@@ -17,10 +17,16 @@ namespace ObscuritasMediaManager.Backend.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
+        [HttpGet("{animeName}/type/{animeType}")]
+        public IActionResult Get([FromRoute] string animeName, [FromRoute] string animeType)
         {
-            return Ok(new {status = 200});
+            return Ok(_repository.Get(animeName, animeType));
+        }
+
+        [HttpGet]
+        public IActionResult GetAll([FromQuery] string type = "")
+        {
+            return Ok(_repository.GetAll(type));
         }
 
         [HttpPost]

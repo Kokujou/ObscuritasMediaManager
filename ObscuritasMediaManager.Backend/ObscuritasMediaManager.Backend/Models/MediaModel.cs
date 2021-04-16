@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Data.Linq.Mapping;
 using System.Reflection.Metadata;
 
 namespace ObscuritasMediaManager.Backend.Models
 {
+    [Table(Name = "media")]
     public class MediaModel
     {
         public string Name { get; set; }
