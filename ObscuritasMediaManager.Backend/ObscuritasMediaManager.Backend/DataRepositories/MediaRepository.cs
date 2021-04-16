@@ -28,9 +28,9 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
         {
             var mediaTable = _context.GetTable<MediaModel>();
 
-            if (string.IsNullOrEmpty(type)) return mediaTable;
+            if (string.IsNullOrEmpty(type)) return mediaTable.ToList();
 
-            return mediaTable.Where(x => x.Type == type);
+            return mediaTable.Where(x => x.Type == type).ToList();
         }
 
         public void BatchCreateMedia(IEnumerable<MediaModel> media)

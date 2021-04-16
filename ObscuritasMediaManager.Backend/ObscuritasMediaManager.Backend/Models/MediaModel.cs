@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Data.Linq;
 using System.Data.Linq.Mapping;
-using System.Reflection.Metadata;
 
 namespace ObscuritasMediaManager.Backend.Models
 {
     [Table(Name = "media")]
     public class MediaModel
     {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public int Rating { get; set; }
-        public int Release { get; set; }
-        public IEnumerable<string> Genres { get; set; }
-        public int State { get; set; }
-        public string Description { get; set; }
-        public Blob Thumbnail { get; set; }
-        public string Image { get; set; }
+        [Column] public string Name { get; set; }
+        [Column] public string Type { get; set; }
+        [Column] public int Rating { get; set; }
+        [Column] public int Release { get; set; }
+        [Column] public IEnumerable<string> Genres { get; set; }
+        [Column] public int State { get; set; }
+        [Column] public string Description { get; set; }
+        [Column] public Binary[] Thumbnail { get; set; }
+        [Column] public string Image { get; set; }
     }
 }
