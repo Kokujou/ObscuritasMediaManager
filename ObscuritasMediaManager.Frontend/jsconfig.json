@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "esnext",
+        "checkJs": true
+    },
+    "include": ["**/*.js"],
+    "exclude": ["./node_modules/**", "./index.bundled.js", "**/exports.js", "./rollup.config.js"],
+    "compileOnSave": true
+}
