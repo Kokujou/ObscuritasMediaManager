@@ -10,10 +10,12 @@ import { MessageDialog } from './dialogs/message-dialog/message-dialog.js';
 import { BorderButton } from './native-components/border-button/border-button.js';
 import { TriValueCheckbox } from './native-components/tri-value-checkbox/tri-value-checkbox.js';
 import { AnimeGerSubPage } from './pages/anime-ger-sub-page/anime-ger-sub-page.js';
+import { ObscuritasMediaManager } from './pages/obscuritas-media-manager/obscuritas-media-manager.js';
 import { PageLayout } from './pages/page-layout/page-layout.js';
 import { PageRouting } from './pages/page-routing/page-routing.js';
 import { WelcomePage } from './pages/welcome-page/welcome-page.js';
 
+window.customElements.define('obscuritas-media-manager', ObscuritasMediaManager);
 window.customElements.define('page-routing', PageRouting);
 window.customElements.define('welcome-page', WelcomePage);
 window.customElements.define('page-layout', PageLayout);
