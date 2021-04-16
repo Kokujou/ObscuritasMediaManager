@@ -14,10 +14,7 @@ export class Observable {
      * @param {(oldValue: T, newValue: T)=> void} observer
      */
     subscribe(observer) {
-        var subscription = new Subscription(
-            observer,
-            () => (this.subscriptions = this.subscriptions.filter((x) => x == subscription))
-        );
+        var subscription = new Subscription(observer, () => (this.subscriptions = this.subscriptions.filter((x) => x != subscription)));
         this.subscriptions.push(subscription);
         observer(this.currentValue, null);
         return subscription;

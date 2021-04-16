@@ -1,4 +1,6 @@
 import { MediaModel } from '../../data/media.model.js';
+import { Subscription } from '../../data/observable.js';
+import { session } from '../../data/session.js';
 import { StreamingEntryModel } from '../../data/streaming-entry.model.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { LitElement } from '../../exports.js';
@@ -32,6 +34,18 @@ export class MediaPage extends LitElement {
         this.ratingFilter = [1, 2, 3, 4, 5];
         this.episodeCountFilter = { left: 0, right: 0 };
         this.genreFilter = new GenreDialogResult();
+        /** @type {Subscription[]} */ this.subscriptions = [];
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+
+        this.subscriptions.push(session.mediaList.subscribe(() => this.requestUpdate(undefined)));
+    }
+
+    get mediaList() {
+        console.log(session.mediaList.current());
+        return session.mediaList.current() || [];
     }
 
     render(content) {

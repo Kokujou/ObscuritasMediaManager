@@ -6,7 +6,7 @@ export class MediaService {
 
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
-        return response.json();
+        return await response.json();
     }
 
     /**

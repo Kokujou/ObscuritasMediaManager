@@ -13,7 +13,7 @@ export class AnimeTile extends LitElement {
             imageSource: { type: String, reflect: true },
             rating: { type: Number, reflect: true },
             genres: { type: Array, reflect: true },
-            status: { type: String, reflect: true },
+            status: { type: Number, reflect: true },
         };
     }
 
@@ -23,7 +23,7 @@ export class AnimeTile extends LitElement {
         /** @type {string} */ this.imageSource;
         /** @type {number} */ this.rating;
         /** @type {string[]} */ this.genres = [];
-        /** @type {string} */ this.status;
+        /** @type {number} */ this.status;
     }
 
     render() {

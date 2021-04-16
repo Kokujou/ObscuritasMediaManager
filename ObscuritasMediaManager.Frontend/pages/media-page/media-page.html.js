@@ -21,10 +21,19 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                         name="Ordner importieren"
                         @click="${() => mediaPage.importFolder()}"
                     ></anime-tile>
-                    <anime-tile name="Some Anime"></anime-tile><anime-tile name="Some Anime"></anime-tile
-                    ><anime-tile name="Some Anime"></anime-tile><anime-tile name="Some Anime"></anime-tile
-                    ><anime-tile name="Some Anime"></anime-tile><anime-tile name="Some Anime"></anime-tile
-                    ><anime-tile name="Some Anime"></anime-tile><anime-tile name="Some Anime"></anime-tile>
+                    ${mediaPage.mediaList.map(
+                        (media) =>
+                            html`
+                                <anime-tile
+                                    .genres="${media.genres || []}"
+                                    .name="${media.name}"
+                                    .rating="${media.rating}"
+                                    .status="${media.state}"
+                                    .imageSource="${media.image}"
+                                ></anime-tile>
+                            `
+                    )}
+
                     <input type="file" id="folder-browser" webkitdirectory directory style="display:none" />
                 </div>
             </div>
