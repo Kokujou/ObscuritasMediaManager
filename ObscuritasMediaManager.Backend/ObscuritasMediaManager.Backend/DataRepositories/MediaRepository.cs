@@ -19,6 +19,29 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             _connection.Open();
         }
 
+        public void AddMediaImage(string mediaName, string mediaType, string mediaImage)
+        {
+            using var transaction = _connection.BeginTransaction();
+            var command = _connection.CreateCommand();
+            command.CommandText = $"update media set Image=$value where Name='{mediaName}' and Type='{mediaType}'";
+            var param = command.CreateParameter();
+            param.ParameterName = "$value";
+            param.Value = mediaImage;
+            command.Parameters.Add(param);
+            command.ExecuteNonQuery();
+            transaction.Commit();
+        }
+
+        public void RemoveMediaImage(string mediaName, string mediaType)
+        {
+            using var transaction = _connection.BeginTransaction();
+            var command = _connection.CreateCommand();
+            command.CommandText = $"update media set Image=NULL where Name='{mediaName}' and Type='{mediaType}'";
+            command.ExecuteNonQuery();
+            transaction.Commit();
+        }
+
+
         public MediaModel Get(string name, string type)
         {
             return _context.GetTable<MediaModel>().First(x => x.Name == name && x.Type == type);

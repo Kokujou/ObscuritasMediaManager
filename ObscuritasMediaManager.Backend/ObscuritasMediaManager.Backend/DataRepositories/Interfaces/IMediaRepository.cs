@@ -11,5 +11,9 @@ namespace ObscuritasMediaManager.Backend.DataRepositories.Interfaces
         public IEnumerable<MediaModel> GetAll(string type = "");
 
         public MediaModel Get(string name, string animeType);
+
+        public void AddMediaImage(string mediaName, string mediaType, string mediaImage);
+
+        public void RemoveMediaImage(string mediaName, string mediaType);
     }
 }

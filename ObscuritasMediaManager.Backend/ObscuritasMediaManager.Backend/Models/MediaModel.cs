@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Linq;
 using System.Data.Linq.Mapping;
 
 namespace ObscuritasMediaManager.Backend.Models
@@ -14,7 +13,7 @@ namespace ObscuritasMediaManager.Backend.Models
         [Column] public IEnumerable<string> Genres { get; set; }
         [Column] public int State { get; set; }
         [Column] public string Description { get; set; }
-        [Column] public Binary[] Thumbnail { get; set; }
+        [Column] public string Thumbnail { get; set; }
         [Column] public string Image { get; set; }
     }
 }

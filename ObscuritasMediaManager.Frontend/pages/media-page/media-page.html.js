@@ -30,11 +30,13 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                                     .rating="${media.rating}"
                                     .status="${media.state}"
                                     .imageSource="${media.image}"
+                                    @addButtonClicked="${() => mediaPage.addImageFor(media)}"
                                 ></anime-tile>
                             `
                     )}
 
                     <input type="file" id="folder-browser" webkitdirectory directory style="display:none" />
+                    <input type="file" id="image-browser" accept="image/*" style="display:none" />
                 </div>
             </div>
         </div>

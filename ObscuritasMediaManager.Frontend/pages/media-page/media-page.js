@@ -81,4 +81,29 @@ export class MediaPage extends LitElement {
             //call backend both arrays
         });
     }
+
+    /**
+     * @param {MediaModel} media
+     */
+    addImageFor(media) {
+        /** @type {HTMLInputElement} */ var imageBrowser = this.shadowRoot.querySelector('#image-browser');
+        imageBrowser.click();
+        imageBrowser.addEventListener('change', async () => {
+            var selectedImage = imageBrowser.files[0];
+
+            var fileReader = new FileReader();
+            fileReader.onload = async (fileData) => {
+                var image = fileData.target.result;
+                if (image instanceof ArrayBuffer) throw 'the string must be an base64 image string';
+
+                try {
+                    await MediaService.addImageForMedia(media, image);
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            fileReader.readAsDataURL(imageBrowser.files[0]);
+        });
+    }
 }
