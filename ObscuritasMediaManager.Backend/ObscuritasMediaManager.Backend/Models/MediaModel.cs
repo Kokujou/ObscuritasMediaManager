@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Data.Linq.Mapping;
+﻿using System.Data.Linq.Mapping;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ObscuritasMediaManager.Backend.Models
 {
@@ -10,7 +10,9 @@ namespace ObscuritasMediaManager.Backend.Models
         [Column] public string Type { get; set; }
         [Column] public int Rating { get; set; }
         [Column] public int Release { get; set; }
-        [Column] public IEnumerable<string> Genres { get; set; }
+
+        [Column(Name = "Genres")] [NotNull] public string GenreString { get; set; }
+
         [Column] public int State { get; set; }
         [Column] public string Description { get; set; }
         [Column] public string Thumbnail { get; set; }

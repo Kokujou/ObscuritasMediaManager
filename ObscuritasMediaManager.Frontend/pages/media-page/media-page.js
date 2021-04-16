@@ -106,4 +106,18 @@ export class MediaPage extends LitElement {
             fileReader.readAsDataURL(imageBrowser.files[0]);
         });
     }
+
+    /**
+     * @param {MediaModel} media
+     * @param {number} newRating
+     */
+    async changeRating(media, newRating) {
+        try {
+            var model = new MediaModel(media.name, media.type);
+            model.rating = newRating;
+            await MediaService.updateMedia(model);
+        } catch (err) {
+            console.error(err);
+        }
+    }
 }

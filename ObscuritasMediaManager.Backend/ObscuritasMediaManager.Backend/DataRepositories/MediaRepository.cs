@@ -19,6 +19,29 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             _connection.Open();
         }
 
+        public void UpdateMedia(MediaModel media)
+        {
+            using var transaction = _connection.BeginTransaction();
+            var command = _connection.CreateCommand();
+            command.CommandText = "update media set ";
+
+            if (!string.IsNullOrEmpty(media.Description))
+                command.CommandText += $"Description='{media.Description}',";
+            if (!string.IsNullOrEmpty(media.GenreString))
+                command.CommandText += $"Genres='{media.GenreString}',";
+            if (media.Rating > 0)
+                command.CommandText += $"Rating={media.Rating},";
+            if (media.Release > 0)
+                command.CommandText += $"Release='{media.Release}',";
+            if (media.State >= 0)
+                command.CommandText += $"State='{media.State}',";
+            command.CommandText = command.CommandText[..^1];
+
+            command.CommandText += $" where Name='{media.Name}' and Type='{media.Type}'";
+            command.ExecuteNonQuery();
+            transaction.Commit();
+        }
+
         public void AddMediaImage(string mediaName, string mediaType, string mediaImage)
         {
             using var transaction = _connection.BeginTransaction();

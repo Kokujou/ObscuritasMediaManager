@@ -38,6 +38,29 @@ export function renderAnimeTileStyles() {
             background-color: #bbbbbb77;
         }
 
+        .rating-container {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            z-index: 1;
+        }
+
+        .rating-container .star {
+            color: gray;
+            text-shadow: 3px 3px 3px black;
+            font-size: 36px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .rating-container .star.selected {
+            color: yellow;
+        }
+
+        .rating-container .star.hovered {
+            color: darkorange;
+        }
+
         .caption {
             cursor: pointer;
             font-size: 30px;
@@ -45,6 +68,9 @@ export function renderAnimeTileStyles() {
             color: white;
             text-align: center;
             margin-bottom: 10px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
         .genre-list {

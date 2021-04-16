@@ -24,6 +24,19 @@ export class MediaService {
 
     /**
      * @param {MediaModel} media
+     */
+    static async updateMedia(media) {
+        var response = await fetch(`https://localhost/ObscuritasMediaManager/api/media`, {
+            method: 'PUT',
+            body: JSON.stringify(media),
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (response.status != 204) throw new Error('something went wrong, status ' + response.status);
+    }
+
+    /**
+     * @param {MediaModel} media
      * @param {string} image
      */
     static async addImageForMedia(media, image) {

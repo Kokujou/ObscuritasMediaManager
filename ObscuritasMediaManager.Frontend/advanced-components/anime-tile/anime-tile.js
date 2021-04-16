@@ -14,6 +14,9 @@ export class AnimeTile extends LitElement {
             rating: { type: Number, reflect: true },
             genres: { type: Array, reflect: true },
             status: { type: Number, reflect: true },
+            disabled: { type: Boolean, reflect: true },
+
+            hoveredRating: { type: Number, reflect: false },
         };
     }
 
@@ -24,6 +27,9 @@ export class AnimeTile extends LitElement {
         /** @type {number} */ this.rating;
         /** @type {string[]} */ this.genres = [];
         /** @type {number} */ this.status;
+        /** @type {boolean} */ this.disabled;
+
+        /** @type {number} */ this.hoveredRating = 0;
     }
 
     render() {
@@ -42,5 +48,10 @@ export class AnimeTile extends LitElement {
     notifyImageClicked() {
         if (this.imageSource) return;
         this.dispatchEvent(new CustomEvent('addButtonClicked'));
+    }
+
+    notifyRatingChanged(newRating) {
+        var ratingChangedEvent = new CustomEvent('ratingChanged', { detail: { newRating: newRating } });
+        this.dispatchEvent(ratingChangedEvent);
     }
 }

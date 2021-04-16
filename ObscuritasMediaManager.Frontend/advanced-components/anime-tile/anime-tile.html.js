@@ -13,8 +13,8 @@ export function renderAnimeTile(tile) {
         </style>
 
         <div class="tile-container">
+            ${tile.disabled ? '' : html`<div class="rating-container">${renderRating(tile)}</div>`}
             <div class="tile-image ${tile.imageSource ? '' : 'unset'}" @click=${() => tile.notifyImageClicked()}>
-                <div class="rating ${tile.rating}"></div>
                 <div class="status-icon ${tile.status}"></div>
             </div>
 
@@ -39,4 +39,24 @@ function renderGenreTag(genre, tile) {
         @removed="${() => (tile.genres = tile.genres.filter((x) => x != genre))}"
         text="${genre}"
     ></tag-label>`;
+}
+
+/**
+ * @param {AnimeTile} tile
+ */
+function renderRating(tile) {
+    var ratingArray = [...Array(5).keys()];
+    return ratingArray.map(
+        (rating) =>
+            html`
+                <div
+                    class="star ${rating < tile.rating ? 'selected' : ''} ${rating < tile.hoveredRating ? 'hovered' : ''}"
+                    @pointerover="${() => (tile.hoveredRating = rating + 1)}"
+                    @pointerout="${() => (tile.hoveredRating = 0)}"
+                    @click="${() => tile.notifyRatingChanged(rating + 1)}"
+                >
+                    ★
+                </div>
+            `
+    );
 }
