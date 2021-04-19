@@ -1,12 +1,17 @@
 import { MediaModel } from '../data/media.model.js';
 
 export class MediaService {
+    /**
+     * @returns {Promise<MediaModel[]>}
+     * @param {string} type
+     */
     static async getAllMedia(type = '') {
         var response = await fetch(`https://localhost/ObscuritasMediaManager/api/media?type=${type}`);
 
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
-        return await response.json();
+        /** @type {MediaModel[]} */ var mediaList = await response.json();
+        return mediaList.map((media) => Object.assign(new MediaModel(), media));
     }
 
     /**

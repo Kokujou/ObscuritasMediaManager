@@ -20,9 +20,10 @@ export function renderAnimeTile(tile) {
 
             <div class="caption">${tile.name}</div>
             <div class="genre-list">
-                ${tile.genres.map((genre) => renderGenreTag(genre, tile))} <br />
-                ${tile.genres[tile.genres.length - 1]
-                    ? html`<div class="add-genre-button" @click="${() => tile.addGenre('')}">+</div>`
+                ${tile.genres.map((genre) => renderGenreTag(tile, genre))} <br />
+                ${tile.newGenre ? renderGenreTag(tile, 'test', true) : ''}
+                ${!tile.disabled && !tile.newGenre
+                    ? html`<div class="add-genre-button" @click="${() => (tile.newGenre = true)}">+</div>`
                     : ''}
             </div>
         </div>
@@ -33,11 +34,13 @@ export function renderAnimeTile(tile) {
  * @param {string} genre
  * @param {AnimeTile} tile
  */
-function renderGenreTag(genre, tile) {
+function renderGenreTag(tile, genre = '', newGenre = false) {
+    if (!genre) return;
     return html`<tag-label
         @tagCreated="${(e) => tile.addGenre(e.detail.value)}"
-        @removed="${() => (tile.genres = tile.genres.filter((x) => x != genre))}"
+        @removed="${() => tile.removeGenre(genre)}"
         text="${genre}"
+        .createNew="${newGenre}"
     ></tag-label>`;
 }
 

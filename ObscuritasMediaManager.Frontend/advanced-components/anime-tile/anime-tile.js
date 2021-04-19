@@ -17,6 +17,7 @@ export class AnimeTile extends LitElement {
             disabled: { type: Boolean, reflect: true },
 
             hoveredRating: { type: Number, reflect: false },
+            newGenre: { type: Boolean, reflect: false },
         };
     }
 
@@ -27,22 +28,38 @@ export class AnimeTile extends LitElement {
         /** @type {number} */ this.rating;
         /** @type {string[]} */ this.genres = [];
         /** @type {number} */ this.status;
-        /** @type {boolean} */ this.disabled;
+        /** @type {boolean} */ this.disabled = false;
 
         /** @type {number} */ this.hoveredRating = 0;
+        /** @type {boolean} */ this.newGenre = false;
+    }
+
+    attributeChangedCallback(name, old, value) {
+        if (name == 'genres') this.newGenre = false;
     }
 
     render() {
         return renderAnimeTile(this);
     }
     addGenre(genre) {
-        console.log(genre);
         if (genre) this.genres = this.genres.filter((x) => x);
 
-        this.genres.push(genre);
-        this.requestUpdate(undefined);
+        if (!genre) {
+            this.genres.push(genre);
+            this.requestUpdate(undefined);
+            return;
+        }
 
-        if (!genre) return;
+        this.notifyGenresChanged(this.genres.concat(genre));
+    }
+
+    /**
+     * @param {string} genre
+     */
+    removeGenre(genre) {
+        if (genre) this.genres = this.genres.filter((x) => x);
+
+        this.notifyGenresChanged(this.genres.filter((x) => x !== genre));
     }
 
     notifyImageClicked() {
@@ -53,5 +70,10 @@ export class AnimeTile extends LitElement {
     notifyRatingChanged(newRating) {
         var ratingChangedEvent = new CustomEvent('ratingChanged', { detail: { newRating: newRating } });
         this.dispatchEvent(ratingChangedEvent);
+    }
+
+    notifyGenresChanged(genres) {
+        var genresChangedEvent = new CustomEvent('genresChanged', { detail: { genres: genres } });
+        this.dispatchEvent(genresChangedEvent);
     }
 }

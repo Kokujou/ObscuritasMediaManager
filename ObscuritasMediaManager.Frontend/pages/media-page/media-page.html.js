@@ -15,11 +15,11 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                     <div class="ranking-table"></div>
                 </div>
                 <div class="right-container">
-                    <anime-tile name="Anime hinzufügen" ?disabled="${true}"></anime-tile>
+                    <anime-tile name="Anime hinzufügen" .disabled="${true}"></anime-tile>
                     <anime-tile
-                        imageSource="data:image/svg+xml;base64,${btoa(importIcon())}"
+                        .imageSource="data:image/svg+xml;base64,${btoa(importIcon())}"
                         name="Ordner importieren"
-                        ?disabled="${true}"
+                        .disabled="${true}"
                         @click="${() => mediaPage.importFolder()}"
                     ></anime-tile>
                     ${mediaPage.mediaList.map(
@@ -32,7 +32,8 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                                     .status="${media.state}"
                                     .imageSource="${media.image}"
                                     @addButtonClicked="${() => mediaPage.addImageFor(media)}"
-                                    @ratingChanged="${(e) => mediaPage.changeRating(media, e.detail.newRating)}"
+                                    @ratingChanged="${(e) => mediaPage.updateRating(media, e.detail.newRating)}"
+                                    @genresChanged="${(e) => mediaPage.updateGenres(media, e.detail.genres)}"
                                 ></anime-tile>
                             `
                     )}

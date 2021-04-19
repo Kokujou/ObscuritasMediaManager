@@ -7,7 +7,7 @@ import { TagLabel } from './tag-label.js';
 export function renderTagLabel(tagLabel) {
     return html`
         <div class="label-container">
-            ${tagLabel.text ? html`<div class="label-text">${tagLabel.text}</div>` : renderNewLabelForm(tagLabel)}
+            ${tagLabel.createNew ? renderNewLabelForm(tagLabel) : html`<div class="label-text">${tagLabel.text}</div>`}
 
             <div class="x-button" @click="${() => tagLabel.notifyRemoved()}">&times</div>
         </div>

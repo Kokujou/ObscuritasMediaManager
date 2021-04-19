@@ -11,7 +11,6 @@ export class ExpandableDropdown extends LitElement {
      * @param {HTMLElement} element
      */
     static switchActiveClass(element) {
-        console.log(element);
         // @ts-ignore
         if (element.classList.replace('active', 'inactive')) return;
         element.classList.replace('inactive', 'active');

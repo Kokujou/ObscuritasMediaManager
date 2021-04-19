@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
@@ -12,10 +13,12 @@ namespace ObscuritasMediaManager.Backend.Controllers
     public class MediaController : ControllerBase
     {
         private readonly IMediaRepository _repository;
+        private readonly IGenreRepository _genreRepository;
 
-        public MediaController(IMediaRepository repository)
+        public MediaController(IMediaRepository repository, IGenreRepository genreRepository)
         {
             _repository = repository;
+            _genreRepository = genreRepository;
         }
 
         [HttpGet("{animeName}/type/{animeType}")]
@@ -63,7 +66,16 @@ namespace ObscuritasMediaManager.Backend.Controllers
         {
             try
             {
+                var genres = _genreRepository.GetAll();
+                if (!string.IsNullOrEmpty(media.GenreString)
+                    && (!media.Genres.All(mediaGenre => genres.Any(genre => genre.Name == mediaGenre))
+                        || media.Genres.Any(genre => media.Genres.Count(x => x == genre) != 1)))
+                    throw new Exception(
+                        $"One of the specified genres is not in the range of values: {media.GenreString}.\n" +
+                        $"Supported Genres are: {string.Join(",", genres)}");
+
                 _repository.UpdateMedia(media);
+
                 return NoContent();
             }
             catch (Exception e)

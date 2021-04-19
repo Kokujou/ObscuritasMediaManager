@@ -8,8 +8,8 @@ import { ObscuritasMediaManager } from './obscuritas-media-manager.js';
 export function renderObscuritasMediaManager(mediaManager) {
     return html`<page-routing
             .routes="${getRoutes()}"
-            class="${mediaManager.initialized ? 'active' : 'inactive'}"
             defaultFragment="welcome"
+            class="${mediaManager.initialized ? 'active' : 'inactive'}"
         ></page-routing>
         ${renderLoadingIcon(mediaManager)} `;
 }

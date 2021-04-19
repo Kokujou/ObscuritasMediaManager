@@ -25,9 +25,9 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             var command = _connection.CreateCommand();
             command.CommandText = "update media set ";
 
-            if (!string.IsNullOrEmpty(media.Description))
+            if (media.Description != null)
                 command.CommandText += $"Description='{media.Description}',";
-            if (!string.IsNullOrEmpty(media.GenreString))
+            if (media.GenreString != null)
                 command.CommandText += $"Genres='{media.GenreString}',";
             if (media.Rating > 0)
                 command.CommandText += $"Rating={media.Rating},";

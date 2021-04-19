@@ -44,7 +44,6 @@ export class MediaPage extends LitElement {
     }
 
     get mediaList() {
-        console.log(session.mediaList.current());
         return session.mediaList.current() || [];
     }
 
@@ -111,11 +110,27 @@ export class MediaPage extends LitElement {
      * @param {MediaModel} media
      * @param {number} newRating
      */
-    async changeRating(media, newRating) {
+    async updateRating(media, newRating) {
         try {
             var model = new MediaModel(media.name, media.type);
             model.rating = newRating;
             await MediaService.updateMedia(model);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    /**
+     * @param {MediaModel} media
+     * @param {string[]} genres
+     */
+    async updateGenres(media, genres) {
+        try {
+            var model = new MediaModel(media.name, media.type);
+            model.genreString = genres.join(',');
+            await MediaService.updateMedia(model);
+            media.genreString = genres.join(',');
+            this.requestUpdate(undefined);
         } catch (err) {
             console.error(err);
         }

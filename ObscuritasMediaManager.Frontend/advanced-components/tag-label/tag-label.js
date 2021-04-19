@@ -10,12 +10,14 @@ export class TagLabel extends LitElement {
     static get properties() {
         return {
             text: { type: String, reflect: true },
+            createNew: { type: Boolean, reflect: true },
         };
     }
 
     constructor() {
         super();
         /** @type {string} */ this.text;
+        /** @type {boolean} */ this.createNew = false;
     }
 
     render() {
