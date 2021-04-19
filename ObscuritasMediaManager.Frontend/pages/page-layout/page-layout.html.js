@@ -1,4 +1,5 @@
 import { Pages } from '../../data/pages.js';
+import { session } from '../../data/session.js';
 import { html } from '../../exports.js';
 
 export function renderWebcomponentTemplate() {
@@ -24,7 +25,13 @@ function renderNavigation() {
             <div class="link-area">
                 <div class="nav-section">
                     <div class="nav-section-links">
-                        <a href="#${Pages.welcome.route}" class="nav-item home-link"> Start </a>
+                        <a
+                            href="javascript:void(0)"
+                            @click="${() => session.currentPage.next(Pages.welcome.route)}"
+                            class="nav-item home-link"
+                        >
+                            Start
+                        </a>
                     </div>
                 </div>
                 <div class="nav-section">
@@ -59,5 +66,5 @@ function renderNavigation() {
 }
 
 function renderNavItem(target, text) {
-    return html`<a href="#${target}" class="nav-item"> ${text} </a>`;
+    return html`<a href="javascript:void(0)" @click="${() => session.currentPage.next(target)}" class="nav-item"> ${text} </a>`;
 }

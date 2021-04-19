@@ -24,7 +24,9 @@ export class PageRouting extends LitElement {
         this.defaultFragment = '';
 
         window.addEventListener('hashchange', () => {
-            session.currentPage.next(window.location.hash.substring(1));
+            if (location.hash.length <= 1) return;
+            var newHash = location.hash.substring(1);
+            if (newHash != session.currentPage.current()) session.currentPage.next(newHash);
         });
         window.addEventListener('resize', () => this.requestUpdate(undefined));
     }
@@ -39,12 +41,13 @@ export class PageRouting extends LitElement {
         );
     }
 
-    attributeChangedCallback() {
-        this.loadPageFromHash(null);
-    }
-
     get content() {
         return this.routes[session.currentPage.current()];
+    }
+
+    firstUpdated(_changedProperties) {
+        super.firstUpdated(_changedProperties);
+        this.loadPageFromHash(null);
     }
 
     async switchPage(newValue, oldValue) {
@@ -57,7 +60,6 @@ export class PageRouting extends LitElement {
             return;
         }
 
-        console.log(this.defaultFragment);
         if (this.defaultFragment) session.currentPage.next(this.defaultFragment);
     }
 
@@ -72,6 +74,7 @@ export class PageRouting extends LitElement {
     }
 
     disconnectedCallback() {
+        super.disconnectedCallback();
         this.subscriptions.forEach((x) => x.unsubscribe());
         this.subscriptions = [];
     }

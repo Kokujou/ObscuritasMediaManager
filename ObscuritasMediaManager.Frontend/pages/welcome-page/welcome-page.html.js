@@ -1,4 +1,5 @@
 import { Pages } from '../../data/pages.js';
+import { session } from '../../data/session.js';
 import { html } from '../../exports.js';
 import { WelcomePage } from './welcome-page.js';
 
@@ -20,46 +21,46 @@ export function renderWelcomePage(welcomePage) {
                 <div class="tile-link-area">
                     <div class="tile-link-section">
                         <image-tile
-                            @click="${() => (document.location.hash = Pages.animeGerDub.route)}"
+                            @click="${() => session.currentPage.next(Pages.animeGerDub.route)}"
                             caption="Animes (Dub)"
                             src="../../resources/images/ger-dub2.png"
                         ></image-tile>
                         <image-tile
-                            @click="${() => (document.location.hash = Pages.animeGerSub.route)}"
+                            @click="${() => session.currentPage.next(Pages.animeGerSub.route)}"
                             caption="Animes (Sub)"
                             src="../../resources/images/ger-sub4.png"
                         ></image-tile>
                         <image-tile
-                            @click="${() => (document.location.hash = Pages.animeMovies.route)}"
+                            @click="${() => session.currentPage.next(Pages.animeMovies.route)}"
                             caption="Animefilme"
                             src="../../resources/images/totoro.png"
                         ></image-tile>
                     </div>
                     <div class="tile-link-section">
                         <image-tile
-                            @click="${() => (document.location.hash = Pages.realSeries.route)}"
+                            @click="${() => session.currentPage.next(Pages.realSeries.route)}"
                             caption="Realfilmserien"
                             src="../../resources/images/real-series.png"
                         ></image-tile>
                         <image-tile
-                            @click="${() => (document.location.hash = Pages.realMovies.route)}"
+                            @click="${() => session.currentPage.next(Pages.realMovies.route)}"
                             caption="Realfilme"
                             src="../../resources/images/real-movies.png"
                         ></image-tile>
                         <image-tile
-                            @click="${() => (document.location.hash = Pages.jDrama.route)}"
+                            @click="${() => session.currentPage.next(Pages.jDrama.route)}"
                             caption="J-Dramen"
                             src="../../resources/images/j-drama.png"
                         ></image-tile>
                     </div>
                     <div class="tile-link-section">
                         <image-tile
-                            @click="${() => (document.location.hash = Pages.music.route)}"
+                            @click="${() => session.currentPage.next(Pages.music.route)}"
                             caption="Musik"
                             src="../../resources/images/music.png"
                         ></image-tile>
                         <image-tile
-                            @click="${() => (document.location.hash = Pages.games.route)}"
+                            @click="${() => session.currentPage.next(Pages.games.route)}"
                             caption="Games"
                             src="../../resources/images/games.png"
                         ></image-tile>
