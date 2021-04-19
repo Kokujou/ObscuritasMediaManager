@@ -1,4 +1,4 @@
-import { getRoutes } from '../../data/pages.js';
+import { Pages } from '../../data/pages.js';
 import { html } from '../../exports.js';
 import { ObscuritasMediaManager } from './obscuritas-media-manager.js';
 
@@ -7,7 +7,7 @@ import { ObscuritasMediaManager } from './obscuritas-media-manager.js';
  */
 export function renderObscuritasMediaManager(mediaManager) {
     return html`<page-routing
-            .routes="${getRoutes()}"
+            .routes="${Pages}"
             defaultFragment="welcome"
             class="${mediaManager.initialized ? 'active' : 'inactive'}"
         ></page-routing>

@@ -26,7 +26,11 @@ export function renderAnimeTileStyles() {
         .tile-image {
             flex: auto;
             cursor: pointer;
-            background-size: 100% 100%;
+
+            background-size: auto 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+
             margin: 20px;
         }
 

@@ -1,4 +1,5 @@
 import { Subscription } from '../../data/observable.js';
+import { RouteDefinition } from '../../data/pages.js';
 import { session } from '../../data/session.js';
 import { html, LitElement } from '../../exports.js';
 import { renderPageRoutingStyles } from './page-routing.css.js';
@@ -15,18 +16,28 @@ export class PageRouting extends LitElement {
         };
     }
 
+    changeHash(newHash) {
+        var searchString = location.search.substring(1);
+        var searchQueries = searchString.split('&');
+        searchQueries = searchQueries.filter((x) => this.currentRoute.allowedQueries.includes(x.split('=')[0]));
+        if (searchQueries.length > 0) searchString = `?${searchQueries.join('&')}`;
+        else searchString = '';
+
+        var newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + searchString;
+        window.history.pushState({ path: newurl }, '', newurl);
+        window.location.hash = `#${newHash}`;
+    }
+
     constructor() {
         super();
 
         /** @type {Subscription[]} */ this.subscriptions = [];
 
-        this.routes = {};
+        /** @type {{[key: string]: RouteDefinition}} */ this.routes = {};
         this.defaultFragment = '';
 
         window.addEventListener('hashchange', () => {
-            if (location.hash.length <= 1) return;
-            var newHash = location.hash.substring(1);
-            if (newHash != session.currentPage.current()) session.currentPage.next(newHash);
+            this.loadPageFromHash(null);
         });
         window.addEventListener('resize', () => this.requestUpdate(undefined));
     }
@@ -41,8 +52,16 @@ export class PageRouting extends LitElement {
         );
     }
 
+    get currentRoute() {
+        return Object.values(this.routes).find((x) => x.route == session.currentPage.current());
+    }
+
     get content() {
-        return this.routes[session.currentPage.current()];
+        return this.currentRoute.component;
+    }
+
+    get fragments() {
+        return Object.values(this.routes).map((x) => x.route);
     }
 
     firstUpdated(_changedProperties) {
@@ -54,9 +73,8 @@ export class PageRouting extends LitElement {
         // @ts-ignore
         if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`)) this.classList.add(`current-page-${newValue}`);
 
-        if (Object.keys(this.routes).some((x) => x == newValue)) {
-            window.location.search = '';
-            window.location.hash = `#${newValue}`;
+        if (this.fragments.some((x) => x == newValue)) {
+            this.changeHash(newValue);
             return;
         }
 
@@ -70,6 +88,7 @@ export class PageRouting extends LitElement {
     }
 
     render() {
+        if (!this.currentRoute) return;
         return html`<div class="current-page">${this.content ? html([this.content]) : html`<slot></slot>`}</div>`;
     }
 
