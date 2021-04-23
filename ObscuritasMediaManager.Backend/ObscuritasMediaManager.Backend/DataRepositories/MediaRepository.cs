@@ -67,7 +67,7 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
 
         public MediaModel Get(string name, string type)
         {
-            return _context.GetTable<MediaModel>().First(x => x.Name == name && x.Type == type);
+            return _context.GetTable<MediaModel>().Where(x => x.Name == name && x.Type == type).ToList().First();
         }
 
         public IEnumerable<MediaModel> GetAll(string type = "")

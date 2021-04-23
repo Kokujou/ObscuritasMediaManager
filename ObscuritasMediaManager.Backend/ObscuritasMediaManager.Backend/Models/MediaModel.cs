@@ -7,8 +7,8 @@ namespace ObscuritasMediaManager.Backend.Models
     [Table(Name = "media")]
     public class MediaModel
     {
-        [Column] public string Name { get; set; }
-        [Column] public string Type { get; set; }
+        [Column(IsPrimaryKey = true)] public string Name { get; set; }
+        [Column(IsPrimaryKey = true)] public string Type { get; set; }
         [Column] public int Rating { get; set; }
         [Column] public int Release { get; set; }
 
