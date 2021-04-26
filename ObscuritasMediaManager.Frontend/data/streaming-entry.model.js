@@ -32,4 +32,12 @@ export class StreamingEntryModel {
 
         return streamingEntry;
     }
+
+    decodeBase64() {
+        if (this.name) this.name = atob(this.name);
+        if (this.season) this.season = atob(this.season);
+        if (this.src) this.src = atob(this.src);
+
+        return this;
+    }
 }

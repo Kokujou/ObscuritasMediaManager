@@ -40,14 +40,14 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                 throw new ModelCreationFailedException<StreamingEntryModel>(failedEntries);
         }
 
-        public StreamingEntryModel Get(string name, string type)
+        public IEnumerable<StreamingEntryModel> Get(string name, string type)
         {
             using var connection = new SQLiteConnection("Data Source=database.sqlite");
             connection.Open();
             using var context = new DataContext(connection);
 
-            return context.GetTable<StreamingEntryModel>().Where(x => x.Name == name && x.Type == type).ToList()
-                .First();
+            return context.GetTable<StreamingEntryModel>()
+                .Where(x => x.Name == name.ToBase64() && x.Type == type).ToList();
         }
     }
 }

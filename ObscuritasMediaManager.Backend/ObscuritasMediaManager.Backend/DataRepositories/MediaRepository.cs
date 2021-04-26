@@ -118,9 +118,5 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             if (failedEntries.Count > 0)
                 throw new ModelCreationFailedException<MediaModel>(failedEntries);
         }
-
-        public void Dispose()
-        {
-        }
     }
 }

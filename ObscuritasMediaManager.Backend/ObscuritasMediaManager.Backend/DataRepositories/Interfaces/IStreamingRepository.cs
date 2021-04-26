@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories.Interfaces
 {
-    public interface IStreamingRepository : IDisposable
+    public interface IStreamingRepository
     {
         public void BatchCreateStreamingEntries(IEnumerable<StreamingEntryModel> streamingEntries);
-        public StreamingEntryModel Get(string name, string type);
+        public IEnumerable<StreamingEntryModel> Get(string name, string type);
     }
 }

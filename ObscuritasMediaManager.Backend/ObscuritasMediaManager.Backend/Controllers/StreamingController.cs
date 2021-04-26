@@ -37,7 +37,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-        [HttpGet("/{animeName}/type/{animeType}")]
+        [HttpGet("{mediaName}/type/{mediaType}")]
         public IActionResult GetStreamingEntry(string mediaName, string mediaType)
         {
             try
