@@ -1,5 +1,6 @@
 import { html } from '../../exports.js';
 import { importIcon } from '../../resources/icons/import-icon.svg.js';
+import { plusIcon } from '../../resources/icons/plus-icon.svg.js';
 import { MediaPage } from './media-page.js';
 
 /**
@@ -15,7 +16,12 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                     <div class="ranking-table"></div>
                 </div>
                 <div class="right-container">
-                    <anime-tile name="Anime hinzufügen" .disabled="${true}"></anime-tile>
+                    <anime-tile
+                        id="123"
+                        name="Anime hinzufügen"
+                        .imageSource="data:image/svg+xml;base64,${btoa(plusIcon())}"
+                        .disabled="${true}"
+                    ></anime-tile>
                     <anime-tile
                         .imageSource="data:image/svg+xml;base64,${btoa(importIcon())}"
                         name="Ordner importieren"
@@ -31,15 +37,17 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                                     .rating="${media.rating}"
                                     .status="${media.state}"
                                     .imageSource="${media.image}"
-                                    @addButtonClicked="${() => mediaPage.addImageFor(media)}"
+                                    @imageReceived="${(e) => mediaPage.addImageFor(media, e.detail.imageData)}"
                                     @ratingChanged="${(e) => mediaPage.updateRating(media, e.detail.newRating)}"
                                     @genresChanged="${(e) => mediaPage.updateGenres(media, e.detail.genres)}"
+                                    @click="${() => (location.search = `?name=${media.name}&type=${media.type}`)}"
                                 ></anime-tile>
                             `
                     )}
 
                     <input type="file" id="folder-browser" webkitdirectory directory style="display:none" />
-                    <input type="file" id="image-browser" accept="image/*" style="display:none" />
+
+                    <input type="file" id="file-browser" webkitdirectory style="display:none" />
                 </div>
             </div>
         </div>

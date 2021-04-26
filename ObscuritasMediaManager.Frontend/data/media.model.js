@@ -28,4 +28,13 @@ export class MediaModel {
         this.name = name;
         this.type = type;
     }
+
+    decodeBase64() {
+        if (this.name) this.name = atob(this.name);
+        if (this.type) this.type = atob(this.type);
+        if (this.genreString) this.genreString = atob(this.genreString);
+        if (this.description) this.description = atob(this.description);
+
+        return this;
+    }
 }

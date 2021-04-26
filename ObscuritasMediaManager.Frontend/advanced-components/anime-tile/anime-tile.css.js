@@ -1,5 +1,4 @@
-import { css, unsafeCSS } from '../../exports.js';
-import { plusIcon } from '../../resources/icons/plus-icon.svg.js';
+import { css } from '../../exports.js';
 
 export function renderAnimeTileStyles() {
     return css`
@@ -24,6 +23,7 @@ export function renderAnimeTileStyles() {
         }
 
         .tile-image {
+            position: relative;
             flex: auto;
             cursor: pointer;
 
@@ -32,14 +32,8 @@ export function renderAnimeTileStyles() {
             background-position: center;
 
             margin: 20px;
-        }
-
-        .tile-image.unset {
-            mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(plusIcon()))}');
-            mask-size: 100% 100%;
-            -webkit-mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(plusIcon()))}');
-            -webkit-mask-size: 100% 100%;
-            background-color: #bbbbbb77;
+            display: flex;
+            flex-direction: row;
         }
 
         .rating-container {

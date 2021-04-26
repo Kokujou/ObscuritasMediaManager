@@ -8,14 +8,16 @@ export class StreamingEntryModel {
     /**
      * @param {File} file
      * @param {string} type
+     * @param {string} basePath
      */
-    static fromFile(file, type) {
+    static fromFile(file, type, basePath) {
         var streamingEntry = new StreamingEntryModel();
         streamingEntry.type = type;
         // @ts-ignore
         var fileLevels = file.webkitRelativePath.split('/');
 
-        streamingEntry.src = file.name;
+        // @ts-ignore
+        streamingEntry.src = `${basePath}\\${file.webkitRelativePath}`;
         streamingEntry.season = 'Staffel 1';
         if (fileLevels.length == 4) {
             streamingEntry.season = fileLevels[2];

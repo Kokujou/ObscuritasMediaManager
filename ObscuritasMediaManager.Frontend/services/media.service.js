@@ -1,6 +1,16 @@
 import { MediaModel } from '../data/media.model.js';
 
 export class MediaService {
+    static async getMedia(name, type) {
+        var response = await fetch(`https://localhost/ObscuritasMediaManager/api/media/${name}/type/${type}`);
+
+        if (response.status == 400) throw new Error(`the following anime already exist: ${await response.json()}`);
+        if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
+
+        /** @type {MediaModel[]} */ var media = await response.json();
+        return Object.assign(new MediaModel(), media).decodeBase64();
+    }
+
     /**
      * @returns {Promise<MediaModel[]>}
      * @param {string} type
@@ -11,7 +21,7 @@ export class MediaService {
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
         /** @type {MediaModel[]} */ var mediaList = await response.json();
-        return mediaList.map((media) => Object.assign(new MediaModel(), media));
+        return mediaList.map((media) => Object.assign(new MediaModel(), media).decodeBase64());
     }
 
     /**
@@ -45,7 +55,7 @@ export class MediaService {
      * @param {string} image
      */
     static async addImageForMedia(media, image) {
-        var response = await fetch(`https://localhost/ObscuritasMediaManager/api/media/${media.name}/type/${media.type}`, {
+        var response = await fetch(`https://localhost/ObscuritasMediaManager/api/media/${media.name}/type/${media.type}/image`, {
             method: 'PUT',
             body: JSON.stringify({ image: image }),
             headers: { 'Content-Type': 'application/json' },

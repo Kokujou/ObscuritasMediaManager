@@ -2,6 +2,7 @@ import { Subscription } from '../../data/observable.js';
 import { RouteDefinition } from '../../data/pages.js';
 import { session } from '../../data/session.js';
 import { html, LitElement } from '../../exports.js';
+import { getQueryValue } from '../../services/extensions/url.extension.js';
 import { renderPageRoutingStyles } from './page-routing.css.js';
 
 export class PageRouting extends LitElement {
@@ -19,13 +20,12 @@ export class PageRouting extends LitElement {
     changeHash(newHash) {
         var searchString = location.search.substring(1);
         var searchQueries = searchString.split('&');
-        searchQueries = searchQueries.filter((x) => this.currentRoute.allowedQueries.includes(x.split('=')[0]));
+        searchQueries = searchQueries.filter((x) => this.currentRoute.withQueries.includes(x.split('=')[0]));
         if (searchQueries.length > 0) searchString = `?${searchQueries.join('&')}`;
         else searchString = '';
 
-        var newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + searchString;
-        window.history.pushState({ path: newurl }, '', newurl);
-        window.location.hash = `#${newHash}`;
+        var newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + searchString + `#${newHash}`;
+        window.history.replaceState({ path: newurl }, '', newurl);
     }
 
     constructor() {
@@ -53,7 +53,13 @@ export class PageRouting extends LitElement {
     }
 
     get currentRoute() {
-        return Object.values(this.routes).find((x) => x.route == session.currentPage.current());
+        var matches = Object.values(this.routes)
+            .filter(
+                (route) => route.routes.includes(session.currentPage.current()) && route.withQueries.every((query) => getQueryValue(query))
+            )
+            .sort((a, b) => b.withQueries.length - a.withQueries.length);
+
+        return matches[0];
     }
 
     get content() {
@@ -61,7 +67,7 @@ export class PageRouting extends LitElement {
     }
 
     get fragments() {
-        return Object.values(this.routes).map((x) => x.route);
+        return Object.values(this.routes).map((x) => x.routes);
     }
 
     firstUpdated(_changedProperties) {
@@ -73,7 +79,7 @@ export class PageRouting extends LitElement {
         // @ts-ignore
         if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`)) this.classList.add(`current-page-${newValue}`);
 
-        if (this.fragments.some((x) => x == newValue)) {
+        if (this.currentRoute) {
             this.changeHash(newValue);
             return;
         }
@@ -88,7 +94,7 @@ export class PageRouting extends LitElement {
     }
 
     render() {
-        if (!this.currentRoute) return;
+        if (!this.currentRoute) return html`<div class="current-page"><slot></slot></div>`;
         return html`<div class="current-page">${this.content ? html([this.content]) : html`<slot></slot>`}</div>`;
     }
 

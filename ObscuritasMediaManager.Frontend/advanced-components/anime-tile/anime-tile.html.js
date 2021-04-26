@@ -13,21 +13,39 @@ export function renderAnimeTile(tile) {
         </style>
 
         <div class="tile-container">
-            ${tile.disabled ? '' : html`<div class="rating-container">${renderRating(tile)}</div>`}
-            <div class="tile-image ${tile.imageSource ? '' : 'unset'}" @click=${() => tile.notifyImageClicked()}>
-                <div class="status-icon ${tile.status}"></div>
-            </div>
+            ${tile.disabled ? '' : html`<div class="rating-container">${renderRating(tile)}</div>`} <br />
+            ${renderImageContainer(tile)}
 
             <div class="caption">${tile.name}</div>
             <div class="genre-list">
                 ${tile.genres.map((genre) => renderGenreTag(tile, genre))} <br />
                 ${tile.newGenre ? renderGenreTag(tile, 'test', true) : ''}
                 ${!tile.disabled && !tile.newGenre
-                    ? html`<div class="add-genre-button" @click="${() => (tile.newGenre = true)}">+</div>`
+                    ? html`<div
+                          class="add-genre-button"
+                          @click="${(e) => {
+                              e.stopPropagation();
+                              tile.newGenre = true;
+                          }}"
+                      >
+                          +
+                      </div>`
                     : ''}
             </div>
         </div>
     `;
+}
+
+/**
+ * @param {AnimeTile} tile
+ */
+function renderImageContainer(tile) {
+    if (tile.imageSource)
+        return html`<div class="tile-image">
+            <div class="status-icon ${tile.status}"></div>
+        </div>`;
+
+    if (!tile.disabled) return html` <upload-area @imageReceived="${(e) => tile.notifyImageAdded(e.detail.imageData)}"></upload-area>`;
 }
 
 /**
@@ -56,7 +74,7 @@ function renderRating(tile) {
                     class="star ${rating < tile.rating ? 'selected' : ''} ${rating < tile.hoveredRating ? 'hovered' : ''}"
                     @pointerover="${() => (tile.hoveredRating = rating + 1)}"
                     @pointerout="${() => (tile.hoveredRating = 0)}"
-                    @click="${() => tile.notifyRatingChanged(rating + 1)}"
+                    @click="${(e) => tile.notifyRatingChanged(rating + 1, e)}"
                 >
                     ★
                 </div>

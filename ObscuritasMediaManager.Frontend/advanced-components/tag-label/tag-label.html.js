@@ -6,10 +6,10 @@ import { TagLabel } from './tag-label.js';
  */
 export function renderTagLabel(tagLabel) {
     return html`
-        <div class="label-container">
+        <div class="label-container" @click="${(e) => e.stopPropagation()}">
             ${tagLabel.createNew ? renderNewLabelForm(tagLabel) : html`<div class="label-text">${tagLabel.text}</div>`}
 
-            <div class="x-button" @click="${() => tagLabel.notifyRemoved()}">&times</div>
+            <div class="x-button" @click="${(e) => tagLabel.notifyRemoved(e)}">&times</div>
         </div>
     `;
 }

@@ -31,6 +31,11 @@ export class MessageDialog extends LitElement {
         return dialog;
     }
 
+    addDefaultEventListeners() {
+        this.addEventListener('accept', () => this.remove());
+        this.addEventListener('decline', () => this.remove());
+    }
+
     render() {
         return renderMessageDialog(this);
     }

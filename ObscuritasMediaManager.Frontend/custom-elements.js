@@ -4,6 +4,7 @@ import { ExpandableDropdown } from './advanced-components/expandible-dropdown/ex
 import { ImageTile } from './advanced-components/image-tile/image-tile.js';
 import { MediaSearch } from './advanced-components/media-search/media-search.js';
 import { TagLabel } from './advanced-components/tag-label/tag-label.js';
+import { UploadArea } from './advanced-components/upload-area/upload-area.js';
 import { DialogBase } from './dialogs/dialog-base/dialog-base.js';
 import { GenreDialog } from './dialogs/genre-dialog/genre-dialog.js';
 import { MessageDialog } from './dialogs/message-dialog/message-dialog.js';
@@ -35,3 +36,4 @@ window.customElements.define('anime-tile', AnimeTile);
 window.customElements.define('tag-label', TagLabel);
 window.customElements.define('media-detail-page', MediaDetailPage);
 window.customElements.define('path-input-dialog', PathInputDialog);
+window.customElements.define('upload-area', UploadArea);

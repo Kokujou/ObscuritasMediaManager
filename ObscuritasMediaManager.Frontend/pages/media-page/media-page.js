@@ -3,7 +3,10 @@ import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
 import { StreamingEntryModel } from '../../data/streaming-entry.model.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
+import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
+import { PathInputDialog } from '../../dialogs/path-input-dialog/path-input-dialog.js';
 import { LitElement } from '../../exports.js';
+import { FileService } from '../../services/file.service.js';
 import { MediaService } from '../../services/media.service.js';
 import { StreamingService } from '../../services/streaming.service.js';
 import { renderMediaPageStyles } from './media-page.css.js';
@@ -43,6 +46,10 @@ export class MediaPage extends LitElement {
         this.subscriptions.push(session.mediaList.subscribe(() => this.requestUpdate(undefined)));
     }
 
+    firstUpdated(_changedProperties) {
+        super.firstUpdated(_changedProperties);
+    }
+
     get mediaList() {
         return session.mediaList.current() || [];
     }
@@ -55,55 +62,82 @@ export class MediaPage extends LitElement {
         const type = 'AnimesGerSub';
         /** @type {HTMLInputElement} */ var folderInput = this.shadowRoot.querySelector('#folder-browser');
         folderInput.click();
-        folderInput.addEventListener('change', async (e) => {
-            var animes = [];
-            var streamingEntries = [];
-            var episode = 0;
-            for (var i = 0; i < folderInput.files.length; i++) {
-                try {
-                    var streamingEntry = StreamingEntryModel.fromFile(folderInput.files[i], type);
-                    if (streamingEntries.some((x) => x.name == streamingEntry.name && x.season == streamingEntry.season)) episode += 1;
-                    else episode = 1;
-                    streamingEntry.episode = episode;
+        folderInput.addEventListener('change', (e) => {
+            var pathDialog = PathInputDialog.show();
+            pathDialog.addEventListener('accept', async (e) => {
+                /** @type {string} */ var basePath = e.detail.path;
+                var files = folderInput.files;
 
-                    streamingEntries.push(streamingEntry);
-
-                    if (animes.some((x) => x.name == streamingEntry.name)) continue;
-                    animes.push(new MediaModel(streamingEntry.name, 'AnimesGerSub'));
-                } catch (err) {
-                    continue;
+                var fileSources = [];
+                var basePath = basePath.substring(0, basePath.lastIndexOf('\\'));
+                for (var i = 0; i < folderInput.files.length; i++) {
+                    // @ts-ignore
+                    fileSources.push(`${basePath}\\${folderInput.files[i].webkitRelativePath}`.replaceAll('/', '\\'));
                 }
-            }
 
-            await MediaService.batchCreateMedia(animes);
-            await StreamingService.BatchCreateStreamingEntries(streamingEntries);
-            //call backend both arrays
+                if (!(await FileService.validate(fileSources))) {
+                    var messageDialog = MessageDialog.show(
+                        'Ungültiger Basispfad!',
+                        'Die Dateien konnten mit dem eingegebenen Basispfad nicht zurückverfolgt werden!'
+                    );
+                    messageDialog.addDefaultEventListeners();
+                } else {
+                    pathDialog.remove();
+                    await MediaPage.processFiles(files, basePath);
+                }
+            });
+
+            pathDialog.addEventListener('decline', () => pathDialog.close());
         });
+    }
+
+    /**
+     * @param {FileList} files
+     */
+    static async processFiles(files, basePath) {
+        var animes = [];
+        var streamingEntries = [];
+        var episode = 0;
+        for (var i = 0; i < files.length; i++) {
+            try {
+                var streamingEntry = StreamingEntryModel.fromFile(files[i], 'AnimesGerSub', basePath);
+                if (streamingEntries.some((x) => x.name == streamingEntry.name && x.season == streamingEntry.season)) episode += 1;
+                else episode = 1;
+                streamingEntry.episode = episode;
+
+                streamingEntries.push(streamingEntry);
+
+                if (animes.some((x) => x.name == streamingEntry.name)) continue;
+                animes.push(new MediaModel(streamingEntry.name, 'AnimesGerSub'));
+            } catch (err) {
+                continue;
+            }
+        }
+
+        try {
+            await MediaService.batchCreateMedia(animes);
+        } catch (err) {
+            console.error(err);
+        }
+
+        try {
+            await StreamingService.BatchCreateStreamingEntries(streamingEntries);
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     /**
      * @param {MediaModel} media
      */
-    addImageFor(media) {
-        /** @type {HTMLInputElement} */ var imageBrowser = this.shadowRoot.querySelector('#image-browser');
-        imageBrowser.click();
-        imageBrowser.addEventListener('change', async () => {
-            var selectedImage = imageBrowser.files[0];
-
-            var fileReader = new FileReader();
-            fileReader.onload = async (fileData) => {
-                var image = fileData.target.result;
-                if (image instanceof ArrayBuffer) throw 'the string must be an base64 image string';
-
-                try {
-                    await MediaService.addImageForMedia(media, image);
-                } catch (err) {
-                    console.error(err);
-                }
-            };
-
-            fileReader.readAsDataURL(imageBrowser.files[0]);
-        });
+    async addImageFor(media, imageData) {
+        try {
+            await MediaService.addImageForMedia(media, imageData);
+            media.image = imageData;
+            this.requestUpdate(undefined);
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     /**

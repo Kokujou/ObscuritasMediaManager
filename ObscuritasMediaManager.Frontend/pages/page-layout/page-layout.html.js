@@ -27,7 +27,7 @@ function renderNavigation() {
                     <div class="nav-section-links">
                         <a
                             href="javascript:void(0)"
-                            @click="${() => session.currentPage.next(Pages.welcome.route)}"
+                            @click="${() => session.currentPage.next(Pages.welcome.routes[0])}"
                             class="nav-item home-link"
                         >
                             Start
@@ -38,26 +38,26 @@ function renderNavigation() {
                     <div class="nav-section-heading">Anime</div>
 
                     <div class="nav-section-links">
-                        ${renderNavItem(Pages.animeGerDub.route, 'Animes (Ger Dub)')}<br />
-                        ${renderNavItem(Pages.animeGerSub.route, 'Animes (Ger Sub)')} <br />
-                        ${renderNavItem(Pages.animeMovies.route, 'Animefilme')}<br />
+                        ${renderNavItem(Pages.animeGerDub.routes[0], 'Animes (Ger Dub)')}<br />
+                        ${renderNavItem(Pages.animeGerSub.routes[0], 'Animes (Ger Sub)')} <br />
+                        ${renderNavItem(Pages.animeMovies.routes[0], 'Animefilme')}<br />
                     </div>
                 </div>
                 <div class="nav-section">
                     <div class="nav-section-heading">Realfilm</div>
 
                     <div class="nav-section-links">
-                        ${renderNavItem(Pages.realSeries.route, 'Realfilmserien')}<br />
-                        ${renderNavItem(Pages.realMovies.route, 'Realfilme')}<br />
-                        ${renderNavItem(Pages.jDrama.route, 'J-Drama')}<br />
+                        ${renderNavItem(Pages.realSeries.routes[0], 'Realfilmserien')}<br />
+                        ${renderNavItem(Pages.realMovies.routes[0], 'Realfilme')}<br />
+                        ${renderNavItem(Pages.jDrama.routes[0], 'J-Drama')}<br />
                     </div>
                 </div>
                 <div class="nav-section">
                     <div class="nav-section-heading">Anderes</div>
 
                     <div class="nav-section-links">
-                        ${renderNavItem(Pages.music.route, 'Musik')}<br />
-                        ${renderNavItem(Pages.games.route, 'Games')}<br />
+                        ${renderNavItem(Pages.music.routes[0], 'Musik')}<br />
+                        ${renderNavItem(Pages.games.routes[0], 'Games')}<br />
                     </div>
                 </div>
             </div>

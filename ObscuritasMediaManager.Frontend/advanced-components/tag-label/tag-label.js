@@ -24,7 +24,10 @@ export class TagLabel extends LitElement {
         return renderTagLabel(this);
     }
 
-    notifyRemoved() {
+    /**
+     * @param {Event} e
+     */
+    notifyRemoved(e) {
         var removedEvent = new CustomEvent('removed');
         this.dispatchEvent(removedEvent);
     }
