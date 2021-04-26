@@ -7,5 +7,6 @@ namespace ObscuritasMediaManager.Backend.DataRepositories.Interfaces
     public interface IStreamingRepository : IDisposable
     {
         public void BatchCreateStreamingEntries(IEnumerable<StreamingEntryModel> streamingEntries);
+        public StreamingEntryModel Get(string name, string type);
     }
 }

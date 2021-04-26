@@ -1,40 +1,53 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Linq;
 using System.Data.SQLite;
+using System.Linq;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
+using ObscuritasMediaManager.Backend.Exceptions;
+using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories
 {
     public class StreamingRepository : IStreamingRepository
     {
-        private readonly SQLiteConnection _connection;
-
-        public StreamingRepository()
-        {
-            _connection = new SQLiteConnection("Data Source=database.sqlite");
-            _connection.Open();
-        }
-
         public void BatchCreateStreamingEntries(IEnumerable<StreamingEntryModel> streamingEntries)
         {
-            using var transaction = _connection.BeginTransaction();
-            var command = _connection.CreateCommand();
+            using var connection = new SQLiteConnection("Data Source=database.sqlite");
+            connection.Open();
+            using var transaction = connection.BeginTransaction();
+            using var command = connection.CreateCommand();
 
-            // Insert a lot of data
-            foreach (var item in streamingEntries)
-            {
-                command.CommandText =
-                    "INSERT INTO Streaming (Name, Season, Episode, Src, Type) " +
-                    $"VALUES ('{item.Name}', '{item.Season}', '{item.Episode}', '{item.Src}', '{item.Type}')";
-                command.ExecuteNonQuery();
-            }
+            var failedEntries = new List<StreamingEntryModel>();
+
+            foreach (var entry in streamingEntries)
+                try
+                {
+                    command.CommandText =
+                        "INSERT OR REPLACE INTO Streaming (Name, Season, Episode, Src, Type) " +
+                        $"VALUES ('{entry.Name.ToBase64()}', '{entry.Season.ToBase64()}', '{entry.Episode}', '{entry.Src.ToBase64()}', '{entry.Type}')";
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    failedEntries.Add(entry);
+                }
 
             transaction.Commit();
+
+            if (failedEntries.Count > 0)
+                throw new ModelCreationFailedException<StreamingEntryModel>(failedEntries);
         }
 
-        public void Dispose()
+        public StreamingEntryModel Get(string name, string type)
         {
-            _connection.Dispose();
+            using var connection = new SQLiteConnection("Data Source=database.sqlite");
+            connection.Open();
+            using var context = new DataContext(connection);
+
+            return context.GetTable<StreamingEntryModel>().Where(x => x.Name == name && x.Type == type).ToList()
+                .First();
         }
     }
 }
