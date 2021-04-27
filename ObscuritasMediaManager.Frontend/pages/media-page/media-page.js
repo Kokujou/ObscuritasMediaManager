@@ -122,6 +122,7 @@ export class MediaPage extends LitElement {
 
         try {
             await StreamingService.BatchCreateStreamingEntries(streamingEntries);
+            location.reload();
         } catch (err) {
             console.error(err);
         }
@@ -149,6 +150,8 @@ export class MediaPage extends LitElement {
             var model = new MediaModel(media.name, media.type);
             model.rating = newRating;
             await MediaService.updateMedia(model);
+            media.rating = newRating;
+            this.requestUpdate(undefined);
         } catch (err) {
             console.error(err);
         }
