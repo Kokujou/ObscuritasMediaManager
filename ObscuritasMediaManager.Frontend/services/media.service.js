@@ -51,11 +51,12 @@ export class MediaService {
     }
 
     /**
-     * @param {MediaModel} media
      * @param {string} image
+     * @param {string} name
+     * @param {string} type
      */
-    static async addImageForMedia(media, image) {
-        var response = await fetch(`https://localhost/ObscuritasMediaManager/api/media/${media.name}/type/${media.type}/image`, {
+    static async addImageForMedia(name, type, image) {
+        var response = await fetch(`https://localhost/ObscuritasMediaManager/api/media/${name}/type/${type}/image`, {
             method: 'PUT',
             body: JSON.stringify({ image: image }),
             headers: { 'Content-Type': 'application/json' },
@@ -65,10 +66,11 @@ export class MediaService {
     }
 
     /**
-     * @param {MediaModel} media
+     * @param {string} name
+     * @param {string} type
      */
-    static async removeImageForMedia(media) {
-        var response = await fetch(`https://localhost/ObscuritasMediaManager/api/media/${media.name}/type/${media.type}`, {
+    static async removeImageForMedia(name, type) {
+        var response = await fetch(`https://localhost/ObscuritasMediaManager/api/media/${name}/type/${type}/image`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         });

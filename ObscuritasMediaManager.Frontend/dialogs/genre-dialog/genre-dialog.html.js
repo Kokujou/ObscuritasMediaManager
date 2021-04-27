@@ -1,3 +1,4 @@
+import { GenreModel } from '../../data/genre.model.js';
 import { html } from '../../exports.js';
 import { GenreDialog } from './genre-dialog.js';
 
@@ -22,7 +23,7 @@ export function renderGenreDialog(genreDialog) {
 
 /**
  * @param {string} section
- * @param {string[]} genres
+ * @param {GenreModel[]} genres
  * @param {GenreDialog} genreDialog
  */
 function renderGenreSection(section, genres, genreDialog) {
@@ -33,11 +34,16 @@ function renderGenreSection(section, genres, genreDialog) {
 }
 
 /**
- * @param {string} genre
+ * @param {GenreModel} genre
  * @param {GenreDialog} genreDialog
  */
 function renderGenre(genre, genreDialog) {
-    return html`<tri-value-checkbox @valueChanged="${(e) => genreDialog.handleGenreSelection(e.detail, genre)}" class="genre-checkbox"
-        >${genre}</tri-value-checkbox
-    >`;
+    return html`<tri-value-checkbox
+        .allowThreeValues="${genreDialog.allowThreeValues}"
+        @valueChanged="${(e) => genreDialog.handleGenreSelection(e.detail, genre)}"
+        .value="${genreDialog.getValue(genre)}"
+        class="genre-checkbox"
+    >
+        ${genre.name}
+    </tri-value-checkbox>`;
 }

@@ -1,8 +1,9 @@
 import { Pages } from '../../data/pages.js';
 import { session } from '../../data/session.js';
 import { html } from '../../exports.js';
+import { changePage } from '../../services/extensions/url.extension.js';
 
-export function renderWebcomponentTemplate() {
+export function renderPageLayout() {
     return html`${renderHeader()}<br />
         ${renderNavigation()}<br />
         <div class="layout-content"><slot></slot></div>`;
@@ -65,6 +66,11 @@ function renderNavigation() {
     </div>`;
 }
 
-function renderNavItem(target, text) {
-    return html`<a href="javascript:void(0)" @click="${() => session.currentPage.next(target)}" class="nav-item"> ${text} </a>`;
+/**
+ * @param {string} target
+ * @param {string} text
+ * @param {undefined} pageLayout
+ */
+function renderNavItem(target, text, pageLayout) {
+    return html`<a href="javascript:void(0)" @click="${() => changePage(target)}" class="nav-item"> ${text} </a>`;
 }

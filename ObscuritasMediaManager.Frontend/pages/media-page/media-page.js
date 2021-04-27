@@ -132,7 +132,7 @@ export class MediaPage extends LitElement {
      */
     async addImageFor(media, imageData) {
         try {
-            await MediaService.addImageForMedia(media, imageData);
+            await MediaService.addImageForMedia(media.name, media.type, imageData);
             media.image = imageData;
             this.requestUpdate(undefined);
         } catch (err) {

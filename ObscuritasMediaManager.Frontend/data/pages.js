@@ -14,6 +14,11 @@ export const Pages = {
     jDrama: { routes: ['j-drama'], component: '<jdrama-page></jdrama-page>', withQueries: [] },
     music: { routes: ['music'], component: '<music-page></music-page>', withQueries: [] },
     games: { routes: ['games'], component: '<games-page></games-page>', withQueries: [] },
+    video: {
+        routes: ['video'],
+        component: '<video-player-popup></video-player-popup>',
+        withQueries: ['name', 'type', 'season', 'episode'],
+    },
 };
 
 export class RouteDefinition {

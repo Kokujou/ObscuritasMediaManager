@@ -6,7 +6,8 @@ export class MediaModel {
 
     /** @type {string} */ genreString;
     /** @type {string[]} */ get genres() {
-        return this.genreString.split(',');
+        if (this.genreString) return this.genreString.split(',');
+        return [];
     }
     set genres(value) {}
 

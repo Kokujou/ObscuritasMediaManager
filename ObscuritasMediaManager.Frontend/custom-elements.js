@@ -16,6 +16,7 @@ import { MediaDetailPage } from './pages/media-detail-page/media-detail-page.js'
 import { ObscuritasMediaManager } from './pages/obscuritas-media-manager/obscuritas-media-manager.js';
 import { PageLayout } from './pages/page-layout/page-layout.js';
 import { PageRouting } from './pages/page-routing/page-routing.js';
+import { VideoPlayerPopup } from './pages/video-player-popup/video-player-popup.js';
 import { WelcomePage } from './pages/welcome-page/welcome-page.js';
 
 window.customElements.define('obscuritas-media-manager', ObscuritasMediaManager);
@@ -37,3 +38,4 @@ window.customElements.define('tag-label', TagLabel);
 window.customElements.define('media-detail-page', MediaDetailPage);
 window.customElements.define('path-input-dialog', PathInputDialog);
 window.customElements.define('upload-area', UploadArea);
+window.customElements.define('video-player-popup', VideoPlayerPopup);

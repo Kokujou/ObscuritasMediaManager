@@ -9,12 +9,12 @@ export class AnimeTile extends LitElement {
 
     static get properties() {
         return {
+            displayStyle: { type: String, reflect: true },
             name: { type: String, reflect: true },
             imageSource: { type: String, reflect: true },
             rating: { type: Number, reflect: true },
             genres: { type: Array, reflect: true },
             status: { type: Number, reflect: true },
-            disabled: { type: Boolean, reflect: true },
 
             hoveredRating: { type: Number, reflect: false },
             newGenre: { type: Boolean, reflect: false },
@@ -23,18 +23,20 @@ export class AnimeTile extends LitElement {
 
     constructor() {
         super();
+
+        /** @type {string} */ this.displayStyle = 'solid';
         /** @type {string} */ this.name;
         /** @type {string} */ this.imageSource;
         /** @type {number} */ this.rating;
         /** @type {string[]} */ this.genres = [];
         /** @type {number} */ this.status;
-        /** @type {boolean} */ this.disabled = false;
 
         /** @type {number} */ this.hoveredRating = 0;
         /** @type {boolean} */ this.newGenre = false;
     }
 
     attributeChangedCallback(name, old, value) {
+        super.attributeChangedCallback(name, old, value);
         if (name == 'genres') this.newGenre = false;
     }
 

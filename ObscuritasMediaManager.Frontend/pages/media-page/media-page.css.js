@@ -44,7 +44,7 @@ export function renderMediaPageStyles() {
 
         anime-tile {
             width: 300px;
-            height: 300px;
+            min-height: 300px;
         }
 
         .add-button {

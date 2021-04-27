@@ -89,13 +89,13 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-        [HttpPut("{animeName}/type/{animeType}/image")]
-        public IActionResult AddMediaImage([FromBody] UpdateImageRequest request, [FromRoute] string animeName,
-            [FromRoute] string animeType)
+        [HttpPut("{mediaName}/type/{mediaType}/image")]
+        public IActionResult AddMediaImage([FromBody] UpdateImageRequest request, [FromRoute] string mediaName,
+            [FromRoute] string mediaType)
         {
             try
             {
-                _repository.AddMediaImage(animeName, animeType, request.Image);
+                _repository.AddMediaImage(mediaName, mediaType, request.Image);
                 return NoContent();
             }
             catch (Exception e)

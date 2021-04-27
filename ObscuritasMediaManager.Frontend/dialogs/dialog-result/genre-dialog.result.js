@@ -1,4 +1,6 @@
+import { GenreModel } from '../../data/genre.model.js';
+
 export class GenreDialogResult {
-    /** @type {string[]} */ acceptedGenres;
-    /** @type {string[]} */ forbiddenGenres;
+    /** @type {GenreModel[]} */ acceptedGenres;
+    /** @type {GenreModel[]} */ forbiddenGenres;
 }

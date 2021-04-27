@@ -1,6 +1,7 @@
 import { html } from '../../exports.js';
 import { importIcon } from '../../resources/icons/import-icon.svg.js';
 import { plusIcon } from '../../resources/icons/plus-icon.svg.js';
+import { changePage } from '../../services/extensions/url.extension.js';
 import { MediaPage } from './media-page.js';
 
 /**
@@ -20,12 +21,12 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                         id="123"
                         name="Anime hinzufügen"
                         .imageSource="data:image/svg+xml;base64,${btoa(plusIcon())}"
-                        .disabled="${true}"
+                        displayStyle="simple"
                     ></anime-tile>
                     <anime-tile
                         .imageSource="data:image/svg+xml;base64,${btoa(importIcon())}"
                         name="Ordner importieren"
-                        .disabled="${true}"
+                        displayStyle="simple"
                         @click="${() => mediaPage.importFolder()}"
                     ></anime-tile>
                     ${mediaPage.mediaList.map(
@@ -40,7 +41,7 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                                     @imageReceived="${(e) => mediaPage.addImageFor(media, e.detail.imageData)}"
                                     @ratingChanged="${(e) => mediaPage.updateRating(media, e.detail.newRating)}"
                                     @genresChanged="${(e) => mediaPage.updateGenres(media, e.detail.genres)}"
-                                    @click="${() => (location.search = `?name=${media.name}&type=${media.type}`)}"
+                                    @click="${() => changePage(location.hash.substr(1), `?name=${media.name}&type=${media.type}`)}"
                                 ></anime-tile>
                             `
                     )}

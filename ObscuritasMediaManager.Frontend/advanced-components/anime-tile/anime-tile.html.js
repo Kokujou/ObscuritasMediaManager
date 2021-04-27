@@ -5,35 +5,38 @@ import { AnimeTile } from './anime-tile.js';
  * @param {AnimeTile} tile
  */
 export function renderAnimeTile(tile) {
-    return html`
-        <style>
+    return html` <style>
             .tile-image {
                 background-image: url('${tile.imageSource}');
             }
         </style>
 
         <div class="tile-container">
-            ${tile.disabled ? '' : html`<div class="rating-container">${renderRating(tile)}</div>`} <br />
+            ${tile.displayStyle == 'simple' ? '' : html`<div class="rating-container">${renderRating(tile)}</div>`} <br />
             ${renderImageContainer(tile)}
 
             <div class="caption">${tile.name}</div>
-            <div class="genre-list">
-                ${tile.genres.map((genre) => renderGenreTag(tile, genre))} <br />
-                ${tile.newGenre ? renderGenreTag(tile, 'test', true) : ''}
-                ${!tile.disabled && !tile.newGenre
-                    ? html`<div
-                          class="add-genre-button"
-                          @click="${(e) => {
-                              e.stopPropagation();
-                              tile.newGenre = true;
-                          }}"
-                      >
-                          +
-                      </div>`
-                    : ''}
-            </div>
         </div>
-    `;
+        ${tile.displayStyle == 'solid'
+            ? html`
+                  <div class="genre-list">
+                      ${tile.genres.map((genre) => renderGenreTag(tile, genre))} <br />
+                      ${tile.newGenre ? renderGenreTag(tile, 'test', true) : ''}
+                      ${!tile.newGenre
+                          ? html`<div
+                                class="add-genre-button"
+                                @click="${(e) => {
+                                    e.stopPropagation();
+                                    tile.newGenre = true;
+                                }}"
+                            >
+                                +
+                            </div>`
+                          : ''}
+                  </div>
+              `
+            : ''}
+        <slot></slot>`;
 }
 
 /**
@@ -45,7 +48,7 @@ function renderImageContainer(tile) {
             <div class="status-icon ${tile.status}"></div>
         </div>`;
 
-    if (!tile.disabled) return html` <upload-area @imageReceived="${(e) => tile.notifyImageAdded(e.detail.imageData)}"></upload-area>`;
+    return html` <upload-area @imageReceived="${(e) => tile.notifyImageAdded(e.detail.imageData)}"></upload-area>`;
 }
 
 /**

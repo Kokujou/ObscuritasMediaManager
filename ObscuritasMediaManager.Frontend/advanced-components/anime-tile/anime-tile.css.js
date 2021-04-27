@@ -3,16 +3,14 @@ import { css } from '../../exports.js';
 export function renderAnimeTileStyles() {
     return css`
         :host {
-            display: inline-block;
-            position: relative;
+            display: inline-flex;
+            flex-direction: column;
         }
 
         .tile-container {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
+            position: relative;
+            width: 100%;
+            min-height: inherit;
 
             display: flex;
             flex-direction: column;
@@ -76,6 +74,13 @@ export function renderAnimeTileStyles() {
             flex-direction: row;
             flex-wrap: wrap;
             align-items: center;
+            max-height: 30px;
+            overflow: hidden;
+            transition: max-height 1s ease;
+        }
+
+        :host(:hover) .genre-list {
+            max-height: 150px;
         }
 
         .genre-list > * {

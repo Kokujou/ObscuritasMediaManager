@@ -10,6 +10,7 @@ export class TriValueCheckbox extends LitElement {
     static get properties() {
         return {
             value: { type: Number, reflect: true },
+            allowThreeValues: { type: Boolean, reflect: true },
         };
     }
 
@@ -29,6 +30,7 @@ export class TriValueCheckbox extends LitElement {
     constructor() {
         super();
         /** @type {number} */ this.value = 0;
+        /** @type {boolean} */ this.allowThreeValues = false;
     }
 
     render() {
@@ -37,7 +39,7 @@ export class TriValueCheckbox extends LitElement {
 
     nextState() {
         this.value++;
-        if (this.value > 1) this.value = -1;
+        if (this.value > 1) this.value = this.allowThreeValues ? -1 : 0;
 
         var valuechangedEvent = new CustomEvent('valueChanged', { detail: { value: this.value } });
         this.dispatchEvent(valuechangedEvent);
