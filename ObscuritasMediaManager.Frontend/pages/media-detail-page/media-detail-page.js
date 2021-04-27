@@ -83,6 +83,7 @@ export class MediaDetailPage extends LitElement {
         var genreDialog = GenreDialog.show(
             genres,
             genres.filter((x) => this.media.genres.includes(x.name)),
+            [],
             false
         );
 

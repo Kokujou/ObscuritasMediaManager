@@ -12,9 +12,7 @@ export class MediaSearch extends LitElement {
     }
 
     static get properties() {
-        return {
-            someProperty: { type: String, reflect: true },
-        };
+        return {};
     }
 
     constructor() {
@@ -77,13 +75,24 @@ export class MediaSearch extends LitElement {
     }
 
     async showGenreDialog() {
-        var genreDialog = GenreDialog.show(await GenreService.getGenreList());
+        var genreDialog = GenreDialog.show(
+            await GenreService.getGenreList(),
+            this.genreFilter.acceptedGenres,
+            this.genreFilter.forbiddenGenres,
+            true
+        );
         genreDialog.addEventListener('decline', () => genreDialog.remove());
         genreDialog.addEventListener('accept', (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
             this.genreFilter = e.detail;
             this.notifyFilterUpdated();
             genreDialog.remove();
         });
+    }
+
+    updateSearchTextFilter() {
+        /** @type {HTMLInputElement} */ var searchInput = this.shadowRoot.querySelector('.search-input');
+        this.searchText = searchInput.value;
+        this.notifyFilterUpdated();
     }
 
     notifyFilterUpdated() {

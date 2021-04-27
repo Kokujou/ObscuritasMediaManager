@@ -41,15 +41,17 @@ export class GenreDialog extends LitElement {
      * @returns {GenreDialog}
      * @param {GenreModel[]} genres
      * @param {GenreModel[]} allowedGenres
+     * @param {GenreModel[]} forbiddenGenres
      * @param {boolean} allowThreeValues
      */
-    static show(genres, allowedGenres = [], allowThreeValues = true) {
+    static show(genres, allowedGenres = [], forbiddenGenres = [], allowThreeValues = true) {
         // @ts-ignore
         /** @type {MessageDialog }*/ var dialog = document.createElement('genre-dialog');
 
         dialog.caption = 'Tags auswählen';
         dialog.genres = genres;
         dialog.allowedGenres = allowedGenres;
+        dialog.forbiddenGenres = forbiddenGenres;
         dialog.allowThreeValues = allowThreeValues;
         document.body.append(dialog);
         dialog.requestUpdate(undefined);
@@ -69,15 +71,15 @@ export class GenreDialog extends LitElement {
         switch (eventDetail.value) {
             case -1:
                 this.forbiddenGenres.push(genre);
-                this.allowedGenres = this.allowedGenres.filter((x) => x != genre);
+                this.allowedGenres = this.allowedGenres.filter((x) => x.name != genre.name);
                 return;
             case 0:
-                this.forbiddenGenres = this.forbiddenGenres.filter((x) => x != genre);
-                this.allowedGenres = this.allowedGenres.filter((x) => x != genre);
+                this.forbiddenGenres = this.forbiddenGenres.filter((x) => x.name != genre.name);
+                this.allowedGenres = this.allowedGenres.filter((x) => x.name != genre.name);
                 return;
             case 1:
                 this.allowedGenres.push(genre);
-                this.forbiddenGenres = this.forbiddenGenres.filter((x) => x != genre);
+                this.forbiddenGenres = this.forbiddenGenres.filter((x) => x.name != genre.name);
                 return;
             default:
                 throw new Error('unsupported tri-value-checkbox value');
@@ -96,8 +98,8 @@ export class GenreDialog extends LitElement {
      * @param {GenreModel} genre
      */
     getValue(genre) {
-        if (this.allowedGenres.includes(genre)) return 1;
-        if (this.forbiddenGenres.includes(genre)) return -1;
+        if (this.allowedGenres.some((x) => x.name == genre.name)) return 1;
+        if (this.forbiddenGenres.some((x) => x.name == genre.name)) return -1;
         return 0;
     }
 }

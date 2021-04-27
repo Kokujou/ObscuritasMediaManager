@@ -7,6 +7,7 @@ import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
 import { PathInputDialog } from '../../dialogs/path-input-dialog/path-input-dialog.js';
 import { LitElement } from '../../exports.js';
 import { FileService } from '../../services/file.service.js';
+import { MediaFilterService } from '../../services/media-filter.service.js';
 import { MediaService } from '../../services/media.service.js';
 import { StreamingService } from '../../services/streaming.service.js';
 import { renderMediaPageStyles } from './media-page.css.js';
@@ -174,17 +175,15 @@ export class MediaPage extends LitElement {
      * @param {MediaSearchFilterData} filterData
      */
     updateSearchFilter(filterData) {
-        console.log(filterData);
         this.filterData = filterData;
         this.requestUpdate(undefined);
     }
 
     get filteredMedia() {
-        return this.mediaList.filter(
-            (media) =>
-                this.filterData.ratingFilter.includes(media.rating) &&
-                this.filterData.genreFilter.acceptedGenres.every((genre) => media.genres.includes(genre.name)) &&
-                media.genres.every((genre) => this.filterData.genreFilter.forbiddenGenres.every((x) => x.name != genre))
-        );
+        if (!this.filterData) return this.mediaList;
+        var result = MediaFilterService.applyRatingFilter(this.filterData.ratingFilter, this.mediaList);
+        result = MediaFilterService.applyGenreFilter(this.filterData.genreFilter, result);
+        result = MediaFilterService.applyTextFilter(this.filterData.searchText || '', result);
+        return result;
     }
 }

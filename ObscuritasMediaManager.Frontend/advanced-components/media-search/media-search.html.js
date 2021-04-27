@@ -9,7 +9,13 @@ export function renderMediaSearch(mediaSearch) {
     return html`
         <div class="searchbar-container">
             <div class="searchbar">
-                <input type="text" class="search-input textbox" placeholder="Suchbegriff" />
+                <input
+                    type="text"
+                    class="search-input textbox"
+                    placeholder="Suchbegriff"
+                    @input="${(e) => e.target.dispatchEvent(new Event('change'))}"
+                    @change="${() => mediaSearch.updateSearchTextFilter()}"
+                />
                 <div class="extended-search-icon-container">
                     <div class="extended-search-icon"></div>
                 </div>
