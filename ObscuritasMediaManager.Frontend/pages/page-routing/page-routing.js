@@ -39,6 +39,12 @@ export class PageRouting extends LitElement {
         window.addEventListener('hashchange', () => {
             this.loadPageFromHash(null);
         });
+
+        var self = this;
+        window.onpopstate = () => {
+            session.currentPage.next(session.currentPage.current());
+        };
+
         window.addEventListener('resize', () => this.requestUpdate(undefined));
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {

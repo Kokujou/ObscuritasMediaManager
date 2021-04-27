@@ -2,8 +2,8 @@ import { html } from '../../exports.js';
 import { VideoPlayerPopup } from './video-player-popup.js';
 
 /**
- * @param {VideoPlayerPopup} videoPlay
+ * @param {VideoPlayerPopup} videoPlayer
  */
-export function renderVideoPlayer(videoPlay) {
-    return html` <video></video> `;
+export function renderVideoPlayer(videoPlayer) {
+    return html` <video id="video" .src="${videoPlayer.src}" controls></video> `;
 }

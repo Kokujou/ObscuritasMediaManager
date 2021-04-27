@@ -7,5 +7,6 @@ namespace ObscuritasMediaManager.Backend.DataRepositories.Interfaces
     {
         public void BatchCreateStreamingEntries(IEnumerable<StreamingEntryModel> streamingEntries);
         public IEnumerable<StreamingEntryModel> Get(string name, string type);
+        public IEnumerable<StreamingEntryModel> Get(string name, string type, string season, int episode);
     }
 }

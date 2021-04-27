@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 using ObscuritasMediaManager.Backend.Exceptions;
@@ -48,6 +49,13 @@ namespace ObscuritasMediaManager.Backend.Controllers
             {
                 return BadRequest(e.ToString());
             }
+        }
+
+        [HttpGet("{mediaName}/type/{mediaType}/season/{season}/episode/{episode}")]
+        public IActionResult GetStream(string mediaName, string mediaType, string season, int episode)
+        {
+            var entry = _repository.Get(mediaName, mediaType, season, episode).Single();
+            return Ok(entry);
         }
     }
 }

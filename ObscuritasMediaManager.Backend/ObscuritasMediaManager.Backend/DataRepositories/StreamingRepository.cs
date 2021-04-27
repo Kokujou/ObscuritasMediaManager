@@ -49,5 +49,16 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             return context.GetTable<StreamingEntryModel>()
                 .Where(x => x.Name == name.ToBase64() && x.Type == type).ToList();
         }
+
+        public IEnumerable<StreamingEntryModel> Get(string name, string type, string season, int episode)
+        {
+            using var connection = new SQLiteConnection("Data Source=database.sqlite");
+            connection.Open();
+            using var context = new DataContext(connection);
+
+            return context.GetTable<StreamingEntryModel>()
+                .Where(x => x.Name == name.ToBase64() && x.Type == type && x.Season == season.ToBase64() &&
+                            x.Episode == episode).ToList();
+        }
     }
 }

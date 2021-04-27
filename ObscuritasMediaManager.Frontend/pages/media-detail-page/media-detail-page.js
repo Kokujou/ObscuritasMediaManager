@@ -7,6 +7,7 @@ import { getQueryValue } from '../../services/extensions/url.extension.js';
 import { GenreService } from '../../services/genre.service.js';
 import { MediaService } from '../../services/media.service.js';
 import { StreamingService } from '../../services/streaming.service.js';
+import { VideoPlayerPopup } from '../video-player-popup/video-player-popup.js';
 import { renderMediaDetailPageStyles } from './media-detail-page.css.js';
 import { renderMediaDetailPage } from './media-detail-page.html.js';
 
@@ -154,10 +155,6 @@ export class MediaDetailPage extends LitElement {
      * @param {StreamingEntryModel} entry
      */
     openVideoPlayer(entry) {
-        window.open(
-            `https://localhost/?name=${entry.name}&type=${entry.type}&season=${entry.season}&episode=${entry.episode}#video`,
-            '_blank',
-            'location=yes,height=480,width=720'
-        );
+        VideoPlayerPopup.popup(entry);
     }
 }
