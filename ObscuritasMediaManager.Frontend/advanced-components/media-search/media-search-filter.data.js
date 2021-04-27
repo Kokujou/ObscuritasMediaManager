@@ -3,9 +3,9 @@ import { MediaSearch } from './media-search.js';
 
 export class MediaSearchFilterData {
     /** @type {string} */ searchText;
-    /** @type {number[]} */ ratingFilter;
-    /** @type {{ left: number, right: number }} */ episodeCountFilter;
-    /** @type {GenreDialogResult} */ genreFilter;
+    /** @type {number[]} */ ratingFilter = [1, 2, 3, 4, 5];
+    /** @type {{ left: number, right: number }} */ episodeCountFilter = { left: 0, right: 9999 };
+    /** @type {GenreDialogResult} */ genreFilter = new GenreDialogResult();
 
     /**
      * @param {MediaSearch} instance

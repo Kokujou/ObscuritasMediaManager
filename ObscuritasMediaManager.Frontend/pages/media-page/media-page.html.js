@@ -10,7 +10,7 @@ import { MediaPage } from './media-page.js';
 export function renderMediaPageTemplate(mediaPage, inner) {
     return html`<page-layout>
         <div class="media-page-container">
-            <media-search></media-search>
+            <media-search @filterUpdated="${(e) => mediaPage.updateSearchFilter(e.detail)}"></media-search>
             <div class="search-result-container">
                 <div class="left-container">
                     <div class="filter-options"></div>
@@ -29,7 +29,7 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                         displayStyle="simple"
                         @click="${() => mediaPage.importFolder()}"
                     ></anime-tile>
-                    ${mediaPage.mediaList.map(
+                    ${mediaPage.filteredMedia.map(
                         (media) =>
                             html`
                                 <anime-tile

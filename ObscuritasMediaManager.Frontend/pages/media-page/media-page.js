@@ -1,8 +1,8 @@
+import { MediaSearchFilterData } from '../../advanced-components/media-search/media-search-filter.data.js';
 import { MediaModel } from '../../data/media.model.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
 import { StreamingEntryModel } from '../../data/streaming-entry.model.js';
-import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
 import { PathInputDialog } from '../../dialogs/path-input-dialog/path-input-dialog.js';
 import { LitElement } from '../../exports.js';
@@ -33,10 +33,7 @@ export class MediaPage extends LitElement {
     constructor() {
         super();
 
-        this.searchText = '';
-        this.ratingFilter = [1, 2, 3, 4, 5];
-        this.episodeCountFilter = { left: 0, right: 0 };
-        this.genreFilter = new GenreDialogResult();
+        /** @type {MediaSearchFilterData} */ this.filterData = new MediaSearchFilterData();
         /** @type {Subscription[]} */ this.subscriptions = [];
     }
 
@@ -171,5 +168,23 @@ export class MediaPage extends LitElement {
         } catch (err) {
             console.error(err);
         }
+    }
+
+    /**
+     * @param {MediaSearchFilterData} filterData
+     */
+    updateSearchFilter(filterData) {
+        console.log(filterData);
+        this.filterData = filterData;
+        this.requestUpdate(undefined);
+    }
+
+    get filteredMedia() {
+        return this.mediaList.filter(
+            (media) =>
+                this.filterData.ratingFilter.includes(media.rating) &&
+                this.filterData.genreFilter.acceptedGenres.every((genre) => media.genres.includes(genre.name)) &&
+                media.genres.every((genre) => this.filterData.genreFilter.forbiddenGenres.every((x) => x.name != genre))
+        );
     }
 }

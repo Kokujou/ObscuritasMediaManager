@@ -32,7 +32,7 @@ export class MediaSearch extends LitElement {
     toggleRating(rating) {
         if (this.ratingFilter.includes(rating)) this.ratingFilter = this.ratingFilter.filter((x) => x != rating);
         else this.ratingFilter.push(rating);
-        this.requestUpdate(undefined);
+        this.notifyFilterUpdated();
     }
 
     getRatingClass(rating) {
@@ -55,6 +55,7 @@ export class MediaSearch extends LitElement {
         this.episodeCountFilter.right = rightValue;
         leftEpisodeCountInput.setCustomValidity('');
         rightEpisodeCountInput.setCustomValidity('');
+        this.notifyFilterUpdated();
     }
 
     udpateReleaseDateFilter() {
@@ -72,6 +73,7 @@ export class MediaSearch extends LitElement {
         this.episodeCountFilter.right = rightValue;
         leftEpisodeCountInput.setCustomValidity('');
         rightEpisodeCountInput.setCustomValidity('');
+        this.notifyFilterUpdated();
     }
 
     async showGenreDialog() {
@@ -79,6 +81,7 @@ export class MediaSearch extends LitElement {
         genreDialog.addEventListener('decline', () => genreDialog.remove());
         genreDialog.addEventListener('accept', (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
             this.genreFilter = e.detail;
+            this.notifyFilterUpdated();
             genreDialog.remove();
         });
     }
@@ -87,5 +90,6 @@ export class MediaSearch extends LitElement {
         var filterData = MediaSearchFilterData.fromInstance(this);
         var filterUpdatedEvent = new CustomEvent('filterUpdated', { detail: filterData });
         this.dispatchEvent(filterUpdatedEvent);
+        this.requestUpdate(undefined);
     }
 }

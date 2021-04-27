@@ -10,6 +10,7 @@ export function renderSearchFilterStyles() {
             flex-direction: row;
             align-items: flex-start;
             flex-wrap: wrap;
+            z-index: 1;
         }
 
         .result-options > * {
