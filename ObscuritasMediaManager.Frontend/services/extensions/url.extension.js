@@ -9,7 +9,7 @@ import { session } from '../../data/session.js';
 }
 
 export function changePage(target, search = '') {
-    session.currentPage.next(target);
     var newUrl = 'https://localhost/' + search + `#${target}`;
     history.pushState(null, null, newUrl);
+    session.currentPage.next(target);
 }

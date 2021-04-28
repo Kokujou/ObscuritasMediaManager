@@ -29,6 +29,13 @@ export function renderMediaDetailPage(detailPage) {
                         </anime-tile>
                         <div class="media-rating">${renderRating(detailPage)}</div>
                     </div>
+                    <div class="middle-panel">
+                        <div class="property-entry">
+                            <div class="property-name">Inhaltswarnungen:</div>
+                            <div class="content-warnings"></div>
+                            <div class="edit-icon"></div>
+                        </div>
+                    </div>
                     <div class="right-panel">
                         <div class="media-heading">
                             <input disabled type="text" class="property-value" value="${detailPage.media.name}" />
@@ -40,17 +47,12 @@ export function renderMediaDetailPage(detailPage) {
                             <input disabled type="text" class="property-value" value="${detailPage.media.release}" />
                             <div class="edit-icon" @click="${(e) => detailPage.enableEditingFor(e.target)}"></div>
                         </div>
-                        <div class="property-entry">
-                            <div class="property-name">Inhaltswarnungen:</div>
-                            <div class="content-warnings"></div>
-                            <div class="edit-icon"></div>
-                        </div>
                         <div class="property-group">
                             <div class="property-entry">
                                 <div class="property-name">Beschreibung:</div>
                                 <div class="edit-icon" @click="${(e) => detailPage.enableEditingFor(e.target.parentNode)}"></div>
                             </div>
-                            <div class="textarea property-value" value="">${detailPage.media.description}</div>
+                            <textarea disabled class="textarea property-value" value="${detailPage.media.description}"></textarea>
                         </div>
                     </div>
                 </div>

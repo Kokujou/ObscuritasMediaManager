@@ -27,7 +27,8 @@ export function renderMediaDetailPageStyles() {
         }
 
         .left-panel,
-        .right-panel {
+        .right-panel,
+        .middle-panel {
             display: flex;
             flex-direction: column;
             flex: auto;
@@ -41,7 +42,8 @@ export function renderMediaDetailPageStyles() {
         }
 
         .right-panel {
-            margin: 0 100px;
+            margin: 0 50px;
+            flex: auto;
         }
 
         anime-tile {
@@ -153,17 +155,21 @@ export function renderMediaDetailPageStyles() {
         }
 
         .textarea {
-            min-height: 100px;
+            width: 600px;
+            height: 200px;
+            overflow-y: auto;
             background: var(--accent-color);
             border: 3px dashed;
             border-radius: 15px;
-            padding: 5px 20px;
+            padding: 10px 20px;
             resize: none;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
             display: inline-block;
+            word-wrap: break-word;
+            line-break: strict;
         }
 
         .add-genre-button {
@@ -200,6 +206,13 @@ export function renderMediaDetailPageStyles() {
             color: darkorange;
         }
 
+        .streaming-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
         .season-scroll-area {
             max-width: 100%;
             margin: 20px;
@@ -215,7 +228,11 @@ export function renderMediaDetailPageStyles() {
             flex-direction: column;
             align-items: center;
             font-size: 18px;
+            padding: 20px;
             margin-bottom: 40px;
+            border-radius: 20px;
+
+            background-color: #883377bb;
         }
 
         .link {

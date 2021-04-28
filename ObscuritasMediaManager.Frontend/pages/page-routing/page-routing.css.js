@@ -3,7 +3,7 @@ import { css } from '../../exports.js';
 export function renderPageRoutingStyles() {
     return css`
         :host {
-            --accent-color: #5555ff55;
+            --accent-color: #333388aa;
             --accent-color-full: #5555ff;
         }
 
@@ -16,7 +16,8 @@ export function renderPageRoutingStyles() {
 
             overflow: hidden;
 
-            background-image: url('../../resources/images/yjqccu7y.bmp');
+            --background-color: #444444ff;
+            background: linear-gradient(var(--background-color), var(--background-color)), url('../../resources/images/background.jpg');
             background-blend-mode: overlay;
             background-size: 100% 100%;
             background-repeat: no-repeat;

@@ -2,7 +2,7 @@ import { Subscription } from '../../data/observable.js';
 import { RouteDefinition } from '../../data/pages.js';
 import { session } from '../../data/session.js';
 import { html, LitElement } from '../../exports.js';
-import { getQueryValue } from '../../services/extensions/url.extension.js';
+import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
 import { renderPageRoutingStyles } from './page-routing.css.js';
 
 export class PageRouting extends LitElement {
@@ -40,9 +40,8 @@ export class PageRouting extends LitElement {
             this.loadPageFromHash(null);
         });
 
-        var self = this;
-        window.onpopstate = () => {
-            session.currentPage.next(session.currentPage.current());
+        window.onpopstate = (e) => {
+            session.currentPage.next(location.hash.substr(1));
         };
 
         window.addEventListener('resize', () => this.requestUpdate(undefined));
@@ -96,13 +95,13 @@ export class PageRouting extends LitElement {
             return;
         }
 
-        if (this.defaultFragment) session.currentPage.next(this.defaultFragment);
+        if (this.defaultFragment) changePage(this.defaultFragment);
     }
 
     loadPageFromHash(e) {
         e?.preventDefault();
         var nextPage = location.hash.length > 1 ? location.hash.substr(1) : 'empty';
-        if (session.currentPage.current() != nextPage) session.currentPage.next(nextPage);
+        if (session.currentPage.current() != nextPage) changePage(nextPage);
     }
 
     render() {

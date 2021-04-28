@@ -9,14 +9,12 @@ export function renderUploadAreaStyles() {
             position: relative;
             flex: auto;
             cursor: pointer;
-
             display: flex;
         }
 
         .image-container {
             position: relative;
             flex: auto;
-            cursor: pointer;
 
             background-size: auto 100%;
             background-repeat: no-repeat;

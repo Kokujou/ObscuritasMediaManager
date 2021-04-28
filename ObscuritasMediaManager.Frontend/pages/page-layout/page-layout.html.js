@@ -1,5 +1,4 @@
 import { Pages } from '../../data/pages.js';
-import { session } from '../../data/session.js';
 import { html } from '../../exports.js';
 import { changePage } from '../../services/extensions/url.extension.js';
 
@@ -26,11 +25,7 @@ function renderNavigation() {
             <div class="link-area">
                 <div class="nav-section">
                     <div class="nav-section-links">
-                        <a
-                            href="javascript:void(0)"
-                            @click="${() => session.currentPage.next(Pages.welcome.routes[0])}"
-                            class="nav-item home-link"
-                        >
+                        <a href="javascript:void(0)" @click="${() => changePage(Pages.welcome.routes[0])}" class="nav-item home-link">
                             Start
                         </a>
                     </div>
