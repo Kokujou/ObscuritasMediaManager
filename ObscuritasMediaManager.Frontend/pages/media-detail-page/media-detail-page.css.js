@@ -46,7 +46,7 @@ export function renderMediaDetailPageStyles() {
             flex: auto;
         }
 
-        anime-tile {
+        media-tile {
             width: 100%;
             min-height: 400px;
             display: flex;
@@ -67,11 +67,11 @@ export function renderMediaDetailPageStyles() {
             border-radius: 20px;
         }
 
-        anime-tile:hover .delete-icon-container {
+        media-tile:hover .delete-icon-container {
             opacity: 1;
         }
 
-        anime-tile .delete-icon {
+        media-tile .delete-icon {
             width: 100px;
             height: 100px;
 
@@ -207,20 +207,51 @@ export function renderMediaDetailPageStyles() {
         }
 
         .streaming-panel {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
-        .season-scroll-area {
-            max-width: 100%;
+        .arrow {
+            cursor: pointer;
             margin: 20px;
+        }
+
+        .arrow.inactive {
+            color: gray;
+            cursor: default;
+        }
+
+        .season-scroll-area {
+            max-width: 50%;
             display: flex;
             flex-direction: row;
+            margin: 20px;
             align-items: center;
-            justify-content: center;
+        }
+
+        .season-inner {
+            display: flex;
+            flex-direction: row;
+
+            justify-content: flex-start;
             font-size: 30px;
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            flex-wrap: nowrap;
+        }
+
+        .season-scroll-area ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .season-scroll-area .link {
+            white-space: nowrap;
         }
 
         .season-content {

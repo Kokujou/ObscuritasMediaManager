@@ -23,22 +23,22 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                     <div class="ranking-table"></div>
                 </div>
                 <div class="right-container">
-                    <anime-tile
+                    <media-tile
                         id="123"
-                        name="Anime hinzufügen"
+                        name="Eintrag hinzufügen"
                         .imageSource="data:image/svg+xml;base64,${btoa(plusIcon())}"
                         displayStyle="simple"
-                    ></anime-tile>
-                    <anime-tile
+                    ></media-tile>
+                    <media-tile
                         .imageSource="data:image/svg+xml;base64,${btoa(importIcon())}"
                         name="Ordner importieren"
                         displayStyle="simple"
                         @click="${() => mediaPage.importFolder()}"
-                    ></anime-tile>
+                    ></media-tile>
                     ${mediaPage.filteredMedia.map(
                         (media) =>
                             html`
-                                <anime-tile
+                                <media-tile
                                     .genres="${media.genres || []}"
                                     .name="${media.name}"
                                     .rating="${media.rating}"
@@ -47,8 +47,12 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                                     @imageReceived="${(e) => mediaPage.addImageFor(media, e.detail.imageData)}"
                                     @ratingChanged="${(e) => mediaPage.updateRating(media, e.detail.newRating)}"
                                     @genresChanged="${(e) => mediaPage.updateGenres(media, e.detail.genres)}"
-                                    @click="${() => changePage(location.hash.substr(1), `?name=${media.name}&type=${media.type}`)}"
-                                ></anime-tile>
+                                    @click="${() =>
+                                        changePage(
+                                            location.hash.length > 1 ? location.hash.substr(1) : 'empty',
+                                            `?name=${media.name}&type=${media.type}`
+                                        )}"
+                                ></media-tile>
                             `
                     )}
 

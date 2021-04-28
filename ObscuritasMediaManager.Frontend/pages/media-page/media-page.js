@@ -28,11 +28,15 @@ export class MediaPage extends LitElement {
     }
 
     static get properties() {
-        return {};
+        return {
+            mediaType: { type: String, reflect: true },
+        };
     }
 
     constructor() {
         super();
+
+        /** @type {string} */ this.mediaType = '';
 
         /** @type {MediaSearchFilterData} */ this.filterData = new MediaSearchFilterData();
         /** @type {Subscription[]} */ this.subscriptions = [];
@@ -41,18 +45,21 @@ export class MediaPage extends LitElement {
     connectedCallback() {
         super.connectedCallback();
 
-        var localSearchString = localStorage.getItem('AnimeGerSub.search');
+        var localSearchString = localStorage.getItem(`${this.mediaType}.search`);
         if (localSearchString) this.filterData = JSON.parse(localSearchString);
 
         this.subscriptions.push(session.mediaList.subscribe(() => this.requestUpdate(undefined)));
     }
 
+    /**
+     * @param {Map<any, any>} [_changedProperties]
+     */
     firstUpdated(_changedProperties) {
         super.firstUpdated(_changedProperties);
     }
 
     get mediaList() {
-        return session.mediaList.current() || [];
+        return session.mediaList.current().filter((x) => x.type == this.mediaType) || [];
     }
 
     render(content) {
@@ -60,12 +67,11 @@ export class MediaPage extends LitElement {
     }
 
     importFolder() {
-        const type = 'AnimesGerSub';
         /** @type {HTMLInputElement} */ var folderInput = this.shadowRoot.querySelector('#folder-browser');
         folderInput.click();
         folderInput.addEventListener('change', (e) => {
             var pathDialog = PathInputDialog.show();
-            pathDialog.addEventListener('accept', async (e) => {
+            pathDialog.addEventListener('accept', async (/** @type {{ detail: { path: string; }; }} */ e) => {
                 /** @type {string} */ var basePath = e.detail.path;
                 var files = folderInput.files;
 
@@ -84,39 +90,41 @@ export class MediaPage extends LitElement {
                     messageDialog.addDefaultEventListeners();
                 } else {
                     pathDialog.remove();
-                    await MediaPage.processFiles(files, basePath);
+                    await MediaPage.processFiles(files, basePath, this.mediaType);
                 }
             });
 
-            pathDialog.addEventListener('decline', () => pathDialog.close());
+            pathDialog.addEventListener('decline', () => pathDialog.remove());
         });
     }
 
     /**
      * @param {FileList} files
+     * @param {string} basePath
+     * @param {string} mediaType
      */
-    static async processFiles(files, basePath) {
-        var animes = [];
+    static async processFiles(files, basePath, mediaType) {
+        var media = [];
         var streamingEntries = [];
         var episode = 0;
         for (var i = 0; i < files.length; i++) {
             try {
-                var streamingEntry = StreamingEntryModel.fromFile(files[i], 'AnimesGerSub', basePath);
+                var streamingEntry = StreamingEntryModel.fromFile(files[i], mediaType, basePath);
                 if (streamingEntries.some((x) => x.name == streamingEntry.name && x.season == streamingEntry.season)) episode += 1;
                 else episode = 1;
                 streamingEntry.episode = episode;
 
                 streamingEntries.push(streamingEntry);
 
-                if (animes.some((x) => x.name == streamingEntry.name)) continue;
-                animes.push(new MediaModel(streamingEntry.name, 'AnimesGerSub'));
+                if (media.some((x) => x.name == streamingEntry.name)) continue;
+                media.push(new MediaModel(streamingEntry.name, mediaType));
             } catch (err) {
                 continue;
             }
         }
 
         try {
-            await MediaService.batchCreateMedia(animes);
+            await MediaService.batchCreateMedia(media);
         } catch (err) {
             console.error(err);
         }
@@ -131,6 +139,7 @@ export class MediaPage extends LitElement {
 
     /**
      * @param {MediaModel} media
+     * @param {string} imageData
      */
     async addImageFor(media, imageData) {
         try {
@@ -184,6 +193,7 @@ export class MediaPage extends LitElement {
 
     get filteredMedia() {
         if (!this.filterData) return this.mediaList;
+
         var result = MediaFilterService.applyRatingFilter(this.filterData.ratingFilter, this.mediaList);
         result = MediaFilterService.applyGenreFilter(this.filterData.genreFilter, result);
         result = MediaFilterService.applyTextFilter(this.filterData.searchText || '', result);
@@ -193,6 +203,6 @@ export class MediaPage extends LitElement {
     disconnectedCallback() {
         super.disconnectedCallback();
         this.subscriptions.forEach((x) => x.unsubscribe());
-        localStorage.setItem('AnimeGerSub.search', JSON.stringify(this.filterData));
+        localStorage.setItem(`${this.mediaType}.search`, JSON.stringify(this.filterData));
     }
 }

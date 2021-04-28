@@ -2,7 +2,7 @@
 export const Pages = {
     welcome: { routes: ['welcome'], component: '<welcome-page></welcome-page>', withQueries: [] },
     mediaDetail: {
-        routes: ['anime-ger-sub', 'anime-ger-dub', 'anime-movies', 'real-series', 'real-movies'],
+        routes: ['anime-ger-sub', 'anime-ger-dub', 'anime-movies', 'real-series', 'real-movies', 'j-drama'],
         component: '<media-detail-page></media-detail-page>',
         withQueries: ['name', 'type'],
     },

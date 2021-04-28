@@ -55,11 +55,19 @@ export class MediaDetailPage extends LitElement {
         this.streamingEntries.forEach((x) => {
             if (!seasons.includes(x.season)) seasons.push(x.season);
         });
-        return seasons;
+        return seasons.sort((a, b) => a.localeCompare(b));
     }
 
     get episodes() {
         return this.streamingEntries.filter((x) => x.season == this.seasons[this.selectedSeason]);
+    }
+
+    /** @returns {HTMLElement} */
+    get seasonScrollContainer() {
+        var element = this.shadowRoot.getElementById('season-inner');
+
+        if (element) return element;
+        return undefined;
     }
 
     render() {

@@ -25,7 +25,7 @@ export class StreamingEntryModel {
         } else if (fileLevels.length == 3) streamingEntry.name = fileLevels[1];
         else {
             // @ts-ignore
-            var error = `the depth of the selected folder must be between 3 and 4 (root -> anime -> (season) -> episode). file: ${file.webkitRelativePath}`;
+            var error = `the depth of the selected folder must be between 3 and 4 (root -> media -> (season) -> episode). file: ${file.webkitRelativePath}`;
             console.error(error);
             throw new Error(error);
         }

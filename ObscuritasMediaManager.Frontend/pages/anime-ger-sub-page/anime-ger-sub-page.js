@@ -1,9 +1,9 @@
-import { MediaPage } from '../media-page/media-page.js';
+import { css, LitElement } from '../../exports.js';
 import { renderAnimeGerSubTemplate } from './anime-ger-sub-page.html.js';
 
-export class AnimeGerSubPage extends MediaPage {
+export class AnimeGerSubPage extends LitElement {
     static get styles() {
-        return super.styles;
+        return css``;
     }
 
     static get properties() {
@@ -16,7 +16,6 @@ export class AnimeGerSubPage extends MediaPage {
     }
 
     render() {
-        var content = renderAnimeGerSubTemplate(this);
-        return super.render(content);
+        return renderAnimeGerSubTemplate(this);
     }
 }

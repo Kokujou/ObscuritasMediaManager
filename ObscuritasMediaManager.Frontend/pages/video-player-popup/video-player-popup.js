@@ -40,6 +40,7 @@ export class VideoPlayerPopup extends LitElement {
      * @param {StreamingEntryModel} entry
      */
     static popup(entry) {
+        console.log(`https://localhost/?name=${entry.name}&type=${entry.type}&season=${entry.season}&episode=${entry.episode}#video`);
         window.open(
             `https://localhost/?name=${entry.name}&type=${entry.type}&season=${entry.season}&episode=${entry.episode}#video`,
             '_blank',

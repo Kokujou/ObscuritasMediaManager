@@ -16,7 +16,7 @@ export function renderMediaDetailPage(detailPage) {
             <div class="media-detail-container">
                 <div class="content-panels">
                     <div class="left-panel">
-                        <anime-tile
+                        <media-tile
                             displayStyle="simple"
                             .imageSource="${detailPage.media.image}"
                             @imageReceived="${(e) => detailPage.addImage(e.detail.imageData)}"
@@ -26,7 +26,7 @@ export function renderMediaDetailPage(detailPage) {
                                       <div class="delete-icon" @click="${() => detailPage.deleteImage()}"></div>
                                   </div>`
                                 : ''}
-                        </anime-tile>
+                        </media-tile>
                         <div class="media-rating">${renderRating(detailPage)}</div>
                     </div>
                     <div class="middle-panel">
@@ -58,15 +58,35 @@ export function renderMediaDetailPage(detailPage) {
                 </div>
                 <div class="streaming-panel">
                     <div class="season-scroll-area">
-                        ${detailPage.seasons.map(
-                            (season, index) =>
-                                html`<div
-                                    @click="${() => (detailPage.selectedSeason = index)}"
-                                    class="link ${detailPage.selectedSeason == index ? 'active' : ''}"
-                                >
-                                    ${season}
-                                </div>`
-                        )}
+                        <div
+                            class="arrow ${(!detailPage.seasonScrollContainer || detailPage.seasonScrollContainer.scrollLeft) == 0
+                                ? 'inactive'
+                                : ''}"
+                            @click="${() => detailPage.seasonScrollContainer.scrollBy({ left: -150, behavior: 'smooth' })}"
+                        >
+                            ◀
+                        </div>
+                        <div id="season-inner" class="season-inner" @scroll="${() => detailPage.requestUpdate(undefined)}">
+                            ${detailPage.seasons.map(
+                                (season, index) =>
+                                    html`<div
+                                        @click="${() => (detailPage.selectedSeason = index)}"
+                                        class="link ${detailPage.selectedSeason == index ? 'active' : ''}"
+                                    >
+                                        ${season}
+                                    </div>`
+                            )}
+                        </div>
+                        <div
+                            class="arrow ${detailPage.seasonScrollContainer &&
+                            detailPage.seasonScrollContainer.scrollLeft >=
+                                detailPage.seasonScrollContainer.scrollWidth - detailPage.seasonScrollContainer.offsetWidth
+                                ? 'inactive'
+                                : ''}"
+                            @click="${() => detailPage.seasonScrollContainer.scrollBy({ left: 150, behavior: 'smooth' })}"
+                        >
+                            ▶
+                        </div>
                     </div>
                     <div class="season-content">
                         ${detailPage.episodes.map(

@@ -1,5 +1,5 @@
 import { css } from '../../exports.js';
 
-export function renderWebcomponentTemplateStyles() {
+export function renderAnimeGerSubStyles() {
     return css``;
 }

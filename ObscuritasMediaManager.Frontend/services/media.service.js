@@ -4,7 +4,7 @@ export class MediaService {
     static async getMedia(name, type) {
         var response = await fetch(`https://localhost/ObscuritasMediaManager/api/media/${name}/type/${type}`);
 
-        if (response.status == 400) throw new Error(`the following anime already exist: ${await response.json()}`);
+        if (response.status == 400) throw new Error(`the following media already exist: ${await response.json()}`);
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
         /** @type {MediaModel[]} */ var media = await response.json();
