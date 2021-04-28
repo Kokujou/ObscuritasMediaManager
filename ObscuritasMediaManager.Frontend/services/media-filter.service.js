@@ -7,7 +7,9 @@ export class MediaFilterService {
      * @param {number[]} filter
      */
     static applyRatingFilter(filter, mediaList) {
-        return mediaList.filter((media) => filter.includes(media.rating) || filter.length == 5);
+        return mediaList.filter(
+            (media) => filter.includes(media.rating) || filter.length == 5 || (filter.length == 0 && media.rating == 0)
+        );
     }
 
     /**

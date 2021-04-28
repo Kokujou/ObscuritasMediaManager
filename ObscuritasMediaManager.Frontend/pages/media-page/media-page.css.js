@@ -43,6 +43,7 @@ export function renderMediaPageStyles() {
         }
 
         anime-tile {
+            cursor: pointer;
             width: 300px;
             min-height: 300px;
         }

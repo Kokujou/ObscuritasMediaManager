@@ -41,6 +41,9 @@ export class MediaPage extends LitElement {
     connectedCallback() {
         super.connectedCallback();
 
+        var localSearchString = localStorage.getItem('AnimeGerSub.search');
+        if (localSearchString) this.filterData = JSON.parse(localSearchString);
+
         this.subscriptions.push(session.mediaList.subscribe(() => this.requestUpdate(undefined)));
     }
 
@@ -185,5 +188,11 @@ export class MediaPage extends LitElement {
         result = MediaFilterService.applyGenreFilter(this.filterData.genreFilter, result);
         result = MediaFilterService.applyTextFilter(this.filterData.searchText || '', result);
         return result;
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        this.subscriptions.forEach((x) => x.unsubscribe());
+        localStorage.setItem('AnimeGerSub.search', JSON.stringify(this.filterData));
     }
 }
