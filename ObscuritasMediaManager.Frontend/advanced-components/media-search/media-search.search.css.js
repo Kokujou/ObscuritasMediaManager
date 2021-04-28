@@ -1,4 +1,5 @@
-import { css } from '../../exports.js';
+import { css, unsafeCSS } from '../../exports.js';
+import { resetIcon } from './images/reset-icon.svg.js';
 
 export function renderSearchStyles() {
     return css`
@@ -46,7 +47,7 @@ export function renderSearchStyles() {
             margin-right: 10px;
         }
 
-        .extended-search-icon-container {
+        .icon-container {
             --search-icon-shadow: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.75));
 
             -webkit-filter: var(--search-icon-shadow);
@@ -56,7 +57,7 @@ export function renderSearchStyles() {
             filter: var(--search-icon-shadow);
         }
 
-        .extended-search-icon-container:hover {
+        .icon-container:hover {
             --search-icon-shadow: drop-shadow(0px 0px 8px rgba(0, 0, 0, 1));
         }
 
@@ -70,6 +71,22 @@ export function renderSearchStyles() {
             -webkit-mask-repeat: no-repeat;
 
             background: gray;
+            width: 50px;
+            height: 50px;
+
+            cursor: pointer;
+        }
+
+        .reset-icon {
+            mask-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(resetIcon()))}');
+            mask-size: 100% 100%;
+            mask-repeat: no-repeat;
+
+            -webkit-mask-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(resetIcon()))}');
+            -webkit-mask-size: 100% 100%;
+            -webkit-mask-repeat: no-repeat;
+
+            background: darkred;
             width: 50px;
             height: 50px;
 

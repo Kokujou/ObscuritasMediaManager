@@ -16,7 +16,10 @@ export function renderMediaSearch(mediaSearch) {
                     @input="${(e) => e.target.dispatchEvent(new Event('change'))}"
                     @change="${() => mediaSearch.updateSearchTextFilter()}"
                 />
-                <div class="extended-search-icon-container">
+                <div class="icon-container" @click="${() => mediaSearch.resetFilters()}">
+                    <div class="reset-icon"></div>
+                </div>
+                <div class="icon-container">
                     <div class="extended-search-icon"></div>
                 </div>
             </div>

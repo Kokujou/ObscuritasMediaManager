@@ -101,4 +101,12 @@ export class MediaSearch extends LitElement {
         this.dispatchEvent(filterUpdatedEvent);
         this.requestUpdate(undefined);
     }
+
+    resetFilters() {
+        this.searchText = '';
+        this.genreFilter = new GenreDialogResult();
+        this.ratingFilter = [1, 2, 3, 4, 5];
+        this.episodeCountFilter = { left: 0, right: 9999 };
+        this.notifyFilterUpdated();
+    }
 }

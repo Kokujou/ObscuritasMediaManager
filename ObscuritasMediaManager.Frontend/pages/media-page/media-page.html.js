@@ -10,7 +10,13 @@ import { MediaPage } from './media-page.js';
 export function renderMediaPageTemplate(mediaPage, inner) {
     return html`<page-layout>
         <div class="media-page-container">
-            <media-search @filterUpdated="${(e) => mediaPage.updateSearchFilter(e.detail)}"></media-search>
+            <media-search
+                @filterUpdated="${(e) => mediaPage.updateSearchFilter(e.detail)}"
+                .episodeCountFilter="${mediaPage.filterData.episodeCountFilter}"
+                .genreFilter="${mediaPage.filterData.genreFilter}"
+                .ratingFilter="${mediaPage.filterData.ratingFilter}"
+                .searchText="${mediaPage.filterData.searchText}"
+            ></media-search>
             <div class="search-result-container">
                 <div class="left-container">
                     <div class="filter-options"></div>
