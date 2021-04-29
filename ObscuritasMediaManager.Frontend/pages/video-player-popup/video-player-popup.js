@@ -29,7 +29,7 @@ export class VideoPlayerPopup extends LitElement {
         var episode = getQueryValue('episode');
 
         var entry = await StreamingService.getStreamingEntry(name, type, season, episode);
-        this.src = `https://localhost/ObscuritasMediaManager/api/file?filePath=${entry.src}`;
+        this.src = `/ObscuritasMediaManager/api/file?filePath=${entry.src}`;
     }
 
     render() {
@@ -40,9 +40,8 @@ export class VideoPlayerPopup extends LitElement {
      * @param {StreamingEntryModel} entry
      */
     static popup(entry) {
-        console.log(`https://localhost/?name=${entry.name}&type=${entry.type}&season=${entry.season}&episode=${entry.episode}#video`);
         window.open(
-            `https://localhost/?name=${entry.name}&type=${entry.type}&season=${entry.season}&episode=${entry.episode}#video`,
+            `/?name=${entry.name}&type=${entry.type}&season=${entry.season}&episode=${entry.episode}#video`,
             '_blank',
             'location=yes,height=480,width=720,menubar=yes,toolbar=yes,status=yes'
         );

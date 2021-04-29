@@ -65,7 +65,8 @@ export function renderMediaTileStyles() {
             margin-bottom: 10px;
             text-overflow: ellipsis;
             overflow: hidden;
-            white-space: nowrap;
+            transition: max-height 1s ease;
+            max-height: 35px;
         }
 
         .genre-list {
@@ -73,13 +74,18 @@ export function renderMediaTileStyles() {
             flex-direction: row;
             flex-wrap: wrap;
             align-items: center;
-            max-height: 30px;
+            max-height: 35px;
             overflow: hidden;
             transition: max-height 1s ease;
         }
 
         :host(:hover) .genre-list {
             max-height: 150px;
+        }
+
+        :host(:hover) .caption {
+            text-overflow: initial;
+            max-height: 105px;
         }
 
         .genre-list > * {

@@ -14,9 +14,8 @@ export function renderMediaTile(tile) {
         <div class="tile-container">
             ${tile.displayStyle == 'simple' ? '' : html`<div class="rating-container">${renderRating(tile)}</div>`} <br />
             ${renderImageContainer(tile)}
-
-            <div class="caption">${tile.name}</div>
         </div>
+        <div class="caption">${tile.name}</div>
         ${tile.displayStyle == 'solid'
             ? html`
                   <div class="genre-list">

@@ -20,7 +20,8 @@ namespace ObscuritasMediaManager.Backend
 
             services.AddCors(x =>
                 x.AddPolicy("all",
-                    builder => builder.WithOrigins("https://localhost").AllowAnyHeader().AllowAnyMethod()));
+                    builder => builder.WithOrigins("https://localhost").WithOrigins("https://obscuritas.strangled.net")
+                        .AllowAnyHeader().AllowAnyMethod()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

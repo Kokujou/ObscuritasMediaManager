@@ -5,7 +5,7 @@ export class StreamingService {
      * @param {StreamingEntryModel[]} streamingEntries
      */
     static async BatchCreateStreamingEntries(streamingEntries) {
-        var response = await fetch('https://localhost/ObscuritasMediaManager/api/streaming', {
+        var response = await fetch('/ObscuritasMediaManager/api/streaming', {
             method: 'POST',
             body: JSON.stringify(streamingEntries),
             headers: { 'Content-Type': 'application/json' },
@@ -15,7 +15,7 @@ export class StreamingService {
     }
 
     static async getStreamingEntries(name, type) {
-        var response = await fetch(`https://localhost/ObscuritasMediaManager/api/streaming/${name}/type/${type}`, {
+        var response = await fetch(`/ObscuritasMediaManager/api/streaming/${name}/type/${type}`, {
             method: 'GET',
         });
 
@@ -26,12 +26,9 @@ export class StreamingService {
     }
 
     static async getStreamingEntry(name, type, season, episode) {
-        var response = await fetch(
-            `https://localhost/ObscuritasMediaManager/api/streaming/${name}/type/${type}/season/${season}/episode/${episode}`,
-            {
-                method: 'GET',
-            }
-        );
+        var response = await fetch(`/ObscuritasMediaManager/api/streaming/${name}/type/${type}/season/${season}/episode/${episode}`, {
+            method: 'GET',
+        });
 
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
