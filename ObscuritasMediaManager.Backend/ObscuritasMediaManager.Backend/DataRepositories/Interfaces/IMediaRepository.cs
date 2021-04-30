@@ -11,7 +11,7 @@ namespace ObscuritasMediaManager.Backend.DataRepositories.Interfaces
 
         public MediaModel Get(string name, string animeType);
 
-        public void UpdateMedia(MediaModel media);
+        public void UpdateMedia(string name, string type, MediaModel updated);
 
         public void AddMediaImage(string mediaName, string mediaType, string mediaImage);
 

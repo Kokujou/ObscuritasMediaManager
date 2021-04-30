@@ -61,8 +61,8 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-        [HttpPut]
-        public IActionResult UpdateMedia([FromBody] MediaModel media)
+        [HttpPut("{mediaName}/type/{mediaType}")]
+        public IActionResult UpdateMedia(string mediaName, string mediaType, [FromBody] MediaModel media)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
                         $"One of the specified genres is not in the range of values: {media.GenreString}.\n" +
                         $"Supported Genres are: {string.Join(",", genres)}");
 
-                _repository.UpdateMedia(media);
+                _repository.UpdateMedia(mediaName, mediaType, media);
 
                 return NoContent();
             }
@@ -83,6 +83,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
                 return BadRequest(e.ToString());
             }
         }
+
 
         [HttpPut("{mediaName}/type/{mediaType}/image")]
         public IActionResult AddMediaImage([FromBody] UpdateImageRequest request, [FromRoute] string mediaName,

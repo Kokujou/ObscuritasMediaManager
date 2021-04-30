@@ -2,6 +2,7 @@
 using System.Data.Linq;
 using System.Data.SQLite;
 using System.Linq;
+using Newtonsoft.Json;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
@@ -19,21 +20,36 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             return table;
         }
 
-        public void UpdateMedia(MediaModel media)
+        public void UpdateMedia(string name, string type, MediaModel updated)
         {
             var table = GetTable();
-            var item = table.Single(x => x.Name == media.Name && x.Type == media.Type);
+            var item = table.Single(x => x.Name == name && x.Type == type);
 
-            if (media.Description != null)
-                item.Description = media.Description;
-            if (media.GenreString != null)
-                item.GenreString = media.GenreString;
-            if (media.Rating > 0)
-                item.Rating = media.Rating;
-            if (media.Release > 0)
-                item.Release = media.Release;
-            if (media.State >= 0)
-                item.State = media.State;
+            if (name != updated.Name || type != updated.Type)
+            {
+                var clone = JsonConvert.DeserializeObject<MediaModel>(JsonConvert.SerializeObject(item));
+                table.DeleteOnSubmit(item);
+                table.Context.SubmitChanges();
+                item = clone;
+                if (!string.IsNullOrEmpty(updated.Name))
+                    item.Name = updated.Name;
+                if (!string.IsNullOrEmpty(updated.Type))
+                    item.Type = updated.Type;
+                table.InsertOnSubmit(item);
+                table.Context.SubmitChanges();
+            }
+
+            if (updated.Description != null)
+                item.Description = updated.Description;
+            if (updated.GenreString != null)
+                item.GenreString = updated.GenreString;
+            if (updated.Rating > 0)
+                item.Rating = updated.Rating;
+            if (updated.Release > 0)
+                item.Release = updated.Release;
+            if (updated.State >= 0)
+                item.State = updated.State;
+
 
             table.Context.SubmitChanges();
             table.Dispose();
