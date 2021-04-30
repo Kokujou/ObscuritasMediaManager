@@ -100,7 +100,7 @@ export class MediaDetailPage extends LitElement {
             try {
                 var media = new MediaModel(this.media.name, this.media.type);
                 media.genreString = e.detail.acceptedGenres.map((x) => x.name).join(',');
-                await MediaService.updateMedia(media);
+                await MediaService.updateMedia(media.name, media.type, media);
                 this.media.genreString = media.genreString;
                 this.requestUpdate(undefined);
                 genreDialog.remove();
@@ -114,7 +114,7 @@ export class MediaDetailPage extends LitElement {
         try {
             var media = new MediaModel(this.media.name, this.media.type);
             media.genreString = this.media.genres.filter((x) => x != genre).join(',');
-            await MediaService.updateMedia(media);
+            await MediaService.updateMedia(media.name, media.type, media);
             this.media.genreString = media.genreString;
             this.requestUpdate(undefined);
         } catch (err) {
@@ -127,9 +127,9 @@ export class MediaDetailPage extends LitElement {
      */
     async changeRating(newRating) {
         try {
-            var mediaModel = new MediaModel(this.media.name, this.media.type);
-            mediaModel.rating = newRating;
-            await MediaService.updateMedia(mediaModel);
+            var media = new MediaModel(this.media.name, this.media.type);
+            media.rating = newRating;
+            await MediaService.updateMedia(media.name, media.type, media);
             this.media.rating = newRating;
             this.requestUpdate(undefined);
         } catch (err) {
@@ -157,6 +157,50 @@ export class MediaDetailPage extends LitElement {
             this.requestUpdate(undefined);
         } catch (err) {
             console.error(err);
+        }
+    }
+
+    async changeName() {
+        /** @type {HTMLInputElement} */ var nameInput = this.shadowRoot.querySelector('#media-name');
+        var media = new MediaModel();
+        media.name = nameInput.value;
+        try {
+            await MediaService.updateMedia(this.media.name, this.media.type, media);
+            location.assign('/' + `?name=${media.name}&type=${this.media.type}` + location.hash);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async changeDescription() {
+        try {
+            /** @type {HTMLTextAreaElement} */ var descriptionInput = this.shadowRoot.querySelector('#description-input');
+            var description = descriptionInput.value;
+            var media = new MediaModel(this.media.name, this.media.type);
+            media.description = description;
+            await MediaService.updateMedia(media.name, media.type, media);
+            this.media.description = media.description;
+            this.requestUpdate(undefined);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    /**
+     * @param {KeyboardEvent} event
+     */
+    handleKeyPress(event) {
+        if (!(event.target instanceof HTMLInputElement) && !(event.target instanceof HTMLTextAreaElement))
+            throw new Error('this function only intended for input elements!');
+
+        var test = event.target;
+        if (event.key == 'Escape') {
+            test.value = test.defaultValue;
+            test.setAttribute('disabled', 'true');
+        }
+        if (event.key == 'Enter' && !(event.target instanceof HTMLTextAreaElement)) {
+            test.blur();
+            test.setAttribute('disabled', 'true');
         }
     }
 

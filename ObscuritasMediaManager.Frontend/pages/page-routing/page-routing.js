@@ -45,12 +45,6 @@ export class PageRouting extends LitElement {
         };
 
         window.addEventListener('resize', () => this.requestUpdate(undefined));
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                document.execCommand('insertLineBreak');
-                event.preventDefault();
-            }
-        });
     }
 
     connectedCallback() {

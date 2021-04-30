@@ -157,9 +157,9 @@ export class MediaPage extends LitElement {
      */
     async updateRating(media, newRating) {
         try {
-            var model = new MediaModel(media.name, media.type);
-            model.rating = newRating;
-            await MediaService.updateMedia(model);
+            var media = new MediaModel(media.name, media.type);
+            media.rating = newRating;
+            await MediaService.updateMedia(media.name, media.type, media);
             media.rating = newRating;
             this.requestUpdate(undefined);
         } catch (err) {
@@ -173,9 +173,9 @@ export class MediaPage extends LitElement {
      */
     async updateGenres(media, genres) {
         try {
-            var model = new MediaModel(media.name, media.type);
-            model.genreString = genres.join(',');
-            await MediaService.updateMedia(model);
+            var media = new MediaModel(media.name, media.type);
+            media.genreString = genres.join(',');
+            await MediaService.updateMedia(media.name, media.type, media);
             media.genreString = genres.join(',');
             this.requestUpdate(undefined);
         } catch (err) {

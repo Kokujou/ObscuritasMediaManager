@@ -38,13 +38,28 @@ export function renderMediaDetailPage(detailPage) {
                     </div>
                     <div class="right-panel">
                         <div class="media-heading">
-                            <input disabled type="text" class="property-value" value="${detailPage.media.name}" />
+                            <input
+                                disabled
+                                type="text"
+                                id="media-name"
+                                @change="${() => detailPage.changeName()}"
+                                @keyup="${(e) => detailPage.handleKeyPress(e)}"
+                                class="property-value"
+                                .value="${detailPage.media.name}"
+                                .defaultValue="${detailPage.media.name}"
+                            />
                             <div class="edit-icon" @click="${(e) => detailPage.enableEditingFor(e.target)}"></div>
                         </div>
                         ${renderGenreSection(detailPage)}
                         <div class="property-entry">
                             <div class="property-name">Release:</div>
-                            <input disabled type="text" class="property-value" value="${detailPage.media.release}" />
+                            <input
+                                disabled
+                                type="text"
+                                class="property-value"
+                                .value="${detailPage.media.release.toString()}"
+                                .defaultValue="${detailPage.media.release.toString()}"
+                            />
                             <div class="edit-icon" @click="${(e) => detailPage.enableEditingFor(e.target)}"></div>
                         </div>
                         <div class="property-group">
@@ -52,7 +67,15 @@ export function renderMediaDetailPage(detailPage) {
                                 <div class="property-name">Beschreibung:</div>
                                 <div class="edit-icon" @click="${(e) => detailPage.enableEditingFor(e.target.parentNode)}"></div>
                             </div>
-                            <textarea disabled class="textarea property-value" value="${detailPage.media.description}"></textarea>
+                            <textarea
+                                disabled
+                                class="textarea property-value"
+                                id="description-input"
+                                @change="${() => detailPage.changeDescription()}"
+                                @keyup="${(e) => detailPage.handleKeyPress(e)}"
+                                .value="${detailPage.media.description}"
+                                .defaultValue="${detailPage.media.description}"
+                            ></textarea>
                         </div>
                     </div>
                 </div>

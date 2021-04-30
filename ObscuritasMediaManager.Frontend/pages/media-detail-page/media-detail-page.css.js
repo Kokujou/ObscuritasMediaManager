@@ -110,6 +110,7 @@ export function renderMediaDetailPageStyles() {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+            flex: auto;
         }
 
         .genre-entry {
@@ -148,6 +149,11 @@ export function renderMediaDetailPageStyles() {
 
             font: inherit;
             color: inherit;
+        }
+
+        input[disabled],
+        textarea[disabled] {
+            user-select: none;
         }
 
         input {

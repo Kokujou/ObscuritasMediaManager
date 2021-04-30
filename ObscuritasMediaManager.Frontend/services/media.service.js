@@ -39,9 +39,11 @@ export class MediaService {
 
     /**
      * @param {MediaModel} media
+     * @param {string} name
+     * @param {string} type
      */
-    static async updateMedia(media) {
-        var response = await fetch(`/ObscuritasMediaManager/api/media`, {
+    static async updateMedia(name, type, media) {
+        var response = await fetch(`/ObscuritasMediaManager/api/media/${name}/type/${type}`, {
             method: 'PUT',
             body: JSON.stringify(media),
             headers: { 'Content-Type': 'application/json' },
