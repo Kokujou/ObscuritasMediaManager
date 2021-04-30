@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
-using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.Controllers
@@ -27,10 +26,6 @@ namespace ObscuritasMediaManager.Backend.Controllers
             {
                 _repository.BatchCreateStreamingEntries(streamingEntries);
                 return NoContent();
-            }
-            catch (ModelCreationFailedException<StreamingEntryModel> e)
-            {
-                return BadRequest(e.ToString());
             }
             catch (Exception e)
             {

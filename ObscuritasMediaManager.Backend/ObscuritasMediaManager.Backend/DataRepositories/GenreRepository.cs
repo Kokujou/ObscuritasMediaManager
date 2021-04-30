@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.SQLite;
+using System.Linq;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 using ObscuritasMediaManager.Backend.Models;
 
@@ -19,7 +20,7 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
         public IEnumerable<Genre> GetAll()
         {
             var genreTable = _context.GetTable<Genre>();
-            return genreTable;
+            return genreTable.ToList();
         }
 
         public void Dispose()

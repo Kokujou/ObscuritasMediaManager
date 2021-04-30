@@ -5,11 +5,12 @@ import { session } from '../../data/session.js';
     var desiredQuery = queries.find((x) => x.split('=')[0] == query);
 
     if (!desiredQuery) return undefined;
-    return desiredQuery.split('=')[1];
+    return decodeURIComponent(desiredQuery.split('=')[1]);
 }
 
 export function changePage(target, search = '') {
     var newUrl = '/' + search + `#${target}`;
     history.pushState(null, null, newUrl);
+    console.log(newUrl);
     session.currentPage.next(target);
 }

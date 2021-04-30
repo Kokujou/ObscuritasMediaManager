@@ -7,7 +7,7 @@ export class StreamingService {
     static async BatchCreateStreamingEntries(streamingEntries) {
         var response = await fetch('/ObscuritasMediaManager/api/streaming', {
             method: 'POST',
-            body: JSON.stringify(streamingEntries),
+            body: JSON.stringify(streamingEntries.map((x) => x)),
             headers: { 'Content-Type': 'application/json' },
         });
 
@@ -22,7 +22,7 @@ export class StreamingService {
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
         /** @type {StreamingEntryModel[]} */ var entryList = await response.json();
-        return entryList.map((x) => Object.assign(new StreamingEntryModel(), x).decodeBase64());
+        return entryList.map((x) => Object.assign(new StreamingEntryModel(), x));
     }
 
     static async getStreamingEntry(name, type, season, episode) {
@@ -33,6 +33,6 @@ export class StreamingService {
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
         /** @type {StreamingEntryModel} */ var entry = await response.json();
-        return Object.assign(new StreamingEntryModel(), entry).decodeBase64();
+        return Object.assign(new StreamingEntryModel(), entry);
     }
 }

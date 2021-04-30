@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data.Linq.Mapping;
-using System.Diagnostics.CodeAnalysis;
 
 namespace ObscuritasMediaManager.Backend.Models
 {
@@ -12,12 +11,11 @@ namespace ObscuritasMediaManager.Backend.Models
         [Column] public int Rating { get; set; }
         [Column] public int Release { get; set; }
 
-        [Column(Name = "Genres")] [NotNull] public string GenreString { get; set; }
+        [Column(Name = "Genres")] public string GenreString { get; set; }
         public IEnumerable<string> Genres => GenreString.Split(',');
 
         [Column] public int State { get; set; }
         [Column] public string Description { get; set; }
-        [Column] public string Thumbnail { get; set; }
         [Column] public string Image { get; set; }
     }
 }

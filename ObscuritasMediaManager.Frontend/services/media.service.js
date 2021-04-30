@@ -8,7 +8,7 @@ export class MediaService {
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
         /** @type {MediaModel[]} */ var media = await response.json();
-        return Object.assign(new MediaModel(), media).decodeBase64();
+        return Object.assign(new MediaModel(), media);
     }
 
     /**
@@ -21,7 +21,7 @@ export class MediaService {
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
         /** @type {MediaModel[]} */ var mediaList = await response.json();
-        return mediaList.map((media) => Object.assign(new MediaModel(), media).decodeBase64());
+        return mediaList.map((media) => Object.assign(new MediaModel(), media));
     }
 
     /**
@@ -30,7 +30,7 @@ export class MediaService {
     static async batchCreateMedia(media) {
         var response = await fetch('/ObscuritasMediaManager/api/media', {
             method: 'POST',
-            body: JSON.stringify(media),
+            body: JSON.stringify(media.map((x) => x)),
             headers: { 'Content-Type': 'application/json' },
         });
 

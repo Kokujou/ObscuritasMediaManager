@@ -18,6 +18,7 @@ export function renderMediaDetailPageStyles() {
             position: relative;
             display: flex;
             flex-direction: row;
+            width: 100%;
         }
 
         .content-panels {
