@@ -6,14 +6,16 @@ const navigationTexts = ['Start', 'App Store', 'Services', 'Notifications', 'Hel
 const navigationTargets = ['start', 'appstore', 'services', 'notifications', 'help'];
 
 export default {
-    title: 'MediaSearch',
-    component: 'media-search',
+    title: 'AudioTile',
+    component: 'audio-tile',
     options: { selectedPanel: 'storybookjs/knobs/panel' },
     decorators: [withKnobs],
 };
 ```
 
-# Webcomponent Template
+# AudioTile
+
+Repräsentiert eine Audio-Datei
 
 ## Properties:
 
@@ -39,7 +41,7 @@ use available knob-functions to make properties or contents of your webcomponent
 ```js preview-story
 export const Multiple = () => html`
     <page-routing>
-        <media-search> </media-search>
+        <audio-tile></audio-tile>
     </page-routing>
 `;
 ```

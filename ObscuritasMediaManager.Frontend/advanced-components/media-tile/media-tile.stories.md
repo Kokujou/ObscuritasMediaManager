@@ -41,7 +41,7 @@ export const Multiple = () => html`
     <style>
         .test {
             width: 300px;
-            height: 300px;
+            min-height: 300px;
             margin: 50px;
         }
     </style>

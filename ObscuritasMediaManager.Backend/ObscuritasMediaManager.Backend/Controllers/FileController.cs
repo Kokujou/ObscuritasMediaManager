@@ -12,14 +12,38 @@ namespace ObscuritasMediaManager.Backend.Controllers
     {
         public static string Logs = "";
 
-        [HttpGet]
-        public async Task<IActionResult> GetFile(string filePath = "")
+        [HttpGet("video")]
+        public async Task<IActionResult> GetVideo(string videoPath = "")
         {
-            if (string.IsNullOrEmpty(filePath)) return BadRequest("invalid file path");
+            if (string.IsNullOrEmpty(videoPath) || !System.IO.File.Exists(videoPath))
+                return BadRequest("invalid file path");
 
             var ffmpeg = new Process();
             var startinfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
-                $"-i \"{filePath}\" -c:v copy -c:a copy -movflags frag_keyframe+empty_moov -f mp4 -");
+                $"-i \"{videoPath}\" -c:v copy -c:a copy -movflags frag_keyframe+empty_moov -f mp4 -");
+            startinfo.RedirectStandardError = true;
+            startinfo.RedirectStandardOutput = true;
+            startinfo.RedirectStandardInput = true;
+            startinfo.UseShellExecute = false;
+            startinfo.CreateNoWindow = true;
+            ffmpeg.StartInfo = startinfo;
+            ffmpeg.ErrorDataReceived += OnErrorDataReceived;
+
+            ffmpeg.Start();
+            ffmpeg.BeginErrorReadLine();
+
+            return File(new BufferedStream(ffmpeg.StandardOutput.BaseStream), "video/mp4");
+        }
+
+        [HttpGet("audio")]
+        public async Task<IActionResult> GetAudio(string audioPath = "")
+        {
+            if (string.IsNullOrEmpty(audioPath) || !System.IO.File.Exists(audioPath))
+                return BadRequest("invalid file path");
+
+            var ffmpeg = new Process();
+            var startinfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
+                $"-i \"{audioPath}\" -f mp3 -");
             startinfo.RedirectStandardError = true;
             startinfo.RedirectStandardOutput = true;
             startinfo.RedirectStandardInput = true;

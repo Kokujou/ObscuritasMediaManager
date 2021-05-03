@@ -66,6 +66,9 @@ function renderHeaderStyles() {
             height: ${headerHeight};
             width: 100%;
 
+            white-space: nowrap;
+            overflow: visible;
+
             display: flex;
             align-items: center;
             justify-content: center;

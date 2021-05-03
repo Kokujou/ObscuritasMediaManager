@@ -29,7 +29,7 @@ export class VideoPlayerPopup extends LitElement {
         var episode = getQueryValue('episode');
 
         var entry = await StreamingService.getStreamingEntry(name, type, season, episode);
-        this.src = `/ObscuritasMediaManager/api/file?filePath=${entry.src}`;
+        this.src = `/ObscuritasMediaManager/api/file/video?filePath=${entry.src}`;
     }
 
     render() {

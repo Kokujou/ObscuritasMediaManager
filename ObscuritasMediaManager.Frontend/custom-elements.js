@@ -1,8 +1,9 @@
-import { MediaTile } from './advanced-components/anime-tile/media-tile.js';
+import { AudioTile } from './advanced-components/audio-tile/audio-tile.js';
 import { DualSlider } from './advanced-components/dual-slider/dual-slider.js';
 import { ExpandableDropdown } from './advanced-components/expandible-dropdown/expandable-dropdown.js';
 import { ImageTile } from './advanced-components/image-tile/image-tile.js';
 import { MediaSearch } from './advanced-components/media-search/media-search.js';
+import { MediaTile } from './advanced-components/media-tile/media-tile.js';
 import { TagLabel } from './advanced-components/tag-label/tag-label.js';
 import { UploadArea } from './advanced-components/upload-area/upload-area.js';
 import { DialogBase } from './dialogs/dialog-base/dialog-base.js';
@@ -17,6 +18,7 @@ import { AnimeMoviesPage } from './pages/anime-movies-page/anime-movies-page.js'
 import { JDramaPage } from './pages/jdrama-page/jdrama-page.js';
 import { MediaDetailPage } from './pages/media-detail-page/media-detail-page.js';
 import { MediaPage } from './pages/media-page/media-page.js';
+import { MusicPage } from './pages/music-page/music-page.js';
 import { ObscuritasMediaManager } from './pages/obscuritas-media-manager/obscuritas-media-manager.js';
 import { PageLayout } from './pages/page-layout/page-layout.js';
 import { PageRouting } from './pages/page-routing/page-routing.js';
@@ -51,3 +53,5 @@ window.customElements.define('anime-movies-page', AnimeMoviesPage);
 window.customElements.define('real-series-page', RealSeriesPage);
 window.customElements.define('real-movies-page', RealMoviesPage);
 window.customElements.define('jdrama-page', JDramaPage);
+window.customElements.define('music-page', MusicPage);
+window.customElements.define('audio-tile', AudioTile);
