@@ -2,7 +2,7 @@ import { css } from '../../exports.js';
 
 export function renderPathInputDialogStyles() {
     return css`
-        .dialog-content {
+        #dialog-content {
             display: flex;
             flex-direction: column;
             font-size: 18px;

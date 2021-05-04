@@ -46,7 +46,7 @@ export const Multiple = () => html`
         }
     </style>
     <page-routing>
-        <media-tile class="test" name="${text('Name', 'Media Name')}" .genres="${array('Genres', ['GenreA', 'GenreB'])}"> </media-tile>
+        <media-tile id="test" name="${text('Name', 'Media Name')}" .genres="${array('Genres', ['GenreA', 'GenreB'])}"> </media-tile>
     </page-routing>
 `;
 ```

@@ -7,7 +7,7 @@ export function renderMediaTileStyles() {
             flex-direction: column;
         }
 
-        .tile-container {
+        #tile-container {
             position: relative;
             width: 100%;
             min-height: inherit;
@@ -20,7 +20,7 @@ export function renderMediaTileStyles() {
             user-select: none;
         }
 
-        .tile-image {
+        #tile-image {
             position: relative;
             flex: auto;
 
@@ -33,14 +33,14 @@ export function renderMediaTileStyles() {
             flex-direction: row;
         }
 
-        .rating-container {
+        #rating-container {
             position: absolute;
             top: 20px;
             right: 30px;
             z-index: 1;
         }
 
-        .rating-container .star {
+        #rating-container .star {
             color: gray;
             text-shadow: 3px 3px 3px black;
             font-size: 36px;
@@ -48,15 +48,15 @@ export function renderMediaTileStyles() {
             line-height: 1;
         }
 
-        .rating-container .star.selected {
+        #rating-container .star.selected {
             color: yellow;
         }
 
-        .rating-container .star.hovered {
+        #rating-container .star.hovered {
             color: darkorange;
         }
 
-        .caption {
+        #caption {
             cursor: pointer;
             font-size: 30px;
             text-shadow: 2px 2px 2px black;
@@ -69,7 +69,7 @@ export function renderMediaTileStyles() {
             max-height: 35px;
         }
 
-        .genre-list {
+        #genre-list {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -79,21 +79,21 @@ export function renderMediaTileStyles() {
             transition: max-height 1s ease;
         }
 
-        :host(:hover) .genre-list {
+        :host(:hover) #genre-list {
             max-height: 150px;
         }
 
-        :host(:hover) .caption {
+        :host(:hover) #caption {
             text-overflow: initial;
             max-height: 105px;
         }
 
-        .genre-list > * {
+        #genre-list > * {
             margin-left: 5px;
             margin-bottom: 5px;
         }
 
-        .add-genre-button {
+        #add-genre-button {
             border-radius: 50%;
             width: 20px;
             height: 20px;

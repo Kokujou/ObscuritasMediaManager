@@ -12,11 +12,11 @@ export function renderDualSlider(dualSlider) {
                 width: ${dualSlider.rightValue - dualSlider.leftValue}%;
             }
         </style>
-        <div class="dual-slider">
-            <div class="slider-line">
-                <div class="slider-container">
-                    <div id="left-slider" @pointerdown="${(e) => dualSlider.startDrag(e.target)}" class="slider"></div>
-                    <div id="right-slider" @pointerdown="${(e) => dualSlider.startDrag(e.target)}" class="slider"></div>
+        <div id="dual-slider">
+            <div id="slider-line">
+                <div id="slider-container">
+                    <div id="left-slider" @pointerdown="${(e) => dualSlider.startDrag(e.target)}" id="slider"></div>
+                    <div id="right-slider" @pointerdown="${(e) => dualSlider.startDrag(e.target)}" id="slider"></div>
                 </div>
             </div>
         </div>

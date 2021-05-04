@@ -9,16 +9,16 @@ import { WelcomePage } from './welcome-page.js';
 export function renderWelcomePage(welcomePage) {
     return html`
         <page-layout>
-            <div class="welcome-page">
-                <div class="page-heading">Willkommen!</div>
-                <div class="greeting">
+            <div id="welcome-page">
+                <div id="page-heading">Willkommen!</div>
+                <div id="greeting">
                     Willkommen auf der Obscuritas Media Management Plattform. <br />
                     Dies ist eine Seite zur Verwaltung, Kategorisierung und Visualisierung privater Mediensammlungen.
                     <br />
                     Womit wollen Sie heute beginnen?
                 </div>
-                <div class="tile-link-area">
-                    <div class="tile-link-section">
+                <div id="tile-link-area">
+                    <div id="tile-link-section">
                         <image-tile
                             @click="${() => changePage(Pages.animeGerDub.routes[0])}"
                             caption="Animes (Dub)"
@@ -35,7 +35,7 @@ export function renderWelcomePage(welcomePage) {
                             src="../../resources/images/totoro.png"
                         ></image-tile>
                     </div>
-                    <div class="tile-link-section">
+                    <div id="tile-link-section">
                         <image-tile
                             @click="${() => changePage(Pages.realSeries.routes[0])}"
                             caption="Realfilmserien"
@@ -52,7 +52,7 @@ export function renderWelcomePage(welcomePage) {
                             src="../../resources/images/j-drama.png"
                         ></image-tile>
                     </div>
-                    <div class="tile-link-section">
+                    <div id="tile-link-section">
                         <image-tile
                             @click="${() => changePage(Pages.music.routes[0])}"
                             caption="Musik"

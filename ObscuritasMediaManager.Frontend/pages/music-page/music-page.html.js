@@ -7,19 +7,19 @@ import { MusicPage } from './music-page.js';
 export function renderMusicPage(musicPage) {
     return html`
         <page-layout>
-            <div class="search-panel">
-                <div class="language-filter"></div>
-                <div class="instrument-filter"></div>
-                <div class="mood-filter"></div>
-                <div class="genre-filter"></div>
-                <div class="instrumentation-filter"></div>
-                <div class="participant-count-filter"></div>
+            <div id="search-panel">
+                <div id="language-filter"></div>
+                <div id="instrument-filter"></div>
+                <div id="mood-filter"></div>
+                <div id="genre-filter"></div>
+                <div id="instrumentation-filter"></div>
+                <div id="participant-count-filter"></div>
             </div>
-            <div class="result-options">
-                <div class="import-files"></div>
-                <div class="download-playlist"></div>
+            <div id="result-options">
+                <div id="import-files"></div>
+                <div id="download-playlist"></div>
             </div>
-            <div class="search-results"></div>
+            <div id="search-results"></div>
         </page-layout>
     `;
 }

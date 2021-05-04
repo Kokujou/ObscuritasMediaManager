@@ -9,7 +9,7 @@ export function renderWebcomponentTemplateStyles() {
             user-select: none;
         }
 
-        .layout-content {
+        #layout-content {
             animation: fade-in 1s normal ease-in;
 
             mask-size: 100% 500%;
@@ -31,16 +31,16 @@ export function renderWebcomponentTemplateStyles() {
             }
         }
 
-        .header,
-        .navigation,
-        .layout-content {
+        #header,
+        #navigation,
+        #layout-content {
             position: absolute;
         }
 
         ${renderHeaderStyles()}
         ${renderNavigationStyles()}
 
-        .layout-content {
+#layout-content {
             top: ${headerHeight};
             left: ${navigationWidth};
             bottom: 0;
@@ -61,7 +61,7 @@ export function renderWebcomponentTemplateStyles() {
 
 function renderHeaderStyles() {
     return css`
-        .header {
+        #header {
             position: relative;
             height: ${headerHeight};
             width: 100%;
@@ -74,7 +74,7 @@ function renderHeaderStyles() {
             justify-content: center;
         }
 
-        .header .logo-container {
+        #header #logo-container {
             height: 200%;
             width: 75%;
 
@@ -83,7 +83,7 @@ function renderHeaderStyles() {
             justify-content: center;
         }
 
-        .header .logo {
+        #header #logo {
             -webkit-background-clip: text;
             -moz-background-clip: text;
             background-clip: text;
@@ -107,12 +107,12 @@ function renderHeaderStyles() {
             }
         }
 
-        .header .logo .title {
+        #header #logo #title {
             font-size: 48px;
             font-weight: bold;
         }
 
-        .header .logo .subtitle {
+        #header #logo #subtitle {
             font-size: 24px;
             font-weight: bold;
             text-align: center;
@@ -126,7 +126,7 @@ function renderNavigationStyles() {
             display: none;
         }
 
-        .navigation-container {
+        #navigation-container {
             position: absolute;
             display: flex;
             flex-direction: column;
@@ -136,7 +136,7 @@ function renderNavigationStyles() {
             width: ${navigationWidth};
         }
 
-        .navigation {
+        #navigation {
             width: 100%;
             display: inline-block;
             background-color: var(--accent-color);
@@ -149,29 +149,29 @@ function renderNavigationStyles() {
             scrollbar-width: thin;
         }
 
-        .link-area {
+        #link-area {
             position: relative;
             margin: 0 20px;
         }
 
-        .nav-section {
+        #nav-section {
             display: flex;
             flex-direction: row;
 
             border-top: 1px solid lightseagreen;
         }
 
-        .nav-section:first-of-type {
+        #nav-section:first-of-type {
             border-top: none;
         }
 
-        .nav-section-links {
+        #nav-section-links {
             display: flex;
             flex-direction: column;
             margin: 10px 0;
         }
 
-        .nav-section-heading {
+        #nav-section-heading {
             font-size: 30px;
             padding: 20px;
             writing-mode: vertical-rl;
@@ -179,7 +179,7 @@ function renderNavigationStyles() {
             text-shadow: 2px 2px 2px black;
         }
 
-        .home-link {
+        #home-link {
             font-size: 30px !important;
             border-bottom: none !important;
         }

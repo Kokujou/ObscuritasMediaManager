@@ -10,8 +10,8 @@ export function renderPathInputDialog(dialog) {
         @decline="${() => dialog.notifyDeclined()}"
         @accept="${() => dialog.notifyAccepted()}"
     >
-        <div class="dialog-content">
-            <div class="input-description">Bitte den Basispfad des ausgewählten Ordners eingeben:</div>
+        <div id="dialog-content">
+            <div id="input-description">Bitte den Basispfad des ausgewählten Ordners eingeben:</div>
             <input type="text" id="base-path-input" />
         </div>
     </dialog-base>`;

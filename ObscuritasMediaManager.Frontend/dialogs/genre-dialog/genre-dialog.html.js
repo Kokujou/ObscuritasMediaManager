@@ -12,7 +12,7 @@ export function renderGenreDialog(genreDialog) {
             @decline="${() => genreDialog.dispatchEvent(new CustomEvent('decline'))}"
             @accept="${() => genreDialog.accept()}"
         >
-            <div class="genre-container">
+            <div id="genre-container">
                 ${Object.keys(genreDialog.genreDict).map((section) =>
                     renderGenreSection(section, genreDialog.genreDict[section], genreDialog)
                 )}

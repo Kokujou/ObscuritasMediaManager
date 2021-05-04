@@ -99,8 +99,8 @@ export class PageRouting extends LitElement {
     }
 
     render() {
-        if (!this.currentRoute) return html`<div class="current-page"><slot></slot></div>`;
-        return html`<div class="current-page">${this.content ? html([this.content]) : html`<slot></slot>`}</div>`;
+        if (!this.currentRoute) return html`<div id="current-page"><slot></slot></div>`;
+        return html`<div id="current-page">${this.content ? html([this.content]) : html`<slot></slot>`}</div>`;
     }
 
     disconnectedCallback() {

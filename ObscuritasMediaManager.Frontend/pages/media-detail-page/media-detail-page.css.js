@@ -4,7 +4,7 @@ import { trashIcon } from './images/trash-icon.svg.js';
 
 export function renderMediaDetailPageStyles() {
     return css`
-        .media-detail-container {
+        #media-detail-container {
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -12,7 +12,7 @@ export function renderMediaDetailPageStyles() {
             margin-left: 60px;
         }
 
-        .media-heading {
+        #media-heading {
             font-size: 36px;
             margin-bottom: 20px;
             position: relative;
@@ -21,28 +21,28 @@ export function renderMediaDetailPageStyles() {
             width: 100%;
         }
 
-        .content-panels {
+        #content-panels {
             display: flex;
             flex-direction: row;
             height: min-content;
         }
 
-        .left-panel,
-        .right-panel,
-        .middle-panel {
+        #left-panel,
+        #right-panel,
+        #middle-panel {
             display: flex;
             flex-direction: column;
             flex: auto;
         }
 
-        .left-panel {
+        #left-panel {
             width: 30%;
             min-width: 300px;
             align-items: center;
             margin-right: 50px;
         }
 
-        .right-panel {
+        #right-panel {
             margin: 0 50px;
             flex: auto;
         }
@@ -55,7 +55,7 @@ export function renderMediaDetailPageStyles() {
             justify-content: center;
         }
 
-        .delete-icon-container {
+        #delete-icon-container {
             position: absolute;
             transition: opacity 1s ease;
             opacity: 0;
@@ -68,11 +68,11 @@ export function renderMediaDetailPageStyles() {
             border-radius: 20px;
         }
 
-        media-tile:hover .delete-icon-container {
+        media-tile:hover #delete-icon-container {
             opacity: 1;
         }
 
-        media-tile .delete-icon {
+        media-tile #delete-icon {
             width: 100px;
             height: 100px;
 
@@ -179,7 +179,7 @@ export function renderMediaDetailPageStyles() {
             line-break: strict;
         }
 
-        .add-genre-button {
+        #add-genre-button {
             border-radius: 50%;
             width: 20px;
             height: 20px;
@@ -192,12 +192,12 @@ export function renderMediaDetailPageStyles() {
             cursor: pointer;
         }
 
-        .media-rating {
+        #media-rating {
             display: flex;
             flex-direction: row;
         }
 
-        .media-rating .star {
+        #media-rating .star {
             color: gray;
             text-shadow: 3px 3px 3px black;
             font-size: 48px;
@@ -205,15 +205,15 @@ export function renderMediaDetailPageStyles() {
             line-height: 1;
         }
 
-        .media-rating .star.selected {
+        #media-rating .star.selected {
             color: yellow;
         }
 
-        .media-rating .star.hovered {
+        #media-rating .star.hovered {
             color: darkorange;
         }
 
-        .streaming-panel {
+        #streaming-panel {
             position: relative;
             display: flex;
             flex-direction: column;
@@ -231,7 +231,7 @@ export function renderMediaDetailPageStyles() {
             cursor: default;
         }
 
-        .season-scroll-area {
+        #season-scroll-area {
             max-width: 50%;
             display: flex;
             flex-direction: row;
@@ -239,7 +239,7 @@ export function renderMediaDetailPageStyles() {
             align-items: center;
         }
 
-        .season-inner {
+        #season-inner {
             display: flex;
             flex-direction: row;
 
@@ -253,15 +253,15 @@ export function renderMediaDetailPageStyles() {
             flex-wrap: nowrap;
         }
 
-        .season-scroll-area ::-webkit-scrollbar {
+        #season-scroll-area ::-webkit-scrollbar {
             display: none;
         }
 
-        .season-scroll-area .link {
+        #season-scroll-area .link {
             white-space: nowrap;
         }
 
-        .season-content {
+        #season-content {
             display: flex;
             flex-direction: column;
             align-items: center;

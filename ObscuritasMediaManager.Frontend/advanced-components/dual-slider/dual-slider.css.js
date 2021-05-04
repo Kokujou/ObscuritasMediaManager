@@ -8,27 +8,27 @@ export function renderDualSliderStyles() {
             display: block;
         }
 
-        .dual-slider {
+        #dual-slider {
             position: absolute;
             left: 0;
             right: 0;
             display: flex;
         }
 
-        .slider-line {
+        #slider-line {
             height: 5px;
             width: 100%;
             border-radius: 5px;
             background-color: #20b2aaaa;
         }
 
-        .slider-line .slider-container {
+        #slider-line #slider-container {
             background-color: #b2b220aa;
             height: 5px;
             position: absolute;
         }
 
-        .slider-line .slider {
+        #slider-line #slider {
             cursor: pointer;
             position: absolute;
             top: 50%;

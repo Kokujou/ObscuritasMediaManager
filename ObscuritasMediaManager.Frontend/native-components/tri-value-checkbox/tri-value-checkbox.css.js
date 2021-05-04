@@ -33,7 +33,7 @@ export function renderTriValueCheckbox() {
             bottom: 0;
             border-radius: 20px;
 
-            background-color: #00000033;
+            background-color: 0.00000033;
         }
 
         .checkbox.forbid {

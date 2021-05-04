@@ -25,7 +25,7 @@ export function renderSearchStyles() {
             box-shadow: 0 0 5px red;
         }
 
-        .searchbar-container {
+        #searchbar-container {
             display: flex;
             flex-direction: column;
             margin: 0 200px;
@@ -33,14 +33,14 @@ export function renderSearchStyles() {
             position: relative;
         }
 
-        .searchbar {
+        #searchbar {
             display: flex;
             flex-direction: row;
 
             align-items: center;
         }
 
-        .search-input {
+        #search-input {
             font-size: 18px;
 
             margin-top: 10px;
@@ -61,7 +61,7 @@ export function renderSearchStyles() {
             --search-icon-shadow: drop-shadow(0px 0px 8px rgba(0, 0, 0, 1));
         }
 
-        .extended-search-icon {
+        #extended-search-icon {
             mask-image: url('../../resources/images/settings.svg');
             mask-size: 100% 100%;
             mask-repeat: no-repeat;
@@ -77,7 +77,7 @@ export function renderSearchStyles() {
             cursor: pointer;
         }
 
-        .reset-icon {
+        #reset-icon {
             mask-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(resetIcon()))}');
             mask-size: 100% 100%;
             mask-repeat: no-repeat;

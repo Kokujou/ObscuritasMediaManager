@@ -7,7 +7,7 @@ export function renderPageRoutingStyles() {
             --accent-color-full: #5555ff;
         }
 
-        .current-page {
+        #current-page {
             position: fixed;
             left: 0;
             top: 0;

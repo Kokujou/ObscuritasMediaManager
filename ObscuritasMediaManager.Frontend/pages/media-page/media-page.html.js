@@ -9,7 +9,7 @@ import { MediaPage } from './media-page.js';
  */
 export function renderMediaPageTemplate(mediaPage, inner) {
     return html`<page-layout>
-        <div class="media-page-container">
+        <div id="media-page-container">
             <media-search
                 @filterUpdated="${(e) => mediaPage.updateSearchFilter(e.detail)}"
                 .episodeCountFilter="${mediaPage.filterData.episodeCountFilter}"
@@ -17,12 +17,12 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                 .ratingFilter="${mediaPage.filterData.ratingFilter}"
                 .searchText="${mediaPage.filterData.searchText}"
             ></media-search>
-            <div class="search-result-container">
-                <div class="left-container">
-                    <div class="filter-options"></div>
-                    <div class="ranking-table"></div>
+            <div id="search-result-container">
+                <div id="left-container">
+                    <div id="filter-options"></div>
+                    <div id="ranking-table"></div>
                 </div>
-                <div class="right-container">
+                <div id="right-container">
                     <media-tile
                         id="123"
                         name="Eintrag hinzufügen"

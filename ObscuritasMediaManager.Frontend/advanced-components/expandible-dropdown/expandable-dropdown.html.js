@@ -6,17 +6,17 @@ import { ExpandableDropdown } from './expandable-dropdown.js';
  */
 export function renderExpandableDropdown(dropdown) {
     return html`
-        <div class="result-filter inactive">
+        <div id="result-filter" class="inactive">
             <div
-                class="filter-title"
+                id="filter-title"
                 @click="${(e) => {
                     if (!dropdown.disabled) ExpandableDropdown.switchActiveClass(e.target.parentElement);
                 }}"
             >
-                <div class="title-text">${dropdown.caption}</div>
-                <div class="title-arrow">⯆</div>
+                <div id="title-text">${dropdown.caption}</div>
+                <div id="title-arrow">⯆</div>
             </div>
-            <div class="filter-container">
+            <div id="filter-container">
                 <slot></slot>
             </div>
         </div>

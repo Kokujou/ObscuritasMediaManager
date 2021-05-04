@@ -2,7 +2,7 @@ import { css } from '../../exports.js';
 
 export function renderDialogBaseStyles() {
     return css`
-        .dialog-outer {
+        #dialog-outer {
             position: fixed;
             top: 0;
             right: 0;
@@ -18,13 +18,13 @@ export function renderDialogBaseStyles() {
             justify-content: center;
         }
 
-        .dialog-border {
+        #dialog-border {
             padding: 10px;
             border: 1px solid #333355;
             border-radius: 20px;
         }
 
-        .dialog-container {
+        #dialog-container {
             display: flex;
             flex-direction: column;
             background-color: #333355;
@@ -32,16 +32,16 @@ export function renderDialogBaseStyles() {
             padding: 30px;
         }
 
-        .dialog-content {
+        #dialog-content {
             margin: 20px;
         }
 
-        .dialog-title {
+        #dialog-title {
             font-size: 48px;
             margin-bottom: 20px;
         }
 
-        .dialog-actions {
+        #dialog-actions {
             display: inline-flex;
             flex-direction: row;
             margin-top: 20px;
@@ -49,11 +49,11 @@ export function renderDialogBaseStyles() {
             justify-content: flex-end;
         }
 
-        .dialog-actions > * {
+        #dialog-actions > * {
             margin-right: 40px;
         }
 
-        .dialog-actions > :last-child {
+        #dialog-actions > :last-child {
             margin-right: 0;
         }
     `;

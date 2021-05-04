@@ -12,7 +12,7 @@ export function renderUploadAreaStyles() {
             display: flex;
         }
 
-        .image-container {
+        #image-container {
             position: relative;
             flex: auto;
 
@@ -25,7 +25,7 @@ export function renderUploadAreaStyles() {
             flex-direction: row;
         }
 
-        .add-icon {
+        #add-icon {
             opacity: 1;
             pointer-events: all;
             position: absolute;
@@ -44,28 +44,28 @@ export function renderUploadAreaStyles() {
             background-color: #bbbbbb77;
         }
 
-        .image-container:focus-within .add-icon,
-        .image-container.focus .add-icon {
+        #image-container:focus-within #add-icon,
+        #image-container#focus #add-icon {
             opacity: 0;
             pointer-events: none;
         }
 
-        .image-container:focus-within .upload-description,
-        .image-container.focus .upload-description {
+        #image-container:focus-within #upload-description,
+        #image-container#focus #upload-description {
             opacity: 1;
             pointer-events: all;
         }
 
-        .image-container .upload-description {
+        #image-container #upload-description {
             opacity: 0;
             pointer-events: none;
         }
 
-        .upload-description:focus-within {
+        #upload-description:focus-within {
             border-color: #553355;
         }
 
-        .upload-description {
+        #upload-description {
             display: flex;
             flex-direction: column;
 
@@ -88,36 +88,36 @@ export function renderUploadAreaStyles() {
             user-select: none;
         }
 
-        .upload-description .icon-section {
+        #upload-description #icon-section {
             display: flex;
             flex-direction: row;
             height: 50px;
             margin-bottom: 20px;
         }
 
-        .upload-description .icon-section > * {
+        #upload-description #icon-section > * {
             flex: auto;
             align-items: center;
         }
 
-        .upload-description .brose-files-link {
+        #upload-description #brose-files-link {
             color: lightseagreen;
             font-weight: bold;
             text-shadow: 1px 1px 1px black;
         }
 
-        .image-container > * {
+        #image-container > * {
             transition: opacity ease 1s;
             user-select: none;
             caret-color: transparent;
         }
 
-        .clipboard-icon {
+        #clipboard-icon {
             mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(clipboardIcon()))}');
             -webkit-mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(clipboardIcon()))}');
         }
 
-        .drop-icon {
+        #drop-icon {
             mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(dropIcon()))}');
             -webkit-mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(dropIcon()))}');
         }

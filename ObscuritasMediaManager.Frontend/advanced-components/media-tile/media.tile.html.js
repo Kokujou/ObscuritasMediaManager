@@ -6,24 +6,24 @@ import { MediaTile } from './media-tile.js';
  */
 export function renderMediaTile(tile) {
     return html` <style>
-            .tile-image {
+            #tile-image {
                 background-image: url('${tile.imageSource}');
             }
         </style>
 
-        <div class="tile-container">
-            ${tile.displayStyle == 'simple' ? '' : html`<div class="rating-container">${renderRating(tile)}</div>`} <br />
+        <div id="tile-container">
+            ${tile.displayStyle == 'simple' ? '' : html`<div id="rating-container">${renderRating(tile)}</div>`} <br />
             ${renderImageContainer(tile)}
         </div>
-        <div class="caption">${tile.name}</div>
+        <div id="caption">${tile.name}</div>
         ${tile.displayStyle == 'solid'
             ? html`
-                  <div class="genre-list">
+                  <div id="genre-list">
                       ${tile.genres.map((genre) => renderGenreTag(tile, genre))} <br />
                       ${tile.newGenre ? renderGenreTag(tile, 'test', true) : ''}
                       ${!tile.newGenre
                           ? html`<div
-                                class="add-genre-button"
+                                id="add-genre-button"
                                 @click="${(e) => {
                                     e.stopPropagation();
                                     tile.newGenre = true;
@@ -43,7 +43,7 @@ export function renderMediaTile(tile) {
  */
 function renderImageContainer(tile) {
     if (tile.imageSource)
-        return html`<div class="tile-image">
+        return html`<div id="tile-image">
             <div class="status-icon ${tile.status}"></div>
         </div>`;
 

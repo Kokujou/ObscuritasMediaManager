@@ -13,31 +13,31 @@ export function renderMediaDetailPage(detailPage) {
         </style>
 
         <page-layout>
-            <div class="media-detail-container">
-                <div class="content-panels">
-                    <div class="left-panel">
+            <div id="media-detail-container">
+                <div id="content-panels">
+                    <div id="left-panel">
                         <media-tile
                             displayStyle="simple"
                             .imageSource="${detailPage.media.image}"
                             @imageReceived="${(e) => detailPage.addImage(e.detail.imageData)}"
                         >
                             ${detailPage.media.image
-                                ? html`<div class="delete-icon-container">
-                                      <div class="delete-icon" @click="${() => detailPage.deleteImage()}"></div>
+                                ? html`<div id="delete-icon-container">
+                                      <div id="delete-icon" @click="${() => detailPage.deleteImage()}"></div>
                                   </div>`
                                 : ''}
                         </media-tile>
-                        <div class="media-rating">${renderRating(detailPage)}</div>
+                        <div id="media-rating">${renderRating(detailPage)}</div>
                     </div>
-                    <div class="middle-panel">
+                    <div id="middle-panel">
                         <div class="property-entry">
                             <div class="property-name">Inhaltswarnungen:</div>
-                            <div class="content-warnings"></div>
+                            <div id="content-warnings"></div>
                             <div class="edit-icon"></div>
                         </div>
                     </div>
-                    <div class="right-panel">
-                        <div class="media-heading">
+                    <div id="right-panel">
+                        <div id="media-heading">
                             <input
                                 disabled
                                 type="text"
@@ -79,8 +79,8 @@ export function renderMediaDetailPage(detailPage) {
                         </div>
                     </div>
                 </div>
-                <div class="streaming-panel">
-                    <div class="season-scroll-area">
+                <div id="streaming-panel">
+                    <div id="season-scroll-area">
                         <div
                             class="arrow ${(!detailPage.seasonScrollContainer || detailPage.seasonScrollContainer.scrollLeft) == 0
                                 ? 'inactive'
@@ -89,7 +89,7 @@ export function renderMediaDetailPage(detailPage) {
                         >
                             ◀
                         </div>
-                        <div id="season-inner" class="season-inner" @scroll="${() => detailPage.requestUpdate(undefined)}">
+                        <div id="season-inner" id="season-inner" @scroll="${() => detailPage.requestUpdate(undefined)}">
                             ${detailPage.seasons.map(
                                 (season, index) =>
                                     html`<div
@@ -101,7 +101,7 @@ export function renderMediaDetailPage(detailPage) {
                             )}
                         </div>
                         <div
-                            class="arrow ${detailPage.seasonScrollContainer &&
+                            id="arrow ${detailPage.seasonScrollContainer &&
                             detailPage.seasonScrollContainer.scrollLeft >=
                                 detailPage.seasonScrollContainer.scrollWidth - detailPage.seasonScrollContainer.offsetWidth
                                 ? 'inactive'
@@ -111,7 +111,7 @@ export function renderMediaDetailPage(detailPage) {
                             ▶
                         </div>
                     </div>
-                    <div class="season-content">
+                    <div id="season-content">
                         ${detailPage.episodes.map(
                             (entry) =>
                                 html`<div @click="${() => detailPage.openVideoPlayer(entry)}" class="link">
@@ -134,7 +134,7 @@ function renderGenreSection(detailPage) {
         <div class="property-value">
             ${detailPage.media.genres.map((x) => html`<tag-label @removed="${() => detailPage.removeGenre(x)}" .text="${x}"></tag-label>`)}
             ${detailPage.newGenre ? html`<tag-label .createNew="${true}"></tag-label>` : ''}
-            <div class="add-genre-button" @click="${() => detailPage.showGenreSelectionDialog()}">+</div>
+            <div id="add-genre-button" @click="${() => detailPage.showGenreSelectionDialog()}">+</div>
         </div>
     </div> `;
 }

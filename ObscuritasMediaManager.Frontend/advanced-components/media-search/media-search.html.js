@@ -7,23 +7,24 @@ import { MediaSearch } from './media-search.js';
  */
 export function renderMediaSearch(mediaSearch) {
     return html`
-        <div class="searchbar-container">
-            <div class="searchbar">
+        <div id="searchbar-container">
+            <div id="searchbar">
                 <input
                     type="text"
-                    class="search-input textbox"
+                    id="search-input"
+                    class="textbox"
                     placeholder="Suchbegriff"
                     @input="${(e) => e.target.dispatchEvent(new Event('change'))}"
                     @change="${() => mediaSearch.updateSearchTextFilter()}"
                 />
                 <div class="icon-container" @click="${() => mediaSearch.resetFilters()}">
-                    <div class="reset-icon"></div>
+                    <div id="reset-icon"></div>
                 </div>
                 <div class="icon-container">
-                    <div class="extended-search-icon"></div>
+                    <div id="extended-search-icon"></div>
                 </div>
             </div>
-            <div class="result-options">
+            <div id="result-options">
                 ${renderRatingFitler(mediaSearch)}<br />
                 ${renderEpisodeCountFilter(mediaSearch)}<br />
                 ${renderReleaseDateFilter(mediaSearch)}<br />
@@ -39,8 +40,8 @@ export function renderMediaSearch(mediaSearch) {
  */
 function renderRatingFitler(MediaSearch) {
     return html`<expandable-dropdown caption="Bewertung">
-        <div class="filter-container">
-            <div class="star-rating">
+        <div id="filter-container">
+            <div id="star-rating">
                 ${[1, 2, 3, 4, 5].map(
                     (rating) =>
                         html`<div @click="${() => MediaSearch.toggleRating(rating)}" class="star ${MediaSearch.getRatingClass(rating)}">
@@ -57,7 +58,7 @@ function renderRatingFitler(MediaSearch) {
  */
 function renderEpisodeCountFilter(MediaSearch) {
     return html`<expandable-dropdown caption="Episodenzahl">
-        <div class="episode-count-filter">
+        <div id="episode-count-filter">
             ${renderNumberInput('left-episode-count', '0', () => MediaSearch.updateEpisodeFilter())}
             <div class="separator">-</div>
             ${renderNumberInput('right-episode-count', '9999', () => MediaSearch.updateEpisodeFilter())}
@@ -70,7 +71,7 @@ function renderEpisodeCountFilter(MediaSearch) {
  */
 function renderReleaseDateFilter(MediaSearch) {
     return html`<expandable-dropdown caption="Veröffentlichung">
-        <div class="release-date-filter">
+        <div id="release-date-filter">
             ${renderNumberInput('left-release-date', '1900', () => MediaSearch.udpateReleaseDateFilter())}
             <div class="separator">-</div>
             ${renderNumberInput('right-release-date', `${new Date().getFullYear()}`, () => MediaSearch.udpateReleaseDateFilter())}

@@ -2,33 +2,33 @@ import { css } from '../../exports.js';
 
 export function renderWelcomePageStyles() {
     return css`
-        .welcome-page {
+        #welcome-page {
             margin: 40px;
         }
 
-        .page-heading {
+        #page-heading {
             font-size: 40px;
             font-weight: bold;
             margin-bottom: 40px;
             text-align: center;
         }
 
-        .greeting {
+        #greeting {
             margin: 20px;
         }
 
-        .tile-link-area {
+        #tile-link-area {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .tile-link-section {
+        #tile-link-section {
             display: flex;
             flex-wrap: wrap;
         }
 
-        .tile-link-section > * {
+        #tile-link-section > * {
             margin: 20px;
         }
 

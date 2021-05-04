@@ -2,12 +2,12 @@ import { css } from '../../exports.js';
 
 export function renderExpandableDropdownStyles() {
     return css`
-        .result-filter {
+        #result-filter {
             background-color: var(--accent-color);
             border-radius: 20px;
         }
 
-        .filter-title {
+        #filter-title {
             cursor: pointer;
             padding: 20px;
             font-size: 20px;
@@ -15,31 +15,31 @@ export function renderExpandableDropdownStyles() {
             flex-direction: row;
         }
 
-        .title-text {
+        #title-text {
             flex: auto;
         }
 
-        .filter-title * {
+        #filter-title * {
             pointer-events: none;
         }
 
-        .title-arrow {
+        #title-arrow {
             font-size: 18px;
             margin-left: 10px;
         }
 
-        .result-filter.active .title-arrow {
+        #result-filter.active #title-arrow {
             transform: rotate(180deg);
         }
 
-        .filter-container {
+        #filter-container {
             height: 0;
 
             transition: height 1s ease;
             overflow: hidden;
         }
 
-        .result-filter.active .filter-container {
+        #result-filter.active #filter-container {
             height: 75px;
 
             transform: translateY(0);

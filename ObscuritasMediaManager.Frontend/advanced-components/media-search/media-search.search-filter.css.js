@@ -2,7 +2,7 @@ import { css } from '../../exports.js';
 
 export function renderSearchFilterStyles() {
     return css`
-        .result-options {
+        #result-options {
             top: 100%;
             position: absolute;
             margin-top: 10px;
@@ -13,17 +13,17 @@ export function renderSearchFilterStyles() {
             z-index: 1;
         }
 
-        .result-options > * {
+        #result-options > * {
             margin-right: 10px;
             margin-bottom: 10px;
         }
 
-        .result-options > :last-of-type {
+        #result-options > :last-of-type {
             margin-right: 0;
             margin-bottom: 0;
         }
 
-        .filter-container .star-rating {
+        #filter-container #star-rating {
             width: 250px;
             display: flex;
             flex-direction: row;
@@ -31,7 +31,7 @@ export function renderSearchFilterStyles() {
             justify-content: center;
         }
 
-        .star-rating .star {
+        #star-rating .star {
             color: gray;
             margin: 5px;
             margin-top: 0;
@@ -39,12 +39,12 @@ export function renderSearchFilterStyles() {
             cursor: pointer;
         }
 
-        .star-rating .star.selected {
+        #star-rating .star.selected {
             color: yellow;
         }
 
-        .episode-count-filter,
-        .release-date-filter {
+        #episode-count-filter,
+        #release-date-filter {
             width: 200px;
             margin: 10px;
             display: flex;
@@ -54,13 +54,13 @@ export function renderSearchFilterStyles() {
             font-size: 18px;
         }
 
-        .episode-count-filter > *,
-        .release-date-filter > * {
+        #episode-count-filter > *,
+        #release-date-filter > * {
             margin-right: 10px;
         }
 
-        .episode-count-filter > :last-child,
-        .release-date-filter > :last-child {
+        #episode-count-filter > :last-child,
+        #release-date-filter > :last-child {
             margin-right: 0;
         }
 

@@ -2,7 +2,7 @@ import { css } from '../../exports.js';
 
 export function renderGenreDialogStyles() {
     return css`
-        .genre-container {
+        #genre-container {
             max-height: 50vh;
             max-width: 50vw;
             overflow-y: auto;

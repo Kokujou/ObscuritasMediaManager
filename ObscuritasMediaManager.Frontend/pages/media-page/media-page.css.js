@@ -4,13 +4,13 @@ import { plusIcon } from '../../resources/icons/plus-icon.svg.js';
 
 export function renderMediaPageStyles() {
     return css`
-        .media-page-container {
+        #media-page-container {
             display: flex;
             flex-direction: column;
             max-height: 100%;
         }
 
-        .search-result-container {
+        #search-result-container {
             overflow-y: scroll;
             position: relative;
             bottom: 0;
@@ -23,19 +23,19 @@ export function renderMediaPageStyles() {
             scrollbar-width: thin;
         }
 
-        .right-container {
+        #right-container {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
             align-items: flex-start;
         }
 
-        .right-container > * {
+        #right-container > * {
             margin-left: 60px;
             margin-bottom: 60px;
         }
 
-        .tile-button {
+        #tile-button {
             width: 200px;
             height: 200px;
 
@@ -48,7 +48,7 @@ export function renderMediaPageStyles() {
             min-height: 300px;
         }
 
-        .add-button {
+        #add-button {
             mask-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(plusIcon()))}');
             mask-size: 100% 100%;
 
@@ -58,7 +58,7 @@ export function renderMediaPageStyles() {
             background-color: #bbbbbb77;
         }
 
-        .import-button {
+        #import-button {
             mask-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(importIcon()))}');
             mask-size: 100% 100%;
 

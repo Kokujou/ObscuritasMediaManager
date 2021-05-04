@@ -6,7 +6,7 @@ export function renderObscuritasMediaManagerStyles() {
             transition: display, opacity 4s ease;
         }
 
-        .loading-overlay {
+        #loading-overlay {
             position: fixed;
             top: 0;
             bottom: 0;
@@ -21,16 +21,16 @@ export function renderObscuritasMediaManagerStyles() {
             transition: display, opacity 2s ease;
         }
 
-        .active {
+        #active {
             opacity: 1;
         }
 
-        .inactive {
+        #inactive {
             opacity: 0;
             display: none;
         }
 
-        .loading-icon {
+        #loading-icon {
             position: absolute;
 
             --donut-chart-border-width: 10px;
@@ -58,19 +58,19 @@ export function renderObscuritasMediaManagerStyles() {
             padding-top: 0%;
         }
 
-        .outer {
+        #outer {
             animation-delay: 2s;
         }
 
-        .inner-1 {
+        #inner-1 {
             animation-delay: 1.5s;
         }
 
-        .inner-2 {
+        #inner-2 {
             animation-delay: 1s;
         }
 
-        .inner-3 {
+        #inner-3 {
             animation-delay: 0.5s;
         }
 

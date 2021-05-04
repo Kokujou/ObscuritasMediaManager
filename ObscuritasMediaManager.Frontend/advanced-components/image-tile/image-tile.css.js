@@ -2,7 +2,7 @@ import { css } from '../../exports.js';
 
 export function renderWebcomponentTemplateStyles() {
     return css`
-        .tile-container {
+        #tile-container {
             position: relative;
             width: 100%;
             height: 100%;
@@ -13,7 +13,7 @@ export function renderWebcomponentTemplateStyles() {
             cursor: pointer;
         }
 
-        .image-tile {
+        #image-tile {
             display: flex;
             flex-direction: column;
             flex: auto;
@@ -21,7 +21,7 @@ export function renderWebcomponentTemplateStyles() {
             padding: 25px 0;
         }
 
-        .image-content {
+        #image-content {
             flex: auto;
 
             background-size: contain;
@@ -29,7 +29,7 @@ export function renderWebcomponentTemplateStyles() {
             background-position: center;
         }
 
-        .image-text {
+        #image-text {
             text-align: center;
             font-size: 30px;
             font-weight: bold;
