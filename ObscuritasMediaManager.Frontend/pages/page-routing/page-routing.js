@@ -1,9 +1,10 @@
 import { Subscription } from '../../data/observable.js';
 import { RouteDefinition } from '../../data/pages.js';
 import { session } from '../../data/session.js';
-import { html, LitElement } from '../../exports.js';
+import { LitElement } from '../../exports.js';
 import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
 import { renderPageRoutingStyles } from './page-routing.css.js';
+import { renderPageRouting } from './page-routing.html.js';
 
 export class PageRouting extends LitElement {
     static get styles() {
@@ -44,7 +45,11 @@ export class PageRouting extends LitElement {
             session.currentPage.next(location.hash.length > 1 ? location.hash.substr(1) : 'empty');
         };
 
-        window.addEventListener('resize', () => this.requestUpdate(undefined));
+        document.addEventListener('resize', () => this.requestUpdate(undefined));
+        var self = this;
+        document.addEventListener('orientationchanged', function () {
+            self.requestUpdate(undefined);
+        });
     }
 
     connectedCallback() {
@@ -68,6 +73,7 @@ export class PageRouting extends LitElement {
     }
 
     get content() {
+        if (!this.currentRoute) return null;
         return this.currentRoute.component;
     }
 
@@ -99,8 +105,7 @@ export class PageRouting extends LitElement {
     }
 
     render() {
-        if (!this.currentRoute) return html`<div id="current-page"><slot></slot></div>`;
-        return html`<div id="current-page">${this.content ? html([this.content]) : html`<slot></slot>`}</div>`;
+        return renderPageRouting(this);
     }
 
     disconnectedCallback() {
