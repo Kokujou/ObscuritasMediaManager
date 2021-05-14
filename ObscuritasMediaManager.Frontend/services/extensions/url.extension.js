@@ -11,6 +11,5 @@ import { session } from '../../data/session.js';
 export function changePage(target, search = '') {
     var newUrl = '/' + search + `#${target}`;
     history.pushState(null, null, newUrl);
-    console.log(newUrl);
     session.currentPage.next(target);
 }

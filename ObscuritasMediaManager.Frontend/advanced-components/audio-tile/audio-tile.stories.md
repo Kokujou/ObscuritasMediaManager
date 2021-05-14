@@ -2,9 +2,6 @@
 import { html } from '@open-wc/demoing-storybook';
 import { withKnobs, text, select } from 'storybook-prebuilt/addon-knobs';
 
-const navigationTexts = ['Start', 'App Store', 'Services', 'Notifications', 'Help'];
-const navigationTargets = ['start', 'appstore', 'services', 'notifications', 'help'];
-
 export default {
     title: 'AudioTile',
     component: 'audio-tile',
@@ -39,9 +36,26 @@ give an example on how to implement your webcomponent. to enable our AHP styling
 use available knob-functions to make properties or contents of your webcomponent configurable in the storybook
 
 ```js preview-story
+import { Mood } from '../../data/enumerations/mood.js';
+import { Nations } from '../../data/enumerations/nations.js';
 export const Multiple = () => html`
+    <style>
+        audio-tile {
+            width: 200px;
+            margin: 20px;
+            min-height: 200px;
+        }
+    </style>
+
     <page-routing>
-        <audio-tile></audio-tile>
+        <audio-tile
+            caption="Die Schafswolke"
+            mood="${select('Mood', Object.values(Mood), 'romantic')}"
+            autor="olle Ko-Schnitte"
+            source="My Brain"
+            language="${select('Nation', Object.values(Nations), 'japanese')}"
+            nation="${select('Language', Object.values(Nations), 'japanese')}"
+        ></audio-tile>
     </page-routing>
 `;
 ```

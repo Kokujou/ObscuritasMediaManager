@@ -20,7 +20,7 @@ namespace ObscuritasMediaManager.Backend
 
             services.AddCors(x =>
                 x.AddPolicy("all",
-                    builder => builder.WithOrigins("https://localhost").WithOrigins("https://obscuritas.strangled.net")
+                    builder => builder.WithOrigins("https://localhost", "https://obscuritas.strangled.net")
                         .AllowAnyHeader().AllowAnyMethod()));
         }
 
@@ -30,6 +30,7 @@ namespace ObscuritasMediaManager.Backend
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseRouting();
+            app.UseHttpsRedirection();
 
             app.UseCors("all");
 
