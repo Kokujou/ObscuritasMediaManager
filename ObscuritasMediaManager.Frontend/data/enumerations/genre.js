@@ -1,0 +1,21 @@
+/** @enum {string} */
+export const Genre = {
+    Avantgarde: 'Avant-Garde',
+    Blues: 'Blues',
+    Classic: 'Classic',
+    Comedy: 'Comedy',
+    Country: 'Country',
+    EasyListening: 'Easy listening',
+    Electronic: 'Electronic',
+    House: 'House',
+    Flamenco: 'Flamenco',
+    Folk: 'Folk',
+    Jazz: 'Jazz',
+    Latin: 'Latin',
+    Pop: 'Pop',
+    RnB: 'Rythm & Soul',
+    Soul: 'Soul',
+    Rock: 'Rock',
+    Metal: 'Metal',
+    March: 'March',
+};

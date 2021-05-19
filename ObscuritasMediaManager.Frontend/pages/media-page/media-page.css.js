@@ -1,6 +1,7 @@
-import { css, unsafeCSS } from '../../exports.js';
+import { css } from '../../exports.js';
 import { importIcon } from '../../resources/icons/import-icon.svg.js';
 import { plusIcon } from '../../resources/icons/plus-icon.svg.js';
+import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderMediaPageStyles() {
     return css`
@@ -49,21 +50,13 @@ export function renderMediaPageStyles() {
         }
 
         #add-button {
-            mask-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(plusIcon()))}');
-            mask-size: 100% 100%;
-
-            -webkit-mask-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(plusIcon()))}');
-            -webkit-mask-size: 100% 100%;
+            ${renderMaskImage(plusIcon())};
 
             background-color: #bbbbbb77;
         }
 
         #import-button {
-            mask-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(importIcon()))}');
-            mask-size: 100% 100%;
-
-            -webkit-mask-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(importIcon()))}');
-            -webkit-mask-size: 100% 100%;
+            ${renderMaskImage(importIcon())};
 
             background-color: #bbbbbb77;
         }

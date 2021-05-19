@@ -1,9 +1,8 @@
-import { InstrumentTypes } from '../../data/enumerations/instrument-types.js';
 import { Instrumentation } from '../../data/enumerations/instrumentation.js';
 import { Instruments } from '../../data/enumerations/instruments.js';
 import { Mood } from '../../data/enumerations/mood.js';
 import { Nations } from '../../data/enumerations/nations.js';
-import { Participans } from '../../data/enumerations/participans.js';
+import { Participants } from '../../data/enumerations/participants.js';
 import { LitElement } from '../../exports.js';
 import { renderAudioTileStyles } from './audio-tile.css.js';
 import { renderAudioTile } from './audio-tile.html.js';
@@ -23,7 +22,6 @@ export class AudioTile extends LitElement {
             instrumentation: { type: String, reflect: true },
             participantCount: { type: String, reflect: true },
             instruments: { type: Array, reflect: true },
-            instrumentTypes: { type: Array, reflect: true },
             genres: { type: Array, reflect: true },
             mood: { type: String, reflect: true },
         };
@@ -37,9 +35,8 @@ export class AudioTile extends LitElement {
         /** @type {Nations} */ this.language;
         /** @type {Nations} */ this.nation;
         /** @type {Instrumentation} */ this.instrumentation;
-        /** @type {Participans} */ this.participantCount;
+        /** @type {Participants} */ this.participantCount;
         /** @type {Instruments[]} */ this.instruments = [];
-        /** @type {InstrumentTypes[]} */ this.instrumentTypes = [];
         /** @type {string[]} */ this.genres = [];
         /** @type {Mood} */ this.mood;
     }
@@ -51,6 +48,10 @@ export class AudioTile extends LitElement {
     get sourceText() {
         if (this.source) return `(${this.source})`;
         return '';
+    }
+
+    notifyEditRequested() {
+        this.dispatchEvent(new CustomEvent('edit'));
     }
 
     render() {

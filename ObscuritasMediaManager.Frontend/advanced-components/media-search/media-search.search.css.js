@@ -1,5 +1,7 @@
-import { css, unsafeCSS } from '../../exports.js';
+import { css } from '../../exports.js';
+import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { resetIcon } from './images/reset-icon.svg.js';
+import { settingsIcon } from './images/settings-icon.svg.js';
 
 export function renderSearchStyles() {
     return css`
@@ -62,13 +64,7 @@ export function renderSearchStyles() {
         }
 
         #extended-search-icon {
-            mask-image: url('../../resources/images/settings.svg');
-            mask-size: 100% 100%;
-            mask-repeat: no-repeat;
-
-            -webkit-mask-image: url('../../resources/images/settings.svg');
-            -webkit-mask-size: 100% 100%;
-            -webkit-mask-repeat: no-repeat;
+            ${renderMaskImage(settingsIcon())};
 
             background: gray;
             width: 50px;
@@ -78,13 +74,7 @@ export function renderSearchStyles() {
         }
 
         #reset-icon {
-            mask-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(resetIcon()))}');
-            mask-size: 100% 100%;
-            mask-repeat: no-repeat;
-
-            -webkit-mask-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(resetIcon()))}');
-            -webkit-mask-size: 100% 100%;
-            -webkit-mask-repeat: no-repeat;
+            ${renderMaskImage(resetIcon())};
 
             background: darkred;
             width: 50px;

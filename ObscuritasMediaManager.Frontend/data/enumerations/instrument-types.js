@@ -3,7 +3,7 @@ export const InstrumentTypes = {
     Vocal: 'vocal',
     WoodWind: 'wood-wind',
     Brass: 'brass',
-    Percussion: 'precussion',
+    Percussion: 'percussion',
     Stringed: 'stringed',
     Keyboard: 'keyboard',
     Electronic: 'electronic',

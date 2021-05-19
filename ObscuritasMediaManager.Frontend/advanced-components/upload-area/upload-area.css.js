@@ -1,5 +1,6 @@
-import { css, unsafeCSS } from '../../exports.js';
+import { css } from '../../exports.js';
 import { plusIcon } from '../../resources/icons/plus-icon.svg.js';
+import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { clipboardIcon } from './images/clipboard-icon.svg.js';
 import { dropIcon } from './images/drop-icon.svg.js';
 
@@ -34,13 +35,10 @@ export function renderUploadAreaStyles() {
             right: 0;
             bottom: 0;
 
-            mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(plusIcon(true)))}');
-            -webkit-mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(plusIcon(true)))}');
+            ${renderMaskImage(plusIcon(true))};
         }
 
         .icon {
-            -webkit-mask-size: 100% 100%;
-            mask-size: 100% 100%;
             background-color: #bbbbbb77;
         }
 
@@ -113,13 +111,11 @@ export function renderUploadAreaStyles() {
         }
 
         #clipboard-icon {
-            mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(clipboardIcon()))}');
-            -webkit-mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(clipboardIcon()))}');
+            ${renderMaskImage(clipboardIcon())};
         }
 
         #drop-icon {
-            mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(dropIcon()))}');
-            -webkit-mask-image: url('data: image/svg+xml;base64,${unsafeCSS(btoa(dropIcon()))}');
+            ${renderMaskImage(dropIcon())};
         }
     `;
 }

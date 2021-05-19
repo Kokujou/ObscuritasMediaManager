@@ -12,15 +12,25 @@ export function renderAudioTile(audioTile) {
                 <div id="nation-icon" class="inline-icon ${audioTile.nation}"></div>
                 <div id="language-icon" class="inline-icon ${audioTile.language}"></div>
             </div>
-            <div id="instrumentation-icon" class="icon-container"></div>
-            <div id="participant-count-icon" class="icon-container ${audioTile.participantCount}"></div>
+            <div id="instrumentation-icon" class="icon-container inline-icon">${audioTile.instrumentation}</div>
+            <div id="participant-count-icon" class="icon-container inline-icon ${audioTile.participantCount}"></div>
+            <div id="edit-icon-container" class="icon-container">
+                <div id="edit-icon" @click="${() => audioTile.notifyEditRequested()}" class="inline-icon"></div>
+            </div>
         </div>
         <div id="tile-description">
             <div id="instrument-icons">${renderInstrumentIcons(audioTile)}</div>
             <div id="audio-title">${audioTile.caption} ${audioTile.autorText} ${audioTile.sourceText}</div>
-            <div id="audio-genre-section"></div>
+            <div id="audio-genre-section">${renderGenreTags(audioTile)}</div>
         </div>
     </div>`;
+}
+
+/**
+ * @param {AudioTile} audioTile
+ */
+function renderGenreTags(audioTile) {
+    return audioTile.genres.map((genre) => html` <tag-label .text="${genre}"></tag-label> `);
 }
 
 /**
@@ -29,11 +39,14 @@ export function renderAudioTile(audioTile) {
 function renderInstrumentIcons(audioTile) {
     /** @type {string[]} */ var iconsToDisplay = [];
     var className = '';
-    if (audioTile.instruments.length > 7) {
-        iconsToDisplay = audioTile.instrumentTypes;
+    if (audioTile.instruments.length > 0) {
+        iconsToDisplay = [];
+        audioTile.instruments.forEach((instrument) => {
+            if (!iconsToDisplay.includes(instrument.type)) iconsToDisplay.push(instrument.type);
+        });
         className = 'instrument';
     } else {
-        iconsToDisplay = audioTile.instruments;
+        iconsToDisplay = audioTile.instruments.map((x) => x.name);
         className = 'instrument-type';
     }
 

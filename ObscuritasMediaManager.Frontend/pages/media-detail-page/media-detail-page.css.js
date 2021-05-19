@@ -1,4 +1,5 @@
-import { css, unsafeCSS } from '../../exports.js';
+import { css } from '../../exports.js';
+import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { editIcon } from './images/edit-icon.svg.js';
 import { trashIcon } from './images/trash-icon.svg.js';
 
@@ -81,15 +82,7 @@ export function renderMediaDetailPageStyles() {
             z-index: 1;
             cursor: pointer;
 
-            mask: url('data:image/svg+xml;base64,${unsafeCSS(btoa(trashIcon()))}');
-            mask-size: contain;
-            mask-repeat: no-repeat;
-            mask-position: center;
-
-            -webkit-mask: url('data:image/svg+xml;base64,${unsafeCSS(btoa(trashIcon()))}');
-            -webkit-mask-size: contain;
-            -webkit-mask-repeat: no-repeat;
-            -webkit-mask-position: center;
+            ${renderMaskImage(trashIcon())};
         }
 
         .property-group {
@@ -133,14 +126,7 @@ export function renderMediaDetailPageStyles() {
             width: 30px;
             height: 30px;
             background-color: gray;
-            mask-size: cover;
-            mask: url('data:image/svg+xml;base64, ${unsafeCSS(btoa(editIcon()))}');
-            mask-position: center center;
-            mask-repeat: no-repeat;
-            -webkit-mask-size: cover;
-            -webkit-mask: url('data:image/svg+xml;base64, ${unsafeCSS(btoa(editIcon()))}');
-            -webkit-mask-position: center center;
-            -webkit-mask-repeat: no-repeat;
+            ${renderMaskImage(editIcon())};
         }
 
         input,

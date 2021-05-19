@@ -1,6 +1,6 @@
 ```js script
 import { html } from '@open-wc/demoing-storybook';
-import { withKnobs, text, select } from 'storybook-prebuilt/addon-knobs';
+import { withKnobs, text, select, optionsKnob } from 'storybook-prebuilt/addon-knobs';
 
 export default {
     title: 'AudioTile',
@@ -38,23 +38,40 @@ use available knob-functions to make properties or contents of your webcomponent
 ```js preview-story
 import { Mood } from '../../data/enumerations/mood.js';
 import { Nations } from '../../data/enumerations/nations.js';
+import { Participants } from '../../data/enumerations/participants.js';
+import { Instrumentation } from '../../data/enumerations/instrumentation.js';
+import { Instruments } from '../../data/enumerations/instruments.js';
+import { Genre } from '../../data/enumerations/genre.js';
+
+const InstrumentEnum = {};
+Object.keys(Instruments).forEach((key) => (InstrumentEnum[key] = key));
+
+function toInstrumentList(instruments) {
+    var selectedInstruments = instruments;
+    return selectedInstruments.map((instrument) => Instruments[instrument]) || [];
+}
+
 export const Multiple = () => html`
     <style>
         audio-tile {
-            width: 200px;
+            width: 250px;
             margin: 20px;
-            min-height: 200px;
+            min-height: 250px;
         }
     </style>
 
     <page-routing>
         <audio-tile
             caption="Die Schafswolke"
-            mood="${select('Mood', Object.values(Mood), 'romantic')}"
+            .mood="${select('Mood', Object.values(Mood), 'romantic')}"
             autor="olle Ko-Schnitte"
             source="My Brain"
-            language="${select('Nation', Object.values(Nations), 'japanese')}"
-            nation="${select('Language', Object.values(Nations), 'japanese')}"
+            .genres="${optionsKnob('Genres', Genre, ['Blues', 'Soul', 'Comedy', 'Rock', 'Pop'], { display: 'multi-select' })}"
+            .instruments="${toInstrumentList(optionsKnob('Instruments', InstrumentEnum, [], { display: 'multi-select' }))}"
+            .language="${select('Nation', Object.values(Nations), 'japanese')}"
+            .nation="${select('Language', Object.values(Nations), 'japanese')}"
+            .participantCount="${select('Participants', Object.values(Participants), 'solo')}"
+            .instrumentation="${select('Instrumentation', Object.values(Instrumentation), 'mixed')}"
         ></audio-tile>
     </page-routing>
 `;

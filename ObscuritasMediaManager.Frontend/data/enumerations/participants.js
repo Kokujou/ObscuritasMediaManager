@@ -1,5 +1,5 @@
 /** @enum {string} */
-export const Participans = {
+export const Participants = {
     Solo: 'solo',
     SmallGroup: 'small-group',
     LargeGroup: 'large-group',

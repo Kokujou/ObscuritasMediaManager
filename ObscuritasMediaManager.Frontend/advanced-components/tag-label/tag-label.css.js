@@ -74,7 +74,7 @@ export function renderTagLabelStyles() {
             margin: 5px;
             width: 15px;
             height: 15px;
-            background: #cc77bb;
+            background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--label-color) 0% 100%);
             cursor: pointer;
 
             display: flex;
