@@ -1,8 +1,8 @@
 export function getScaleFactorX() {
-    return outerWidth / viewportWidth;
+    return (outerWidth - 20) / viewportWidth;
 }
 export function getScaleFactorY() {
-    return (outerHeight - 90) / viewportHeight;
+    return (outerHeight - 140) / viewportHeight;
 }
 
 export const viewportWidth = 1920;

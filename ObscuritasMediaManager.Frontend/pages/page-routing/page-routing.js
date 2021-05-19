@@ -45,9 +45,9 @@ export class PageRouting extends LitElement {
             session.currentPage.next(location.hash.length > 1 ? location.hash.substr(1) : 'empty');
         };
 
-        document.addEventListener('resize', () => this.requestUpdate(undefined));
+        window.addEventListener('resize', () => this.requestUpdate(undefined));
         var self = this;
-        document.addEventListener('orientationchanged', function () {
+        window.addEventListener('orientationchanged', function () {
             self.requestUpdate(undefined);
         });
     }

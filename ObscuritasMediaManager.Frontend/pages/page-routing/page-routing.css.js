@@ -29,7 +29,7 @@ export function renderPageRoutingStyles() {
         }
 
         #current-page {
-            position: fixed;
+            position: relative;
             left: 0;
             top: 0;
             width: ${viewportWidth}px;
