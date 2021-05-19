@@ -141,6 +141,8 @@ function renderNavigationStyles() {
             display: inline-block;
             background-color: var(--accent-color);
             padding: 20px 0;
+            border-top-right-radius: 5%;
+            border-bottom-right-radius: 5%;
 
             max-height: calc(100% - ${headerHeight} - 40px);
 
