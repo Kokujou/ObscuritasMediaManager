@@ -6,3 +6,9 @@ export function renderMaskImage(image) {
             -webkit-mask: url('data:image/svg+xml;base64, ${btoa(image)}') no-repeat center center / 100% 100%;
     `);
 }
+
+export function renderBackgroundImage(image) {
+    return unsafeCSS(`
+    background: url('data:image/svg+xml;base64, ${btoa(image)}') no-repeat center center / 100% 100%;
+`);
+}

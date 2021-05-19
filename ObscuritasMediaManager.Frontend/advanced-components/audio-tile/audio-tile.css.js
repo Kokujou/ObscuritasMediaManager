@@ -1,20 +1,8 @@
-import { css, unsafeCSS } from '../../exports.js';
+import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-types.js';
+import { renderLanguageFlags } from '../../data/enumerations/nations.js';
+import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
+import { css } from '../../exports.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
-import { brassIcon } from '../../resources/icons/instrument-icons/brass-icon.svg.js';
-import { electronicIcon } from '../../resources/icons/instrument-icons/electronic-icon.svg.js';
-import { keyboardIcon } from '../../resources/icons/instrument-icons/keyboard-icon.svg.js';
-import { microphoneIcon } from '../../resources/icons/instrument-icons/microphone-icon.svg.js';
-import { percussionIcon } from '../../resources/icons/instrument-icons/percussion-icon.svg.js';
-import { stringsIcon } from '../../resources/icons/instrument-icons/string-icon.svg.js';
-import { woodWindIcon } from '../../resources/icons/instrument-icons/wood-wind-icon.svg.js';
-import { englishFlag } from '../../resources/icons/language-icons/english-flag.svg.js';
-import { germanFlag } from '../../resources/icons/language-icons/german-flag.svg.js';
-import { japanFlag } from '../../resources/icons/language-icons/japan-flag.svg.js';
-import { largeGroupIcon } from '../../resources/icons/participants-icons/large-group.svg.js';
-import { largeOrchestraIcon } from '../../resources/icons/participants-icons/large-orchestra.svg.js';
-import { singlePersonIcon } from '../../resources/icons/participants-icons/single-person.svg.js';
-import { smalLGroupIcon } from '../../resources/icons/participants-icons/small-group.svg.js';
-import { smallOrchestraIcon } from '../../resources/icons/participants-icons/small-orchestra-svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { settingsIcon } from '../media-search/images/settings-icon.svg.js';
 
@@ -104,7 +92,7 @@ export function renderAudioTileStyles() {
 
         ${renderMoodStyles()}
         ${renderLanguageFlags()}
-        ${renderPartitipantIcon()}
+        ${renderParticipantCountIcon()}
         ${renderInstrumentTypeIcons()}
 
         #language-flags {
@@ -197,74 +185,6 @@ export function renderAudioTileStyles() {
             margin-bottom: 5px;
             z-index: 1;
             --label-color: var(--primary-color);
-        }
-    `;
-}
-
-function renderInstrumentTypeIcons() {
-    return css`
-        #instrument-icons > .vocal {
-            ${renderMaskImage(microphoneIcon())};
-        }
-
-        #instrument-icons > .brass {
-            ${renderMaskImage(brassIcon())};
-        }
-
-        #instrument-icons > .wood-wind {
-            ${renderMaskImage(woodWindIcon())};
-        }
-
-        #instrument-icons > .keyboard {
-            ${renderMaskImage(keyboardIcon())};
-        }
-
-        #instrument-icons > .electronic {
-            ${renderMaskImage(electronicIcon())};
-        }
-
-        #instrument-icons > .percussion {
-            ${renderMaskImage(percussionIcon())};
-        }
-
-        #instrument-icons > .stringed {
-            ${renderMaskImage(stringsIcon())};
-        }
-    `;
-}
-
-function renderLanguageFlags() {
-    return css`
-        #language-flags .japanese {
-            background-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(japanFlag()))}');
-        }
-
-        #language-flags .german {
-            background-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(germanFlag()))}');
-        }
-
-        #language-flags .english {
-            background-image: url('data:image/svg+xml;base64,${unsafeCSS(btoa(englishFlag()))}');
-        }
-    `;
-}
-
-function renderPartitipantIcon() {
-    return css`
-        #participant-count-icon.solo {
-            ${renderMaskImage(singlePersonIcon())};
-        }
-        #participant-count-icon.small-group {
-            ${renderMaskImage(smalLGroupIcon())};
-        }
-        #participant-count-icon.large-group {
-            ${renderMaskImage(largeGroupIcon())};
-        }
-        #participant-count-icon.small-orchestra {
-            ${renderMaskImage(smallOrchestraIcon())};
-        }
-        #participant-count-icon.large-orchestra {
-            ${renderMaskImage(largeOrchestraIcon())};
         }
     `;
 }

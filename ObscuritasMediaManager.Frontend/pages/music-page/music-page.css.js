@@ -1,3 +1,6 @@
+import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-types.js';
+import { renderLanguageFlags } from '../../data/enumerations/nations.js';
+import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
 import { importIcon } from '../../resources/icons/import-icon.svg.js';
 import { addPlaylistIcon } from '../../resources/icons/playlist-icons/add-playlist-icon.svg.js';
@@ -18,23 +21,62 @@ export function renderMusicPageStyles() {
             bottom: 0;
         }
 
-        #search-panel {
+        #search-panel-container {
             position: absolute;
-            top: 100px;
-            right: 50px;
-            width: 300px;
-            bottom: 100px;
+            top: 0;
+            right: 25px;
+            width: 350px;
+            bottom: 150px;
 
+            background-color: var(--accent-color);
+            border-radius: 20px;
+        }
+
+        #search-panel {
             display: flex;
             flex-direction: column;
 
-            border: 1px solid white;
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            top: 20px;
+            bottom: 20px;
         }
 
         #search-panel > * {
             flex: auto;
         }
 
+        .inline-icon {
+            width: 30px;
+            height: 30px;
+
+            background-color: #ffffff99;
+        }
+
+        ${renderInstrumentTypeIcons()}
+        ${renderLanguageFlags()}
+        ${renderParticipantCountIcon()}
+
+        ${renderResultOptionsBar()}
+
+        #search-results {
+            position: absolute;
+            bottom: 150px;
+            left: 100px;
+            right: 400px;
+            top: 0;
+
+            overflow-y: scroll;
+            scrollbar-width: thin;
+            scrollbar-color: #20625599 white;
+            border-radius: 20px;
+        }
+    `;
+}
+
+function renderResultOptionsBar() {
+    return css`
         #result-options-container {
             position: absolute;
             bottom: 0;
@@ -103,19 +145,6 @@ export function renderMusicPageStyles() {
 
         #download-playlist {
             ${renderMaskImage(downloadPlaylistIcon())};
-        }
-
-        #search-results {
-            position: absolute;
-            bottom: 150px;
-            left: 100px;
-            right: 400px;
-            top: 0;
-
-            overflow-y: scroll;
-            scrollbar-width: thin;
-            scrollbar-color: #20625599 white;
-            border: 1px solid white;
         }
     `;
 }
