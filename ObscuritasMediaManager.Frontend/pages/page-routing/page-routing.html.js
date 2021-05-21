@@ -5,8 +5,6 @@ export function renderPageRouting(routing) {
     var scaleX = getScaleFactorX();
     var scaleY = getScaleFactorY();
 
-    console.log(outerWidth);
-
     return html`<style>
             #current-page {
                 transform: scale(${scaleX}, ${scaleY});

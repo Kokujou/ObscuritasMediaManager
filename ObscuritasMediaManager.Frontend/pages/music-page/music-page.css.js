@@ -13,6 +13,10 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderMusicPageStyles() {
     return css`
+        * {
+            scrollbar-width: thin;
+        }
+
         #music-page {
             position: absolute;
             left: 0;
@@ -25,7 +29,7 @@ export function renderMusicPageStyles() {
             position: absolute;
             top: 0;
             right: 25px;
-            width: 350px;
+            width: 450px;
             bottom: 150px;
 
             background-color: var(--accent-color);
@@ -41,10 +45,45 @@ export function renderMusicPageStyles() {
             right: 20px;
             top: 20px;
             bottom: 20px;
+
+            font-size: 24px;
+            overflow-y: auto;
+        }
+
+        #search-heading {
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .filter {
+            margin-bottom: 30px;
+        }
+
+        .filter > .filter-heading {
+            margin-bottom: 10px;
         }
 
         #search-panel > * {
             flex: auto;
+        }
+
+        .side-scroller-container {
+            position: relative;
+            width: 100%;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        side-scroller {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+
+            color: white;
+        }
+
+        .icon-container {
+            margin-right: 20px;
         }
 
         .inline-icon {
@@ -64,12 +103,12 @@ export function renderMusicPageStyles() {
             position: absolute;
             bottom: 150px;
             left: 100px;
-            right: 400px;
+            right: 500px;
             top: 0;
 
             overflow-y: scroll;
             scrollbar-width: thin;
-            scrollbar-color: #20625599 white;
+            scrollbar-color: var(--accent-color) #20625599;
             border-radius: 20px;
         }
     `;

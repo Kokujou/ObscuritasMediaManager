@@ -14,41 +14,61 @@ export function renderMusicPage(musicPage) {
                 <div id="search-panel-container">
                     <div id="search-panel">
                         <div id="search-heading">Suche</div>
-                        <div id="language-filter">
-                            ${Object.values(Nations).map(
-                                (type) =>
-                                    html` <tri-value-checkbox ?allowThreeValues="${true}">
-                                        <div class="inline-icon ${type}"></div>
-                                    </tri-value-checkbox>`
-                            )}
+                        <div id="language-filter" class="filter">
+                            <div class="filter-heading">Sprache:</div>
+                            <side-scroller>
+                                ${Object.values(Nations).map(
+                                    (type) =>
+                                        html` <tri-value-checkbox class="icon-container" class="" ?allowThreeValues="${true}">
+                                            <div class="inline-icon ${type}"></div>
+                                        </tri-value-checkbox class="icon-container">`
+                                )}
+                            </side-scroller>
                         </div>
-                        <div id="nation-filter">
-                            ${Object.values(Nations).map(
-                                (type) =>
-                                    html` <tri-value-checkbox ?allowThreeValues="${true}">
-                                        <div class="inline-icon ${type}"></div>
-                                    </tri-value-checkbox>`
-                            )}
+                        <div id="nation-filter" class="filter">
+                            <div class="filter-heading">Herkunftsland:</div>
+                            <side-scroller>
+                                ${Object.values(Nations).map(
+                                    (type) =>
+                                        html` <tri-value-checkbox class="icon-container" ?allowThreeValues="${true}">
+                                            <div class="inline-icon ${type}"></div>
+                                        </tri-value-checkbox class="icon-container">`
+                                )}
+                            </side-scroller>
+                            <div id="instrument-type-filter" class="filter">
+                                <div class="filter-heading">Instrumenten-Typen:</div>
+                                <side-scroller>
+                                    ${Object.values(InstrumentTypes).map(
+                                        (type) =>
+                                            html` <tri-value-checkbox class="icon-container" ?allowThreeValues="${true}">
+                                                <div class="inline-icon ${type}"></div>
+                                            </tri-value-checkbox class="icon-container">`
+                                    )}
+                                </side-scroller>
+                            </div>
                         </div>
-                        <div id="instrument-filter"></div>
-                        <div id="instrument-type-filter">
-                            ${Object.values(InstrumentTypes).map(
-                                (type) =>
-                                    html` <tri-value-checkbox ?allowThreeValues="${true}">
-                                        <div class="inline-icon ${type}"></div>
-                                    </tri-value-checkbox>`
-                            )}
+                        <div id="instrument-filter" class="filter">
+                            <div class="filter-heading">Instrumente:</div>
                         </div>
-                        <div id="mood-filter"></div>
-                        <div id="genre-filter"></div>
-                        <div id="instrumentation-filter"></div>
-                        <div id="participant-count-filter">
-                            ${Object.values(Participants).map(
-                                (type) =>
-                                    html` <tri-value-checkbox ?allowThreeValues="${true}">
-                                        <div class="inline-icon ${type}"></div>
-                                    </tri-value-checkbox>`
-                            )}
+                        <div id="mood-filter" class="filter">
+                            <div class="filter-heading">Stimmung:</div>
+                        </div>
+                        <div id="genre-filter" class="filter">
+                            <div class="filter-heading">Genre:</div>
+                        </div>
+                        <div id="instrumentation-filter" class="filter">
+                            <div class="filter-heading">Verteilung der Instrumente:</div>
+                        </div>
+                        <div id="participant-count-filter" class="filter">
+                            <div class="filter-heading">Mitgliederzahl:</div>
+                            <side-scroller>
+                                ${Object.values(Participants).map(
+                                    (type) =>
+                                        html` <tri-value-checkbox class="icon-container" ?allowThreeValues="${true}">
+                                            <div class="inline-icon ${type}"></div>
+                                        </tri-value-checkbox class="icon-container">`
+                                )}
+                            </side-scroller>
                         </div>
                     </div>
                 </div>
