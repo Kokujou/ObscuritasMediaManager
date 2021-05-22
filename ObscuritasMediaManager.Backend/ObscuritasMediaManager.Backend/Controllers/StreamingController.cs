@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 using ObscuritasMediaManager.Backend.Models;
@@ -20,11 +20,12 @@ namespace ObscuritasMediaManager.Backend.Controllers
 
 
         [HttpPost]
-        public IActionResult BatchPostStreamingEntries([FromBody] IEnumerable<StreamingEntryModel> streamingEntries)
+        public async Task<IActionResult> BatchPostStreamingEntries(
+            [FromBody] IEnumerable<StreamingEntryModel> streamingEntries)
         {
             try
             {
-                _repository.BatchCreateStreamingEntries(streamingEntries);
+                await _repository.BatchCreateStreamingEntriesAsync(streamingEntries);
                 return NoContent();
             }
             catch (Exception e)
@@ -34,11 +35,11 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet("{mediaName}/type/{mediaType}")]
-        public IActionResult GetStreamingEntry(string mediaName, string mediaType)
+        public async Task<IActionResult> GetStreamingEntry(string mediaName, string mediaType)
         {
             try
             {
-                return Ok(_repository.Get(mediaName, mediaType));
+                return Ok(await _repository.GetAsync(mediaName, mediaType));
             }
             catch (Exception e)
             {
@@ -47,9 +48,9 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet("{mediaName}/type/{mediaType}/season/{season}/episode/{episode}")]
-        public IActionResult GetStream(string mediaName, string mediaType, string season, int episode)
+        public async Task<IActionResult> GetStream(string mediaName, string mediaType, string season, int episode)
         {
-            var entry = _repository.Get(mediaName, mediaType, season, episode).Single();
+            var entry = await _repository.GetAsync(mediaName, mediaType, season, episode);
             return Ok(entry);
         }
     }

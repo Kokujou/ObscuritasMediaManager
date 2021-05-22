@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ObscuritasMediaManager.Backend.Controllers
@@ -13,7 +12,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         public static string Logs = "";
 
         [HttpGet("video")]
-        public async Task<IActionResult> GetVideo(string videoPath = "")
+        public IActionResult GetVideo(string videoPath = "")
         {
             if (string.IsNullOrEmpty(videoPath) || !System.IO.File.Exists(videoPath))
                 return BadRequest("invalid file path");
@@ -36,7 +35,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet("audio")]
-        public async Task<IActionResult> GetAudio(string audioPath = "")
+        public IActionResult GetAudio(string audioPath = "")
         {
             if (string.IsNullOrEmpty(audioPath) || !System.IO.File.Exists(audioPath))
                 return BadRequest("invalid file path");

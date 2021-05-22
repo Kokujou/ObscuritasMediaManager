@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories.Interfaces
 {
-    public interface IGenreRepository : IDisposable
+    public interface IGenreRepository
     {
-        public IEnumerable<Genre> GetAll();
+        public Task<IEnumerable<GenreModel>> GetAllAsync();
     }
 }

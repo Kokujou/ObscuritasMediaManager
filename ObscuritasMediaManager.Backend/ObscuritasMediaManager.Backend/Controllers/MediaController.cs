@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
@@ -22,11 +23,11 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet("{animeName}/type/{animeType}")]
-        public IActionResult Get([FromRoute] string animeName, [FromRoute] string animeType)
+        public async Task<IActionResult> Get([FromRoute] string animeName, [FromRoute] string animeType)
         {
             try
             {
-                return Ok(_repository.Get(animeName, animeType));
+                return Ok(await _repository.GetAsync(animeName, animeType));
             }
             catch (Exception e)
             {
@@ -35,11 +36,11 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll([FromQuery] string type = "")
+        public async Task<IActionResult> GetAll([FromQuery] string type = "")
         {
             try
             {
-                return Ok(_repository.GetAll(type));
+                return Ok(await _repository.GetAllAsync(type));
             }
             catch (Exception e)
             {
@@ -48,11 +49,11 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpPost]
-        public IActionResult BatchPostStreamingEntries([FromBody] IEnumerable<MediaModel> media)
+        public async Task<IActionResult> BatchPostStreamingEntries([FromBody] IEnumerable<MediaModel> media)
         {
             try
             {
-                _repository.BatchCreateMedia(media);
+                await _repository.BatchCreateMediaAsync(media);
                 return NoContent();
             }
             catch (Exception e)
@@ -62,11 +63,11 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpPut("{mediaName}/type/{mediaType}")]
-        public IActionResult UpdateMedia(string mediaName, string mediaType, [FromBody] MediaModel media)
+        public async Task<IActionResult> UpdateMedia(string mediaName, string mediaType, [FromBody] MediaModel media)
         {
             try
             {
-                var genres = _genreRepository.GetAll();
+                var genres = await _genreRepository.GetAllAsync();
                 if (!string.IsNullOrEmpty(media.GenreString)
                     && (!media.Genres.All(mediaGenre => genres.Any(genre => genre.Name == mediaGenre))
                         || media.Genres.Any(genre => media.Genres.Count(x => x == genre) != 1)))
@@ -74,7 +75,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
                         $"One of the specified genres is not in the range of values: {media.GenreString}.\n" +
                         $"Supported Genres are: {string.Join(",", genres)}");
 
-                _repository.UpdateMedia(mediaName, mediaType, media);
+                await _repository.UpdateMediaAsync(mediaName, mediaType, media);
 
                 return NoContent();
             }
@@ -86,12 +87,13 @@ namespace ObscuritasMediaManager.Backend.Controllers
 
 
         [HttpPut("{mediaName}/type/{mediaType}/image")]
-        public IActionResult AddMediaImage([FromBody] UpdateImageRequest request, [FromRoute] string mediaName,
+        public async Task<IActionResult> AddMediaImage([FromBody] UpdateImageRequest request,
+            [FromRoute] string mediaName,
             [FromRoute] string mediaType)
         {
             try
             {
-                _repository.AddMediaImage(mediaName, mediaType, request.Image);
+                await _repository.AddMediaImageAsync(mediaName, mediaType, request.Image);
                 return NoContent();
             }
             catch (Exception e)
@@ -101,12 +103,12 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpDelete("{animeName}/type/{animeType}/image")]
-        public IActionResult DeleteMediaImage([FromRoute] string animeName,
+        public async Task<IActionResult> DeleteMediaImage([FromRoute] string animeName,
             [FromRoute] string animeType)
         {
             try
             {
-                _repository.RemoveMediaImage(animeName, animeType);
+                await _repository.RemoveMediaImageAsync(animeName, animeType);
                 return NoContent();
             }
             catch (Exception e)

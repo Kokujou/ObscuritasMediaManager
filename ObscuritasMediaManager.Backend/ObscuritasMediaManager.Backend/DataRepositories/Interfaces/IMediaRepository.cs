@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories.Interfaces
 {
     public interface IMediaRepository
     {
-        public void BatchCreateMedia(IEnumerable<MediaModel> media);
+        public Task BatchCreateMediaAsync(IEnumerable<MediaModel> media);
 
-        public IEnumerable<MediaModel> GetAll(string type = "");
+        public Task<IEnumerable<MediaModel>> GetAllAsync(string type = "");
 
-        public MediaModel Get(string name, string animeType);
+        public Task<MediaModel> GetAsync(string name, string animeType);
 
-        public void UpdateMedia(string name, string type, MediaModel updated);
+        public Task UpdateMediaAsync(string name, string type, MediaModel updated);
 
-        public void AddMediaImage(string mediaName, string mediaType, string mediaImage);
+        public Task AddMediaImageAsync(string mediaName, string mediaType, string mediaImage);
 
-        public void RemoveMediaImage(string mediaName, string mediaType);
+        public Task RemoveMediaImageAsync(string mediaName, string mediaType);
     }
 }

@@ -17,6 +17,7 @@ namespace ObscuritasMediaManager.Backend
             services.AddSingleton<IGenreRepository, GenreRepository>();
             services.AddSingleton<IMediaRepository, MediaRepository>();
             services.AddSingleton<IStreamingRepository, StreamingRepository>();
+            services.AddSingleton<IMusicRepository, MusicRepository>();
 
             services.AddCors(x =>
                 x.AddPolicy("all",

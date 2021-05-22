@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 
@@ -16,11 +17,11 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                var genreList = _genreRepository.GetAll();
+                var genreList = await _genreRepository.GetAllAsync();
                 return Ok(genreList);
             }
             catch (Exception e)

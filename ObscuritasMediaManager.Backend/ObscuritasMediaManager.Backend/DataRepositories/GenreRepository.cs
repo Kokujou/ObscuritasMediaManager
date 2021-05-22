@@ -1,31 +1,20 @@
 ﻿using System.Collections.Generic;
-using System.Data.Linq;
-using System.Data.SQLite;
-using System.Linq;
+using System.Data.Entity;
+using System.Threading.Tasks;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
+using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories
 {
     public class GenreRepository : IGenreRepository
     {
-        private readonly DataContext _context;
-
-        public GenreRepository()
+        public async Task<IEnumerable<GenreModel>> GetAllAsync()
         {
-            var connection = new SQLiteConnection("Data Source=database.sqlite");
-            _context = new DataContext(connection);
-        }
-
-        public IEnumerable<Genre> GetAll()
-        {
-            var genreTable = _context.GetTable<Genre>();
-            return genreTable.ToList();
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
+            var genreTable = DisposableTableExtension.GetTable<GenreModel>();
+            var genres = await genreTable.ToListAsync();
+            await genreTable.DisposeAsync();
+            return genres;
         }
     }
 }
