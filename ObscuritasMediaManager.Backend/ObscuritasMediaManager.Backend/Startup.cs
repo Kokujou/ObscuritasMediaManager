@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ObscuritasMediaManager.Backend.DataRepositories;
@@ -14,10 +15,12 @@ namespace ObscuritasMediaManager.Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IGenreRepository, GenreRepository>();
-            services.AddSingleton<IMediaRepository, MediaRepository>();
-            services.AddSingleton<IStreamingRepository, StreamingRepository>();
-            services.AddSingleton<IMusicRepository, MusicRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IMediaRepository, MediaRepository>();
+            services.AddScoped<IStreamingRepository, StreamingRepository>();
+            services.AddScoped<IMusicRepository, MusicRepository>();
+
+            services.AddDbContext<DatabaseContext>(x => x.UseSqlite(@"Data Source=database.sqlite"));
 
             services.AddCors(x =>
                 x.AddPolicy("all",

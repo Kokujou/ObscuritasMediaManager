@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories.Interfaces
 {
-    public interface IStreamingRepository
+    public interface IStreamingRepository : IAsyncDisposable
     {
         public Task BatchCreateStreamingEntriesAsync(IEnumerable<StreamingEntryModel> streamingEntries);
         public Task<IEnumerable<StreamingEntryModel>> GetAsync(string name, string type);

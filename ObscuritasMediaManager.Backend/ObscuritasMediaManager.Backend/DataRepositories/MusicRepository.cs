@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 using ObscuritasMediaManager.Backend.Exceptions;
@@ -12,10 +11,16 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
 {
     public class MusicRepository : IMusicRepository
     {
+        private readonly DatabaseContext _context;
+
+        public MusicRepository(DatabaseContext context)
+        {
+            _context = context;
+        }
+
         public async Task UpdateAsync(string name, string author, MusicModel updated)
         {
-            var table = DisposableTableExtension.GetTable<MusicModel>();
-            var item = await table.SingleOrDefaultAsync(x => x.Name == name && x.Author == author);
+            var item = await _context.Music.SingleOrDefaultAsync(x => x.Name == name && x.Author == author);
             if (item == default)
                 throw new ModelNotFoundException(name, author);
 
@@ -23,8 +28,8 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             {
                 var clone = JsonConvert.DeserializeObject<MusicModel>(
                     JsonConvert.SerializeObject(item));
-                table.DeleteOnSubmit(item);
-                table.Context.SubmitChanges();
+                _context.Remove(item);
+                await _context.SaveChangesAsync();
                 item = clone;
                 if (item == default)
                     throw new ModelNotFoundException(name, author);
@@ -33,12 +38,12 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                     item.Name = updated.Name;
                 if (!string.IsNullOrEmpty(updated.Author))
                     item.Author = updated.Author;
-                table.InsertOnSubmit(item);
-                table.Context.SubmitChanges();
+                await _context.AddAsync(item);
+                await _context.SaveChangesAsync();
             }
 
             if (updated.Genres != null)
-                item.Genres = updated.Genres;
+                item.GenreString = updated.GenreString;
             if (updated.Source != null)
                 item.Source = updated.Source;
             if (updated.Src != null)
@@ -59,32 +64,24 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                 item.Participants = updated.Participants;
 
 
-            table.Context.SubmitChanges();
-            await table.DisposeAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task<MusicModel> GetAsync(string name, string author)
         {
-            var table = DisposableTableExtension.GetTable<MusicModel>();
-            var response = await table.SingleAsync(x => x.Name == name && x.Author == author);
-            await table.DisposeAsync();
+            var response = await _context.Music.SingleAsync(x => x.Name == name && x.Author == author);
             return response;
         }
 
         public async Task<IEnumerable<MusicModel>> GetAllAsync()
         {
-            var table = DisposableTableExtension.GetTable<MusicModel>();
-            var response = await table.ToListAsync();
-            await table.DisposeAsync();
+            var response = await _context.Music.ToListAsync();
             return response;
         }
 
         public async Task BatchCreateMusicTracksAsync(IEnumerable<MusicModel> media)
         {
-            var table = DisposableTableExtension.GetTable<MusicModel>();
-            table.InsertAllOnSubmit(media);
-            table.Context.SubmitChanges(ConflictMode.ContinueOnConflict);
-            await table.DisposeAsync();
+            await _context.InsertIfNotExistsAsync(media);
         }
     }
 }

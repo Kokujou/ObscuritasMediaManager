@@ -1,0 +1,34 @@
+﻿using Microsoft.EntityFrameworkCore;
+using ObscuritasMediaManager.Backend.Models;
+
+namespace ObscuritasMediaManager.Backend.DataRepositories
+{
+    public class DatabaseContext : DbContext
+    {
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<GenreModel> Genres { get; set; }
+        public DbSet<MediaModel> Media { get; set; }
+        public DbSet<StreamingEntryModel> StreamingEntries { get; set; }
+        public DbSet<MusicModel> Music { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<MediaModel>()
+                .HasKey(x => new {x.Name, x.Type});
+            modelBuilder.Entity<MediaModel>()
+                .Property(x => x.GenreString).HasColumnName("Genres");
+
+            modelBuilder.Entity<MusicModel>()
+                .HasKey(x => new {x.Name, x.Author});
+            modelBuilder.Entity<MusicModel>()
+                .Property(x => x.GenreString).HasColumnName("Genres");
+
+            modelBuilder.Entity<StreamingEntryModel>()
+                .HasKey(x => new {x.Name, x.Type, x.Episode, x.Season});
+        }
+    }
+}

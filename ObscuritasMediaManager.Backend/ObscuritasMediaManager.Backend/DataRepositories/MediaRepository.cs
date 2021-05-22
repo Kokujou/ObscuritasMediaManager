@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Linq;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 using ObscuritasMediaManager.Backend.Exceptions;
@@ -13,18 +12,24 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
 {
     public class MediaRepository : IMediaRepository
     {
+        private readonly DatabaseContext _context;
+
+        public MediaRepository(DatabaseContext context)
+        {
+            _context = context;
+        }
+
         public async Task UpdateMediaAsync(string name, string type, MediaModel updated)
         {
-            var table = DisposableTableExtension.GetTable<MediaModel>();
-            var item = await table.SingleOrDefaultAsync(x => x.Name == name && x.Type == type);
+            var item = await _context.Media.SingleOrDefaultAsync(x => x.Name == name && x.Type == type);
             if (item == default)
                 throw new ModelNotFoundException(name, type);
 
             if (name != updated.Name || type != updated.Type)
             {
                 var clone = JsonConvert.DeserializeObject<MediaModel>(JsonConvert.SerializeObject(item));
-                table.DeleteOnSubmit(item);
-                table.Context.SubmitChanges();
+                _context.Remove(item);
+                await _context.SaveChangesAsync();
                 item = clone;
                 if (item == default)
                     throw new ModelNotFoundException(name, type);
@@ -32,8 +37,8 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                     item.Name = updated.Name;
                 if (!string.IsNullOrEmpty(updated.Type))
                     item.Type = updated.Type;
-                table.InsertOnSubmit(item);
-                table.Context.SubmitChanges();
+                await _context.AddAsync(item);
+                await _context.SaveChangesAsync();
             }
 
             if (updated.Description != null)
@@ -47,66 +52,52 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             if (updated.State >= 0)
                 item.State = updated.State;
 
-
-            table.Context.SubmitChanges();
-            await table.DisposeAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task AddMediaImageAsync(string mediaName, string mediaType, string mediaImage)
         {
-            var table = DisposableTableExtension.GetTable<MediaModel>();
-            var item = await table.SingleOrDefaultAsync(x => x.Name == mediaName && x.Type == mediaType);
+            var item = await _context.Media.SingleOrDefaultAsync(x => x.Name == mediaName && x.Type == mediaType);
             if (item == default)
                 throw new ModelNotFoundException(mediaName, mediaType);
             item.Image = mediaImage;
-            table.Context.SubmitChanges();
-            await table.DisposeAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task RemoveMediaImageAsync(string mediaName, string mediaType)
         {
-            var table = DisposableTableExtension.GetTable<MediaModel>();
-            var item = await table.SingleOrDefaultAsync(x => x.Name == mediaName && x.Type == mediaType);
+            var item = await _context.Media.SingleOrDefaultAsync(x => x.Name == mediaName && x.Type == mediaType);
             if (item == default)
                 throw new ModelNotFoundException(mediaName, mediaType);
             item.Image = null;
-            table.Context.SubmitChanges();
-            await table.DisposeAsync();
+            await _context.SaveChangesAsync();
         }
 
 
         public async Task<MediaModel> GetAsync(string name, string type)
         {
-            var table = DisposableTableExtension.GetTable<MediaModel>();
-            var response = await table.SingleOrDefaultAsync(x => x.Name == name && x.Type == type);
+            var response = await _context.Media.SingleOrDefaultAsync(x => x.Name == name && x.Type == type);
             if (response == default)
                 throw new ModelNotFoundException(name, type);
-            await table.DisposeAsync();
             return response;
         }
 
         public async Task<IEnumerable<MediaModel>> GetAllAsync(string type = "")
         {
-            var table = DisposableTableExtension.GetTable<MediaModel>();
+            if (string.IsNullOrEmpty(type)) return await _context.Media.ToListAsync();
 
-            if (string.IsNullOrEmpty(type))
-            {
-                var media = await table.ToListAsync();
-                await table.DisposeAsync();
-                return media;
-            }
-
-            var response = await table.Where(x => x.Type == type).ToListAsync();
-            await table.DisposeAsync();
+            var response = await _context.Media.Where(x => x.Type == type).ToListAsync();
             return response;
         }
 
         public async Task BatchCreateMediaAsync(IEnumerable<MediaModel> media)
         {
-            var table = DisposableTableExtension.GetTable<MediaModel>();
-            table.InsertAllOnSubmit(media);
-            table.Context.SubmitChanges(ConflictMode.ContinueOnConflict);
-            await table.DisposeAsync();
+            await _context.InsertIfNotExistsAsync(media);
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await _context.DisposeAsync();
         }
     }
 }
