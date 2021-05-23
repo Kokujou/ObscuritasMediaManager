@@ -100,10 +100,9 @@ export function renderMusicPageStyles() {
         ${renderResultOptionsBar()}
 
         #search-results {
-            width: 100%;
-            height: 100%;
             padding-left: 50px;
             padding-top: 20px;
+            padding-bottom: 50px;
             box-sizing: border-box;
 
             display: flex;

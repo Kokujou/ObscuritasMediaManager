@@ -45,7 +45,6 @@ export class MusicPage extends LitElement {
     }
 
     changeVolume(newVolume) {
-        console.log(newVolume);
         this.currentVolumne = newVolume / 100;
         this.requestUpdate(undefined);
     }

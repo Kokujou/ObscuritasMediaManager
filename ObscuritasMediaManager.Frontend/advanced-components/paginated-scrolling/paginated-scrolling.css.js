@@ -14,6 +14,7 @@ export function renderPaginatedScrollingStyles() {
             bottom: 0;
 
             overflow-y: scroll;
+            mask: linear-gradient(to bottom, transparent, black 10% 90%, transparent);
         }
     `;
 }
