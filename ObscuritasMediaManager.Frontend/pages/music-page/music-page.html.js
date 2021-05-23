@@ -88,6 +88,17 @@ export function renderMusicPage(musicPage) {
                         <div class="option-section">
                             <a id="download-playlist"></a>
                         </div>
+
+                        <div class="option-section">
+                            <range-slider
+                                @valueChanged="${(e) => musicPage.changeVolume(e.detail.value)}"
+                                step="1"
+                                min="0"
+                                max="100"
+                                .value="${`${musicPage.currentVolumne * 100}`}"
+                            >
+                            </range-slider>
+                        </div>
                     </div>
                 </div>
                 <paginated-scrolling id="search-results-container" scrollTopThreshold="50" @scrollBottom="${() => musicPage.loadNext()}">
@@ -106,7 +117,7 @@ export function renderMusicPage(musicPage) {
                 </paginated-scrolling>
             </div>
             <input type="file" id="folder-browser" webkitdirectory style="display:none" />
-            <audio id="current-track" .volume="${0.1}" .src="${musicPage.currentTrack}"></audio>
+            <audio id="current-track" .volume="${musicPage.currentVolumne}" .src="${musicPage.currentTrack}"></audio>
         </page-layout>
     `;
 }

@@ -25,6 +25,7 @@ export class MusicPage extends LitElement {
         document.title = 'Musik';
         /** @type {MusicModel[]} */ this.musicTracks = [];
         /** @type {string} */ this.currentTrack = '';
+        /** @type {number} */ this.currentVolumne = 0.1;
         this.currentPage = 0;
         this.initializeData();
     }
@@ -40,6 +41,12 @@ export class MusicPage extends LitElement {
 
     loadNext() {
         this.currentPage++;
+        this.requestUpdate(undefined);
+    }
+
+    changeVolume(newVolume) {
+        console.log(newVolume);
+        this.currentVolumne = newVolume / 100;
         this.requestUpdate(undefined);
     }
 
