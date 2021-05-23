@@ -32,6 +32,10 @@ export class AudioTile extends LitElement {
         this.dispatchEvent(new CustomEvent('edit'));
     }
 
+    notifyMusicToggled() {
+        this.dispatchEvent(new CustomEvent('musicToggled'));
+    }
+
     render() {
         return renderAudioTile(this);
     }

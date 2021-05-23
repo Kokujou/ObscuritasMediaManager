@@ -16,10 +16,16 @@ export class MusicPage extends LitElement {
         return {};
     }
 
+    get filteredTracks() {
+        return this.musicTracks.slice(0, 6 + 3 * this.currentPage);
+    }
+
     constructor() {
         super();
         document.title = 'Musik';
         /** @type {MusicModel[]} */ this.musicTracks = [];
+        /** @type {string} */ this.currentTrack = '';
+        this.currentPage = 0;
         this.initializeData();
     }
 
@@ -30,6 +36,11 @@ export class MusicPage extends LitElement {
 
     render() {
         return renderMusicPage(this);
+    }
+
+    loadNext() {
+        this.currentPage++;
+        this.requestUpdate(undefined);
     }
 
     importFolder() {
@@ -62,6 +73,28 @@ export class MusicPage extends LitElement {
 
             pathDialog.addEventListener('decline', () => pathDialog.remove());
         });
+    }
+
+    /**
+     * @param {MusicModel} track
+     */
+    async toggleMusic(track) {
+        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.src}`;
+        /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#current-track');
+        if (this.currentTrack == trackSrc && !audioElement.paused) {
+            audioElement.pause();
+            return;
+        }
+
+        if (this.currentTrack == trackSrc && audioElement.paused) {
+            audioElement.play();
+            return;
+        }
+
+        this.currentTrack = trackSrc;
+        console.log(this.currentTrack);
+        await this.requestUpdate(undefined);
+        audioElement.play();
     }
 
     /**

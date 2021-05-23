@@ -100,26 +100,33 @@ export function renderMusicPageStyles() {
         ${renderResultOptionsBar()}
 
         #search-results {
-            position: absolute;
-            bottom: 150px;
-            left: 100px;
-            right: 500px;
-            top: 0;
-
-            overflow-y: scroll;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-color) #20625599;
-            border-radius: 20px;
+            width: 100%;
+            height: 100%;
+            padding-left: 50px;
+            padding-top: 20px;
+            box-sizing: border-box;
 
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) #20625599;
+            border-radius: 20px;
+        }
+
+        #search-results-container {
+            position: absolute;
+            bottom: 150px;
+            left: 0;
+            right: 500px;
+            top: 0;
         }
 
         audio-tile {
             display: inline-block;
             position: relative;
-            margin: 20px;
+            margin: 35px;
             width: 250px;
             min-height: 250px;
         }

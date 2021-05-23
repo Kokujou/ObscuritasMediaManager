@@ -5,7 +5,7 @@ import { AudioTile } from './audio-tile.js';
  * @param {AudioTile} audioTile
  */
 export function renderAudioTile(audioTile) {
-    return html` <div id="tile-container" class="${audioTile.track.mood}">
+    return html` <div id="tile-container" @click="${() => audioTile.notifyMusicToggled()}" class="${audioTile.track.mood}">
         <div id="image-box">
             <div id="tile-image"></div>
             <div id="language-flags" class="icon-container">

@@ -1,4 +1,5 @@
 import { css } from '../../exports.js';
+import { viewportHeight, viewportWidth } from '../../services/extensions/document.extensions.js';
 
 export function renderVideoPlayerStyles() {
     return css`
@@ -12,8 +13,10 @@ export function renderVideoPlayerStyles() {
 
         #video {
             position: fixed;
-            width: 100vw;
-            height: 100vh;
+            left: 0;
+            top: 0;
+            width: ${viewportWidth}px;
+            height: ${viewportHeight}px;
             background: black;
         }
     `;

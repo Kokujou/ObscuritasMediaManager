@@ -90,9 +90,23 @@ export function renderMusicPage(musicPage) {
                         </div>
                     </div>
                 </div>
-                <div id="search-results">${musicPage.musicTracks.map((track) => html` <audio-tile .track="${track}"></audio-tile> `)}</div>
+                <paginated-scrolling id="search-results-container" scrollTopThreshold="50" @scrollBottom="${() => musicPage.loadNext()}">
+                    <div id="search-results">
+                        ${musicPage.filteredTracks.map(
+                            (track) =>
+                                html`
+                                    <audio-tile
+                                        .track="${track}"
+                                        @musicToggled="${() => musicPage.toggleMusic(track)}"
+                                        @edit="${() => {}}"
+                                    ></audio-tile>
+                                `
+                        )}
+                    </div>
+                </paginated-scrolling>
             </div>
             <input type="file" id="folder-browser" webkitdirectory style="display:none" />
+            <audio id="current-track" .volume="${0.1}" .src="${musicPage.currentTrack}"></audio>
         </page-layout>
     `;
 }

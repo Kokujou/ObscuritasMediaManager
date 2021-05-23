@@ -90,6 +90,10 @@ export function renderAudioTileStyles() {
             background-color: #ffffff99;
         }
 
+        .inline-icon.unset {
+            display: none;
+        }
+
         ${renderMoodStyles()}
         ${renderLanguageFlags()}
         ${renderParticipantCountIcon()}
@@ -193,6 +197,9 @@ export function renderAudioTileStyles() {
 
 function renderMoodStyles() {
     return css`
+        #tile-container {
+            --primary-color: #dddddd;
+        }
         #tile-container.happy {
             --primary-color: #008000;
         }
