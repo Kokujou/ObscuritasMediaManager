@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories
@@ -33,6 +34,8 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
 
             modelBuilder.Entity<StreamingEntryModel>()
                 .HasKey(x => new {x.Name, x.Type, x.Episode, x.Season});
+
+            modelBuilder.AddEnumConversion();
         }
     }
 }

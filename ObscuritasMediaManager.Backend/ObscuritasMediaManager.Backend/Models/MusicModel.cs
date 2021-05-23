@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq.Mapping;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using ObscuritasMediaManager.Backend.Data.Music;
 
 namespace ObscuritasMediaManager.Backend.Models
 {
-    [Table(Name = "Music")]
     public class MusicModel
     {
         public string Name { get; set; }
