@@ -2,6 +2,7 @@
 {
     public enum Participants
     {
+        Unset,
         Solo,
         SmallGroup,
         LargeGroup,

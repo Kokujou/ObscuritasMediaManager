@@ -20,12 +20,16 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             modelBuilder.Entity<MediaModel>()
                 .HasKey(x => new {x.Name, x.Type});
             modelBuilder.Entity<MediaModel>()
-                .Property(x => x.GenreString).HasColumnName("Genres");
+                .Property(x => x.GenreString).HasColumnName(nameof(MediaModel.Genres));
 
             modelBuilder.Entity<MusicModel>()
                 .HasKey(x => new {x.Name, x.Author});
             modelBuilder.Entity<MusicModel>()
-                .Property(x => x.GenreString).HasColumnName("Genres");
+                .Property(x => x.InstrumentTypesString).HasColumnName(nameof(MusicModel.Genres));
+            modelBuilder.Entity<MusicModel>()
+                .Property(x => x.InstrumentsString).HasColumnName(nameof(MusicModel.Instruments));
+            modelBuilder.Entity<MusicModel>()
+                .Property(x => x.GenreString).HasColumnName(nameof(MusicModel.InstrumentTypes));
 
             modelBuilder.Entity<StreamingEntryModel>()
                 .HasKey(x => new {x.Name, x.Type, x.Episode, x.Season});

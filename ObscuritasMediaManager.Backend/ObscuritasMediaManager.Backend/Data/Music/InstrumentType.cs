@@ -2,6 +2,7 @@
 {
     public enum InstrumentType
     {
+        Unset,
         Vocal,
         WoodWind,
         Brass,

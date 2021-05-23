@@ -132,6 +132,8 @@ export function renderAudioTileStyles() {
             font-size: 18px;
             color: white;
             text-align: center;
+
+            overflow: hidden;
         }
 
         #edit-icon-container {

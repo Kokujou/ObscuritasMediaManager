@@ -2,6 +2,7 @@
 {
     public enum Instrumentation
     {
+        Unset,
         Mono,
         Groups,
         Mixed

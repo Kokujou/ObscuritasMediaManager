@@ -2,6 +2,7 @@
 {
     public enum Mood
     {
+        Unset,
         Happy,
         Aggressive,
         Sad,

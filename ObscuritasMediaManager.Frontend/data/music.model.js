@@ -15,21 +15,37 @@ export class MusicModel {
     /** @type {Nations} */ nation;
     /** @type {Instrumentation} */ instrumentation;
     /** @type {Participants} */ participants;
-    /** @type {Instruments} */ instruments;
-    /** @type {InstrumentTypes} */ instrumentTypes;
-    /** @type {Genre[]} */ genres = [];
+    /** @type {string} */ instrumentsString;
+    /** @type {Instruments[]} */ get instruments() {
+        return [];
+    }
+    set instruments(value) {}
+    /** @type {string} */ instrumentTypesString;
+    /** @type {InstrumentTypes[]} */ get instrumentTypes() {
+        if (this.instrumentTypesString) return this.instrumentTypesString.split(',');
+        return [];
+    }
+    set instrumentTypes(value) {}
+    /**@type {string} */ genreString;
+    /** @type {Genre[]} */ get genres() {
+        if (this.genreString) return this.genreString.split(',');
+        return [];
+    }
+    set genres(value) {}
     /** @type {string} */ src;
 
     /**
      * @param {File} file
+     * @param {string} basePath
      */
     static fromFile(file, basePath) {
         var musicModel = new MusicModel();
         // @ts-ignore
-        var fileLevels = file.webkitRelativePath.split('/');
-        musicModel.name = fileLevels[1];
+        /** @type {string[]} */ var fileLevels = file.webkitRelativePath.split('/');
+        musicModel.name = fileLevels[fileLevels.length - 1];
         // @ts-ignore
         musicModel.src = `${basePath}\\${file.webkitRelativePath}`;
+        musicModel.author = 'undefined';
         return musicModel;
     }
 }

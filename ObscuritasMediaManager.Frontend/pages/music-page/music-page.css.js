@@ -110,6 +110,18 @@ export function renderMusicPageStyles() {
             scrollbar-width: thin;
             scrollbar-color: var(--accent-color) #20625599;
             border-radius: 20px;
+
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        audio-tile {
+            display: inline-block;
+            position: relative;
+            margin: 20px;
+            width: 250px;
+            min-height: 250px;
         }
     `;
 }

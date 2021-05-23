@@ -30,7 +30,7 @@ export class MediaService {
     static async batchCreateMedia(media) {
         var response = await fetch('/ObscuritasMediaManager/api/media', {
             method: 'POST',
-            body: JSON.stringify(media.map((x) => x)),
+            body: JSON.stringify(media),
             headers: { 'Content-Type': 'application/json' },
         });
 

@@ -3,6 +3,7 @@ import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
 import { PathInputDialog } from '../../dialogs/path-input-dialog/path-input-dialog.js';
 import { LitElement } from '../../exports.js';
 import { FileService } from '../../services/file.service.js';
+import { MusicService } from '../../services/music.service.js';
 import { renderMusicPageStyles } from './music-page.css.js';
 import { renderMusicPage } from './music-page.html.js';
 
@@ -18,7 +19,13 @@ export class MusicPage extends LitElement {
     constructor() {
         super();
         document.title = 'Musik';
-        /** @type {string} */ this.someProperty;
+        /** @type {MusicModel[]} */ this.musicTracks = [];
+        this.initializeData();
+    }
+
+    async initializeData() {
+        this.musicTracks = await MusicService.getAll();
+        this.requestUpdate(undefined);
     }
 
     render() {
@@ -63,11 +70,9 @@ export class MusicPage extends LitElement {
      */
     static async processFiles(files, basePath) {
         var musickTracks = [];
-        var streamingEntries = [];
-        var episode = 0;
         for (var i = 0; i < files.length; i++) {
             try {
-                var track = MusicModel.fromFile(files[i]);
+                var track = MusicModel.fromFile(files[i], basePath);
                 if (musickTracks.some((x) => x.name == track.name)) continue;
                 musickTracks.push(track);
             } catch (err) {

@@ -2,6 +2,7 @@
 {
     public enum Nation
     {
+        Unset,
         Japanese,
         English,
         German

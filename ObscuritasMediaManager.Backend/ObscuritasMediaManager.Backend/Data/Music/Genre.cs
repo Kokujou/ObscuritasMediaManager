@@ -2,6 +2,7 @@
 {
     public enum Genre
     {
+        Unset,
         Avantgarde,
         Blues,
         Classic,

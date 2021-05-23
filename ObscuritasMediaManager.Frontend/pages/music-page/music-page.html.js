@@ -75,7 +75,7 @@ export function renderMusicPage(musicPage) {
                 <div id="result-options-container">
                     <div id="result-options">
                         <div class="option-section" id="import-section">
-                            <a id="import-files"></a>
+                            <a id="import-files" @click="${() => musicPage.importFolder()}"></a>
                             <a id="create-song"></a>
                         </div>
                         <div class="option-section" id="playlist-section">
@@ -90,8 +90,9 @@ export function renderMusicPage(musicPage) {
                         </div>
                     </div>
                 </div>
-                <div id="search-results"></div>
+                <div id="search-results">${musicPage.musicTracks.map((track) => html` <audio-tile .track="${track}"></audio-tile> `)}</div>
             </div>
+            <input type="file" id="folder-browser" webkitdirectory style="display:none" />
         </page-layout>
     `;
 }

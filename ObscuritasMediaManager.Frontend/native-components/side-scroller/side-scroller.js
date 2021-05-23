@@ -43,7 +43,6 @@ export class SideScroller extends LitElement {
         setTimeout(() => {
             this.requestUpdate(undefined);
             this.currentItemIndex = Math.floor(this.scrollChildren.length / 2);
-            console.log(this.scrollChildren);
             this.scrollChildren[this.currentItemIndex].scrollIntoView({ block: 'end', inline: 'center', behavior: 'smooth' });
             this.requestUpdate(undefined);
         }, 100);

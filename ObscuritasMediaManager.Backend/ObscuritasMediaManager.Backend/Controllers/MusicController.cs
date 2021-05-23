@@ -31,5 +31,18 @@ namespace ObscuritasMediaManager.Backend.Controllers
                 return BadRequest(e.ToString());
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            try
+            {
+                return Ok(await _repository.GetAllAsync());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.ToString());
+            }
+        }
     }
 }

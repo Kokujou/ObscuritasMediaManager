@@ -1,8 +1,4 @@
-import { Instrumentation } from '../../data/enumerations/instrumentation.js';
-import { Instruments } from '../../data/enumerations/instruments.js';
-import { Mood } from '../../data/enumerations/mood.js';
-import { Nations } from '../../data/enumerations/nations.js';
-import { Participants } from '../../data/enumerations/participants.js';
+import { MusicModel } from '../../data/music.model.js';
 import { LitElement } from '../../exports.js';
 import { renderAudioTileStyles } from './audio-tile.css.js';
 import { renderAudioTile } from './audio-tile.html.js';
@@ -14,39 +10,21 @@ export class AudioTile extends LitElement {
 
     static get properties() {
         return {
-            caption: { type: String, reflect: true },
-            autor: { type: String, reflect: true },
-            source: { type: String, reflect: true },
-            language: { type: String, reflect: true },
-            nation: { type: String, reflect: true },
-            instrumentation: { type: String, reflect: true },
-            participantCount: { type: String, reflect: true },
-            instruments: { type: Array, reflect: true },
-            genres: { type: Array, reflect: true },
-            mood: { type: String, reflect: true },
+            track: { type: Object, reflect: true },
         };
     }
 
     constructor() {
         super();
-        /** @type {string} */ this.caption;
-        /** @type {string} */ this.autor = '';
-        /** @type {string} */ this.source = '';
-        /** @type {Nations} */ this.language;
-        /** @type {Nations} */ this.nation;
-        /** @type {Instrumentation} */ this.instrumentation;
-        /** @type {Participants} */ this.participantCount;
-        /** @type {Instruments[]} */ this.instruments = [];
-        /** @type {string[]} */ this.genres = [];
-        /** @type {Mood} */ this.mood;
+        /** @type {MusicModel} */ this.track = new MusicModel();
     }
 
     get autorText() {
-        if (this.autor) return `- ${this.autor}`;
+        if (this.track.author) return `- ${this.track.author}`;
         return '';
     }
     get sourceText() {
-        if (this.source) return `(${this.source})`;
+        if (this.track.source) return `(${this.track.source})`;
         return '';
     }
 
