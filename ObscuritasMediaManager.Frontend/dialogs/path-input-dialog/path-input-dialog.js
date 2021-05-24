@@ -12,11 +12,8 @@ export class PathInputDialog extends LitElement {
     }
 
     static show() {
-        // @ts-ignore
-        /** @type {MessageDialog }*/ var dialog = document.createElement('path-input-dialog');
-
+        var dialog = new PathInputDialog();
         document.body.append(dialog);
-
         return dialog;
     }
 

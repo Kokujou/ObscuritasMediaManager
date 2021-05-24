@@ -45,10 +45,8 @@ export class GenreDialog extends LitElement {
      * @param {boolean} allowThreeValues
      */
     static show(genres, allowedGenres = [], forbiddenGenres = [], allowThreeValues = true) {
-        // @ts-ignore
-        /** @type {MessageDialog }*/ var dialog = document.createElement('genre-dialog');
+        var dialog = new GenreDialog();
 
-        dialog.caption = 'Tags auswählen';
         dialog.genres = genres;
         dialog.allowedGenres = allowedGenres;
         dialog.forbiddenGenres = forbiddenGenres;

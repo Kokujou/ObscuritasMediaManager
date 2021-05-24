@@ -21,19 +21,21 @@ export class MessageDialog extends LitElement {
     }
 
     static show(title, message) {
-        // @ts-ignore
-        /** @type {MessageDialog }*/ var dialog = document.createElement('message-dialog');
-
+        var dialog = new MessageDialog();
         dialog.caption = title;
         dialog.message = message;
         document.body.append(dialog);
 
-        return dialog;
-    }
-
-    addDefaultEventListeners() {
-        this.addEventListener('accept', () => this.remove());
-        this.addEventListener('decline', () => this.remove());
+        return new Promise((resolve, reject) => {
+            dialog.addEventListener('accept', () => {
+                resolve();
+                dialog.remove();
+            });
+            dialog.addEventListener('decline', () => {
+                reject();
+                dialog.remove();
+            });
+        });
     }
 
     render() {

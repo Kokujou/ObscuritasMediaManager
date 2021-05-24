@@ -116,7 +116,6 @@ export function renderMusicPage(musicPage) {
                     </div>
                 </paginated-scrolling>
             </div>
-            <input type="file" id="folder-browser" webkitdirectory style="display:none" />
             <audio id="current-track" .volume="${musicPage.currentVolumne}" .src="${musicPage.currentTrack}"></audio>
         </page-layout>
     `;
