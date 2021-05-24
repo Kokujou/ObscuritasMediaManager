@@ -1,4 +1,5 @@
 export class StreamingEntryModel {
+    /** @type {string} */ id;
     /** @type {string} */ name;
     /** @type {string} */ season;
     /** @type {number} */ episode = 0;

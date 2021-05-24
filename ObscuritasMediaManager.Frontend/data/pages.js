@@ -4,7 +4,7 @@ export const Pages = {
     mediaDetail: {
         routes: ['anime-ger-sub', 'anime-ger-dub', 'anime-movies', 'real-series', 'real-movies', 'j-drama'],
         component: '<media-detail-page></media-detail-page>',
-        withQueries: ['name', 'type'],
+        withQueries: ['guid'],
     },
     animeGerSub: { routes: ['anime-ger-sub'], component: '<anime-ger-sub-page></anime-ger-sub-page>', withQueries: [] },
     animeGerDub: { routes: ['anime-ger-dub'], component: '<anime-ger-dub-page></anime-ger-dub-page>', withQueries: [] },
@@ -17,7 +17,12 @@ export const Pages = {
     video: {
         routes: ['video'],
         component: '<video-player-popup></video-player-popup>',
-        withQueries: ['name', 'type', 'season', 'episode'],
+        withQueries: ['guid', 'season', 'episode'],
+    },
+    musicPlaylist: {
+        routes: ['music-playlist'],
+        component: '<music-playlist-popup></music-playlist-popup>',
+        withQueries: ['guid'],
     },
 };
 

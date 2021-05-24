@@ -1,4 +1,5 @@
 export class MediaModel {
+    /** @type {string} */ id;
     /** @type {string} */ name;
     /** @type {string} */ type;
     /** @type {number} */ rating = 0;

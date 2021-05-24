@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Data.Linq.Mapping;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ObscuritasMediaManager.Backend.Models
 {
-    [Table(Name = "media")]
     public class MediaModel
     {
+        [Key] public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
         public string Type { get; set; }
         public int Rating { get; set; }

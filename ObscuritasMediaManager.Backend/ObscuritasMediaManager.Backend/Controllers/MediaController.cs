@@ -22,12 +22,12 @@ namespace ObscuritasMediaManager.Backend.Controllers
             _genreRepository = genreRepository;
         }
 
-        [HttpGet("{animeName}/type/{animeType}")]
-        public async Task<IActionResult> Get([FromRoute] string animeName, [FromRoute] string animeType)
+        [HttpGet("{guid:Guid}")]
+        public async Task<IActionResult> Get([FromRoute] Guid guid)
         {
             try
             {
-                return Ok(await _repository.GetAsync(animeName, animeType));
+                return Ok(await _repository.GetAsync(guid));
             }
             catch (Exception e)
             {
@@ -62,8 +62,8 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-        [HttpPut("{mediaName}/type/{mediaType}")]
-        public async Task<IActionResult> UpdateMedia(string mediaName, string mediaType, [FromBody] MediaModel media)
+        [HttpPut]
+        public async Task<IActionResult> UpdateMedia([FromBody] MediaModel media)
         {
             try
             {
@@ -75,7 +75,8 @@ namespace ObscuritasMediaManager.Backend.Controllers
                         $"One of the specified genres is not in the range of values: {media.GenreString}.\n" +
                         $"Supported Genres are: {string.Join(",", genres)}");
 
-                await _repository.UpdateMediaAsync(mediaName, mediaType, media);
+
+                await _repository.UpdateMediaAsync(media);
 
                 return NoContent();
             }
@@ -86,14 +87,13 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
 
-        [HttpPut("{mediaName}/type/{mediaType}/image")]
+        [HttpPut("{guid:Guid}/image")]
         public async Task<IActionResult> AddMediaImage([FromBody] UpdateImageRequest request,
-            [FromRoute] string mediaName,
-            [FromRoute] string mediaType)
+            Guid guid)
         {
             try
             {
-                await _repository.AddMediaImageAsync(mediaName, mediaType, request.Image);
+                await _repository.AddMediaImageAsync(guid, request.Image);
                 return NoContent();
             }
             catch (Exception e)
@@ -102,13 +102,12 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-        [HttpDelete("{animeName}/type/{animeType}/image")]
-        public async Task<IActionResult> DeleteMediaImage([FromRoute] string animeName,
-            [FromRoute] string animeType)
+        [HttpDelete("{guid:Guid}/image")]
+        public async Task<IActionResult> DeleteMediaImage(Guid guid)
         {
             try
             {
-                await _repository.RemoveMediaImageAsync(animeName, animeType);
+                await _repository.RemoveMediaImageAsync(guid);
                 return NoContent();
             }
             catch (Exception e)

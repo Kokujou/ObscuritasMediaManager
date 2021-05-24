@@ -115,7 +115,7 @@ export function renderMediaDetailPage(detailPage) {
                         ${detailPage.episodes.map(
                             (entry) =>
                                 html`<div @click="${() => detailPage.openVideoPlayer(entry)}" class="link">
-                                    ${entry.name} - ${entry.season}: Episode ${entry.episode}
+                                    ${detailPage.media.name} - ${entry.season}: Episode ${entry.episode}
                                 </div>`
                         )}
                     </div>

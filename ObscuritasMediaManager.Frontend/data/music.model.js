@@ -7,6 +7,7 @@ import { Nations } from './enumerations/nations.js';
 import { Participants } from './enumerations/participants.js';
 
 export class MusicModel {
+    /** @type {string} */ id;
     /** @type {string} */ name;
     /** @type {string} */ author;
     /** @type {string} */ source;

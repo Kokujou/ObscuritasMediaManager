@@ -41,10 +41,10 @@ export class MediaDetailPage extends LitElement {
     }
 
     async getMediaFromRoute() {
-        var name = getQueryValue('name');
-        var type = getQueryValue('type');
-        this.media = await MediaService.getMedia(name, type);
-        this.streamingEntries = await StreamingService.getStreamingEntries(name, type);
+        var guid = getQueryValue('guid');
+        this.media = await MediaService.getMedia(guid);
+        this.streamingEntries = await StreamingService.getStreamingEntries(guid);
+        console.log(this.streamingEntries);
 
         this.requestUpdate(undefined);
         document.title = this.media.name;
@@ -100,7 +100,7 @@ export class MediaDetailPage extends LitElement {
             try {
                 var media = new MediaModel(this.media.name, this.media.type);
                 media.genreString = e.detail.acceptedGenres.map((x) => x.name).join(',');
-                await MediaService.updateMedia(media.name, media.type, media);
+                await MediaService.updateMedia(media.id, media);
                 this.media.genreString = media.genreString;
                 this.requestUpdate(undefined);
                 genreDialog.remove();
@@ -114,7 +114,7 @@ export class MediaDetailPage extends LitElement {
         try {
             var media = new MediaModel(this.media.name, this.media.type);
             media.genreString = this.media.genres.filter((x) => x != genre).join(',');
-            await MediaService.updateMedia(media.name, media.type, media);
+            await MediaService.updateMedia(media.id, media);
             this.media.genreString = media.genreString;
             this.requestUpdate(undefined);
         } catch (err) {
@@ -129,7 +129,7 @@ export class MediaDetailPage extends LitElement {
         try {
             var media = new MediaModel(this.media.name, this.media.type);
             media.rating = newRating;
-            await MediaService.updateMedia(media.name, media.type, media);
+            await MediaService.updateMedia(media.id, media);
             this.media.rating = newRating;
             this.requestUpdate(undefined);
         } catch (err) {
@@ -142,7 +142,7 @@ export class MediaDetailPage extends LitElement {
      */
     async addImage(imageData) {
         try {
-            await MediaService.addImageForMedia(this.media.name, this.media.type, imageData);
+            await MediaService.addImageForMedia(this.media.id, imageData);
             this.media.image = imageData;
             this.requestUpdate(undefined);
         } catch (err) {
@@ -152,7 +152,7 @@ export class MediaDetailPage extends LitElement {
 
     async deleteImage() {
         try {
-            await MediaService.removeImageForMedia(this.media.name, this.media.type);
+            await MediaService.removeImageForMedia(this.media.id);
             this.media.image = null;
             this.requestUpdate(undefined);
         } catch (err) {
@@ -161,12 +161,14 @@ export class MediaDetailPage extends LitElement {
     }
 
     async changeName() {
-        /** @type {HTMLInputElement} */ var nameInput = this.shadowRoot.querySelector('#media-name');
-        var media = new MediaModel();
-        media.name = nameInput.value;
         try {
-            await MediaService.updateMedia(this.media.name, this.media.type, media);
-            location.assign('/' + `?name=${media.name}&type=${this.media.type}` + location.hash);
+            /** @type {HTMLInputElement} */ var nameInput = this.shadowRoot.querySelector('#media-name');
+            var media = new MediaModel();
+            media.name = nameInput.value;
+
+            await MediaService.updateMedia(this.media.id, media);
+            this.media.name = media.name;
+            this.requestUpdate(undefined);
         } catch (err) {
             console.error(err);
         }
@@ -178,7 +180,7 @@ export class MediaDetailPage extends LitElement {
             var description = descriptionInput.value;
             var media = new MediaModel(this.media.name, this.media.type);
             media.description = description;
-            await MediaService.updateMedia(media.name, media.type, media);
+            await MediaService.updateMedia(media.id, media);
             this.media.description = media.description;
             this.requestUpdate(undefined);
         } catch (err) {

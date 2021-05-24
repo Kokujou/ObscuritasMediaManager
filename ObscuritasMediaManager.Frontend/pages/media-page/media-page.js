@@ -118,7 +118,7 @@ export class MediaPage extends LitElement {
      */
     async addImageFor(media, imageData) {
         try {
-            await MediaService.addImageForMedia(media.name, media.type, imageData);
+            await MediaService.addImageForMedia(media.id, imageData);
             media.image = imageData;
             this.requestUpdate(undefined);
         } catch (err) {
@@ -134,7 +134,7 @@ export class MediaPage extends LitElement {
         try {
             var media = new MediaModel(media.name, media.type);
             media.rating = newRating;
-            await MediaService.updateMedia(media.name, media.type, media);
+            await MediaService.updateMedia(media.id, media);
             media.rating = newRating;
             this.requestUpdate(undefined);
         } catch (err) {
@@ -150,7 +150,7 @@ export class MediaPage extends LitElement {
         try {
             var media = new MediaModel(media.name, media.type);
             media.genreString = genres.join(',');
-            await MediaService.updateMedia(media.name, media.type, media);
+            await MediaService.updateMedia(media.id, media);
             media.genreString = genres.join(',');
             this.requestUpdate(undefined);
         } catch (err) {

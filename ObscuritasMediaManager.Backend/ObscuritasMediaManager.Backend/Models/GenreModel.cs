@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Data.Linq.Mapping;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ObscuritasMediaManager.Backend.Models
 {
-    [Table(Name = "genres")]
     public class GenreModel
     {
+        [Key] public Guid Id { get; set; } = Guid.NewGuid();
         public string Section { get; set; }
-        [Key] public string Name { get; set; }
+        public string Name { get; set; }
     }
 }

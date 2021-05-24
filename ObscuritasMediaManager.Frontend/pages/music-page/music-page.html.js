@@ -82,7 +82,7 @@ export function renderMusicPage(musicPage) {
                         <div class="option-section" id="playlist-section">
                             <a id="save-playlist"></a>
                             <a id="add-to-playlist"></a>
-                            <a id="play-playlist"></a>
+                            <a id="play-playlist" @click="${() => musicPage.playPlaylist()}"></a>
                             <a id="browse-playlists"></a>
                         </div>
 
@@ -106,13 +106,7 @@ export function renderMusicPage(musicPage) {
                     <div id="search-results">
                         ${musicPage.paginatedTracks.map(
                             (track) =>
-                                html`
-                                    <audio-tile
-                                        .track="${track}"
-                                        @musicToggled="${() => musicPage.toggleMusic(track)}"
-                                        @edit="${() => {}}"
-                                    ></audio-tile>
-                                `
+                                html` <audio-tile .track="${track}" @musicToggled="${() => musicPage.toggleMusic(track)}"></audio-tile> `
                         )}
                     </div>
                 </paginated-scrolling>

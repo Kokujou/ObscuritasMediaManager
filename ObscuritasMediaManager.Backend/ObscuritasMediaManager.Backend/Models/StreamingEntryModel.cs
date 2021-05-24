@@ -1,13 +1,11 @@
-﻿using System.Data.Linq.Mapping;
+﻿using System;
 using Newtonsoft.Json;
 
 namespace ObscuritasMediaManager.Backend.Models
 {
-    [Table(Name = "streaming")]
     public class StreamingEntryModel
     {
-        public string Name { get; set; }
-        public string Type { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Season { get; set; }
         public int Episode { get; set; }
         public string Src { get; set; }

@@ -23,12 +23,11 @@ export class VideoPlayerPopup extends LitElement {
     }
 
     async loadEntry() {
-        var name = getQueryValue('name');
-        var type = getQueryValue('type');
+        var guid = getQueryValue('guid');
         var season = getQueryValue('season');
         var episode = getQueryValue('episode');
 
-        var entry = await StreamingService.getStreamingEntry(name, type, season, episode);
+        var entry = await StreamingService.getStreamingEntry(guid, season, episode);
         this.src = `/ObscuritasMediaManager/api/file/video?videoPath=${entry.src}`;
     }
 
@@ -41,7 +40,7 @@ export class VideoPlayerPopup extends LitElement {
      */
     static popup(entry) {
         window.open(
-            `/?name=${entry.name}&type=${entry.type}&season=${entry.season}&episode=${entry.episode}#video`,
+            `/?guid=${entry.id}&season=${entry.season}&episode=${entry.episode}#video`,
             '_blank',
             'location=yes,height=480,width=720,menubar=yes,toolbar=yes,status=yes'
         );

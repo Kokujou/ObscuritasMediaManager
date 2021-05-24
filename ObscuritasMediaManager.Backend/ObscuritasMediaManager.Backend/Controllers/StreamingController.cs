@@ -34,12 +34,12 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-        [HttpGet("{mediaName}/type/{mediaType}")]
-        public async Task<IActionResult> GetStreamingEntry(string mediaName, string mediaType)
+        [HttpGet("{guid:Guid}")]
+        public async Task<IActionResult> GetStreamingEntry(Guid guid)
         {
             try
             {
-                return Ok(await _repository.GetAsync(mediaName, mediaType));
+                return Ok(await _repository.GetAsync(guid));
             }
             catch (Exception e)
             {
@@ -47,10 +47,10 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-        [HttpGet("{mediaName}/type/{mediaType}/season/{season}/episode/{episode}")]
-        public async Task<IActionResult> GetStream(string mediaName, string mediaType, string season, int episode)
+        [HttpGet("{guid:Guid}/season/{season}/episode/{episode}")]
+        public async Task<IActionResult> GetStream(Guid guid, string season, int episode)
         {
-            var entry = await _repository.GetAsync(mediaName, mediaType, season, episode);
+            var entry = await _repository.GetAsync(guid, season, episode);
             return Ok(entry);
         }
     }

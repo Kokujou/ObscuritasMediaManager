@@ -8,7 +8,7 @@ namespace ObscuritasMediaManager.Backend.DataRepositories.Interfaces
     public interface IStreamingRepository : IAsyncDisposable
     {
         public Task BatchCreateStreamingEntriesAsync(IEnumerable<StreamingEntryModel> streamingEntries);
-        public Task<IEnumerable<StreamingEntryModel>> GetAsync(string name, string type);
-        public Task<StreamingEntryModel> GetAsync(string name, string type, string season, int episode);
+        public Task<IEnumerable<StreamingEntryModel>> GetAsync(Guid guid);
+        public Task<StreamingEntryModel> GetAsync(Guid guid, string season, int episode);
     }
 }

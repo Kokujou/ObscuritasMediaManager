@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
@@ -19,28 +19,17 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             _context = context;
         }
 
-        public async Task UpdateMediaAsync(string name, string type, MediaModel updated)
+        public async Task UpdateMediaAsync(MediaModel updated)
         {
-            var item = await _context.Media.SingleOrDefaultAsync(x => x.Name == name && x.Type == type);
+            var item = await _context.Media.SingleOrDefaultAsync(x => x.Id == updated.Id);
+
             if (item == default)
-                throw new ModelNotFoundException(name, type);
+                throw new ModelNotFoundException(updated.Id);
 
-            if (name != updated.Name || type != updated.Type)
-            {
-                var clone = JsonConvert.DeserializeObject<MediaModel>(JsonConvert.SerializeObject(item));
-                _context.Remove(item);
-                await _context.SaveChangesAsync();
-                item = clone;
-                if (item == default)
-                    throw new ModelNotFoundException(name, type);
-                if (!string.IsNullOrEmpty(updated.Name))
-                    item.Name = updated.Name;
-                if (!string.IsNullOrEmpty(updated.Type))
-                    item.Type = updated.Type;
-                await _context.AddAsync(item);
-                await _context.SaveChangesAsync();
-            }
-
+            if (!string.IsNullOrEmpty(updated.Name))
+                item.Name = updated.Name;
+            if (!string.IsNullOrEmpty(updated.Type))
+                item.Type = updated.Type;
             if (updated.Description != null)
                 item.Description = updated.Description;
             if (updated.GenreString != null)
@@ -55,30 +44,30 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddMediaImageAsync(string mediaName, string mediaType, string mediaImage)
+        public async Task AddMediaImageAsync(Guid guid, string mediaImage)
         {
-            var item = await _context.Media.SingleOrDefaultAsync(x => x.Name == mediaName && x.Type == mediaType);
+            var item = await _context.Media.SingleOrDefaultAsync(x => x.Id == guid);
             if (item == default)
-                throw new ModelNotFoundException(mediaName, mediaType);
+                throw new ModelNotFoundException(guid);
             item.Image = mediaImage;
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveMediaImageAsync(string mediaName, string mediaType)
+        public async Task RemoveMediaImageAsync(Guid guid)
         {
-            var item = await _context.Media.SingleOrDefaultAsync(x => x.Name == mediaName && x.Type == mediaType);
+            var item = await _context.Media.SingleOrDefaultAsync(x => x.Id == guid);
             if (item == default)
-                throw new ModelNotFoundException(mediaName, mediaType);
+                throw new ModelNotFoundException(guid);
             item.Image = null;
             await _context.SaveChangesAsync();
         }
 
 
-        public async Task<MediaModel> GetAsync(string name, string type)
+        public async Task<MediaModel> GetAsync(Guid guid)
         {
-            var response = await _context.Media.SingleOrDefaultAsync(x => x.Name == name && x.Type == type);
+            var response = await _context.Media.SingleOrDefaultAsync(x => x.Id == guid);
             if (response == default)
-                throw new ModelNotFoundException(name, type);
+                throw new ModelNotFoundException(guid);
             return response;
         }
 

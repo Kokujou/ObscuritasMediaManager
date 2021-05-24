@@ -1,8 +1,11 @@
 import { MediaModel } from '../data/media.model.js';
 
 export class MediaService {
-    static async getMedia(name, type) {
-        var response = await fetch(`/ObscuritasMediaManager/api/media/${name}/type/${type}`);
+    /**
+     * @param {string} guid
+     */
+    static async getMedia(guid) {
+        var response = await fetch(`/ObscuritasMediaManager/api/media/${guid}`);
 
         if (response.status == 400) throw new Error(`the following media already exist: ${await response.json()}`);
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
@@ -39,11 +42,10 @@ export class MediaService {
 
     /**
      * @param {MediaModel} media
-     * @param {string} name
-     * @param {string} type
+     * @param {string} guid
      */
-    static async updateMedia(name, type, media) {
-        var response = await fetch(`/ObscuritasMediaManager/api/media/${name}/type/${type}`, {
+    static async updateMedia(guid, media) {
+        var response = await fetch(`/ObscuritasMediaManager/api/media/${guid}`, {
             method: 'PUT',
             body: JSON.stringify(media),
             headers: { 'Content-Type': 'application/json' },
@@ -54,11 +56,10 @@ export class MediaService {
 
     /**
      * @param {string} image
-     * @param {string} name
-     * @param {string} type
+     * @param {string} guid
      */
-    static async addImageForMedia(name, type, image) {
-        var response = await fetch(`/ObscuritasMediaManager/api/media/${name}/type/${type}/image`, {
+    static async addImageForMedia(guid, image) {
+        var response = await fetch(`/ObscuritasMediaManager/api/media/${guid}/image`, {
             method: 'PUT',
             body: JSON.stringify({ image: image }),
             headers: { 'Content-Type': 'application/json' },
@@ -68,11 +69,10 @@ export class MediaService {
     }
 
     /**
-     * @param {string} name
-     * @param {string} type
+     * @param {string} guid
      */
-    static async removeImageForMedia(name, type) {
-        var response = await fetch(`/ObscuritasMediaManager/api/media/${name}/type/${type}/image`, {
+    static async removeImageForMedia(guid) {
+        var response = await fetch(`/ObscuritasMediaManager/api/media/${guid}/image`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         });

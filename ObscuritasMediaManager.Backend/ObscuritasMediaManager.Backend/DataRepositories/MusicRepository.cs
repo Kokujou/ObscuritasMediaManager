@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
@@ -18,30 +18,16 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             _context = context;
         }
 
-        public async Task UpdateAsync(string name, string author, MusicModel updated)
+        public async Task UpdateAsync(MusicModel updated)
         {
-            var item = await _context.Music.SingleOrDefaultAsync(x => x.Name == name && x.Author == author);
+            var item = await _context.Music.SingleOrDefaultAsync(x => x.Id == updated.Id);
             if (item == default)
-                throw new ModelNotFoundException(name, author);
+                throw new ModelNotFoundException(updated.Id);
 
-            if (name != updated.Name || author != updated.Author)
-            {
-                var clone = JsonConvert.DeserializeObject<MusicModel>(
-                    JsonConvert.SerializeObject(item));
-                _context.Remove(item);
-                await _context.SaveChangesAsync();
-                item = clone;
-                if (item == default)
-                    throw new ModelNotFoundException(name, author);
-
-                if (!string.IsNullOrEmpty(updated.Name))
-                    item.Name = updated.Name;
-                if (!string.IsNullOrEmpty(updated.Author))
-                    item.Author = updated.Author;
-                await _context.AddAsync(item);
-                await _context.SaveChangesAsync();
-            }
-
+            if (!string.IsNullOrEmpty(updated.Name))
+                item.Name = updated.Name;
+            if (!string.IsNullOrEmpty(updated.Author))
+                item.Author = updated.Author;
             if (updated.Genres != null)
                 item.GenreString = updated.GenreString;
             if (updated.Source != null)
@@ -67,9 +53,9 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<MusicModel> GetAsync(string name, string author)
+        public async Task<MusicModel> GetAsync(Guid guid)
         {
-            var response = await _context.Music.SingleAsync(x => x.Name == name && x.Author == author);
+            var response = await _context.Music.SingleAsync(x => x.Id == guid);
             return response;
         }
 

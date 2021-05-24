@@ -18,7 +18,18 @@ export class MusicService {
         var response = await fetch('/ObscuritasMediaManager/api/music');
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
-        /** @type {MusicModel[]} */ var mediaList = await response.json();
-        return mediaList.map((tracks) => Object.assign(new MusicModel(), tracks));
+        /** @type {MusicModel[]} */ var musicTracks = await response.json();
+        return musicTracks.map((tracks) => Object.assign(new MusicModel(), tracks));
+    }
+
+    /**
+     * @param {string} guid
+     */
+    static async get(guid) {
+        var response = await fetch(`/ObscuritasMediaManager/api/music/${guid}`);
+        if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
+
+        /** @type {MusicModel} */ var track = await response.json();
+        return Object.assign(new MusicModel(), track);
     }
 }

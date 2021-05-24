@@ -14,8 +14,11 @@ export class StreamingService {
         if (response.status != 204) throw new Error('something went wrong, status ' + response.status);
     }
 
-    static async getStreamingEntries(name, type) {
-        var response = await fetch(`/ObscuritasMediaManager/api/streaming/${name}/type/${type}`, {
+    /**
+     * @param {string} guid
+     */
+    static async getStreamingEntries(guid) {
+        var response = await fetch(`/ObscuritasMediaManager/api/streaming/${guid}`, {
             method: 'GET',
         });
 
@@ -25,8 +28,13 @@ export class StreamingService {
         return entryList.map((x) => Object.assign(new StreamingEntryModel(), x));
     }
 
-    static async getStreamingEntry(name, type, season, episode) {
-        var response = await fetch(`/ObscuritasMediaManager/api/streaming/${name}/type/${type}/season/${season}/episode/${episode}`, {
+    /**
+     * @param {string} guid
+     * @param {string} season
+     * @param {string} episode
+     */
+    static async getStreamingEntry(guid, season, episode) {
+        var response = await fetch(`/ObscuritasMediaManager/api/streaming/${guid}/season/${season}/episode/${episode}`, {
             method: 'GET',
         });
 

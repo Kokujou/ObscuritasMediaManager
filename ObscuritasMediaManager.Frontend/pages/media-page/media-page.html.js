@@ -48,10 +48,7 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                                     @ratingChanged="${(e) => mediaPage.updateRating(media, e.detail.newRating)}"
                                     @genresChanged="${(e) => mediaPage.updateGenres(media, e.detail.genres)}"
                                     @click="${() =>
-                                        changePage(
-                                            location.hash.length > 1 ? location.hash.substr(1) : 'empty',
-                                            `?name=${media.name}&type=${media.type}`
-                                        )}"
+                                        changePage(location.hash.length > 1 ? location.hash.substr(1) : 'empty', `?guid=${media.id}`)}"
                                 ></media-tile>
                             `
                     )}

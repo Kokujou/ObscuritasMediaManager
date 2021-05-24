@@ -11,12 +11,12 @@ namespace ObscuritasMediaManager.Backend.DataRepositories.Interfaces
 
         public Task<IEnumerable<MediaModel>> GetAllAsync(string type = "");
 
-        public Task<MediaModel> GetAsync(string name, string animeType);
+        public Task<MediaModel> GetAsync(Guid guid);
 
-        public Task UpdateMediaAsync(string name, string type, MediaModel updated);
+        public Task UpdateMediaAsync(MediaModel updated);
 
-        public Task AddMediaImageAsync(string mediaName, string mediaType, string mediaImage);
+        public Task AddMediaImageAsync(Guid guid, string mediaImage);
 
-        public Task RemoveMediaImageAsync(string mediaName, string mediaType);
+        public Task RemoveMediaImageAsync(Guid guid);
     }
 }
