@@ -14,8 +14,12 @@ export class MusicPage extends LitElement {
         return {};
     }
 
-    get filteredTracks() {
+    get paginatedTracks() {
         return this.musicTracks.slice(0, 6 + 3 * this.currentPage);
+    }
+
+    get filteredTracks() {
+        return this.musicTracks;
     }
 
     constructor() {
@@ -62,18 +66,11 @@ export class MusicPage extends LitElement {
     async toggleMusic(track) {
         var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.src}`;
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#current-track');
-        if (this.currentTrack == trackSrc && !audioElement.paused) {
-            audioElement.pause();
-            return;
-        }
-
-        if (this.currentTrack == trackSrc && audioElement.paused) {
-            audioElement.play();
-            return;
-        }
+        if (this.currentTrack == trackSrc && !audioElement.paused) audioElement.pause();
+        else if (this.currentTrack == trackSrc && audioElement.paused) audioElement.play();
+        if (this.currentTrack == trackSrc) return;
 
         this.currentTrack = trackSrc;
-        console.log(this.currentTrack);
         await this.requestUpdate(undefined);
         audioElement.play();
     }

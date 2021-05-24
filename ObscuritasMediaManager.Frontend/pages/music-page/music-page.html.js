@@ -12,8 +12,8 @@ export function renderMusicPage(musicPage) {
         <page-layout>
             <div id="music-page">
                 <div id="search-panel-container">
+                    <div id="search-heading">Suche</div>
                     <div id="search-panel">
-                        <div id="search-heading">Suche</div>
                         <div id="language-filter" class="filter">
                             <div class="filter-heading">Sprache:</div>
                             <side-scroller>
@@ -71,6 +71,7 @@ export function renderMusicPage(musicPage) {
                             </side-scroller>
                         </div>
                     </div>
+                    <div id="result-count-label">${musicPage.filteredTracks.length} von ${musicPage.musicTracks.length} Musik-Tracks</div>
                 </div>
                 <div id="result-options-container">
                     <div id="result-options">
@@ -103,7 +104,7 @@ export function renderMusicPage(musicPage) {
                 </div>
                 <paginated-scrolling id="search-results-container" scrollTopThreshold="50" @scrollBottom="${() => musicPage.loadNext()}">
                     <div id="search-results">
-                        ${musicPage.filteredTracks.map(
+                        ${musicPage.paginatedTracks.map(
                             (track) =>
                                 html`
                                     <audio-tile

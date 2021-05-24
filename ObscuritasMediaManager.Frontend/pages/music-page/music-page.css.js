@@ -29,22 +29,31 @@ export function renderMusicPageStyles() {
             position: absolute;
             top: 0;
             right: 25px;
-            width: 450px;
-            bottom: 150px;
+            width: 400px;
+            bottom: 100px;
+
+            padding: 0 20px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
             background-color: var(--accent-color);
             border-radius: 20px;
+        }
+
+        #search-panel-container > * {
+            margin: 10px 0;
         }
 
         #search-panel {
             display: flex;
             flex-direction: column;
 
-            position: absolute;
-            left: 20px;
-            right: 20px;
-            top: 20px;
-            bottom: 20px;
+            width: 100%;
+            flex: auto;
+            margin: 20px 0;
 
             font-size: 24px;
             overflow-y: auto;
@@ -93,6 +102,15 @@ export function renderMusicPageStyles() {
             background-color: #ffffff99;
         }
 
+        #result-count-label {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 3px 3px 10px black;
+            color: white;
+        }
+
         ${renderInstrumentTypeIcons()}
         ${renderLanguageFlags()}
         ${renderParticipantCountIcon()}
@@ -137,8 +155,8 @@ function renderResultOptionsBar() {
         #result-options-container {
             position: absolute;
             bottom: 0;
-            left: 100px;
-            right: 400px;
+            left: 50px;
+            right: 500px;
             height: 100px;
 
             display: flex;
