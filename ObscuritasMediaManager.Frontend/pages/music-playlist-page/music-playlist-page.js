@@ -43,9 +43,13 @@ export class MusicPlaylistPage extends LitElement {
         else audioElement.pause();
     }
 
-    changeMood(mood) {
-        this.currentTrack.mood = mood;
+    /**
+     * @param {keyof  MusicModel} property
+     * @param {any} mood
+     */
+    changeProperty(property, mood) {
+        if (property == 'displayName') return;
+        this.currentTrack[property] = mood;
         this.requestUpdate(undefined);
-        console.log(mood);
     }
 }

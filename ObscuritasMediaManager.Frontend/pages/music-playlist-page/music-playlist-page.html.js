@@ -1,5 +1,8 @@
+import { Instrumentation } from '../../data/enumerations/instrumentation.js';
 import { Mood } from '../../data/enumerations/mood.js';
+import { Participants } from '../../data/enumerations/participants.js';
 import { html } from '../../exports.js';
+import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MusicPlaylistPage } from './music-playlist-page.js';
 
 /**
@@ -14,7 +17,8 @@ export function renderMusicPlaylist(playlist) {
                         <div id="mood-container">
                             <div class="fade-space"></div>
                             ${Object.values(Mood).map(
-                                (x) => html`<a @click="${() => playlist.changeMood(x)}" class="change-mood-button">${x}</a>`
+                                (mood) =>
+                                    html`<a @click="${() => playlist.changeProperty('mood', mood)}" class="change-mood-button">${mood}</a>`
                             )}
                             <div class="fade-space"></div>
                         </div>
@@ -25,8 +29,23 @@ export function renderMusicPlaylist(playlist) {
                             <div id="lagnuage-icon" class="inline-icon ${playlist.currentTrack.language}"></div>
                             <div id="nation-icon" class="inline-icon ${playlist.currentTrack.nation}"></div>
                         </div>
-                        <div id="participant-count-button" class="inline-icon ${playlist.currentTrack.participants}"></div>
-                        <div id="instrumentation-button" class="inline-icon">${playlist.currentTrack.instrumentation}</div>
+                        <div
+                            @click="${() =>
+                                playlist.changeProperty('participants', Enum.nextValue(Participants, playlist.currentTrack.participants))}"
+                            id="participant-count-button"
+                            class="inline-icon ${playlist.currentTrack.participants}"
+                        ></div>
+                        <div
+                            @click="${() =>
+                                playlist.changeProperty(
+                                    'instrumentation',
+                                    Enum.nextValue(Instrumentation, playlist.currentTrack.instrumentation)
+                                )}"
+                            id="instrumentation-button"
+                            class="inline-icon"
+                        >
+                            ${playlist.currentTrack.instrumentation}
+                        </div>
                         <div id="language-switcher-overlay"></div>
                     </div>
                     <div id="audio-control-container">
@@ -44,7 +63,10 @@ export function renderMusicPlaylist(playlist) {
                 </div>
                 <div id="playlist-container">
                     <div id="playlist-item-container">
-                        ${playlist.playlist.map((x) => html`<div id="playlist-entry">${x.displayName}</div>`)}
+                        ${playlist.playlist.map(
+                            (x) =>
+                                html`<div class="playlist-entry ${x.id == playlist.currentTrack.id ? 'active' : ''}">${x.displayName}</div>`
+                        )}
                     </div>
                     <div id="playlist-option-container">
                         <input type="range" id="track-position" />

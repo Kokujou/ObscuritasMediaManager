@@ -5,6 +5,7 @@ import { css } from '../../exports.js';
 /**
  * TODO: - change detection - autosave
  * TODO: - isntrument selection
+ * TODO: - reset functionality
  */
 
 export function renderMusicPlaylistStyles() {
@@ -28,7 +29,6 @@ export function renderMusicPlaylistStyles() {
             box-shadow: 0 0 50px var(--primary-color);
             border-radius: 20px;
             overflow: hidden;
-            color: black;
         }
 
         #current-track-container {
@@ -47,7 +47,7 @@ export function renderMusicPlaylistStyles() {
 
             border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
-            background: linear-gradient(#00000099 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
+            background: var(--primary-color);
         }
 
         #mood-container {
@@ -78,7 +78,6 @@ export function renderMusicPlaylistStyles() {
             padding: 10px 10px;
             font-size: 18px;
             font-weight: bold;
-            color: var(--primary-color);
             border-top: 0.5px solid var(--primary-color);
             border-bottom: 0.5px solid var(--primary-color);
             box-sizing: border-box;
@@ -144,7 +143,6 @@ export function renderMusicPlaylistStyles() {
             justify-content: center;
             align-items: center;
 
-            color: black;
             background: none;
             text-transform: uppercase;
             font-weight: bold;
@@ -207,10 +205,26 @@ export function renderMusicPlaylistStyles() {
             overflow-y: auto;
             overflow-x: hidden;
 
-            background-color: var(--primary-color);
             border-radius: 20px;
-            padding: 20px;
+
             box-sizing: border-box;
+
+            border: 20px solid var(--primary-color);
+        }
+
+        .playlist-entry {
+            padding: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            background: linear-gradient(#00000077 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
+        }
+
+        .playlist-entry:hover {
+            background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
+        }
+
+        .playlist-entry.active {
+            background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
         }
 
         #playlist-option-container {
@@ -231,36 +245,47 @@ function renderMoodStyles() {
     return css`
         #music-player-container {
             --primary-color: #dddddd;
+            color: black;
         }
         #music-player-container.happy {
             --primary-color: #008000;
+            color: white;
         }
         #music-player-container.aggressive {
             --primary-color: #a33000;
+            color: white;
         }
         #music-player-container.sad {
             --primary-color: #0055a0;
+            color: white;
         }
         #music-player-container.calm {
             --primary-color: #662200;
+            color: white;
         }
         #music-player-container.romantic {
             --primary-color: #dd6677;
+            color: white;
         }
         #music-player-container.dramatic {
             --primary-color: #333333;
+            color: white;
         }
         #music-player-container.epic {
             --primary-color: #773399;
+            color: white;
         }
         #music-player-container.funny {
             --primary-color: #a0a000;
+            color: white;
         }
         #music-player-container.passionate {
             --primary-color: #bb6622;
+            color: white;
         }
         #music-player-container.monotonuous {
             --primary-color: #999999;
+            color: black;
         }
     `;
 }
