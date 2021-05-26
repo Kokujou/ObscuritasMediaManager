@@ -96,7 +96,7 @@ export function renderAudioTileStyles() {
 
         ${renderMoodStyles()}
         ${renderLanguageFlags()}
-        ${renderParticipantCountIcon()}
+        ${renderParticipantCountIcon('#participant-count-icon')}
         ${renderInstrumentTypeIcons()}
 
         #language-flags {
@@ -133,7 +133,7 @@ export function renderAudioTileStyles() {
         }
 
         #audio-title {
-            font-size: 18px;
+            font-size: 24px;
             color: white;
             text-align: center;
 

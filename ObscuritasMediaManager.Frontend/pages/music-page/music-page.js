@@ -1,9 +1,10 @@
 import { MusicModel } from '../../data/music.model.js';
+import { Pages } from '../../data/pages.js';
 import { LitElement } from '../../exports.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
+import { changePage } from '../../services/extensions/url.extension.js';
 import { MusicService } from '../../services/music.service.js';
 import { PlaylistService } from '../../services/playlist.service.js';
-import { MusicPlaylistPopup } from '../music-playlist-popup/music-playlist-popup.js';
 import { renderMusicPageStyles } from './music-page.css.js';
 import { renderMusicPage } from './music-page.html.js';
 
@@ -70,7 +71,7 @@ export class MusicPage extends LitElement {
 
     async playPlaylist() {
         var guid = await PlaylistService.createTemporaryPlaylist(this.musicTracks.map((x) => x.id));
-        MusicPlaylistPopup.popup(guid);
+        changePage(Pages.musicPlaylist.routes[0], `?guid=${guid}`);
     }
 
     async importFolder() {

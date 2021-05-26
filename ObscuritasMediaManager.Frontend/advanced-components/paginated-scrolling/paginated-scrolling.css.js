@@ -2,6 +2,10 @@ import { css } from '../../exports.js';
 
 export function renderPaginatedScrollingStyles() {
     return css`
+        * {
+            scrollbar-width: thin;
+        }
+
         :host {
             position: relative;
         }

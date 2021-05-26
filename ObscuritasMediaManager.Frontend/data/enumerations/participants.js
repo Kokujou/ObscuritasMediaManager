@@ -1,4 +1,5 @@
-import { css } from '../../exports.js';
+import { css, unsafeCSS } from '../../exports.js';
+import { unsetIcon } from '../../resources/icons/general/unset-icon.svg.js';
 import { largeGroupIcon } from '../../resources/icons/participants-icons/large-group.svg.js';
 import { largeOrchestraIcon } from '../../resources/icons/participants-icons/large-orchestra.svg.js';
 import { singlePersonIcon } from '../../resources/icons/participants-icons/single-person.svg.js';
@@ -15,21 +16,25 @@ export const Participants = {
     LargeOrchestra: 'large-orchestra',
 };
 
-export function renderParticipantCountIcon() {
+export function renderParticipantCountIcon(parentSelector) {
     return css`
-        .solo {
+        ${unsafeCSS(parentSelector)}.unset {
+            ${renderMaskImage(unsetIcon())};
+        }
+
+        ${unsafeCSS(parentSelector)}.solo {
             ${renderMaskImage(singlePersonIcon())};
         }
-        .small-group {
+        ${unsafeCSS(parentSelector)}.small-group {
             ${renderMaskImage(smalLGroupIcon())};
         }
-        .large-group {
+        ${unsafeCSS(parentSelector)}.large-group {
             ${renderMaskImage(largeGroupIcon())};
         }
-        .small-orchestra {
+        ${unsafeCSS(parentSelector)}.small-orchestra {
             ${renderMaskImage(smallOrchestraIcon())};
         }
-        .large-orchestra {
+        ${unsafeCSS(parentSelector)}.large-orchestra {
             ${renderMaskImage(largeOrchestraIcon())};
         }
     `;

@@ -21,7 +21,7 @@ export const Pages = {
     },
     musicPlaylist: {
         routes: ['music-playlist'],
-        component: '<music-playlist-popup></music-playlist-popup>',
+        component: '<music-playlist-page></music-playlist-page>',
         withQueries: ['guid'],
     },
 };

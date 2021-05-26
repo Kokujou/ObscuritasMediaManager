@@ -35,6 +35,13 @@ export class MusicModel {
     set genres(value) {}
     /** @type {string} */ src;
 
+    get displayName() {
+        var result = this.name;
+        if (this.author) result.concat(` - ${this.author}`);
+        if (this.source) result.concat(` (${this.source})`);
+        return result;
+    }
+
     /**
      * @param {File} file
      * @param {string} basePath

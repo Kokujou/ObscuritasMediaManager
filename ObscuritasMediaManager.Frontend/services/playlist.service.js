@@ -1,3 +1,5 @@
+import { MusicModel } from '../data/music.model.js';
+
 export class PlaylistService {
     /**
      * @returns {Promise<string>}
@@ -16,12 +18,13 @@ export class PlaylistService {
     }
 
     /**
-     * @returns {Promise<string[]>}
+     * @returns {Promise<MusicModel[]>}
      * @param {string} guid
      */
     static async getTemporaryPlaylist(guid) {
         var response = await fetch(`/ObscuritasMediaManager/api/playlist/temp/${guid}`);
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
-        return await response.json();
+        /** @type {MusicModel[]} */ var result = await response.json();
+        return result.map((x) => Object.assign(new MusicModel(), x));
     }
 }

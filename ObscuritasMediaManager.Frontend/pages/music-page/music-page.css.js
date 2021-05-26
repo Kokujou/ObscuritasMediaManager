@@ -113,7 +113,7 @@ export function renderMusicPageStyles() {
 
         ${renderInstrumentTypeIcons()}
         ${renderLanguageFlags()}
-        ${renderParticipantCountIcon()}
+        ${renderParticipantCountIcon('#participant-count-filter ')}
 
         ${renderResultOptionsBar()}
 
