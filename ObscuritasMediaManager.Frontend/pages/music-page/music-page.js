@@ -5,6 +5,7 @@ import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
+import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage } from '../../services/extensions/url.extension.js';
 import { MusicService } from '../../services/music.service.js';
 import { PlaylistService } from '../../services/playlist.service.js';
@@ -30,13 +31,18 @@ export class MusicPage extends LitElement {
 
     constructor() {
         super();
-        document.title = 'Musik';
+
         /** @type {MusicModel[]} */ this.musicTracks = [];
         /** @type {string} */ this.currentTrackSrc = '';
         /** @type {number} */ this.currentVolumne = 0.1;
         /** @type {boolean} */ this.isPaused = false;
         this.currentPage = 0;
         this.initializeData();
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        document.title = 'Musik';
+        setFavicon(NoteIcon());
     }
 
     async initializeData() {

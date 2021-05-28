@@ -1,5 +1,7 @@
 import { MusicModel } from '../../data/music.model.js';
 import { LitElement } from '../../exports.js';
+import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
+import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { getQueryValue } from '../../services/extensions/url.extension.js';
 import { PlaylistService } from '../../services/playlist.service.js';
 import { renderMusicPlaylistStyles } from './music-playlist-page.css.js';
@@ -27,6 +29,10 @@ export class MusicPlaylistPage extends LitElement {
         /** @type {number} */ this.currentVolumne = 0.1;
 
         this.initializeData();
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        setFavicon(NoteIcon());
     }
 
     async initializeData() {

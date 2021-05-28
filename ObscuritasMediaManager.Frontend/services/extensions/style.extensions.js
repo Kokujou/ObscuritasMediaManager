@@ -12,3 +12,13 @@ export function renderBackgroundImage(image) {
     background: url('data:image/svg+xml;base64, ${btoa(image)}') no-repeat center center / 100% 100%;
 `);
 }
+
+export function setFavicon(icon) {
+    /** @type {HTMLLinkElement} */ var link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    }
+    link.href = `data:image/svg+xml;base64, ${btoa(icon)}`;
+}
