@@ -6,3 +6,4 @@
 //TODO:  refine single play functionality (pause, play, (stop), jump to active)
 //TODO:  add select functionality and indication, opt: select all
 //TODO:  implement filter
+//TODO:  add a fancy audio visualization

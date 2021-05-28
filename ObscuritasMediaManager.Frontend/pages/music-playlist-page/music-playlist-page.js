@@ -14,11 +14,17 @@ export class MusicPlaylistPage extends LitElement {
         return {};
     }
 
+    get paused() {
+        var audioElement = this.shadowRoot.querySelector('audio');
+        return audioElement?.paused;
+    }
+
     constructor() {
         super();
         /** @type {MusicModel[]} */ this.playlist = [];
         /** @type {number} */ this.currentTrackIndex = 0;
         /** @type {MusicModel} */ this.currentTrack = new MusicModel();
+        /** @type {number} */ this.currentVolumne = 0.1;
 
         this.initializeData();
     }
@@ -27,8 +33,8 @@ export class MusicPlaylistPage extends LitElement {
         var guid = getQueryValue('guid');
 
         this.playlist = await PlaylistService.getTemporaryPlaylist(guid);
-        this.currentTrack = this.playlist[this.currentTrackIndex];
-        console.log(this.currentTrack);
+        this.currentTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
+        document.title = this.currentTrack.displayName;
         this.requestUpdate(undefined);
     }
 
@@ -41,6 +47,21 @@ export class MusicPlaylistPage extends LitElement {
 
         if (audioElement.paused) audioElement.play();
         else audioElement.pause();
+
+        this.requestUpdate(undefined);
+    }
+
+    changeTrack(offset) {
+        /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
+        audioElement.pause();
+        this.currentTrackIndex += offset;
+        this.currentTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
+        this.requestUpdate(undefined);
+    }
+
+    changeVolume(newVolume) {
+        this.currentVolumne = newVolume / 100;
+        this.requestUpdate(undefined);
     }
 
     /**

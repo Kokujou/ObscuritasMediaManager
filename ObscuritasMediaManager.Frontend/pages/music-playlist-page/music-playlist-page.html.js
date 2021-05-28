@@ -24,7 +24,11 @@ export function renderMusicPlaylist(playlist) {
                         </div>
                     </div>
                     <div id="audio-tile-container">
-                        <div id="main-image"></div>
+                        <div
+                            id="audio-image"
+                            @click="${() => playlist.toggleCurrentTrack()}"
+                            class="${playlist.paused ? 'paused' : 'playing'}"
+                        ></div>
                         <div id="language-icon-section">
                             <div id="lagnuage-icon" class="inline-icon ${playlist.currentTrack.language}"></div>
                             <div id="nation-icon" class="inline-icon ${playlist.currentTrack.nation}"></div>
@@ -46,7 +50,8 @@ export function renderMusicPlaylist(playlist) {
                         >
                             ${playlist.currentTrack.instrumentation}
                         </div>
-                        <div id="language-switcher-overlay"></div>
+                        <range-slider id="track-position"></range-slider>
+                        <!-- <div id="language-switcher-overlay"></div> -->
                     </div>
                     <div id="audio-control-container">
                         <div id="audio-title">${playlist.currentTrack.name}</div>
@@ -55,28 +60,42 @@ export function renderMusicPlaylist(playlist) {
                             <div id="audio-source">${playlist.currentTrack.source}</div>
                         </div>
                         <div id="audio-controls">
-                            <div id="previous-track-button"></div>
-                            <div id="toggle-track-button"></div>
-                            <div id="next-track-button"></div>
+                            <div id="previous-track-button" @click="${() => playlist.changeTrack(-1)}" class="audio-icon"></div>
+                            <div
+                                id="toggle-track-button"
+                                @click="${() => playlist.toggleCurrentTrack()}"
+                                class="audio-icon ${playlist.paused ? 'paused' : 'playing'}"
+                            ></div>
+                            <div id="next-track-button" @click="${() => playlist.changeTrack(1)}" class="audio-icon"></div>
+                            <div class="audio-icon" id="random-order-button"></div>
+                            <div class="audio-icon" id="reset-order-button"></div>
+                            <div class="audio-icon" id="remove-track-button"></div>
+                            <div id="change-volume-container">
+                                <div id="lower-volume-button"></div>
+                                <range-slider
+                                    id="change-volume"
+                                    @valueChanged="${(e) => playlist.changeVolume(e.detail.value)}"
+                                    step="1"
+                                    min="0"
+                                    max="100"
+                                    .value="${`${playlist.currentVolumne * 100}`}"
+                                ></range-slider>
+                                <div id="raise-volume-button"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div id="playlist-container">
-                    <div id="playlist-item-container">
-                        ${playlist.playlist.map(
-                            (x) =>
-                                html`<div class="playlist-entry ${x.id == playlist.currentTrack.id ? 'active' : ''}">${x.displayName}</div>`
-                        )}
-                    </div>
-                    <div id="playlist-option-container">
-                        <input type="range" id="track-position" />
-                    </div>
-                    <div id="random-order-button"></div>
-                    <div id="reset-order-button"></div>
-                    <div id="remove-track-button"></div>
+                <div id="playlist-item-container">
+                    ${playlist.playlist.map(
+                        (x) => html`<div class="playlist-entry ${x.id == playlist.currentTrack.id ? 'active' : ''}">${x.displayName}</div>`
+                    )}
                 </div>
             </div>
-            <audio id="audio-player" .src="/ObscuritasMediaManager/api/file/audio?audioPath=${playlist.currentTrack.src}"></audio>
+            <audio
+                id="audio-player"
+                .volume="${playlist.currentVolumne}"
+                .src="/ObscuritasMediaManager/api/file/audio?audioPath=${playlist.currentTrack.src}"
+            ></audio>
         </page-layout>
     `;
 }

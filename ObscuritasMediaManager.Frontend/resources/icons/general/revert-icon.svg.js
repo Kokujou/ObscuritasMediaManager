@@ -1,4 +1,4 @@
-export function resetIcon() {
+export function revertIcon() {
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 18">
     <defs/>
     <g fill="none" fill-rule="evenodd">
