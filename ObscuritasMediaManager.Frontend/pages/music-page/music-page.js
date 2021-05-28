@@ -1,6 +1,9 @@
 import { MusicModel } from '../../data/music.model.js';
 import { Pages } from '../../data/pages.js';
 import { LitElement } from '../../exports.js';
+import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
+import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
+import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
 import { changePage } from '../../services/extensions/url.extension.js';
 import { MusicService } from '../../services/music.service.js';
@@ -29,8 +32,9 @@ export class MusicPage extends LitElement {
         super();
         document.title = 'Musik';
         /** @type {MusicModel[]} */ this.musicTracks = [];
-        /** @type {string} */ this.currentTrack = '';
+        /** @type {string} */ this.currentTrackSrc = '';
         /** @type {number} */ this.currentVolumne = 0.1;
+        /** @type {boolean} */ this.isPaused = false;
         this.currentPage = 0;
         this.initializeData();
     }
@@ -42,6 +46,16 @@ export class MusicPage extends LitElement {
 
     render() {
         return renderMusicPage(this);
+    }
+
+    /**
+     * @param {MusicModel} track
+     */
+    getTrackIcon(track) {
+        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.src}`;
+        if (this.currentTrackSrc != trackSrc) return NoteIcon();
+        if (this.isPaused) return playIcon();
+        return pauseIcon();
     }
 
     loadNext() {
@@ -60,13 +74,17 @@ export class MusicPage extends LitElement {
     async toggleMusic(track) {
         var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.src}`;
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#current-track');
-        if (this.currentTrack == trackSrc && !audioElement.paused) audioElement.pause();
-        else if (this.currentTrack == trackSrc && audioElement.paused) audioElement.play();
-        if (this.currentTrack == trackSrc) return;
+        if (this.currentTrackSrc == trackSrc && !audioElement.paused) audioElement.pause();
+        else if (this.currentTrackSrc == trackSrc && audioElement.paused) audioElement.play();
+        this.isPaused = audioElement.paused;
+        this.requestUpdate(undefined);
+        if (this.currentTrackSrc == trackSrc) return;
 
-        this.currentTrack = trackSrc;
+        this.currentTrackSrc = trackSrc;
         await this.requestUpdate(undefined);
         audioElement.play();
+        this.isPaused = audioElement.paused;
+        this.requestUpdate(undefined);
     }
 
     async playPlaylist() {

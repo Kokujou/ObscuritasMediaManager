@@ -2,7 +2,6 @@ import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-ty
 import { renderLanguageFlags } from '../../data/enumerations/nations.js';
 import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
-import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { settingsIcon } from '../media-search/images/settings-icon.svg.js';
 
@@ -45,8 +44,8 @@ export function renderAudioTileStyles() {
         #tile-image {
             margin: 50px;
             position: relative;
-            ${renderMaskImage(NoteIcon())};
-            background-color: #ffffff99;
+            background-color: var(--font-color);
+            opacity: 0.7;
             flex: auto;
         }
 
@@ -87,7 +86,8 @@ export function renderAudioTileStyles() {
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            background-color: #ffffff99;
+            background-color: var(--font-color);
+            opacity: 0.7;
         }
 
         .inline-icon.unset {
@@ -125,7 +125,6 @@ export function renderAudioTileStyles() {
             justify-content: center;
             align-items: center;
 
-            color: #ffffff99;
             background: none;
             text-transform: uppercase;
             font-weight: bold;
@@ -134,7 +133,6 @@ export function renderAudioTileStyles() {
 
         #audio-title {
             font-size: 24px;
-            color: white;
             text-align: center;
 
             overflow: hidden;
@@ -199,36 +197,48 @@ function renderMoodStyles() {
     return css`
         #tile-container {
             --primary-color: #dddddd;
+            --font-color: black;
+            color: var(--font-color);
         }
         #tile-container.happy {
             --primary-color: #008000;
+            --font-color: white;
         }
         #tile-container.aggressive {
             --primary-color: #a33000;
+            --font-color: white;
         }
         #tile-container.sad {
             --primary-color: #0055a0;
+            --font-color: white;
         }
         #tile-container.calm {
             --primary-color: #662200;
+            --font-color: white;
         }
         #tile-container.romantic {
             --primary-color: #dd6677;
+            --font-color: white;
         }
         #tile-container.dramatic {
             --primary-color: #333333;
+            --font-color: white;
         }
         #tile-container.epic {
             --primary-color: #773399;
+            --font-color: white;
         }
         #tile-container.funny {
             --primary-color: #a0a000;
+            --font-color: white;
         }
         #tile-container.passionate {
             --primary-color: #bb6622;
+            --font-color: white;
         }
         #tile-container.monotonuous {
             --primary-color: #999999;
+            --font-color: black;
         }
     `;
 }

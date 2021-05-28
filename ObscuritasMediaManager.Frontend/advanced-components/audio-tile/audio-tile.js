@@ -11,12 +11,14 @@ export class AudioTile extends LitElement {
     static get properties() {
         return {
             track: { type: Object, reflect: true },
+            image: { type: String, reflect: true },
         };
     }
 
     constructor() {
         super();
         /** @type {MusicModel} */ this.track = new MusicModel();
+        /** @type {string} */ this.image;
     }
 
     get autorText() {

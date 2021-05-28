@@ -106,12 +106,18 @@ export function renderMusicPage(musicPage) {
                     <div id="search-results">
                         ${musicPage.paginatedTracks.map(
                             (track) =>
-                                html` <audio-tile .track="${track}" @musicToggled="${() => musicPage.toggleMusic(track)}"></audio-tile> `
+                                html`
+                                    <audio-tile
+                                        .track="${track}"
+                                        .image="${musicPage.getTrackIcon(track)}"
+                                        @musicToggled="${() => musicPage.toggleMusic(track)}"
+                                    ></audio-tile>
+                                `
                         )}
                     </div>
                 </paginated-scrolling>
             </div>
-            <audio id="current-track" .volume="${musicPage.currentVolumne}" .src="${musicPage.currentTrack}"></audio>
+            <audio id="current-track" .volume="${musicPage.currentVolumne}" .src="${musicPage.currentTrackSrc}"></audio>
         </page-layout>
     `;
 }
