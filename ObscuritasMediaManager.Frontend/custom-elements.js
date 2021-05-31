@@ -14,6 +14,7 @@ import { PathInputDialog } from './dialogs/path-input-dialog/path-input-dialog.j
 import { BorderButton } from './native-components/border-button/border-button.js';
 import { DropDown } from './native-components/drop-down/drop-down.js';
 import { RangeSlider } from './native-components/range-slider/range-slider.js';
+import { ScrollSelect } from './native-components/scroll-seelect/scroll-select.js';
 import { SideScroller } from './native-components/side-scroller/side-scroller.js';
 import { TriValueCheckbox } from './native-components/tri-value-checkbox/tri-value-checkbox.js';
 import { AnimeGerDubPage } from './pages/anime-ger-dub-page/anime-ger-dub-page.js';
@@ -65,3 +66,4 @@ window.customElements.define('paginated-scrolling', PaginatedScrolling);
 window.customElements.define('range-slider', RangeSlider);
 window.customElements.define('music-playlist-page', MusicPlaylistPage);
 window.customElements.define('drop-down', DropDown);
+window.customElements.define('scroll-select', ScrollSelect);

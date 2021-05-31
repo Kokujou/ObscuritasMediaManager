@@ -1,7 +1,6 @@
 ```js script
 import { html } from '@open-wc/demoing-storybook';
 import { withKnobs, text, select, array } from 'storybook-prebuilt/addon-knobs';
-import { theme } from '../../shared/theme.js';
 import { DropDown } from './drop-down.js';
 
 export default {
