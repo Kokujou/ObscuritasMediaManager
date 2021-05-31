@@ -7,3 +7,13 @@ export function getScaleFactorY() {
 
 export const viewportWidth = 1920;
 export const viewportHeight = 900;
+
+/**
+ * @param {HTMLElement} element
+ * @param {HTMLElement} parent
+ */
+export function scrollIntoParentView(element, parent) {
+    var targetLeft = element.offsetLeft - parent.offsetWidth / 2;
+    var targetTop = element.offsetTop - parent.offsetHeight / 2;
+    parent.scroll({ left: targetLeft, top: targetTop, behavior: 'smooth' });
+}

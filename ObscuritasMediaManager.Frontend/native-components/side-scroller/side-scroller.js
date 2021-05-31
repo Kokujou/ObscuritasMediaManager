@@ -1,4 +1,5 @@
 import { LitElement } from '../../exports.js';
+import { scrollIntoParentView } from '../../services/extensions/document.extensions.js';
 import { renderSideScrollerStyles } from './side-scroller.css.js';
 import { renderSideScroller } from './side-scroller.html.js';
 
@@ -21,7 +22,8 @@ export class SideScroller extends LitElement {
         return this.shadowRoot
             .querySelector('slot')
             .assignedElements()
-            .filter((x) => x.className != 'inner-space');
+            .filter((x) => x.className != 'inner-space')
+            .map(/** @param {HTMLElement} x */ (x) => x);
     }
 
     get canScrollLeft() {
@@ -43,7 +45,7 @@ export class SideScroller extends LitElement {
         setTimeout(() => {
             this.requestUpdate(undefined);
             this.currentItemIndex = Math.floor(this.scrollChildren.length / 2);
-            this.scrollChildren[this.currentItemIndex].scrollIntoView({ block: 'end', inline: 'center', behavior: 'smooth' });
+            scrollIntoParentView(this.scrollChildren[this.currentItemIndex], this.scrollContainer);
             this.requestUpdate(undefined);
         }, 100);
     }
@@ -55,7 +57,7 @@ export class SideScroller extends LitElement {
     async scrollToLeft() {
         if (this.currentItemIndex <= 0) return;
         this.currentItemIndex--;
-        this.scrollChildren[this.currentItemIndex].scrollIntoView({ block: 'end', inline: 'center', behavior: 'smooth' });
+        scrollIntoParentView(this.scrollChildren[this.currentItemIndex], this.scrollContainer);
         this.requestUpdate(undefined);
     }
 
@@ -63,7 +65,7 @@ export class SideScroller extends LitElement {
         var children = this.scrollChildren;
         if (this.currentItemIndex >= children.length - 1) return;
         this.currentItemIndex++;
-        this.scrollChildren[this.currentItemIndex].scrollIntoView({ block: 'end', inline: 'center', behavior: 'smooth' });
+        scrollIntoParentView(this.scrollChildren[this.currentItemIndex], this.scrollContainer);
         this.requestUpdate(undefined);
     }
 }
