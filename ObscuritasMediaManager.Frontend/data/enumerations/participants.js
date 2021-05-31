@@ -9,6 +9,7 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 /** @enum {string} */
 export const Participants = {
+    Unset: 'unset',
     Solo: 'solo',
     SmallGroup: 'small-group',
     LargeGroup: 'large-group',

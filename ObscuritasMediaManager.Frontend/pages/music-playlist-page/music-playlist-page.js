@@ -72,11 +72,11 @@ export class MusicPlaylistPage extends LitElement {
 
     /**
      * @param {keyof  MusicModel} property
-     * @param {any} mood
+     * @param {any} value
      */
-    changeProperty(property, mood) {
+    changeProperty(property, value) {
         if (property == 'displayName') return;
-        this.currentTrack[property] = mood;
+        this.currentTrack[property] = value;
         this.requestUpdate(undefined);
     }
 }

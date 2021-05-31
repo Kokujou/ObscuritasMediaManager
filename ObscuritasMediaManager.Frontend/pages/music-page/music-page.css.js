@@ -111,7 +111,7 @@ export function renderMusicPageStyles() {
             color: white;
         }
 
-        ${renderInstrumentTypeIcons()}
+        ${renderInstrumentTypeIcons('#instrument-type-filter ')}
         ${renderLanguageFlags()}
         ${renderParticipantCountIcon('#participant-count-filter ')}
 

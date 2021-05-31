@@ -1,4 +1,5 @@
-import { css } from '../../exports.js';
+import { css, unsafeCSS } from '../../exports.js';
+import { unsetIcon } from '../../resources/icons/general/unset-icon.svg.js';
 import { brassIcon } from '../../resources/icons/instrument-icons/brass-icon.svg.js';
 import { electronicIcon } from '../../resources/icons/instrument-icons/electronic-icon.svg.js';
 import { keyboardIcon } from '../../resources/icons/instrument-icons/keyboard-icon.svg.js';
@@ -10,6 +11,7 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 /** @enum {string} */
 export const InstrumentTypes = {
+    Unset: 'unset',
     Vocal: 'vocal',
     WoodWind: 'wood-wind',
     Brass: 'brass',
@@ -19,33 +21,37 @@ export const InstrumentTypes = {
     Electronic: 'electronic',
 };
 
-export function renderInstrumentTypeIcons() {
+export function renderInstrumentTypeIcons(parentSelector) {
     return css`
-        .vocal {
+        ${unsafeCSS(parentSelector)}.unset {
+            ${renderMaskImage(unsetIcon())};
+        }
+
+        ${unsafeCSS(parentSelector)}.vocal {
             ${renderMaskImage(microphoneIcon())};
         }
 
-        .brass {
+        ${unsafeCSS(parentSelector)}.brass {
             ${renderMaskImage(brassIcon())};
         }
 
-        .wood-wind {
+        ${unsafeCSS(parentSelector)}.wood-wind {
             ${renderMaskImage(woodWindIcon())};
         }
 
-        .keyboard {
+        ${unsafeCSS(parentSelector)}.keyboard {
             ${renderMaskImage(keyboardIcon())};
         }
 
-        .electronic {
+        ${unsafeCSS(parentSelector)}.electronic {
             ${renderMaskImage(electronicIcon())};
         }
 
-        .percussion {
+        ${unsafeCSS(parentSelector)}.percussion {
             ${renderMaskImage(percussionIcon())};
         }
 
-        .stringed {
+        ${unsafeCSS(parentSelector)}.stringed {
             ${renderMaskImage(stringsIcon())};
         }
     `;
