@@ -8,3 +8,4 @@
 //TODO:  implement filter
 //TODO:  add a fancy audio visualization
 //TODO: add horizontal slider for mood-changing
+//TODO: add indication how many playlist entries are there vs displayed

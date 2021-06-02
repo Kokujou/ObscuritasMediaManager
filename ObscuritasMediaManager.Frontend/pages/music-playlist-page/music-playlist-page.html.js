@@ -53,10 +53,10 @@ export function renderMusicPlaylist(playlist) {
                         <!-- <div id="language-switcher-overlay"></div> -->
                     </div>
                     <div id="audio-control-container">
-                        <div id="audio-title">${playlist.currentTrack.name}</div>
+                        <editable-label id="audio-title" .value="${playlist.currentTrack.name}"></editable-label>
                         <div id="audio-subtitle">
-                            <div id="audio-author">${playlist.currentTrack.author}</div>
-                            <div id="audio-source">${playlist.currentTrack.source}</div>
+                            <editable-label id="audio-author" .value="${playlist.currentTrack.author}"></editable-label>
+                            <editable-label id="audio-source" .value="${playlist.currentTrack.source || '---'}"></editable-label>
                         </div>
                         <div id="audio-controls">
                             <div id="previous-track-button" @click="${() => playlist.changeTrack(-1)}" class="audio-icon"></div>

@@ -163,12 +163,19 @@ export function renderMusicPlaylistStyles() {
 
         #audio-title {
             font-size: 30px;
+            min-width: 300px;
         }
 
         #audio-subtitle {
             font-size: 20px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            min-width: 300px;
+            margin-bottom: 30px;
+        }
+
+        #audio-subtitle > * {
+            flex: auto;
         }
 
         #audio-controls {
