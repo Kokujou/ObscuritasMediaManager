@@ -26,12 +26,17 @@ export class MusicPlaylistPage extends LitElement {
         return null;
     }
 
+    get paginatedPlaylistTracks() {
+        return this.playlist.slice(0, this.maxPlaylistItems);
+    }
+
     constructor() {
         super();
         /** @type {MusicModel[]} */ this.playlist = [];
         /** @type {number} */ this.currentTrackIndex = 0;
         /** @type {MusicModel} */ this.currentTrack = new MusicModel();
         /** @type {number} */ this.currentVolumne = 0.1;
+        /** @type {number} */ this.maxPlaylistItems = 20;
 
         this.initializeData();
     }
@@ -82,6 +87,11 @@ export class MusicPlaylistPage extends LitElement {
     changeProperty(property, value) {
         if (property == 'displayName') return;
         this.currentTrack[property] = value;
+        this.requestUpdate(undefined);
+    }
+
+    loadMoreTracks() {
+        if (this.playlist.length > this.maxPlaylistItems) this.maxPlaylistItems += 10;
         this.requestUpdate(undefined);
     }
 }

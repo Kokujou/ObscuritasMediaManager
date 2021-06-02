@@ -13,7 +13,6 @@ export const viewportHeight = 900;
  * @param {HTMLElement} parent
  */
 export function scrollIntoParentView(element, parent) {
-    console.log(element);
     var targetLeft = element.offsetLeft - parent.offsetWidth / 2;
     var targetTop = element.offsetTop - parent.offsetHeight / 2 + element.offsetHeight / 2;
     parent.scrollTo({ left: targetLeft, top: targetTop, behavior: 'smooth' });

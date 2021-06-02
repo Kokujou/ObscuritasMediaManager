@@ -84,7 +84,13 @@ export function renderMusicPlaylist(playlist) {
                         </div>
                     </div>
                 </div>
-                <div id="playlist-item-container"></div>
+                <paginated-scrolling
+                    scrollTopThreshold="20"
+                    id="playlist-item-container"
+                    @scrollBottom="${() => playlist.loadMoreTracks()}"
+                >
+                    ${playlist.paginatedPlaylistTracks.map((x) => html` <div class="playlist-entry">${x.displayName}</div> `)}
+                </paginated-scrolling>
             </div>
             <audio preload="none" id="audio-player" .volume="${playlist.currentVolumne}" .src="${playlist.audioSource}"></audio>
         </page-layout>
