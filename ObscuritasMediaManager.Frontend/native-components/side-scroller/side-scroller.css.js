@@ -36,8 +36,7 @@ export function renderSideScrollerStyles() {
 
         #content-container {
             flex: auto;
-            overflow-y: hidden;
-            overflow-x: scroll;
+            overflow: hidden;
             scrollbar-width: none;
 
             display: flex;

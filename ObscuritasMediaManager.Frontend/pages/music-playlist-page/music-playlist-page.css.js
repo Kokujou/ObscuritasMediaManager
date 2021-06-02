@@ -57,7 +57,8 @@ export function renderMusicPlaylistStyles() {
 
             border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
-            background: var(--primary-color);
+            background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
+            border: 2px solid var(--primary-color);
         }
 
         #mood-container {
@@ -66,31 +67,9 @@ export function renderMusicPlaylistStyles() {
             right: 0;
             top: 0px;
             bottom: 0px;
-            overflow-y: auto;
-            overflow-x: hidden;
-            scrollbar-width: none;
 
             display: flex;
             flex-direction: column;
-
-            mask: radial-gradient(closest-side, black, transparent 100%);
-        }
-
-        #mood-container .fade-space {
-            content: ' ';
-            min-height: 100px;
-            width: 100%;
-        }
-
-        .change-mood-button {
-            text-align: center;
-            width: 100%;
-            padding: 10px 10px;
-            font-size: 18px;
-            font-weight: bold;
-            border-top: 0.5px solid var(--primary-color);
-            border-bottom: 0.5px solid var(--primary-color);
-            box-sizing: border-box;
         }
 
         #audio-tile-container {

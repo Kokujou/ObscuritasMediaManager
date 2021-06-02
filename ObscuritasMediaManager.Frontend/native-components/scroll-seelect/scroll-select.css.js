@@ -3,25 +3,59 @@ import { css } from '../../exports.js';
 export function renderScrollSelectStyles() {
     return css`
         #scroll-container {
-            padding: 20px;
-        }
-
-        #scorll-items {
-            display: flex;
-            flex-direction: column;
+            --active-item-start: calc(50% - 22px);
+            --active-item-end: calc(50% + 22px);
+            mask: linear-gradient(
+                transparent,
+                #00000055 20% var(--active-item-start),
+                black var(--active-item-start) var(--active-item-end),
+                #00000055 var(--active-item-end) 80%,
+                transparent
+            );
             max-height: 100%;
         }
 
-        #scroll-items ::after,
-        #scroll-item ::before {
+        #scroll-items {
+            z-index: 1;
+            overflow: hidden;
+            scrollbar-width: none;
+
+            display: flex;
+            flex-direction: column;
+
+            height: 100%;
+        }
+
+        .inner-space {
             content: ' ';
             min-height: 50%;
+            display: block;
+            opacity: 0;
         }
 
         .scroll-item {
             width: 100%;
-            padding: 10px;
-            opacity: 0.5;
+
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 40px !important;
+        }
+
+        #border-overlay {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: var(--active-item-start);
+            height: 40px;
+
+            border-bottom: 1px solid;
+            border-top: 1px solid;
         }
     `;
 }

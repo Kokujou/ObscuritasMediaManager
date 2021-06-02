@@ -1,5 +1,6 @@
 /** @enum {string} */
 export const Mood = {
+    Unset: 'unset',
     Happy: 'happy',
     Aggressive: 'aggressive',
     Sad: 'sad',

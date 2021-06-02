@@ -14,14 +14,13 @@ export function renderMusicPlaylist(playlist) {
             <div id="music-player-container" class="${playlist.currentTrack.mood}">
                 <div id="current-track-container">
                     <div id="mood-switcher">
-                        <div id="mood-container">
-                            <div class="fade-space"></div>
-                            ${Object.values(Mood).map(
-                                (mood) =>
-                                    html`<a @click="${() => playlist.changeProperty('mood', mood)}" class="change-mood-button">${mood}</a>`
-                            )}
-                            <div class="fade-space"></div>
-                        </div>
+                        <scroll-select
+                            id="mood-container"
+                            .options="${Object.values(Mood)}"
+                            .value="${Mood[playlist.currentTrack.mood]}"
+                            @valueChanged="${(e) => playlist.changeProperty('mood', e.detail.value)}"
+                        >
+                        </scroll-select>
                     </div>
                     <div id="audio-tile-container">
                         <div
@@ -85,17 +84,9 @@ export function renderMusicPlaylist(playlist) {
                         </div>
                     </div>
                 </div>
-                <div id="playlist-item-container">
-                    ${playlist.playlist.map(
-                        (x) => html`<div class="playlist-entry ${x.id == playlist.currentTrack.id ? 'active' : ''}">${x.displayName}</div>`
-                    )}
-                </div>
+                <div id="playlist-item-container"></div>
             </div>
-            <audio
-                id="audio-player"
-                .volume="${playlist.currentVolumne}"
-                .src="/ObscuritasMediaManager/api/file/audio?audioPath=${playlist.currentTrack.src}"
-            ></audio>
+            <audio preload="none" id="audio-player" .volume="${playlist.currentVolumne}" .src="${playlist.audioSource}"></audio>
         </page-layout>
     `;
 }

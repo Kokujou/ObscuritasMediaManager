@@ -21,6 +21,11 @@ export class MusicPlaylistPage extends LitElement {
         return audioElement?.paused;
     }
 
+    get audioSource() {
+        if (this.currentTrack && this.currentTrack.src) return `/ObscuritasMediaManager/api/file/audio?audioPath=${this.currentTrack.src}`;
+        return null;
+    }
+
     constructor() {
         super();
         /** @type {MusicModel[]} */ this.playlist = [];
