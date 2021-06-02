@@ -167,7 +167,7 @@ export function renderMusicPlaylistStyles() {
         }
 
         #audio-subtitle {
-            font-size: 20px;
+            font-size: 24px;
             display: flex;
             flex-direction: row;
             min-width: 300px;
@@ -176,6 +176,13 @@ export function renderMusicPlaylistStyles() {
 
         #audio-subtitle > * {
             flex: auto;
+        }
+
+        #subtitle-separator {
+            margin: 0 20px;
+            display: flex;
+            align-items: Center;
+            justify-content: center;
         }
 
         #audio-controls {

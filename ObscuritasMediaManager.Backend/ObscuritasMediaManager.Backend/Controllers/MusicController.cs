@@ -57,5 +57,19 @@ namespace ObscuritasMediaManager.Backend.Controllers
                 return BadRequest(e.ToString());
             }
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody] MusicModel model)
+        {
+            try
+            {
+                await _repository.UpdateAsync(model);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.ToString());
+            }
+        }
     }
 }

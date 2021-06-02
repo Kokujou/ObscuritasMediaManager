@@ -32,4 +32,17 @@ export class MusicService {
         /** @type {MusicModel} */ var track = await response.json();
         return Object.assign(new MusicModel(), track);
     }
+
+    /**
+     * @param {MusicModel} updatedTrack
+     */
+    static async update(updatedTrack) {
+        var response = await fetch('/ObscuritasMediaManager/api/music', {
+            method: 'PUT',
+            body: JSON.stringify(updatedTrack),
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (response.status != 204) throw new Error('something went wrong, status ' + response.status);
+    }
 }
