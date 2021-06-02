@@ -16,8 +16,8 @@ export function renderEditableLabelStyles() {
         }
 
         .icon {
-            width: 30px;
-            height: 30px;
+            min-width: 30px;
+            min-height: 30px;
             background-color: var(--font-color, black);
 
             cursor: pointer;
@@ -50,6 +50,19 @@ export function renderEditableLabelStyles() {
             font: inherit;
             border-bottom: 1px solid;
             padding: 10px;
+
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: auto;
+            scrollbar-width: none;
+            text-overflow: ellipsis;
+        }
+
+        #value-label {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 100%;
         }
     `;
 }

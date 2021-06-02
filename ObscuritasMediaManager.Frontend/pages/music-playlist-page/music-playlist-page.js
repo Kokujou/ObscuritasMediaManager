@@ -1,8 +1,9 @@
 import { MusicModel } from '../../data/music.model.js';
+import { session } from '../../data/session.js';
 import { LitElement } from '../../exports.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
-import { getQueryValue } from '../../services/extensions/url.extension.js';
+import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
 import { MusicService } from '../../services/music.service.js';
 import { PlaylistService } from '../../services/playlist.service.js';
 import { renderMusicPlaylistStyles } from './music-playlist-page.css.js';
@@ -41,6 +42,13 @@ export class MusicPlaylistPage extends LitElement {
         /** @type {number} */ this.maxPlaylistItems = 20;
 
         this.initializeData();
+        window.onunload = async (e) => {
+            alert('test');
+            e.preventDefault();
+            e.returnValue = '';
+            await this.updateTrack();
+            return;
+        };
     }
     connectedCallback() {
         super.connectedCallback();
@@ -52,8 +60,11 @@ export class MusicPlaylistPage extends LitElement {
 
     async initializeData() {
         var guid = getQueryValue('guid');
+        var trackId = getQueryValue('track');
 
+        this.id = guid;
         this.playlist = await PlaylistService.getTemporaryPlaylist(guid);
+        this.currentTrackIndex = Number.parseInt(trackId);
         this.currentTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         document.title = this.currentTrack.displayName;
@@ -81,6 +92,7 @@ export class MusicPlaylistPage extends LitElement {
         this.currentTrackIndex += offset;
         this.currentTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
+        changePage(session.currentPage.current(), `?guid=${this.id}&track=${this.currentTrackIndex}`);
         this.requestUpdate(undefined);
     }
 

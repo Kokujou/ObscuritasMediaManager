@@ -11,31 +11,31 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 export const Participants = {
     Unset: 'unset',
     Solo: 'solo',
-    SmallGroup: 'small-group',
-    LargeGroup: 'large-group',
-    SmallOrchestra: 'small-orchestra',
-    LargeOrchestra: 'large-orchestra',
+    SmallGroup: 'smallGroup',
+    LargeGroup: 'largeGroup',
+    SmallOrchestra: 'smallOrchestra',
+    LargeOrchestra: 'largeOrchestra',
 };
 
 export function renderParticipantCountIcon(parentSelector) {
     return css`
-        ${unsafeCSS(parentSelector)}.unset {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(Participants.Unset)} {
             ${renderMaskImage(unsetIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.solo {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(Participants.Solo)} {
             ${renderMaskImage(singlePersonIcon())};
         }
-        ${unsafeCSS(parentSelector)}.small-group {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(Participants.SmallGroup)} {
             ${renderMaskImage(smalLGroupIcon())};
         }
-        ${unsafeCSS(parentSelector)}.large-group {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(Participants.LargeGroup)} {
             ${renderMaskImage(largeGroupIcon())};
         }
-        ${unsafeCSS(parentSelector)}.small-orchestra {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(Participants.SmallOrchestra)} {
             ${renderMaskImage(smallOrchestraIcon())};
         }
-        ${unsafeCSS(parentSelector)}.large-orchestra {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(Participants.LargeOrchestra)} {
             ${renderMaskImage(largeOrchestraIcon())};
         }
     `;

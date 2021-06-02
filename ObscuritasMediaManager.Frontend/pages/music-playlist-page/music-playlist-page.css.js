@@ -2,9 +2,8 @@ import { renderLanguageFlags } from '../../data/enumerations/nations.js';
 import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
 import { revertIcon } from '../../resources/icons/general/revert-icon.svg.js';
-import { decreaseVolumeIcon } from '../../resources/icons/music-player-icons/decrease-volume-icon.svg.js';
+import { volumeIcon } from '../../resources/icons/music-player-icons/change-volume-icon.svg.js';
 import { fastForwardIcon } from '../../resources/icons/music-player-icons/fast-forward-icon.svg.js';
-import { IncreaseVolumeIcon } from '../../resources/icons/music-player-icons/increase-volume-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
 import { shufflePlaylistIcon } from '../../resources/icons/playlist-icons/shuffle-playlist-icon.svg.js';
@@ -74,7 +73,7 @@ export function renderMusicPlaylistStyles() {
 
         #audio-tile-container {
             position: relative;
-            width: 350px;
+            min-width: 350px;
             height: 400px;
             border-radius: 20px;
             background-color: var(--primary-color);
@@ -159,11 +158,14 @@ export function renderMusicPlaylistStyles() {
             flex: auto;
             border-radius: 20px;
             margin: 50px;
+            min-width: 0;
+            padding: 20px;
         }
 
         #audio-title {
             font-size: 30px;
             min-width: 300px;
+            max-width: 100%;
         }
 
         #audio-subtitle {
@@ -198,6 +200,10 @@ export function renderMusicPlaylistStyles() {
         #change-volume-container {
             display: flex;
             flex-direction: row;
+        }
+
+        #change-volume {
+            margin: 0 10px;
         }
 
         range-slider {
@@ -322,12 +328,8 @@ function renderAudioPlayerIcons() {
             ${renderMaskImage(fastForwardIcon())};
         }
 
-        #audio-controls #lower-volume-button {
-            ${renderMaskImage(decreaseVolumeIcon())};
-        }
-
-        #audio-controls #raise-volume-button {
-            ${renderMaskImage(IncreaseVolumeIcon())};
+        #audio-controls #change-volume-button {
+            ${renderMaskImage(volumeIcon())};
         }
 
         #audio-controls #random-order-button {

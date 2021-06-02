@@ -95,7 +95,7 @@ export class MusicPage extends LitElement {
 
     async playPlaylist() {
         var guid = await PlaylistService.createTemporaryPlaylist(this.musicTracks.map((x) => x.id));
-        changePage(Pages.musicPlaylist.routes[0], `?guid=${guid}`);
+        changePage(Pages.musicPlaylist.routes[0], `?guid=${guid}&track=0`);
     }
 
     async importFolder() {

@@ -1,9 +1,12 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 
@@ -15,22 +18,33 @@ namespace ObscuritasMediaManager.Backend
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            MvcServiceCollectionExtensions.AddControllers(services);
-            ServiceCollectionServiceExtensions.AddScoped<IGenreRepository, GenreRepository>(services);
-            ServiceCollectionServiceExtensions.AddScoped<IMediaRepository, MediaRepository>(services);
-            ServiceCollectionServiceExtensions.AddScoped<IStreamingRepository, StreamingRepository>(services);
-            ServiceCollectionServiceExtensions.AddScoped<IMusicRepository, MusicRepository>(services);
+            services.AddControllers();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IMediaRepository, MediaRepository>();
+            services.AddScoped<IStreamingRepository, StreamingRepository>();
+            services.AddScoped<IMusicRepository, MusicRepository>();
 
-            EntityFrameworkServiceCollectionExtensions.AddDbContext<DatabaseContext>(services,
-                x => x.UseSqlite(@"Data Source=database.sqlite"));
+            services.AddDbContext<DatabaseContext>(x => x.UseSqlite(@"Data Source=database.sqlite"));
 
-            CorsServiceCollectionExtensions.AddCors(services, x =>
+            services.AddCors(x =>
                 x.AddPolicy("all",
                     builder => builder.WithOrigins("https://localhost", "https://obscuritas.strangled.net")
                         .AllowAnyHeader().AllowAnyMethod()));
 
-            MvcCoreMvcBuilderExtensions.AddJsonOptions(MvcServiceCollectionExtensions.AddMvc(services),
-                options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(
+                    new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+            });
+
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                }
+            };
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

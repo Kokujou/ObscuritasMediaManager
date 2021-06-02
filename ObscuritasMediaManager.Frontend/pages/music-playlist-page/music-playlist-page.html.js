@@ -17,7 +17,7 @@ export function renderMusicPlaylist(playlist) {
                         <scroll-select
                             id="mood-container"
                             .options="${Object.values(Mood)}"
-                            .value="${Mood[playlist.updatedTrack.mood]}"
+                            .value="${playlist.updatedTrack.mood}"
                             @valueChanged="${(e) => playlist.changeProperty('mood', e.detail.value)}"
                         >
                         </scroll-select>
@@ -83,7 +83,7 @@ export function renderMusicPlaylist(playlist) {
                             <div class="audio-icon" id="reset-order-button"></div>
                             <div class="audio-icon" id="remove-track-button"></div>
                             <div id="change-volume-container">
-                                <div id="lower-volume-button"></div>
+                                <div id="change-volume-button" class="audio-icon"></div>
                                 <range-slider
                                     id="change-volume"
                                     @valueChanged="${(e) => playlist.changeVolume(e.detail.value)}"
@@ -92,7 +92,6 @@ export function renderMusicPlaylist(playlist) {
                                     max="100"
                                     .value="${`${playlist.currentVolumne * 100}`}"
                                 ></range-slider>
-                                <div id="raise-volume-button"></div>
                             </div>
                         </div>
                     </div>
@@ -105,7 +104,7 @@ export function renderMusicPlaylist(playlist) {
                     ${playlist.paginatedPlaylistTracks.map((x) => html` <div class="playlist-entry">${x.displayName}</div> `)}
                 </paginated-scrolling>
             </div>
-            <audio preload="none" id="audio-player" .volume="${playlist.currentVolumne}" .src="${playlist.audioSource}"></audio>
+            <audio id="audio-player" .volume="${playlist.currentVolumne}" .src="${playlist.audioSource}"></audio>
         </page-layout>
     `;
 }

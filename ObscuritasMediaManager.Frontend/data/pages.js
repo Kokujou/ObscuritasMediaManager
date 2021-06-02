@@ -22,7 +22,7 @@ export const Pages = {
     musicPlaylist: {
         routes: ['music-playlist'],
         component: '<music-playlist-page></music-playlist-page>',
-        withQueries: ['guid'],
+        withQueries: ['guid', 'track'],
     },
 };
 

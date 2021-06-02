@@ -51,6 +51,7 @@ export class ScrollSelect extends LitElement {
      */
     updated(_changedProperties) {
         super.updated(_changedProperties);
+
         if (!_changedProperties.has('value') || !this.value) return;
 
         this.currentItemIndex = this.options.findIndex((x) => x == this.value);

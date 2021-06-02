@@ -13,7 +13,7 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 export const InstrumentTypes = {
     Unset: 'unset',
     Vocal: 'vocal',
-    WoodWind: 'wood-wind',
+    WoodWind: 'woodWind',
     Brass: 'brass',
     Percussion: 'percussion',
     Stringed: 'stringed',
@@ -23,35 +23,35 @@ export const InstrumentTypes = {
 
 export function renderInstrumentTypeIcons(parentSelector) {
     return css`
-        ${unsafeCSS(parentSelector)}.unset {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Unset)} {
             ${renderMaskImage(unsetIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.vocal {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Vocal)} {
             ${renderMaskImage(microphoneIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.brass {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Brass)} {
             ${renderMaskImage(brassIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.wood-wind {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.WoodWind)} {
             ${renderMaskImage(woodWindIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.keyboard {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Keyboard)} {
             ${renderMaskImage(keyboardIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.electronic {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Electronic)} {
             ${renderMaskImage(electronicIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.percussion {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Percussion)} {
             ${renderMaskImage(percussionIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.stringed {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Stringed)} {
             ${renderMaskImage(stringsIcon())};
         }
     `;
