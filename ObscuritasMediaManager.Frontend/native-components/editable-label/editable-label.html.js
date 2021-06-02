@@ -28,6 +28,7 @@ function renderValueInput(editableLabel) {
         <div id="value-input" contenteditable class="value-item" @keydown="${(e) => editableLabel.handleLabelInput(e)}">
             ${editableLabel.value}
         </div>
+        <div id="abort-icon" class="icon" @click="${() => editableLabel.revertChanges()}">&times;</div>
         <div id="save-icon" class="icon" @click="${() => editableLabel.saveChanges()}"></div>
     </div>`;
 }

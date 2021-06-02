@@ -44,7 +44,6 @@ export class MediaDetailPage extends LitElement {
         var guid = getQueryValue('guid');
         this.media = await MediaService.getMedia(guid);
         this.streamingEntries = await StreamingService.getStreamingEntries(guid);
-        console.log(this.streamingEntries);
 
         this.requestUpdate(undefined);
         document.title = this.media.name;

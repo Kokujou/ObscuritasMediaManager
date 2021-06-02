@@ -32,18 +32,23 @@ export class EditableLabel extends LitElement {
      * @param {KeyboardEvent} e
      */
     handleLabelInput(e) {
-        console.log(e);
-        if (e.key == 'Enter') {
-            e.stopPropagation();
-            e.preventDefault();
-            this.saveChanges();
-        }
+        if (e.key != 'Enter') return;
+
+        e.stopPropagation();
+        e.preventDefault();
+        this.saveChanges();
+    }
+
+    revertChanges() {
+        /** @type {HTMLLabelElement} */ var input = this.shadowRoot.querySelector('#value-input');
+        input.innerText = this.value;
+        this.editEnabled = false;
+        this.requestUpdate(undefined);
     }
 
     saveChanges() {
         /** @type {HTMLLabelElement} */ var input = this.shadowRoot.querySelector('#value-input');
         this.value = input.innerText;
-        console.log(this.value);
         this.dispatchEvent(new CustomEvent('valueChanged', { detail: { value: this.value } }));
         this.editEnabled = false;
         this.requestUpdate(undefined);

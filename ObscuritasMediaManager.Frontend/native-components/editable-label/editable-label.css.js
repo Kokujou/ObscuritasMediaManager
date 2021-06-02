@@ -32,6 +32,15 @@ export function renderEditableLabelStyles() {
             ${renderMaskImage(saveTickIcon())};
         }
 
+        #abort-icon {
+            background: transparent;
+            font-size: 50px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         #invisile-text {
             opacity: 0;
         }
