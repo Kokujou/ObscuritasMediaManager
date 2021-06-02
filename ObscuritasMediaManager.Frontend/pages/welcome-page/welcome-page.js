@@ -21,6 +21,6 @@ export class WelcomePage extends LitElement {
     }
 
     render() {
-        return renderWelcomePage(this);
+        return renderWelcomePage();
     }
 }

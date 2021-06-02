@@ -44,7 +44,6 @@ export class PageRouting extends LitElement {
         window.onpopstate = (e) => {
             session.currentPage.next(location.hash.length > 1 ? location.hash.substr(1) : 'empty');
         };
-
         window.addEventListener('resize', () => this.requestUpdate(undefined));
         var self = this;
         window.addEventListener('orientationchanged', function () {

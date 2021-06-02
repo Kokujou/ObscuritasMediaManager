@@ -1,12 +1,8 @@
 import { Pages } from '../../data/pages.js';
 import { html } from '../../exports.js';
 import { changePage } from '../../services/extensions/url.extension.js';
-import { WelcomePage } from './welcome-page.js';
 
-/**
- * @param {WelcomePage} welcomePage
- */
-export function renderWelcomePage(welcomePage) {
+export function renderWelcomePage() {
     return html`
         <page-layout>
             <div id="welcome-page">

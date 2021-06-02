@@ -49,7 +49,18 @@ export function renderMusicPlaylist(playlist) {
                         >
                             ${playlist.updatedTrack.instrumentation}
                         </div>
-                        <range-slider id="track-position"></range-slider>
+                        <div id="track-position-container">
+                            <div id="track-position-label">${playlist.currentTrackPositionText}</div>
+                            <range-slider
+                                id="track-position"
+                                @valueChanged="${(e) => playlist.changeTrackPosition(e.detail.value)}"
+                                .value="${playlist.currentTrackPosition.toString()}"
+                                min="0"
+                                .max="${playlist.currentTrackDuration.toString()}"
+                                steps="1000 "
+                            ></range-slider>
+                            <div id="track-position-label">${playlist.currentTrackDurationText}</div>
+                        </div>
                         <!-- <div id="language-switcher-overlay"></div> -->
                     </div>
                     <div id="audio-control-container">
@@ -72,13 +83,13 @@ export function renderMusicPlaylist(playlist) {
                             ></editable-label>
                         </div>
                         <div id="audio-controls">
-                            <div id="previous-track-button" @click="${() => playlist.changeTrack(-1)}" class="audio-icon"></div>
+                            <div id="previous-track-button" @click="${() => playlist.changeTrackBy(-1)}" class="audio-icon"></div>
                             <div
                                 id="toggle-track-button"
                                 @click="${() => playlist.toggleCurrentTrack()}"
                                 class="audio-icon ${playlist.paused ? 'paused' : 'playing'}"
                             ></div>
-                            <div id="next-track-button" @click="${() => playlist.changeTrack(1)}" class="audio-icon"></div>
+                            <div id="next-track-button" @click="${() => playlist.changeTrackBy(1)}" class="audio-icon"></div>
                             <div class="audio-icon" id="random-order-button"></div>
                             <div class="audio-icon" id="reset-order-button"></div>
                             <div class="audio-icon" id="remove-track-button"></div>
@@ -101,10 +112,22 @@ export function renderMusicPlaylist(playlist) {
                     id="playlist-item-container"
                     @scrollBottom="${() => playlist.loadMoreTracks()}"
                 >
-                    ${playlist.paginatedPlaylistTracks.map((x) => html` <div class="playlist-entry">${x.displayName}</div> `)}
+                    ${playlist.paginatedPlaylistTracks.map(
+                        (x, index) =>
+                            html` <div class="playlist-entry" @dblclick="${() => playlist.changeTrack(index)}">${x.displayName}</div> `
+                    )}
                 </paginated-scrolling>
             </div>
-            <audio id="audio-player" .volume="${playlist.currentVolumne}" .src="${playlist.audioSource}"></audio>
+            <audio
+                controls
+                preload="auto"
+                @loadedmetadata="${() => playlist.requestUpdate(undefined)}"
+                @ended="${() => playlist.changeTrackBy(1)}"
+                @timeupdate="${() => playlist.requestUpdate(undefined)}"
+                id="audio-player"
+                .volume="${playlist.currentVolumne}"
+                .src="${playlist.audioSource}"
+            ></audio>
         </page-layout>
     `;
 }

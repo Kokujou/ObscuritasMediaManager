@@ -42,7 +42,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
 
             var ffmpeg = new Process();
             var startinfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
-                $"-i \"{audioPath}\" -q:a 2 -f mp3 -");
+                $"-i \"{audioPath}\" -c:a libopus -f ogg -");
             startinfo.RedirectStandardError = true;
             startinfo.RedirectStandardOutput = true;
             startinfo.RedirectStandardInput = true;
@@ -54,7 +54,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
             ffmpeg.Start();
             ffmpeg.BeginErrorReadLine();
 
-            return File(new BufferedStream(ffmpeg.StandardOutput.BaseStream), "audio/mp3");
+            return File(new BufferedStream(ffmpeg.StandardOutput.BaseStream), "audio/ogg");
         }
 
         [HttpPost("validate-files")]

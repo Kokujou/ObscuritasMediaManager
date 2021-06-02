@@ -32,6 +32,34 @@ export class MusicPlaylistPage extends LitElement {
         return this.playlist.slice(0, this.maxPlaylistItems);
     }
 
+    get currentTrackPosition() {
+        /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
+        if (!audioElement || !audioElement.currentTime) return 0;
+        return audioElement.currentTime;
+    }
+
+    get currentTrackDuration() {
+        /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
+        if (!audioElement || !audioElement.duration) return 100;
+        return Math.floor(audioElement.duration);
+    }
+
+    get currentTrackPositionText() {
+        var position = this.currentTrackPosition;
+        var minutes = Math.floor(position / 60);
+        var seconds = Math.floor(position - minutes * 60);
+
+        return `${Math.floor(minutes)}:${seconds}`;
+    }
+
+    get currentTrackDurationText() {
+        var duration = this.currentTrackDuration;
+        var minutes = Math.floor(duration / 60);
+        var seconds = Math.floor(duration - minutes * 60);
+
+        return `${Math.floor(minutes)}:${seconds}`;
+    }
+
     constructor() {
         super();
         /** @type {MusicModel[]} */ this.playlist = [];
@@ -42,8 +70,8 @@ export class MusicPlaylistPage extends LitElement {
         /** @type {number} */ this.maxPlaylistItems = 20;
 
         this.initializeData();
+
         window.onunload = async (e) => {
-            alert('test');
             e.preventDefault();
             e.returnValue = '';
             await this.updateTrack();
@@ -68,10 +96,16 @@ export class MusicPlaylistPage extends LitElement {
         this.currentTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         document.title = this.currentTrack.displayName;
-        this.requestUpdate(undefined);
+        await this.requestUpdate(undefined);
+
+        var audio = this.shadowRoot.querySelector('audio');
+        audio.addEventListener('error', function (e) {
+            alert(`an error occured while playing the audio file: code ${audio.error.code}`);
+        });
     }
 
     render() {
+        if (this.currentTrackIndex) document.title = this.currentTrack.displayName;
         return renderMusicPlaylist(this);
     }
 
@@ -84,16 +118,22 @@ export class MusicPlaylistPage extends LitElement {
         this.requestUpdate(undefined);
     }
 
-    changeTrack(offset) {
-        this.updateTrack();
+    async changeTrackBy(offset) {
+        var index = this.currentTrackIndex + offset;
+        await this.changeTrack(index);
+    }
+
+    async changeTrack(index) {
+        await this.updateTrack();
 
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
         audioElement.pause();
-        this.currentTrackIndex += offset;
+        this.currentTrackIndex = index;
         this.currentTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         changePage(session.currentPage.current(), `?guid=${this.id}&track=${this.currentTrackIndex}`);
-        this.requestUpdate(undefined);
+        await this.requestUpdate(undefined);
+        audioElement.play();
     }
 
     changeVolume(newVolume) {
@@ -120,6 +160,8 @@ export class MusicPlaylistPage extends LitElement {
         if (JSON.stringify(this.updatedTrack) == JSON.stringify(this.currentTrack)) return;
         try {
             await MusicService.update(this.updatedTrack);
+            this.currentTrack = this.updatedTrack;
+            this.playlist[this.currentTrackIndex] = this.updatedTrack;
         } catch (err) {
             console.error(err);
         }
@@ -129,5 +171,12 @@ export class MusicPlaylistPage extends LitElement {
         super.disconnectedCallback();
         clearInterval(this.updateIntervalCall);
         this.updateTrack();
+    }
+
+    changeTrackPosition(value) {
+        /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
+        if (audioElement.duration == Infinity) return;
+        console.log({ value, duration: audioElement.duration.toFixed(0) });
+        audioElement.currentTime = value;
     }
 }

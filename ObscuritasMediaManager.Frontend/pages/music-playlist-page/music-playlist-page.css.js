@@ -1,3 +1,4 @@
+import { renderMoodStyles } from '../../data/enumerations/mood.js';
 import { renderLanguageFlags } from '../../data/enumerations/nations.js';
 import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
@@ -21,7 +22,7 @@ export function renderMusicPlaylistStyles() {
             scrollbar-width: thin;
         }
 
-        ${renderMoodStyles()}
+        ${renderMoodStyles('#music-player-container')}
 
         #music-player-container {
             position: absolute;
@@ -41,9 +42,11 @@ export function renderMusicPlaylistStyles() {
         }
 
         #current-track-container {
+            position: relative;
             display: flex;
             flex-direction: row;
             margin: 20px;
+            max-height: 200px;
         }
 
         #mood-switcher {
@@ -117,7 +120,7 @@ export function renderMusicPlaylistStyles() {
         #participant-count-button {
             position: absolute;
             left: 20px;
-            bottom: 20px;
+            bottom: 70px;
 
             width: 50px;
             height: 50px;
@@ -128,7 +131,7 @@ export function renderMusicPlaylistStyles() {
         #instrumentation-button {
             position: absolute;
             right: 50px;
-            bottom: 50px;
+            bottom: 70px;
 
             display: flex;
             justify-content: center;
@@ -139,6 +142,24 @@ export function renderMusicPlaylistStyles() {
             font-weight: bold;
             font-size: 30px;
             transform: rotate(315deg);
+        }
+
+        #track-position-container {
+            position: absolute;
+            bottom: 0px;
+            left: 20px;
+            right: 20px;
+            height: 50px;
+            filter: drop-shadow(0 0 10px black);
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #track-position {
+            flex: auto;
         }
 
         #language-switcher-overlay {
@@ -244,54 +265,9 @@ export function renderMusicPlaylistStyles() {
         .playlist-entry.active {
             background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
         }
-    `;
-}
 
-function renderMoodStyles() {
-    return css`
-        #music-player-container {
-            --primary-color: #dddddd;
-            --font-color: black;
-        }
-        #music-player-container.happy {
-            --primary-color: #008000;
-            --font-color: white;
-        }
-        #music-player-container.aggressive {
-            --primary-color: #a33000;
-            --font-color: white;
-        }
-        #music-player-container.sad {
-            --primary-color: #0055a0;
-            --font-color: white;
-        }
-        #music-player-container.calm {
-            --primary-color: #662200;
-            --font-color: white;
-        }
-        #music-player-container.romantic {
-            --primary-color: #dd6677;
-            --font-color: white;
-        }
-        #music-player-container.dramatic {
-            --primary-color: #333333;
-            --font-color: white;
-        }
-        #music-player-container.epic {
-            --primary-color: #773399;
-            --font-color: white;
-        }
-        #music-player-container.funny {
-            --primary-color: #a0a000;
-            --font-color: white;
-        }
-        #music-player-container.passionate {
-            --primary-color: #bb6622;
-            --font-color: white;
-        }
-        #music-player-container.monotonuous {
-            --primary-color: #999999;
-            --font-color: black;
+        audio {
+            display: none;
         }
     `;
 }

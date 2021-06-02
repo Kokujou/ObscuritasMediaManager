@@ -32,11 +32,12 @@ export class EditableLabel extends LitElement {
      * @param {KeyboardEvent} e
      */
     handleLabelInput(e) {
-        if (e.key != 'Enter') return;
+        if (e.key == 'Enter') this.saveChanges();
+        else if (e.key == 'Escape') this.revertChanges();
+        else return;
 
         e.stopPropagation();
         e.preventDefault();
-        this.saveChanges();
     }
 
     revertChanges() {
