@@ -1,8 +1,5 @@
-import { css, LitElement } from '../../exports.js';
-import { renderCompactDropDownStyles } from './drop-down.css.compact.js';
+import { LitElement } from '../../exports.js';
 import { renderDropDownStyles } from './drop-down.css.js';
-import { renderSimpleDropDownStyles } from './drop-down.css.simple.js';
-import { renderSolidDropDownStyles } from './drop-down.css.solid.js';
 import { renderDropDown } from './drop-down.html.js';
 
 /** @enum {string} */
@@ -14,14 +11,25 @@ export class DropDown extends LitElement {
     clickedOnElement = false;
 
     set value(value) {
-        var oldValue = this._currentIndex;
+        if (this.multiselect && this.values.includes(value)) {
+            this.values = this.values.filter((x) => x != value);
+        } else if (this.multiselect) {
+            this.values.push(value);
+        }
+
         this._currentIndex = value;
         var selectionChangeEvent = new CustomEvent('selectionChange', {
-            detail: { value: this.value },
+            detail: { value: this.multiselect ? this.values : this.value },
         });
         this.dispatchEvent(selectionChangeEvent);
         this.dispatchEvent(new Event('change'));
-        this.requestUpdate('value', oldValue);
+        this.requestUpdate(undefined);
+    }
+
+    get caption() {
+        if (!this.multiselect) return this.value;
+        else if (this.values.length == 0) return 'Keine Einträge ausgewählt';
+        else return this.values.join(', ');
     }
 
     get value() {
@@ -39,23 +47,19 @@ export class DropDown extends LitElement {
     }
 
     static get styles() {
-        return css`
-            ${renderDropDownStyles()}
-            ${renderSimpleDropDownStyles()} 
-            ${renderSolidDropDownStyles()}
-            ${renderCompactDropDownStyles()}
-        `;
+        return renderDropDownStyles();
     }
 
     static get properties() {
         return {
             options: { type: Array, reflect: true },
             value: { type: String, reflect: true },
+            values: { type: Array, reflect: true },
             maxDisplayDepth: { type: Number, reflect: true },
-            displayStyle: { type: String, reflect: true },
             required: { type: Boolean, reflect: true },
             showDropDown: { type: Boolean, reflect: false },
             useSearch: { type: Boolean, reflect: false },
+            multiselect: { type: Boolean, reflect: false },
         };
     }
 
@@ -64,10 +68,11 @@ export class DropDown extends LitElement {
         this.maxDisplayDepth = 5;
         /** @type {string[]} */ this.options = [];
         this._currentIndex = '';
-        this.displayStyle = DropDown.defaultstyle;
         this.required = false;
         this.useSearch = false;
+        this.multiselect = false;
         this.searchFilter = '';
+        this.values = [];
 
         this.addEventListener('click', () => {
             this.clickedOnElement = true;
@@ -79,22 +84,7 @@ export class DropDown extends LitElement {
         });
     }
 
-    get currentStyle() {
-        var selectedStyle = Object.values(DropDownStyles).find((x) => x == this.displayStyle);
-        if (!selectedStyle) {
-            console.warn(
-                `selected style ${this.displayStyle} is not supported. supported styles are ${Object.values(DropDownStyles)}. 
-                Fallback to default style ${DropDown.defaultstyle}`
-            );
-            return DropDown.defaultstyle;
-        }
-        return selectedStyle;
-    }
-
     render() {
-        Object.values(DropDownStyles).forEach((x) => this.classList.remove(x));
-        this.classList.add(this.currentStyle);
-
         return renderDropDown(this);
     }
 
@@ -113,5 +103,11 @@ export class DropDown extends LitElement {
         this.searchFilter = '';
         searchBox.value = '';
         this.requestUpdate(undefined);
+    }
+
+    valueActive(value) {
+        if (this.multiselect && this.values.includes(value)) return true;
+        if (!this.multiselect && this.value == value) return true;
+        return false;
     }
 }

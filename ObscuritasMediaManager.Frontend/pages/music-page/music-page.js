@@ -60,9 +60,9 @@ export class MusicPage extends LitElement {
     }
 
     async initializeData() {
+        this.musicTracks = await MusicService.getAll();
         var localSearchString = localStorage.getItem(`music.search`);
         if (localSearchString) this.filter = JSON.parse(localSearchString);
-        this.musicTracks = await MusicService.getAll();
         this.requestUpdate(undefined);
     }
 
@@ -110,7 +110,7 @@ export class MusicPage extends LitElement {
     }
 
     async playPlaylist() {
-        var guid = await PlaylistService.createTemporaryPlaylist(this.musicTracks.map((x) => x.id));
+        var guid = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.id));
         changePage(Pages.musicPlaylist.routes[0], `?guid=${guid}&track=0`);
     }
 

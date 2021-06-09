@@ -38,4 +38,16 @@ export class MusicFilter extends LitElement {
 
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
+
+    /**
+     * @param {keyof MusicFilterOptions} filter
+     * @param {string} value
+     * @param {string[]} selectedValues
+     */
+    handleDropdownChange(filter, value, selectedValues) {
+        if (filter == 'title') return;
+        Object.keys(this.filter[filter].states).forEach((key) => {
+            this.toggleFilter(filter, key, selectedValues.includes(key) ? CheckboxState.Allow : CheckboxState.Forbid);
+        });
+    }
 }

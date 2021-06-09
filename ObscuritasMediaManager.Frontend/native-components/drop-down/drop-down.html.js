@@ -1,15 +1,16 @@
-import { session } from '../../data/session.js';
 import { html } from '../../exports.js';
-import { DropDown, DropDownStyles } from './drop-down.js';
+import { DropDown } from './drop-down.js';
 
 /**
  * @param {DropDown} dropdown
  */
 export function renderDropDown(dropdown) {
+    var maxHeight = dropdown.maxDisplayDepth * 40;
+    if (dropdown.useSearch) maxHeight += 50;
     return html`
         <style>
             .options {
-                max-height: ${dropdown.maxDisplayDepth * (dropdown.displayStyle == DropDownStyles.solid ? 60 : 26)}px;
+                max-height: ${maxHeight}px;
             }
         </style>
 
@@ -28,11 +29,19 @@ function showDropDown(dropdown) {
             if (dropdown.useSearch) dropdown.resetSearchFilter();
         }}"
     >
-        <div id="caption-container">${dropdown.value} ${dropdown.value ? '' : html`<div id="empty-text-placeholder">empty</div>`}</div>
-        <div class="options" @scroll="${(e) => dropdown.scroll(e)}" style="display: ${dropdown.showDropDown ? 'block' : 'none'}">
+        <div id="caption-container">${dropdown.caption} ${dropdown.caption ? '' : html`<div id="empty-text-placeholder">empty</div>`}</div>
+        <div
+            class="options"
+            @click="${(e) => {
+                e.stopPropagation();
+                if (dropdown.multiselect) dropdown.showDropDown = true;
+            }}"
+            @scroll="${(e) => dropdown.scroll(e)}"
+            style="display: ${dropdown.showDropDown ? 'block' : 'none'}"
+        >
             ${dropdown.useSearch
                 ? html`
-                      <custom-form
+                      <div
                           @click="${(e) => {
                               e.preventDefault();
                               e.stopPropagation();
@@ -41,12 +50,12 @@ function showDropDown(dropdown) {
                           <input
                               tabindex="1"
                               type="text"
-                              .placeholder="${session.resources.current().searchPlaceholder}"
+                              placeholder="Suchtext eingeben..."
                               id="dropdown-search"
                               @input="${(e) => e.target.dispatchEvent(new Event('change'))}"
                               @change="${() => dropdown.updateSearchFilter()}"
                           />
-                      </custom-form>
+                      </div>
                   `
                 : ''}
             ${dropdown.options
@@ -55,7 +64,7 @@ function showDropDown(dropdown) {
                     return renderDropDownOption(dropdown, option, option);
                 })}
         </div>
-        <div class="dropdown-icon-container ${dropdown.showDropDown ? 'dropped-down' : ''}">^</div>
+        <div class="dropdown-icon-container ${dropdown.showDropDown ? 'dropped-down' : ''}">></div>
     </div>`;
 }
 
@@ -67,7 +76,7 @@ function showDropDown(dropdown) {
 function renderDropDownOption(dropdown, key, value) {
     return html`
         <div
-            class="option ${dropdown.value == value ? 'selected' : ''}"
+            class="option ${dropdown.valueActive(value) ? 'selected' : ''}"
             value="${value}"
             @click=${() => {
                 dropdown.value = value;

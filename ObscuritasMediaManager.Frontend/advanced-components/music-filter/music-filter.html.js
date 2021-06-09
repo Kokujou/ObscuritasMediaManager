@@ -1,4 +1,6 @@
 import { InstrumentTypes } from '../../data/enumerations/instrument-types.js';
+import { Instrumentation } from '../../data/enumerations/instrumentation.js';
+import { Mood } from '../../data/enumerations/mood.js';
 import { Nations } from '../../data/enumerations/nations.js';
 import { Participants } from '../../data/enumerations/participants.js';
 import { html } from '../../exports.js';
@@ -62,12 +64,30 @@ export function renderMusicFilter(musicFilter) {
             </div>
             <div id="mood-filter" class="filter">
                 <div class="filter-heading">Stimmung:</div>
+                <drop-down
+                    @selectionChange="${(e) => musicFilter.handleDropdownChange('moods', 'mood', e.detail.value)}"
+                    .values="${Object.keys(musicFilter.filter.moods.states)}"
+                    multiselect
+                    useSearch
+                    maxDisplayDepth="5"
+                    .options="${Object.values(Mood)}"
+                >
+                </drop-down>
             </div>
             <div id="genre-filter" class="filter">
                 <div class="filter-heading">Genre:</div>
             </div>
             <div id="instrumentation-filter" class="filter">
                 <div class="filter-heading">Verteilung der Instrumente:</div>
+                <drop-down
+                    @selectionChange="${(e) => musicFilter.handleDropdownChange('instrumentations', 'instrumentation', e.detail.value)}"
+                    .values="${Object.keys(musicFilter.filter.instrumentations.states)}"
+                    multiselect
+                    useSearch
+                    maxDisplayDepth="5"
+                    .options="${Object.values(Instrumentation)}"
+                >
+                </drop-down>
             </div>
             <div id="participant-count-filter" class="filter">
                 <div class="filter-heading">Mitgliederzahl:</div>

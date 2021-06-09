@@ -2,6 +2,10 @@ import { css } from '../../exports.js';
 
 export function renderDropDownStyles() {
     return css`
+        :host {
+            display: inline-block;
+        }
+
         * {
             scrollbar-width: thin;
         }
@@ -17,16 +21,26 @@ export function renderDropDownStyles() {
             position: relative;
             user-select: none;
 
-            padding: 20px;
-            padding-right: 50px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+
+            color: inherit;
+            border-bottom: 1px solid lightgray;
+            padding: 10px 0;
+        }
+
+        #caption-container {
+            flex: auto;
+            white-space: nowrap;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0 20px;
         }
 
         .dropdown-icon-container {
-            position: absolute;
-            right: 20px;
-            top: 23px;
-            bottom: 23px;
-
             display: flex;
             justify-content: right;
         }
@@ -38,21 +52,14 @@ export function renderDropDownStyles() {
             color: gray;
         }
 
-        .dropdown-icon-container > svg,
-        .dropdown-icon-container.dropped-down {
-            -webkit-transition: all 0.25s ease-in-out;
-            -moz-transition: all 0.25s ease-in-out;
-            -ms-transition: all 0.25s ease-in-out;
-            -o-transition: all 0.25s ease-in-out;
+        .dropdown-icon-container {
+            transform: rotate(90deg);
+            transform-origin: center center;
             transition: all 0.25s ease-in-out;
         }
 
-        .dropdown-icon-container > svg {
-            transform: rotate(0deg);
-        }
-
-        .dropdown-icon-container.dropped-down > svg {
-            transform: rotate(180deg);
+        .dropdown-icon-container.dropped-down {
+            transform: rotate(270deg);
         }
 
         .dropdown-icon-container * {
@@ -63,6 +70,13 @@ export function renderDropDownStyles() {
             width: 100%;
             margin-top: 15px;
             margin-bottom: 15px;
+
+            outline: none;
+            background-color: transparent;
+            border: none;
+            padding: 10px 0;
+            border-bottom: 1px solid lightgray;
+
             font: inherit;
             color: inherit;
             padding: 5px 0;
@@ -75,6 +89,13 @@ export function renderDropDownStyles() {
             left: 0;
             right: 0;
 
+            padding: 10px 25px;
+
+            color: black;
+            border: none;
+            box-shadow: 0px 3px 6px #00000040;
+            background-color: white;
+
             overflow-y: auto;
 
             z-index: 10;
@@ -82,12 +103,21 @@ export function renderDropDownStyles() {
 
         .option {
             font-weight: 400;
-            height: 60px;
+
+            padding: 0 10px;
             width: auto;
-            padding: 0 20px;
+            height: 40px;
+            cursor: pointer;
+            white-space: nowrap;
 
             display: flex;
             align-items: center;
+        }
+
+        .option:hover,
+        .option.selected {
+            color: var(--dropdown-compact-hover-color, inherit);
+            background: lightskyblue;
         }
     `;
 }

@@ -67,8 +67,6 @@ export const Required = () => html`
         }
     </style>
     <page-routing>
-        <storybook-theme-tester theme="${select('Theme', theme, 'light', 'Theming')}"></storybook-theme-tester>
-
         <div class="dropdown">
             <drop-down
                 maxDisplayDepth="3"

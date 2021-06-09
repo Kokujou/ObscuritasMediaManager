@@ -77,5 +77,14 @@ export function renderMusicFilterStyles() {
         ${renderInstrumentTypeIcons('#instrument-type-filter ')}
         ${renderLanguageFlags()}
         ${renderParticipantCountIcon('#participant-count-filter ')}
+        
+
+        drop-down {
+            font: inherit;
+            font-size: 20px;
+            width: 90%;
+
+            color: white;
+        }
     `;
 }
