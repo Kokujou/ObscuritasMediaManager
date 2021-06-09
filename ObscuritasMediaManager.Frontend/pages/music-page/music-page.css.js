@@ -1,6 +1,3 @@
-import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-types.js';
-import { renderLanguageFlags } from '../../data/enumerations/nations.js';
-import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
 import { importIcon } from '../../resources/icons/import-icon.svg.js';
 import { addPlaylistIcon } from '../../resources/icons/playlist-icons/add-playlist-icon.svg.js';
@@ -43,63 +40,8 @@ export function renderMusicPageStyles() {
             border-radius: 20px;
         }
 
-        #search-panel-container > * {
-            margin: 10px 0;
-        }
-
-        #search-panel {
-            display: flex;
-            flex-direction: column;
-
-            width: 100%;
+        #music-filter {
             flex: auto;
-            margin: 20px 0;
-
-            font-size: 24px;
-            overflow-y: auto;
-        }
-
-        #search-heading {
-            font-size: 30px;
-            text-align: center;
-        }
-
-        .filter {
-            margin-bottom: 30px;
-        }
-
-        .filter > .filter-heading {
-            margin-bottom: 10px;
-        }
-
-        #search-panel > * {
-            flex: auto;
-        }
-
-        .side-scroller-container {
-            position: relative;
-            width: 100%;
-            padding: 0 30px;
-            box-sizing: border-box;
-        }
-
-        side-scroller {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-
-            color: white;
-        }
-
-        .icon-container {
-            margin-right: 20px;
-        }
-
-        .inline-icon {
-            width: 30px;
-            height: 30px;
-
-            background-color: #ffffff99;
         }
 
         #result-count-label {
@@ -110,10 +52,6 @@ export function renderMusicPageStyles() {
             text-shadow: 3px 3px 10px black;
             color: white;
         }
-
-        ${renderInstrumentTypeIcons('#instrument-type-filter ')}
-        ${renderLanguageFlags()}
-        ${renderParticipantCountIcon('#participant-count-filter ')}
 
         ${renderResultOptionsBar()}
 

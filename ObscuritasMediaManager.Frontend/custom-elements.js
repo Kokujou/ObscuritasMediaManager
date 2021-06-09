@@ -4,6 +4,7 @@ import { ExpandableDropdown } from './advanced-components/expandible-dropdown/ex
 import { ImageTile } from './advanced-components/image-tile/image-tile.js';
 import { MediaSearch } from './advanced-components/media-search/media-search.js';
 import { MediaTile } from './advanced-components/media-tile/media-tile.js';
+import { MusicFilter } from './advanced-components/music-filter/music-filter.js';
 import { PaginatedScrolling } from './advanced-components/paginated-scrolling/paginated-scrolling.js';
 import { TagLabel } from './advanced-components/tag-label/tag-label.js';
 import { UploadArea } from './advanced-components/upload-area/upload-area.js';
@@ -67,3 +68,4 @@ window.customElements.define('range-slider', RangeSlider);
 window.customElements.define('music-playlist-page', MusicPlaylistPage);
 window.customElements.define('scroll-select', ScrollSelect);
 window.customElements.define('editable-label', EditableLabel);
+window.customElements.define('music-filter', MusicFilter);

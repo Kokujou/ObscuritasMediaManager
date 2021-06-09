@@ -1,4 +1,6 @@
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElement } from '../../exports.js';
+import { Enum } from '../../services/extensions/enum.extensions.js';
 import { renderTriValueCheckbox } from './tri-value-checkbox.css.js';
 import { renderTriValueCheckboxStyles } from './tri-value-checkbox.html.js';
 
@@ -9,27 +11,14 @@ export class TriValueCheckbox extends LitElement {
 
     static get properties() {
         return {
-            value: { type: Number, reflect: true },
+            value: { type: String, reflect: true },
             allowThreeValues: { type: Boolean, reflect: true },
         };
     }
 
-    get valueClass() {
-        switch (this.value) {
-            case -1:
-                return 'forbid';
-            case 0:
-                return 'ignore';
-            case 1:
-                return 'allow';
-            default:
-                throw new Error('invalid value for the tri value checkbox');
-        }
-    }
-
     constructor() {
         super();
-        /** @type {number} */ this.value = 0;
+        /** @type {CheckboxState} */ this.value = CheckboxState.Ignore;
         /** @type {boolean} */ this.allowThreeValues = false;
     }
 
@@ -37,9 +26,14 @@ export class TriValueCheckbox extends LitElement {
         return renderTriValueCheckboxStyles(this);
     }
 
+    firstUpdated(_changedProperties) {
+        super.firstUpdated(_changedProperties);
+        if (!this.allowThreeValues && this.value == CheckboxState.Ignore) this.value = CheckboxState.Allow;
+    }
+
     nextState() {
-        this.value++;
-        if (this.value > 1) this.value = this.allowThreeValues ? -1 : 0;
+        this.value = Enum.nextValue(CheckboxState, this.value, false);
+        if (this.value == CheckboxState.Ignore && !this.allowThreeValues) this.value = Enum.nextValue(CheckboxState, this.value, false);
 
         var valuechangedEvent = new CustomEvent('valueChanged', { detail: { value: this.value } });
         this.dispatchEvent(valuechangedEvent);

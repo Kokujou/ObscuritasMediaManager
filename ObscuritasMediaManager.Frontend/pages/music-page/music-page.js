@@ -1,3 +1,4 @@
+import { MusicFilterOptions } from '../../data/music-filter-options.js';
 import { MusicModel } from '../../data/music.model.js';
 import { Pages } from '../../data/pages.js';
 import { LitElement } from '../../exports.js';
@@ -7,6 +8,7 @@ import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg
 import { importFiles } from '../../services/extensions/file.extension.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage } from '../../services/extensions/url.extension.js';
+import { MusicFilterService } from '../../services/music-filter.service.js';
 import { MusicService } from '../../services/music.service.js';
 import { PlaylistService } from '../../services/playlist.service.js';
 import { renderMusicPageStyles } from './music-page.css.js';
@@ -22,11 +24,22 @@ export class MusicPage extends LitElement {
     }
 
     get paginatedTracks() {
-        return this.musicTracks.slice(0, 6 + 3 * this.currentPage);
+        return this.filteredTracks.slice(0, 6 + 3 * this.currentPage);
     }
 
     get filteredTracks() {
-        return this.musicTracks;
+        var filteredTracks = this.musicTracks;
+
+        filteredTracks = MusicFilterService.applyArrayFilter(filteredTracks, this.filter.genres, 'genres');
+        filteredTracks = MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instrumentTypes, 'instrumentTypes');
+        filteredTracks = MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instruments, 'instruments');
+        filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.instrumentations, 'instrumentation');
+        filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.languages, 'language');
+        filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.nations, 'nation');
+        filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.moods, 'mood');
+        filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.participants, 'participants');
+
+        return filteredTracks;
     }
 
     constructor() {
@@ -36,6 +49,7 @@ export class MusicPage extends LitElement {
         /** @type {string} */ this.currentTrackSrc = '';
         /** @type {number} */ this.currentVolumne = 0.1;
         /** @type {boolean} */ this.isPaused = false;
+        /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
         this.currentPage = 0;
         this.initializeData();
     }
@@ -46,6 +60,8 @@ export class MusicPage extends LitElement {
     }
 
     async initializeData() {
+        var localSearchString = localStorage.getItem(`music.search`);
+        if (localSearchString) this.filter = JSON.parse(localSearchString);
         this.musicTracks = await MusicService.getAll();
         this.requestUpdate(undefined);
     }
@@ -128,5 +144,14 @@ export class MusicPage extends LitElement {
         } catch (err) {
             console.error(err);
         }
+    }
+
+    /**
+     * @param {MusicFilterOptions} filter
+     */
+    updateFilter(filter) {
+        this.filter = filter;
+        localStorage.setItem(`music.search`, JSON.stringify(this.filter));
+        this.requestUpdate(undefined);
     }
 }

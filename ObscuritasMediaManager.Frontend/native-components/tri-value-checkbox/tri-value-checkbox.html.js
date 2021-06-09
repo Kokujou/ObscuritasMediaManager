@@ -5,5 +5,5 @@ import { TriValueCheckbox } from './tri-value-checkbox.js';
  * @param {TriValueCheckbox} checkbox
  */
 export function renderTriValueCheckboxStyles(checkbox) {
-    return html` <div class="checkbox ${checkbox.valueClass}" @click="${() => checkbox.nextState()}"><slot></slot></div> `;
+    return html` <div class="checkbox ${checkbox.value}" @click="${() => checkbox.nextState()}"><slot></slot></div> `;
 }
