@@ -1,3 +1,4 @@
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { GenreModel } from '../../data/genre.model.js';
 import { LitElement } from '../../exports.js';
 import { GenreDialogResult } from '../dialog-result/genre-dialog.result.js';
@@ -96,8 +97,8 @@ export class GenreDialog extends LitElement {
      * @param {GenreModel} genre
      */
     getValue(genre) {
-        if (this.allowedGenres.some((x) => x.name == genre.name)) return 1;
-        if (this.forbiddenGenres.some((x) => x.name == genre.name)) return -1;
-        return 0;
+        if (this.allowedGenres.some((x) => x.name == genre.name)) return CheckboxState.Allow;
+        if (this.forbiddenGenres.some((x) => x.name == genre.name)) return CheckboxState.Forbid;
+        return CheckboxState.Ignore;
     }
 }

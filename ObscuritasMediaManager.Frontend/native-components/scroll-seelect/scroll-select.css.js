@@ -20,10 +20,14 @@ export function renderScrollSelectStyles() {
             overflow: hidden;
             scrollbar-width: none;
 
+            height: 100%;
+        }
+
+        #item-container:not(.user-interaction) {
             display: flex;
             flex-direction: column;
 
-            height: 100%;
+            transition: transform 0.5s ease-out;
         }
 
         .inner-space {

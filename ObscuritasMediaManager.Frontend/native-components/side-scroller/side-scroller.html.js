@@ -15,9 +15,11 @@ export function renderSideScroller(sideScroller) {
                 ◀
             </a>
             <div id="content-container" @mousedown="${(e) => e.preventDefault()}">
-                <div class="inner-space" id="left-space"></div>
-                <slot @slotchange="${() => sideScroller.requestUpdate(undefined)}"></slot>
-                <div class="inner-space" id="right-space"></div>
+                <div id="item-container">
+                    <div class="inner-space" id="left-space"></div>
+                    <slot @slotchange="${() => sideScroller.requestUpdate(undefined)}"></slot>
+                    <div class="inner-space" id="right-space"></div>
+                </div>
             </div>
             <a
                 class="arrow-link ${sideScroller.canScrollRight ? '' : 'disabled'}"

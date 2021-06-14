@@ -11,9 +11,30 @@ export const viewportHeight = 900;
 /**
  * @param {HTMLElement} element
  * @param {HTMLElement} parent
+ * @param {HTMLElement} elementContainer
  */
-export function scrollIntoParentView(element, parent) {
-    var targetLeft = element.offsetLeft - parent.offsetWidth / 2;
-    var targetTop = element.offsetTop - parent.offsetHeight / 2 + element.offsetHeight / 2;
-    parent.scrollTo({ left: targetLeft, top: targetTop, behavior: 'smooth' });
+export function scrollIntoParentViewX(element, elementContainer, parent) {
+    var targetLeft = element.offsetLeft + elementContainer.offsetLeft - parent.offsetWidth / 2 - element.offsetWidth / 2;
+    elementContainer.style.transform = `translateX(${-targetLeft}px)`;
+}
+
+/**
+ * @param {HTMLElement} element
+ * @param {HTMLElement} parent
+ * @param {HTMLElement} elementContainer
+ */
+export function scrollIntoParentViewY(element, elementContainer, parent) {
+    var targetTop = element.offsetTop + elementContainer.offsetTop - parent.offsetHeight / 2 + element.offsetHeight / 2;
+    elementContainer.style.transform = `translateY(${-targetTop}px)`;
+}
+
+/**
+ * @param {HTMLElement} element
+ * @param {HTMLElement} parent
+ * @param {HTMLElement} elementContainer
+ */
+export function getTargetScrollPosition(element, elementContainer, parent) {
+    var targetLeft = element.offsetLeft + elementContainer.offsetLeft - parent.offsetWidth / 2 - element.offsetWidth / 2;
+    var targetTop = element.offsetTop + elementContainer.offsetTop - parent.offsetHeight / 2 + element.offsetHeight / 2;
+    return { left: -targetLeft, top: -targetTop };
 }

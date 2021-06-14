@@ -1,3 +1,4 @@
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { InstrumentTypes } from '../../data/enumerations/instrument-types.js';
 import { Instrumentation } from '../../data/enumerations/instrumentation.js';
 import { Mood } from '../../data/enumerations/mood.js';
@@ -66,7 +67,9 @@ export function renderMusicFilter(musicFilter) {
                 <div class="filter-heading">Stimmung:</div>
                 <drop-down
                     @selectionChange="${(e) => musicFilter.handleDropdownChange('moods', 'mood', e.detail.value)}"
-                    .values="${Object.keys(musicFilter.filter.moods.states)}"
+                    .values="${Object.keys(musicFilter.filter.moods.states).filter(
+                        (key) => musicFilter.filter.moods.states[key] == CheckboxState.Allow
+                    )}"
                     multiselect
                     useSearch
                     maxDisplayDepth="5"
@@ -81,7 +84,9 @@ export function renderMusicFilter(musicFilter) {
                 <div class="filter-heading">Verteilung der Instrumente:</div>
                 <drop-down
                     @selectionChange="${(e) => musicFilter.handleDropdownChange('instrumentations', 'instrumentation', e.detail.value)}"
-                    .values="${Object.keys(musicFilter.filter.instrumentations.states)}"
+                    .values="${Object.keys(musicFilter.filter.instrumentations.states).filter(
+                        (key) => musicFilter.filter.instrumentations.states[key] == CheckboxState.Allow
+                    )}"
                     multiselect
                     useSearch
                     maxDisplayDepth="5"

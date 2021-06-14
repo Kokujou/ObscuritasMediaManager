@@ -1,5 +1,5 @@
 import { LitElement } from '../../exports.js';
-import { scrollIntoParentView } from '../../services/extensions/document.extensions.js';
+import { scrollIntoParentViewX } from '../../services/extensions/document.extensions.js';
 import { renderSideScrollerStyles } from './side-scroller.css.js';
 import { renderSideScroller } from './side-scroller.html.js';
 
@@ -15,6 +15,12 @@ export class SideScroller extends LitElement {
     /** @returns {HTMLElement} */
     get scrollContainer() {
         var container = this.shadowRoot.getElementById('content-container');
+        return container;
+    }
+
+    /** @returns {HTMLElement} */
+    get scrollItemcontainer() {
+        var container = this.shadowRoot.getElementById('item-container');
         return container;
     }
 
@@ -45,7 +51,8 @@ export class SideScroller extends LitElement {
         setTimeout(() => {
             this.requestUpdate(undefined);
             this.currentItemIndex = Math.floor(this.scrollChildren.length / 2);
-            scrollIntoParentView(this.scrollChildren[this.currentItemIndex], this.scrollContainer);
+            var element = this.scrollChildren[this.currentItemIndex];
+            scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
             this.requestUpdate(undefined);
         }, 100);
     }
@@ -57,7 +64,8 @@ export class SideScroller extends LitElement {
     async scrollToLeft() {
         if (this.currentItemIndex <= 0) return;
         this.currentItemIndex--;
-        scrollIntoParentView(this.scrollChildren[this.currentItemIndex], this.scrollContainer);
+        var element = this.scrollChildren[this.currentItemIndex];
+        scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
         this.requestUpdate(undefined);
     }
 
@@ -65,7 +73,8 @@ export class SideScroller extends LitElement {
         var children = this.scrollChildren;
         if (this.currentItemIndex >= children.length - 1) return;
         this.currentItemIndex++;
-        scrollIntoParentView(this.scrollChildren[this.currentItemIndex], this.scrollContainer);
+        var element = this.scrollChildren[this.currentItemIndex];
+        scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
         this.requestUpdate(undefined);
     }
 }

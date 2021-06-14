@@ -9,7 +9,11 @@ export function renderMusicPage(musicPage) {
         <page-layout>
             <div id="music-page">
                 <div id="search-panel-container">
-                    <music-filter @filterChanged="${(e) => musicPage.updateFilter(e.detail.filter)}" id="music-filter"></music-filter>
+                    <music-filter
+                        .filter="${musicPage.filter}"
+                        @filterChanged="${(e) => musicPage.updateFilter(e.detail.filter)}"
+                        id="music-filter"
+                    ></music-filter>
                     <div id="result-count-label">${musicPage.filteredTracks.length} von ${musicPage.musicTracks.length} Musik-Tracks</div>
                 </div>
                 <div id="result-options-container">

@@ -39,11 +39,15 @@ export function renderSideScrollerStyles() {
             overflow: hidden;
             scrollbar-width: none;
 
+            mask: linear-gradient(to right, transparent 0%, black 10% 90%, transparent 100%);
+        }
+
+        #item-container {
+            transition: transform 0.5s ease-out;
+
             display: flex;
             flex-direction: row;
             align-items: center;
-
-            mask: linear-gradient(to right, transparent 0%, black 10% 90%, transparent 100%);
         }
 
         .inner-space {

@@ -1,6 +1,6 @@
 import { Mood } from '../../data/enumerations/mood.js';
 import { LitElement } from '../../exports.js';
-import { scrollIntoParentView } from '../../services/extensions/document.extensions.js';
+import { getTargetScrollPosition, scrollIntoParentViewY } from '../../services/extensions/document.extensions.js';
 import { renderScrollSelectStyles } from './scroll-select.css.js';
 import { renderScrollSelect } from './scroll-select.html.js';
 
@@ -22,8 +22,13 @@ export class ScrollSelect extends LitElement {
         return container;
     }
 
+    get scrollItemsContainer() {
+        var container = this.shadowRoot.getElementById('item-container');
+        return container;
+    }
+
     get scrollChildren() {
-        return [...this.shadowRoot.querySelectorAll('#scroll-items > *:not(.inner-space)')].map(/** @param {HTMLElement} x */ (x) => x);
+        return [...this.shadowRoot.querySelectorAll('#item-container > *:not(.inner-space)')].map(/** @param {HTMLElement} x */ (x) => x);
     }
 
     get canScrollUp() {
@@ -55,7 +60,7 @@ export class ScrollSelect extends LitElement {
         if (!_changedProperties.has('value') || !this.value) return;
 
         this.currentItemIndex = this.options.findIndex((x) => x == this.value);
-        scrollIntoParentView(this.scrollChildren[this.currentItemIndex], this.scrollContainer);
+        this.notifyValueChanged();
     }
 
     render() {
@@ -80,12 +85,11 @@ export class ScrollSelect extends LitElement {
         this.notifyValueChanged();
     }
 
-    /**
-     * @param {PointerEvent} e
-     */
-    startDragScrolling(e) {
+    startDragScrolling() {
         this.mouseDown = true;
-        this.mouseStartY = e.offsetY;
+        var element = this.scrollChildren[this.currentItemIndex];
+        this.mouseStartY = getTargetScrollPosition(element, element.parentElement, this.scrollContainer).top;
+        this.scrollItemsContainer.classList.toggle('user-interaction', true);
         this.requestUpdate(undefined);
     }
 
@@ -95,30 +99,31 @@ export class ScrollSelect extends LitElement {
     onPointerMove(e) {
         if (!this.mouseDown) return;
         var deltaY = e.movementY;
-        var scrollContainer = this.scrollContainer;
-        scrollContainer.scrollTop -= deltaY / 2;
-        if (scrollContainer.scrollTop > scrollContainer.scrollHeight) scrollContainer.scrollTop = scrollContainer.scrollHeight;
-        else if (scrollContainer.scrollTop < 0) scrollContainer.scrollTop = 0;
+        this.mouseStartY += deltaY / 2;
+        this.scrollItemsContainer.style.transform = `translateY(${this.mouseStartY}px)`;
     }
 
     onPointerUp() {
         if (!this.mouseDown) return;
         this.mouseDown = false;
 
-        var scrollContainer = this.scrollContainer;
-        var currentScrollTop = scrollContainer.scrollTop + scrollContainer.offsetHeight / 2 - 20;
-        var closestItem = { diff: Number.MAX_VALUE, index: 0 };
+        var currentScrollTop = this.mouseStartY;
+        this.scrollItemsContainer.classList.toggle('user-interaction', false);
         this.scrollChildren.forEach((item, index) => {
-            var diff = Math.abs(currentScrollTop - item.offsetTop);
-            if (diff < closestItem.diff) closestItem = { diff: diff, index: index };
+            var targetTop = getTargetScrollPosition(item, item.parentElement, this.scrollContainer).top;
+            console.log(targetTop + '|' + currentScrollTop + '|' + (targetTop + item.offsetHeight));
+            if (currentScrollTop > targetTop - item.offsetHeight / 2 && currentScrollTop < targetTop + item.offsetHeight / 2) {
+                this.currentItemIndex = index;
+            }
         });
 
-        this.currentItemIndex = closestItem.index;
         this.notifyValueChanged();
     }
 
     notifyValueChanged() {
-        scrollIntoParentView(this.scrollChildren[this.currentItemIndex], this.scrollContainer);
+        var element = this.scrollChildren[this.currentItemIndex];
+        scrollIntoParentViewY(element, element.parentElement, this.scrollContainer);
+
         this.dispatchEvent(new CustomEvent('valueChanged', { detail: { value: this.options[this.currentItemIndex] } }));
         this.requestUpdate(undefined);
     }

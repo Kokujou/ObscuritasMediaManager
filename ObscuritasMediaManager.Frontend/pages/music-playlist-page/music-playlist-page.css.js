@@ -46,7 +46,6 @@ export function renderMusicPlaylistStyles() {
             display: flex;
             flex-direction: row;
             margin: 20px;
-            max-height: 200px;
         }
 
         #mood-switcher {
@@ -54,8 +53,10 @@ export function renderMusicPlaylistStyles() {
             align-self: center;
             min-height: 250px;
             max-height: 250px;
+            height: 250px;
             min-width: 200px;
             max-width: 200px;
+            width: 200px;
 
             border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
