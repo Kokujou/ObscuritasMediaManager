@@ -1,6 +1,8 @@
 import { MusicFilterOptions } from '../../data/music-filter-options.js';
 import { MusicModel } from '../../data/music.model.js';
+import { Subscription } from '../../data/observable.js';
 import { Pages } from '../../data/pages.js';
+import { session } from '../../data/session.js';
 import { LitElement } from '../../exports.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
@@ -50,6 +52,8 @@ export class MusicPage extends LitElement {
         /** @type {number} */ this.currentVolumne = 0.1;
         /** @type {boolean} */ this.isPaused = false;
         /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
+        /** @type {Subscription[]} */ this.subcriptions = [];
+
         this.currentPage = 0;
         this.initializeData();
     }
@@ -57,6 +61,7 @@ export class MusicPage extends LitElement {
         super.connectedCallback();
         document.title = 'Musik';
         setFavicon(NoteIcon());
+        this.subcriptions.push(session.instruments.subscribe(() => this.requestUpdate(undefined)));
     }
 
     async initializeData() {
@@ -153,5 +158,10 @@ export class MusicPage extends LitElement {
         this.filter = filter;
         localStorage.setItem(`music.search`, JSON.stringify(this.filter));
         this.requestUpdate(undefined);
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        this.subcriptions.forEach((x) => x.unsubscribe());
     }
 }

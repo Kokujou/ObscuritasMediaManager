@@ -146,7 +146,7 @@ export class MusicPlaylistPage extends LitElement {
      * @param {any} value
      */
     changeProperty(property, value) {
-        if (property == 'displayName' || property == 'instrumentNames') return;
+        if (property == 'displayName' || property == 'instrumentNames' || property == 'instrumentTypes') return;
         this.updatedTrack[property] = value;
         this.requestUpdate(undefined);
     }

@@ -30,12 +30,10 @@ export class MusicModel {
     }
     set instruments(value) {}
 
-    /** @type {string} */ instrumentTypesString;
     /** @type {InstrumentTypes[]} */ get instrumentTypes() {
-        if (this.instrumentTypesString) return this.instrumentTypesString.split(',');
-        return [];
+        return this.instruments.map((x) => x.type);
     }
-    set instrumentTypes(value) {}
+
     /**@type {string} */ genreString;
     /** @type {Genre[]} */ get genres() {
         if (this.genreString) return this.genreString.split(',');

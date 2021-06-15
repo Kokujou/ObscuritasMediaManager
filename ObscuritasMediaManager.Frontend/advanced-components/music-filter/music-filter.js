@@ -89,10 +89,12 @@ export class MusicFilter extends LitElement {
             }
             for (var allowed of e.detail.acceptedGenres) {
                 this.filter.instruments.states[allowed.name] = CheckboxState.Allow;
+                this.filter.instrumentTypes.states[allowed.section] = CheckboxState.Allow;
             }
             for (var forbidden of e.detail.forbiddenGenres) {
                 this.filter.instruments.states[forbidden.name] = CheckboxState.Forbid;
             }
+
             this.requestUpdate(undefined);
             this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
             genreDialog.remove();
