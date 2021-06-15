@@ -146,7 +146,7 @@ export class MusicPlaylistPage extends LitElement {
      * @param {any} value
      */
     changeProperty(property, value) {
-        if (property == 'displayName') return;
+        if (property == 'displayName' || property == 'instrumentNames') return;
         this.updatedTrack[property] = value;
         this.requestUpdate(undefined);
     }
@@ -176,7 +176,6 @@ export class MusicPlaylistPage extends LitElement {
     changeTrackPosition(value) {
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
         if (audioElement.duration == Infinity) return;
-        console.log({ value, duration: audioElement.duration.toFixed(0) });
         audioElement.currentTime = value;
     }
 }

@@ -2,6 +2,8 @@ import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-ty
 import { renderLanguageFlags } from '../../data/enumerations/nations.js';
 import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
+import { popupIcon } from '../../resources/icons/popup-icon.svg.js';
+import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderMusicFilterStyles() {
     return css`
@@ -42,6 +44,15 @@ export function renderMusicFilterStyles() {
 
         .filter > .filter-heading {
             margin-bottom: 10px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        #popup-icon {
+            ${renderMaskImage(popupIcon())};
+            background-color: lightseagreen;
+            margin-left: 20px;
+            cursor: pointer;
         }
 
         #search-panel > * {

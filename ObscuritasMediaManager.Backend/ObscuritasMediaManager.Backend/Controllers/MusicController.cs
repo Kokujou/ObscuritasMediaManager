@@ -79,7 +79,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
             {
                 var instruments = await _repository.GetInstruments();
                 var instrumentStrings = instruments.Select(x => x.Name);
-                var sentInstruments = model.Instruments.Split(",");
+                var sentInstruments = model.InstrumentsString.Split(",");
                 var invalidInstruments = instrumentStrings.Except(sentInstruments).ToList();
                 if (invalidInstruments.Count > 0)
                     return BadRequest($"sent instruments invalid: {string.Join(",", invalidInstruments)}");

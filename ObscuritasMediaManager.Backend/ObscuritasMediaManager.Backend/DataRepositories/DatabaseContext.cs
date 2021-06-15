@@ -24,6 +24,8 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
 
             modelBuilder.Entity<MusicModel>()
                 .Property(x => x.GenreString).HasColumnName(nameof(MusicModel.Genres));
+            modelBuilder.Entity<MusicModel>()
+                .Property(x => x.InstrumentsString).HasColumnName("Instruments");
 
             modelBuilder.Entity<StreamingEntryModel>()
                 .HasKey(x => new {x.Id, x.Season, x.Episode});

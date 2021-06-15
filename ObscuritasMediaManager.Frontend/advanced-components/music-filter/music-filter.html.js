@@ -61,12 +61,15 @@ export function renderMusicFilter(musicFilter) {
                 </div>
             </div>
             <div id="instrument-filter" class="filter">
-                <div class="filter-heading">Instrumente:</div>
+                <div class="filter-heading">
+                    <div id="heading-label">Instrumente:</div>
+                    <div id="popup-icon" class="inline-icon" @click="${() => musicFilter.showInstrumentFilterPopup()}"></div>
+                </div>
             </div>
             <div id="mood-filter" class="filter">
                 <div class="filter-heading">Stimmung:</div>
                 <drop-down
-                    @selectionChange="${(e) => musicFilter.handleDropdownChange('moods', 'mood', e.detail.value)}"
+                    @selectionChange="${(e) => musicFilter.handleDropdownChange('moods', e.detail.value)}"
                     .values="${Object.keys(musicFilter.filter.moods.states).filter(
                         (key) => musicFilter.filter.moods.states[key] == CheckboxState.Allow
                     )}"
@@ -83,7 +86,7 @@ export function renderMusicFilter(musicFilter) {
             <div id="instrumentation-filter" class="filter">
                 <div class="filter-heading">Verteilung der Instrumente:</div>
                 <drop-down
-                    @selectionChange="${(e) => musicFilter.handleDropdownChange('instrumentations', 'instrumentation', e.detail.value)}"
+                    @selectionChange="${(e) => musicFilter.handleDropdownChange('instrumentations', e.detail.value)}"
                     .values="${Object.keys(musicFilter.filter.instrumentations.states).filter(
                         (key) => musicFilter.filter.instrumentations.states[key] == CheckboxState.Allow
                     )}"

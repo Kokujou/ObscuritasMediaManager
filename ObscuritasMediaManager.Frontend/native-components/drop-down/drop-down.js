@@ -72,7 +72,7 @@ export class DropDown extends LitElement {
         this.useSearch = false;
         this.multiselect = false;
         this.searchFilter = '';
-        this.values = [];
+        /** @type {string[]} */ this.values = [];
 
         this.addEventListener('click', () => {
             this.clickedOnElement = true;

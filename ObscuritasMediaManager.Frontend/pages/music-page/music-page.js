@@ -32,7 +32,7 @@ export class MusicPage extends LitElement {
 
         filteredTracks = MusicFilterService.applyArrayFilter(filteredTracks, this.filter.genres, 'genres');
         filteredTracks = MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instrumentTypes, 'instrumentTypes');
-        filteredTracks = MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instruments, 'instruments');
+        filteredTracks = MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instruments, 'instrumentNames');
         filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.instrumentations, 'instrumentation');
         filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.languages, 'language');
         filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.nations, 'nation');

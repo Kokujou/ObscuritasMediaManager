@@ -63,20 +63,20 @@ export class GenreDialog extends LitElement {
     }
 
     /**
-     * @param {{value: number}} eventDetail
+     * @param {{value: CheckboxState}} eventDetail
      * @param {GenreModel} genre
      */
     handleGenreSelection(eventDetail, genre) {
         switch (eventDetail.value) {
-            case -1:
+            case CheckboxState.Forbid:
                 this.forbiddenGenres.push(genre);
                 this.allowedGenres = this.allowedGenres.filter((x) => x.name != genre.name);
                 return;
-            case 0:
+            case CheckboxState.Ignore:
                 this.forbiddenGenres = this.forbiddenGenres.filter((x) => x.name != genre.name);
                 this.allowedGenres = this.allowedGenres.filter((x) => x.name != genre.name);
                 return;
-            case 1:
+            case CheckboxState.Allow:
                 this.allowedGenres.push(genre);
                 this.forbiddenGenres = this.forbiddenGenres.filter((x) => x.name != genre.name);
                 return;

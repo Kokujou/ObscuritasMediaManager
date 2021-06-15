@@ -17,7 +17,7 @@ namespace ObscuritasMediaManager.Backend.Models
         public Nation Nation { get; set; }
         public Instrumentation Instrumentation { get; set; }
         public Participants Participants { get; set; }
-        public string Instruments { get; set; }
+        public string InstrumentsString { get; set; }
         public string GenreString { get; set; }
         public IEnumerable<Genre> Genres => GenreString?.Split(',').Select(Enum.Parse<Genre>);
         public string Src { get; set; }

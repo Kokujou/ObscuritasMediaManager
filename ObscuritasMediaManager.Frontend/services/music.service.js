@@ -52,6 +52,6 @@ export class MusicService {
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
         /** @type {InstrumentModel[]} */ var instruments = await response.json();
-        return instruments;
+        return instruments.map((x) => Object.assign(new InstrumentModel(), x));
     }
 }

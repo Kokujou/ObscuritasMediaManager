@@ -38,8 +38,8 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                 item.Mood = updated.Mood;
             if (updated.Instrumentation != default)
                 item.Instrumentation = updated.Instrumentation;
-            if (updated.Instruments != default)
-                item.Instruments = updated.Instruments;
+            if (updated.InstrumentsString != default)
+                item.InstrumentsString = updated.InstrumentsString;
             if (updated.Language != default)
                 item.Language = updated.Language;
             if (updated.Nation != default)

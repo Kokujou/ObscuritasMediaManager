@@ -1,10 +1,11 @@
 import { Genre } from './enumerations/genre.js';
 import { InstrumentTypes } from './enumerations/instrument-types.js';
 import { Instrumentation } from './enumerations/instrumentation.js';
-import { Instruments } from './enumerations/instruments.js';
 import { Mood } from './enumerations/mood.js';
 import { Nations } from './enumerations/nations.js';
 import { Participants } from './enumerations/participants.js';
+import { InstrumentModel } from './instrument.model.js';
+import { session } from './session.js';
 
 export class MusicModel {
     /** @type {string} */ id;
@@ -17,10 +18,18 @@ export class MusicModel {
     /** @type {Instrumentation} */ instrumentation;
     /** @type {Participants} */ participants;
     /** @type {string} */ instrumentsString;
-    /** @type {Instruments[]} */ get instruments() {
-        return [];
+    /** @type {string[]} */ get instrumentNames() {
+        if (!this.instrumentsString) return [];
+        return this.instrumentsString.split(',');
+    }
+    /** @type {InstrumentModel[]} */ get instruments() {
+        if (!session.instruments.current() || session.instruments.current().length <= 0) return [];
+        return this.instrumentNames.map((instrumentName) =>
+            session.instruments.current().find((instrument) => instrument.name == instrumentName)
+        );
     }
     set instruments(value) {}
+
     /** @type {string} */ instrumentTypesString;
     /** @type {InstrumentTypes[]} */ get instrumentTypes() {
         if (this.instrumentTypesString) return this.instrumentTypesString.split(',');

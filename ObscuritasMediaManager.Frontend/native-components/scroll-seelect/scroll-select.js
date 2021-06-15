@@ -111,7 +111,6 @@ export class ScrollSelect extends LitElement {
         this.scrollItemsContainer.classList.toggle('user-interaction', false);
         this.scrollChildren.forEach((item, index) => {
             var targetTop = getTargetScrollPosition(item, item.parentElement, this.scrollContainer).top;
-            console.log(targetTop + '|' + currentScrollTop + '|' + (targetTop + item.offsetHeight));
             if (currentScrollTop > targetTop - item.offsetHeight / 2 && currentScrollTop < targetTop + item.offsetHeight / 2) {
                 this.currentItemIndex = index;
             }
