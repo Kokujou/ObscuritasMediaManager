@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
@@ -33,7 +34,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<MusicModel>>> GetAllAsync()
         {
             try
             {
@@ -46,11 +47,24 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet("{guid:Guid}")]
-        public async Task<IActionResult> GetAsync(Guid guid)
+        public async Task<ActionResult<MusicModel>> GetAsync(Guid guid)
         {
             try
             {
                 return Ok(await _repository.GetAsync(guid));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.ToString());
+            }
+        }
+
+        [HttpGet("instruments")]
+        public async Task<ActionResult<IEnumerable<InstrumentModel>>> GetInstruments()
+        {
+            try
+            {
+                return Ok(await _repository.GetInstruments());
             }
             catch (Exception e)
             {
@@ -63,6 +77,14 @@ namespace ObscuritasMediaManager.Backend.Controllers
         {
             try
             {
+                var instruments = await _repository.GetInstruments();
+                var instrumentStrings = instruments.Select(x => x.Name);
+                var sentInstruments = model.Instruments.Split(",");
+                var invalidInstruments = instrumentStrings.Except(sentInstruments).ToList();
+                if (invalidInstruments.Count > 0)
+                    return BadRequest($"sent instruments invalid: {string.Join(",", invalidInstruments)}");
+
+
                 await _repository.UpdateAsync(model);
                 return NoContent();
             }

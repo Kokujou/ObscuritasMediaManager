@@ -15,6 +15,7 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
         public DbSet<MediaModel> Media { get; set; }
         public DbSet<StreamingEntryModel> StreamingEntries { get; set; }
         public DbSet<MusicModel> Music { get; set; }
+        public DbSet<InstrumentModel> Instruments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,14 +23,14 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                 .Property(x => x.GenreString).HasColumnName(nameof(MediaModel.Genres));
 
             modelBuilder.Entity<MusicModel>()
-                .Property(x => x.InstrumentTypesString).HasColumnName(nameof(MusicModel.Genres));
-            modelBuilder.Entity<MusicModel>()
-                .Property(x => x.InstrumentsString).HasColumnName(nameof(MusicModel.Instruments));
-            modelBuilder.Entity<MusicModel>()
-                .Property(x => x.GenreString).HasColumnName(nameof(MusicModel.InstrumentTypes));
+                .Property(x => x.GenreString).HasColumnName(nameof(MusicModel.Genres));
 
             modelBuilder.Entity<StreamingEntryModel>()
                 .HasKey(x => new {x.Id, x.Season, x.Episode});
+
+            modelBuilder.Entity<GenreModel>();
+
+            modelBuilder.Entity<InstrumentModel>();
 
             modelBuilder.AddEnumConversion();
         }

@@ -11,5 +11,7 @@ namespace ObscuritasMediaManager.Backend.DataRepositories.Interfaces
         public Task UpdateAsync(MusicModel updated);
         public Task<MusicModel> GetAsync(Guid guid);
         public Task<IEnumerable<MusicModel>> GetAllAsync();
+
+        public Task<IEnumerable<InstrumentModel>> GetInstruments();
     }
 }

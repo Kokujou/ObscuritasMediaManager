@@ -34,21 +34,18 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                 item.Source = updated.Source;
             if (updated.Src != null)
                 item.Src = updated.Src;
-            if (updated.InstrumentTypesString != default)
-                item.InstrumentTypesString = updated.InstrumentTypesString;
             if (updated.Mood != default)
                 item.Mood = updated.Mood;
             if (updated.Instrumentation != default)
                 item.Instrumentation = updated.Instrumentation;
-            if (updated.InstrumentsString != default)
-                item.InstrumentsString = updated.InstrumentsString;
+            if (updated.Instruments != default)
+                item.Instruments = updated.Instruments;
             if (updated.Language != default)
                 item.Language = updated.Language;
             if (updated.Nation != default)
                 item.Nation = updated.Nation;
             if (updated.Participants != default)
                 item.Participants = updated.Participants;
-
 
             await _context.SaveChangesAsync();
         }
@@ -68,6 +65,11 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
         public async Task BatchCreateMusicTracksAsync(IEnumerable<MusicModel> media)
         {
             await _context.InsertIfNotExistsAsync(media);
+        }
+
+        public async Task<IEnumerable<InstrumentModel>> GetInstruments()
+        {
+            return await _context.Instruments.ToListAsync();
         }
     }
 }

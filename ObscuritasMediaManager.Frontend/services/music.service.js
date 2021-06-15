@@ -1,3 +1,4 @@
+import { InstrumentModel } from '../data/instrument.model.js';
 import { MusicModel } from '../data/music.model.js';
 
 export class MusicService {
@@ -44,5 +45,13 @@ export class MusicService {
         });
 
         if (response.status != 204) throw new Error('something went wrong, status ' + response.status);
+    }
+
+    static async getInstruments() {
+        var response = await fetch(`/ObscuritasMediaManager/api/music/instruments`);
+        if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
+
+        /** @type {InstrumentModel[]} */ var instruments = await response.json();
+        return instruments;
     }
 }
