@@ -13,6 +13,7 @@ export class TriValueCheckbox extends LitElement {
         return {
             value: { type: String, reflect: true },
             allowThreeValues: { type: Boolean, reflect: true },
+            disabled: { type: Boolean, reflect: true },
         };
     }
 
@@ -20,6 +21,7 @@ export class TriValueCheckbox extends LitElement {
         super();
         /** @type {CheckboxState} */ this.value = CheckboxState.Ignore;
         /** @type {boolean} */ this.allowThreeValues = false;
+        /** @type {boolean} */ this.disabled = false;
     }
 
     render() {

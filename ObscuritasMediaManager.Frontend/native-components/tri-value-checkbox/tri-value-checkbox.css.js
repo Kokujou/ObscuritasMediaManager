@@ -50,5 +50,9 @@ export function renderTriValueCheckbox() {
             border-color: var(--ignore-color);
             background-color: var(--ignore-color);
         }
+
+        .checkbox.disabled {
+            pointer-events: none;
+        }
     `;
 }

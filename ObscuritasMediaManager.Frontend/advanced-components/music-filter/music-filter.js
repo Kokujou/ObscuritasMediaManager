@@ -47,16 +47,38 @@ export class MusicFilter extends LitElement {
 
     /**
      * @param {keyof MusicFilterOptions} filter
-     * @param {string} value
+     * @param {string} enumKey
      * @param {CheckboxState} state
      */
-    toggleFilter(filter, value, state) {
+    toggleFilter(filter, enumKey, state) {
         if (filter == 'title') {
             this.filter[filter] = state;
             return;
         }
-        this.filter[filter].states[value] = state;
 
+        this.filter[filter].states[enumKey] = state;
+
+        this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
+    }
+
+    /**
+     * @param {keyof MusicFilterOptions} filter
+     */
+    resetFilter(filter) {
+        if (filter == 'title') {
+            this.filter[filter] = '';
+            return;
+        }
+
+        var newFilterOptions = new MusicFilterOptions();
+        this.filter[filter] = newFilterOptions[filter];
+        this.requestUpdate(undefined);
+        this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
+    }
+
+    resetAllFilters() {
+        this.filter = new MusicFilterOptions();
+        this.requestUpdate(undefined);
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
 
@@ -102,6 +124,15 @@ export class MusicFilter extends LitElement {
         genreDialog.addEventListener('decline', () => {
             genreDialog.remove();
         });
+    }
+
+    canFilterInstrumentType(type) {
+        var forcedInstruments = Object.keys(this.filter.instruments.states)
+            .filter((x) => this.filter.instruments.states[x] == CheckboxState.Allow)
+            .map((x) => session.instruments.current().find((instrument) => instrument.name == x));
+
+        console.log(!forcedInstruments.some((x) => x && x.type == type));
+        return !forcedInstruments.some((x) => x && x.type == type);
     }
 
     disconnectedCallback() {
