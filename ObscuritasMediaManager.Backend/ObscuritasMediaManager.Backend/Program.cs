@@ -15,7 +15,6 @@ namespace ObscuritasMediaManager.Backend
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<DatabaseContext>();
                 context.Database.Migrate();
-                context.Database.EnsureCreated();
             }
 
             host.Run();

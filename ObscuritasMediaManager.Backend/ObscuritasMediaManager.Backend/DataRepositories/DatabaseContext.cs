@@ -11,6 +11,7 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
         {
         }
 
+
         public DbSet<GenreModel> Genres { get; set; }
         public DbSet<MediaModel> Media { get; set; }
         public DbSet<StreamingEntryModel> StreamingEntries { get; set; }

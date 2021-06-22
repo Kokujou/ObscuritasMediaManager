@@ -1,4 +1,3 @@
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
@@ -59,17 +58,6 @@ namespace ObscuritasMediaManager.Backend
             app.UseCors("all");
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-            try
-            {
-                using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-                {
-                    var context = serviceScope.ServiceProvider.GetRequiredService<DatabaseContext>();
-                    context.Database.EnsureCreated();
-                }
-            }
-            catch (Exception e)
-            {
-            }
         }
     }
 }

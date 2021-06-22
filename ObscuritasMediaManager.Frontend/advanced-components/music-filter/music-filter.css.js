@@ -50,10 +50,6 @@ export function renderMusicFilterStyles() {
             margin-left: 20px;
         }
 
-        .filter {
-            margin-bottom: 30px;
-        }
-
         .filter > .filter-heading {
             margin-bottom: 10px;
             display: flex;

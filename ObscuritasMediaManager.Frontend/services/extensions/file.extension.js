@@ -27,13 +27,16 @@ export function importFiles() {
     render(folderBrowser, parentElement);
     /** @type {HTMLInputElement} */ var folderInput = parentElement.querySelector('#folder-browser');
     folderInput.click();
+    folderInput.focus();
 
+    var folderSelected = false;
     return new Promise((resolve, reject) => {
         document.body.onfocus = () => {
-            reject();
+            if (!folderSelected) reject();
         };
 
         folderInput.addEventListener('change', (e) => {
+            folderSelected = true;
             var pathDialog = PathInputDialog.show();
             pathDialog.addEventListener('accept', async (/** @type {CustomEvent<{ path: string }>} */ e) => {
                 /** @type {string} */ var basePath = e.detail.path;

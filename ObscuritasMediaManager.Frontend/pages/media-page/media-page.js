@@ -68,8 +68,8 @@ export class MediaPage extends LitElement {
         try {
             var fileImportResult = await importFiles();
             await MediaPage.processFiles(fileImportResult.files, fileImportResult.basePath, this.mediaType);
-        } catch {
-            console.info('the import of files was aborted');
+        } catch (err) {
+            console.error('the import of files was aborted', err);
         }
     }
 

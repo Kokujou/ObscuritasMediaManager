@@ -25,7 +25,7 @@ export class MusicPlaylistPage extends LitElement {
 
     get audioSource() {
         if (this.currentTrack && this.currentTrack.src) return `/ObscuritasMediaManager/api/file/audio?audioPath=${this.currentTrack.src}`;
-        return null;
+        return '';
     }
 
     get paginatedPlaylistTracks() {

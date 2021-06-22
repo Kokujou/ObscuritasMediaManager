@@ -123,8 +123,8 @@ export class MusicPage extends LitElement {
         try {
             var fileImportResult = await importFiles();
             await MusicPage.processFiles(fileImportResult.files, fileImportResult.basePath);
-        } catch {
-            console.info('the import of files was aborted');
+        } catch (err) {
+            console.error('the import of files was aborted', err);
         }
     }
 

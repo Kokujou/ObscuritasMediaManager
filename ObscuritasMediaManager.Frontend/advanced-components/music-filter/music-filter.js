@@ -131,7 +131,6 @@ export class MusicFilter extends LitElement {
             .filter((x) => this.filter.instruments.states[x] == CheckboxState.Allow)
             .map((x) => session.instruments.current().find((instrument) => instrument.name == x));
 
-        console.log(!forcedInstruments.some((x) => x && x.type == type));
         return !forcedInstruments.some((x) => x && x.type == type);
     }
 

@@ -77,13 +77,9 @@ namespace ObscuritasMediaManager.Backend.Controllers
         {
             try
             {
-                var instruments = await _repository.GetInstruments();
-                var instrumentStrings = instruments.Select(x => x.Name);
-                var sentInstruments = model.InstrumentsString.Split(",");
-                var invalidInstruments = instrumentStrings.Except(sentInstruments).ToList();
+                var invalidInstruments = await GetInvalidInstrumentsAsync(model.InstrumentsString);
                 if (invalidInstruments.Count > 0)
                     return BadRequest($"sent instruments invalid: {string.Join(",", invalidInstruments)}");
-
 
                 await _repository.UpdateAsync(model);
                 return NoContent();
@@ -92,6 +88,17 @@ namespace ObscuritasMediaManager.Backend.Controllers
             {
                 return BadRequest(e.ToString());
             }
+        }
+
+        private async Task<List<string>> GetInvalidInstrumentsAsync(string instrumentsString)
+        {
+            if (string.IsNullOrEmpty(instrumentsString)) return new List<string>();
+
+            var instruments = await _repository.GetInstruments();
+            var instrumentStrings = instruments.Select(x => x.Name);
+            var sentInstruments = instrumentsString.Split(",");
+            var invalidInstruments = sentInstruments.Except(instrumentStrings).ToList();
+            return invalidInstruments;
         }
     }
 }
