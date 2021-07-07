@@ -1,5 +1,5 @@
 import { renderMoodStyles } from '../../data/enumerations/mood.js';
-import { renderLanguageFlags } from '../../data/enumerations/nations.js';
+import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
 import { revertIcon } from '../../resources/icons/general/revert-icon.svg.js';

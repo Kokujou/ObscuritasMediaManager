@@ -95,7 +95,6 @@ export class MusicPlaylistPage extends LitElement {
         this.currentTrackIndex = Number.parseInt(trackId);
         this.currentTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
-        document.title = this.currentTrack.displayName;
         await this.requestUpdate(undefined);
 
         var audio = this.shadowRoot.querySelector('audio');
@@ -105,6 +104,7 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     render() {
+        document.title = this.currentTrack.displayName;
         if (this.currentTrackIndex) document.title = this.currentTrack.displayName;
         return renderMusicPlaylist(this);
     }
@@ -147,7 +147,8 @@ export class MusicPlaylistPage extends LitElement {
      */
     changeProperty(property, value) {
         if (property == 'displayName' || property == 'instrumentNames' || property == 'instrumentTypes') return;
-        this.updatedTrack[property] = value;
+        if (property == 'rating') this.updatedTrack[property] = value;
+        else this.updatedTrack[property] = value;
         this.requestUpdate(undefined);
     }
 

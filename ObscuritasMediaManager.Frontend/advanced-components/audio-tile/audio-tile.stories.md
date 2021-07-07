@@ -37,19 +37,10 @@ use available knob-functions to make properties or contents of your webcomponent
 
 ```js preview-story
 import { Mood } from '../../data/enumerations/mood.js';
-import { Nations } from '../../data/enumerations/nations.js';
+import { Nation } from '../../data/enumerations/nation.js';
 import { Participants } from '../../data/enumerations/participants.js';
 import { Instrumentation } from '../../data/enumerations/instrumentation.js';
-import { Instruments } from '../../data/enumerations/instruments.js';
 import { Genre } from '../../data/enumerations/genre.js';
-
-const InstrumentEnum = {};
-Object.keys(Instruments).forEach((key) => (InstrumentEnum[key] = key));
-
-function toInstrumentList(instruments) {
-    var selectedInstruments = instruments;
-    return selectedInstruments.map((instrument) => Instruments[instrument]) || [];
-}
 
 export const Multiple = () => html`
     <style>
@@ -67,9 +58,8 @@ export const Multiple = () => html`
             autor="olle Ko-Schnitte"
             source="My Brain"
             .genres="${optionsKnob('Genres', Genre, ['Blues', 'Soul', 'Comedy', 'Rock', 'Pop'], { display: 'multi-select' })}"
-            .instruments="${toInstrumentList(optionsKnob('Instruments', InstrumentEnum, [], { display: 'multi-select' }))}"
-            .language="${select('Nation', Object.values(Nations), 'japanese')}"
-            .nation="${select('Language', Object.values(Nations), 'japanese')}"
+            .language="${select('Nation', Object.values(Nation), 'japanese')}"
+            .nation="${select('Language', Object.values(Nation), 'japanese')}"
             .participantCount="${select('Participants', Object.values(Participants), 'solo')}"
             .instrumentation="${select('Instrumentation', Object.values(Instrumentation), 'mixed')}"
         ></audio-tile>

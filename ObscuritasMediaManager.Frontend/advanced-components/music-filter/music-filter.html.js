@@ -2,7 +2,7 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { InstrumentTypes } from '../../data/enumerations/instrument-types.js';
 import { Instrumentation } from '../../data/enumerations/instrumentation.js';
 import { Mood } from '../../data/enumerations/mood.js';
-import { Nations } from '../../data/enumerations/nations.js';
+import { Nation } from '../../data/enumerations/nation.js';
 import { Participants } from '../../data/enumerations/participants.js';
 import { html } from '../../exports.js';
 import { MusicFilter } from './music-filter.js';
@@ -23,7 +23,7 @@ export function renderMusicFilter(musicFilter) {
                     <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('languages')}"></div>
                 </div>
                 <side-scroller>
-                    ${Object.values(Nations).map(
+                    ${Object.values(Nation).map(
                         (type) =>
                             html` <tri-value-checkbox
                                 ?allowThreeValues="${false}"
@@ -42,7 +42,7 @@ export function renderMusicFilter(musicFilter) {
                     <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('nations')}"></div>
                 </div>
                 <side-scroller>
-                    ${Object.values(Nations).map(
+                    ${Object.values(Nation).map(
                         (type) =>
                             html` <tri-value-checkbox
                                 class="icon-container"

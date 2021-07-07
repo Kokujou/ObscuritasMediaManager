@@ -5,7 +5,7 @@ import { japanFlag } from '../../resources/icons/language-icons/japan-flag.svg.j
 import { renderBackgroundImage } from '../../services/extensions/style.extensions.js';
 
 /** @enum {string} */
-export const Nations = {
+export const Nation = {
     Japanese: 'japanese',
     English: 'english',
     German: 'german',

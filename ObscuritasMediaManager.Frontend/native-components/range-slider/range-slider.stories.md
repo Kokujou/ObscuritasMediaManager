@@ -39,7 +39,7 @@ use available knob-functions to make properties or contents of your webcomponent
 ```js preview-story
 export const Multiple = () => html`
     <page-routing>
-        <webcomponent-template> </webcomponent-template>
+        <range-slider> </range-slider>
     </page-routing>
 `;
 ```

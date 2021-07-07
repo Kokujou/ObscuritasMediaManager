@@ -21,6 +21,7 @@ namespace ObscuritasMediaManager.Backend.Models
         public string GenreString { get; set; } = string.Empty;
         public IEnumerable<Genre> Genres => ParseGenreString(GenreString);
         public string Src { get; set; }
+        public byte Rating { get; set; }
 
         private static IEnumerable<Genre> ParseGenreString(string genreString)
         {

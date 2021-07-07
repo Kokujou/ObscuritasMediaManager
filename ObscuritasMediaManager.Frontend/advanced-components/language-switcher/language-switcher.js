@@ -75,11 +75,9 @@ export class LanguageSwitcher extends LitElement {
 
         if (oldIndex == index) return;
 
-        console.log(index);
         var clampedTargetOffset = nations.length - index;
         if (index == 0) clampedTargetOffset = 0;
         var clampedRotationOffset = this.rotationOffset % nations.length;
-        console.log(clampedTargetOffset, clampedRotationOffset);
         var backSteps = 0;
         while (true) {
             backSteps--;
@@ -101,7 +99,6 @@ export class LanguageSwitcher extends LitElement {
 
         if (foreSteps < backSteps) this.rotationOffset += foreSteps;
         else this.rotationOffset -= backSteps;
-        console.log('back', backSteps, 'fore', foreSteps);
     }
 
     rotateForward() {

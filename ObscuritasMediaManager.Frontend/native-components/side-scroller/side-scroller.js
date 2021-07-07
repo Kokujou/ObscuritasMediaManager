@@ -43,14 +43,14 @@ export class SideScroller extends LitElement {
     constructor() {
         super();
 
-        this.currentItemIndex = 0;
+        this.currentItemIndex = -1;
     }
 
-    firstUpdated(_changedProperties) {
-        super.firstUpdated(_changedProperties);
+    updated(_changedProperties) {
+        super.updated(_changedProperties);
         setTimeout(() => {
             this.requestUpdate(undefined);
-            this.currentItemIndex = Math.floor(this.scrollChildren.length / 2);
+            if (this.currentItemIndex < 0) this.currentItemIndex = Math.floor(this.scrollChildren.length / 2);
             var element = this.scrollChildren[this.currentItemIndex];
             scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
             this.requestUpdate(undefined);

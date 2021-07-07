@@ -1,5 +1,5 @@
 import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-types.js';
-import { renderLanguageFlags } from '../../data/enumerations/nations.js';
+import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
