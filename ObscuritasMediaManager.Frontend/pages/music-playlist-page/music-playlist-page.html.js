@@ -1,3 +1,4 @@
+import { Genre } from '../../data/enumerations/genre.js';
 import { Instrumentation } from '../../data/enumerations/instrumentation.js';
 import { Mood } from '../../data/enumerations/mood.js';
 import { Participants } from '../../data/enumerations/participants.js';
@@ -104,6 +105,20 @@ export function renderMusicPlaylist(playlist) {
                                 .value="${playlist.updatedTrack.source || '---'}"
                                 @valueChanged="${(e) => playlist.changeProperty('source', e.detail.value)}"
                             ></editable-label>
+                        </div>
+                        <div id="genre-section">
+                            ${playlist.updatedTrack.genres.map(
+                                (genreKey) =>
+                                    html`<tag-label
+                                        .text="${Genre[genreKey]}"
+                                        @removed="${() => playlist.removeGenreKey(Genre[genreKey])}"
+                                    ></tag-label>`
+                            )}
+                            <tag-label
+                                createNew
+                                .autocomplete="${Object.values(Genre)}"
+                                @tagCreated="${(e) => playlist.addGenre(e.detail.value)}"
+                            ></tag-label>
                         </div>
                         <div id="audio-controls">
                             <div id="previous-track-button" @click="${() => playlist.changeTrackBy(-1)}" class="audio-icon"></div>

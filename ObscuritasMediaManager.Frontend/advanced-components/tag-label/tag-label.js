@@ -11,6 +11,8 @@ export class TagLabel extends LitElement {
         return {
             text: { type: String, reflect: true },
             createNew: { type: Boolean, reflect: true },
+            autocomplete: { type: Array, reflect: true },
+            showAutocomplete: { type: Boolean, reflect: false },
         };
     }
 
@@ -18,6 +20,16 @@ export class TagLabel extends LitElement {
         super();
         /** @type {string} */ this.text;
         /** @type {boolean} */ this.createNew = false;
+        /** @type {string[]} */ this.autocomplete = [];
+        /** @type {number} */ this.autofillIndex = -1;
+        /** @type {boolean} */ this.showAutocomplete = false;
+    }
+
+    get autocompleteItems() {
+        /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#new-tag-input');
+        if (!input) return [];
+        var searchText = input.value;
+        return this.autocomplete.filter((x) => x.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
     }
 
     render() {
@@ -35,5 +47,40 @@ export class TagLabel extends LitElement {
     notifyTagCreated() {
         /** @type {HTMLInputElement} */ var tagInput = this.shadowRoot.querySelector('#new-tag-input');
         this.dispatchEvent(new CustomEvent('tagCreated', { detail: { value: tagInput.value } }));
+    }
+
+    /**@param {KeyboardEvent} event */
+    handleInput(event) {
+        /** @type {NodeListOf<HTMLElement>} */ var elements = this.shadowRoot.querySelectorAll('#autocomplete-list .autocomplete-item');
+
+        if (event.key == 'ArrowDown') {
+            this.autofillIndex++;
+            if (this.autofillIndex >= this.autocompleteItems.length) this.autofillIndex = 0;
+            var selectedElement = elements[this.autofillIndex];
+            if (selectedElement.offsetTop >= selectedElement.parentElement.offsetHeight + selectedElement.parentElement.scrollTop)
+                selectedElement.parentElement.scrollTo({
+                    top: selectedElement.offsetTop + selectedElement.offsetHeight - selectedElement.parentElement.offsetHeight,
+                });
+        } else if (event.key == 'ArrowUp') {
+            if (this.autofillIndex <= 0) this.autofillIndex = this.autocompleteItems.length;
+            this.autofillIndex--;
+            var selectedElement = elements[this.autofillIndex];
+            if (selectedElement.offsetTop <= selectedElement.parentElement.scrollTop)
+                selectedElement.parentElement.scrollTo({ top: selectedElement.offsetTop });
+        } else if (event.key == 'Enter') this.setSearchText(this.autocompleteItems[this.autofillIndex]);
+
+        this.requestUpdate(undefined);
+        var selectedElement = elements[this.autofillIndex];
+        if (selectedElement.offsetTop == 0) selectedElement.parentElement.scrollTo({ top: 0 });
+        if (selectedElement.offsetTop + selectedElement.offsetHeight == selectedElement.parentElement.scrollHeight)
+            selectedElement.parentElement.scrollTo({ top: selectedElement.parentElement.scrollHeight });
+    }
+
+    setSearchText(text) {
+        /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#new-tag-input');
+        input.value = text;
+        this.requestUpdate(undefined);
+        this.notifyTagCreated();
+        input.value = '';
     }
 }

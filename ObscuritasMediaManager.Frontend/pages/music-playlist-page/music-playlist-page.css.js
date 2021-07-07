@@ -225,10 +225,22 @@ export function renderMusicPlaylistStyles() {
             justify-content: center;
         }
 
+        #genre-section {
+            display: flex;
+            flex-direction: row;
+        }
+
+        tag-label {
+            font-size: 18px;
+            color: var(--font-color);
+            --label-color: linear-gradient(#00000055 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
+        }
+
         #audio-controls {
             display: flex;
             flex-direction: row;
             filter: drop-shadow(0 0 10px #000000);
+            margin-top: 10px;
         }
 
         #audio-controls > * {

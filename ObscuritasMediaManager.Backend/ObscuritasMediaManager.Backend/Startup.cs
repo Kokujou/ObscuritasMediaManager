@@ -65,7 +65,7 @@ namespace ObscuritasMediaManager.Backend
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/ObscuritasMediaManager/swagger/v1/swagger.json",
-                    "Obsucritas Media management");
+                    "Obscuritas Media management");
             });
         }
     }

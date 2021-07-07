@@ -1,4 +1,5 @@
 import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher.js';
+import { Genre } from '../../data/enumerations/genre.js';
 import { MusicModel } from '../../data/music.model.js';
 import { session } from '../../data/session.js';
 import { LitElement } from '../../exports.js';
@@ -162,7 +163,6 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     async updateTrack() {
-        console.log(this.currentTrack.rating);
         if (JSON.stringify(this.updatedTrack) == JSON.stringify(this.currentTrack)) return;
         try {
             await MusicService.update(this.updatedTrack);
@@ -195,5 +195,17 @@ export class MusicPlaylistPage extends LitElement {
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
         if (audioElement.duration == Infinity) return;
         audioElement.currentTime = value;
+    }
+
+    addGenre(genre) {
+        var genreKey = Object.keys(Genre).find((x) => Genre[x] == genre);
+        if (!genreKey) console.error(`genre not found: ${genre}`);
+        var newGenres = this.updatedTrack.genres.concat([genreKey]);
+        this.changeProperty('genreString', newGenres.join(','));
+    }
+
+    removeGenreKey(key) {
+        var newGenres = this.updatedTrack.genres.filter((x) => x != key);
+        this.changeProperty('genreString', newGenres.join(','));
     }
 }

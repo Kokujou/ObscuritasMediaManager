@@ -23,7 +23,7 @@ export function scrollIntoParentViewX(element, elementContainer, parent) {
  * @param {HTMLElement} parent
  * @param {HTMLElement} elementContainer
  */
-export function scrollIntoParentViewY(element, elementContainer, parent) {
+export function scrollIntoParentViewY(element, elementContainer, parent, max = null, min = null) {
     var targetTop = element.offsetTop + elementContainer.offsetTop - parent.offsetHeight / 2 + element.offsetHeight / 2;
     elementContainer.style.transform = `translateY(${-targetTop}px)`;
 }

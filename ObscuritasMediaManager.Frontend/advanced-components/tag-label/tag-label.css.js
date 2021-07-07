@@ -19,13 +19,13 @@ export function renderTagLabelStyles() {
             border-top-left-radius: 50%;
             border-bottom-left-radius: 50%;
 
-            background-color: var(--label-color);
+            background: var(--label-color);
         }
 
         #label-container {
             position: relative;
             margin-left: 15px;
-            background-color: var(--label-color);
+            background: var(--label-color);
 
             display: flex;
             flex-direction: row;
@@ -60,7 +60,7 @@ export function renderTagLabelStyles() {
             color: inherit;
             min-width: 30px;
             padding: 5px;
-            font-size: 12px;
+            font-size: inherit;
         }
 
         #invisible-text {
@@ -83,6 +83,41 @@ export function renderTagLabelStyles() {
 
             font-size: 18px;
             color: lightgray;
+        }
+
+        #autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+
+            background: var(--label-color);
+            z-index: 1;
+
+            max-height: 200px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: 0 0px 3px black;
+        }
+
+        #autocomplete-list.hidden {
+            display: none;
+        }
+
+        #autocomplete-list #item-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #autocomplete-list .autocomplete-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            padding-right: 30px;
+            white-space: nowrap;
+        }
+
+        #autocomplete-list .autocomplete-item.active {
+            background: #fff5;
         }
     `;
 }
