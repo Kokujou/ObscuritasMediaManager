@@ -45,6 +45,8 @@ namespace ObscuritasMediaManager.Backend
                     NamingStrategy = new CamelCaseNamingStrategy()
                 }
             };
+
+            services.AddSwaggerGen(options => { });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +60,13 @@ namespace ObscuritasMediaManager.Backend
             app.UseCors("all");
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/ObscuritasMediaManager/swagger/v1/swagger.json",
+                    "Obsucritas Media management");
+            });
         }
     }
 }
