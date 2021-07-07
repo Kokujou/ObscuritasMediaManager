@@ -81,6 +81,7 @@ export function renderMusicPlaylistStyles() {
             height: 400px;
             border-radius: 20px;
             background-color: var(--primary-color);
+            overflow: hidden;
         }
 
         #audio-image {
@@ -163,12 +164,27 @@ export function renderMusicPlaylistStyles() {
             flex: auto;
         }
 
-        #language-switcher-overlay {
+        #rating-container {
             position: absolute;
-            left: 0;
-            top: 100px;
-            bottom: 100px;
-            right: 0;
+            top: 20px;
+            right: 30px;
+            z-index: 1;
+        }
+
+        #rating-container .star {
+            color: gray;
+            text-shadow: 3px 3px 3px black;
+            font-size: 42px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        #rating-container .star.selected {
+            color: yellow;
+        }
+
+        #rating-container .star.hovered {
+            color: darkorange;
         }
 
         #audio-control-container {

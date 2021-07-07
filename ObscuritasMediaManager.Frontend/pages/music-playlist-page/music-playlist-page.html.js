@@ -29,8 +29,16 @@ export function renderMusicPlaylist(playlist) {
                             class="${playlist.paused ? 'paused' : 'playing'}"
                         ></div>
                         <div id="language-icon-section">
-                            <div id="lagnuage-icon" class="inline-icon ${playlist.updatedTrack.language}"></div>
-                            <div id="nation-icon" class="inline-icon ${playlist.updatedTrack.nation}"></div>
+                            <div
+                                id="lagnuage-icon"
+                                class="inline-icon ${playlist.updatedTrack.language}"
+                                @click="${() => playlist.showLanguageSwitcher()}"
+                            ></div>
+                            <div
+                                id="nation-icon"
+                                class="inline-icon ${playlist.updatedTrack.nation}"
+                                @click="${() => playlist.showNationSwitcher()}"
+                            ></div>
                         </div>
                         <div
                             @click="${() =>
@@ -61,7 +69,22 @@ export function renderMusicPlaylist(playlist) {
                             ></range-slider>
                             <div id="track-position-label">${playlist.currentTrackDurationText}</div>
                         </div>
-                        <!-- <div id="language-switcher-overlay"></div> -->
+                        <div id="rating-container">
+                            ${[1, 2, 3, 4, 5].map(
+                                (rating) =>
+                                    html` <div
+                                        class="star ${rating <= playlist.updatedTrack.rating ? 'selected' : ''} ${rating <=
+                                        playlist.hoveredRating
+                                            ? 'hovered'
+                                            : ''}"
+                                        @pointerover="${() => (playlist.hoveredRating = rating)}"
+                                        @pointerout="${() => (playlist.hoveredRating = 0)}"
+                                        @click="${(e) => playlist.changeProperty('rating', rating)}"
+                                    >
+                                        ★
+                                    </div>`
+                            )}
+                        </div>
                     </div>
                     <div id="audio-control-container">
                         <editable-label

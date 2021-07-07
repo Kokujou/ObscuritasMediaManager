@@ -6,7 +6,16 @@ import { LanguageSwitcher } from './language-switcher.js';
  * @param {LanguageSwitcher} languageSwitcher
  */
 export function renderLanguageSwitcher(languageSwitcher) {
+    var smallestParentSize = languageSwitcher.parentElement.offsetWidth;
+    if (languageSwitcher.parentElement.offsetWidth > languageSwitcher.parentElement.offsetHeight)
+        smallestParentSize = languageSwitcher.parentElement.offsetHeight;
     return html`
+        <style>
+            #language-switcher-overlay {
+                width: ${smallestParentSize}px;
+                height: ${smallestParentSize}px;
+            }
+        </style>
         <div id="language-switcher-overlay">
             <div id="left-arrow" @click="${() => languageSwitcher.rotateBackward()}"></div>
             <div id="blocked-area">
@@ -18,7 +27,11 @@ export function renderLanguageSwitcher(languageSwitcher) {
                 )}
             </div>
 
-            <div id="selected-language" class="${languageSwitcher.language}"></div>
+            <div
+                id="selected-language"
+                class="${languageSwitcher.language}"
+                @click="${() => languageSwitcher.notifyLanguageChanged()}"
+            ></div>
 
             <div id="right-arrow" @click="${() => languageSwitcher.rotateForward()}"></div>
         </div>

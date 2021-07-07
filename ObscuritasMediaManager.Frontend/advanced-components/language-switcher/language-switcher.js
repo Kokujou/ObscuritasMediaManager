@@ -20,21 +20,27 @@ export class LanguageSwitcher extends LitElement {
     constructor() {
         super();
         /** @type {Nation} */ this.language;
-        /** @type {number} */ this.rotationOffset = Object.values(Nation).length;
+        /** @type {number} */ this.rotationOffset = 0;
+        this.resolve = (x) => {};
 
         this.animationRunning = false;
     }
 
     /**
-     * @param {HTMLElement} parent
+     * @param {Element} parent
      * @param {Nation} language
+     * @return {Promise<Nation>}
      */
     static spawnAt(parent, language) {
         var languageSwitcher = new LanguageSwitcher();
         languageSwitcher.language = language;
+        var nations = Object.values(Nation);
+        languageSwitcher.rotationOffset = nations.length - nations.indexOf(language);
 
         parent.append(languageSwitcher);
-        return languageSwitcher;
+        return new Promise((resolve) => {
+            languageSwitcher.resolve = resolve;
+        });
     }
 
     /**
@@ -115,11 +121,16 @@ export class LanguageSwitcher extends LitElement {
         this.rotationOffset--;
     }
 
+    notifyLanguageChanged() {
+        this.destroy();
+    }
+
     render() {
         return renderLanguageSwitcher(this);
     }
 
     destroy() {
+        this.resolve(this.language);
         this.classList.toggle('destroyed', true);
         setTimeout(() => {
             this.remove();

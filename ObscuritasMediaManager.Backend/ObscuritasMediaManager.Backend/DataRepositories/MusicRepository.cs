@@ -46,6 +46,8 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                 item.Nation = updated.Nation;
             if (updated.Participants != default)
                 item.Participants = updated.Participants;
+            if (updated.Rating != 0)
+                item.Rating = updated.Rating;
 
             await _context.SaveChangesAsync();
         }

@@ -1,3 +1,4 @@
+import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher.js';
 import { MusicModel } from '../../data/music.model.js';
 import { session } from '../../data/session.js';
 import { LitElement } from '../../exports.js';
@@ -15,7 +16,9 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     static get properties() {
-        return {};
+        return {
+            hoveredRating: { type: Number, reflect: false },
+        };
     }
 
     get paused() {
@@ -68,6 +71,7 @@ export class MusicPlaylistPage extends LitElement {
         /** @type {MusicModel} */ this.updatedTrack = new MusicModel();
         /** @type {number} */ this.currentVolumne = 0.1;
         /** @type {number} */ this.maxPlaylistItems = 20;
+        /** @type {number} */ this.hoveredRating = 0;
 
         this.initializeData();
 
@@ -158,6 +162,7 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     async updateTrack() {
+        console.log(this.currentTrack.rating);
         if (JSON.stringify(this.updatedTrack) == JSON.stringify(this.currentTrack)) return;
         try {
             await MusicService.update(this.updatedTrack);
@@ -166,6 +171,18 @@ export class MusicPlaylistPage extends LitElement {
         } catch (err) {
             console.error(err);
         }
+    }
+
+    async showLanguageSwitcher() {
+        var parent = this.shadowRoot.querySelector('#music-player-container');
+        var language = await LanguageSwitcher.spawnAt(parent, this.currentTrack.language);
+        this.changeProperty('language', language);
+    }
+
+    async showNationSwitcher() {
+        var parent = this.shadowRoot.querySelector('#music-player-container');
+        var nation = await LanguageSwitcher.spawnAt(parent, this.currentTrack.nation);
+        this.changeProperty('nation', nation);
     }
 
     disconnectedCallback() {

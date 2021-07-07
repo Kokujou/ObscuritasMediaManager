@@ -5,15 +5,23 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderLanguageSwitcherStyles() {
     return css`
+        :host {
+            background: #000c;
+            inset: 0;
+            position: absolute;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         :host(.destroyed) {
             transition: opacity 1s linear;
             opacity: 0;
         }
 
         #language-switcher-overlay {
-            position: absolute;
-            inset: 0;
-            background: #000a;
+            position: relative;
             animation: fadeIn 1s linear;
             -moz-animation: fadeIn 1s linear;
             -webkit-animation: fadeIn 1s linear;
@@ -82,6 +90,7 @@ export function renderLanguageSwitcherStyles() {
             width: 100px;
             height: 100px;
             filter: drop-shadow(0 0 10px white);
+            cursor: pointer;
         }
 
         ${renderLanguageFlags()};
