@@ -1,5 +1,5 @@
 /** @enum {string} */
-export const Genre = {
+export const MusicGenre = {
     Avantgarde: 'Avant-Garde',
     Blues: 'Blues',
     Classic: 'Classic',
@@ -18,4 +18,6 @@ export const Genre = {
     Rock: 'Rock',
     Metal: 'Metal',
     March: 'March',
+    Moe: 'Moe',
+    Wagakki: 'Wagakki',
 };

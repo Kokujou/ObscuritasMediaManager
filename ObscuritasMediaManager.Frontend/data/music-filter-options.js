@@ -1,8 +1,8 @@
 import { CheckboxState } from './enumerations/checkbox-state.js';
-import { Genre } from './enumerations/genre.js';
 import { InstrumentTypes } from './enumerations/instrument-types.js';
 import { Instrumentation } from './enumerations/instrumentation.js';
 import { Mood } from './enumerations/mood.js';
+import { MusicGenre } from './enumerations/music-genre.js';
 import { Nation } from './enumerations/nation.js';
 import { Participants } from './enumerations/participants.js';
 import { FilterEntry } from './filter-entry.js';
@@ -18,7 +18,7 @@ export class MusicFilterOptions {
         CheckboxState.Ignore
     );
     moods = new FilterEntry(Mood);
-    genres = new FilterEntry(Genre, CheckboxState.Ignore);
+    genres = new FilterEntry(MusicGenre, CheckboxState.Ignore);
     instrumentations = new FilterEntry(Instrumentation);
     participants = new FilterEntry(Participants);
 }

@@ -13,4 +13,6 @@
 // TODO: loading screen
 // TODO: Websockets
 // TODO: Authentication
-// TODO: Live-Saving using local storage for storing to-send data
+// TODO: Implememnt Live saving using visibilitychange + sendBeacon
+// TODO: retrink position of language icons
+// TODO: improve music playlist back behaviour

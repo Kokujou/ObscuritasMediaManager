@@ -1,6 +1,6 @@
-import { Genre } from '../../data/enumerations/genre.js';
 import { Instrumentation } from '../../data/enumerations/instrumentation.js';
 import { Mood } from '../../data/enumerations/mood.js';
+import { MusicGenre } from '../../data/enumerations/music-genre.js';
 import { Participants } from '../../data/enumerations/participants.js';
 import { html } from '../../exports.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
@@ -108,7 +108,7 @@ export function renderMusicPlaylist(playlist) {
                             ${playlist.updatedTrack.genres.map(
                                 (genreKey) =>
                                     html`<tag-label
-                                        .text="${Genre[genreKey]}"
+                                        .text="${MusicGenre[genreKey]}"
                                         @removed="${() => playlist.removeGenreKey(genreKey)}"
                                     ></tag-label>`
                             )}
@@ -166,7 +166,14 @@ export function renderMusicPlaylist(playlist) {
                     >
                         ${playlist.paginatedPlaylistTracks.map(
                             (x, index) =>
-                                html` <div class="playlist-entry" @dblclick="${() => playlist.changeTrack(index)}">${x.displayName}</div> `
+                                html`
+                                    <div
+                                        class="playlist-entry ${playlist.currentTrack.id == x.id ? 'active' : ''}"
+                                        @dblclick="${() => playlist.changeTrack(index)}"
+                                    >
+                                        ${x.displayName}
+                                    </div>
+                                `
                         )}
                     </paginated-scrolling>
                 </div>

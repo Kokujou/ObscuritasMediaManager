@@ -20,6 +20,8 @@
         Soul,
         Rock,
         Metal,
-        March
+        March,
+        Moe,
+        Wagakki
     }
 }

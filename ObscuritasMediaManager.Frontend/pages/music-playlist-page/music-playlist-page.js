@@ -1,6 +1,7 @@
 import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher.js';
+import { PaginatedScrolling } from '../../advanced-components/paginated-scrolling/paginated-scrolling.js';
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
-import { Genre } from '../../data/enumerations/genre.js';
+import { MusicGenre } from '../../data/enumerations/music-genre.js';
 import { MusicModel } from '../../data/music.model.js';
 import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
@@ -26,7 +27,7 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     get autocompleteGenres() {
-        return Object.values(Genre).filter((genre) => !this.updatedTrack.genres.some((x) => Genre[x] == genre));
+        return Object.values(MusicGenre).filter((genre) => !this.updatedTrack.genres.some((x) => MusicGenre[x] == genre));
     }
 
     get paused() {
@@ -101,6 +102,10 @@ export class MusicPlaylistPage extends LitElement {
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         await this.requestUpdate(undefined);
 
+        /** @type {PaginatedScrolling} */ var playlistScrollContainer = this.shadowRoot.querySelector('#playlist-item-container');
+        /** @type {HTMLElement} */ var child = playlistScrollContainer.querySelector('.playlist-entry.active');
+        playlistScrollContainer.scrollToChild(child);
+
         var audio = this.shadowRoot.querySelector('audio');
         audio.addEventListener('error', function (e) {
             alert(`an error occured while playing the audio file: code ${audio.error.code}`);
@@ -134,8 +139,13 @@ export class MusicPlaylistPage extends LitElement {
         this.currentTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         changePage(session.currentPage.current(), `?guid=${this.id}&track=${this.currentTrackIndex}`);
+
         await this.requestUpdate(undefined);
         audioElement.play();
+
+        /** @type {PaginatedScrolling} */ var playlistScrollContainer = this.shadowRoot.querySelector('#playlist-item-container');
+        /** @type {HTMLElement} */ var child = this.shadowRoot.querySelector('.playlist-entry.active');
+        playlistScrollContainer.scrollToChild(child);
     }
 
     /**
@@ -195,7 +205,7 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     addGenre(genre) {
-        var genreKey = Object.keys(Genre).find((x) => Genre[x] == genre);
+        var genreKey = Object.keys(MusicGenre).find((x) => MusicGenre[x] == genre);
         if (!genreKey) throw new Error(`genre not found: ${genre}`);
         var newGenres = this.updatedTrack.genres.concat([genreKey]);
         this.changeProperty('genreString', newGenres.join(','));

@@ -19,6 +19,7 @@ export const InstrumentTypes = {
     Stringed: 'stringed',
     Keyboard: 'keyboard',
     Electronic: 'electronic',
+    HumanBody: 'humanBody',
 };
 
 export function renderInstrumentTypeIcons(parentSelector) {
@@ -53,6 +54,10 @@ export function renderInstrumentTypeIcons(parentSelector) {
 
         ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Stringed)} {
             ${renderMaskImage(stringsIcon())};
+        }
+
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.HumanBody)} {
+            ${renderMaskImage(unsetIcon())};
         }
     `;
 }

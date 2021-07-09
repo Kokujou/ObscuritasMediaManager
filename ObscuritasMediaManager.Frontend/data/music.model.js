@@ -1,7 +1,7 @@
-import { Genre } from './enumerations/genre.js';
 import { InstrumentTypes } from './enumerations/instrument-types.js';
 import { Instrumentation } from './enumerations/instrumentation.js';
 import { Mood } from './enumerations/mood.js';
+import { MusicGenre } from './enumerations/music-genre.js';
 import { Nation } from './enumerations/nation.js';
 import { Participants } from './enumerations/participants.js';
 import { InstrumentModel } from './instrument.model.js';
@@ -36,7 +36,7 @@ export class MusicModel {
     }
 
     /**@type {string} */ genreString;
-    /** @type {Genre[]} */ get genres() {
+    /** @type {MusicGenre[]} */ get genres() {
         if (this.genreString) return this.genreString.split(',');
         return [];
     }
