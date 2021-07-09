@@ -58,18 +58,7 @@ export function renderMusicPlaylist(playlist) {
                         >
                             ${playlist.updatedTrack.instrumentation}
                         </div>
-                        <div id="track-position-container">
-                            <div id="track-position-label">${playlist.currentTrackPositionText}</div>
-                            <range-slider
-                                id="track-position"
-                                @valueChanged="${(e) => playlist.changeTrackPosition(e.detail.value)}"
-                                .value="${playlist.currentTrackPosition.toString()}"
-                                min="0"
-                                .max="${playlist.currentTrackDuration.toString()}"
-                                steps="1000 "
-                            ></range-slider>
-                            <div id="track-position-label">${playlist.currentTrackDurationText}</div>
-                        </div>
+
                         <div id="rating-container">
                             ${[1, 2, 3, 4, 5].map(
                                 (rating) =>
@@ -85,6 +74,15 @@ export function renderMusicPlaylist(playlist) {
                                         ★
                                     </div>`
                             )}
+                        </div>
+
+                        <div id="instruments-container" @click="${() => playlist.openInstrumentsDialog()}">
+                            ${playlist.updatedTrack.instrumentTypes?.length == 0
+                                ? html`<a id="add-instruments-link">Add Instruments</a>`
+                                : ''}
+                            ${playlist.updatedTrack.instrumentTypes
+                                .filter((instrument, index, self) => self.indexOf(instrument) == index)
+                                .map((instrument) => html` <div class="instrument-icon ${instrument}"></div> `)}
                         </div>
                     </div>
                     <div id="audio-control-container">
@@ -111,14 +109,26 @@ export function renderMusicPlaylist(playlist) {
                                 (genreKey) =>
                                     html`<tag-label
                                         .text="${Genre[genreKey]}"
-                                        @removed="${() => playlist.removeGenreKey(Genre[genreKey])}"
+                                        @removed="${() => playlist.removeGenreKey(genreKey)}"
                                     ></tag-label>`
                             )}
                             <tag-label
                                 createNew
-                                .autocomplete="${Object.values(Genre)}"
+                                .autocomplete="${playlist.autocompleteGenres}"
                                 @tagCreated="${(e) => playlist.addGenre(e.detail.value)}"
                             ></tag-label>
+                        </div>
+                        <div id="track-position-container">
+                            <div id="track-position-label">${playlist.currentTrackPositionText}</div>
+                            <range-slider
+                                id="track-position"
+                                @valueChanged="${(e) => playlist.changeTrackPosition(e.detail.value)}"
+                                .value="${playlist.currentTrackPosition.toString()}"
+                                min="0"
+                                .max="${playlist.currentTrackDuration.toString()}"
+                                steps="1000 "
+                            ></range-slider>
+                            <div id="track-position-label">${playlist.currentTrackDurationText}</div>
                         </div>
                         <div id="audio-controls">
                             <div id="previous-track-button" @click="${() => playlist.changeTrackBy(-1)}" class="audio-icon"></div>
@@ -128,9 +138,7 @@ export function renderMusicPlaylist(playlist) {
                                 class="audio-icon ${playlist.paused ? 'paused' : 'playing'}"
                             ></div>
                             <div id="next-track-button" @click="${() => playlist.changeTrackBy(1)}" class="audio-icon"></div>
-                            <div class="audio-icon" id="random-order-button"></div>
-                            <div class="audio-icon" id="reset-order-button"></div>
-                            <div class="audio-icon" id="remove-track-button"></div>
+
                             <div id="change-volume-container">
                                 <div id="change-volume-button" class="audio-icon"></div>
                                 <range-slider
@@ -145,16 +153,23 @@ export function renderMusicPlaylist(playlist) {
                         </div>
                     </div>
                 </div>
-                <paginated-scrolling
-                    scrollTopThreshold="20"
-                    id="playlist-item-container"
-                    @scrollBottom="${() => playlist.loadMoreTracks()}"
-                >
-                    ${playlist.paginatedPlaylistTracks.map(
-                        (x, index) =>
-                            html` <div class="playlist-entry" @dblclick="${() => playlist.changeTrack(index)}">${x.displayName}</div> `
-                    )}
-                </paginated-scrolling>
+                <div id="playlist-container">
+                    <div id="playlist-options">
+                        <div class="audio-icon" id="random-order-button"></div>
+                        <div class="audio-icon" id="reset-order-button"></div>
+                        <div class="audio-icon" id="remove-track-button"></div>
+                    </div>
+                    <paginated-scrolling
+                        scrollTopThreshold="20"
+                        id="playlist-item-container"
+                        @scrollBottom="${() => playlist.loadMoreTracks()}"
+                    >
+                        ${playlist.paginatedPlaylistTracks.map(
+                            (x, index) =>
+                                html` <div class="playlist-entry" @dblclick="${() => playlist.changeTrack(index)}">${x.displayName}</div> `
+                        )}
+                    </paginated-scrolling>
+                </div>
             </div>
             <audio
                 controls

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 using ObscuritasMediaManager.Backend.Models;
 
@@ -72,16 +73,18 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromBody] MusicModel model)
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] UpdateRequest<MusicModel> updateRequest)
         {
             try
             {
-                var invalidInstruments = await GetInvalidInstrumentsAsync(model.InstrumentsString);
+                if (updateRequest.OldModel.Id != default && id != updateRequest.OldModel.Id)
+                    return BadRequest("Ids of objects did not match");
+                var invalidInstruments = await GetInvalidInstrumentsAsync(updateRequest.NewModel.InstrumentsString);
                 if (invalidInstruments.Count > 0)
                     return BadRequest($"sent instruments invalid: {string.Join(",", invalidInstruments)}");
 
-                await _repository.UpdateAsync(model);
+                await _repository.UpdateAsync(id, updateRequest.OldModel, updateRequest.NewModel);
                 return NoContent();
             }
             catch (Exception e)

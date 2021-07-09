@@ -13,3 +13,4 @@
 // TODO: loading screen
 // TODO: Websockets
 // TODO: Authentication
+// TODO: Live-Saving using local storage for storing to-send data

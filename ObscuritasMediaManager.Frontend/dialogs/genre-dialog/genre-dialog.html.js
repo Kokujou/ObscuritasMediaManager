@@ -42,6 +42,7 @@ function renderGenre(genre, genreDialog) {
         .allowThreeValues="${genreDialog.allowThreeValues}"
         @valueChanged="${(e) => genreDialog.handleGenreSelection(e.detail, genre)}"
         .value="${genreDialog.getValue(genre)}"
+        .ignoredState="${genreDialog.ignoredState}"
         class="genre-checkbox"
     >
         ${genre.name}

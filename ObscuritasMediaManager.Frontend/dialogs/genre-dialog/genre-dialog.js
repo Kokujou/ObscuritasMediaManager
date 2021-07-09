@@ -14,6 +14,7 @@ export class GenreDialog extends LitElement {
         return {
             genres: { type: Array, reflect: true },
             allowThreeValues: { type: Array, reflect: true },
+            ignoredState: { type: String, reflect: true },
 
             caption: { type: String, reflect: false },
         };
@@ -26,6 +27,7 @@ export class GenreDialog extends LitElement {
 
         /** @type {GenreModel[]} */ this.allowedGenres = [];
         /** @type {GenreModel[]} */ this.forbiddenGenres = [];
+        /** @type {CheckboxState} */ this.ignoredState = CheckboxState.Ignore;
     }
 
     /** @returns {Object.<string, GenreModel[]>} */
@@ -45,13 +47,14 @@ export class GenreDialog extends LitElement {
      * @param {GenreModel[]} forbiddenGenres
      * @param {boolean} allowThreeValues
      */
-    static show(genres, allowedGenres = [], forbiddenGenres = [], allowThreeValues = true) {
+    static show(genres, allowedGenres = [], forbiddenGenres = [], allowThreeValues = true, ignoredstate = CheckboxState.Ignore) {
         var dialog = new GenreDialog();
 
         dialog.genres = genres;
         dialog.allowedGenres = allowedGenres;
         dialog.forbiddenGenres = forbiddenGenres;
         dialog.allowThreeValues = allowThreeValues;
+        dialog.ignoredState = ignoredstate;
         document.body.append(dialog);
         dialog.requestUpdate(undefined);
 

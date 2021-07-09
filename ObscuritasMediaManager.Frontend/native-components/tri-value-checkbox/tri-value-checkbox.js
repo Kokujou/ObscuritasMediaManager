@@ -14,6 +14,7 @@ export class TriValueCheckbox extends LitElement {
             value: { type: String, reflect: true },
             allowThreeValues: { type: Boolean, reflect: true },
             disabled: { type: Boolean, reflect: true },
+            ignoredState: { type: String, reflect: true },
         };
     }
 
@@ -22,6 +23,7 @@ export class TriValueCheckbox extends LitElement {
         /** @type {CheckboxState} */ this.value = CheckboxState.Ignore;
         /** @type {boolean} */ this.allowThreeValues = false;
         /** @type {boolean} */ this.disabled = false;
+        /** @type {CheckboxState} */ this.ignoredState = CheckboxState.Forbid;
     }
 
     render() {
@@ -30,12 +32,12 @@ export class TriValueCheckbox extends LitElement {
 
     firstUpdated(_changedProperties) {
         super.firstUpdated(_changedProperties);
-        if (!this.allowThreeValues && this.value == CheckboxState.Ignore) this.value = CheckboxState.Allow;
+        if (!this.allowThreeValues && this.value == this.ignoredState) this.value = CheckboxState.Allow;
     }
 
     nextState() {
         this.value = Enum.nextValue(CheckboxState, this.value, false);
-        if (this.value == CheckboxState.Ignore && !this.allowThreeValues) this.value = Enum.nextValue(CheckboxState, this.value, false);
+        if (this.value == this.ignoredState && !this.allowThreeValues) this.value = Enum.nextValue(CheckboxState, this.value, false);
 
         var valuechangedEvent = new CustomEvent('valueChanged', { detail: { value: this.value } });
         this.dispatchEvent(valuechangedEvent);

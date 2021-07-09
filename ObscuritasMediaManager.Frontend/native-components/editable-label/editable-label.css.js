@@ -64,6 +64,7 @@ export function renderEditableLabelStyles() {
             text-overflow: ellipsis;
             overflow: hidden;
             max-width: 100%;
+            padding: 15px 27px;
         }
     `;
 }

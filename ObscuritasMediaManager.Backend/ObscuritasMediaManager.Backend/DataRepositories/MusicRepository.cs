@@ -18,36 +18,36 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             _context = context;
         }
 
-        public async Task UpdateAsync(MusicModel updated)
+        public async Task UpdateAsync(Guid id, MusicModel old, MusicModel updated)
         {
-            var item = await _context.Music.SingleOrDefaultAsync(x => x.Id == updated.Id);
-            if (item == default)
+            var actual = await _context.Music.SingleOrDefaultAsync(x => x.Id == id);
+            if (actual == default)
                 throw new ModelNotFoundException(updated.Id);
 
-            if (!string.IsNullOrEmpty(updated.Name))
-                item.Name = updated.Name;
-            if (!string.IsNullOrEmpty(updated.Author))
-                item.Author = updated.Author;
-            if (updated.Genres != null)
-                item.GenreString = updated.GenreString;
-            if (updated.Source != null)
-                item.Source = updated.Source;
-            if (updated.Src != null)
-                item.Src = updated.Src;
-            if (updated.Mood != default)
-                item.Mood = updated.Mood;
-            if (updated.Instrumentation != default)
-                item.Instrumentation = updated.Instrumentation;
-            if (updated.InstrumentsString != default)
-                item.InstrumentsString = updated.InstrumentsString;
-            if (updated.Language != default)
-                item.Language = updated.Language;
-            if (updated.Nation != default)
-                item.Nation = updated.Nation;
-            if (updated.Participants != default)
-                item.Participants = updated.Participants;
-            if (updated.Rating != 0)
-                item.Rating = updated.Rating;
+            if (!string.IsNullOrEmpty(updated.Name) && old.Name == actual.Name)
+                actual.Name = updated.Name;
+            if (!string.IsNullOrEmpty(updated.Author) && old.Author == actual.Author)
+                actual.Author = updated.Author;
+            if (updated.Genres != null && old.GenreString == actual.GenreString)
+                actual.GenreString = updated.GenreString;
+            if (updated.Source != null && old.Source == actual.Source)
+                actual.Source = updated.Source;
+            if (updated.Src != null && old.Src == actual.Src)
+                actual.Src = updated.Src;
+            if (updated.Mood != default && old.Mood == actual.Mood)
+                actual.Mood = updated.Mood;
+            if (updated.Instrumentation != default && old.Instrumentation == actual.Instrumentation)
+                actual.Instrumentation = updated.Instrumentation;
+            if (updated.InstrumentsString != default && old.InstrumentsString == actual.InstrumentsString)
+                actual.InstrumentsString = updated.InstrumentsString;
+            if (updated.Language != default && old.Language == actual.Language)
+                actual.Language = updated.Language;
+            if (updated.Nation != default && old.Nation == actual.Nation)
+                actual.Nation = updated.Nation;
+            if (updated.Participants != default && old.Participants == actual.Participants)
+                actual.Participants = updated.Participants;
+            if (updated.Rating != 0 && old.Rating == actual.Rating)
+                actual.Rating = updated.Rating;
 
             await _context.SaveChangesAsync();
         }

@@ -1,3 +1,4 @@
+import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-types.js';
 import { renderMoodStyles } from '../../data/enumerations/mood.js';
 import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
@@ -77,7 +78,7 @@ export function renderMusicPlaylistStyles() {
 
         #audio-tile-container {
             position: relative;
-            min-width: 350px;
+            min-width: 400px;
             height: 400px;
             border-radius: 20px;
             background-color: var(--primary-color);
@@ -119,21 +120,10 @@ export function renderMusicPlaylistStyles() {
 
         ${renderLanguageFlags()}
 
-        #participant-count-button {
-            position: absolute;
-            left: 20px;
-            bottom: 70px;
-
-            width: 50px;
-            height: 50px;
-        }
-
-        ${renderParticipantCountIcon('#participant-count-button')}
-
         #instrumentation-button {
             position: absolute;
             right: 50px;
-            bottom: 70px;
+            top: 60px;
 
             display: flex;
             justify-content: center;
@@ -143,38 +133,19 @@ export function renderMusicPlaylistStyles() {
             text-transform: uppercase;
             font-weight: bold;
             font-size: 30px;
-            transform: rotate(315deg);
-        }
-
-        #track-position-container {
-            position: absolute;
-            bottom: 0px;
-            left: 20px;
-            right: 20px;
-            height: 50px;
-            filter: drop-shadow(0 0 10px black);
-
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #track-position {
-            flex: auto;
+            transform: rotate(45deg);
         }
 
         #rating-container {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            z-index: 1;
+            bottom: 70px;
+            left: 20px;
         }
 
         #rating-container .star {
             color: gray;
             text-shadow: 3px 3px 3px black;
-            font-size: 42px;
+            font-size: 48px;
             cursor: pointer;
             line-height: 1;
         }
@@ -186,6 +157,44 @@ export function renderMusicPlaylistStyles() {
         #rating-container .star.hovered {
             color: darkorange;
         }
+
+        #participant-count-button {
+            position: absolute;
+            right: 20px;
+            bottom: 70px;
+
+            width: 50px;
+            height: 50px;
+        }
+
+        ${renderParticipantCountIcon('#participant-count-button')}
+
+        #instruments-container {
+            position: absolute;
+            bottom: 20px;
+            left: 10px;
+            right: 10px;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        #instruments-container .instrument-icon {
+            background: white;
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+        }
+
+        #add-instruments-link {
+            font-size: 24px;
+            text-decoration: underline;
+        }
+
+        ${renderInstrumentTypeIcons('#instruments-container .instrument-icon')}
 
         #audio-control-container {
             display: flex;
@@ -211,29 +220,52 @@ export function renderMusicPlaylistStyles() {
             display: flex;
             flex-direction: row;
             min-width: 300px;
-            margin-bottom: 30px;
         }
 
         #audio-subtitle > * {
             flex: auto;
+            margin-top: -10px;
         }
 
         #subtitle-separator {
             margin: 0 20px;
             display: flex;
-            align-items: Center;
+            align-items: center;
             justify-content: center;
         }
 
         #genre-section {
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
         }
 
         tag-label {
             font-size: 18px;
             color: var(--font-color);
             --label-color: linear-gradient(#00000055 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
+            margin-bottom: 10px;
+        }
+
+        #track-position-container {
+            width: 100%;
+            height: 50px;
+
+            filter: drop-shadow(0 0 10px black);
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #track-position-label {
+            font-size: 18px;
+        }
+
+        #track-position {
+            flex: auto;
+            margin: 0 20px;
         }
 
         #audio-controls {
@@ -263,25 +295,41 @@ export function renderMusicPlaylistStyles() {
 
         ${renderAudioPlayerIcons()}
 
+        #playlist-container {
+            display: flex;
+            flex-direction: row;
+
+            border-radius: 20px;
+            box-sizing: border-box;
+            border: 20px solid var(--primary-color);
+            margin: 20px 50px;
+        }
+
+        #playlist-container #playlist-options {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            padding-left: 10px;
+            padding-right: 30px;
+            background: var(--primary-color);
+        }
+
         #playlist-item-container {
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: stretch;
             flex: auto;
-            margin: 20px 50px;
 
             overflow-y: auto;
             overflow-x: hidden;
 
-            border-radius: 20px;
-            box-sizing: border-box;
-            border: 20px solid var(--primary-color);
             font-weight: bold;
         }
 
         .playlist-entry {
-            padding: 5px;
+            padding: 5px 20px;
             font-size: 18px;
             cursor: pointer;
             background: linear-gradient(#00000077 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
@@ -310,42 +358,42 @@ function renderAudioPlayerIcons() {
             cursor: pointer;
         }
 
-        #audio-controls #previous-track-button {
+        #previous-track-button {
             ${renderMaskImage(fastForwardIcon())};
             transform: rotate(180deg);
         }
 
-        #audio-controls #toggle-track-button.playing,
+        #toggle-track-button.playing,
         #audio-tile-container #audio-image.playing {
             ${renderMaskImage(pauseIcon())};
         }
 
-        #audio-controls #toggle-track-button.paused,
+        #toggle-track-button.paused,
         #audio-tile-container #audio-image.paused {
             ${renderMaskImage(playIcon())};
         }
 
-        #audio-controls #toggle-track-button.playing {
+        #toggle-track-button.playing {
             ${renderMaskImage(pauseIcon())};
         }
 
-        #audio-controls #next-track-button {
+        #next-track-button {
             ${renderMaskImage(fastForwardIcon())};
         }
 
-        #audio-controls #change-volume-button {
+        #change-volume-button {
             ${renderMaskImage(volumeIcon())};
         }
 
-        #audio-controls #random-order-button {
+        #random-order-button {
             ${renderMaskImage(shufflePlaylistIcon())};
         }
 
-        #audio-controls #reset-order-button {
+        #reset-order-button {
             ${renderMaskImage(revertIcon())};
         }
 
-        #audio-controls #remove-track-button {
+        #remove-track-button {
             mask: linear-gradient(transparent, transparent);
         }
     `;

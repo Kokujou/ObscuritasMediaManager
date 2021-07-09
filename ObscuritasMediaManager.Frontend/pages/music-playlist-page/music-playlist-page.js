@@ -1,7 +1,10 @@
 import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher.js';
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { Genre } from '../../data/enumerations/genre.js';
 import { MusicModel } from '../../data/music.model.js';
 import { session } from '../../data/session.js';
+import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
+import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { LitElement } from '../../exports.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
@@ -20,6 +23,10 @@ export class MusicPlaylistPage extends LitElement {
         return {
             hoveredRating: { type: Number, reflect: false },
         };
+    }
+
+    get autocompleteGenres() {
+        return Object.values(Genre).filter((genre) => !this.updatedTrack.genres.some((x) => Genre[x] == genre));
     }
 
     get paused() {
@@ -53,7 +60,7 @@ export class MusicPlaylistPage extends LitElement {
         var minutes = Math.floor(position / 60);
         var seconds = Math.floor(position - minutes * 60);
 
-        return `${Math.floor(minutes)}:${seconds}`;
+        return `${Math.floor(minutes).toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
     get currentTrackDurationText() {
@@ -61,7 +68,7 @@ export class MusicPlaylistPage extends LitElement {
         var minutes = Math.floor(duration / 60);
         var seconds = Math.floor(duration - minutes * 60);
 
-        return `${Math.floor(minutes)}:${seconds}`;
+        return `${Math.floor(minutes).toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
     constructor() {
@@ -75,20 +82,12 @@ export class MusicPlaylistPage extends LitElement {
         /** @type {number} */ this.hoveredRating = 0;
 
         this.initializeData();
-
-        window.onunload = async (e) => {
-            e.preventDefault();
-            e.returnValue = '';
-            await this.updateTrack();
-            return;
-        };
     }
     connectedCallback() {
         super.connectedCallback();
         setFavicon(NoteIcon());
-        this.updateIntervalCall = setInterval(async () => {
-            await this.updateTrack();
-        }, 10000);
+        var localStorageVolume = localStorage.getItem('volume');
+        if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume));
     }
 
     async initializeData() {
@@ -129,8 +128,6 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     async changeTrack(index) {
-        await this.updateTrack();
-
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
         audioElement.pause();
         this.currentTrackIndex = index;
@@ -141,8 +138,12 @@ export class MusicPlaylistPage extends LitElement {
         audioElement.play();
     }
 
+    /**
+     * @param { number} newVolume
+     */
     changeVolume(newVolume) {
         this.currentVolumne = newVolume / 100;
+        localStorage.setItem('volume', newVolume.toString());
         this.requestUpdate(undefined);
     }
 
@@ -150,27 +151,25 @@ export class MusicPlaylistPage extends LitElement {
      * @param {keyof  MusicModel} property
      * @param {any} value
      */
-    changeProperty(property, value) {
+    async changeProperty(property, value) {
+        var oldModel = {};
+        oldModel[property] = this.updatedTrack[property];
         if (property == 'displayName' || property == 'instrumentNames' || property == 'instrumentTypes') return;
         if (property == 'rating') this.updatedTrack[property] = value;
         else this.updatedTrack[property] = value;
+
+        var newModel = {};
+        newModel[property] = value;
+        await MusicService.update(this.currentTrack.id, oldModel, newModel);
+        Object.assign(this.currentTrack, this.updatedTrack);
+        this.playlist[this.currentTrackIndex] = this.updatedTrack;
+
         this.requestUpdate(undefined);
     }
 
     loadMoreTracks() {
         if (this.playlist.length > this.maxPlaylistItems) this.maxPlaylistItems += 10;
         this.requestUpdate(undefined);
-    }
-
-    async updateTrack() {
-        if (JSON.stringify(this.updatedTrack) == JSON.stringify(this.currentTrack)) return;
-        try {
-            await MusicService.update(this.updatedTrack);
-            this.currentTrack = this.updatedTrack;
-            this.playlist[this.currentTrackIndex] = this.updatedTrack;
-        } catch (err) {
-            console.error(err);
-        }
     }
 
     async showLanguageSwitcher() {
@@ -187,8 +186,6 @@ export class MusicPlaylistPage extends LitElement {
 
     disconnectedCallback() {
         super.disconnectedCallback();
-        clearInterval(this.updateIntervalCall);
-        this.updateTrack();
     }
 
     changeTrackPosition(value) {
@@ -199,7 +196,7 @@ export class MusicPlaylistPage extends LitElement {
 
     addGenre(genre) {
         var genreKey = Object.keys(Genre).find((x) => Genre[x] == genre);
-        if (!genreKey) console.error(`genre not found: ${genre}`);
+        if (!genreKey) throw new Error(`genre not found: ${genre}`);
         var newGenres = this.updatedTrack.genres.concat([genreKey]);
         this.changeProperty('genreString', newGenres.join(','));
     }
@@ -207,5 +204,20 @@ export class MusicPlaylistPage extends LitElement {
     removeGenreKey(key) {
         var newGenres = this.updatedTrack.genres.filter((x) => x != key);
         this.changeProperty('genreString', newGenres.join(','));
+    }
+
+    openInstrumentsDialog() {
+        var instruments = session.instruments.current().map((item, index) => item.toGenreModel(index));
+        var allowedInstruments = this.updatedTrack.instruments.map((instrument, index) => instrument.toGenreModel(index));
+        var genreDialog = GenreDialog.show(instruments, allowedInstruments, [], false, CheckboxState.Forbid);
+        genreDialog.addEventListener('accept', (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
+            var instrumentsString = e.detail.acceptedGenres.map((x) => x.name).join(',');
+            this.requestUpdate(undefined);
+            this.changeProperty('instrumentsString', instrumentsString);
+            genreDialog.remove();
+        });
+        genreDialog.addEventListener('decline', () => {
+            genreDialog.remove();
+        });
     }
 }

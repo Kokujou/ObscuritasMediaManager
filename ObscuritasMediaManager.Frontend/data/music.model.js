@@ -45,8 +45,8 @@ export class MusicModel {
 
     get displayName() {
         var result = this.name;
-        if (this.author) result.concat(` - ${this.author}`);
-        if (this.source) result.concat(` (${this.source})`);
+        if (this.author && this.author != 'undefined') result = result.concat(` - ${this.author}`);
+        if (this.source) result = result.concat(` (${this.source})`);
         return result;
     }
 

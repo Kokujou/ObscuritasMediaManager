@@ -25,6 +25,7 @@ export function renderTagLabelStyles() {
         #label-container {
             position: relative;
             margin-left: 15px;
+            padding-left: 10px;
             background: var(--label-color);
 
             display: flex;
@@ -48,7 +49,7 @@ export function renderTagLabelStyles() {
             border: none;
             background-color: inherit;
             outline: none;
-            border-bottom: 1px solid black;
+            border-bottom: 2px solid black;
             width: 100%;
             padding: 0 !important;
             font-family: inherit;
@@ -58,7 +59,7 @@ export function renderTagLabelStyles() {
         #new-tag-input,
         #label-text {
             color: inherit;
-            min-width: 30px;
+            min-width: 50px;
             padding: 5px;
             font-size: inherit;
         }

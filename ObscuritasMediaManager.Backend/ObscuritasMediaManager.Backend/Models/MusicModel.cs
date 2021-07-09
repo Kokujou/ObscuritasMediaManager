@@ -8,7 +8,7 @@ namespace ObscuritasMediaManager.Backend.Models
 {
     public class MusicModel
     {
-        [Key] public Guid Id { get; set; } = Guid.NewGuid();
+        [Key] public Guid Id { get; set; }
         public string Name { get; set; }
         public string Author { get; set; }
         public string Source { get; set; }

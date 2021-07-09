@@ -35,12 +35,15 @@ export class MusicService {
     }
 
     /**
-     * @param {MusicModel} updatedTrack
+     * @param {string} id
+     * @param {any} oldModel
+     * @param {any} newModel
      */
-    static async update(updatedTrack) {
-        var response = await fetch('/ObscuritasMediaManager/api/music', {
+    static async update(id, oldModel, newModel) {
+        var updateRequest = { oldModel, newModel };
+        var response = await fetch(`/ObscuritasMediaManager/api/music/${id}`, {
             method: 'PUT',
-            body: JSON.stringify(updatedTrack),
+            body: JSON.stringify(updateRequest),
             headers: { 'Content-Type': 'application/json' },
         });
 

@@ -16,6 +16,12 @@ export class TagLabel extends LitElement {
         };
     }
 
+    get selectedElement() {
+        /** @type {NodeListOf<HTMLElement>} */ var elements = this.shadowRoot.querySelectorAll('#autocomplete-list .autocomplete-item');
+        if (elements[this.autofillIndex]) return elements[this.autofillIndex];
+        return null;
+    }
+
     constructor() {
         super();
         /** @type {string} */ this.text;
@@ -51,12 +57,11 @@ export class TagLabel extends LitElement {
 
     /**@param {KeyboardEvent} event */
     handleInput(event) {
-        /** @type {NodeListOf<HTMLElement>} */ var elements = this.shadowRoot.querySelectorAll('#autocomplete-list .autocomplete-item');
-
         if (event.key == 'ArrowDown') {
             this.autofillIndex++;
             if (this.autofillIndex >= this.autocompleteItems.length) this.autofillIndex = 0;
-            var selectedElement = elements[this.autofillIndex];
+            var selectedElement = this.selectedElement;
+            if (!selectedElement) return;
             if (selectedElement.offsetTop >= selectedElement.parentElement.offsetHeight + selectedElement.parentElement.scrollTop)
                 selectedElement.parentElement.scrollTo({
                     top: selectedElement.offsetTop + selectedElement.offsetHeight - selectedElement.parentElement.offsetHeight,
@@ -64,13 +69,15 @@ export class TagLabel extends LitElement {
         } else if (event.key == 'ArrowUp') {
             if (this.autofillIndex <= 0) this.autofillIndex = this.autocompleteItems.length;
             this.autofillIndex--;
-            var selectedElement = elements[this.autofillIndex];
+            var selectedElement = this.selectedElement;
+            if (!selectedElement) return;
             if (selectedElement.offsetTop <= selectedElement.parentElement.scrollTop)
                 selectedElement.parentElement.scrollTo({ top: selectedElement.offsetTop });
         } else if (event.key == 'Enter') this.setSearchText(this.autocompleteItems[this.autofillIndex]);
 
         this.requestUpdate(undefined);
-        var selectedElement = elements[this.autofillIndex];
+        var selectedElement = this.selectedElement;
+        if (!selectedElement) return;
         if (selectedElement.offsetTop == 0) selectedElement.parentElement.scrollTo({ top: 0 });
         if (selectedElement.offsetTop + selectedElement.offsetHeight == selectedElement.parentElement.scrollHeight)
             selectedElement.parentElement.scrollTo({ top: selectedElement.parentElement.scrollHeight });
