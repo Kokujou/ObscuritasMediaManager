@@ -89,6 +89,10 @@ export class MusicPlaylistPage extends LitElement {
         setFavicon(NoteIcon());
         var localStorageVolume = localStorage.getItem('volume');
         if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume));
+
+        document.onvisibilitychange = async () => {
+            await this.updateTrack();
+        };
     }
 
     async initializeData() {
@@ -134,12 +138,21 @@ export class MusicPlaylistPage extends LitElement {
         this.requestUpdate(undefined);
     }
 
+    async updateTrack() {
+        if (JSON.stringify(this.currentTrack) == JSON.stringify(this.updatedTrack)) return;
+
+        await MusicService.update(this.currentTrack.id, this.currentTrack, this.updatedTrack);
+        Object.assign(this.currentTrack, this.updatedTrack);
+        this.playlist[this.currentTrackIndex] = this.updatedTrack;
+    }
+
     async changeTrackBy(offset) {
         var index = this.currentTrackIndex + offset;
         await this.changeTrack(index);
     }
 
     async changeTrack(index) {
+        await this.updateTrack();
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
         audioElement.pause();
         this.currentTrackIndex = index;
@@ -170,17 +183,9 @@ export class MusicPlaylistPage extends LitElement {
      * @param {any} value
      */
     async changeProperty(property, value) {
-        var oldModel = {};
-        oldModel[property] = this.updatedTrack[property];
         if (property == 'displayName' || property == 'instrumentNames' || property == 'instrumentTypes') return;
         if (property == 'rating') this.updatedTrack[property] = value;
         else this.updatedTrack[property] = value;
-
-        var newModel = {};
-        newModel[property] = value;
-        await MusicService.update(this.currentTrack.id, oldModel, newModel);
-        Object.assign(this.currentTrack, this.updatedTrack);
-        this.playlist[this.currentTrackIndex] = this.updatedTrack;
 
         this.requestUpdate(undefined);
     }
