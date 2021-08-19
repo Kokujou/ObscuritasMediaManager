@@ -145,7 +145,8 @@ export class MusicPlaylistPage extends LitElement {
         this.currentTrackIndex = index;
         this.currentTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
-        changePage(session.currentPage.current(), `?guid=${this.id}&track=${this.currentTrackIndex}`);
+
+        changePage(session.currentPage.current(), `?guid=${this.id}&track=${this.currentTrackIndex}`, false);
 
         await this.requestUpdate(undefined);
         audioElement.play();

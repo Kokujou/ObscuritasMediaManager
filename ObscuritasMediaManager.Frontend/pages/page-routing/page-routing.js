@@ -21,7 +21,6 @@ export class PageRouting extends LitElement {
     changeHash(newHash) {
         var searchString = location.search.substring(1);
         var searchQueries = searchString.split('&');
-        searchQueries = searchQueries.filter((x) => this.currentRoute.withQueries.includes(x.split('=')[0]));
         if (searchQueries.length > 0) searchString = `?${searchQueries.join('&')}`;
         else searchString = '';
 

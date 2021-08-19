@@ -8,8 +8,12 @@ import { session } from '../../data/session.js';
     return decodeURIComponent(desiredQuery.split('=')[1]);
 }
 
-export function changePage(target, search = '') {
+/**
+ * @param {string} target
+ */
+export function changePage(target, search = '', reflectInHistory = true) {
     var newUrl = '/' + search + `#${target}`;
-    history.pushState(null, null, newUrl);
+    if (reflectInHistory) history.pushState(null, null, newUrl);
+    else history.replaceState(null, null, newUrl);
     session.currentPage.next(target);
 }

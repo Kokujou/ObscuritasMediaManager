@@ -9,7 +9,6 @@
 //TODO:  add a fancy audio visualization
 //TODO: add horizontal slider for mood-changing
 //TODO: add indication how many playlist entries are there vs displayed
-//TODO: add reset filter button
 // TODO: loading screen
 // TODO: Websockets
 // TODO: Authentication
