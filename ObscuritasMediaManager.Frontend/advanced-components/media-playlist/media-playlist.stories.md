@@ -1,30 +1,21 @@
 ```js script
 import { html } from '@open-wc/demoing-storybook';
-import { withKnobs, text, select } from 'storybook-prebuilt/addon-knobs';
-
-const navigationTexts = ['Start', 'App Store', 'Services', 'Notifications', 'Help'];
-const navigationTargets = ['start', 'appstore', 'services', 'notifications', 'help'];
+import { withKnobs } from 'storybook-prebuilt/addon-knobs';
 
 export default {
-    title: 'WebcomponenntTemplate',
-    component: 'webcomponent-template',
+    title: 'MediaPlaylist',
+    component: 'media-playlist',
     options: { selectedPanel: 'storybookjs/knobs/panel' },
     decorators: [withKnobs],
 };
 ```
 
-# Webcomponent Template
+# MediaPlaylist
 
 shortly describe what your webcomponent is and how it behaves or looks like.
 before you use the webcomponent it needs to be implemented in
 [../custom-elements.js](custom-elements.js)
 
-this will look like this:
-
-```js script
-import { WebcomponentTemplate } from './webcomponent-template.js';
-window.customElements.define('webcomponent-template', WebcomponentTemplate);
-```
 
 ## Properties:
 
@@ -48,9 +39,6 @@ give an example on how to implement your webcomponent. to enable our AHP styling
 use available knob-functions to make properties or contents of your webcomponent configurable in the storybook
 
 ```js preview-story
-export const Multiple = () => html`
-    <page-routing>
-        <webcomponent-template> </webcomponent-template>
-    </page-routing>
-`;
+import { MediaPlaylistExample } from './media-playlist.stories.example.js';
+export const Multiple = () => MediaPlaylistExample();
 ```
