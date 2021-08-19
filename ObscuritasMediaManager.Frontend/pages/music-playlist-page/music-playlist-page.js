@@ -1,5 +1,4 @@
 import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher.js';
-import { PaginatedScrolling } from '../../advanced-components/paginated-scrolling/paginated-scrolling.js';
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { MusicGenre } from '../../data/enumerations/music-genre.js';
 import { MusicModel } from '../../data/music.model.js';
@@ -8,7 +7,6 @@ import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.resu
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { LitElement } from '../../exports.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
-import { randomizeArray } from '../../services/extensions/array.extensions.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
 import { MusicService } from '../../services/music.service.js';
@@ -39,10 +37,6 @@ export class MusicPlaylistPage extends LitElement {
     get audioSource() {
         if (this.currentTrack && this.currentTrack.src) return `/ObscuritasMediaManager/api/file/audio?audioPath=${this.currentTrack.src}`;
         return '';
-    }
-
-    get paginatedPlaylistTracks() {
-        return this.playlistToDisplay.slice(0, this.maxPlaylistItems);
     }
 
     get currentTrackPosition() {
@@ -116,10 +110,6 @@ export class MusicPlaylistPage extends LitElement {
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         await this.requestUpdate(undefined);
 
-        /** @type {PaginatedScrolling} */ var playlistScrollContainer = this.shadowRoot.querySelector('#playlist-item-container');
-        /** @type {HTMLElement} */ var child = playlistScrollContainer.querySelector('.playlist-entry.active');
-        playlistScrollContainer.scrollToChild(child);
-
         var audio = this.shadowRoot.querySelector('audio');
         audio.addEventListener('error', function (e) {
             alert(`an error occured while playing the audio file: code ${audio.error.code}`);
@@ -166,10 +156,6 @@ export class MusicPlaylistPage extends LitElement {
 
         await this.requestUpdate(undefined);
         audioElement.play();
-
-        /** @type {PaginatedScrolling} */ var playlistScrollContainer = this.shadowRoot.querySelector('#playlist-item-container');
-        /** @type {HTMLElement} */ var child = this.shadowRoot.querySelector('.playlist-entry.active');
-        playlistScrollContainer.scrollToChild(child);
     }
 
     /**
@@ -190,11 +176,6 @@ export class MusicPlaylistPage extends LitElement {
         if (property == 'rating') this.updatedTrack[property] = value;
         else this.updatedTrack[property] = value;
 
-        this.requestUpdate(undefined);
-    }
-
-    loadMoreTracks() {
-        if (this.playlist.length > this.maxPlaylistItems) this.maxPlaylistItems += 10;
         this.requestUpdate(undefined);
     }
 
@@ -245,15 +226,5 @@ export class MusicPlaylistPage extends LitElement {
         genreDialog.addEventListener('decline', () => {
             genreDialog.remove();
         });
-    }
-
-    randomizeOrder() {
-        this.playlistToDisplay = randomizeArray(this.playlistToDisplay);
-        this.requestUpdate(undefined);
-    }
-
-    restoreOrder() {
-        this.playlistToDisplay = [...this.playlist];
-        this.requestUpdate(undefined);
     }
 }

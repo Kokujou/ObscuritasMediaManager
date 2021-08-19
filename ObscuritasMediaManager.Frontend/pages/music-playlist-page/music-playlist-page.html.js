@@ -153,30 +153,11 @@ export function renderMusicPlaylist(playlist) {
                         </div>
                     </div>
                 </div>
-                <div id="playlist-container">
-                    <div id="playlist-options">
-                        <div class="audio-icon" id="random-order-button" @click="${() => playlist.randomizeOrder()}"></div>
-                        <div class="audio-icon" id="reset-order-button" @click="${() => playlist.restoreOrder()}"></div>
-                        <div class="audio-icon" id="remove-track-button"></div>
-                    </div>
-                    <paginated-scrolling
-                        scrollTopThreshold="20"
-                        id="playlist-item-container"
-                        @scrollBottom="${() => playlist.loadMoreTracks()}"
-                    >
-                        ${playlist.paginatedPlaylistTracks.map(
-                            (x, index) =>
-                                html`
-                                    <div
-                                        class="playlist-entry ${playlist.currentTrack.id == x.id ? 'active' : ''}"
-                                        @dblclick="${() => playlist.changeTrack(index)}"
-                                    >
-                                        ${x.displayName}
-                                    </div>
-                                `
-                        )}
-                    </paginated-scrolling>
-                </div>
+                <media-playlist
+                    .items="${playlist.playlistToDisplay.map((x) => x.displayName)}"
+                    .index="${playlist.currentTrackIndex}"
+                    @indexChanged="${(e) => playlist.changeTrack(e.detail.index)}"
+                ></media-playlist>
             </div>
             <audio
                 controls

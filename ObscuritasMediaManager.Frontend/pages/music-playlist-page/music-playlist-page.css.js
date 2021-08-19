@@ -3,12 +3,10 @@ import { renderMoodStyles } from '../../data/enumerations/mood.js';
 import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
-import { revertIcon } from '../../resources/icons/general/revert-icon.svg.js';
 import { volumeIcon } from '../../resources/icons/music-player-icons/change-volume-icon.svg.js';
 import { fastForwardIcon } from '../../resources/icons/music-player-icons/fast-forward-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
-import { shufflePlaylistIcon } from '../../resources/icons/playlist-icons/shuffle-playlist-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 /**
@@ -295,54 +293,6 @@ export function renderMusicPlaylistStyles() {
 
         ${renderAudioPlayerIcons()}
 
-        #playlist-container {
-            display: flex;
-            flex-direction: row;
-
-            border-radius: 20px;
-            box-sizing: border-box;
-            border: 20px solid var(--primary-color);
-            margin: 20px 50px;
-        }
-
-        #playlist-container #playlist-options {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100%;
-            padding-left: 10px;
-            padding-right: 30px;
-            background: var(--primary-color);
-        }
-
-        #playlist-item-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            flex: auto;
-
-            overflow-y: auto;
-            overflow-x: hidden;
-
-            font-weight: bold;
-        }
-
-        .playlist-entry {
-            padding: 5px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            background: linear-gradient(#00000077 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
-        }
-
-        .playlist-entry:hover {
-            background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
-        }
-
-        .playlist-entry.active {
-            background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
-        }
-
         audio {
             display: none;
         }
@@ -383,18 +333,6 @@ function renderAudioPlayerIcons() {
 
         #change-volume-button {
             ${renderMaskImage(volumeIcon())};
-        }
-
-        #random-order-button {
-            ${renderMaskImage(shufflePlaylistIcon())};
-        }
-
-        #reset-order-button {
-            ${renderMaskImage(revertIcon())};
-        }
-
-        #remove-track-button {
-            mask: linear-gradient(transparent, transparent);
         }
     `;
 }
