@@ -1,4 +1,3 @@
-/** @type {{[key: string]: RouteDefinition}} */
 export const Pages = {
     welcome: { routes: ['welcome'], component: '<welcome-page></welcome-page>', withQueries: [] },
     mediaDetail: {
@@ -22,7 +21,7 @@ export const Pages = {
     musicPlaylist: {
         routes: ['music-playlist'],
         component: '<music-playlist-page></music-playlist-page>',
-        withQueries: ['guid', 'track'],
+        withQueries: ['track'],
     },
 };
 

@@ -54,6 +54,7 @@ export function renderMusicPage(musicPage) {
                                         .track="${track}"
                                         .image="${musicPage.getTrackIcon(track)}"
                                         @musicToggled="${() => musicPage.toggleMusic(track)}"
+                                        @edit="${() => musicPage.editTrack(track)}"
                                     ></audio-tile>
                                 `
                         )}

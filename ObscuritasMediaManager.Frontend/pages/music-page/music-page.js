@@ -160,6 +160,13 @@ export class MusicPage extends LitElement {
         this.requestUpdate(undefined);
     }
 
+    /**
+     * @param {MusicModel} track
+     */
+    editTrack(track) {
+        changePage(Pages.musicPlaylist.routes[0], `?track=${track.id}`);
+    }
+
     disconnectedCallback() {
         super.disconnectedCallback();
         this.subcriptions.forEach((x) => x.unsubscribe());

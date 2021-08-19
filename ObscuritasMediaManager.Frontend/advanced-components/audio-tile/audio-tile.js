@@ -30,7 +30,11 @@ export class AudioTile extends LitElement {
         return '';
     }
 
-    notifyEditRequested() {
+    /**
+     * @param {Event} event
+     */
+    notifyEditRequested(event) {
+        event.stopPropagation();
         this.dispatchEvent(new CustomEvent('edit'));
     }
 

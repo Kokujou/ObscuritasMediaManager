@@ -21,7 +21,7 @@ export function renderAudioTile(audioTile) {
                 <div id="instrumentation-icon" class="icon-container inline-icon">${audioTile.track.instrumentation}</div>
                 <div id="participant-count-icon" class="icon-container inline-icon ${audioTile.track.participants}"></div>
                 <div id="edit-icon-container" class="icon-container">
-                    <div id="edit-icon" @click="${() => audioTile.notifyEditRequested()}" class="inline-icon"></div>
+                    <div id="edit-icon" @click="${(e) => audioTile.notifyEditRequested(e)}" class="inline-icon"></div>
                 </div>
             </div>
             <div id="tile-description">

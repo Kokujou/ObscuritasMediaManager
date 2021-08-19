@@ -92,12 +92,19 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     async initializeData() {
-        var guid = getQueryValue('guid');
+        var playlistId = getQueryValue('guid');
         var trackId = getQueryValue('track');
 
-        this.id = guid;
-        this.playlist = await PlaylistService.getTemporaryPlaylist(guid);
-        this.currentTrackIndex = Number.parseInt(trackId);
+        if (!playlistId) {
+            var currentTrack = await MusicService.get(trackId);
+            this.playlist = [currentTrack];
+            this.currentTrackIndex = 0;
+        } else {
+            this.id = playlistId;
+            this.playlist = await PlaylistService.getTemporaryPlaylist(playlistId);
+            this.currentTrackIndex = Number.parseInt(trackId);
+        }
+
         this.currentTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
         await this.requestUpdate(undefined);
