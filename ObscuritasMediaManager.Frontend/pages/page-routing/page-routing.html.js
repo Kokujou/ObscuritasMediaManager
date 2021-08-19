@@ -1,5 +1,5 @@
 import { html } from '../../exports.js';
-import { getScaleFactorX, getScaleFactorY } from '../../services/extensions/document.extensions.js';
+import { getScaleFactorX, getScaleFactorY, viewportHeight, viewportWidth } from '../../services/extensions/document.extensions.js';
 
 export function renderPageRouting(routing) {
     var scaleX = getScaleFactorX();
@@ -9,8 +9,21 @@ export function renderPageRouting(routing) {
                 transform: scale(${scaleX}, ${scaleY});
                 transform-origin: 0 0;
             }
+
+            #viewport {
+                width: ${innerWidth}px;
+                height: ${innerHeight}px;
+            }
+
+            #page-container {
+                overflow: hidden;
+                width: ${viewportWidth * scaleX}px;
+                height: ${viewportHeight * scaleY}px;
+            }
         </style>
         <div id="viewport">
-            <div id="current-page">${routing.content ? html([routing.content]) : html`<slot></slot>`}</div>
+            <div id="page-container">
+                <div id="current-page">${routing.content ? html([routing.content]) : html`<slot></slot>`}</div>
+            </div>
         </div>`;
 }

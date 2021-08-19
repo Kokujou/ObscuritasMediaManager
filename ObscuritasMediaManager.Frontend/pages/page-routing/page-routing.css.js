@@ -15,12 +15,8 @@ export function renderPageRoutingStyles() {
             position: relative;
             left: 0;
             top: 0;
-            display: grid;
             overflow-y: auto;
             overflow-x: auto;
-
-            width: 100vw;
-            height: 100vh;
 
             background: linear-gradient(var(--background-color), var(--background-color)), url('../../resources/images/background.jpg');
             background-blend-mode: overlay;
