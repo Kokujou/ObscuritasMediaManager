@@ -7,6 +7,9 @@
     "settings": {
         "todo-tree.tree.showBadges": false,
         "todo-tree.tree.disableCompactFolders": true,
-        "blueprint.templatesPath": ["./templates"]
+        "blueprint.templatesPath": ["./templates"],
+        "files.associations": {
+            "**/templates/**/*.js": "txt"
+        }
     }
 }

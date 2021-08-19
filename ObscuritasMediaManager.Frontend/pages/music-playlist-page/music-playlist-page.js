@@ -137,6 +137,7 @@ export class MusicPlaylistPage extends LitElement {
         await MusicService.update(this.currentTrack.id, this.currentTrack, this.updatedTrack);
         Object.assign(this.currentTrack, this.updatedTrack);
         this.playlist[this.currentTrackIndex] = this.updatedTrack;
+        this.playlistToDisplay[this.currentTrackIndex] = this.updatedTrack;
     }
 
     async changeTrackBy(offset) {

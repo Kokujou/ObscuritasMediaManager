@@ -25,7 +25,13 @@ function renderValueLabel(editableLabel) {
  */
 function renderValueInput(editableLabel) {
     return html` <div id="editable-label">
-        <div id="value-input" contenteditable class="value-item" @keydown="${(e) => editableLabel.handleLabelInput(e)}">
+        <div
+            id="value-input"
+            contenteditable
+            class="value-item"
+            @keydown="${(e) => editableLabel.handleLabelInput(e)}"
+            @paste="${(e) => editableLabel.handlePaste(e)}"
+        >
             ${editableLabel.value}
         </div>
         <div id="abort-icon" class="icon" @click="${() => editableLabel.revertChanges()}">&times;</div>

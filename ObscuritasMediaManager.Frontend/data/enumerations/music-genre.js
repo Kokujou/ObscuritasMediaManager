@@ -20,4 +20,5 @@ export const MusicGenre = {
     March: 'March',
     Moe: 'Moe',
     Wagakki: 'Wagakki',
+    Medley: 'Medley',
 };

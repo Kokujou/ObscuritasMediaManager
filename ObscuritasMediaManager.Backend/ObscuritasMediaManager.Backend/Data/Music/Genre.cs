@@ -22,6 +22,7 @@
         Metal,
         March,
         Moe,
-        Wagakki
+        Wagakki,
+        Medley
     }
 }

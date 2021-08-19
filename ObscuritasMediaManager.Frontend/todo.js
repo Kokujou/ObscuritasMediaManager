@@ -1,15 +1,15 @@
 //TODO:  implement audio page
 //TODO:  implement sorting
 //TODO:  implement edit-dialog
-//TODO:  implement rating
-//TODO:  implement playlist functionality
+//TODO:  implement playlist functionality (ongoing)
 //TODO:  refine single play functionality (jump to active)
 //TODO:  add select functionality and indication, opt: select all
-//TODO:  implement filter
 //TODO:  add a fancy audio visualization
-//TODO: add horizontal slider for mood-changing
 //TODO: add indication how many playlist entries are there vs displayed
 // TODO: loading screen
 // TODO: Websockets
 // TODO: Authentication
 // TODO: retrink position of language icons
+// TODO: (optional) create templates for edit
+// TODO: improve re-upload algorithm to not overwrite or duplicate data
+// TODO: Improve music filter

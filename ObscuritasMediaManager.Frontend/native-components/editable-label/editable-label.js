@@ -54,4 +54,13 @@ export class EditableLabel extends LitElement {
         this.editEnabled = false;
         this.requestUpdate(undefined);
     }
+
+    /**
+     * @param {ClipboardEvent} event
+     */
+    handlePaste(event) {
+        event.preventDefault();
+        var text = (event.originalEvent || event).clipboardData.getData('text/plain');
+        document.execCommand('insertHTML', false, text);
+    }
 }

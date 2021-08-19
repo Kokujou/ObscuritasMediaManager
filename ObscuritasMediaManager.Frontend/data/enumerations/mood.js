@@ -34,7 +34,7 @@ export function renderMoodStyles(parentSelector) {
             --font-color: white;
         }
         ${unsafeCSS(parentSelector)}.calm {
-            --primary-color: #662200;
+            --primary-color: #773311;
             --font-color: white;
         }
         ${unsafeCSS(parentSelector)}.romantic {
