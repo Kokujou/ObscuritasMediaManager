@@ -155,8 +155,8 @@ export function renderMusicPlaylist(playlist) {
                 </div>
                 <div id="playlist-container">
                     <div id="playlist-options">
-                        <div class="audio-icon" id="random-order-button"></div>
-                        <div class="audio-icon" id="reset-order-button"></div>
+                        <div class="audio-icon" id="random-order-button" @click="${() => playlist.randomizeOrder()}"></div>
+                        <div class="audio-icon" id="reset-order-button" @click="${() => playlist.restoreOrder()}"></div>
                         <div class="audio-icon" id="remove-track-button"></div>
                     </div>
                     <paginated-scrolling

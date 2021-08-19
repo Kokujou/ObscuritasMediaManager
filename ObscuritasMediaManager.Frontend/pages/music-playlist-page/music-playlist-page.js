@@ -8,6 +8,7 @@ import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.resu
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { LitElement } from '../../exports.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
+import { randomizeArray } from '../../services/extensions/array.extensions.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
 import { MusicService } from '../../services/music.service.js';
@@ -41,7 +42,7 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     get paginatedPlaylistTracks() {
-        return this.playlist.slice(0, this.maxPlaylistItems);
+        return this.playlistToDisplay.slice(0, this.maxPlaylistItems);
     }
 
     get currentTrackPosition() {
@@ -75,6 +76,7 @@ export class MusicPlaylistPage extends LitElement {
     constructor() {
         super();
         /** @type {MusicModel[]} */ this.playlist = [];
+        /** @type {MusicModel[]} */ this.playlistToDisplay = [];
         /** @type {number} */ this.currentTrackIndex = 0;
         /** @type {MusicModel} */ this.currentTrack = new MusicModel();
         /** @type {MusicModel} */ this.updatedTrack = new MusicModel();
@@ -106,6 +108,7 @@ export class MusicPlaylistPage extends LitElement {
         } else {
             this.id = playlistId;
             this.playlist = await PlaylistService.getTemporaryPlaylist(playlistId);
+            Object.assign(this.playlistToDisplay, this.playlist);
             this.currentTrackIndex = Number.parseInt(trackId);
         }
 
@@ -242,5 +245,15 @@ export class MusicPlaylistPage extends LitElement {
         genreDialog.addEventListener('decline', () => {
             genreDialog.remove();
         });
+    }
+
+    randomizeOrder() {
+        this.playlistToDisplay = randomizeArray(this.playlistToDisplay);
+        this.requestUpdate(undefined);
+    }
+
+    restoreOrder() {
+        this.playlistToDisplay = [...this.playlist];
+        this.requestUpdate(undefined);
     }
 }
