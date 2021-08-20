@@ -13,3 +13,6 @@
 // TODO: (optional) create templates for edit
 // TODO: improve re-upload algorithm to not overwrite or duplicate data
 // TODO: Improve music filter
+// TODO: Fix: if dropdown has one one element -> select by default
+// TODO: implement NSWAG Client
+// TODO: add close-button to genre dialog and reduce fadeout time

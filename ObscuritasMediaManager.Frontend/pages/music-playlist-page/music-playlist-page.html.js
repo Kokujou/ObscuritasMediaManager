@@ -13,6 +13,15 @@ export function renderMusicPlaylist(playlist) {
     return html`
         <page-layout>
             <div id="music-player-container" class="${playlist.updatedTrack.mood}">
+                <div id="complete-checkbox">
+                    <div class="label">Complete:</div>
+                    <input
+                        type="checkbox"
+                        id="complete-check"
+                        .checked="${playlist.updatedTrack.complete}"
+                        @input="${() => playlist.toggleComplete()}"
+                    />
+                </div>
                 <div id="current-track-container">
                     <div id="mood-switcher">
                         <scroll-select

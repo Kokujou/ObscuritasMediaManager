@@ -84,8 +84,7 @@ export class MediaPlaylist extends LitElement {
 
         setTimeout(() => {
             /** @type {HTMLElement} */ var child = this.shadowRoot.querySelector('.playlist-entry[active]');
-
             playlistScrollContainer.scrollToChild(child);
-        }, 1000);
+        }, 100);
     }
 }

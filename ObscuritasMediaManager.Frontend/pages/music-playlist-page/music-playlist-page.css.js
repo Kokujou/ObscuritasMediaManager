@@ -40,6 +40,27 @@ export function renderMusicPlaylistStyles() {
             color: var(--font-color);
         }
 
+        #complete-checkbox {
+            display: flex;
+            flex-direction: row;
+
+            position: absolute;
+            top: 25px;
+            right: 25px;
+
+            font-size: 20px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        #complete-checkbox .label {
+            margin-right: 10px;
+        }
+
+        #complete-checkbox input[type='checkbox'] {
+            transform: scale(1.5);
+        }
+
         #current-track-container {
             position: relative;
             display: flex;

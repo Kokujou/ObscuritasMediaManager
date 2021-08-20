@@ -5,6 +5,12 @@
         Unset,
         Japanese,
         English,
-        German
+        German,
+        Spain,
+        Chinese,
+        Italian,
+        Russian,
+        SouthAmerican,
+        African
     }
 }

@@ -2,8 +2,10 @@ import { css, unsafeCSS } from '../../exports.js';
 import { unsetIcon } from '../../resources/icons/general/unset-icon.svg.js';
 import { brassIcon } from '../../resources/icons/instrument-icons/brass-icon.svg.js';
 import { electronicIcon } from '../../resources/icons/instrument-icons/electronic-icon.svg.js';
+import { humanBodyIcon } from '../../resources/icons/instrument-icons/human-body-icon.svg.js';
 import { keyboardIcon } from '../../resources/icons/instrument-icons/keyboard-icon.svg.js';
 import { microphoneIcon } from '../../resources/icons/instrument-icons/microphone-icon.svg.js';
+import { miscIcon } from '../../resources/icons/instrument-icons/misc-icon.svg.js';
 import { percussionIcon } from '../../resources/icons/instrument-icons/percussion-icon.svg.js';
 import { stringsIcon } from '../../resources/icons/instrument-icons/string-icon.svg.js';
 import { woodWindIcon } from '../../resources/icons/instrument-icons/wood-wind-icon.svg.js';
@@ -20,6 +22,7 @@ export const InstrumentTypes = {
     Keyboard: 'keyboard',
     Electronic: 'electronic',
     HumanBody: 'humanBody',
+    Miscellaneous: 'miscellaneous',
 };
 
 export function renderInstrumentTypeIcons(parentSelector) {
@@ -57,7 +60,11 @@ export function renderInstrumentTypeIcons(parentSelector) {
         }
 
         ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.HumanBody)} {
-            ${renderMaskImage(unsetIcon())};
+            ${renderMaskImage(humanBodyIcon())};
+        }
+
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Miscellaneous)} {
+            ${renderMaskImage(miscIcon())};
         }
     `;
 }

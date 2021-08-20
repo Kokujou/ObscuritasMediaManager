@@ -50,6 +50,8 @@ export class MusicModel {
         return result;
     }
 
+    /** @type {boolean} */ complete;
+
     /**
      * @param {File} file
      * @param {string} basePath

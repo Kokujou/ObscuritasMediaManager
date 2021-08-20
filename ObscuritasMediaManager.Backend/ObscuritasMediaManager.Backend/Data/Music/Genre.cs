@@ -23,6 +23,9 @@
         March,
         Moe,
         Wagakki,
-        Medley
+        Medley,
+        Parody,
+        Ballad,
+        FilmMusic
     }
 }

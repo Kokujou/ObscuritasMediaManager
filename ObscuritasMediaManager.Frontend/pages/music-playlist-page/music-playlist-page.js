@@ -175,6 +175,7 @@ export class MusicPlaylistPage extends LitElement {
     async changeProperty(property, value) {
         if (property == 'displayName' || property == 'instrumentNames' || property == 'instrumentTypes') return;
         if (property == 'rating') this.updatedTrack[property] = value;
+        else if (property == 'complete') this.updatedTrack[property] = value;
         else this.updatedTrack[property] = value;
 
         this.requestUpdate(undefined);
@@ -227,5 +228,10 @@ export class MusicPlaylistPage extends LitElement {
         genreDialog.addEventListener('decline', () => {
             genreDialog.remove();
         });
+    }
+
+    async toggleComplete() {
+        /** @type {HTMLInputElement}*/ var input = this.shadowRoot.querySelector('#complete-check');
+        await this.changeProperty('complete', input.checked);
     }
 }

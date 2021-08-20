@@ -60,7 +60,7 @@ export class EditableLabel extends LitElement {
      */
     handlePaste(event) {
         event.preventDefault();
-        var text = (event.originalEvent || event).clipboardData.getData('text/plain');
+        var text = event.clipboardData.getData('text/plain');
         document.execCommand('insertHTML', false, text);
     }
 }
