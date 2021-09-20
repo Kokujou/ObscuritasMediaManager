@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>%%CSTargetNamespace%%.Client</AssemblyName>
+        <RootNamespace>%%CSTargetNamespace%%.Client</RootNamespace>
+        <GenerateCode>True</GenerateCode>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Company>CANCOM SE</Company>
+        <Copyright>© 2019 CANCOM Software Group. All rights reserved.</Copyright>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="node_modules\**" />
+      <EmbeddedResource Remove="node_modules\**" />
+      <None Remove="node_modules\**" />
+      <Compile Remove="dist\**" />
+      <EmbeddedResource Remove="dist\**" />
+      <None Remove="dist\**" />
+      <None Remove="*.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+        <PackageReference Include="NSwag.MSBuild" Version="13.13.2">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <Target Name="NSwag" BeforeTargets="PrepareForBuild" Condition="'$(GenerateCode)'=='True' ">
+        <Exec Command="$(NSwagExe_Net50) run nswag.json  /variables:Configuration=$(Configuration)"  />
+    </Target>
+
+</Project>
