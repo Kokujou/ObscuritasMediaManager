@@ -89,9 +89,9 @@ export function renderMusicPlaylist(playlist) {
                             ${playlist.updatedTrack.instrumentTypes?.length == 0
                                 ? html`<a id="add-instruments-link">Add Instruments</a>`
                                 : ''}
-                            ${playlist.updatedTrack.instrumentTypes
-                                .filter((instrument, index, self) => self.indexOf(instrument) == index)
-                                .map((instrument) => html` <div class="instrument-icon ${instrument}"></div> `)}
+                            ${playlist.updatedTrack.instrumentTypes.map(
+                                (instrument) => html` <div class="instrument-icon ${instrument}"></div> `
+                            )}
                         </div>
                     </div>
                     <div id="audio-control-container">

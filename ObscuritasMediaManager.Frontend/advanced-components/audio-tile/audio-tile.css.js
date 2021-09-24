@@ -97,7 +97,7 @@ export function renderAudioTileStyles() {
         ${renderMoodStyles()}
         ${renderLanguageFlags()}
         ${renderParticipantCountIcon('#participant-count-icon')}
-        ${renderInstrumentTypeIcons()}
+        ${renderInstrumentTypeIcons('.instrument-type')}
 
         #language-flags {
             top: 10px;

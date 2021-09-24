@@ -43,18 +43,6 @@ function renderGenreTags(audioTile) {
  * @param {AudioTile} audioTile
  */
 function renderInstrumentIcons(audioTile) {
-    /** @type {string[]} */ var iconsToDisplay = [];
-    var className = '';
-    if (audioTile.track.instruments.length > 0) {
-        iconsToDisplay = [];
-        audioTile.track.instruments.forEach((instrument) => {
-            if (!iconsToDisplay.includes(instrument.type)) iconsToDisplay.push(instrument.type);
-        });
-        className = 'instrument';
-    } else {
-        iconsToDisplay = audioTile.track.instruments.map((x) => x.name);
-        className = 'instrument-type';
-    }
-
-    return iconsToDisplay.map((x) => html`<div class="inline-icon ${className} ${x}"></div>`);
+    var iconsToDisplay = audioTile.track.instrumentTypes;
+    return html`${iconsToDisplay.map((x) => html`<div class="inline-icon instrument-type ${x}"></div>`)}`;
 }

@@ -55,20 +55,24 @@ export class MusicPage extends LitElement {
         /** @type {Subscription[]} */ this.subcriptions = [];
 
         this.currentPage = 0;
-        this.initializeData();
     }
     connectedCallback() {
         super.connectedCallback();
         document.title = 'Musik';
         setFavicon(NoteIcon());
-        this.subcriptions.push(session.instruments.subscribe(() => this.requestUpdate(undefined)));
+        this.subcriptions.push(
+            session.instruments.subscribe(() => {
+                this.initializeData();
+                this.requestUpdate(undefined);
+            })
+        );
     }
 
     async initializeData() {
         this.musicTracks = await MusicService.getAll();
         var localSearchString = localStorage.getItem(`music.search`);
         if (localSearchString) this.filter = JSON.parse(localSearchString);
-        this.requestUpdate(undefined);
+        await this.requestUpdate(undefined);
     }
 
     render() {

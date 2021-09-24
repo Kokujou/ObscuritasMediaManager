@@ -16,3 +16,4 @@
 // TODO: Fix: if dropdown has one one element -> select by default
 // TODO: implement NSWAG Client
 // TODO: add close-button to genre dialog and reduce fadeout time
+// TODO: tooltips

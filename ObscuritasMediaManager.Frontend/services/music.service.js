@@ -20,7 +20,7 @@ export class MusicService {
         if (response.status != 200) throw new Error('something went wrong, status ' + response.status);
 
         /** @type {MusicModel[]} */ var musicTracks = await response.json();
-        return musicTracks.map((tracks) => Object.assign(new MusicModel(), tracks));
+        return musicTracks.map((track) => Object.assign(new MusicModel(), track));
     }
 
     /**
