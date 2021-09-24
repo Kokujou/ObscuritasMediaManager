@@ -1,12 +1,11 @@
 import { css } from '../../exports.js';
 
-const headerHeight = css`100px`;
-const navigationWidth = css`350px`;
-
 export function renderWebcomponentTemplateStyles() {
     return css`
         :host {
             user-select: none;
+            --header-height: 100px;
+            --navigation-width: 350px;
         }
 
         #layout-content {
@@ -41,8 +40,8 @@ export function renderWebcomponentTemplateStyles() {
         ${renderNavigationStyles()}
 
 #layout-content {
-            top: ${headerHeight};
-            left: ${navigationWidth};
+            top: var(--header-height);
+            left: var(--navigation-width);
             bottom: 0;
             right: 0;
             overflow-y: auto;
@@ -63,7 +62,7 @@ function renderHeaderStyles() {
     return css`
         #header {
             position: relative;
-            height: ${headerHeight};
+            height: var(--header-height);
             width: 100%;
 
             white-space: nowrap;
@@ -131,9 +130,9 @@ function renderNavigationStyles() {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            top: ${headerHeight};
+            top: var(--header-height);
             bottom: 0;
-            width: ${navigationWidth};
+            width: var(--navigation-width);
         }
 
         #navigation {
@@ -144,7 +143,7 @@ function renderNavigationStyles() {
             border-top-right-radius: 5%;
             border-bottom-right-radius: 5%;
 
-            max-height: calc(100% - ${headerHeight} - 40px);
+            max-height: calc(100% - var(--header-height) - 40px);
 
             overflow-y: auto;
             scrollbar-color: #20625599 transparent;
@@ -160,7 +159,7 @@ function renderNavigationStyles() {
             display: flex;
             flex-direction: row;
 
-            border-top: 1px solid lightseagreen;
+            border-top: 1px solid var(--font-color);
         }
 
         #nav-section:first-of-type {
@@ -179,6 +178,7 @@ function renderNavigationStyles() {
             writing-mode: vertical-rl;
             text-align: center;
             text-shadow: 2px 2px 2px black;
+            letter-spacing: 4px;
         }
 
         #home-link {
@@ -188,7 +188,8 @@ function renderNavigationStyles() {
 
         .nav-item {
             text-shadow: 2px 2px 2px black;
-            font-size: 20px;
+            letter-spacing: 2px;
+            font-size: 21px;
             white-space: nowrap;
 
             margin-left: 20px;
@@ -199,7 +200,7 @@ function renderNavigationStyles() {
         }
 
         .nav-item:hover {
-            border-bottom: 2px solid lightseagreen;
+            border-bottom: 2px solid var(--font-color);
         }
     `;
 }

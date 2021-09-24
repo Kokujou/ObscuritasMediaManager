@@ -4,11 +4,13 @@ import { viewportHeight, viewportWidth } from '../../services/extensions/documen
 export function renderPageRoutingStyles() {
     return css`
         :host {
-            --accent-color: #333388aa;
+            --accent-color: #222a;
             --accent-color-full: #5555ff;
             --background-color: #444444ff;
+            --font-color: #aaa;
             display: inline-flex;
             background-position: 0 0;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         #viewport {
@@ -18,7 +20,8 @@ export function renderPageRoutingStyles() {
             overflow-y: auto;
             overflow-x: auto;
 
-            background: linear-gradient(var(--background-color), var(--background-color)), url('../../resources/images/background.jpg');
+            background: linear-gradient(var(--background-color), var(--background-color)),
+                url('../../resources/images/background.jpg');
             background-blend-mode: overlay;
             background-size: 100% 100%;
             background-repeat: no-repeat;
@@ -33,8 +36,7 @@ export function renderPageRoutingStyles() {
 
             overflow: hidden;
 
-            font-family: Arial, Helvetica, sans-serif;
-            color: lightseagreen;
+            color: var(--font-color);
         }
     `;
 }

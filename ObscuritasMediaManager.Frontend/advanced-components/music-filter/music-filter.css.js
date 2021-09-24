@@ -60,14 +60,14 @@ export function renderMusicFilterStyles() {
 
         .popup-icon {
             ${renderMaskImage(popupIcon())};
-            background-color: lightseagreen;
+            background-color: var(--font-color);
             margin-left: 20px;
             cursor: pointer;
         }
 
         .reset-icon {
             ${renderMaskImage(revertIcon())};
-            background-color: lightseagreen;
+            background-color: var(--font-color);
             margin-right: 20px;
             cursor: pointer;
             margin-left: auto;

@@ -6,13 +6,6 @@ export function renderWelcomePage() {
     return html`
         <page-layout>
             <div id="welcome-page">
-                <div id="page-heading">Willkommen!</div>
-                <div id="greeting">
-                    Willkommen auf der Obscuritas Media Management Plattform. <br />
-                    Dies ist eine Seite zur Verwaltung, Kategorisierung und Visualisierung privater Mediensammlungen.
-                    <br />
-                    Womit wollen Sie heute beginnen?
-                </div>
                 <div id="tile-link-area">
                     <div id="tile-link-section">
                         <image-tile

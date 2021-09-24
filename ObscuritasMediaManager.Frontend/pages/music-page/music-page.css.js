@@ -123,7 +123,7 @@ function renderResultOptionsBar() {
             margin: 0 10px;
             width: 40px;
             height: 40px;
-            background-color: lightseagreen;
+            background-color: var(--font-color);
 
             cursor: pointer;
         }

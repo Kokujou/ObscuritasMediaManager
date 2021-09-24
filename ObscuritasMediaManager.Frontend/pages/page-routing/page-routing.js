@@ -2,6 +2,7 @@ import { Subscription } from '../../data/observable.js';
 import { RouteDefinition } from '../../data/pages.js';
 import { session } from '../../data/session.js';
 import { LitElement } from '../../exports.js';
+import { LoadingScreen } from '../../native-components/loading-screen/loading-screen.js';
 import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
 import { renderPageRoutingStyles } from './page-routing.css.js';
 import { renderPageRouting } from './page-routing.html.js';
@@ -24,7 +25,13 @@ export class PageRouting extends LitElement {
         if (searchQueries.length > 0) searchString = `?${searchQueries.join('&')}`;
         else searchString = '';
 
-        var newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + searchString + `#${newHash}`;
+        var newurl =
+            window.location.protocol +
+            '//' +
+            window.location.host +
+            window.location.pathname +
+            searchString +
+            `#${newHash}`;
         window.history.replaceState({ path: newurl }, '', newurl);
     }
 
@@ -60,10 +67,18 @@ export class PageRouting extends LitElement {
         );
     }
 
+    firstUpdated(_changedProperties) {
+        super.firstUpdated(_changedProperties);
+        session.currentPage.next(location.hash.length > 1 ? location.hash.substr(1) : 'empty');
+        document.querySelector(LoadingScreen.tag).remove();
+    }
+
     get currentRoute() {
         var matches = Object.values(this.routes)
             .filter(
-                (route) => route.routes.includes(session.currentPage.current()) && route.withQueries.every((query) => getQueryValue(query))
+                (route) =>
+                    route.routes.includes(session.currentPage.current()) &&
+                    route.withQueries.every((query) => getQueryValue(query))
             )
             .sort((a, b) => b.withQueries.length - a.withQueries.length);
 
@@ -79,14 +94,10 @@ export class PageRouting extends LitElement {
         return Object.values(this.routes).map((x) => x.routes);
     }
 
-    firstUpdated(_changedProperties) {
-        super.firstUpdated(_changedProperties);
-        session.currentPage.next(location.hash.length > 1 ? location.hash.substr(1) : 'empty');
-    }
-
     async switchPage(newValue, oldValue) {
         // @ts-ignore
-        if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`)) this.classList.add(`current-page-${newValue}`);
+        if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`))
+            this.classList.add(`current-page-${newValue}`);
 
         if (this.currentRoute) {
             this.changeHash(newValue);
