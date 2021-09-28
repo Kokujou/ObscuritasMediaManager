@@ -103,6 +103,10 @@ export function renderMusicFilterStyles() {
             background-color: #ffffff99;
         }
 
+        #complete-input {
+            margin-left: 20px;
+        }
+
         ${renderInstrumentTypeIcons('#instrument-type-filter ')}
         ${renderLanguageFlags()}
         ${renderParticipantCountIcon('#participant-count-filter ')}
@@ -114,6 +118,28 @@ export function renderMusicFilterStyles() {
             width: 90%;
 
             color: white;
+        }
+
+        input[type='text'] {
+            font-size: 20px;
+            width: 100%;
+            background: transparent;
+            color: var(--font-color);
+            border: none;
+            border-bottom: 5px solid black;
+            padding: 10 20px;
+            outline: none;
+        }
+
+        input[type='checkbox'] {
+            transform: scale(1.5);
+            margin: 0 20px;
+        }
+
+        #complete-filter {
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
         }
     `;
 }

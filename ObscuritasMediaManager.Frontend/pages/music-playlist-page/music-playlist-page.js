@@ -35,7 +35,8 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     get audioSource() {
-        if (this.currentTrack && this.currentTrack.src) return `/ObscuritasMediaManager/api/file/audio?audioPath=${this.currentTrack.src}`;
+        if (this.currentTrack && this.currentTrack.src)
+            return `/ObscuritasMediaManager/api/file/audio?audioPath=${this.currentTrack.src}`;
         return '';
     }
 
@@ -142,6 +143,8 @@ export class MusicPlaylistPage extends LitElement {
 
     async changeTrackBy(offset) {
         var index = this.currentTrackIndex + offset;
+        if (index < 0) index = this.playlist.length - 1;
+        if (index >= this.playlist.length) index = 0;
         await this.changeTrack(index);
     }
 

@@ -1,3 +1,4 @@
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { MusicFilterOptions } from '../../data/music-filter-options.js';
 import { MusicModel } from '../../data/music.model.js';
 import { Subscription } from '../../data/observable.js';
@@ -30,16 +31,24 @@ export class MusicPage extends LitElement {
     }
 
     get filteredTracks() {
-        var filteredTracks = this.musicTracks;
+        var filteredTracks = [...this.musicTracks];
 
-        filteredTracks = MusicFilterService.applyArrayFilter(filteredTracks, this.filter.genres, 'genres');
-        filteredTracks = MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instrumentTypes, 'instrumentTypes');
-        filteredTracks = MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instruments, 'instrumentNames');
-        filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.instrumentations, 'instrumentation');
-        filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.languages, 'language');
-        filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.nations, 'nation');
-        filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.moods, 'mood');
-        filteredTracks = MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.participants, 'participants');
+        MusicFilterService.applyArrayFilter(filteredTracks, this.filter.genres, 'genres');
+        MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instrumentTypes, 'instrumentTypes');
+        MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instruments, 'instrumentNames');
+        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.instrumentations, 'instrumentation');
+        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.languages, 'language');
+        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.nations, 'nation');
+        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.moods, 'mood');
+        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.participants, 'participants');
+        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.ratings, 'rating', true);
+
+        filteredTracks = filteredTracks.filter((track) =>
+            track.displayName.toLowerCase().includes((this.filter.title || '').toLowerCase())
+        );
+
+        if (this.filter.complete != CheckboxState.Ignore)
+            filteredTracks = filteredTracks.filter((track) => track.complete == (this.filter.complete == CheckboxState.Allow));
 
         return filteredTracks;
     }

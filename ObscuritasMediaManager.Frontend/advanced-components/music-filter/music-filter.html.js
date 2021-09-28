@@ -17,6 +17,25 @@ export function renderMusicFilter(musicFilter) {
             <div class="inline-icon reset-icon" @click="${() => musicFilter.resetAllFilters()}"></div>
         </div>
         <div id="search-panel">
+            <div id="text-filter" class="filter">
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Suchbegriff eingeben..."
+                    oninput="this.dispatchEvent(new Event('change'))"
+                    @change="${(e) => musicFilter.toggleFilter('title', '', e.target.value)}"
+                    .value="${musicFilter.filter.title || ''}"
+                />
+            </div>
+            <div id="complete-filter" class="filter">
+                <label for="scales">Complete: </label>
+                <tri-value-checkbox
+                    id="complete-input"
+                    .value="${musicFilter.filter.complete}"
+                    allowThreeValues
+                    @valueChanged="${(e) => musicFilter.toggleFilter('complete', '', e.detail.value)}"
+                ></tri-value-checkbox>
+            </div>
             <div id="language-filter" class="filter">
                 <div class="filter-heading">
                     <div id="heading-label">Sprache:</div>
@@ -81,6 +100,24 @@ export function renderMusicFilter(musicFilter) {
                     <div class="inline-icon popup-icon" @click="${() => musicFilter.showInstrumentFilterPopup()}"></div>
                     <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('instruments')}"></div>
                 </div>
+            </div>
+            <div id="rating-filter" class="filter">
+                <div class="filter-heading">
+                    <div id="heading-label">Bewertung:</div>
+                    <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('ratings')}"></div>
+                </div>
+                <star-rating
+                    max="5"
+                    .values="${Object.keys(musicFilter.filter.ratings.states)
+                        .filter((x) => musicFilter.filter.ratings.states[x] == CheckboxState.Allow)
+                        .map((x) => Number.parseInt(x))}"
+                    @ratingChanged="${(e) =>
+                        musicFilter.toggleFilter(
+                            'ratings',
+                            `${e.detail.rating}`,
+                            e.detail.include ? CheckboxState.Allow : CheckboxState.Forbid
+                        )}"
+                ></star-rating>
             </div>
             <div id="mood-filter" class="filter">
                 <div class="filter-heading">

@@ -42,6 +42,7 @@ export class MusicFilter extends LitElement {
     }
 
     render() {
+        console.log(this.filter.ratings);
         return renderMusicFilter(this);
     }
 
@@ -53,10 +54,8 @@ export class MusicFilter extends LitElement {
     toggleFilter(filter, enumKey, state) {
         if (filter == 'title') {
             this.filter[filter] = state;
-            return;
-        }
-
-        this.filter[filter].states[enumKey] = state;
+        } else if (filter == 'complete') this.filter.complete = state;
+        else this.filter[filter].states[enumKey] = state;
 
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
@@ -65,13 +64,9 @@ export class MusicFilter extends LitElement {
      * @param {keyof MusicFilterOptions} filter
      */
     resetFilter(filter) {
-        if (filter == 'title') {
-            this.filter[filter] = '';
-            return;
-        }
-
-        var newFilterOptions = new MusicFilterOptions();
-        this.filter[filter] = newFilterOptions[filter];
+        if (filter == 'title') this.filter[filter] = '';
+        else if (filter == 'complete') this.filter.complete = CheckboxState.Ignore;
+        else this.filter[filter] = new MusicFilterOptions()[filter];
         this.requestUpdate(undefined);
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
@@ -87,7 +82,7 @@ export class MusicFilter extends LitElement {
      * @param {string[]} selectedValues
      */
     handleDropdownChange(filter, selectedValues) {
-        if (filter == 'title') return;
+        if (filter == 'title' || filter == 'complete') return;
         Object.keys(this.filter[filter].states).forEach((key) => {
             this.toggleFilter(filter, key, selectedValues.includes(key) ? CheckboxState.Allow : CheckboxState.Forbid);
         });
@@ -99,7 +94,8 @@ export class MusicFilter extends LitElement {
         /** @type {GenreModel[]} */ var forbiddenInstruments = [];
 
         for (var key of Object.keys(this.filter.instruments.states)) {
-            if (this.filter.instruments.states[key] == CheckboxState.Allow) allowedInstruments.push(instruments.find((x) => x.name == key));
+            if (this.filter.instruments.states[key] == CheckboxState.Allow)
+                allowedInstruments.push(instruments.find((x) => x.name == key));
             else if (this.filter.instruments.states[key] == CheckboxState.Forbid)
                 forbiddenInstruments.push(instruments.find((x) => x.name == key));
         }

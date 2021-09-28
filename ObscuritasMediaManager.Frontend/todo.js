@@ -17,3 +17,4 @@
 // TODO: implement NSWAG Client
 // TODO: add close-button to genre dialog and reduce fadeout time
 // TODO: tooltips
+// TODO: optional: disable edit when "complete" checkbox is ticked

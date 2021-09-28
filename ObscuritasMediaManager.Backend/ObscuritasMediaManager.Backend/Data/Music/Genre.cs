@@ -26,6 +26,7 @@
         Medley,
         Parody,
         Ballad,
-        FilmMusic
+        FilmMusic,
+        Western
     }
 }

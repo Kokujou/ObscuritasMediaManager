@@ -12,7 +12,7 @@ export class MusicFilterService {
         var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
 
-        return list.filter((item) => {
+        var results = list.filter((item) => {
             var array = item[filterProperty];
             if (!Array.isArray(array)) throw new Error('property must be an array');
             var anotherArray = array;
@@ -21,6 +21,8 @@ export class MusicFilterService {
                 anotherArray.every((genre) => forbiddenValues.every((x) => x != genre))
             );
         });
+        list.length = 0;
+        list.push(...results);
     }
 
     /**
@@ -29,15 +31,17 @@ export class MusicFilterService {
      * @param {FilterEntry<T>} filter
      * @param {keyof T} filterProperty
      */
-    static applyPropertyFilter(list, filter, filterProperty) {
+    static applyPropertyFilter(list, filter, filterProperty, emptyAllowsUndefined = false) {
         var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
 
-        return list.filter((item) => {
+        var results = list.filter((item) => {
             var property = item[filterProperty];
-            if (typeof property != 'string') throw new Error('property must be a string');
-            if (allowedValues.includes(property)) return true;
+            if (allowedValues.includes(`${property}`)) return true;
+            if (allowedValues.length == 0 && emptyAllowsUndefined && !property) return true;
             return false;
         });
+        list.length = 0;
+        list.push(...results);
     }
 }

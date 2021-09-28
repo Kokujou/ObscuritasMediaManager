@@ -22,4 +22,6 @@ export const MusicGenre = {
     Wagakki: 'Wagakki',
     Medley: 'Medley',
     Parody: 'Parody',
+    FilmMusic: 'Film Musik',
+    Western: 'Western',
 };

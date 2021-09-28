@@ -18,8 +18,6 @@ export class {{ pascalCase name }} extends LitElement {
         super();
 
         /** @type {string} */ this.someProperty;
-
-        session.resources.subscribe(() => this.requestUpdate(undefined));
     }
 
     render() {

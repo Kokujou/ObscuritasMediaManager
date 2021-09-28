@@ -60,7 +60,9 @@ export class LanguageSwitcher extends LitElement {
 
             container = item.parentElement;
 
-            item.style.transform = `rotate(${targetAngle}deg) translateY(-${container.offsetHeight / 3}px) rotate(${-targetAngle}deg)`;
+            item.style.transform = `rotate(${targetAngle}deg) translateY(-${
+                container.offsetHeight / 3
+            }px) rotate(${-targetAngle}deg)`;
         });
         setTimeout(() => {
             this.animationRunning = false;
@@ -134,6 +136,6 @@ export class LanguageSwitcher extends LitElement {
         this.classList.toggle('destroyed', true);
         setTimeout(() => {
             this.remove();
-        }, 1000);
+        }, 500);
     }
 }

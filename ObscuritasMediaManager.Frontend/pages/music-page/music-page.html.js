@@ -14,7 +14,9 @@ export function renderMusicPage(musicPage) {
                         @filterChanged="${(e) => musicPage.updateFilter(e.detail.filter)}"
                         id="music-filter"
                     ></music-filter>
-                    <div id="result-count-label">${musicPage.filteredTracks.length} von ${musicPage.musicTracks.length} Musik-Tracks</div>
+                    <div id="result-count-label">
+                        ${musicPage.filteredTracks.length} von ${musicPage.musicTracks.length} Musik-Tracks
+                    </div>
                 </div>
                 <div id="result-options-container">
                     <div id="result-options">
@@ -45,7 +47,11 @@ export function renderMusicPage(musicPage) {
                         </div>
                     </div>
                 </div>
-                <paginated-scrolling id="search-results-container" scrollTopThreshold="50" @scrollBottom="${() => musicPage.loadNext()}">
+                <paginated-scrolling
+                    id="search-results-container"
+                    scrollTopThreshold="50"
+                    @scrollBottom="${() => musicPage.loadNext()}"
+                >
                     <div id="search-results">
                         ${musicPage.paginatedTracks.map(
                             (track) =>

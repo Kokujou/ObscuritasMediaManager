@@ -8,6 +8,7 @@ import { MediaSearch } from './advanced-components/media-search/media-search.js'
 import { MediaTile } from './advanced-components/media-tile/media-tile.js';
 import { MusicFilter } from './advanced-components/music-filter/music-filter.js';
 import { PaginatedScrolling } from './advanced-components/paginated-scrolling/paginated-scrolling.js';
+import { StarRating } from './advanced-components/star-rating/star-rating.js';
 import { TagLabel } from './advanced-components/tag-label/tag-label.js';
 import { UploadArea } from './advanced-components/upload-area/upload-area.js';
 import { DialogBase } from './dialogs/dialog-base/dialog-base.js';
@@ -75,3 +76,4 @@ window.customElements.define('music-filter', MusicFilter);
 window.customElements.define('drop-down', DropDown);
 window.customElements.define('language-switcher', LanguageSwitcher);
 window.customElements.define('media-playlist', MediaPlaylist);
+window.customElements.define('star-rating', StarRating);

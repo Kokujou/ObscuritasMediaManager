@@ -9,8 +9,11 @@ import { FilterEntry } from './filter-entry.js';
 import { session } from './session.js';
 
 export class MusicFilterOptions {
-    /** @type {string} */ title;
+    /** @type {string} */ title = '';
+    /** @type {CheckboxState} */ complete = CheckboxState.Ignore;
+
     languages = new FilterEntry(Nation);
+    ratings = new FilterEntry(['1', '2', '3', '4', '5']);
     nations = new FilterEntry(Nation);
     instrumentTypes = new FilterEntry(InstrumentTypes, CheckboxState.Ignore);
     instruments = new FilterEntry(
