@@ -40,7 +40,7 @@ import { Mood } from '../../data/enumerations/mood.js';
 import { Nation } from '../../data/enumerations/nation.js';
 import { Participants } from '../../data/enumerations/participants.js';
 import { Instrumentation } from '../../data/enumerations/instrumentation.js';
-import { Genre } from '../../data/enumerations/genre.js';
+import { MusicGenre } from '../../data/enumerations/music-genre.js';
 
 export const Multiple = () => html`
     <style>
@@ -57,7 +57,9 @@ export const Multiple = () => html`
             .mood="${select('Mood', Object.values(Mood), 'romantic')}"
             autor="olle Ko-Schnitte"
             source="My Brain"
-            .genres="${optionsKnob('Genres', Genre, ['Blues', 'Soul', 'Comedy', 'Rock', 'Pop'], { display: 'multi-select' })}"
+            .genres="${optionsKnob('Genres', MusicGenre, ['Blues', 'Soul', 'Comedy', 'Rock', 'Pop'], {
+                display: 'multi-select',
+            })}"
             .language="${select('Nation', Object.values(Nation), 'japanese')}"
             .nation="${select('Language', Object.values(Nation), 'japanese')}"
             .participantCount="${select('Participants', Object.values(Participants), 'solo')}"

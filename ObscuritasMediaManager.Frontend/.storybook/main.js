@@ -1,5 +1,5 @@
 module.exports = {
-    stories: ['../**/*.stories.md'],
+    stories: ['../!(templates)/**/*.stories.md'],
     addons: [
         'storybook-prebuilt/addon-knobs/register.js',
         'storybook-prebuilt/addon-docs/register.js',
