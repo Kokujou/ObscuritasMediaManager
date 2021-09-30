@@ -23,7 +23,7 @@ export class TriValueCheckbox extends LitElement {
         /** @type {CheckboxState} */ this.value = CheckboxState.Ignore;
         /** @type {boolean} */ this.allowThreeValues = false;
         /** @type {boolean} */ this.disabled = false;
-        /** @type {CheckboxState} */ this.ignoredState = CheckboxState.Forbid;
+        /** @type {CheckboxState} */ this.ignoredState = CheckboxState.Ignore;
     }
 
     render() {
@@ -37,7 +37,8 @@ export class TriValueCheckbox extends LitElement {
 
     nextState() {
         this.value = Enum.nextValue(CheckboxState, this.value, false);
-        if (this.value == this.ignoredState && !this.allowThreeValues) this.value = Enum.nextValue(CheckboxState, this.value, false);
+        if (this.value == this.ignoredState && !this.allowThreeValues)
+            this.value = Enum.nextValue(CheckboxState, this.value, false);
 
         var valuechangedEvent = new CustomEvent('valueChanged', { detail: { value: this.value } });
         this.dispatchEvent(valuechangedEvent);

@@ -31,15 +31,15 @@ export class MusicFilterService {
      * @param {FilterEntry<T>} filter
      * @param {keyof T} filterProperty
      */
-    static applyPropertyFilter(list, filter, filterProperty, emptyAllowsUndefined = false) {
+    static applyPropertyFilter(list, filter, filterProperty) {
         var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
 
         var results = list.filter((item) => {
             var property = item[filterProperty];
-            if (allowedValues.includes(`${property}`)) return true;
-            if (allowedValues.length == 0 && emptyAllowsUndefined && !property) return true;
-            return false;
+            if (forbiddenValues.includes(`${property}`)) return false;
+            if (forbiddenValues.length > 0 && !property) return false;
+            return true;
         });
         list.length = 0;
         list.push(...results);

@@ -28,7 +28,9 @@ export class ScrollSelect extends LitElement {
     }
 
     get scrollChildren() {
-        return [...this.shadowRoot.querySelectorAll('#item-container > *:not(.inner-space)')].map(/** @param {HTMLElement} x */ (x) => x);
+        return [...this.shadowRoot.querySelectorAll('#item-container > *:not(.inner-space)')].map(
+            /** @param {HTMLElement} x */ (x) => x
+        );
     }
 
     get canScrollUp() {
@@ -121,7 +123,9 @@ export class ScrollSelect extends LitElement {
 
     notifyValueChanged() {
         var element = this.scrollChildren[this.currentItemIndex];
-        scrollIntoParentViewY(element, element.parentElement, this.scrollContainer);
+        setTimeout(() => {
+            scrollIntoParentViewY(element, element.parentElement, this.scrollContainer);
+        }, 100);
 
         this.dispatchEvent(new CustomEvent('valueChanged', { detail: { value: this.options[this.currentItemIndex] } }));
         this.requestUpdate(undefined);

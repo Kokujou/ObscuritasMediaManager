@@ -28,11 +28,10 @@ export function renderMusicFilter(musicFilter) {
                 />
             </div>
             <div id="complete-filter" class="filter">
-                <label for="scales">Complete: </label>
+                <label for="scales">Vollständig: </label>
                 <tri-value-checkbox
                     id="complete-input"
-                    .value="${musicFilter.filter.complete}"
-                    allowThreeValues
+                    value="${musicFilter.filter.complete}"
                     @valueChanged="${(e) => musicFilter.toggleFilter('complete', '', e.detail.value)}"
                 ></tri-value-checkbox>
             </div>
@@ -45,7 +44,6 @@ export function renderMusicFilter(musicFilter) {
                     ${Object.values(Nation).map(
                         (type) =>
                             html` <tri-value-checkbox
-                                ?allowThreeValues="${false}"
                                 @valueChanged="${(e) => musicFilter.toggleFilter('languages', type, e.detail.value)}"
                                 class="icon-container"
                                 .value="${musicFilter.filter.languages.states[type]}"
@@ -65,7 +63,6 @@ export function renderMusicFilter(musicFilter) {
                         (type) =>
                             html` <tri-value-checkbox
                                 class="icon-container"
-                                ?allowThreeValues="${false}"
                                 @valueChanged="${(e) => musicFilter.toggleFilter('nations', type, e.detail.value)}"
                                 .value="${musicFilter.filter.nations.states[type]}"
                             >
@@ -83,7 +80,7 @@ export function renderMusicFilter(musicFilter) {
                             (type) =>
                                 html` <tri-value-checkbox
                                     class="icon-container"
-                                    ?allowThreeValues="${true}"
+                                    allowThreeValues
                                     @valueChanged="${(e) => musicFilter.toggleFilter('instrumentTypes', type, e.detail.value)}"
                                     .value="${musicFilter.filter.instrumentTypes.states[type]}"
                                     .disabled="${!musicFilter.canFilterInstrumentType(type)}"
@@ -130,7 +127,6 @@ export function renderMusicFilter(musicFilter) {
                         (key) => musicFilter.filter.moods.states[key] == CheckboxState.Allow
                     )}"
                     multiselect
-                    useSearch
                     maxDisplayDepth="5"
                     .options="${Object.values(Mood)}"
                 >
@@ -150,7 +146,6 @@ export function renderMusicFilter(musicFilter) {
                         (key) => musicFilter.filter.instrumentations.states[key] == CheckboxState.Allow
                     )}"
                     multiselect
-                    useSearch
                     maxDisplayDepth="5"
                     .options="${Object.values(Instrumentation)}"
                 >
@@ -166,7 +161,6 @@ export function renderMusicFilter(musicFilter) {
                         (type) =>
                             html` <tri-value-checkbox
                                 class="icon-container"
-                                ?allowThreeValues="${false}"
                                 @valueChanged="${(e) => musicFilter.toggleFilter('participants', type, e.detail.value)}"
                                 .value="${musicFilter.filter.participants.states[type]}"
                             >

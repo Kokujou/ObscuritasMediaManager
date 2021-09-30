@@ -196,8 +196,9 @@ export class MusicPlaylistPage extends LitElement {
         this.changeProperty('nation', nation);
     }
 
-    disconnectedCallback() {
+    async disconnectedCallback() {
         super.disconnectedCallback();
+        await this.updateTrack();
     }
 
     changeTrackPosition(value) {

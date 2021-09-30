@@ -22,7 +22,6 @@ export class StarRating extends LitElement {
     }
 
     render() {
-        console.log(this.values);
         return renderStarRating(this);
     }
 

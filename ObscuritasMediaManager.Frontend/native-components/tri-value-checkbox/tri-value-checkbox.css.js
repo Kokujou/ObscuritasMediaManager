@@ -36,22 +36,22 @@ export function renderTriValueCheckbox() {
             background-color: 0.00000033;
         }
 
-        .checkbox.forbid {
+        :host([value='forbid']) .checkbox {
             border-color: var(--forbid-color);
             background-color: var(--forbid-color);
         }
 
-        .checkbox.allow {
+        :host([value='allow']) .checkbox {
             border-color: var(--allow-color);
             background-color: var(--allow-color);
         }
 
-        .checkbox.ignore {
+        :host([value='ignore']) .checkbox {
             border-color: var(--ignore-color);
             background-color: var(--ignore-color);
         }
 
-        .checkbox.disabled {
+        :host([disabled]) .checkbox {
             pointer-events: none;
         }
     `;

@@ -32,6 +32,7 @@ export class MusicModel {
     set instruments(value) {}
 
     /** @type {InstrumentTypes[]} */ get instrumentTypes() {
+        console.log(this.instruments);
         return this.instruments.map((x) => x.type).filter((instrument, index, self) => self.indexOf(instrument) == index);
     }
 

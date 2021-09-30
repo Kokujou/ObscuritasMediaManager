@@ -42,7 +42,6 @@ export class MusicFilter extends LitElement {
     }
 
     render() {
-        console.log(this.filter.ratings);
         return renderMusicFilter(this);
     }
 
@@ -52,11 +51,13 @@ export class MusicFilter extends LitElement {
      * @param {CheckboxState} state
      */
     toggleFilter(filter, enumKey, state) {
+        console.log(state);
         if (filter == 'title') {
             this.filter[filter] = state;
         } else if (filter == 'complete') this.filter.complete = state;
         else this.filter[filter].states[enumKey] = state;
 
+        this.requestUpdate(undefined);
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
 
@@ -64,9 +65,10 @@ export class MusicFilter extends LitElement {
      * @param {keyof MusicFilterOptions} filter
      */
     resetFilter(filter) {
+        var newOptions = new MusicFilterOptions();
         if (filter == 'title') this.filter[filter] = '';
         else if (filter == 'complete') this.filter.complete = CheckboxState.Ignore;
-        else this.filter[filter] = new MusicFilterOptions()[filter];
+        else this.filter[filter] = newOptions[filter];
         this.requestUpdate(undefined);
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }

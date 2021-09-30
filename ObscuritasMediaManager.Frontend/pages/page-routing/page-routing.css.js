@@ -5,9 +5,9 @@ export function renderPageRoutingStyles() {
     return css`
         :host {
             --accent-color: #222a;
-            --accent-color-full: #5555ff;
+            --accent-color-full: #222;
             --background-color: #444444ff;
-            --font-color: #aaa;
+            --font-color: #ddd;
             display: inline-flex;
             background-position: 0 0;
             font-family: Arial, Helvetica, sans-serif;
@@ -31,12 +31,12 @@ export function renderPageRoutingStyles() {
             position: relative;
             left: 0;
             top: 0;
-            width: ${viewportWidth}px;
-            height: ${viewportHeight}px;
-
             overflow: hidden;
 
             color: var(--font-color);
+
+            width: ${viewportWidth}px;
+            height: ${viewportHeight}px;
         }
     `;
 }

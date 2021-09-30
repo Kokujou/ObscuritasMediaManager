@@ -91,10 +91,10 @@ export function renderDropDownStyles() {
 
             padding: 10px 25px;
 
-            color: black;
+            color: var(--font-color);
             border: none;
             box-shadow: 0px 3px 6px #00000040;
-            background-color: white;
+            background-color: var(--accent-color-full);
 
             overflow-y: auto;
 
@@ -117,7 +117,7 @@ export function renderDropDownStyles() {
         .option:hover,
         .option.selected {
             color: var(--dropdown-compact-hover-color, inherit);
-            background: lightskyblue;
+            background: #666;
         }
     `;
 }

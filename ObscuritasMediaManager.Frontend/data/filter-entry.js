@@ -10,7 +10,7 @@ export class FilterEntry {
     /**
      * @param {T} type
      */
-    constructor(type, defaultValue = CheckboxState.Allow) {
+    constructor(type, defaultValue = CheckboxState.Ignore) {
         this.states = {};
         Object.values(type).forEach((x) => (this.states[x] = defaultValue));
     }

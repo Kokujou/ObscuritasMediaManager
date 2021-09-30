@@ -41,8 +41,7 @@ export class MusicPage extends LitElement {
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.nations, 'nation');
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.moods, 'mood');
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.participants, 'participants');
-        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.ratings, 'rating', true);
-
+        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.ratings, 'rating');
         filteredTracks = filteredTracks.filter((track) =>
             track.displayName.toLowerCase().includes((this.filter.title || '').toLowerCase())
         );

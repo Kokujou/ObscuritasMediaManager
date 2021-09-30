@@ -9,6 +9,7 @@
         Percussion,
         Stringed,
         Keyboard,
-        Electronic
+        Electronic,
+        HumanBody
     }
 }

@@ -10,7 +10,7 @@ export function renderDialogBaseStyles() {
             left: 0;
 
             font-family: Arial, Helvetica, sans-serif;
-            color: lightgray;
+            color: #ddd;
             user-select: none;
 
             display: flex;
@@ -27,7 +27,7 @@ export function renderDialogBaseStyles() {
         #dialog-container {
             display: flex;
             flex-direction: column;
-            background-color: #333355;
+            background-color: #222;
             border-radius: 20px;
             padding: 30px;
         }
