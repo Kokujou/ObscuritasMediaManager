@@ -19,7 +19,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
 
             var ffmpeg = new Process();
             var startinfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
-                $"-i \"{videoPath}\" -c:v copy -c:a copy -movflags frag_keyframe+empty_moov -f mp4 -");
+                $"-i \"{videoPath}\" -c:v copy -c:a copy -movflags frag_keyframe+empty_moov+delay_moov -f mp4 -");
             startinfo.RedirectStandardError = true;
             startinfo.RedirectStandardOutput = true;
             startinfo.RedirectStandardInput = true;
