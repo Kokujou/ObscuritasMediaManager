@@ -103,19 +103,26 @@ export function renderDropDownStyles() {
 
         .option {
             font-weight: 400;
+            text-transform: capitalize;
 
             padding: 0 10px;
             width: auto;
             height: 40px;
-            cursor: pointer;
+
             white-space: nowrap;
 
             display: flex;
             align-items: center;
         }
 
-        .option:hover,
+        .label {
+            text-transform: capitalize;
+            flex: auto;
+        }
+
+        :host(:not([useSearch]):not([multiselect])).option:hover,
         .option.selected {
+            cursor: pointer;
             color: var(--dropdown-compact-hover-color, inherit);
             background: #666;
         }

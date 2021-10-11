@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
+using ObscuritasMediaManager.Backend.DataRepositories;
 
 namespace ObscuritasMediaManager.Backend.Controllers
 {
@@ -9,9 +9,9 @@ namespace ObscuritasMediaManager.Backend.Controllers
     [Route("/api/[controller]")]
     public class GenreController : ControllerBase
     {
-        private readonly IGenreRepository _genreRepository;
+        private readonly GenreRepository _genreRepository;
 
-        public GenreController(IGenreRepository genreRepository)
+        public GenreController(GenreRepository genreRepository)
         {
             _genreRepository = genreRepository;
         }

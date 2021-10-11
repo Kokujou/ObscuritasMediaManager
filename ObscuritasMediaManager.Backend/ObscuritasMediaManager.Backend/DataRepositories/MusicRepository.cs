@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories
 {
-    public class MusicRepository : IMusicRepository
+    public class MusicRepository
     {
         private readonly DatabaseContext _context;
 
@@ -18,11 +18,11 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             _context = context;
         }
 
-        public async Task UpdateAsync(Guid id, MusicModel old, MusicModel updated)
+        public async Task UpdateAsync(string hash, MusicModel old, MusicModel updated)
         {
-            var actual = await _context.Music.SingleOrDefaultAsync(x => x.Id == id);
+            var actual = await _context.Music.SingleOrDefaultAsync(x => x.Hash == hash);
             if (actual == default)
-                throw new ModelNotFoundException(updated.Id);
+                throw new ModelNotFoundException(updated.Hash);
 
             if (!string.IsNullOrEmpty(updated.Name) && old.Name == actual.Name)
                 actual.Name = updated.Name;
@@ -32,8 +32,8 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                 actual.GenreString = updated.GenreString;
             if (updated.Source != null && old.Source == actual.Source)
                 actual.Source = updated.Source;
-            if (updated.Src != null && old.Src == actual.Src)
-                actual.Src = updated.Src;
+            if (updated.Path != null && old.Path == actual.Path)
+                actual.Path = updated.Path;
             if (updated.Mood != default && old.Mood == actual.Mood)
                 actual.Mood = updated.Mood;
             if (updated.Instrumentation != default && old.Instrumentation == actual.Instrumentation)
@@ -54,10 +54,41 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<MusicModel> GetAsync(Guid guid)
+        public async Task ChangeFilePathAsync(string hash, string newPath)
         {
-            var response = await _context.Music.SingleAsync(x => x.Id == guid);
+            var actual = await _context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);
+            actual.Path = newPath;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RecalculateHashesAsync()
+        {
+            var tracks = await GetAllAsync();
+            foreach (var track in tracks)
+            {
+                if (!File.Exists(track.Path)) continue;
+                track.CalculateHash();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    track.Hash = $"{track.Hash}_{new Random().Next()}";
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async Task<MusicModel> GetAsync(string hash)
+        {
+            var response = await _context.Music.SingleAsync(x => x.Hash == hash);
             return response;
+        }
+
+        public async Task<Dictionary<string, string>> GetHashValuesAsync()
+        {
+            return await _context.Music.ToDictionaryAsync(x => x.Hash, x => x.Path);
         }
 
         public async Task<IEnumerable<MusicModel>> GetAllAsync()

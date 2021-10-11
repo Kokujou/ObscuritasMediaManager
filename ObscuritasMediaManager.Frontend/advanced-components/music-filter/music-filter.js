@@ -51,7 +51,7 @@ export class MusicFilter extends LitElement {
      * @param {CheckboxState} state
      */
     toggleFilter(filter, enumKey, state) {
-        console.log(state);
+        state;
         if (filter == 'title') {
             this.filter[filter] = state;
         } else if (filter == 'complete') this.filter.complete = state;

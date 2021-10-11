@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
+using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.Controllers
@@ -11,21 +11,21 @@ namespace ObscuritasMediaManager.Backend.Controllers
     [Route("api/[controller]")]
     public class PlaylistController : ControllerBase
     {
-        private static readonly Dictionary<Guid, IEnumerable<Guid>> TemporaryPlaylistRepository
+        private static readonly Dictionary<Guid, IEnumerable<string>> TemporaryPlaylistRepository
             = new();
 
-        private readonly IMusicRepository _musicRepository;
+        private readonly MusicRepository _musicRepository;
 
-        public PlaylistController(IMusicRepository musicRepository)
+        public PlaylistController(MusicRepository musicRepository)
         {
             _musicRepository = musicRepository;
         }
 
         [HttpPost("temp")]
-        public IActionResult CreateTemporaryPlaylist([FromBody] IEnumerable<Guid> entries)
+        public IActionResult CreateTemporaryPlaylist([FromBody] IEnumerable<string> hashes)
         {
             var guid = Guid.NewGuid();
-            TemporaryPlaylistRepository.Add(guid, entries);
+            TemporaryPlaylistRepository.Add(guid, hashes);
             return Ok(guid);
         }
 
@@ -34,9 +34,9 @@ namespace ObscuritasMediaManager.Backend.Controllers
         {
             try
             {
-                var trackIds = TemporaryPlaylistRepository[guid];
+                var trackHashes = TemporaryPlaylistRepository[guid];
                 var tracks = new List<MusicModel>();
-                foreach (var id in trackIds) tracks.Add(await _musicRepository.GetAsync(id));
+                foreach (var hash in trackHashes) tracks.Add(await _musicRepository.GetAsync(hash));
                 return Ok(tracks);
             }
             catch

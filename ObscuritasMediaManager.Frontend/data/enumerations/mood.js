@@ -15,6 +15,36 @@ export const Mood = {
     Monotonuous: 'monotonuous',
 };
 
+/**
+ * @param {keyof Mood} mood
+ */
+export function getMoodColor(mood) {
+    switch (mood) {
+        case 'Aggressive':
+            return ' #a33000';
+        case 'Calm':
+            return ' #773311';
+        case 'Dramatic':
+            return ' #333333';
+        case 'Epic':
+            return '#773399';
+        case 'Funny':
+            return '#a0a000';
+        case 'Happy':
+            return '#008000';
+        case 'Monotonuous':
+            return '#999999';
+        case 'Passionate':
+            return '#a33000';
+        case 'Romantic':
+            return '#dd6677';
+        case 'Sad':
+            return '#0055a0';
+        default:
+            return '#dddddd';
+    }
+}
+
 export function renderMoodStyles(parentSelector) {
     return css`
         ${unsafeCSS(parentSelector)} {

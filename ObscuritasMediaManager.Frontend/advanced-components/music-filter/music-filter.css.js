@@ -141,5 +141,8 @@ export function renderMusicFilterStyles() {
             display: flex;
             align-items: center;
         }
+
+        #mood-filter drop-down[options*=] {
+        }
     `;
 }

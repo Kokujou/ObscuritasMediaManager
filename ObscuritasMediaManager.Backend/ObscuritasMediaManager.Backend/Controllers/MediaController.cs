@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
-using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
+using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.Controllers
@@ -13,10 +13,10 @@ namespace ObscuritasMediaManager.Backend.Controllers
     [Route("api/[controller]")]
     public class MediaController : ControllerBase
     {
-        private readonly IMediaRepository _repository;
-        private readonly IGenreRepository _genreRepository;
+        private readonly MediaRepository _repository;
+        private readonly GenreRepository _genreRepository;
 
-        public MediaController(IMediaRepository repository, IGenreRepository genreRepository)
+        public MediaController(MediaRepository repository, GenreRepository genreRepository)
         {
             _repository = repository;
             _genreRepository = genreRepository;

@@ -32,7 +32,9 @@ export function importFiles() {
     var folderSelected = false;
     return new Promise((resolve, reject) => {
         document.body.onfocus = () => {
-            if (!folderSelected) reject();
+            setTimeout(() => {
+                if (!folderSelected) reject();
+            }, 10000);
         };
 
         folderInput.addEventListener('change', (e) => {

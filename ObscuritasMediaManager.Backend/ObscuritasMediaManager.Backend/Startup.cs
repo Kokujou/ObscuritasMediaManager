@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ObscuritasMediaManager.Backend.DataRepositories;
-using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
 
 namespace ObscuritasMediaManager.Backend
 {
@@ -19,10 +18,10 @@ namespace ObscuritasMediaManager.Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IGenreRepository, GenreRepository>();
-            services.AddScoped<IMediaRepository, MediaRepository>();
-            services.AddScoped<IStreamingRepository, StreamingRepository>();
-            services.AddScoped<IMusicRepository, MusicRepository>();
+            services.AddScoped<GenreRepository>();
+            services.AddScoped<MediaRepository>();
+            services.AddScoped<StreamingRepository>();
+            services.AddScoped<MusicRepository>();
 
             services.AddDbContext<DatabaseContext>(x => x.UseSqlite(@"Data Source=database.sqlite"));
 

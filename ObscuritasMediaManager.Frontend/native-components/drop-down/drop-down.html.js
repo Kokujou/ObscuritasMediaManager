@@ -29,7 +29,9 @@ function showDropDown(dropdown) {
             if (dropdown.useSearch) dropdown.resetSearchFilter();
         }}"
     >
-        <div id="caption-container">${dropdown.caption} ${dropdown.caption ? '' : html`<div id="empty-text-placeholder">empty</div>`}</div>
+        <div id="caption-container">
+            ${dropdown.caption} ${dropdown.caption ? '' : html`<div id="empty-text-placeholder">empty</div>`}
+        </div>
         <div
             class="options"
             @click="${(e) => {
@@ -76,13 +78,26 @@ function showDropDown(dropdown) {
 function renderDropDownOption(dropdown, key, value) {
     return html`
         <div
-            class="option ${dropdown.valueActive(value) ? 'selected' : ''}"
+            ?selected="${dropdown.valueActive(value)}"
+            class="option"
             value="${value}"
             @click=${() => {
-                dropdown.value = value;
+                if (!dropdown.multiselect || dropdown.useSearch) dropdown.value = value;
             }}
         >
-            ${key}
+            ${dropdown.multiselect && !dropdown.useSearch ? renderToggle(dropdown, key, value) : key}
         </div>
+    `;
+}
+
+/**
+ * @param {DropDown} dropdown
+ * @param {String} key
+ * @param {String} value
+ */
+function renderToggle(dropdown, key, value) {
+    return html`
+        <div class="label">${key}</div>
+        <custom-toggle ?checked="${dropdown.valueActive(value)}" @toggle="${() => (dropdown.value = value)}"></custom-toggle>
     `;
 }

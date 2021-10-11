@@ -91,7 +91,7 @@ export class MusicPage extends LitElement {
      * @param {MusicModel} track
      */
     getTrackIcon(track) {
-        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.src}`;
+        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.path}`;
         if (this.currentTrackSrc != trackSrc) return NoteIcon();
         if (this.isPaused) return playIcon();
         return pauseIcon();
@@ -111,7 +111,7 @@ export class MusicPage extends LitElement {
      * @param {MusicModel} track
      */
     async toggleMusic(track) {
-        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.src}`;
+        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.path}`;
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#current-track');
         if (this.currentTrackSrc == trackSrc && !audioElement.paused) audioElement.pause();
         else if (this.currentTrackSrc == trackSrc && audioElement.paused) audioElement.play();
@@ -127,7 +127,7 @@ export class MusicPage extends LitElement {
     }
 
     async playPlaylist() {
-        var guid = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.id));
+        var guid = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash));
         changePage(Pages.musicPlaylist.routes[0], `?guid=${guid}&track=0`);
     }
 
@@ -136,7 +136,7 @@ export class MusicPage extends LitElement {
             var fileImportResult = await importFiles();
             await MusicPage.processFiles(fileImportResult.files, fileImportResult.basePath);
         } catch (err) {
-            console.error('the import of files was aborted', err);
+            console.trace('the import of files was aborted', err);
         }
     }
 
@@ -176,7 +176,7 @@ export class MusicPage extends LitElement {
      * @param {MusicModel} track
      */
     editTrack(track) {
-        changePage(Pages.musicPlaylist.routes[0], `?track=${track.id}`);
+        changePage(Pages.musicPlaylist.routes[0], `?track=${track.hash}`);
     }
 
     disconnectedCallback() {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
+using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.Controllers
@@ -11,9 +11,9 @@ namespace ObscuritasMediaManager.Backend.Controllers
     [Route("api/[controller]")]
     public class StreamingController : ControllerBase
     {
-        private readonly IStreamingRepository _repository;
+        private readonly StreamingRepository _repository;
 
-        public StreamingController(IStreamingRepository repository)
+        public StreamingController(StreamingRepository repository)
         {
             _repository = repository;
         }

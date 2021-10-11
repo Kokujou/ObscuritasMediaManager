@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
-using ObscuritasMediaManager.Backend.DataRepositories.Interfaces;
+using ObscuritasMediaManager.Backend.DataRepositories;
+using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.Controllers
@@ -13,9 +14,9 @@ namespace ObscuritasMediaManager.Backend.Controllers
     [Route("api/[controller]")]
     public class MusicController : ControllerBase
     {
-        private readonly IMusicRepository _repository;
+        private readonly MusicRepository _repository;
 
-        public MusicController(IMusicRepository repository)
+        public MusicController(MusicRepository repository)
         {
             _repository = repository;
         }
@@ -25,7 +26,48 @@ namespace ObscuritasMediaManager.Backend.Controllers
         {
             try
             {
-                await _repository.BatchCreateMusicTracksAsync(tracks);
+                var existingTracks = await _repository.GetHashValuesAsync();
+                var invalidTracks = new List<MusicModel>();
+                var validTracks = new List<MusicModel>();
+                foreach (var track in tracks)
+                {
+                    if (!System.IO.File.Exists(track.Path))
+                    {
+                        invalidTracks.Add(track);
+                        continue;
+                    }
+
+                    track.CalculateHash();
+
+                    if (existingTracks.ContainsKey(track.Hash) && existingTracks[track.Hash] == track.Path)
+                        continue;
+
+                    if (existingTracks.ContainsKey(track.Hash) && System.IO.File.Exists(existingTracks[track.Hash]))
+                        invalidTracks.Add(track);
+                    else if (existingTracks.ContainsKey(track.Hash))
+                        await _repository.ChangeFilePathAsync(track.Hash, track.Path);
+                    else
+                        validTracks.Add(track.CalculateHash());
+                }
+
+                if (validTracks.Count > 0)
+                    await _repository.BatchCreateMusicTracksAsync(validTracks);
+                if (invalidTracks.Count > 0)
+                    throw new ModelCreationFailedException<MusicModel>(invalidTracks);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.ToString());
+            }
+        }
+
+        [HttpPost("recalculate-hashes")]
+        public async Task<IActionResult> RecalculateHashes()
+        {
+            try
+            {
+                await _repository.RecalculateHashesAsync();
                 return NoContent();
             }
             catch (Exception e)
@@ -48,11 +90,11 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet("{guid:Guid}")]
-        public async Task<ActionResult<MusicModel>> GetAsync(Guid guid)
+        public async Task<ActionResult<MusicModel>> GetAsync(string hash)
         {
             try
             {
-                return Ok(await _repository.GetAsync(guid));
+                return Ok(await _repository.GetAsync(hash));
             }
             catch (Exception e)
             {
@@ -74,17 +116,17 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] UpdateRequest<MusicModel> updateRequest)
+        public async Task<IActionResult> UpdateAsync(string hash, [FromBody] UpdateRequest<MusicModel> updateRequest)
         {
             try
             {
-                if (updateRequest.OldModel.Id != default && id != updateRequest.OldModel.Id)
+                if (updateRequest.OldModel.Hash != default && hash != updateRequest.OldModel.Hash)
                     return BadRequest("Ids of objects did not match");
                 var invalidInstruments = await GetInvalidInstrumentsAsync(updateRequest.NewModel.InstrumentsString);
                 if (invalidInstruments.Count > 0)
                     return BadRequest($"sent instruments invalid: {string.Join(",", invalidInstruments)}");
 
-                await _repository.UpdateAsync(id, updateRequest.OldModel, updateRequest.NewModel);
+                await _repository.UpdateAsync(hash, updateRequest.OldModel, updateRequest.NewModel);
                 return NoContent();
             }
             catch (Exception e)

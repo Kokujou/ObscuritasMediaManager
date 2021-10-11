@@ -35,8 +35,8 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     get audioSource() {
-        if (this.currentTrack && this.currentTrack.src)
-            return `/ObscuritasMediaManager/api/file/audio?audioPath=${this.currentTrack.src}`;
+        if (this.currentTrack && this.currentTrack.path)
+            return `/ObscuritasMediaManager/api/file/audio?audioPath=${this.currentTrack.path}`;
         return '';
     }
 
@@ -135,7 +135,7 @@ export class MusicPlaylistPage extends LitElement {
     async updateTrack() {
         if (JSON.stringify(this.currentTrack) == JSON.stringify(this.updatedTrack)) return;
 
-        await MusicService.update(this.currentTrack.id, this.currentTrack, this.updatedTrack);
+        await MusicService.update(this.currentTrack.hash, this.currentTrack, this.updatedTrack);
         Object.assign(this.currentTrack, this.updatedTrack);
         this.playlist[this.currentTrackIndex] = this.updatedTrack;
         this.playlistToDisplay[this.currentTrackIndex] = this.updatedTrack;

@@ -27,7 +27,7 @@ export function renderCustomToggleStyles() {
         }
 
         :host([checked]) {
-            background-color: var(--toggled-color);
+            background-color: var(--toggled-color, var(--background-color));
         }
 
         :host([checked]) #slider {

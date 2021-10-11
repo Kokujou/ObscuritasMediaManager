@@ -8,7 +8,7 @@ import { InstrumentModel } from './instrument.model.js';
 import { session } from './session.js';
 
 export class MusicModel {
-    /** @type {string} */ id;
+    /** @type {string} */ hash;
     /** @type {string} */ name;
     /** @type {string} */ author;
     /** @type {string} */ source;
@@ -32,7 +32,6 @@ export class MusicModel {
     set instruments(value) {}
 
     /** @type {InstrumentTypes[]} */ get instrumentTypes() {
-        console.log(this.instruments);
         return this.instruments.map((x) => x.type).filter((instrument, index, self) => self.indexOf(instrument) == index);
     }
 
@@ -42,7 +41,7 @@ export class MusicModel {
         return [];
     }
     set genres(value) {}
-    /** @type {string} */ src;
+    /** @type {string} */ path;
 
     get displayName() {
         var result = this.name;
@@ -63,7 +62,7 @@ export class MusicModel {
         /** @type {string[]} */ var fileLevels = file.webkitRelativePath.split('/');
         musicModel.name = fileLevels[fileLevels.length - 1];
         // @ts-ignore
-        musicModel.src = `${basePath}\\${file.webkitRelativePath}`;
+        musicModel.path = `${basePath}\\${file.webkitRelativePath}`;
         musicModel.author = 'undefined';
         return musicModel;
     }
