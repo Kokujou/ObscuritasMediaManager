@@ -1,7 +1,4 @@
-import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-types.js';
 import { renderMoodStyles } from '../../data/enumerations/mood.js';
-import { renderLanguageFlags } from '../../data/enumerations/nation.js';
-import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
 import { volumeIcon } from '../../resources/icons/music-player-icons/change-volume-icon.svg.js';
 import { fastForwardIcon } from '../../resources/icons/music-player-icons/fast-forward-icon.svg.js';
@@ -95,24 +92,9 @@ export function renderMusicPlaylistStyles() {
             flex-direction: column;
         }
 
-        #audio-tile-container {
-            position: relative;
+        audio-tile-base {
             min-width: 400px;
             height: 400px;
-            border-radius: 20px;
-            background-color: var(--primary-color);
-            overflow: hidden;
-        }
-
-        #audio-image {
-            position: absolute;
-            left: 100px;
-            right: 100px;
-            bottom: 100px;
-            top: 100px;
-            background-color: var(--font-color);
-
-            cursor: pointer;
         }
 
         .inline-icon {
@@ -123,97 +105,6 @@ export function renderMusicPlaylistStyles() {
             cursor: pointer;
             filter: drop-shadow(0 0 5px black);
         }
-
-        #language-icon-section {
-            display: flex;
-            flex-direction: row;
-
-            position: absolute;
-            left: 20px;
-            top: 20px;
-        }
-
-        #language-icon-section > * {
-            margin-right: 10px;
-        }
-
-        ${renderLanguageFlags()}
-
-        #instrumentation-button {
-            position: absolute;
-            right: 50px;
-            top: 60px;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            background: none;
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 30px;
-            transform: rotate(45deg);
-        }
-
-        #rating-container {
-            position: absolute;
-            bottom: 70px;
-            left: 20px;
-        }
-
-        #rating-container .star {
-            color: gray;
-            text-shadow: 3px 3px 3px black;
-            font-size: 48px;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        #rating-container .star.selected {
-            color: yellow;
-        }
-
-        #rating-container .star.hovered {
-            color: darkorange;
-        }
-
-        #participant-count-button {
-            position: absolute;
-            right: 20px;
-            bottom: 70px;
-
-            width: 50px;
-            height: 50px;
-        }
-
-        ${renderParticipantCountIcon('#participant-count-button')}
-
-        #instruments-container {
-            position: absolute;
-            bottom: 20px;
-            left: 10px;
-            right: 10px;
-
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        #instruments-container .instrument-icon {
-            background: white;
-            width: 40px;
-            height: 40px;
-            margin: 0 5px;
-        }
-
-        #add-instruments-link {
-            font-size: 24px;
-            text-decoration: underline;
-        }
-
-        ${renderInstrumentTypeIcons('#instruments-container .instrument-icon')}
 
         #audio-control-container {
             display: flex;

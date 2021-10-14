@@ -56,9 +56,9 @@ export class MusicPage extends LitElement {
         super();
 
         /** @type {MusicModel[]} */ this.musicTracks = [];
-        /** @type {string} */ this.currentTrackSrc = '';
+        /** @type {string} */ this.currentTrackPath = '';
         /** @type {number} */ this.currentVolumne = 0.1;
-        /** @type {boolean} */ this.isPaused = false;
+        /** @type {boolean} */ this.isPaused = true;
         /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
         /** @type {Subscription[]} */ this.subcriptions = [];
 
@@ -92,7 +92,7 @@ export class MusicPage extends LitElement {
      */
     getTrackIcon(track) {
         var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.path}`;
-        if (this.currentTrackSrc != trackSrc) return NoteIcon();
+        if (this.currentTrackPath != trackSrc) return NoteIcon();
         if (this.isPaused) return playIcon();
         return pauseIcon();
     }
@@ -113,13 +113,13 @@ export class MusicPage extends LitElement {
     async toggleMusic(track) {
         var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.path}`;
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#current-track');
-        if (this.currentTrackSrc == trackSrc && !audioElement.paused) audioElement.pause();
-        else if (this.currentTrackSrc == trackSrc && audioElement.paused) audioElement.play();
+        if (this.currentTrackPath == trackSrc && !audioElement.paused) audioElement.pause();
+        else if (this.currentTrackPath == trackSrc && audioElement.paused) audioElement.play();
         this.isPaused = audioElement.paused;
         this.requestUpdate(undefined);
-        if (this.currentTrackSrc == trackSrc) return;
+        if (this.currentTrackPath == trackSrc) return;
 
-        this.currentTrackSrc = trackSrc;
+        this.currentTrackPath = trackSrc;
         await this.requestUpdate(undefined);
         audioElement.play();
         this.isPaused = audioElement.paused;

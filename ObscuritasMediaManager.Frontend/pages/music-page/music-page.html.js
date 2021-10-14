@@ -59,15 +59,16 @@ export function renderMusicPage(musicPage) {
                                     <audio-tile
                                         .track="${track}"
                                         .image="${musicPage.getTrackIcon(track)}"
-                                        @musicToggled="${() => musicPage.toggleMusic(track)}"
-                                        @edit="${() => musicPage.editTrack(track)}"
+                                        ?paused="${musicPage.isPaused || !musicPage.currentTrackPath.includes(track.path)}"
+                                        @toggle="${() => musicPage.toggleMusic(track)}"
+                                        @click="${() => musicPage.editTrack(track)}"
                                     ></audio-tile>
                                 `
                         )}
                     </div>
                 </paginated-scrolling>
             </div>
-            <audio id="current-track" .volume="${musicPage.currentVolumne}" .src="${musicPage.currentTrackSrc}"></audio>
+            <audio id="current-track" .volume="${musicPage.currentVolumne}" .src="${musicPage.currentTrackPath}"></audio>
         </page-layout>
     `;
 }

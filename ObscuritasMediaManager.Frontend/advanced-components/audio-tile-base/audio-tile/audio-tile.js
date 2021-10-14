@@ -1,5 +1,5 @@
-import { MusicModel } from '../../data/music.model.js';
-import { LitElement } from '../../exports.js';
+import { MusicModel } from '../../../data/music.model.js';
+import { LitElement } from '../../../exports.js';
 import { renderAudioTileStyles } from './audio-tile.css.js';
 import { renderAudioTile } from './audio-tile.html.js';
 
@@ -12,6 +12,7 @@ export class AudioTile extends LitElement {
         return {
             track: { type: Object, reflect: true },
             image: { type: String, reflect: true },
+            paused: { type: Boolean, reflect: true },
         };
     }
 
@@ -19,25 +20,8 @@ export class AudioTile extends LitElement {
         super();
         /** @type {MusicModel} */ this.track = new MusicModel();
         /** @type {string} */ this.image;
+        this.paused = true;
     }
-
-    get autorText() {
-        if (this.track.author) return `- ${this.track.author}`;
-        return '';
-    }
-    get sourceText() {
-        if (this.track.source) return `(${this.track.source})`;
-        return '';
-    }
-
-    /**
-     * @param {Event} event
-     */
-    notifyEditRequested(event) {
-        event.stopPropagation();
-        this.dispatchEvent(new CustomEvent('edit'));
-    }
-
     notifyMusicToggled() {
         this.dispatchEvent(new CustomEvent('musicToggled'));
     }

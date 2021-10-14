@@ -11,6 +11,11 @@ export class PageLayout extends LitElement {
         return {};
     }
 
+    static handleAuxClick(event, target) {
+        event.preventDefault();
+        window.open(`#${target}`, '_blank');
+    }
+
     constructor() {
         super();
     }

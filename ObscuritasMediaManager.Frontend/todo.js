@@ -18,3 +18,4 @@
 // TODO: add close-button to genre dialog and reduce fadeout time
 // TODO: tooltips
 // TODO: optional: disable edit when "complete" checkbox is ticked
+// TODO: implement batch-update for file-path re-retrieval - include file-size as filter criteria

@@ -89,7 +89,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-        [HttpGet("{guid:Guid}")]
+        [HttpGet("{hash}")]
         public async Task<ActionResult<MusicModel>> GetAsync(string hash)
         {
             try
@@ -115,7 +115,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-        [HttpPut("{id:guid}")]
+        [HttpPut("{hash}")]
         public async Task<IActionResult> UpdateAsync(string hash, [FromBody] UpdateRequest<MusicModel> updateRequest)
         {
             try

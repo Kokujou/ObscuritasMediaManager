@@ -1,4 +1,5 @@
-import { AudioTile } from './advanced-components/audio-tile/audio-tile.js';
+import { AudioTileBase } from './advanced-components/audio-tile-base/audio-tile-base.js';
+import { AudioTile } from './advanced-components/audio-tile-base/audio-tile/audio-tile.js';
 import { DualSlider } from './advanced-components/dual-slider/dual-slider.js';
 import { ExpandableDropdown } from './advanced-components/expandible-dropdown/expandable-dropdown.js';
 import { ImageTile } from './advanced-components/image-tile/image-tile.js';
@@ -79,3 +80,4 @@ window.customElements.define('language-switcher', LanguageSwitcher);
 window.customElements.define('media-playlist', MediaPlaylist);
 window.customElements.define('star-rating', StarRating);
 window.customElements.define('custom-toggle', CustomToggle);
+window.customElements.define('audio-tile-base', AudioTileBase);

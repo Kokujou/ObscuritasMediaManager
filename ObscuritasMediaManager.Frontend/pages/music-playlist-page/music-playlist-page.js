@@ -176,6 +176,7 @@ export class MusicPlaylistPage extends LitElement {
      * @param {any} value
      */
     async changeProperty(property, value) {
+        console.log(property, value);
         if (property == 'displayName' || property == 'instrumentNames' || property == 'instrumentTypes') return;
         if (property == 'rating') this.updatedTrack[property] = value;
         else if (property == 'complete') this.updatedTrack[property] = value;

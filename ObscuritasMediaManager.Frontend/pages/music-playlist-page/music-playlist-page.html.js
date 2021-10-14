@@ -2,6 +2,7 @@ import { Instrumentation } from '../../data/enumerations/instrumentation.js';
 import { Mood } from '../../data/enumerations/mood.js';
 import { MusicGenre } from '../../data/enumerations/music-genre.js';
 import { Participants } from '../../data/enumerations/participants.js';
+import { MusicModel } from '../../data/music.model.js';
 import { html } from '../../exports.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MusicPlaylistPage } from './music-playlist-page.js';
@@ -32,68 +33,25 @@ export function renderMusicPlaylist(playlist) {
                         >
                         </scroll-select>
                     </div>
-                    <div id="audio-tile-container">
-                        <div
-                            id="audio-image"
-                            @click="${() => playlist.toggleCurrentTrack()}"
-                            class="${playlist.paused ? 'paused' : 'playing'}"
-                        ></div>
-                        <div id="language-icon-section">
-                            <div
-                                id="lagnuage-icon"
-                                class="inline-icon ${playlist.updatedTrack.language}"
-                                @click="${() => playlist.showLanguageSwitcher()}"
-                            ></div>
-                            <div
-                                id="nation-icon"
-                                class="inline-icon ${playlist.updatedTrack.nation}"
-                                @click="${() => playlist.showNationSwitcher()}"
-                            ></div>
-                        </div>
-                        <div
-                            @click="${() =>
-                                playlist.changeProperty('participants', Enum.nextValue(Participants, playlist.updatedTrack.participants))}"
-                            id="participant-count-button"
-                            class="inline-icon ${playlist.updatedTrack.participants}"
-                        ></div>
-                        <div
-                            @click="${() =>
-                                playlist.changeProperty(
-                                    'instrumentation',
-                                    Enum.nextValue(Instrumentation, playlist.updatedTrack.instrumentation)
-                                )}"
-                            id="instrumentation-button"
-                            class="inline-icon"
-                        >
-                            ${playlist.updatedTrack.instrumentation}
-                        </div>
-
-                        <div id="rating-container">
-                            ${[1, 2, 3, 4, 5].map(
-                                (rating) =>
-                                    html` <div
-                                        class="star ${rating <= playlist.updatedTrack.rating ? 'selected' : ''} ${rating <=
-                                        playlist.hoveredRating
-                                            ? 'hovered'
-                                            : ''}"
-                                        @pointerover="${() => (playlist.hoveredRating = rating)}"
-                                        @pointerout="${() => (playlist.hoveredRating = 0)}"
-                                        @click="${(e) => playlist.changeProperty('rating', rating)}"
-                                    >
-                                        ★
-                                    </div>`
-                            )}
-                        </div>
-
-                        <div id="instruments-container" @click="${() => playlist.openInstrumentsDialog()}">
-                            ${playlist.updatedTrack.instrumentTypes?.length == 0
-                                ? html`<a id="add-instruments-link">Add Instruments</a>`
-                                : ''}
-                            ${playlist.updatedTrack.instrumentTypes.map(
-                                (instrument) => html` <div class="instrument-icon ${instrument}"></div> `
-                            )}
-                        </div>
-                    </div>
+                    <audio-tile-base
+                        .track="${Object.assign(new MusicModel(), playlist.updatedTrack)}"
+                        ?paused="${playlist.paused}"
+                        @toggle="${() => playlist.toggleCurrentTrack()}"
+                        @changeLanguage="${() => playlist.showLanguageSwitcher()}"
+                        @changeNation="${() => playlist.showNationSwitcher()}"
+                        @nextParticipants="${() =>
+                            playlist.changeProperty(
+                                'participants',
+                                Enum.nextValue(Participants, playlist.updatedTrack.participants)
+                            )}"
+                        @nextInstrumentation="${() =>
+                            playlist.changeProperty(
+                                'instrumentation',
+                                Enum.nextValue(Instrumentation, playlist.updatedTrack.instrumentation)
+                            )}"
+                        @changeRating="${(e) => playlist.changeProperty('rating', e.detail.rating)}"
+                        @changeInstruemnts="${() => playlist.openInstrumentsDialog()}"
+                    ></audio-tile-base>
                     <div id="audio-control-container">
                         <editable-label
                             id="audio-title"

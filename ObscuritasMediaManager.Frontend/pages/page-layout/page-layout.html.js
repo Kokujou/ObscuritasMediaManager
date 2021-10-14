@@ -1,6 +1,7 @@
 import { Pages } from '../../data/pages.js';
 import { html } from '../../exports.js';
 import { changePage } from '../../services/extensions/url.extension.js';
+import { PageLayout } from './page-layout.js';
 
 export function renderPageLayout() {
     return html`${renderHeader()}<br />
@@ -25,7 +26,12 @@ function renderNavigation() {
             <div id="link-area">
                 <div id="nav-section">
                     <div id="nav-section-links">
-                        <a href="javascript:void(0)" @click="${() => changePage(Pages.welcome.routes[0])}" id="home-link" class="nav-item">
+                        <a
+                            href="javascript:void(0)"
+                            @click="${() => changePage(Pages.welcome.routes[0])}"
+                            id="home-link"
+                            class="nav-item"
+                        >
                             Start
                         </a>
                     </div>
@@ -64,8 +70,14 @@ function renderNavigation() {
 /**
  * @param {string} target
  * @param {string} text
- * @param {undefined} pageLayout
  */
-function renderNavItem(target, text, pageLayout) {
-    return html`<a href="javascript:void(0)" @click="${() => changePage(target)}" class="nav-item"> ${text} </a>`;
+function renderNavItem(target, text) {
+    return html`<a
+        href="javascript:void(0)"
+        @auxclick="${(e) => PageLayout.handleAuxClick(e, target)}"
+        @click="${(e) => changePage(target, e)}"
+        class="nav-item"
+    >
+        ${text}
+    </a>`;
 }
