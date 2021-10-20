@@ -31,15 +31,6 @@ export const MoodColors = {
 
 export function renderMoodStyles(parentSelector) {
     return css`
-        ${Object.values(Mood).map(
-            (mood) => css`
-                ${unsafeCSS(parentSelector)}.${unsafeCSS(mood)} {
-                    --primary-color: ${MoodColors[mood]};
-                    --font-color: white;
-                }
-            `
-        )}
-
         ${unsafeCSS(parentSelector)} {
             --primary-color: #dddddd;
             --font-color: black;
@@ -48,5 +39,18 @@ export function renderMoodStyles(parentSelector) {
         ${unsafeCSS(parentSelector)}.monotonuous {
             --font-color: black;
         }
+
+        ${unsafeCSS(
+            Object.values(Mood).reduce(
+                (prev, mood) => `
+                    ${unsafeCSS(prev)}
+
+                    ${unsafeCSS(parentSelector)}.${unsafeCSS(mood)} {
+                        --primary-color: ${unsafeCSS(MoodColors[mood])};
+                        --font-color: white;
+                    }
+                `
+            )
+        )}
     `;
 }

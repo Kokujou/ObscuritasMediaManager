@@ -1,3 +1,4 @@
+import { Pages } from '../../data/pages.js';
 import { html } from '../../exports.js';
 import { MusicPage } from './music-page.js';
 
@@ -56,13 +57,14 @@ export function renderMusicPage(musicPage) {
                         ${musicPage.paginatedTracks.map(
                             (track) =>
                                 html`
-                                    <audio-tile
-                                        .track="${track}"
-                                        .image="${musicPage.getTrackIcon(track)}"
-                                        ?paused="${musicPage.isPaused || !musicPage.currentTrackPath.includes(track.path)}"
-                                        @toggle="${() => musicPage.toggleMusic(track)}"
-                                        @click="${() => musicPage.editTrack(track)}"
-                                    ></audio-tile>
+                                    <link-element .hash="${Pages.musicPlaylist.routes[0]}" .search="track=${track.hash}">
+                                        <audio-tile
+                                            .track="${track}"
+                                            .image="${musicPage.getTrackIcon(track)}"
+                                            ?paused="${musicPage.isPaused || !musicPage.currentTrackPath.includes(track.path)}"
+                                            @toggle="${() => musicPage.toggleMusic(track)}"
+                                        ></audio-tile>
+                                    </link-element>
                                 `
                         )}
                     </div>

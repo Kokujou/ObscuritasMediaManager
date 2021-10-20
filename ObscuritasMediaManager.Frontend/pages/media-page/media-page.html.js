@@ -1,7 +1,7 @@
+import { session } from '../../data/session.js';
 import { html } from '../../exports.js';
 import { importIcon } from '../../resources/icons/import-icon.svg.js';
 import { plusIcon } from '../../resources/icons/plus-icon.svg.js';
-import { changePage } from '../../services/extensions/url.extension.js';
 import { MediaPage } from './media-page.js';
 
 /**
@@ -38,18 +38,18 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                     ${mediaPage.filteredMedia.map(
                         (media) =>
                             html`
-                                <media-tile
-                                    .genres="${media.genres || []}"
-                                    .name="${media.name}"
-                                    .rating="${media.rating}"
-                                    .status="${media.state}"
-                                    .imageSource="${media.image}"
-                                    @imageReceived="${(e) => mediaPage.addImageFor(media, e.detail.imageData)}"
-                                    @ratingChanged="${(e) => mediaPage.updateRating(media, e.detail.newRating)}"
-                                    @genresChanged="${(e) => mediaPage.updateGenres(media, e.detail.genres)}"
-                                    @click="${() =>
-                                        changePage(location.hash.length > 1 ? location.hash.substr(1) : 'empty', `?guid=${media.id}`)}"
-                                ></media-tile>
+                                <link-element .hash="${session.currentPage.current()}" .search="guid=${media.id}">
+                                    <media-tile
+                                        .genres="${media.genres || []}"
+                                        .name="${media.name}"
+                                        .rating="${media.rating}"
+                                        .status="${media.state}"
+                                        .imageSource="${media.image}"
+                                        @imageReceived="${(e) => mediaPage.addImageFor(media, e.detail.imageData)}"
+                                        @ratingChanged="${(e) => mediaPage.updateRating(media, e.detail.newRating)}"
+                                        @genresChanged="${(e) => mediaPage.updateGenres(media, e.detail.genres)}"
+                                    ></media-tile
+                                ></link-element>
                             `
                     )}
 

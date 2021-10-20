@@ -10,7 +10,9 @@ export function renderAudioTileBase(audioTile) {
             id="audio-tile-container"
             @click="${(e) => {
                 e.stopPropagation();
+                e.preventDefault();
                 audioTile.notifyEvent('toggle');
+                return false;
             }}"
         >
             <div id="audio-image"></div>
