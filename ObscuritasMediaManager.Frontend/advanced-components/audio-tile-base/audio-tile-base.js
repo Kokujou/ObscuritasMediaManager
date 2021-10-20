@@ -33,8 +33,17 @@ export class AudioTileBase extends LitElement {
     /**
      * @param {string} name
      * @param {any} detail
+     * @param {Event} event
      */
-    notifyEvent(name, detail) {
+    notifyEvent(name, detail, event = null) {
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+        if (detail instanceof Event) {
+            detail.stopPropagation();
+            detail.preventDefault();
+        }
         this.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
     }
 }

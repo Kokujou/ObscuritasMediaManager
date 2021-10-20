@@ -12,22 +12,21 @@ export function renderAudioTileBase(audioTile) {
                 e.stopPropagation();
                 e.preventDefault();
                 audioTile.notifyEvent('toggle');
-                return false;
             }}"
         >
             <div id="audio-image"></div>
             <div
                 id="language-icon"
                 class="inline-icon ${audioTile.track.language}"
-                @click="${() => audioTile.notifyEvent('changeLanguage')}"
+                @click="${(e) => audioTile.notifyEvent('changeLanguage', e)}"
             ></div>
             <div
                 id="nation-icon"
                 class="inline-icon ${audioTile.track.nation}"
-                @click="${() => audioTile.notifyEvent('changeNation')}"
+                @click="${(e) => audioTile.notifyEvent('changeNation', e)}"
             ></div>
             <div
-                @click="${() => audioTile.notifyEvent('nextParticipants')}"
+                @click="${(e) => audioTile.notifyEvent('nextParticipants', e)}"
                 id="participant-count-button"
                 class="inline-icon ${audioTile.track.participants}"
             ></div>
@@ -35,7 +34,7 @@ export function renderAudioTileBase(audioTile) {
                 id="instrumentation-button"
                 class="inline-icon"
                 viewBox="0 0 60 18"
-                @click="${() => audioTile.notifyEvent('nextInstrumentation')}"
+                @click="${(e) => audioTile.notifyEvent('nextInstrumentation', e)}"
             >
                 <text x="50%" y="80%" text-anchor="middle">${audioTile.track.instrumentation}</text>
             </svg>
@@ -54,7 +53,7 @@ export function renderAudioTileBase(audioTile) {
                                 y="15"
                                 @pointerover="${() => (audioTile.hoveredRating = rating)}"
                                 @pointerout="${() => (audioTile.hoveredRating = 0)}"
-                                @click="${(e) => audioTile.notifyEvent('changeRating', { rating })}"
+                                @click="${(e) => audioTile.notifyEvent('changeRating', { rating }, e)}"
                             >
                                 ★
                             </text>
@@ -62,7 +61,7 @@ export function renderAudioTileBase(audioTile) {
                 )}
             </div>
 
-            <div id="instruments-container" @click="${() => audioTile.notifyEvent('changeInstruemnts')}">
+            <div id="instruments-container" @click="${(e) => audioTile.notifyEvent('changeInstruemnts', e)}">
                 ${audioTile.track.instrumentTypes?.length == 0 ? html`<a id="add-instruments-link">Add Instruments</a>` : ''}
                 ${audioTile.track.instrumentTypes.map(
                     (instrument) => html` <div class="instrument-icon inline-icon ${instrument}"></div> `
