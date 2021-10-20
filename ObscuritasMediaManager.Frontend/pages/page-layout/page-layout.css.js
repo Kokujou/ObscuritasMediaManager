@@ -193,8 +193,11 @@ function renderNavigationStyles() {
             white-space: nowrap;
 
             margin-left: 20px;
-            padding-top: 15px;
-            padding-bottom: 15px;
+            min-height: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             border-bottom: 2px solid transparent;
         }

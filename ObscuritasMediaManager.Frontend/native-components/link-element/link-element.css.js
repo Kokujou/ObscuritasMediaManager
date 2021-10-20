@@ -9,7 +9,8 @@ export function renderLinkElementStyles() {
             font-size: inherit;
             cursor: pointer;
 
-            display: block;
+            display: flex;
+            align-items: center;
             min-width: 100%;
             min-height: 100%;
         }
