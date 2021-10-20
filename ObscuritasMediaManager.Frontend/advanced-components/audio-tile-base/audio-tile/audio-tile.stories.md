@@ -36,11 +36,11 @@ give an example on how to implement your webcomponent. to enable our AHP styling
 use available knob-functions to make properties or contents of your webcomponent configurable in the storybook
 
 ```js preview-story
-import { Mood } from '../../data/enumerations/mood.js';
-import { Nation } from '../../data/enumerations/nation.js';
-import { Participants } from '../../data/enumerations/participants.js';
-import { Instrumentation } from '../../data/enumerations/instrumentation.js';
-import { MusicGenre } from '../../data/enumerations/music-genre.js';
+import { Mood } from '../../../data/enumerations/mood.js';
+import { Nation } from '../../../data/enumerations/nation.js';
+import { Participants } from '../../../data/enumerations/participants.js';
+import { Instrumentation } from '../../../data/enumerations/instrumentation.js';
+import { MusicGenre } from '../../../data/enumerations/music-genre.js';
 
 export const Multiple = () => html`
     <style>

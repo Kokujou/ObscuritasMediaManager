@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ObscuritasMediaManager.Backend.DataRepositories;
+using Xabe.FFmpeg;
 
 namespace ObscuritasMediaManager.Backend
 {
@@ -44,6 +45,8 @@ namespace ObscuritasMediaManager.Backend
                     NamingStrategy = new CamelCaseNamingStrategy()
                 }
             };
+
+            FFmpeg.SetExecutablesPath("D:\\Programme\\ffmpeg\\bin");
 
             services.AddSwaggerGen(options => { });
         }

@@ -25,6 +25,9 @@ export function renderMusicPage(musicPage) {
                             <a id="import-files" @click="${() => musicPage.importFolder()}"></a>
                             <a id="create-song"></a>
                         </div>
+                        <div class="option-section" id="import-section">
+                            <a id="cleanup-tracks" @click="${() => musicPage.cleanupTracks()}"></a>
+                        </div>
                         <div class="option-section" id="playlist-section">
                             <a id="save-playlist"></a>
                             <a id="add-to-playlist"></a>

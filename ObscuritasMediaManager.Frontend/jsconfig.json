@@ -1,11 +1,16 @@
 {
     "compilerOptions": {
-        "experimentalDecorators": true,
         "module": "esnext",
         "target": "esnext",
-        "checkJs": true
+        "checkJs": true,
+        "sourceMap": false,
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+        "watch": true,
+        "pretty": true,
+        "moduleResolution": "node"
     },
     "include": ["**/*.js"],
-    "exclude": ["./node_modules/**", "./index.bundled.js", "**/exports.js", "./rollup.config.js"],
+    "exclude": ["./node_modules/**", "**/*.bundled.js", "**/exports.js", "./rollup.config.js"],
     "compileOnSave": true
 }

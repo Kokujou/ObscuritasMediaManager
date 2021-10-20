@@ -28,7 +28,7 @@ export class DialogBase extends LitElement {
     }
 
     decline() {
-        var event = new CustomEvent('decline');
+        var event = new CustomEvent('decline', { bubbles: true, composed: true });
         this.dispatchEvent(event);
     }
 }

@@ -4,10 +4,12 @@ import { MusicModel } from '../../data/music.model.js';
 import { Subscription } from '../../data/observable.js';
 import { Pages } from '../../data/pages.js';
 import { session } from '../../data/session.js';
+import { SelectOptionsDialog } from '../../dialogs/select-options-dialog2/select-options-dialog.js';
 import { LitElement } from '../../exports.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
+import { CleanupService } from '../../services/cleanup.service.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage } from '../../services/extensions/url.extension.js';
@@ -179,6 +181,17 @@ export class MusicPage extends LitElement {
         this.filter = filter;
         localStorage.setItem(`music.search`, JSON.stringify(this.filter));
         this.requestUpdate(undefined);
+    }
+
+    async cleanupTracks() {
+        var brokenTracks = await CleanupService.getBrokenAudioTracks();
+
+        var dialog = SelectOptionsDialog.show(
+            brokenTracks.reduce((prev, curr) => {
+                prev[curr.hash] = curr.displayName;
+                return prev;
+            }, {})
+        );
     }
 
     disconnectedCallback() {
