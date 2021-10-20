@@ -77,9 +77,18 @@ export class MusicPage extends LitElement {
     }
 
     async initializeData() {
-        this.musicTracks = await MusicService.getAll();
+        this.loading = true;
+        await this.requestUpdate(undefined);
+
+        try {
+            this.musicTracks = await MusicService.getAll();
+        } catch (err) {
+            console.error(err);
+        }
         var localSearchString = localStorage.getItem(`music.search`);
         if (localSearchString) this.filter = JSON.parse(localSearchString);
+
+        this.loading = false;
         await this.requestUpdate(undefined);
     }
 

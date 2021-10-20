@@ -53,21 +53,24 @@ export function renderMusicPage(musicPage) {
                     scrollTopThreshold="50"
                     @scrollBottom="${() => musicPage.loadNext()}"
                 >
-                    <div id="search-results">
-                        ${musicPage.paginatedTracks.map(
-                            (track) =>
-                                html`
-                                    <link-element .hash="${Pages.musicPlaylist.routes[0]}" .search="track=${track.hash}">
-                                        <audio-tile
-                                            .track="${track}"
-                                            .image="${musicPage.getTrackIcon(track)}"
-                                            ?paused="${musicPage.isPaused || !musicPage.currentTrackPath.includes(track.path)}"
-                                            @toggle="${() => musicPage.toggleMusic(track)}"
-                                        ></audio-tile>
-                                    </link-element>
-                                `
-                        )}
-                    </div>
+                    ${musicPage.loading
+                        ? html`<partial-loading></partial-loading>`
+                        : html` <div id="search-results">
+                              ${musicPage.paginatedTracks.map(
+                                  (track) =>
+                                      html`
+                                          <link-element .hash="${Pages.musicPlaylist.routes[0]}" .search="track=${track.hash}">
+                                              <audio-tile
+                                                  .track="${track}"
+                                                  .image="${musicPage.getTrackIcon(track)}"
+                                                  ?paused="${musicPage.isPaused ||
+                                                  !musicPage.currentTrackPath.includes(track.path)}"
+                                                  @toggle="${() => musicPage.toggleMusic(track)}"
+                                              ></audio-tile>
+                                          </link-element>
+                                      `
+                              )}
+                          </div>`}
                 </paginated-scrolling>
             </div>
             <audio id="current-track" .volume="${musicPage.currentVolumne}" .src="${musicPage.currentTrackPath}"></audio>

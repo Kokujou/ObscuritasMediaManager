@@ -21,6 +21,7 @@ import { CustomToggle } from './native-components/custom-toggle/custom-toggle.js
 import { DropDown } from './native-components/drop-down/drop-down.js';
 import { EditableLabel } from './native-components/editable-label/editable-label.js';
 import { LinkElement } from './native-components/link-element/link-element.js';
+import { PartialLoading } from './native-components/partial-loading/partial-loading.js';
 import { RangeSlider } from './native-components/range-slider/range-slider.js';
 import { ScrollSelect } from './native-components/scroll-seelect/scroll-select.js';
 import { SideScroller } from './native-components/side-scroller/side-scroller.js';
@@ -83,3 +84,4 @@ window.customElements.define('star-rating', StarRating);
 window.customElements.define('custom-toggle', CustomToggle);
 window.customElements.define('audio-tile-base', AudioTileBase);
 window.customElements.define('link-element', LinkElement);
+window.customElements.define('partial-loading', PartialLoading);
