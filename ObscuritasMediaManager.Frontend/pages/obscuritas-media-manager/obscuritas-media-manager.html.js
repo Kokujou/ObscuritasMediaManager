@@ -6,6 +6,7 @@ import { ObscuritasMediaManager } from './obscuritas-media-manager.js';
  * @param {ObscuritasMediaManager} mediaManager
  */
 export function renderObscuritasMediaManager(mediaManager) {
+    if (!mediaManager.initialized) return '';
     return html`<page-routing
         .routes="${Pages}"
         defaultFragment="welcome"

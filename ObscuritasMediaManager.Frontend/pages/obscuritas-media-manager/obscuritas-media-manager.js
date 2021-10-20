@@ -44,24 +44,31 @@ export class ObscuritasMediaManager extends LitElement {
 
     constructor() {
         super();
-        this.initialized = false;
-
-        this.loadResources().then(() => {
-            this.initialized = true;
-            this.requestUpdate(undefined);
-        });
 
         this.loadedResourceIndex = 0;
+        this.loadResources();
     }
 
     async loadResources() {
-        session.mediaList.next(await MediaService.getAllMedia());
-        session.instruments.next(await MusicService.getInstruments());
+        this.initialized = false;
+
+        try {
+            session.mediaList.next(await MediaService.getAllMedia());
+        } catch (err) {
+            console.error(err);
+        }
+        try {
+            session.instruments.next(await MusicService.getInstruments());
+        } catch (err) {
+            console.error(err);
+        }
+
+        this.initialized = true;
+        this.requestUpdate(undefined);
     }
 
     render() {
-        if (this.loadedResourceIndex >= ObscuritasMediaManager.resourceList.length)
-            return renderObscuritasMediaManager(this);
+        if (this.loadedResourceIndex >= ObscuritasMediaManager.resourceList.length) return renderObscuritasMediaManager(this);
         else
             return this.currentResources.map(
                 (resUrl) => html`<img invisible src="${resUrl}" @load="${() => this.loadedResourceIndex++}" />`
