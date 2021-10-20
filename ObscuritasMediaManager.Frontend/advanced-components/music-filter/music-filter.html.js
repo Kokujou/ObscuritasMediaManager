@@ -1,7 +1,7 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { InstrumentTypes } from '../../data/enumerations/instrument-types.js';
 import { Instrumentation } from '../../data/enumerations/instrumentation.js';
-import { Mood } from '../../data/enumerations/mood.js';
+import { Mood, MoodColors } from '../../data/enumerations/mood.js';
 import { Nation } from '../../data/enumerations/nation.js';
 import { Participants } from '../../data/enumerations/participants.js';
 import { html } from '../../exports.js';
@@ -129,6 +129,7 @@ export function renderMusicFilter(musicFilter) {
                     multiselect
                     maxDisplayDepth="5"
                     .options="${Object.values(Mood)}"
+                    .colors="${MoodColors}"
                 >
                 </drop-down>
             </div>

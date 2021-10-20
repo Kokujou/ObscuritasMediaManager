@@ -118,6 +118,7 @@ export function renderMusicFilterStyles() {
             width: 90%;
 
             color: white;
+            --toggled-color: purple;
         }
 
         input[type='text'] {
@@ -140,9 +141,6 @@ export function renderMusicFilterStyles() {
             margin-top: 30px;
             display: flex;
             align-items: center;
-        }
-
-        #mood-filter drop-down[options*=] {
         }
     `;
 }

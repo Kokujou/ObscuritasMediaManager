@@ -98,6 +98,10 @@ function renderDropDownOption(dropdown, key, value) {
 function renderToggle(dropdown, key, value) {
     return html`
         <div class="label">${key}</div>
-        <custom-toggle ?checked="${dropdown.valueActive(value)}" @toggle="${() => (dropdown.value = value)}"></custom-toggle>
+        <custom-toggle
+            style="--toggled-color:${dropdown.colors[key] || 'unset'}"
+            ?checked="${dropdown.valueActive(value)}"
+            @toggle="${() => (dropdown.value = value)}"
+        ></custom-toggle>
     `;
 }

@@ -5,7 +5,7 @@ export function renderCustomToggleStyles() {
         :host {
             position: relative;
             display: block;
-            background-color: var(--background-color);
+            background-color: #0007;
             border-radius: 5px;
             --width: 60px;
             --height: 30px;
@@ -13,6 +13,9 @@ export function renderCustomToggleStyles() {
             width: var(--width);
             cursor: pointer;
             transition: background-color 1s ease;
+
+            filter: saturate(1.5);
+            box-shadow: 0 0 5px black;
         }
 
         #slider {
