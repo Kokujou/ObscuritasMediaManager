@@ -21,7 +21,7 @@ export class MusicFilterOptions {
         CheckboxState.Ignore
     );
     moods = new FilterEntry(Mood, CheckboxState.Allow);
-    genres = new FilterEntry(MusicGenre);
+    genres = new FilterEntry(MusicGenre, CheckboxState.Allow);
     instrumentations = new FilterEntry(Instrumentation, CheckboxState.Allow);
     participants = new FilterEntry(Participants, CheckboxState.Allow);
 }

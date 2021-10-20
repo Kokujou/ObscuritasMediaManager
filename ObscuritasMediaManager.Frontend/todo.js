@@ -1,4 +1,12 @@
 //TODO:  implement audio page
+/**
+ * - single track creation
+ * - permanent playlist creation
+ * - permanent playlist search/selection
+ * - permanent playlist change
+ * - export playlist
+ */
+
 //TODO:  implement sorting
 //TODO:  implement edit-dialog
 //TODO:  implement playlist functionality (ongoing)

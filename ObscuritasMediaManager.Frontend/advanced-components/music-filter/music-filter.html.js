@@ -2,6 +2,7 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { InstrumentTypes } from '../../data/enumerations/instrument-types.js';
 import { Instrumentation } from '../../data/enumerations/instrumentation.js';
 import { Mood, MoodColors } from '../../data/enumerations/mood.js';
+import { MusicGenre } from '../../data/enumerations/music-genre.js';
 import { Nation } from '../../data/enumerations/nation.js';
 import { Participants } from '../../data/enumerations/participants.js';
 import { html } from '../../exports.js';
@@ -134,7 +135,19 @@ export function renderMusicFilter(musicFilter) {
                 </drop-down>
             </div>
             <div id="genre-filter" class="filter">
-                <div class="filter-heading"><div id="heading-label">genres:</div></div>
+                <div class="filter-heading">
+                    <div id="heading-label">genres:</div>
+                </div>
+                <drop-down
+                    @selectionChange="${(e) => musicFilter.handleDropdownChange('genres', e.detail.value)}"
+                    .values="${Object.keys(musicFilter.filter.genres.states).filter(
+                        (key) => musicFilter.filter.genres.states[key] == CheckboxState.Allow
+                    )}"
+                    multiselect
+                    maxDisplayDepth="5"
+                    .options="${Object.values(MusicGenre)}"
+                >
+                </drop-down>
             </div>
             <div id="instrumentation-filter" class="filter">
                 <div class="filter-heading">
