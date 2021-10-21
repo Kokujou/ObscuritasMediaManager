@@ -10,4 +10,22 @@ export class CleanupService {
             return responseArray.map((x) => Object.assign(new MusicModel(), x));
         } catch (err) {}
     }
+
+    /**
+     * @param {string[]} trackHashes
+     * @returns {Promise<string[]>}
+     */
+    static async cleanupMusicTracks(trackHashes) {
+        try {
+            var response = await fetch('/ObscuritasMediaManager/api/cleanup/music', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(trackHashes),
+            });
+            if (response.status == 200) return (await response.json()).failed;
+            if (response.status == 204) return [];
+
+            throw { status: response.status };
+        } catch (err) {}
+    }
 }

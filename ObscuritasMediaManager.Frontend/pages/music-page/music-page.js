@@ -4,6 +4,7 @@ import { MusicModel } from '../../data/music.model.js';
 import { Subscription } from '../../data/observable.js';
 import { Pages } from '../../data/pages.js';
 import { session } from '../../data/session.js';
+import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog2/select-options-dialog.js';
 import { LitElement } from '../../exports.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
@@ -186,12 +187,35 @@ export class MusicPage extends LitElement {
     async cleanupTracks() {
         var brokenTracks = await CleanupService.getBrokenAudioTracks();
 
+        if (brokenTracks.length <= 0)
+            MessageDialog.show('Alles Ok!', 'Alle in Tracks in der Datenbank sind valide Audio-Dateien.');
+
         var dialog = SelectOptionsDialog.show(
             brokenTracks.reduce((prev, curr) => {
                 prev[curr.hash] = curr.displayName;
                 return prev;
             }, {})
         );
+
+        dialog.addEventListener('decline', () => dialog.remove());
+        dialog.addEventListener('accept', async (e) => {
+            try {
+                var selected = /** @type {CustomEvent<{selected: string[]}>} */ (e).detail.selected;
+                var failedTracks = await CleanupService.cleanupMusicTracks(selected);
+                if (failedTracks.length > 0)
+                    await MessageDialog.show(
+                        'Warnung!',
+                        `Die folgenden Tracks konnten nicht gelöscht werden:
+                        ${failedTracks.map((hash) => brokenTracks.find((track) => track.hash == hash).displayName).join('\n')} 
+                    `
+                    );
+                dialog.remove();
+                location.reload();
+            } catch (err) {
+                console.error(err);
+                MessageDialog.show('Bereinigung fehlgeschlagen', err);
+            }
+        });
     }
 
     disconnectedCallback() {

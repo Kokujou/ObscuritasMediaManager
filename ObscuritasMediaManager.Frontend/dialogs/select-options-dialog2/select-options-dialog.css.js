@@ -6,10 +6,18 @@ export function renderSelectOptionsDialogStyles() {
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+            max-height: 300px;
+            overflow-y: auto;
         }
 
         .option {
             margin: 10px 0;
+            width: 100%;
+        }
+
+        label {
+            width: 100%;
         }
     `;
 }

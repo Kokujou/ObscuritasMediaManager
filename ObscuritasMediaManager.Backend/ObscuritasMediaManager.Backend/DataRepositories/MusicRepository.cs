@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Exceptions;
@@ -97,6 +98,12 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             return response;
         }
 
+        public async Task<IEnumerable<MusicModel>> GetSelectedAsync(IEnumerable<string> trackHashes)
+        {
+            var query = await _context.Music.Where(track => trackHashes.Contains(track.Hash)).ToListAsync();
+            return query;
+        }
+
         public async Task BatchCreateMusicTracksAsync(IEnumerable<MusicModel> media)
         {
             await _context.InsertIfNotExistsAsync(media);
@@ -105,6 +112,12 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
         public async Task<IEnumerable<InstrumentModel>> GetInstruments()
         {
             return await _context.Instruments.ToListAsync();
+        }
+
+        public async Task BatchDeleteTracks(IEnumerable<MusicModel> tracks)
+        {
+            _context.Music.RemoveRange(tracks);
+            await _context.SaveChangesAsync();
         }
     }
 }

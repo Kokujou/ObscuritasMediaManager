@@ -24,3 +24,5 @@
 //TODO: implement batch-update for file-path re-retrieval - include file-size as filter criteria
 //TODO: error page
 //TODO: implement broken file detection and cleanup
+//TODO: implement message snackbar for error and success notifications
+//TODO: implement loading-indiciation for requests

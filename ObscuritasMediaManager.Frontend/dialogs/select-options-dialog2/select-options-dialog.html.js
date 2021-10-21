@@ -11,7 +11,12 @@ export function renderSelectOptionsDialog(dialog) {
                 ${Object.keys(dialog.options).map(
                     (key) =>
                         html`<div class="option">
-                            <input id="${key}" type="${dialog.multiselect ? 'checkbox' : 'radio'}" .value="${key}" />
+                            <input
+                                id="${key}"
+                                type="${dialog.multiselect ? 'checkbox' : 'radio'}"
+                                .value="${key}"
+                                checked="true"
+                            />
                             <label for="${key}">${dialog.options[key]}</label>
                         </div>`
                 )}
