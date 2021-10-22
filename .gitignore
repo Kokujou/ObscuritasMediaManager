@@ -4,3 +4,4 @@ node_modules
 bin
 obj
 database.sqlite
+**/nswag_template/nswag_client
