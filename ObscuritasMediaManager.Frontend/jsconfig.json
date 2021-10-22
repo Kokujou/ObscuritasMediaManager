@@ -11,6 +11,6 @@
         "moduleResolution": "node"
     },
     "include": ["**/*.js"],
-    "exclude": ["**/node_modules/**", "**/*.bundled.js", "**/exports.js", "./rollup.config.js"],
+    "exclude": ["./node_modules/**", "**/*.bundled.js", "**/exports.js", "./rollup.config.js"],
     "compileOnSave": true
 }

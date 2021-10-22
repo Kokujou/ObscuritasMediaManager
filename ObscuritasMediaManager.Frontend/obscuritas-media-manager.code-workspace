@@ -10,6 +10,12 @@
         "blueprint.templatesPath": ["./templates"],
         "files.associations": {
             "**/templates/**/*.js": "txt"
+        },
+        "files.exclude": {
+            "**/.DS_Store": true,
+            "**/node_modules/**": true,
+            "exports.js": true,
+            ".vscode/**": true
         }
     }
 }
