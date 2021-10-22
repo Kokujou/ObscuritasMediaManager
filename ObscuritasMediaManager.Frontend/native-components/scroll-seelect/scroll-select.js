@@ -1,5 +1,5 @@
-import { Mood } from '../../data/enumerations/mood.js';
 import { LitElement } from '../../exports.js';
+import { Mood } from '../../obscuritas-media-manager-backend-client.js';
 import { getTargetScrollPosition, scrollIntoParentViewY } from '../../services/extensions/document.extensions.js';
 import { renderScrollSelectStyles } from './scroll-select.css.js';
 import { renderScrollSelect } from './scroll-select.html.js';
@@ -44,7 +44,7 @@ export class ScrollSelect extends LitElement {
     constructor() {
         super();
         /** @type {string[]} */ this.options = [];
-        /** @type {Mood} */ this.value = '';
+        /** @type {Mood} */ this.value = Mood.Unset;
         /** @type {number} */ this.currentItemIndex = 0;
         /** @type {boolean} */ this.mouseDown = false;
         /** @type {number} */ this.mouseStartY = 0;

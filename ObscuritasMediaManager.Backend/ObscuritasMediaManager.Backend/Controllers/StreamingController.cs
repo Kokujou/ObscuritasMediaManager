@@ -18,9 +18,8 @@ namespace ObscuritasMediaManager.Backend.Controllers
             _repository = repository;
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> BatchPostStreamingEntries(
+        public async Task<ActionResult> BatchPostStreamingEntries(
             [FromBody] IEnumerable<StreamingEntryModel> streamingEntries)
         {
             try
@@ -35,7 +34,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet("{guid:Guid}")]
-        public async Task<IActionResult> GetStreamingEntry(Guid guid)
+        public async Task<ActionResult<IEnumerable<StreamingEntryModel>>> GetStreamingEntries(Guid guid)
         {
             try
             {
@@ -48,7 +47,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet("{guid:Guid}/season/{season}/episode/{episode}")]
-        public async Task<IActionResult> GetStream(Guid guid, string season, int episode)
+        public async Task<ActionResult<StreamingEntryModel>> GetStream(Guid guid, string season, int episode)
         {
             var entry = await _repository.GetAsync(guid, season, episode);
             return Ok(entry);

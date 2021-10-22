@@ -26,12 +26,7 @@ export class PageRouting extends LitElement {
         else searchString = '';
 
         var newurl =
-            window.location.protocol +
-            '//' +
-            window.location.host +
-            window.location.pathname +
-            searchString +
-            `#${newHash}`;
+            window.location.protocol + '//' + window.location.host + window.location.pathname + searchString + `#${newHash}`;
         window.history.replaceState({ path: newurl }, '', newurl);
     }
 

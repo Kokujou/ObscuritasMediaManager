@@ -29,7 +29,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpDelete("music")]
-        public async Task<IActionResult> CleanupMusic([FromBody] List<string> trackHashes)
+        public async Task<ActionResult<IEnumerable<string>>> CleanupMusic([FromBody] List<string> trackHashes)
         {
             try
             {
@@ -46,12 +46,8 @@ namespace ObscuritasMediaManager.Backend.Controllers
 
                 await _musicRepository.BatchDeleteTracks(selectedBrokenTracks);
 
-
                 if (failedHashes.Any())
-                    return Ok(new
-                    {
-                        Failed = failedHashes
-                    });
+                    return Ok(failedHashes);
 
                 return NoContent();
             }

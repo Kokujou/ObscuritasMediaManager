@@ -1,6 +1,6 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { MusicFilterOptions } from '../../data/music-filter-options.js';
-import { MusicModel } from '../../data/music.model.js';
+import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { Subscription } from '../../data/observable.js';
 import { Pages } from '../../data/pages.js';
 import { session } from '../../data/session.js';
@@ -10,13 +10,11 @@ import { LitElement } from '../../exports.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
-import { CleanupService } from '../../services/cleanup.service.js';
+import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage } from '../../services/extensions/url.extension.js';
 import { MusicFilterService } from '../../services/music-filter.service.js';
-import { MusicService } from '../../services/music.service.js';
-import { PlaylistService } from '../../services/playlist.service.js';
 import { renderMusicPageStyles } from './music-page.css.js';
 import { renderMusicPage } from './music-page.html.js';
 
@@ -37,7 +35,7 @@ export class MusicPage extends LitElement {
         var filteredTracks = [...this.musicTracks];
 
         MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instrumentTypes, 'instrumentTypes');
-        MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instruments, 'instrumentNames');
+        MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instruments, 'instruments');
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.instrumentations, 'instrumentation');
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.languages, 'language');
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.nations, 'nation');
@@ -58,7 +56,7 @@ export class MusicPage extends LitElement {
     constructor() {
         super();
 
-        /** @type {MusicModel[]} */ this.musicTracks = [];
+        /** @type {ExtendedMusicModel[]} */ this.musicTracks = [];
         /** @type {string} */ this.currentTrackPath = '';
         /** @type {number} */ this.currentVolumne = 0.1;
         /** @type {boolean} */ this.isPaused = true;
@@ -84,7 +82,7 @@ export class MusicPage extends LitElement {
         await this.requestUpdate(undefined);
 
         try {
-            this.musicTracks = await MusicService.getAll();
+            this.musicTracks = (await MusicService.getAll()).map((x) => new ExtendedMusicModel(x));
         } catch (err) {
             console.error(err);
         }
@@ -100,7 +98,7 @@ export class MusicPage extends LitElement {
     }
 
     /**
-     * @param {MusicModel} track
+     * @param {ExtendedMusicModel} track
      */
     getTrackIcon(track) {
         var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.path}`;
@@ -120,7 +118,7 @@ export class MusicPage extends LitElement {
     }
 
     /**
-     * @param {MusicModel} track
+     * @param {ExtendedMusicModel} track
      */
     async toggleMusic(track) {
         var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.path}`;
@@ -160,7 +158,7 @@ export class MusicPage extends LitElement {
         var musickTracks = [];
         for (var i = 0; i < files.length; i++) {
             try {
-                var track = MusicModel.fromFile(files[i], basePath);
+                var track = ExtendedMusicModel.fromFile(files[i], basePath);
                 if (musickTracks.some((x) => x.name == track.name)) continue;
                 musickTracks.push(track);
             } catch (err) {
@@ -185,7 +183,7 @@ export class MusicPage extends LitElement {
     }
 
     async cleanupTracks() {
-        var brokenTracks = await CleanupService.getBrokenAudioTracks();
+        var brokenTracks = (await CleanupService.getBrokenAudioTracks()).map((x) => new ExtendedMusicModel(x));
 
         if (brokenTracks.length <= 0)
             MessageDialog.show('Alles Ok!', 'Alle in Tracks in der Datenbank sind valide Audio-Dateien.');
@@ -201,7 +199,7 @@ export class MusicPage extends LitElement {
         dialog.addEventListener('accept', async (e) => {
             try {
                 var selected = /** @type {CustomEvent<{selected: string[]}>} */ (e).detail.selected;
-                var failedTracks = await CleanupService.cleanupMusicTracks(selected);
+                var failedTracks = await CleanupService.cleanupMusic(selected);
                 if (failedTracks.length > 0)
                     await MessageDialog.show(
                         'Warnung!',

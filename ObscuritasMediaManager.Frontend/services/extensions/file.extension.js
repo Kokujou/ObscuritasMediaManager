@@ -1,7 +1,7 @@
 import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
 import { PathInputDialog } from '../../dialogs/path-input-dialog/path-input-dialog.js';
 import { html, render } from '../../exports.js';
-import { FileService } from '../file.service.js';
+import { FileService } from '../backend.services.js';
 
 export function fileToDataUrl(file) {
     return new Promise((resolve, reject) => {
@@ -68,4 +68,30 @@ export function importFiles() {
             });
         });
     });
+}
+
+/**
+ * @param {File} file
+ * @param {string} basePath
+ */
+export function analyzeMediaFile(file, basePath) {
+    var streamingEntry = {};
+    // @ts-ignore
+    var fileLevels = file.webkitRelativePath.split('/');
+
+    // @ts-ignore
+    streamingEntry.src = `${basePath}\\${file.webkitRelativePath}`;
+    streamingEntry.season = 'Staffel 1';
+    if (fileLevels.length == 4) {
+        streamingEntry.season = fileLevels[2];
+        streamingEntry.name = fileLevels[1];
+    } else if (fileLevels.length == 3) streamingEntry.name = fileLevels[1];
+    else {
+        // @ts-ignore
+        var error = `the depth of the selected folder must be between 3 and 4 (root -> media -> (season) -> episode). file: ${file.webkitRelativePath}`;
+        console.error(error);
+        throw new Error(error);
+    }
+
+    return streamingEntry;
 }

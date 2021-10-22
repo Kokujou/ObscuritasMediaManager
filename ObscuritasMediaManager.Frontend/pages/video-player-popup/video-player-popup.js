@@ -1,7 +1,7 @@
-import { StreamingEntryModel } from '../../data/streaming-entry.model.js';
 import { LitElement } from '../../exports.js';
+import { StreamingEntryModel } from '../../obscuritas-media-manager-backend-client.js';
+import { StreamingService } from '../../services/backend.services.js';
 import { getQueryValue } from '../../services/extensions/url.extension.js';
-import { StreamingService } from '../../services/streaming.service.js';
 import { renderVideoPlayerStyles } from './video-player-popup.css.js';
 import { renderVideoPlayer } from './video-player-popup.html.js';
 
@@ -25,9 +25,9 @@ export class VideoPlayerPopup extends LitElement {
     async loadEntry() {
         var guid = getQueryValue('guid');
         var season = getQueryValue('season');
-        var episode = getQueryValue('episode');
+        var episode = Number.parseInt(getQueryValue('episode'));
 
-        var entry = await StreamingService.getStreamingEntry(guid, season, episode);
+        var entry = await StreamingService.getStream(guid, season, episode);
         this.src = `/ObscuritasMediaManager/api/file/video?videoPath=${entry.src}`;
     }
 

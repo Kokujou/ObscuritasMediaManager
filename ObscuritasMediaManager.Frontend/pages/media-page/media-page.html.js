@@ -46,8 +46,8 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                                         .status="${media.state}"
                                         .imageSource="${media.image}"
                                         @imageReceived="${(e) => mediaPage.addImageFor(media, e.detail.imageData)}"
-                                        @ratingChanged="${(e) => mediaPage.updateRating(media, e.detail.newRating)}"
-                                        @genresChanged="${(e) => mediaPage.updateGenres(media, e.detail.genres)}"
+                                        @ratingChanged="${(e) => mediaPage.changePropertyOf(media, 'rating', e.detail.newRating)}"
+                                        @genresChanged="${(e) => mediaPage.changePropertyOf(media, 'genres', e.detail.genres)}"
                                     ></media-tile
                                 ></link-element>
                             `

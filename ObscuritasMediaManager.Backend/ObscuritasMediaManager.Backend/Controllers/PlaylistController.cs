@@ -22,7 +22,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpPost("temp")]
-        public IActionResult CreateTemporaryPlaylist([FromBody] IEnumerable<string> hashes)
+        public ActionResult<Guid> CreateTemporaryPlaylist([FromBody] IEnumerable<string> hashes)
         {
             var guid = Guid.NewGuid();
             TemporaryPlaylistRepository.Add(guid, hashes);
@@ -30,7 +30,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet("temp/{guid:Guid}")]
-        public async Task<IActionResult> GetTemporaryPlaylist(Guid guid)
+        public async Task<ActionResult<IEnumerable<MusicModel>>> GetTemporaryPlaylist(Guid guid)
         {
             try
             {

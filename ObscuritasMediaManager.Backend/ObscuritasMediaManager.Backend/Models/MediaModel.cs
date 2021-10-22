@@ -11,9 +11,7 @@ namespace ObscuritasMediaManager.Backend.Models
         public string Type { get; set; }
         public int Rating { get; set; }
         public int Release { get; set; }
-
-        public string GenreString { get; set; }
-        public IEnumerable<string> Genres => GenreString.Split(',');
+        public IEnumerable<string> Genres { get; set; } = new List<string>();
 
         public int State { get; set; }
         public string Description { get; set; }

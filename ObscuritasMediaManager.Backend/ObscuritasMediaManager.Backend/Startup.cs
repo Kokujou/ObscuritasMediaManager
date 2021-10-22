@@ -1,4 +1,3 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,9 +33,8 @@ namespace ObscuritasMediaManager.Backend
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(
-                    new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+                    new JsonStringEnumConverter());
             });
-
 
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
             {

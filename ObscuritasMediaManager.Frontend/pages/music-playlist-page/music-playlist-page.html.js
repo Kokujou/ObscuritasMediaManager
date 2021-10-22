@@ -1,9 +1,9 @@
 import { Instrumentation } from '../../data/enumerations/instrumentation.js';
-import { Mood } from '../../data/enumerations/mood.js';
 import { MusicGenre } from '../../data/enumerations/music-genre.js';
 import { Participants } from '../../data/enumerations/participants.js';
-import { MusicModel } from '../../data/music.model.js';
+import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { html } from '../../exports.js';
+import { Mood } from '../../obscuritas-media-manager-backend-client.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MusicPlaylistPage } from './music-playlist-page.js';
 
@@ -34,7 +34,7 @@ export function renderMusicPlaylist(playlist) {
                         </scroll-select>
                     </div>
                     <audio-tile-base
-                        .track="${Object.assign(new MusicModel(), playlist.updatedTrack)}"
+                        .track="${new ExtendedMusicModel(playlist.updatedTrack)}"
                         ?paused="${playlist.paused}"
                         @toggle="${() => playlist.toggleCurrentTrack()}"
                         @changeLanguage="${() => playlist.showLanguageSwitcher()}"

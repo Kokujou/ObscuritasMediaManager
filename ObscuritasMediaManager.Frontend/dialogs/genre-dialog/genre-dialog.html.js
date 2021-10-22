@@ -1,5 +1,5 @@
-import { GenreModel } from '../../data/genre.model.js';
 import { html } from '../../exports.js';
+import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreDialog } from './genre-dialog.js';
 
 /**

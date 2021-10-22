@@ -22,7 +22,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BatchCreateMusicTracks(IEnumerable<MusicModel> tracks)
+        public async Task<ActionResult> BatchCreateMusicTracks(IEnumerable<MusicModel> tracks)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpPost("recalculate-hashes")]
-        public async Task<IActionResult> RecalculateHashes()
+        public async Task<ActionResult> RecalculateHashes()
         {
             try
             {
@@ -116,13 +116,13 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpPut("{hash}")]
-        public async Task<IActionResult> UpdateAsync(string hash, [FromBody] UpdateRequest<MusicModel> updateRequest)
+        public async Task<ActionResult> UpdateAsync(string hash, [FromBody] UpdateRequest<MusicModel> updateRequest)
         {
             try
             {
                 if (updateRequest.OldModel.Hash != default && hash != updateRequest.OldModel.Hash)
                     return BadRequest("Ids of objects did not match");
-                var invalidInstruments = await GetInvalidInstrumentsAsync(updateRequest.NewModel.InstrumentsString);
+                var invalidInstruments = await GetInvalidInstrumentsAsync(updateRequest.NewModel.Instruments);
                 if (invalidInstruments.Count > 0)
                     return BadRequest($"sent instruments invalid: {string.Join(",", invalidInstruments)}");
 
@@ -135,14 +135,14 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-        private async Task<List<string>> GetInvalidInstrumentsAsync(string instrumentsString)
+        private async Task<List<string>> GetInvalidInstrumentsAsync(IEnumerable<string> instrumentNames)
         {
-            if (string.IsNullOrEmpty(instrumentsString)) return new List<string>();
+            instrumentNames = instrumentNames.ToList();
+            if (!instrumentNames.Any()) return new List<string>();
 
             var instruments = await _repository.GetInstruments();
             var instrumentStrings = instruments.Select(x => x.Name);
-            var sentInstruments = instrumentsString.Split(",");
-            var invalidInstruments = sentInstruments.Except(instrumentStrings).ToList();
+            var invalidInstruments = instrumentNames.Except(instrumentStrings).ToList();
             return invalidInstruments;
         }
     }

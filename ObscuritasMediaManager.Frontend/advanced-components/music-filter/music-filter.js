@@ -1,11 +1,11 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
-import { GenreModel } from '../../data/genre.model.js';
 import { MusicFilterOptions } from '../../data/music-filter-options.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { LitElement } from '../../exports.js';
+import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
 import { renderMusicFilterStyles } from './music-filter.css.js';
 import { renderMusicFilter } from './music-filter.html.js';
 
@@ -91,7 +91,9 @@ export class MusicFilter extends LitElement {
     }
 
     async showInstrumentFilterPopup() {
-        var instruments = session.instruments.current().map((item, index) => item.toGenreModel(index));
+        var instruments = session.instruments
+            .current()
+            .map((item, index) => new GenreModel({ id: `${index}`, name: item.name, section: item.type }));
         /** @type {GenreModel[]} */ var allowedInstruments = [];
         /** @type {GenreModel[]} */ var forbiddenInstruments = [];
 

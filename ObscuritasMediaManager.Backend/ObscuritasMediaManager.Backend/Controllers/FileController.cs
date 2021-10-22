@@ -12,7 +12,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         public static string Logs = "";
 
         [HttpGet("video")]
-        public IActionResult GetVideo(string videoPath = "")
+        public ActionResult<BufferedStream> GetVideo(string videoPath = "")
         {
             if (string.IsNullOrEmpty(videoPath) || !System.IO.File.Exists(videoPath))
                 return BadRequest("invalid file path");
@@ -35,7 +35,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet("audio")]
-        public IActionResult GetAudio(string audioPath = "")
+        public ActionResult<BufferedStream> GetAudio(string audioPath = "")
         {
             if (string.IsNullOrEmpty(audioPath) || !System.IO.File.Exists(audioPath))
                 return BadRequest("invalid file path");
@@ -58,7 +58,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpPost("validate-files")]
-        public IActionResult Validate([FromBody] IEnumerable<string> fileUrls)
+        public ActionResult Validate([FromBody] IEnumerable<string> fileUrls)
         {
             foreach (var filePath in fileUrls)
                 if (!System.IO.File.Exists(filePath))

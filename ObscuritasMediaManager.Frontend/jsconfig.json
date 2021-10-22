@@ -8,9 +8,19 @@
         "forceConsistentCasingInFileNames": true,
         "watch": true,
         "pretty": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true
     },
     "include": ["**/*.js"],
-    "exclude": ["./node_modules/**", "**/*.bundled.js", "**/exports.js", "./rollup.config.js"],
+    "exclude": [
+        "./node_modules/**",
+        "**/*.bundled.js",
+        "**/exports.js",
+        "./rollup.config.js",
+        "./node_modules/**/*.js",
+        "<node_internals>/**/*.js"
+    ],
+
     "compileOnSave": true
 }

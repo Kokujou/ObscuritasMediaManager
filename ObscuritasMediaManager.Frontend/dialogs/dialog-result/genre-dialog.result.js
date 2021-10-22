@@ -1,4 +1,4 @@
-import { GenreModel } from '../../data/genre.model.js';
+import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
 
 export class GenreDialogResult {
     /** @type {GenreModel[]} */ acceptedGenres = [];

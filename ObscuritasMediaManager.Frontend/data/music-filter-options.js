@@ -1,7 +1,7 @@
+import { Mood } from '../obscuritas-media-manager-backend-client.js';
 import { CheckboxState } from './enumerations/checkbox-state.js';
 import { InstrumentTypes } from './enumerations/instrument-types.js';
 import { Instrumentation } from './enumerations/instrumentation.js';
-import { Mood } from './enumerations/mood.js';
 import { MusicGenre } from './enumerations/music-genre.js';
 import { Nation } from './enumerations/nation.js';
 import { Participants } from './enumerations/participants.js';

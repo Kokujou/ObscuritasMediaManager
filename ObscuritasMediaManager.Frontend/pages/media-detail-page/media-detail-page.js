@@ -1,12 +1,9 @@
-import { MediaModel } from '../../data/media.model.js';
-import { StreamingEntryModel } from '../../data/streaming-entry.model.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { LitElement } from '../../exports.js';
+import { MediaModel, StreamingEntryModel } from '../../obscuritas-media-manager-backend-client.js';
+import { GenreService, MediaService, StreamingService } from '../../services/backend.services.js';
 import { getQueryValue } from '../../services/extensions/url.extension.js';
-import { GenreService } from '../../services/genre.service.js';
-import { MediaService } from '../../services/media.service.js';
-import { StreamingService } from '../../services/streaming.service.js';
 import { VideoPlayerPopup } from '../video-player-popup/video-player-popup.js';
 import { renderMediaDetailPageStyles } from './media-detail-page.css.js';
 import { renderMediaDetailPage } from './media-detail-page.html.js';
@@ -22,6 +19,14 @@ export class MediaDetailPage extends LitElement {
             hoveredRating: { type: Number, reflect: false },
             selectedSeason: { type: Number, reflect: false },
         };
+    }
+
+    get nameInputValue() {
+        return /** @type {HTMLInputElement} */ (this.shadowRoot.querySelector('#media-name')).value;
+    }
+
+    get descriptionInputValue() {
+        return /** @type {HTMLInputElement} */ (this.shadowRoot.querySelector('#description-input')).value;
     }
 
     constructor() {
@@ -42,7 +47,7 @@ export class MediaDetailPage extends LitElement {
 
     async getMediaFromRoute() {
         var guid = getQueryValue('guid');
-        this.media = await MediaService.getMedia(guid);
+        this.media = await MediaService.get(guid);
         this.streamingEntries = await StreamingService.getStreamingEntries(guid);
 
         this.requestUpdate(undefined);
@@ -86,7 +91,7 @@ export class MediaDetailPage extends LitElement {
     }
 
     async showGenreSelectionDialog() {
-        var genres = await GenreService.getGenreList();
+        var genres = await GenreService.getAll();
         var genreDialog = GenreDialog.show(
             genres,
             genres.filter((x) => this.media.genres.includes(x.name)),
@@ -96,40 +101,27 @@ export class MediaDetailPage extends LitElement {
 
         genreDialog.addEventListener('decline', () => genreDialog.remove());
         genreDialog.addEventListener('accept', async (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
-            try {
-                var media = new MediaModel(this.media.name, this.media.type);
-                media.genreString = e.detail.acceptedGenres.map((x) => x.name).join(',');
-                await MediaService.updateMedia(media.id, media);
-                this.media.genreString = media.genreString;
-                this.requestUpdate(undefined);
-                genreDialog.remove();
-            } catch (err) {
-                console.error(err);
-            }
+            await this.changeProperty(
+                'genres',
+                e.detail.acceptedGenres.map((x) => x.name)
+            );
+
+            genreDialog.remove();
         });
     }
 
-    async removeGenre(genre) {
-        try {
-            var media = new MediaModel(this.media.name, this.media.type);
-            media.genreString = this.media.genres.filter((x) => x != genre).join(',');
-            await MediaService.updateMedia(media.id, media);
-            this.media.genreString = media.genreString;
-            this.requestUpdate(undefined);
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
     /**
-     * @param {number} newRating
+     * @param {keyof MediaModel} property
+     * @param {typeof this.media[property]} value
      */
-    async changeRating(newRating) {
+    async changeProperty(property, value) {
         try {
-            var media = new MediaModel(this.media.name, this.media.type);
-            media.rating = newRating;
-            await MediaService.updateMedia(media.id, media);
-            this.media.rating = newRating;
+            if (typeof this.media[property] != typeof value) return;
+
+            var media = this.media.clone();
+            /** @type {any} */ (media[property]) = value;
+            await MediaService.updateMedia(media);
+            /** @type {any} */ (this.media[property]) = value;
             this.requestUpdate(undefined);
         } catch (err) {
             console.error(err);
@@ -141,7 +133,7 @@ export class MediaDetailPage extends LitElement {
      */
     async addImage(imageData) {
         try {
-            await MediaService.addImageForMedia(this.media.id, imageData);
+            await MediaService.addMediaImage(this.media.id, imageData);
             this.media.image = imageData;
             this.requestUpdate(undefined);
         } catch (err) {
@@ -151,36 +143,8 @@ export class MediaDetailPage extends LitElement {
 
     async deleteImage() {
         try {
-            await MediaService.removeImageForMedia(this.media.id);
+            await MediaService.deleteMediaImage(this.media.id);
             this.media.image = null;
-            this.requestUpdate(undefined);
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    async changeName() {
-        try {
-            /** @type {HTMLInputElement} */ var nameInput = this.shadowRoot.querySelector('#media-name');
-            var media = new MediaModel();
-            media.name = nameInput.value;
-
-            await MediaService.updateMedia(this.media.id, media);
-            this.media.name = media.name;
-            this.requestUpdate(undefined);
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    async changeDescription() {
-        try {
-            /** @type {HTMLTextAreaElement} */ var descriptionInput = this.shadowRoot.querySelector('#description-input');
-            var description = descriptionInput.value;
-            var media = new MediaModel(this.media.name, this.media.type);
-            media.description = description;
-            await MediaService.updateMedia(media.id, media);
-            this.media.description = media.description;
             this.requestUpdate(undefined);
         } catch (err) {
             console.error(err);

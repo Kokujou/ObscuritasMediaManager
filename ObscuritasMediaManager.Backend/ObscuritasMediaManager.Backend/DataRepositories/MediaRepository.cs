@@ -31,8 +31,8 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                 item.Type = updated.Type;
             if (updated.Description != null)
                 item.Description = updated.Description;
-            if (updated.GenreString != null)
-                item.GenreString = updated.GenreString;
+            if (updated.Genres != null)
+                item.Genres = updated.Genres;
             if (updated.Rating > 0)
                 item.Rating = updated.Rating;
             if (updated.Release > 0)
@@ -60,7 +60,6 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             item.Image = null;
             await _context.SaveChangesAsync();
         }
-
 
         public async Task<MediaModel> GetAsync(Guid guid)
         {

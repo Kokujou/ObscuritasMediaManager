@@ -29,8 +29,8 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                 actual.Name = updated.Name;
             if (!string.IsNullOrEmpty(updated.Author) && old.Author == actual.Author)
                 actual.Author = updated.Author;
-            if (updated.Genres != null && old.GenreString == actual.GenreString)
-                actual.GenreString = updated.GenreString;
+            if (updated.Genres != null && !old.Genres.Except(actual.Genres).Any())
+                actual.Genres = updated.Genres;
             if (updated.Source != null && old.Source == actual.Source)
                 actual.Source = updated.Source;
             if (updated.Path != null && old.Path == actual.Path)
@@ -39,8 +39,8 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
                 actual.Mood = updated.Mood;
             if (updated.Instrumentation != default && old.Instrumentation == actual.Instrumentation)
                 actual.Instrumentation = updated.Instrumentation;
-            if (updated.InstrumentsString != default && old.InstrumentsString == actual.InstrumentsString)
-                actual.InstrumentsString = updated.InstrumentsString;
+            if (updated.Instruments != null && !old.Instruments.Except(actual.Instruments).Any())
+                actual.Instruments = updated.Instruments;
             if (updated.Language != default && old.Language == actual.Language)
                 actual.Language = updated.Language;
             if (updated.Nation != default && old.Nation == actual.Nation)
@@ -95,6 +95,7 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
         public async Task<IEnumerable<MusicModel>> GetAllAsync()
         {
             var response = await _context.Music.ToListAsync();
+            var test = response.Where(x => x.Genres.Count() > 1);
             return response;
         }
 

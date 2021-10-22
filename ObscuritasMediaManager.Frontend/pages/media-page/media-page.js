@@ -1,13 +1,12 @@
 import { MediaSearchFilterData } from '../../advanced-components/media-search/media-search-filter.data.js';
-import { MediaModel } from '../../data/media.model.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
-import { StreamingEntryModel } from '../../data/streaming-entry.model.js';
 import { LitElement } from '../../exports.js';
-import { importFiles } from '../../services/extensions/file.extension.js';
+import { MediaModel, StreamingEntryModel } from '../../obscuritas-media-manager-backend-client.js';
+import { MediaService, StreamingService } from '../../services/backend.services.js';
+import { newGuid } from '../../services/extensions/crypto.extensions.js';
+import { analyzeMediaFile, importFiles } from '../../services/extensions/file.extension.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
-import { MediaService } from '../../services/media.service.js';
-import { StreamingService } from '../../services/streaming.service.js';
 import { renderMediaPageStyles } from './media-page.css.js';
 import { renderMediaPageTemplate } from './media-page.html.js';
 
@@ -79,33 +78,43 @@ export class MediaPage extends LitElement {
      * @param {string} mediaType
      */
     static async processFiles(files, basePath, mediaType) {
-        var media = [];
+        var newMedia = [];
         var streamingEntries = [];
         var episode = 0;
         for (var i = 0; i < files.length; i++) {
             try {
-                var streamingEntry = StreamingEntryModel.fromFile(files[i], mediaType, basePath);
-                if (streamingEntries.some((x) => x.name == streamingEntry.name && x.season == streamingEntry.season)) episode += 1;
+                var mediaFileInfo = analyzeMediaFile(files[i], basePath);
+                var associatedMedia = session.mediaList.current().find((x) => x.name == mediaFileInfo.name);
+
+                if (!associatedMedia) {
+                    associatedMedia = new MediaModel({ name: mediaFileInfo.name, type: mediaType, id: newGuid() });
+                    newMedia.push(associatedMedia);
+                }
+
+                var streamingEntry = new StreamingEntryModel({
+                    id: associatedMedia.id,
+                    season: mediaFileInfo.season,
+                    src: mediaFileInfo.src,
+                });
+                if (streamingEntries.some((x) => associatedMedia.id == streamingEntry.id && x.season == streamingEntry.season))
+                    episode += 1;
                 else episode = 1;
                 streamingEntry.episode = episode;
 
                 streamingEntries.push(streamingEntry);
-
-                if (media.some((x) => x.name == streamingEntry.name)) continue;
-                media.push(new MediaModel(streamingEntry.name, mediaType));
             } catch (err) {
                 continue;
             }
         }
 
         try {
-            await MediaService.batchCreateMedia(media);
+            await MediaService.batchCreateMedia(newMedia);
         } catch (err) {
             console.error(err);
         }
 
         try {
-            await StreamingService.BatchCreateStreamingEntries(streamingEntries);
+            await StreamingService.batchPostStreamingEntries(streamingEntries);
             location.reload();
         } catch (err) {
             console.error(err);
@@ -118,7 +127,7 @@ export class MediaPage extends LitElement {
      */
     async addImageFor(media, imageData) {
         try {
-            await MediaService.addImageForMedia(media.id, imageData);
+            await MediaService.addMediaImage(imageData, media.id);
             media.image = imageData;
             this.requestUpdate(undefined);
         } catch (err) {
@@ -128,36 +137,22 @@ export class MediaPage extends LitElement {
 
     /**
      * @param {MediaModel} media
-     * @param {number} newRating
+     * @param {keyof MediaModel} property
+     * @param {any} value
      */
-    async updateRating(media, newRating) {
+    async changePropertyOf(media, property, value) {
         try {
-            var media = new MediaModel(media.name, media.type);
-            media.rating = newRating;
-            await MediaService.updateMedia(media.id, media);
-            media.rating = newRating;
+            if (typeof media[property] != typeof value) return;
+
+            var media = media.clone();
+            /** @type {any} */ (media[property]) = value;
+            await MediaService.updateMedia(media);
+            /** @type {any} */ (media[property]) = value;
             this.requestUpdate(undefined);
         } catch (err) {
             console.error(err);
         }
     }
-
-    /**
-     * @param {MediaModel} media
-     * @param {string[]} genres
-     */
-    async updateGenres(media, genres) {
-        try {
-            var media = new MediaModel(media.name, media.type);
-            media.genreString = genres.join(',');
-            await MediaService.updateMedia(media.id, media);
-            media.genreString = genres.join(',');
-            this.requestUpdate(undefined);
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
     /**
      * @param {MediaSearchFilterData} filterData
      */

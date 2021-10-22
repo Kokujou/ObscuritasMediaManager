@@ -42,7 +42,7 @@ export function renderMediaDetailPage(detailPage) {
                                 disabled
                                 type="text"
                                 id="media-name"
-                                @change="${() => detailPage.changeName()}"
+                                @change="${() => detailPage.changeProperty('name', detailPage.nameInputValue)}"
                                 @keyup="${(e) => detailPage.handleKeyPress(e)}"
                                 class="property-value"
                                 .value="${detailPage.media.name}"
@@ -71,7 +71,7 @@ export function renderMediaDetailPage(detailPage) {
                                 disabled
                                 class="textarea property-value"
                                 id="description-input"
-                                @change="${() => detailPage.changeDescription()}"
+                                @change="${() => detailPage.changeProperty('description', detailPage.descriptionInputValue)}"
                                 @keyup="${(e) => detailPage.handleKeyPress(e)}"
                                 .value="${detailPage.media.description}"
                                 .defaultValue="${detailPage.media.description}"
@@ -132,7 +132,17 @@ function renderGenreSection(detailPage) {
     return html`<div class="property-entry genre-entry">
         <div class="property-name">Genres:</div>
         <div class="property-value">
-            ${detailPage.media.genres.map((x) => html`<tag-label @removed="${() => detailPage.removeGenre(x)}" .text="${x}"></tag-label>`)}
+            ${detailPage.media.genres.map(
+                (x) =>
+                    html`<tag-label
+                        @removed="${() =>
+                            detailPage.changeProperty(
+                                'genres',
+                                detailPage.media.genres.filter((genre) => genre != x)
+                            )}"
+                        .text="${x}"
+                    ></tag-label>`
+            )}
             ${detailPage.newGenre ? html`<tag-label .createNew="${true}"></tag-label>` : ''}
             <div id="add-genre-button" @click="${() => detailPage.showGenreSelectionDialog()}">+</div>
         </div>
@@ -148,10 +158,12 @@ function renderRating(detailPage) {
         (rating) =>
             html`
                 <div
-                    class="star ${rating < detailPage.media.rating ? 'selected' : ''} ${rating < detailPage.hoveredRating ? 'hovered' : ''}"
+                    class="star ${rating < detailPage.media.rating ? 'selected' : ''} ${rating < detailPage.hoveredRating
+                        ? 'hovered'
+                        : ''}"
                     @pointerover="${() => (detailPage.hoveredRating = rating + 1)}"
                     @pointerout="${() => (detailPage.hoveredRating = 0)}"
-                    @click="${() => detailPage.changeRating(rating + 1)}"
+                    @click="${() => detailPage.changeProperty('rating', rating + 1)}"
                 >
                     ★
                 </div>

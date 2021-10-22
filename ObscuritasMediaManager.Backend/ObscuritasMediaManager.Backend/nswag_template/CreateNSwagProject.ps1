@@ -67,3 +67,7 @@ New-Item "$targetProjectFolder/nswag.json" -Value $(Rename-CustomProperties -fil
 Copy-Item .\tsconfig.json "$targetProjectFolder/tsconfig.json" -Force
 
 dotnet publish  $targetProjectFolder
+cd $targetProjectFolder
+npm install
+tsc --project tsconfig.json
+cd $PSScriptRoot

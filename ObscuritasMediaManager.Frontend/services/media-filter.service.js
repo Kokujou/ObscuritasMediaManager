@@ -1,5 +1,5 @@
-import { MediaModel } from '../data/media.model.js';
 import { GenreDialogResult } from '../dialogs/dialog-result/genre-dialog.result.js';
+import { MediaModel } from '../obscuritas-media-manager-backend-client.js';
 
 export class MediaFilterService {
     /**
@@ -17,6 +17,7 @@ export class MediaFilterService {
      * @param {MediaModel[]} mediaList
      */
     static applyGenreFilter(filter, mediaList) {
+        console.log(mediaList);
         return mediaList.filter(
             (media) =>
                 filter.acceptedGenres.every((genre) => media.genres.includes(genre.name)) &&
@@ -32,7 +33,8 @@ export class MediaFilterService {
         if (filter)
             return mediaList.filter(
                 (media) =>
-                    media.name.toLowerCase().includes(filter.toLocaleLowerCase()) || media.name.toLowerCase().match(filter.toLowerCase())
+                    media.name.toLowerCase().includes(filter.toLocaleLowerCase()) ||
+                    media.name.toLowerCase().match(filter.toLowerCase())
             );
 
         return mediaList;

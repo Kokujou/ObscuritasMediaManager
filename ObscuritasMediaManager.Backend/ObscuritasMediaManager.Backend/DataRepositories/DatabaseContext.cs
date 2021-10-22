@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 
@@ -11,7 +14,6 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
         {
         }
 
-
         public DbSet<GenreModel> Genres { get; set; }
         public DbSet<MediaModel> Media { get; set; }
         public DbSet<StreamingEntryModel> StreamingEntries { get; set; }
@@ -21,12 +23,17 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MediaModel>()
-                .Property(x => x.GenreString).HasColumnName(nameof(MediaModel.Genres));
+                .Property(x => x.Genres).HasConversion(x => string.Join(",", x),
+                    x => x.Split(",", StringSplitOptions.RemoveEmptyEntries));
 
             modelBuilder.Entity<MusicModel>()
-                .Property(x => x.GenreString).HasColumnName(nameof(MusicModel.Genres));
+                .Property(x => x.Genres).HasConversion(x => string.Join(",", x),
+                    x => x.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(y => ParseEnumOrDefault<Genre>(y))
+                        .ToList());
+
             modelBuilder.Entity<MusicModel>()
-                .Property(x => x.InstrumentsString).HasColumnName("Instruments");
+                .Property(x => x.Instruments).HasConversion(x => string.Join(",", x),
+                    x => x.Split(",", StringSplitOptions.RemoveEmptyEntries));
 
             modelBuilder.Entity<StreamingEntryModel>()
                 .HasKey(x => new {x.Id, x.Season, x.Episode});
@@ -36,6 +43,13 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
             modelBuilder.Entity<InstrumentModel>();
 
             modelBuilder.AddEnumConversion();
+        }
+
+        private static T ParseEnumOrDefault<T>(string value) where T : Enum
+        {
+            if (Enum.TryParse(typeof(T), value, out var result))
+                return (T) result;
+            return (T) (object) 0;
         }
     }
 }

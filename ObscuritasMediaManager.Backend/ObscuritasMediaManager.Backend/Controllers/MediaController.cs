@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Models;
 
@@ -23,7 +21,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet("{guid:Guid}")]
-        public async Task<IActionResult> Get([FromRoute] Guid guid)
+        public async Task<ActionResult<MediaModel>> Get([FromRoute] Guid guid)
         {
             try
             {
@@ -36,7 +34,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string type = "")
+        public async Task<ActionResult<IEnumerable<MediaModel>>> GetAll([FromQuery] string type = "")
         {
             try
             {
@@ -49,7 +47,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BatchPostStreamingEntries([FromBody] IEnumerable<MediaModel> media)
+        public async Task<ActionResult> BatchCreateMediaAsync([FromBody] IEnumerable<MediaModel> media)
         {
             try
             {
@@ -63,19 +61,10 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateMedia([FromBody] MediaModel media)
+        public async Task<ActionResult> UpdateMedia([FromBody] MediaModel media)
         {
             try
             {
-                var genres = await _genreRepository.GetAllAsync();
-                if (!string.IsNullOrEmpty(media.GenreString)
-                    && (!media.Genres.All(mediaGenre => genres.Any(genre => genre.Name == mediaGenre))
-                        || media.Genres.Any(genre => media.Genres.Count(x => x == genre) != 1)))
-                    throw new Exception(
-                        $"One of the specified genres is not in the range of values: {media.GenreString}.\n" +
-                        $"Supported Genres are: {string.Join(",", genres)}");
-
-
                 await _repository.UpdateMediaAsync(media);
 
                 return NoContent();
@@ -86,14 +75,13 @@ namespace ObscuritasMediaManager.Backend.Controllers
             }
         }
 
-
         [HttpPut("{guid:Guid}/image")]
-        public async Task<IActionResult> AddMediaImage([FromBody] UpdateImageRequest request,
+        public async Task<ActionResult> AddMediaImage([FromBody] string image,
             Guid guid)
         {
             try
             {
-                await _repository.AddMediaImageAsync(guid, request.Image);
+                await _repository.AddMediaImageAsync(guid, image);
                 return NoContent();
             }
             catch (Exception e)
@@ -103,7 +91,7 @@ namespace ObscuritasMediaManager.Backend.Controllers
         }
 
         [HttpDelete("{guid:Guid}/image")]
-        public async Task<IActionResult> DeleteMediaImage(Guid guid)
+        public async Task<ActionResult> DeleteMediaImage(Guid guid)
         {
             try
             {

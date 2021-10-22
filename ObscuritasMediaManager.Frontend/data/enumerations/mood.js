@@ -1,32 +1,18 @@
 import { css, unsafeCSS } from '../../exports.js';
-
-/** @enum {string} */
-export const Mood = {
-    Epic: 'epic',
-    Sad: 'sad',
-    Happy: 'happy',
-    Funny: 'funny',
-    Passionate: 'passionate',
-    Calm: 'calm',
-    Aggressive: 'aggressive',
-    Romantic: 'romantic',
-    Dramatic: 'dramatic',
-    Monotonuous: 'monotonuous',
-    Unset: 'unset',
-};
+import { Mood } from '../../obscuritas-media-manager-backend-client.js';
 
 export const MoodColors = {
-    aggressive: '#a33000',
-    calm: '#773311',
-    dramatic: '#333333',
-    epic: '#773399',
-    funny: '#a0a000',
-    happy: '#008000',
-    monotonuous: '#999999',
-    passionate: '#bb6622',
-    romantic: '#dd6677',
-    sad: '#0055a0',
-    unset: '#dddddd',
+    Aggressive: '#a33000',
+    Calm: '#773311',
+    Dramatic: '#333333',
+    Epic: '#773399',
+    Funny: '#a0a000',
+    Happy: '#008000',
+    Monotonuous: '#999999',
+    Passionate: '#bb6622',
+    Romantic: '#dd6677',
+    Sad: '#0055a0',
+    Unset: '#dddddd',
 };
 
 export function renderMoodStyles(parentSelector) {
@@ -43,13 +29,14 @@ export function renderMoodStyles(parentSelector) {
         ${unsafeCSS(
             Object.values(Mood).reduce(
                 (prev, mood) => `
-                    ${unsafeCSS(prev)}
+                        ${unsafeCSS(prev)}
 
-                    ${unsafeCSS(parentSelector)}.${unsafeCSS(mood)} {
-                        --primary-color: ${unsafeCSS(MoodColors[mood])};
-                        --font-color: white;
-                    }
-                `
+                        ${unsafeCSS(parentSelector)}.${unsafeCSS(mood)} {
+                            --primary-color: ${unsafeCSS(MoodColors[mood])};
+                            --font-color: white;
+                        }
+                    `,
+                ''
             )
         )}
     `;

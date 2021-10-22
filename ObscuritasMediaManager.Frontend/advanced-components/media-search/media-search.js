@@ -1,7 +1,7 @@
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { LitElement } from '../../exports.js';
-import { GenreService } from '../../services/genre.service.js';
+import { GenreService } from '../../services/backend.services.js';
 import { MediaSearchFilterData } from './media-search-filter.data.js';
 import { renderMediaSearchStyles } from './media-search.css.js';
 import { renderMediaSearch } from './media-search.html.js';
@@ -76,7 +76,7 @@ export class MediaSearch extends LitElement {
 
     async showGenreDialog() {
         var genreDialog = GenreDialog.show(
-            await GenreService.getGenreList(),
+            await GenreService.getAll(),
             this.genreFilter.acceptedGenres,
             this.genreFilter.forbiddenGenres,
             true

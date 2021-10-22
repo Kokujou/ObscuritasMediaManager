@@ -1,11 +1,12 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { InstrumentTypes } from '../../data/enumerations/instrument-types.js';
 import { Instrumentation } from '../../data/enumerations/instrumentation.js';
-import { Mood, MoodColors } from '../../data/enumerations/mood.js';
+import { MoodColors } from '../../data/enumerations/mood.js';
 import { MusicGenre } from '../../data/enumerations/music-genre.js';
 import { Nation } from '../../data/enumerations/nation.js';
 import { Participants } from '../../data/enumerations/participants.js';
 import { html } from '../../exports.js';
+import { Mood } from '../../obscuritas-media-manager-backend-client.js';
 import { MusicFilter } from './music-filter.js';
 
 /**

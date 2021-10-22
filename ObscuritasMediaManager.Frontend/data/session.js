@@ -1,5 +1,4 @@
-import { InstrumentModel } from './instrument.model.js';
-import { MediaModel } from './media.model.js';
+import { InstrumentModel, MediaModel } from '../obscuritas-media-manager-backend-client.js';
 import { Observable } from './observable.js';
 
 export const session = {

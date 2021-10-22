@@ -1,4 +1,4 @@
-import { MusicModel } from '../../data/music.model.js';
+import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { session } from '../../data/session.js';
 import { LitElement } from '../../exports.js';
 import { renderAudioTileBaseStyles } from './audio-tile-base.css.js';
@@ -20,7 +20,7 @@ export class AudioTileBase extends LitElement {
     constructor() {
         super();
 
-        /** @type {MusicModel} */ this.track = new MusicModel();
+        /** @type {ExtendedMusicModel} */ this.track = new ExtendedMusicModel();
         /** @type {Number} */ this.hoveredRating = 0;
 
         session.instruments.subscribe(() => this.requestUpdate(undefined));

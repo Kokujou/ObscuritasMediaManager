@@ -1,4 +1,4 @@
-import { MusicModel } from '../../../data/music.model.js';
+import { ExtendedMusicModel } from '../../../data/music.model.extended.js';
 import { LitElement } from '../../../exports.js';
 import { renderAudioTileStyles } from './audio-tile.css.js';
 import { renderAudioTile } from './audio-tile.html.js';
@@ -18,7 +18,7 @@ export class AudioTile extends LitElement {
 
     constructor() {
         super();
-        /** @type {MusicModel} */ this.track = new MusicModel();
+        /** @type {ExtendedMusicModel} */ this.track = new ExtendedMusicModel();
         /** @type {string} */ this.image;
         this.paused = true;
     }

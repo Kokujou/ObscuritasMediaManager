@@ -1,6 +1,6 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
-import { GenreModel } from '../../data/genre.model.js';
 import { LitElement } from '../../exports.js';
+import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreDialogResult } from '../dialog-result/genre-dialog.result.js';
 import { renderGenreDialogStyles } from './genre-dialog.css.js';
 import { renderGenreDialog } from './genre-dialog.html.js';
