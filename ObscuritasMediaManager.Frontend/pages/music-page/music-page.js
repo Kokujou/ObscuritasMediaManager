@@ -5,7 +5,7 @@ import { Subscription } from '../../data/observable.js';
 import { Pages } from '../../data/pages.js';
 import { session } from '../../data/session.js';
 import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
-import { SelectOptionsDialog } from '../../dialogs/select-options-dialog2/select-options-dialog.js';
+import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
 import { LitElement } from '../../exports.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';

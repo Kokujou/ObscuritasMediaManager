@@ -1,5 +1,5 @@
 import { html } from '../../exports.js';
-import { isNumberKey } from '../../services/keyboard.service.js';
+import { isNumberKey } from '../../services/extensions/keyboard.extensions.js';
 import { MediaSearch } from './media-search.js';
 
 /**
@@ -44,7 +44,10 @@ function renderRatingFitler(MediaSearch) {
             <div id="star-rating">
                 ${[1, 2, 3, 4, 5].map(
                     (rating) =>
-                        html`<div @click="${() => MediaSearch.toggleRating(rating)}" class="star ${MediaSearch.getRatingClass(rating)}">
+                        html`<div
+                            @click="${() => MediaSearch.toggleRating(rating)}"
+                            class="star ${MediaSearch.getRatingClass(rating)}"
+                        >
                             ★
                         </div>`
                 )}

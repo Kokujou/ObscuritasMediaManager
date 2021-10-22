@@ -16,7 +16,7 @@ import { DialogBase } from './dialogs/dialog-base/dialog-base.js';
 import { GenreDialog } from './dialogs/genre-dialog/genre-dialog.js';
 import { MessageDialog } from './dialogs/message-dialog/message-dialog.js';
 import { PathInputDialog } from './dialogs/path-input-dialog/path-input-dialog.js';
-import { SelectOptionsDialog } from './dialogs/select-options-dialog2/select-options-dialog.js';
+import { SelectOptionsDialog } from './dialogs/select-options-dialog/select-options-dialog.js';
 import { BorderButton } from './native-components/border-button/border-button.js';
 import { CustomToggle } from './native-components/custom-toggle/custom-toggle.js';
 import { DropDown } from './native-components/drop-down/drop-down.js';
