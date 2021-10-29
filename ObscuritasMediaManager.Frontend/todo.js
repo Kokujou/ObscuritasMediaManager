@@ -25,3 +25,4 @@
 //TODO: implement broken file detection
 //TODO: implement message snackbar for error and success notifications
 //TODO: implement loading-indiciation for requests
+//TODO: add delete from playlist and hard delete functionality to playlist

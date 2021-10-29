@@ -10,6 +10,7 @@
         Stringed,
         Keyboard,
         Electronic,
-        HumanBody
+        HumanBody,
+        Miscellaneous
     }
 }

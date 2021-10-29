@@ -1,5 +1,5 @@
-import { Nation } from '../../data/enumerations/nation.js';
 import { html } from '../../exports.js';
+import { Nation } from '../../obscuritas-media-manager-backend-client.js';
 import { LanguageSwitcher } from './language-switcher.js';
 
 /**
@@ -22,7 +22,10 @@ export function renderLanguageSwitcher(languageSwitcher) {
                 ${Object.values(Nation).map(
                     (nation, index) =>
                         html`
-                            <div class="language-selector-icon ${nation}" @click="${() => languageSwitcher.changeLanguage(index)}"></div>
+                            <div
+                                class="language-selector-icon ${nation}"
+                                @click="${() => languageSwitcher.changeLanguage(index)}"
+                            ></div>
                         `
                 )}
             </div>

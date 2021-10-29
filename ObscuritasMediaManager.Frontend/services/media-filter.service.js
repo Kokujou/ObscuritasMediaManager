@@ -17,7 +17,6 @@ export class MediaFilterService {
      * @param {MediaModel[]} mediaList
      */
     static applyGenreFilter(filter, mediaList) {
-        console.log(mediaList);
         return mediaList.filter(
             (media) =>
                 filter.acceptedGenres.every((genre) => media.genres.includes(genre.name)) &&

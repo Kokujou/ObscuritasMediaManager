@@ -2,12 +2,9 @@ export declare class CleanupClient {
     private http;
     private baseUrl;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(
-        baseUrl?: string,
-        http?: {
-            fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-        }
-    );
+    constructor(baseUrl?: string, http?: {
+        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
+    });
     getBrokenAudioTracks(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
     protected processGetBrokenAudioTracks(response: Response): Promise<MusicModel[]>;
     cleanupMusic(trackHashes: string[], signal?: AbortSignal | undefined): Promise<string[]>;
@@ -17,16 +14,13 @@ export declare class FileClient {
     private http;
     private baseUrl;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(
-        baseUrl?: string,
-        http?: {
-            fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-        }
-    );
-    getVideo(videoPath?: string | null | undefined, signal?: AbortSignal | undefined): Promise<BufferedStream>;
-    protected processGetVideo(response: Response): Promise<BufferedStream>;
-    getAudio(audioPath?: string | null | undefined, signal?: AbortSignal | undefined): Promise<BufferedStream>;
-    protected processGetAudio(response: Response): Promise<BufferedStream>;
+    constructor(baseUrl?: string, http?: {
+        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
+    });
+    getVideo(videoPath?: string | null | undefined, signal?: AbortSignal | undefined): Promise<FileResponse>;
+    protected processGetVideo(response: Response): Promise<FileResponse>;
+    getAudio(audioPath?: string | null | undefined, signal?: AbortSignal | undefined): Promise<FileResponse>;
+    protected processGetAudio(response: Response): Promise<FileResponse>;
     validate(fileUrls: string[], signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processValidate(response: Response): Promise<FileResponse>;
 }
@@ -34,12 +28,9 @@ export declare class GenreClient {
     private http;
     private baseUrl;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(
-        baseUrl?: string,
-        http?: {
-            fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-        }
-    );
+    constructor(baseUrl?: string, http?: {
+        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
+    });
     getAll(signal?: AbortSignal | undefined): Promise<GenreModel[]>;
     protected processGetAll(response: Response): Promise<GenreModel[]>;
 }
@@ -47,12 +38,9 @@ export declare class MediaClient {
     private http;
     private baseUrl;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(
-        baseUrl?: string,
-        http?: {
-            fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-        }
-    );
+    constructor(baseUrl?: string, http?: {
+        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
+    });
     get(guid: string, signal?: AbortSignal | undefined): Promise<MediaModel>;
     protected processGet(response: Response): Promise<MediaModel>;
     getAll(type?: string | null | undefined, signal?: AbortSignal | undefined): Promise<MediaModel[]>;
@@ -70,12 +58,9 @@ export declare class MusicClient {
     private http;
     private baseUrl;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(
-        baseUrl?: string,
-        http?: {
-            fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-        }
-    );
+    constructor(baseUrl?: string, http?: {
+        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
+    });
     batchCreateMusicTracks(tracks: MusicModel[], signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processBatchCreateMusicTracks(response: Response): Promise<FileResponse>;
     getAll(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
@@ -84,11 +69,7 @@ export declare class MusicClient {
     protected processRecalculateHashes(response: Response): Promise<FileResponse>;
     get(hash: string | null, signal?: AbortSignal | undefined): Promise<MusicModel>;
     protected processGet(response: Response): Promise<MusicModel>;
-    update(
-        hash: string | null,
-        updateRequest: UpdateRequestOfMusicModel,
-        signal?: AbortSignal | undefined
-    ): Promise<FileResponse>;
+    update(hash: string | null, updateRequest: UpdateRequestOfMusicModel, signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processUpdate(response: Response): Promise<FileResponse>;
     getInstruments(signal?: AbortSignal | undefined): Promise<InstrumentModel[]>;
     protected processGetInstruments(response: Response): Promise<InstrumentModel[]>;
@@ -97,12 +78,9 @@ export declare class PlaylistClient {
     private http;
     private baseUrl;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(
-        baseUrl?: string,
-        http?: {
-            fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-        }
-    );
+    constructor(baseUrl?: string, http?: {
+        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
+    });
     createTemporaryPlaylist(hashes: string[], signal?: AbortSignal | undefined): Promise<string>;
     protected processCreateTemporaryPlaylist(response: Response): Promise<string>;
     getTemporaryPlaylist(guid: string, signal?: AbortSignal | undefined): Promise<MusicModel[]>;
@@ -112,22 +90,14 @@ export declare class StreamingClient {
     private http;
     private baseUrl;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(
-        baseUrl?: string,
-        http?: {
-            fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-        }
-    );
+    constructor(baseUrl?: string, http?: {
+        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
+    });
     batchPostStreamingEntries(streamingEntries: StreamingEntryModel[], signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processBatchPostStreamingEntries(response: Response): Promise<FileResponse>;
     getStreamingEntries(guid: string, signal?: AbortSignal | undefined): Promise<StreamingEntryModel[]>;
     protected processGetStreamingEntries(response: Response): Promise<StreamingEntryModel[]>;
-    getStream(
-        guid: string,
-        season: string | null,
-        episode: number,
-        signal?: AbortSignal | undefined
-    ): Promise<StreamingEntryModel>;
+    getStream(guid: string, season: string | null, episode: number, signal?: AbortSignal | undefined): Promise<StreamingEntryModel>;
     protected processGetStream(response: Response): Promise<StreamingEntryModel>;
 }
 export declare class MusicModel implements IMusicModel {
@@ -140,7 +110,7 @@ export declare class MusicModel implements IMusicModel {
     instrumentation?: Instrumentation;
     participants?: Participants;
     instruments?: string[] | undefined;
-    genres?: Genre[] | undefined;
+    genres?: MusicGenre[] | undefined;
     path?: string | undefined;
     rating?: number;
     complete?: boolean | undefined;
@@ -161,134 +131,78 @@ export interface IMusicModel {
     instrumentation?: Instrumentation;
     participants?: Participants;
     instruments?: string[] | undefined;
-    genres?: Genre[] | undefined;
+    genres?: MusicGenre[] | undefined;
     path?: string | undefined;
     rating?: number;
     complete?: boolean | undefined;
     hash?: string | undefined;
 }
 export declare enum Mood {
-    Unset = 'Unset',
-    Happy = 'Happy',
-    Aggressive = 'Aggressive',
-    Sad = 'Sad',
-    Calm = 'Calm',
-    Romantic = 'Romantic',
-    Dramatic = 'Dramatic',
-    Epic = 'Epic',
-    Funny = 'Funny',
-    Passionate = 'Passionate',
-    Monotonuous = 'Monotonuous',
+    Unset = "Unset",
+    Happy = "Happy",
+    Aggressive = "Aggressive",
+    Sad = "Sad",
+    Calm = "Calm",
+    Romantic = "Romantic",
+    Dramatic = "Dramatic",
+    Epic = "Epic",
+    Funny = "Funny",
+    Passionate = "Passionate",
+    Monotonuous = "Monotonuous"
 }
 export declare enum Nation {
-    Unset = 'Unset',
-    Japanese = 'Japanese',
-    English = 'English',
-    German = 'German',
-    Spain = 'Spain',
-    Chinese = 'Chinese',
-    Italian = 'Italian',
-    Russian = 'Russian',
-    SouthAmerican = 'SouthAmerican',
-    African = 'African',
+    Unset = "Unset",
+    Japanese = "Japanese",
+    English = "English",
+    German = "German",
+    Spain = "Spain",
+    Chinese = "Chinese",
+    Italian = "Italian",
+    Russian = "Russian",
+    SouthAmerican = "SouthAmerican",
+    African = "African"
 }
 export declare enum Instrumentation {
-    Unset = 'Unset',
-    Mono = 'Mono',
-    Groups = 'Groups',
-    Mixed = 'Mixed',
+    Unset = "Unset",
+    Mono = "Mono",
+    Groups = "Groups",
+    Mixed = "Mixed"
 }
 export declare enum Participants {
-    Unset = 'Unset',
-    Solo = 'Solo',
-    SmallGroup = 'SmallGroup',
-    LargeGroup = 'LargeGroup',
-    SmallOrchestra = 'SmallOrchestra',
-    LargeOrchestra = 'LargeOrchestra',
+    Unset = "Unset",
+    Solo = "Solo",
+    SmallGroup = "SmallGroup",
+    LargeGroup = "LargeGroup",
+    SmallOrchestra = "SmallOrchestra",
+    LargeOrchestra = "LargeOrchestra"
 }
-export declare enum Genre {
-    Unset = 'Unset',
-    Avantgarde = 'Avantgarde',
-    Blues = 'Blues',
-    Classic = 'Classic',
-    Comedy = 'Comedy',
-    Country = 'Country',
-    EasyListening = 'EasyListening',
-    Electronic = 'Electronic',
-    House = 'House',
-    Flamenco = 'Flamenco',
-    Folk = 'Folk',
-    Jazz = 'Jazz',
-    Latin = 'Latin',
-    Pop = 'Pop',
-    RnB = 'RnB',
-    Soul = 'Soul',
-    Rock = 'Rock',
-    Metal = 'Metal',
-    March = 'March',
-    Moe = 'Moe',
-    Wagakki = 'Wagakki',
-    Medley = 'Medley',
-    Parody = 'Parody',
-    Ballad = 'Ballad',
-    FilmMusic = 'FilmMusic',
-    Western = 'Western',
-}
-export declare abstract class MarshalByRefObject implements IMarshalByRefObject {
-    constructor(data?: IMarshalByRefObject);
-    init(_data?: any): void;
-    static fromJS(data: any): MarshalByRefObject;
-    toJSON(data?: any): any;
-    clone(): MarshalByRefObject;
-}
-export interface IMarshalByRefObject {}
-export declare abstract class Stream extends MarshalByRefObject implements IStream {
-    canRead?: boolean;
-    canSeek?: boolean;
-    canTimeout?: boolean;
-    canWrite?: boolean;
-    length?: number;
-    position?: number;
-    readTimeout?: number;
-    writeTimeout?: number;
-    constructor(data?: IStream);
-    init(_data?: any): void;
-    static fromJS(data: any): Stream;
-    toJSON(data?: any): any;
-    clone(): Stream;
-}
-export interface IStream extends IMarshalByRefObject {
-    canRead?: boolean;
-    canSeek?: boolean;
-    canTimeout?: boolean;
-    canWrite?: boolean;
-    length?: number;
-    position?: number;
-    readTimeout?: number;
-    writeTimeout?: number;
-}
-export declare class BufferedStream extends Stream implements IBufferedStream {
-    underlyingStream?: Stream;
-    bufferSize?: number;
-    canRead?: boolean;
-    canWrite?: boolean;
-    canSeek?: boolean;
-    length?: number;
-    position?: number;
-    constructor(data?: IBufferedStream);
-    init(_data?: any): void;
-    static fromJS(data: any): BufferedStream;
-    toJSON(data?: any): any;
-    clone(): BufferedStream;
-}
-export interface IBufferedStream extends IStream {
-    underlyingStream?: Stream;
-    bufferSize?: number;
-    canRead?: boolean;
-    canWrite?: boolean;
-    canSeek?: boolean;
-    length?: number;
-    position?: number;
+export declare enum MusicGenre {
+    Unset = "Unset",
+    Avantgarde = "Avantgarde",
+    Blues = "Blues",
+    Classic = "Classic",
+    Comedy = "Comedy",
+    Country = "Country",
+    EasyListening = "EasyListening",
+    Electronic = "Electronic",
+    House = "House",
+    Flamenco = "Flamenco",
+    Folk = "Folk",
+    Jazz = "Jazz",
+    Latin = "Latin",
+    Pop = "Pop",
+    RnB = "RnB",
+    Soul = "Soul",
+    Rock = "Rock",
+    Metal = "Metal",
+    March = "March",
+    Moe = "Moe",
+    Wagakki = "Wagakki",
+    Medley = "Medley",
+    Parody = "Parody",
+    Ballad = "Ballad",
+    FilmMusic = "FilmMusic",
+    Western = "Western"
 }
 export declare class GenreModel implements IGenreModel {
     id?: string;
@@ -346,15 +260,16 @@ export interface IInstrumentModel {
     type?: InstrumentType;
 }
 export declare enum InstrumentType {
-    Unset = 'Unset',
-    Vocal = 'Vocal',
-    WoodWind = 'WoodWind',
-    Brass = 'Brass',
-    Percussion = 'Percussion',
-    Stringed = 'Stringed',
-    Keyboard = 'Keyboard',
-    Electronic = 'Electronic',
-    HumanBody = 'HumanBody',
+    Unset = "Unset",
+    Vocal = "Vocal",
+    WoodWind = "WoodWind",
+    Brass = "Brass",
+    Percussion = "Percussion",
+    Stringed = "Stringed",
+    Keyboard = "Keyboard",
+    Electronic = "Electronic",
+    HumanBody = "HumanBody",
+    Miscellaneous = "Miscellaneous"
 }
 export declare class UpdateRequestOfMusicModel implements IUpdateRequestOfMusicModel {
     oldModel?: MusicModel | undefined;
@@ -402,15 +317,9 @@ export declare class SwaggerException extends Error {
         [key: string]: any;
     };
     result: any;
-    constructor(
-        message: string,
-        status: number,
-        response: string,
-        headers: {
-            [key: string]: any;
-        },
-        result: any
-    );
+    constructor(message: string, status: number, response: string, headers: {
+        [key: string]: any;
+    }, result: any);
     protected isSwaggerException: boolean;
     static isSwaggerException(obj: any): obj is SwaggerException;
 }

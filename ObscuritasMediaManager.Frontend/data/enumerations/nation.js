@@ -1,4 +1,5 @@
-import { css } from '../../exports.js';
+import { css, unsafeCSS } from '../../exports.js';
+import { Nation } from '../../obscuritas-media-manager-backend-client.js';
 import { africaFlag } from '../../resources/icons/language-icons/africa-flag.svg.js';
 import { chinaFlag } from '../../resources/icons/language-icons/china-flag.svg.js';
 import { englishFlag } from '../../resources/icons/language-icons/english-flag.svg.js';
@@ -10,54 +11,41 @@ import { southAmericaFlag } from '../../resources/icons/language-icons/south-ame
 import { spainFlag } from '../../resources/icons/language-icons/spain-flag.svg.js';
 import { renderBackgroundImage } from '../../services/extensions/style.extensions.js';
 
-/** @enum {string} */
-export const Nation = {
-    Japanese: 'japanese',
-    English: 'english',
-    German: 'german',
-    Spain: 'spain',
-    Chinese: 'chinese',
-    Italian: 'italian',
-    Russian: 'russian',
-    SouthAmerican: 'southAmerican',
-    African: 'african',
-};
-
 export function renderLanguageFlags() {
     return css`
-        .japanese {
+        .${unsafeCSS(Nation.Japanese)} {
             ${renderBackgroundImage(japanFlag())};
         }
 
-        .german {
+        .${unsafeCSS(Nation.German)} {
             ${renderBackgroundImage(germanFlag())};
         }
 
-        .english {
+        .${unsafeCSS(Nation.English)} {
             ${renderBackgroundImage(englishFlag())};
         }
 
-        .spain {
+        .${unsafeCSS(Nation.Spain)} {
             ${renderBackgroundImage(spainFlag())};
         }
 
-        .italian {
+        .${unsafeCSS(Nation.Italian)} {
             ${renderBackgroundImage(italyFlag())};
         }
 
-        .chinese {
+        .${unsafeCSS(Nation.Chinese)} {
             ${renderBackgroundImage(chinaFlag())};
         }
 
-        .southAmerican {
+        .${unsafeCSS(Nation.SouthAmerican)} {
             ${renderBackgroundImage(southAmericaFlag())};
         }
 
-        .african {
+        .${unsafeCSS(Nation.African)} {
             ${renderBackgroundImage(africaFlag())};
         }
 
-        .russian {
+        .${unsafeCSS(Nation.Russian)} {
             ${renderBackgroundImage(russiaFlag())};
         }
     `;

@@ -1,5 +1,4 @@
-import { MusicModel } from '../obscuritas-media-manager-backend-client.js';
-import { InstrumentTypes } from './enumerations/instrument-types.js';
+import { InstrumentType, MusicModel } from '../obscuritas-media-manager-backend-client.js';
 import { session } from './session.js';
 
 export class ExtendedMusicModel extends MusicModel {
@@ -7,7 +6,7 @@ export class ExtendedMusicModel extends MusicModel {
         return this.instruments.map((name) => session.instruments.current().find((instrument) => instrument.name == name));
     }
 
-    /** @type {InstrumentTypes[]} */ get instrumentTypes() {
+    /** @type {InstrumentType[]} */ get instrumentTypes() {
         return this.mappedInstruments.map((x) => x.type).filter((instrument, index, self) => self.indexOf(instrument) == index);
     }
 

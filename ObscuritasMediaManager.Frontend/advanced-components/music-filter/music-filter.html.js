@@ -1,12 +1,14 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
-import { InstrumentTypes } from '../../data/enumerations/instrument-types.js';
-import { Instrumentation } from '../../data/enumerations/instrumentation.js';
 import { MoodColors } from '../../data/enumerations/mood.js';
-import { MusicGenre } from '../../data/enumerations/music-genre.js';
-import { Nation } from '../../data/enumerations/nation.js';
-import { Participants } from '../../data/enumerations/participants.js';
 import { html } from '../../exports.js';
-import { Mood } from '../../obscuritas-media-manager-backend-client.js';
+import {
+    Instrumentation,
+    InstrumentType,
+    Mood,
+    MusicGenre,
+    Nation,
+    Participants,
+} from '../../obscuritas-media-manager-backend-client.js';
 import { MusicFilter } from './music-filter.js';
 
 /**
@@ -78,7 +80,7 @@ export function renderMusicFilter(musicFilter) {
                         <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('instrumentTypes')}"></div>
                     </div>
                     <side-scroller>
-                        ${Object.values(InstrumentTypes).map(
+                        ${Object.values(InstrumentType).map(
                             (type) =>
                                 html` <tri-value-checkbox
                                     class="icon-container"

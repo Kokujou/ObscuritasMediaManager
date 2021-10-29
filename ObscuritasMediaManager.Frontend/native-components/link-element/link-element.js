@@ -39,7 +39,6 @@ export class LinkElement extends LitElement {
      * @param {Event} event
      */
     handleClick(event) {
-        console.log(this.hash);
         if (!this.hash || this.hash.length <= 0) return;
         event.stopPropagation();
         event.stopImmediatePropagation();

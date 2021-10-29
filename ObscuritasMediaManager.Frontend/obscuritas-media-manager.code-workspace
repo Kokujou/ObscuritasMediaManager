@@ -16,6 +16,12 @@
             "**/node_modules/**": true,
             "exports.js": true,
             ".vscode/**": true
+        },
+        "search.exclude": {
+            "**/node_modules": true,
+            "**/bower_components": true,
+            "**/*.code-search": true,
+            "obscuritas-media-manager-backend-client.*": true
         }
     }
 }

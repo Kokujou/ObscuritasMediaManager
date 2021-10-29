@@ -1,5 +1,5 @@
-import { Nation } from '../../data/enumerations/nation.js';
 import { LitElement } from '../../exports.js';
+import { Nation } from '../../obscuritas-media-manager-backend-client.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { renderLanguageSwitcherStyles } from './language-switcher.css.js';
 import { renderLanguageSwitcher } from './language-switcher.html.js';

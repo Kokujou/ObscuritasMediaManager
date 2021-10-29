@@ -12,17 +12,17 @@ export class CleanupClient {
     jsonParseReviver = undefined;
     constructor(baseUrl, http) {
         this.http = http ? http : window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : '';
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
     getBrokenAudioTracks(signal) {
-        let url_ = this.baseUrl + '/api/Cleanup/music';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Cleanup/music";
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGetBrokenAudioTracks(_response);
@@ -32,39 +32,43 @@ export class CleanupClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
-                    for (let item of resultData200) result200.push(MusicModel.fromJS(item));
-                } else {
+                    for (let item of resultData200)
+                        result200.push(MusicModel.fromJS(item));
+                }
+                else {
                     result200 = null;
                 }
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     cleanupMusic(trackHashes, signal) {
-        let url_ = this.baseUrl + '/api/Cleanup/music';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Cleanup/music";
+        url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(trackHashes);
         let options_ = {
             body: content_,
-            method: 'DELETE',
+            method: "DELETE",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processCleanupMusic(_response);
@@ -74,23 +78,27 @@ export class CleanupClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
-                    for (let item of resultData200) result200.push(item);
-                } else {
+                    for (let item of resultData200)
+                        result200.push(item);
+                }
+                else {
                     result200 = null;
                 }
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
@@ -102,18 +110,19 @@ export class FileClient {
     jsonParseReviver = undefined;
     constructor(baseUrl, http) {
         this.http = http ? http : window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : '';
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
     getVideo(videoPath, signal) {
-        let url_ = this.baseUrl + '/api/File/video?';
-        if (videoPath !== undefined && videoPath !== null) url_ += 'videoPath=' + encodeURIComponent('' + videoPath) + '&';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/File/video?";
+        if (videoPath !== undefined && videoPath !== null)
+            url_ += "videoPath=" + encodeURIComponent("" + videoPath) + "&";
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGetVideo(_response);
@@ -123,32 +132,33 @@ export class FileClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
-        if (status === 200) {
+        ;
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = BufferedStream.fromJS(resultData200);
-                return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     getAudio(audioPath, signal) {
-        let url_ = this.baseUrl + '/api/File/audio?';
-        if (audioPath !== undefined && audioPath !== null) url_ += 'audioPath=' + encodeURIComponent('' + audioPath) + '&';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/File/audio?";
+        if (audioPath !== undefined && audioPath !== null)
+            url_ += "audioPath=" + encodeURIComponent("" + audioPath) + "&";
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGetAudio(_response);
@@ -158,34 +168,34 @@ export class FileClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
-        if (status === 200) {
+        ;
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = BufferedStream.fromJS(resultData200);
-                return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     validate(fileUrls, signal) {
-        let url_ = this.baseUrl + '/api/File/validate-files';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/File/validate-files";
+        url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(fileUrls);
         let options_ = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/octet-stream',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processValidate(_response);
@@ -195,18 +205,18 @@ export class FileClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
             const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
-        } else if (status !== 200 && status !== 204) {
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
@@ -218,17 +228,17 @@ export class GenreClient {
     jsonParseReviver = undefined;
     constructor(baseUrl, http) {
         this.http = http ? http : window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : '';
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
     getAll(signal) {
-        let url_ = this.baseUrl + '/api/Genre';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Genre";
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGetAll(_response);
@@ -238,23 +248,27 @@ export class GenreClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
-                    for (let item of resultData200) result200.push(GenreModel.fromJS(item));
-                } else {
+                    for (let item of resultData200)
+                        result200.push(GenreModel.fromJS(item));
+                }
+                else {
                     result200 = null;
                 }
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
@@ -266,19 +280,20 @@ export class MediaClient {
     jsonParseReviver = undefined;
     constructor(baseUrl, http) {
         this.http = http ? http : window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : '';
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
     get(guid, signal) {
-        let url_ = this.baseUrl + '/api/Media/{guid}';
-        if (guid === undefined || guid === null) throw new Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace('{guid}', encodeURIComponent('' + guid));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/{guid}";
+        if (guid === undefined || guid === null)
+            throw new Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGet(_response);
@@ -288,32 +303,35 @@ export class MediaClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = MediaModel.fromJS(resultData200);
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     getAll(type, signal) {
-        let url_ = this.baseUrl + '/api/Media?';
-        if (type !== undefined && type !== null) url_ += 'type=' + encodeURIComponent('' + type) + '&';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media?";
+        if (type !== undefined && type !== null)
+            url_ += "type=" + encodeURIComponent("" + type) + "&";
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGetAll(_response);
@@ -323,39 +341,43 @@ export class MediaClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
-                    for (let item of resultData200) result200.push(MediaModel.fromJS(item));
-                } else {
+                    for (let item of resultData200)
+                        result200.push(MediaModel.fromJS(item));
+                }
+                else {
                     result200 = null;
                 }
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     batchCreateMedia(media, signal) {
-        let url_ = this.baseUrl + '/api/Media';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media";
+        url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(media);
         let options_ = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/octet-stream',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processBatchCreateMedia(_response);
@@ -365,34 +387,34 @@ export class MediaClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
             const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
-        } else if (status !== 200 && status !== 204) {
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     updateMedia(media, signal) {
-        let url_ = this.baseUrl + '/api/Media';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media";
+        url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(media);
         let options_ = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/octet-stream',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processUpdateMedia(_response);
@@ -402,36 +424,37 @@ export class MediaClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
             const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
-        } else if (status !== 200 && status !== 204) {
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     addMediaImage(image, guid, signal) {
-        let url_ = this.baseUrl + '/api/Media/{guid}/image';
-        if (guid === undefined || guid === null) throw new Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace('{guid}', encodeURIComponent('' + guid));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/{guid}/image";
+        if (guid === undefined || guid === null)
+            throw new Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(image);
         let options_ = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/octet-stream',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processAddMediaImage(_response);
@@ -441,33 +464,34 @@ export class MediaClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
             const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
-        } else if (status !== 200 && status !== 204) {
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     deleteMediaImage(guid, signal) {
-        let url_ = this.baseUrl + '/api/Media/{guid}/image';
-        if (guid === undefined || guid === null) throw new Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace('{guid}', encodeURIComponent('' + guid));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/{guid}/image";
+        if (guid === undefined || guid === null)
+            throw new Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
             headers: {
-                Accept: 'application/octet-stream',
-            },
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processDeleteMediaImage(_response);
@@ -477,18 +501,18 @@ export class MediaClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
             const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
-        } else if (status !== 200 && status !== 204) {
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
@@ -500,20 +524,20 @@ export class MusicClient {
     jsonParseReviver = undefined;
     constructor(baseUrl, http) {
         this.http = http ? http : window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : '';
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
     batchCreateMusicTracks(tracks, signal) {
-        let url_ = this.baseUrl + '/api/Music';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music";
+        url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(tracks);
         let options_ = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/octet-stream',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processBatchCreateMusicTracks(_response);
@@ -523,31 +547,31 @@ export class MusicClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
             const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
-        } else if (status !== 200 && status !== 204) {
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     getAll(signal) {
-        let url_ = this.baseUrl + '/api/Music';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music";
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGetAll(_response);
@@ -557,36 +581,40 @@ export class MusicClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
-                    for (let item of resultData200) result200.push(MusicModel.fromJS(item));
-                } else {
+                    for (let item of resultData200)
+                        result200.push(MusicModel.fromJS(item));
+                }
+                else {
                     result200 = null;
                 }
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     recalculateHashes(signal) {
-        let url_ = this.baseUrl + '/api/Music/recalculate-hashes';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/recalculate-hashes";
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                Accept: 'application/octet-stream',
-            },
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processRecalculateHashes(_response);
@@ -596,33 +624,34 @@ export class MusicClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
             const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
-        } else if (status !== 200 && status !== 204) {
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     get(hash, signal) {
-        let url_ = this.baseUrl + '/api/Music/{hash}';
-        if (hash === undefined || hash === null) throw new Error("The parameter 'hash' must be defined.");
-        url_ = url_.replace('{hash}', encodeURIComponent('' + hash));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/{hash}";
+        if (hash === undefined || hash === null)
+            throw new Error("The parameter 'hash' must be defined.");
+        url_ = url_.replace("{hash}", encodeURIComponent("" + hash));
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGet(_response);
@@ -632,36 +661,39 @@ export class MusicClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = MusicModel.fromJS(resultData200);
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     update(hash, updateRequest, signal) {
-        let url_ = this.baseUrl + '/api/Music/{hash}';
-        if (hash === undefined || hash === null) throw new Error("The parameter 'hash' must be defined.");
-        url_ = url_.replace('{hash}', encodeURIComponent('' + hash));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/{hash}";
+        if (hash === undefined || hash === null)
+            throw new Error("The parameter 'hash' must be defined.");
+        url_ = url_.replace("{hash}", encodeURIComponent("" + hash));
+        url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(updateRequest);
         let options_ = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/octet-stream',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processUpdate(_response);
@@ -671,31 +703,31 @@ export class MusicClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
             const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
-        } else if (status !== 200 && status !== 204) {
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     getInstruments(signal) {
-        let url_ = this.baseUrl + '/api/Music/instruments';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/instruments";
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGetInstruments(_response);
@@ -705,23 +737,27 @@ export class MusicClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
-                    for (let item of resultData200) result200.push(InstrumentModel.fromJS(item));
-                } else {
+                    for (let item of resultData200)
+                        result200.push(InstrumentModel.fromJS(item));
+                }
+                else {
                     result200 = null;
                 }
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
@@ -733,20 +769,20 @@ export class PlaylistClient {
     jsonParseReviver = undefined;
     constructor(baseUrl, http) {
         this.http = http ? http : window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : '';
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
     createTemporaryPlaylist(hashes, signal) {
-        let url_ = this.baseUrl + '/api/Playlist/temp';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Playlist/temp";
+        url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(hashes);
         let options_ = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processCreateTemporaryPlaylist(_response);
@@ -756,33 +792,36 @@ export class PlaylistClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : null;
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     getTemporaryPlaylist(guid, signal) {
-        let url_ = this.baseUrl + '/api/Playlist/temp/{guid}';
-        if (guid === undefined || guid === null) throw new Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace('{guid}', encodeURIComponent('' + guid));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Playlist/temp/{guid}";
+        if (guid === undefined || guid === null)
+            throw new Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGetTemporaryPlaylist(_response);
@@ -792,23 +831,27 @@ export class PlaylistClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
-                    for (let item of resultData200) result200.push(MusicModel.fromJS(item));
-                } else {
+                    for (let item of resultData200)
+                        result200.push(MusicModel.fromJS(item));
+                }
+                else {
                     result200 = null;
                 }
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
@@ -820,20 +863,20 @@ export class StreamingClient {
     jsonParseReviver = undefined;
     constructor(baseUrl, http) {
         this.http = http ? http : window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : '';
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
     batchPostStreamingEntries(streamingEntries, signal) {
-        let url_ = this.baseUrl + '/api/Streaming';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Streaming";
+        url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(streamingEntries);
         let options_ = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/octet-stream',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processBatchPostStreamingEntries(_response);
@@ -843,33 +886,34 @@ export class StreamingClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
             const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
             const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
-        } else if (status !== 200 && status !== 204) {
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     getStreamingEntries(guid, signal) {
-        let url_ = this.baseUrl + '/api/Streaming/{guid}';
-        if (guid === undefined || guid === null) throw new Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace('{guid}', encodeURIComponent('' + guid));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Streaming/{guid}";
+        if (guid === undefined || guid === null)
+            throw new Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGetStreamingEntries(_response);
@@ -879,42 +923,49 @@ export class StreamingClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
-                    for (let item of resultData200) result200.push(StreamingEntryModel.fromJS(item));
-                } else {
+                    for (let item of resultData200)
+                        result200.push(StreamingEntryModel.fromJS(item));
+                }
+                else {
                     result200 = null;
                 }
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
     }
     getStream(guid, season, episode, signal) {
-        let url_ = this.baseUrl + '/api/Streaming/{guid}/season/{season}/episode/{episode}';
-        if (guid === undefined || guid === null) throw new Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace('{guid}', encodeURIComponent('' + guid));
-        if (season === undefined || season === null) throw new Error("The parameter 'season' must be defined.");
-        url_ = url_.replace('{season}', encodeURIComponent('' + season));
-        if (episode === undefined || episode === null) throw new Error("The parameter 'episode' must be defined.");
-        url_ = url_.replace('{episode}', encodeURIComponent('' + episode));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Streaming/{guid}/season/{season}/episode/{episode}";
+        if (guid === undefined || guid === null)
+            throw new Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        if (season === undefined || season === null)
+            throw new Error("The parameter 'season' must be defined.");
+        url_ = url_.replace("{season}", encodeURIComponent("" + season));
+        if (episode === undefined || episode === null)
+            throw new Error("The parameter 'episode' must be defined.");
+        url_ = url_.replace("{episode}", encodeURIComponent("" + episode));
+        url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processGetStream(_response);
@@ -924,18 +975,20 @@ export class StreamingClient {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => (_headers[k] = v));
+            response.headers.forEach((v, k) => _headers[k] = v);
         }
+        ;
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === '' ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = StreamingEntryModel.fromJS(resultData200);
                 return result200;
             });
-        } else if (status !== 200 && status !== 204) {
+        }
+        else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve(null);
@@ -959,32 +1012,35 @@ export class MusicModel {
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property)) this[property] = data[property];
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
-            this.name = _data['name'];
-            this.author = _data['author'];
-            this.source = _data['source'];
-            this.mood = _data['mood'];
-            this.language = _data['language'];
-            this.nation = _data['nation'];
-            this.instrumentation = _data['instrumentation'];
-            this.participants = _data['participants'];
-            if (Array.isArray(_data['instruments'])) {
+            this.name = _data["name"];
+            this.author = _data["author"];
+            this.source = _data["source"];
+            this.mood = _data["mood"];
+            this.language = _data["language"];
+            this.nation = _data["nation"];
+            this.instrumentation = _data["instrumentation"];
+            this.participants = _data["participants"];
+            if (Array.isArray(_data["instruments"])) {
                 this.instruments = [];
-                for (let item of _data['instruments']) this.instruments.push(item);
+                for (let item of _data["instruments"])
+                    this.instruments.push(item);
             }
-            if (Array.isArray(_data['genres'])) {
+            if (Array.isArray(_data["genres"])) {
                 this.genres = [];
-                for (let item of _data['genres']) this.genres.push(item);
+                for (let item of _data["genres"])
+                    this.genres.push(item);
             }
-            this.path = _data['path'];
-            this.rating = _data['rating'];
-            this.complete = _data['complete'];
-            this.hash = _data['hash'];
+            this.path = _data["path"];
+            this.rating = _data["rating"];
+            this.complete = _data["complete"];
+            this.hash = _data["hash"];
         }
     }
     static fromJS(data) {
@@ -995,26 +1051,28 @@ export class MusicModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data['name'] = this.name;
-        data['author'] = this.author;
-        data['source'] = this.source;
-        data['mood'] = this.mood;
-        data['language'] = this.language;
-        data['nation'] = this.nation;
-        data['instrumentation'] = this.instrumentation;
-        data['participants'] = this.participants;
+        data["name"] = this.name;
+        data["author"] = this.author;
+        data["source"] = this.source;
+        data["mood"] = this.mood;
+        data["language"] = this.language;
+        data["nation"] = this.nation;
+        data["instrumentation"] = this.instrumentation;
+        data["participants"] = this.participants;
         if (Array.isArray(this.instruments)) {
-            data['instruments'] = [];
-            for (let item of this.instruments) data['instruments'].push(item);
+            data["instruments"] = [];
+            for (let item of this.instruments)
+                data["instruments"].push(item);
         }
         if (Array.isArray(this.genres)) {
-            data['genres'] = [];
-            for (let item of this.genres) data['genres'].push(item);
+            data["genres"] = [];
+            for (let item of this.genres)
+                data["genres"].push(item);
         }
-        data['path'] = this.path;
-        data['rating'] = this.rating;
-        data['complete'] = this.complete;
-        data['hash'] = this.hash;
+        data["path"] = this.path;
+        data["rating"] = this.rating;
+        data["complete"] = this.complete;
+        data["hash"] = this.hash;
         return data;
     }
     clone() {
@@ -1026,191 +1084,76 @@ export class MusicModel {
 }
 export var Mood;
 (function (Mood) {
-    Mood['Unset'] = 'Unset';
-    Mood['Happy'] = 'Happy';
-    Mood['Aggressive'] = 'Aggressive';
-    Mood['Sad'] = 'Sad';
-    Mood['Calm'] = 'Calm';
-    Mood['Romantic'] = 'Romantic';
-    Mood['Dramatic'] = 'Dramatic';
-    Mood['Epic'] = 'Epic';
-    Mood['Funny'] = 'Funny';
-    Mood['Passionate'] = 'Passionate';
-    Mood['Monotonuous'] = 'Monotonuous';
+    Mood["Unset"] = "Unset";
+    Mood["Happy"] = "Happy";
+    Mood["Aggressive"] = "Aggressive";
+    Mood["Sad"] = "Sad";
+    Mood["Calm"] = "Calm";
+    Mood["Romantic"] = "Romantic";
+    Mood["Dramatic"] = "Dramatic";
+    Mood["Epic"] = "Epic";
+    Mood["Funny"] = "Funny";
+    Mood["Passionate"] = "Passionate";
+    Mood["Monotonuous"] = "Monotonuous";
 })(Mood || (Mood = {}));
 export var Nation;
 (function (Nation) {
-    Nation['Unset'] = 'Unset';
-    Nation['Japanese'] = 'Japanese';
-    Nation['English'] = 'English';
-    Nation['German'] = 'German';
-    Nation['Spain'] = 'Spain';
-    Nation['Chinese'] = 'Chinese';
-    Nation['Italian'] = 'Italian';
-    Nation['Russian'] = 'Russian';
-    Nation['SouthAmerican'] = 'SouthAmerican';
-    Nation['African'] = 'African';
+    Nation["Unset"] = "Unset";
+    Nation["Japanese"] = "Japanese";
+    Nation["English"] = "English";
+    Nation["German"] = "German";
+    Nation["Spain"] = "Spain";
+    Nation["Chinese"] = "Chinese";
+    Nation["Italian"] = "Italian";
+    Nation["Russian"] = "Russian";
+    Nation["SouthAmerican"] = "SouthAmerican";
+    Nation["African"] = "African";
 })(Nation || (Nation = {}));
 export var Instrumentation;
 (function (Instrumentation) {
-    Instrumentation['Unset'] = 'Unset';
-    Instrumentation['Mono'] = 'Mono';
-    Instrumentation['Groups'] = 'Groups';
-    Instrumentation['Mixed'] = 'Mixed';
+    Instrumentation["Unset"] = "Unset";
+    Instrumentation["Mono"] = "Mono";
+    Instrumentation["Groups"] = "Groups";
+    Instrumentation["Mixed"] = "Mixed";
 })(Instrumentation || (Instrumentation = {}));
 export var Participants;
 (function (Participants) {
-    Participants['Unset'] = 'Unset';
-    Participants['Solo'] = 'Solo';
-    Participants['SmallGroup'] = 'SmallGroup';
-    Participants['LargeGroup'] = 'LargeGroup';
-    Participants['SmallOrchestra'] = 'SmallOrchestra';
-    Participants['LargeOrchestra'] = 'LargeOrchestra';
+    Participants["Unset"] = "Unset";
+    Participants["Solo"] = "Solo";
+    Participants["SmallGroup"] = "SmallGroup";
+    Participants["LargeGroup"] = "LargeGroup";
+    Participants["SmallOrchestra"] = "SmallOrchestra";
+    Participants["LargeOrchestra"] = "LargeOrchestra";
 })(Participants || (Participants = {}));
-export var Genre;
-(function (Genre) {
-    Genre['Unset'] = 'Unset';
-    Genre['Avantgarde'] = 'Avantgarde';
-    Genre['Blues'] = 'Blues';
-    Genre['Classic'] = 'Classic';
-    Genre['Comedy'] = 'Comedy';
-    Genre['Country'] = 'Country';
-    Genre['EasyListening'] = 'EasyListening';
-    Genre['Electronic'] = 'Electronic';
-    Genre['House'] = 'House';
-    Genre['Flamenco'] = 'Flamenco';
-    Genre['Folk'] = 'Folk';
-    Genre['Jazz'] = 'Jazz';
-    Genre['Latin'] = 'Latin';
-    Genre['Pop'] = 'Pop';
-    Genre['RnB'] = 'RnB';
-    Genre['Soul'] = 'Soul';
-    Genre['Rock'] = 'Rock';
-    Genre['Metal'] = 'Metal';
-    Genre['March'] = 'March';
-    Genre['Moe'] = 'Moe';
-    Genre['Wagakki'] = 'Wagakki';
-    Genre['Medley'] = 'Medley';
-    Genre['Parody'] = 'Parody';
-    Genre['Ballad'] = 'Ballad';
-    Genre['FilmMusic'] = 'FilmMusic';
-    Genre['Western'] = 'Western';
-})(Genre || (Genre = {}));
-export class MarshalByRefObject {
-    constructor(data) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property)) this[property] = data[property];
-            }
-        }
-    }
-    init(_data) {}
-    static fromJS(data) {
-        data = typeof data === 'object' ? data : {};
-        throw new Error("The abstract class 'MarshalByRefObject' cannot be instantiated.");
-    }
-    toJSON(data) {
-        data = typeof data === 'object' ? data : {};
-        return data;
-    }
-    clone() {
-        throw new Error("The abstract class 'MarshalByRefObject' cannot be instantiated.");
-    }
-}
-export class Stream extends MarshalByRefObject {
-    canRead;
-    canSeek;
-    canTimeout;
-    canWrite;
-    length;
-    position;
-    readTimeout;
-    writeTimeout;
-    constructor(data) {
-        super(data);
-    }
-    init(_data) {
-        super.init(_data);
-        if (_data) {
-            this.canRead = _data['canRead'];
-            this.canSeek = _data['canSeek'];
-            this.canTimeout = _data['canTimeout'];
-            this.canWrite = _data['canWrite'];
-            this.length = _data['length'];
-            this.position = _data['position'];
-            this.readTimeout = _data['readTimeout'];
-            this.writeTimeout = _data['writeTimeout'];
-        }
-    }
-    static fromJS(data) {
-        data = typeof data === 'object' ? data : {};
-        throw new Error("The abstract class 'Stream' cannot be instantiated.");
-    }
-    toJSON(data) {
-        data = typeof data === 'object' ? data : {};
-        data['canRead'] = this.canRead;
-        data['canSeek'] = this.canSeek;
-        data['canTimeout'] = this.canTimeout;
-        data['canWrite'] = this.canWrite;
-        data['length'] = this.length;
-        data['position'] = this.position;
-        data['readTimeout'] = this.readTimeout;
-        data['writeTimeout'] = this.writeTimeout;
-        super.toJSON(data);
-        return data;
-    }
-    clone() {
-        throw new Error("The abstract class 'Stream' cannot be instantiated.");
-    }
-}
-export class BufferedStream extends Stream {
-    underlyingStream;
-    bufferSize;
-    canRead;
-    canWrite;
-    canSeek;
-    length;
-    position;
-    constructor(data) {
-        super(data);
-    }
-    init(_data) {
-        super.init(_data);
-        if (_data) {
-            this.underlyingStream = _data['underlyingStream'] ? Stream.fromJS(_data['underlyingStream']) : undefined;
-            this.bufferSize = _data['bufferSize'];
-            this.canRead = _data['canRead'];
-            this.canWrite = _data['canWrite'];
-            this.canSeek = _data['canSeek'];
-            this.length = _data['length'];
-            this.position = _data['position'];
-        }
-    }
-    static fromJS(data) {
-        data = typeof data === 'object' ? data : {};
-        let result = new BufferedStream();
-        result.init(data);
-        return result;
-    }
-    toJSON(data) {
-        data = typeof data === 'object' ? data : {};
-        data['underlyingStream'] = this.underlyingStream ? this.underlyingStream.toJSON() : undefined;
-        data['bufferSize'] = this.bufferSize;
-        data['canRead'] = this.canRead;
-        data['canWrite'] = this.canWrite;
-        data['canSeek'] = this.canSeek;
-        data['length'] = this.length;
-        data['position'] = this.position;
-        super.toJSON(data);
-        return data;
-    }
-    clone() {
-        const json = this.toJSON();
-        let result = new BufferedStream();
-        result.init(json);
-        return result;
-    }
-}
+export var MusicGenre;
+(function (MusicGenre) {
+    MusicGenre["Unset"] = "Unset";
+    MusicGenre["Avantgarde"] = "Avantgarde";
+    MusicGenre["Blues"] = "Blues";
+    MusicGenre["Classic"] = "Classic";
+    MusicGenre["Comedy"] = "Comedy";
+    MusicGenre["Country"] = "Country";
+    MusicGenre["EasyListening"] = "EasyListening";
+    MusicGenre["Electronic"] = "Electronic";
+    MusicGenre["House"] = "House";
+    MusicGenre["Flamenco"] = "Flamenco";
+    MusicGenre["Folk"] = "Folk";
+    MusicGenre["Jazz"] = "Jazz";
+    MusicGenre["Latin"] = "Latin";
+    MusicGenre["Pop"] = "Pop";
+    MusicGenre["RnB"] = "RnB";
+    MusicGenre["Soul"] = "Soul";
+    MusicGenre["Rock"] = "Rock";
+    MusicGenre["Metal"] = "Metal";
+    MusicGenre["March"] = "March";
+    MusicGenre["Moe"] = "Moe";
+    MusicGenre["Wagakki"] = "Wagakki";
+    MusicGenre["Medley"] = "Medley";
+    MusicGenre["Parody"] = "Parody";
+    MusicGenre["Ballad"] = "Ballad";
+    MusicGenre["FilmMusic"] = "FilmMusic";
+    MusicGenre["Western"] = "Western";
+})(MusicGenre || (MusicGenre = {}));
 export class GenreModel {
     id;
     section;
@@ -1218,15 +1161,16 @@ export class GenreModel {
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property)) this[property] = data[property];
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
-            this.id = _data['id'];
-            this.section = _data['section'];
-            this.name = _data['name'];
+            this.id = _data["id"];
+            this.section = _data["section"];
+            this.name = _data["name"];
         }
     }
     static fromJS(data) {
@@ -1237,9 +1181,9 @@ export class GenreModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data['id'] = this.id;
-        data['section'] = this.section;
-        data['name'] = this.name;
+        data["id"] = this.id;
+        data["section"] = this.section;
+        data["name"] = this.name;
         return data;
     }
     clone() {
@@ -1262,24 +1206,26 @@ export class MediaModel {
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property)) this[property] = data[property];
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
-            this.id = _data['id'];
-            this.name = _data['name'];
-            this.type = _data['type'];
-            this.rating = _data['rating'];
-            this.release = _data['release'];
-            if (Array.isArray(_data['genres'])) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.type = _data["type"];
+            this.rating = _data["rating"];
+            this.release = _data["release"];
+            if (Array.isArray(_data["genres"])) {
                 this.genres = [];
-                for (let item of _data['genres']) this.genres.push(item);
+                for (let item of _data["genres"])
+                    this.genres.push(item);
             }
-            this.state = _data['state'];
-            this.description = _data['description'];
-            this.image = _data['image'];
+            this.state = _data["state"];
+            this.description = _data["description"];
+            this.image = _data["image"];
         }
     }
     static fromJS(data) {
@@ -1290,18 +1236,19 @@ export class MediaModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data['id'] = this.id;
-        data['name'] = this.name;
-        data['type'] = this.type;
-        data['rating'] = this.rating;
-        data['release'] = this.release;
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["type"] = this.type;
+        data["rating"] = this.rating;
+        data["release"] = this.release;
         if (Array.isArray(this.genres)) {
-            data['genres'] = [];
-            for (let item of this.genres) data['genres'].push(item);
+            data["genres"] = [];
+            for (let item of this.genres)
+                data["genres"].push(item);
         }
-        data['state'] = this.state;
-        data['description'] = this.description;
-        data['image'] = this.image;
+        data["state"] = this.state;
+        data["description"] = this.description;
+        data["image"] = this.image;
         return data;
     }
     clone() {
@@ -1317,14 +1264,15 @@ export class InstrumentModel {
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property)) this[property] = data[property];
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
-            this.name = _data['name'];
-            this.type = _data['type'];
+            this.name = _data["name"];
+            this.type = _data["type"];
         }
     }
     static fromJS(data) {
@@ -1335,8 +1283,8 @@ export class InstrumentModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data['name'] = this.name;
-        data['type'] = this.type;
+        data["name"] = this.name;
+        data["type"] = this.type;
         return data;
     }
     clone() {
@@ -1348,15 +1296,16 @@ export class InstrumentModel {
 }
 export var InstrumentType;
 (function (InstrumentType) {
-    InstrumentType['Unset'] = 'Unset';
-    InstrumentType['Vocal'] = 'Vocal';
-    InstrumentType['WoodWind'] = 'WoodWind';
-    InstrumentType['Brass'] = 'Brass';
-    InstrumentType['Percussion'] = 'Percussion';
-    InstrumentType['Stringed'] = 'Stringed';
-    InstrumentType['Keyboard'] = 'Keyboard';
-    InstrumentType['Electronic'] = 'Electronic';
-    InstrumentType['HumanBody'] = 'HumanBody';
+    InstrumentType["Unset"] = "Unset";
+    InstrumentType["Vocal"] = "Vocal";
+    InstrumentType["WoodWind"] = "WoodWind";
+    InstrumentType["Brass"] = "Brass";
+    InstrumentType["Percussion"] = "Percussion";
+    InstrumentType["Stringed"] = "Stringed";
+    InstrumentType["Keyboard"] = "Keyboard";
+    InstrumentType["Electronic"] = "Electronic";
+    InstrumentType["HumanBody"] = "HumanBody";
+    InstrumentType["Miscellaneous"] = "Miscellaneous";
 })(InstrumentType || (InstrumentType = {}));
 export class UpdateRequestOfMusicModel {
     oldModel;
@@ -1364,14 +1313,15 @@ export class UpdateRequestOfMusicModel {
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property)) this[property] = data[property];
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
-            this.oldModel = _data['oldModel'] ? MusicModel.fromJS(_data['oldModel']) : undefined;
-            this.newModel = _data['newModel'] ? MusicModel.fromJS(_data['newModel']) : undefined;
+            this.oldModel = _data["oldModel"] ? MusicModel.fromJS(_data["oldModel"]) : undefined;
+            this.newModel = _data["newModel"] ? MusicModel.fromJS(_data["newModel"]) : undefined;
         }
     }
     static fromJS(data) {
@@ -1382,8 +1332,8 @@ export class UpdateRequestOfMusicModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data['oldModel'] = this.oldModel ? this.oldModel.toJSON() : undefined;
-        data['newModel'] = this.newModel ? this.newModel.toJSON() : undefined;
+        data["oldModel"] = this.oldModel ? this.oldModel.toJSON() : undefined;
+        data["newModel"] = this.newModel ? this.newModel.toJSON() : undefined;
         return data;
     }
     clone() {
@@ -1401,16 +1351,17 @@ export class StreamingEntryModel {
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property)) this[property] = data[property];
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
-            this.id = _data['id'];
-            this.season = _data['season'];
-            this.episode = _data['episode'];
-            this.src = _data['src'];
+            this.id = _data["id"];
+            this.season = _data["season"];
+            this.episode = _data["episode"];
+            this.src = _data["src"];
         }
     }
     static fromJS(data) {
@@ -1421,10 +1372,10 @@ export class StreamingEntryModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data['id'] = this.id;
-        data['season'] = this.season;
-        data['episode'] = this.episode;
-        data['src'] = this.src;
+        data["id"] = this.id;
+        data["season"] = this.season;
+        data["episode"] = this.episode;
+        data["src"] = this.src;
         return data;
     }
     clone() {
@@ -1454,6 +1405,8 @@ export class SwaggerException extends Error {
     }
 }
 function throwException(message, status, response, headers, result) {
-    if (result !== null && result !== undefined) throw result;
-    else throw new SwaggerException(message, status, response, headers, null);
+    if (result !== null && result !== undefined)
+        throw result;
+    else
+        throw new SwaggerException(message, status, response, headers, null);
 }

@@ -28,7 +28,8 @@ namespace ObscuritasMediaManager.Backend.DataRepositories
 
             modelBuilder.Entity<MusicModel>()
                 .Property(x => x.Genres).HasConversion(x => string.Join(",", x),
-                    x => x.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(y => ParseEnumOrDefault<Genre>(y))
+                    x => x.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                        .Select(y => ParseEnumOrDefault<MusicGenre>(y))
                         .ToList());
 
             modelBuilder.Entity<MusicModel>()

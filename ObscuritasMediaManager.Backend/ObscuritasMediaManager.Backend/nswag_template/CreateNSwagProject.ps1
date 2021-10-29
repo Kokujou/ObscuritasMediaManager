@@ -7,6 +7,7 @@ Param(
     $clientTargetRuntime = "Net50"
 )
 cd $PSScriptRoot
+iisreset /stop
 function Resolve-Parameters(){
     $directory = Resolve-Path -Path $workingDirectory
     Write-Host $directory
@@ -71,3 +72,4 @@ cd $targetProjectFolder
 npm install
 tsc --project tsconfig.json
 cd $PSScriptRoot
+iisreset /start

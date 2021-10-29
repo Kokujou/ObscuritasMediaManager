@@ -1,4 +1,5 @@
 import { css, unsafeCSS } from '../../exports.js';
+import { InstrumentType } from '../../obscuritas-media-manager-backend-client.js';
 import { unsetIcon } from '../../resources/icons/general/unset-icon.svg.js';
 import { brassIcon } from '../../resources/icons/instrument-icons/brass-icon.svg.js';
 import { electronicIcon } from '../../resources/icons/instrument-icons/electronic-icon.svg.js';
@@ -11,59 +12,45 @@ import { stringsIcon } from '../../resources/icons/instrument-icons/string-icon.
 import { woodWindIcon } from '../../resources/icons/instrument-icons/wood-wind-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
-/** @enum {string} */
-export const InstrumentTypes = {
-    Unset: 'unset',
-    Vocal: 'vocal',
-    WoodWind: 'woodWind',
-    Brass: 'brass',
-    Percussion: 'percussion',
-    Stringed: 'stringed',
-    Keyboard: 'keyboard',
-    Electronic: 'electronic',
-    HumanBody: 'humanBody',
-    Miscellaneous: 'miscellaneous',
-};
-
 export function renderInstrumentTypeIcons(parentSelector) {
     return css`
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Unset)} {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Unset)} {
             ${renderMaskImage(unsetIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Vocal)} {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Vocal)} {
             ${renderMaskImage(microphoneIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Brass)} {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Brass)} {
             ${renderMaskImage(brassIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.WoodWind)} {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.WoodWind)} {
             ${renderMaskImage(woodWindIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Keyboard)} {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Keyboard)} {
             ${renderMaskImage(keyboardIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Electronic)} {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Electronic)} {
             ${renderMaskImage(electronicIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Percussion)} {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Percussion)} {
             ${renderMaskImage(percussionIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Stringed)} {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Stringed)} {
             ${renderMaskImage(stringsIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.HumanBody)} {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.HumanBody)} {
             ${renderMaskImage(humanBodyIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentTypes.Miscellaneous)} {
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Miscellaneous)} {
             ${renderMaskImage(miscIcon())};
         }
     `;

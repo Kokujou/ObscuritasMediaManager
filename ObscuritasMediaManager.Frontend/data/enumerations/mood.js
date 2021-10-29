@@ -22,8 +22,12 @@ export function renderMoodStyles(parentSelector) {
             --font-color: black;
         }
 
-        ${unsafeCSS(parentSelector)}.monotonuous {
-            --font-color: black;
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(Mood.Monotonuous)} {
+            --font-color: black !important;
+        }
+
+        ${unsafeCSS(parentSelector)}.${unsafeCSS(Mood.Unset)} {
+            --font-color: black !important;
         }
 
         ${unsafeCSS(

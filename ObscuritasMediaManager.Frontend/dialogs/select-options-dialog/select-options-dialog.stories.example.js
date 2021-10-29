@@ -14,7 +14,6 @@ function showDialog() {
     dialog.addEventListener('decline', () => dialog.remove());
     dialog.addEventListener('accept', (e) => {
         var event = /** @type {CustomEvent} */ (e);
-        console.log(event.detail);
         dialog.remove();
     });
 }

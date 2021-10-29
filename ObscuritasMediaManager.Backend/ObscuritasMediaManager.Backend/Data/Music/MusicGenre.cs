@@ -1,6 +1,6 @@
 ﻿namespace ObscuritasMediaManager.Backend.Data.Music
 {
-    public enum Genre
+    public enum MusicGenre
     {
         Unset,
         Avantgarde,

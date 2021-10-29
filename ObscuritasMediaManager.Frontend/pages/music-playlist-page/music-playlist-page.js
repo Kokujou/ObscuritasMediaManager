@@ -1,12 +1,11 @@
 import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher.js';
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
-import { MusicGenre } from '../../data/enumerations/music-genre.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { LitElement } from '../../exports.js';
-import { Genre, GenreModel, MusicModel, UpdateRequestOfMusicModel } from '../../obscuritas-media-manager-backend-client.js';
+import { GenreModel, MusicGenre, MusicModel, UpdateRequestOfMusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
@@ -179,7 +178,6 @@ export class MusicPlaylistPage extends LitElement {
      * @param {any} value
      */
     async changeProperty(property, value) {
-        console.log(property, value);
         if (property == 'displayName' || property == 'mappedInstruments' || property == 'instrumentTypes') return;
         if (property == 'rating') this.updatedTrack[property] = value;
         else if (property == 'complete') this.updatedTrack[property] = value;
@@ -214,7 +212,7 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     /**
-     * @param {Genre} genre
+     * @param {MusicGenre} genre
      */
     addGenre(genre) {
         var newGenres = this.updatedTrack.genres.concat([genre]);

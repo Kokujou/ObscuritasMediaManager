@@ -18,7 +18,7 @@ namespace ObscuritasMediaManager.Backend.Models
         public Instrumentation Instrumentation { get; set; }
         public Participants Participants { get; set; }
         public IEnumerable<string> Instruments { get; set; }
-        public IEnumerable<Genre> Genres { get; set; }
+        public IEnumerable<MusicGenre> Genres { get; set; }
         public string Path { get; set; }
         public byte Rating { get; set; }
         public bool? Complete { get; set; }
