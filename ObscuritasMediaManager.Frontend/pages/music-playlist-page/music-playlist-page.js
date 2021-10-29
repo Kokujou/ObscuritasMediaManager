@@ -5,9 +5,10 @@ import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { LitElement } from '../../exports.js';
-import { GenreModel, MusicGenre, MusicModel, UpdateRequestOfMusicModel } from '../../obscuritas-media-manager-backend-client.js';
+import { GenreModel, MusicGenre, UpdateRequestOfMusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
+import { randomizeArray } from '../../services/extensions/array.extensions.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
 import { renderMusicPlaylistStyles } from './music-playlist-page.css.js';
@@ -70,7 +71,6 @@ export class MusicPlaylistPage extends LitElement {
     constructor() {
         super();
         /** @type {ExtendedMusicModel[]} */ this.playlist = [];
-        /** @type {ExtendedMusicModel[]} */ this.playlistToDisplay = [];
         /** @type {number} */ this.currentTrackIndex = 0;
         /** @type {ExtendedMusicModel} */ this.currentTrack = new ExtendedMusicModel();
         /** @type {ExtendedMusicModel} */ this.updatedTrack = new ExtendedMusicModel();
@@ -102,7 +102,6 @@ export class MusicPlaylistPage extends LitElement {
         } else {
             this.id = playlistId;
             this.playlist = (await PlaylistService.getTemporaryPlaylist(playlistId)).map((x) => new ExtendedMusicModel(x));
-            Object.assign(this.playlistToDisplay, this.playlist);
             this.currentTrackIndex = Number.parseInt(trackId);
         }
 
@@ -140,7 +139,6 @@ export class MusicPlaylistPage extends LitElement {
         );
         Object.assign(this.currentTrack, this.updatedTrack);
         this.playlist[this.currentTrackIndex] = this.updatedTrack;
-        this.playlistToDisplay[this.currentTrackIndex] = this.updatedTrack;
     }
 
     async changeTrackBy(offset) {
@@ -155,8 +153,8 @@ export class MusicPlaylistPage extends LitElement {
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
         audioElement.pause();
         this.currentTrackIndex = index;
-        this.currentTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
-        this.updatedTrack = Object.assign(new MusicModel(), this.playlist[this.currentTrackIndex]);
+        this.currentTrack = Object.assign(new ExtendedMusicModel(), this.playlist[this.currentTrackIndex]);
+        this.updatedTrack = Object.assign(new ExtendedMusicModel(), this.playlist[this.currentTrackIndex]);
 
         changePage(session.currentPage.current(), `?guid=${this.id}&track=${this.currentTrackIndex}`, false);
 
@@ -246,5 +244,13 @@ export class MusicPlaylistPage extends LitElement {
     async toggleComplete() {
         /** @type {HTMLInputElement}*/ var input = this.shadowRoot.querySelector('#complete-check');
         await this.changeProperty('complete', input.checked);
+    }
+
+    randomize() {
+        var currentItem = this.playlist[this.currentTrackIndex];
+        this.playlist = randomizeArray(this.playlist);
+        this.currentTrackIndex = this.playlist.indexOf(currentItem);
+
+        this.requestUpdate(undefined);
     }
 }

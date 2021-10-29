@@ -118,9 +118,10 @@ export function renderMusicPlaylist(playlist) {
                     </div>
                 </div>
                 <media-playlist
-                    .items="${playlist.playlistToDisplay.map((x) => x.displayName)}"
+                    .items="${playlist.playlist.map((x) => x.displayName)}"
                     .index="${playlist.currentTrackIndex}"
                     @indexChanged="${(e) => playlist.changeTrack(e.detail.index)}"
+                    @randomize="${() => playlist.randomize()}"
                 ></media-playlist>
             </div>
             <audio

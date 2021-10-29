@@ -1,5 +1,4 @@
 import { LitElement } from '../../exports.js';
-import { randomizeArray } from '../../services/extensions/array.extensions.js';
 import { PaginatedScrolling } from '../paginated-scrolling/paginated-scrolling.js';
 import { renderMediaPlaylistStyles } from './media-playlist.css.js';
 import { renderMediaPlaylist } from './media-playlist.html.js';
@@ -17,14 +16,14 @@ export class MediaPlaylist extends LitElement {
     }
 
     get paginatedItems() {
-        return this.displayedItems.slice(0, this.maxPlaylistItems);
+        return this.items.slice(0, this.maxPlaylistItems);
     }
 
     constructor() {
         super();
 
         /** @type {string[]} */ this.items = [];
-        /** @type {string[]} */ this.displayedItems = [];
+        /** @type {string[]} */ this.originalItems = [];
         /** @type {number} */ this.index = 0;
 
         /** @type {number} */ this.maxPlaylistItems = 20;
@@ -44,27 +43,21 @@ export class MediaPlaylist extends LitElement {
 
         var items = _changedProperties.get('items');
         if (!items) return;
-        this.displayedItems = [...items];
+        this.originalItems = [...items];
         if (_changedProperties.has('index')) this.scrollToActive();
     }
 
     loadMoreItems() {
-        if (this.displayedItems.length > this.maxPlaylistItems) this.maxPlaylistItems += 10;
+        if (this.items.length > this.maxPlaylistItems) this.maxPlaylistItems += 10;
         this.requestUpdate(undefined);
     }
 
     async randomizeOrder() {
-        var currentItem = this.displayedItems[this.index];
-        this.displayedItems = randomizeArray(this.displayedItems);
-        this.index = this.displayedItems.indexOf(currentItem);
-
-        this.requestUpdate(undefined);
-
-        await this.scrollToActive();
+        this.dispatchEvent(new CustomEvent('randomize'));
     }
 
     restoreOrder() {
-        this.displayedItems = [...this.items];
+        this.items = [...this.originalItems];
         this.requestUpdate(undefined);
     }
 
