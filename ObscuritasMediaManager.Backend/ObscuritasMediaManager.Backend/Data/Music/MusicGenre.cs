@@ -3,6 +3,7 @@
     public enum MusicGenre
     {
         Unset,
+        Acapella,
         Avantgarde,
         Blues,
         Classic,

@@ -1128,6 +1128,7 @@ export var Participants;
 export var MusicGenre;
 (function (MusicGenre) {
     MusicGenre["Unset"] = "Unset";
+    MusicGenre["Acapella"] = "Acapella";
     MusicGenre["Avantgarde"] = "Avantgarde";
     MusicGenre["Blues"] = "Blues";
     MusicGenre["Classic"] = "Classic";

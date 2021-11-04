@@ -3,7 +3,9 @@ import { session } from './session.js';
 
 export class ExtendedMusicModel extends MusicModel {
     get mappedInstruments() {
-        return this.instruments.map((name) => session.instruments.current().find((instrument) => instrument.name == name));
+        return this.instruments
+            .map((name) => session.instruments.current().find((instrument) => instrument.name == name))
+            .filter((x) => x);
     }
 
     /** @type {InstrumentType[]} */ get instrumentTypes() {

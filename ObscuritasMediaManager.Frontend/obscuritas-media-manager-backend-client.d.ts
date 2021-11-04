@@ -178,6 +178,7 @@ export declare enum Participants {
 }
 export declare enum MusicGenre {
     Unset = "Unset",
+    Acapella = "Acapella",
     Avantgarde = "Avantgarde",
     Blues = "Blues",
     Classic = "Classic",
