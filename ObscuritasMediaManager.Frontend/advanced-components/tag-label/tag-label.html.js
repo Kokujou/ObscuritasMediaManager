@@ -18,7 +18,7 @@ export function renderTagLabel(tagLabel) {
  * @param {TagLabel} tagLabel
  */
 function renderNewLabelForm(tagLabel) {
-    return html`<form id="new-label-form" action="javascript:void(0)" @submit="${() => tagLabel.notifyTagCreated()}">
+    return html`<form id="new-label-form" action="javascript:void(0)">
         <input
             id="new-tag-input"
             @keyup="${(e) => tagLabel.handleInput(e)}"

@@ -1,4 +1,5 @@
 import { css } from '../../exports.js';
+import { cleanIcon } from '../../resources/icons/general/clean-icon.svg.js';
 import { importIcon } from '../../resources/icons/import-icon.svg.js';
 import { addPlaylistIcon } from '../../resources/icons/playlist-icons/add-playlist-icon.svg.js';
 import { browsePlaylistIcon } from '../../resources/icons/playlist-icons/browse-playlist-icon.svg.js';
@@ -158,6 +159,10 @@ function renderResultOptionsBar() {
 
         #download-playlist {
             ${renderMaskImage(downloadPlaylistIcon())};
+        }
+
+        #cleanup-tracks {
+            ${renderMaskImage(cleanIcon())};
         }
     `;
 }

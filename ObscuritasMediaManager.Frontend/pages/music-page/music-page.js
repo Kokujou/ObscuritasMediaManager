@@ -101,7 +101,7 @@ export class MusicPage extends LitElement {
      * @param {ExtendedMusicModel} track
      */
     getTrackIcon(track) {
-        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.path}`;
+        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
         if (this.currentTrackPath != trackSrc) return NoteIcon();
         if (this.isPaused) return playIcon();
         return pauseIcon();
@@ -121,7 +121,7 @@ export class MusicPage extends LitElement {
      * @param {ExtendedMusicModel} track
      */
     async toggleMusic(track) {
-        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${track.path}`;
+        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#current-track');
         if (this.currentTrackPath == trackSrc && !audioElement.paused) audioElement.pause();
         else if (this.currentTrackPath == trackSrc && audioElement.paused) audioElement.play();
@@ -200,7 +200,7 @@ export class MusicPage extends LitElement {
             try {
                 var selected = /** @type {CustomEvent<{selected: string[]}>} */ (e).detail.selected;
                 var failedTracks = await CleanupService.cleanupMusic(selected);
-                if (failedTracks.length > 0)
+                if (failedTracks && failedTracks.length > 0)
                     await MessageDialog.show(
                         'Warnung!',
                         `Die folgenden Tracks konnten nicht gelöscht werden:

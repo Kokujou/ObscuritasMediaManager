@@ -36,7 +36,7 @@ export class MusicPlaylistPage extends LitElement {
 
     get audioSource() {
         if (this.currentTrack && this.currentTrack.path)
-            return `/ObscuritasMediaManager/api/file/audio?audioPath=${this.currentTrack.path}`;
+            return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.currentTrack.path)}`;
         return '';
     }
 
@@ -219,7 +219,7 @@ export class MusicPlaylistPage extends LitElement {
 
     removeGenreKey(key) {
         var newGenres = this.updatedTrack.genres.filter((x) => x != key);
-        this.changeProperty('genres', newGenres.join(','));
+        this.changeProperty('genres', newGenres);
     }
 
     openInstrumentsDialog() {

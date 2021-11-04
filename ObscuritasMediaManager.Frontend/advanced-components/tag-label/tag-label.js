@@ -17,7 +17,9 @@ export class TagLabel extends LitElement {
     }
 
     get selectedElement() {
-        /** @type {NodeListOf<HTMLElement>} */ var elements = this.shadowRoot.querySelectorAll('#autocomplete-list .autocomplete-item');
+        /** @type {NodeListOf<HTMLElement>} */ var elements = this.shadowRoot.querySelectorAll(
+            '#autocomplete-list .autocomplete-item'
+        );
         if (elements[this.autofillIndex]) return elements[this.autofillIndex];
         return null;
     }
@@ -73,7 +75,8 @@ export class TagLabel extends LitElement {
             if (!selectedElement) return;
             if (selectedElement.offsetTop <= selectedElement.parentElement.scrollTop)
                 selectedElement.parentElement.scrollTo({ top: selectedElement.offsetTop });
-        } else if (event.key == 'Enter') this.setSearchText(this.autocompleteItems[this.autofillIndex]);
+        } else if (event.key == 'Enter')
+            this.setSearchText(this.autocompleteItems[this.autofillIndex > 0 ? this.autofillIndex : 0]);
 
         this.requestUpdate(undefined);
         var selectedElement = this.selectedElement;
@@ -84,6 +87,7 @@ export class TagLabel extends LitElement {
     }
 
     setSearchText(text) {
+        console.log('set search text' + text);
         /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#new-tag-input');
         input.value = text;
         this.requestUpdate(undefined);
