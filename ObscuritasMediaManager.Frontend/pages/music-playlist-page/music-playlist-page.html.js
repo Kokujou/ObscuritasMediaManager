@@ -33,7 +33,7 @@ export function renderMusicPlaylist(playlist) {
                     <audio-tile-base
                         .track="${new ExtendedMusicModel(playlist.updatedTrack)}"
                         ?paused="${playlist.paused}"
-                        @toggle="${() => playlist.toggleCurrentTrack()}"
+                        @imageClicked="${() => playlist.toggleCurrentTrack()}"
                         @changeLanguage="${() => playlist.showLanguageSwitcher()}"
                         @changeNation="${() => playlist.showNationSwitcher()}"
                         @nextParticipants="${() =>

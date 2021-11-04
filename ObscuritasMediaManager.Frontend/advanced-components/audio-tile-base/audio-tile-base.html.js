@@ -14,7 +14,7 @@ export function renderAudioTileBase(audioTile) {
                 audioTile.notifyEvent('toggle');
             }}"
         >
-            <div id="audio-image"></div>
+            <div id="audio-image" @click="${(e) => audioTile.notifyEvent('imageClicked', e)}"></div>
             <div
                 id="language-icon"
                 class="inline-icon ${audioTile.track.language}"
