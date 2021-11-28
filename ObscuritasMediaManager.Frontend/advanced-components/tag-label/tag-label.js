@@ -87,7 +87,6 @@ export class TagLabel extends LitElement {
     }
 
     setSearchText(text) {
-        console.log('set search text' + text);
         /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#new-tag-input');
         input.value = text;
         this.requestUpdate(undefined);

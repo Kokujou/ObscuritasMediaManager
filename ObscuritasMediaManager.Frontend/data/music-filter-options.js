@@ -11,7 +11,7 @@ import { FilterEntry } from './filter-entry.js';
 import { session } from './session.js';
 
 export class MusicFilterOptions {
-    /** @type {string} */ title = '';
+    /** @type {string} */ search = '';
     /** @type {CheckboxState} */ complete = CheckboxState.Ignore;
 
     languages = new FilterEntry(Nation, CheckboxState.Allow);

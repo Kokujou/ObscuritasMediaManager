@@ -67,8 +67,8 @@ export function renderMusicPage(musicPage) {
                                                   .track="${track}"
                                                   .image="${musicPage.getTrackIcon(track)}"
                                                   ?paused="${musicPage.isPaused ||
-                                                  !musicPage.currentTrackPath.includes(track.path)}"
-                                                  @toggle="${() => musicPage.toggleMusic(track)}"
+                                                  !musicPage.currentTrackPath.includes(encodeURIComponent(track.path))}"
+                                                  @imageClicked="${() => musicPage.toggleMusic(track)}"
                                               ></audio-tile>
                                           </link-element>
                                       `

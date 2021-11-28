@@ -11,7 +11,6 @@ export class MusicFilterService {
     static applyArrayFilter(list, filter, filterProperty) {
         var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
-        console.log(forbiddenValues);
         var results = list.filter((item) => {
             var array = item[filterProperty];
             if (!Array.isArray(array)) throw new Error('property must be an array');

@@ -52,7 +52,7 @@ export class MusicFilter extends LitElement {
      */
     toggleFilter(filter, enumKey, state) {
         state;
-        if (filter == 'title') {
+        if (filter == 'search') {
             this.filter[filter] = state;
         } else if (filter == 'complete') this.filter.complete = state;
         else this.filter[filter].states[enumKey] = state;
@@ -66,7 +66,7 @@ export class MusicFilter extends LitElement {
      */
     resetFilter(filter) {
         var newOptions = new MusicFilterOptions();
-        if (filter == 'title') this.filter[filter] = '';
+        if (filter == 'search') this.filter[filter] = '';
         else if (filter == 'complete') this.filter.complete = CheckboxState.Ignore;
         else this.filter[filter] = newOptions[filter];
         this.requestUpdate(undefined);
@@ -84,7 +84,7 @@ export class MusicFilter extends LitElement {
      * @param {string[]} selectedValues
      */
     handleDropdownChange(filter, selectedValues) {
-        if (filter == 'title' || filter == 'complete') return;
+        if (filter == 'search' || filter == 'complete') return;
         Object.keys(this.filter[filter].states).forEach((key) => {
             this.toggleFilter(filter, key, selectedValues.includes(key) ? CheckboxState.Ignore : CheckboxState.Forbid);
         });

@@ -43,8 +43,10 @@ export class MusicPage extends LitElement {
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.moods, 'mood');
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.participants, 'participants');
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.ratings, 'rating');
-        filteredTracks = filteredTracks.filter((track) =>
-            track.displayName.toLowerCase().includes((this.filter.title || '').toLowerCase())
+        filteredTracks = filteredTracks.filter(
+            (track) =>
+                track.displayName.toLowerCase().includes((this.filter.search || '').toLowerCase()) ||
+                track.path.toLowerCase().includes((this.filter.search || '').toLowerCase())
         );
 
         if (this.filter.complete != CheckboxState.Ignore)
@@ -127,11 +129,12 @@ export class MusicPage extends LitElement {
         else if (this.currentTrackPath == trackSrc && audioElement.paused) audioElement.play();
         this.isPaused = audioElement.paused;
         this.requestUpdate(undefined);
+
         if (this.currentTrackPath == trackSrc) return;
 
         this.currentTrackPath = trackSrc;
         await this.requestUpdate(undefined);
-        audioElement.play();
+        await audioElement.play();
         this.isPaused = audioElement.paused;
         this.requestUpdate(undefined);
     }

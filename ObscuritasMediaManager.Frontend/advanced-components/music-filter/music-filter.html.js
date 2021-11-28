@@ -27,13 +27,14 @@ export function renderMusicFilter(musicFilter) {
                     id="search-input"
                     placeholder="Suchbegriff eingeben..."
                     oninput="this.dispatchEvent(new Event('change'))"
-                    @change="${(e) => musicFilter.toggleFilter('title', '', e.target.value)}"
-                    .value="${musicFilter.filter.title || ''}"
+                    @change="${(e) => musicFilter.toggleFilter('search', '', e.target.value)}"
+                    .value="${musicFilter.filter.search || ''}"
                 />
             </div>
             <div id="complete-filter" class="filter">
                 <label for="scales">Vollständig: </label>
                 <tri-value-checkbox
+                    allowThreeValues
                     id="complete-input"
                     value="${musicFilter.filter.complete}"
                     @valueChanged="${(e) => musicFilter.toggleFilter('complete', '', e.detail.value)}"
