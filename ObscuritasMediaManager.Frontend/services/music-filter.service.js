@@ -11,14 +11,14 @@ export class MusicFilterService {
     static applyArrayFilter(list, filter, filterProperty) {
         var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
-
+        console.log(forbiddenValues);
         var results = list.filter((item) => {
             var array = item[filterProperty];
             if (!Array.isArray(array)) throw new Error('property must be an array');
             var anotherArray = array;
             return (
-                allowedValues.every((genre) => anotherArray.some((x) => x == genre)) &&
-                anotherArray.every((genre) => forbiddenValues.every((x) => x != genre))
+                allowedValues.every((allowedItem) => anotherArray.some((anotherItem) => anotherItem == allowedItem)) &&
+                anotherArray.every((anotherItem) => forbiddenValues.every((forbiddenItem) => forbiddenItem != anotherItem))
             );
         });
         list.length = 0;

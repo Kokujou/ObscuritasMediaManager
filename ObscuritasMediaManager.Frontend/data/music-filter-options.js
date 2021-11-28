@@ -22,8 +22,8 @@ export class MusicFilterOptions {
         session.instruments.current().map((x) => x.name),
         CheckboxState.Ignore
     );
-    moods = new FilterEntry(Mood, CheckboxState.Allow);
-    genres = new FilterEntry(MusicGenre, CheckboxState.Allow);
-    instrumentations = new FilterEntry(Instrumentation, CheckboxState.Allow);
+    moods = new FilterEntry(Mood, CheckboxState.Ignore);
+    genres = new FilterEntry(MusicGenre, CheckboxState.Ignore);
+    instrumentations = new FilterEntry(Instrumentation, CheckboxState.Ignore);
     participants = new FilterEntry(Participants, CheckboxState.Allow);
 }

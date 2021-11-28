@@ -86,7 +86,7 @@ export class MusicFilter extends LitElement {
     handleDropdownChange(filter, selectedValues) {
         if (filter == 'title' || filter == 'complete') return;
         Object.keys(this.filter[filter].states).forEach((key) => {
-            this.toggleFilter(filter, key, selectedValues.includes(key) ? CheckboxState.Allow : CheckboxState.Forbid);
+            this.toggleFilter(filter, key, selectedValues.includes(key) ? CheckboxState.Ignore : CheckboxState.Forbid);
         });
     }
 

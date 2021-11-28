@@ -128,7 +128,7 @@ export function renderMusicFilter(musicFilter) {
                 <drop-down
                     @selectionChange="${(e) => musicFilter.handleDropdownChange('moods', e.detail.value)}"
                     .values="${Object.keys(musicFilter.filter.moods.states).filter(
-                        (key) => musicFilter.filter.moods.states[key] == CheckboxState.Allow
+                        (key) => musicFilter.filter.moods.states[key] == CheckboxState.Ignore
                     )}"
                     multiselect
                     maxDisplayDepth="5"
@@ -144,7 +144,7 @@ export function renderMusicFilter(musicFilter) {
                 <drop-down
                     @selectionChange="${(e) => musicFilter.handleDropdownChange('genres', e.detail.value)}"
                     .values="${Object.keys(musicFilter.filter.genres.states).filter(
-                        (key) => musicFilter.filter.genres.states[key] == CheckboxState.Allow
+                        (key) => musicFilter.filter.genres.states[key] == CheckboxState.Ignore
                     )}"
                     multiselect
                     maxDisplayDepth="5"
@@ -160,7 +160,7 @@ export function renderMusicFilter(musicFilter) {
                 <drop-down
                     @selectionChange="${(e) => musicFilter.handleDropdownChange('instrumentations', e.detail.value)}"
                     .values="${Object.keys(musicFilter.filter.instrumentations.states).filter(
-                        (key) => musicFilter.filter.instrumentations.states[key] == CheckboxState.Allow
+                        (key) => musicFilter.filter.instrumentations.states[key] == CheckboxState.Ignore
                     )}"
                     multiselect
                     maxDisplayDepth="5"
