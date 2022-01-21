@@ -80,6 +80,11 @@ export class MusicPage extends LitElement {
                 this.requestUpdate(undefined);
             })
         );
+        this.addEventListener('click', () => {
+            if (!this.selectionMode) return;
+            this.selectionMode = false;
+            this.requestUpdate(undefined);
+        });
     }
 
     async initializeData() {

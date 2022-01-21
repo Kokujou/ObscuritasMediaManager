@@ -9,7 +9,6 @@
 
 //TODO: implement sorting
 //TODO: refine single play functionality (jump to active)
-//TODO: add select functionality and indication, opt: select all
 //TODO: add a fancy audio visualization
 //TODO: Websockets
 //TODO: Authentication
