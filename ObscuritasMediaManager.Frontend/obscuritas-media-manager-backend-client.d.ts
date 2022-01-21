@@ -113,7 +113,7 @@ export declare class MusicModel implements IMusicModel {
     genres?: MusicGenre[] | undefined;
     path?: string | undefined;
     rating?: number;
-    complete?: boolean | undefined;
+    complete?: boolean;
     hash?: string | undefined;
     constructor(data?: IMusicModel);
     init(_data?: any): void;
@@ -134,7 +134,7 @@ export interface IMusicModel {
     genres?: MusicGenre[] | undefined;
     path?: string | undefined;
     rating?: number;
-    complete?: boolean | undefined;
+    complete?: boolean;
     hash?: string | undefined;
 }
 export declare enum Mood {
@@ -203,7 +203,8 @@ export declare enum MusicGenre {
     Parody = "Parody",
     Ballad = "Ballad",
     FilmMusic = "FilmMusic",
-    Western = "Western"
+    Western = "Western",
+    Christmas = "Christmas"
 }
 export declare class GenreModel implements IGenreModel {
     id?: string;

@@ -1,5 +1,6 @@
 import { html } from '../../exports.js';
 import { Nation } from '../../obscuritas-media-manager-backend-client.js';
+import { IconRegistry } from '../../resources/icons/icon-registry.js';
 import { LanguageSwitcher } from './language-switcher.js';
 
 /**
@@ -17,7 +18,7 @@ export function renderLanguageSwitcher(languageSwitcher) {
             }
         </style>
         <div id="language-switcher-overlay">
-            <div id="left-arrow" @click="${() => languageSwitcher.rotateBackward()}"></div>
+            <div class="${IconRegistry.ArrowIcon}" id="left-arrow" @click="${() => languageSwitcher.rotateBackward()}"></div>
             <div id="blocked-area">
                 ${Object.values(Nation).map(
                     (nation, index) =>
@@ -36,7 +37,7 @@ export function renderLanguageSwitcher(languageSwitcher) {
                 @click="${() => languageSwitcher.notifyLanguageChanged()}"
             ></div>
 
-            <div id="right-arrow" @click="${() => languageSwitcher.rotateForward()}"></div>
+            <div class="${IconRegistry.ArrowIcon}" id="right-arrow" @click="${() => languageSwitcher.rotateForward()}"></div>
         </div>
     `;
 }

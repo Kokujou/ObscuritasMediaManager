@@ -9,6 +9,7 @@ import {
     Nation,
     Participants,
 } from '../../obscuritas-media-manager-backend-client.js';
+import { IconRegistry } from '../../resources/icons/icon-registry.js';
 import { MusicFilter } from './music-filter.js';
 
 /**
@@ -17,8 +18,8 @@ import { MusicFilter } from './music-filter.js';
 export function renderMusicFilter(musicFilter) {
     return html`
         <div id="search-heading">
-            <div id="heading-label">Suche</div>
-            <div class="inline-icon reset-icon" @click="${() => musicFilter.resetAllFilters()}"></div>
+            <div class="heading-label">Suche</div>
+            <div class="icon-button ${IconRegistry.RevertIcon}" @click="${() => musicFilter.resetAllFilters()}"></div>
         </div>
         <div id="search-panel">
             <div id="text-filter" class="filter">
@@ -42,8 +43,15 @@ export function renderMusicFilter(musicFilter) {
             </div>
             <div id="language-filter" class="filter">
                 <div class="filter-heading">
-                    <div id="heading-label">Sprache:</div>
-                    <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('languages')}"></div>
+                    <div class="heading-label">Sprache:</div>
+                    <div
+                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('languages', CheckboxState.Allow)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('languages', CheckboxState.Forbid)}"
+                    ></div>
                 </div>
                 <side-scroller>
                     ${Object.values(Nation).map(
@@ -60,8 +68,15 @@ export function renderMusicFilter(musicFilter) {
             </div>
             <div id="nation-filter" class="filter">
                 <div class="filter-heading">
-                    <div id="heading-label">Herkunftsland:</div>
-                    <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('nations')}"></div>
+                    <div class="heading-label">Herkunftsland:</div>
+                    <div
+                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('nations', CheckboxState.Allow)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('nations', CheckboxState.Forbid)}"
+                    ></div>
                 </div>
                 <side-scroller>
                     ${Object.values(Nation).map(
@@ -77,8 +92,19 @@ export function renderMusicFilter(musicFilter) {
                 </side-scroller>
                 <div id="instrument-type-filter" class="filter">
                     <div class="filter-heading">
-                        <div id="heading-label">Instrument Typen:</div>
-                        <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('instrumentTypes')}"></div>
+                        <div class="heading-label">Instrument Typen:</div>
+                        <div
+                            class="icon-button ${IconRegistry.SelectAllIcon}"
+                            @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Allow)}"
+                        ></div>
+                        <div
+                            class="icon-button ${IconRegistry.UnselectAllIcon}"
+                            @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Forbid)}"
+                        ></div>
+                        <div
+                            class="icon-button ${IconRegistry.RevertIcon}"
+                            @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Ignore)}"
+                        ></div>
                     </div>
                     <side-scroller>
                         ${Object.values(InstrumentType).map(
@@ -98,15 +124,36 @@ export function renderMusicFilter(musicFilter) {
             </div>
             <div id="instrument-filter" class="filter">
                 <div class="filter-heading">
-                    <div id="heading-label">Instrumente:</div>
-                    <div class="inline-icon popup-icon" @click="${() => musicFilter.showInstrumentFilterPopup()}"></div>
-                    <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('instruments')}"></div>
+                    <div class="heading-label">Instrumente:</div>
+                    <div
+                        class="icon-button ${IconRegistry.PopupIcon}"
+                        @click="${() => musicFilter.showInstrumentFilterPopup()}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('instruments', CheckboxState.Allow)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('instruments', CheckboxState.Forbid)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.RevertIcon}"
+                        @click="${() => musicFilter.setArrayFilter('instruments', CheckboxState.Ignore)}"
+                    ></div>
                 </div>
             </div>
             <div id="rating-filter" class="filter">
                 <div class="filter-heading">
-                    <div id="heading-label">Bewertung:</div>
-                    <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('ratings')}"></div>
+                    <div class="heading-label">Bewertung:</div>
+                    <div
+                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('ratings', CheckboxState.Allow)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('ratings', CheckboxState.Forbid)}"
+                    ></div>
                 </div>
                 <star-rating
                     max="5"
@@ -123,8 +170,15 @@ export function renderMusicFilter(musicFilter) {
             </div>
             <div id="mood-filter" class="filter">
                 <div class="filter-heading">
-                    <div id="heading-label">Stimmung:</div>
-                    <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('moods')}"></div>
+                    <div class="heading-label">Stimmung:</div>
+                    <div
+                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('moods', CheckboxState.Ignore)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('moods', CheckboxState.Forbid)}"
+                    ></div>
                 </div>
                 <drop-down
                     @selectionChange="${(e) => musicFilter.handleDropdownChange('moods', e.detail.value)}"
@@ -140,7 +194,15 @@ export function renderMusicFilter(musicFilter) {
             </div>
             <div id="genre-filter" class="filter">
                 <div class="filter-heading">
-                    <div id="heading-label">genres:</div>
+                    <div class="heading-label">genres:</div>
+                    <div
+                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('genres', CheckboxState.Ignore)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('genres', CheckboxState.Forbid)}"
+                    ></div>
                 </div>
                 <drop-down
                     @selectionChange="${(e) => musicFilter.handleDropdownChange('genres', e.detail.value)}"
@@ -155,8 +217,15 @@ export function renderMusicFilter(musicFilter) {
             </div>
             <div id="instrumentation-filter" class="filter">
                 <div class="filter-heading">
-                    <div id="heading-label">Verteilung der Instrumente:</div>
-                    <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('instrumentations')}"></div>
+                    <div class="heading-label">Instrumentverteilung:</div>
+                    <div
+                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('instrumentations', CheckboxState.Ignore)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('instrumentations', CheckboxState.Forbid)}"
+                    ></div>
                 </div>
                 <drop-down
                     @selectionChange="${(e) => musicFilter.handleDropdownChange('instrumentations', e.detail.value)}"
@@ -171,8 +240,15 @@ export function renderMusicFilter(musicFilter) {
             </div>
             <div id="participant-count-filter" class="filter">
                 <div class="filter-heading">
-                    <div id="heading-label">Mitgliederzahl:</div>
-                    <div class="inline-icon reset-icon" @click="${() => musicFilter.resetFilter('participants')}"></div>
+                    <div class="heading-label">Mitgliederzahl:</div>
+                    <div
+                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('participants', CheckboxState.Allow)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('participants', CheckboxState.Forbid)}"
+                    ></div>
                 </div>
                 <side-scroller>
                     ${Object.values(Participants).map(

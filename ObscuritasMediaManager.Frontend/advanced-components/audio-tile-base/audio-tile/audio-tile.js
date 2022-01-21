@@ -22,6 +22,11 @@ export class AudioTile extends LitElement {
         /** @type {string} */ this.image;
         this.paused = true;
     }
+
+    connectedCallback() {
+        super.connectedCallback();
+    }
+
     notifyMusicToggled() {
         this.dispatchEvent(new CustomEvent('musicToggled'));
     }

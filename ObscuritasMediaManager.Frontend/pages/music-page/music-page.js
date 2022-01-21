@@ -7,7 +7,7 @@ import { session } from '../../data/session.js';
 import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
 import { LitElement } from '../../exports.js';
-import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
+import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
 import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
@@ -64,13 +64,16 @@ export class MusicPage extends LitElement {
         /** @type {boolean} */ this.isPaused = true;
         /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
         /** @type {Subscription[]} */ this.subcriptions = [];
+        /** @type {boolean} */ this.selectionMode = false;
+        /** @type {string[]} */ this.selectedHashes = [];
+        /** @type {NodeJS.Timeout} */ this.selectionModeTimer = null;
 
         this.currentPage = 0;
     }
     connectedCallback() {
         super.connectedCallback();
         document.title = 'Musik';
-        setFavicon(NoteIcon());
+        setFavicon(noteIcon());
         this.subcriptions.push(
             session.instruments.subscribe(() => {
                 this.initializeData();
@@ -104,7 +107,7 @@ export class MusicPage extends LitElement {
      */
     getTrackIcon(track) {
         var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
-        if (this.currentTrackPath != trackSrc) return NoteIcon();
+        if (this.currentTrackPath != trackSrc) return noteIcon();
         if (this.isPaused) return playIcon();
         return pauseIcon();
     }
@@ -123,6 +126,7 @@ export class MusicPage extends LitElement {
      * @param {ExtendedMusicModel} track
      */
     async toggleMusic(track) {
+        if (this.selectionMode || this.selectionModeUnset) return;
         var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#current-track');
         if (this.currentTrackPath == trackSrc && !audioElement.paused) audioElement.pause();
@@ -140,7 +144,9 @@ export class MusicPage extends LitElement {
     }
 
     async playPlaylist() {
-        var guid = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash));
+        var guid = '';
+        if (this.selectedHashes.length > 0) guid = await PlaylistService.createTemporaryPlaylist(this.selectedHashes);
+        else guid = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash));
         changePage(Pages.musicPlaylist.routes[0], `?guid=${guid}&track=0`);
     }
 
@@ -217,6 +223,44 @@ export class MusicPage extends LitElement {
                 MessageDialog.show('Bereinigung fehlgeschlagen', err);
             }
         });
+    }
+
+    /**
+     * @param {string} audioHash
+     */
+    startSelectionModeTimer(audioHash) {
+        if (this.selectionModeUnset) this.selectionModeUnset = false;
+        if (this.selectionMode) return;
+        this.selectionModeTimer = setTimeout(() => {
+            this.selectionModeTimer = null;
+            this.selectionMode = true;
+            this.selectionModeSet = true;
+            this.selectedHashes.push(audioHash);
+            this.requestUpdate(undefined);
+        }, 500);
+        this.requestUpdate(undefined);
+    }
+
+    stopSelectionModeTimer(hash) {
+        if (this.selectionMode && !this.selectionModeSet) this.toggleTrackSelection(null, hash);
+        this.selectionModeSet = false;
+        if (!this.selectionModeTimer) return;
+        clearTimeout(this.selectionModeTimer);
+        this.requestUpdate(undefined);
+    }
+
+    /**
+     * @param {HTMLInputElement} input
+     * @param {string} hash
+     */
+    toggleTrackSelection(input, hash) {
+        if ((!input || input.checked) && !this.selectedHashes.includes(hash)) this.selectedHashes.push(hash);
+        else if (!input || !input.checked) this.selectedHashes = this.selectedHashes.filter((x) => x != hash);
+        if (this.selectedHashes.length == 0) {
+            this.selectionMode = false;
+            this.selectionModeUnset = true;
+        }
+        this.requestUpdate(undefined);
     }
 
     disconnectedCallback() {

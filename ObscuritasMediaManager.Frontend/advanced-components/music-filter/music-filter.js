@@ -63,12 +63,14 @@ export class MusicFilter extends LitElement {
 
     /**
      * @param {keyof MusicFilterOptions} filter
+     * @param {CheckboxState} value
      */
-    resetFilter(filter) {
-        var newOptions = new MusicFilterOptions();
+    setArrayFilter(filter, value) {
         if (filter == 'search') this.filter[filter] = '';
-        else if (filter == 'complete') this.filter.complete = CheckboxState.Ignore;
-        else this.filter[filter] = newOptions[filter];
+        else if (filter == 'complete') this.filter.complete = value;
+        else {
+            for (var key in this.filter[filter].states) this.filter[filter].states[key] = value;
+        }
         this.requestUpdate(undefined);
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }

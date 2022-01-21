@@ -13,6 +13,7 @@ export class LinkElement extends LitElement {
             href: { type: String, reflect: true },
             hash: { type: String, reflect: true },
             search: { type: String, reflect: true },
+            disabled: { type: Boolean, reflect: true },
         };
     }
 
@@ -29,6 +30,7 @@ export class LinkElement extends LitElement {
         this.href = '';
         this.hash = '';
         this.search = '';
+        this.disabled = false;
     }
 
     render() {
@@ -39,6 +41,14 @@ export class LinkElement extends LitElement {
      * @param {Event} event
      */
     handleClick(event) {
+        console.log(this.disabled);
+        if (this.disabled) {
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            event.returnValue = false;
+            event.preventDefault();
+            return;
+        }
         if (!this.hash || this.hash.length <= 0) return;
         event.stopPropagation();
         event.stopImmediatePropagation();

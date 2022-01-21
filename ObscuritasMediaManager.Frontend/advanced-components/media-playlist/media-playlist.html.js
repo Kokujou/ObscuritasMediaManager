@@ -1,4 +1,5 @@
 import { html } from '../../exports.js';
+import { IconRegistry } from '../../resources/icons/icon-registry.js';
 import { MediaPlaylist } from './media-playlist.js';
 
 /**
@@ -8,8 +9,16 @@ export function renderMediaPlaylist(mediaPlaylist) {
     return html`
         <div id="playlist-container">
             <div id="playlist-options">
-                <div class="playlist-button" id="random-order-button" @click="${() => mediaPlaylist.randomizeOrder()}"></div>
-                <div class="playlist-button" id="reset-order-button" @click="${() => mediaPlaylist.restoreOrder()}"></div>
+                <div
+                    class="playlist-button ${IconRegistry.ShufflePlaylistIcon}"
+                    id="random-order-button"
+                    @click="${() => mediaPlaylist.randomizeOrder()}"
+                ></div>
+                <div
+                    class="playlist-button ${IconRegistry.RevertIcon}"
+                    id="reset-order-button"
+                    @click="${() => mediaPlaylist.restoreOrder()}"
+                ></div>
                 <div class="playlist-button" id="remove-track-button"></div>
             </div>
             <paginated-scrolling

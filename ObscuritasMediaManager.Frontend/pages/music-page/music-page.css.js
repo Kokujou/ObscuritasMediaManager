@@ -79,6 +79,19 @@ export function renderMusicPageStyles() {
             top: 0;
         }
 
+        .audio-link-container {
+            position: relative;
+        }
+
+        .audio-select {
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            z-index: 1;
+        }
+
         audio-tile {
             display: inline-block;
             position: relative;

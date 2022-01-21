@@ -5,6 +5,7 @@ export function renderAudioTileStyles() {
         :host {
             display: inline-flex;
             flex-direction: column;
+            position: relative;
         }
 
         ${renderMoodStyles()}

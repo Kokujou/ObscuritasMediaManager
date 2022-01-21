@@ -1,5 +1,5 @@
 export function revertIcon() {
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 18">
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 18">
     <defs/>
     <g fill="none" fill-rule="evenodd">
       <path d="M-1-3h24v24H-1z"/>

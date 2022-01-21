@@ -17,11 +17,11 @@ namespace ObscuritasMediaManager.Backend.Models
         public Nation Nation { get; set; }
         public Instrumentation Instrumentation { get; set; }
         public Participants Participants { get; set; }
-        public IEnumerable<string> Instruments { get; set; }
-        public IEnumerable<MusicGenre> Genres { get; set; }
+        public IEnumerable<string> Instruments { get; set; } = new List<string>();
+        public IEnumerable<MusicGenre> Genres { get; set; } = new List<MusicGenre>();
         public string Path { get; set; }
         public byte Rating { get; set; }
-        public bool? Complete { get; set; }
+        public bool Complete { get; set; }
 
         [Key] public string Hash { get; set; }
 

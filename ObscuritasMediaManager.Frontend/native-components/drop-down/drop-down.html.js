@@ -67,7 +67,7 @@ function showDropDown(dropdown) {
                 })}
         </div>
         <div class="dropdown-icon-container ${dropdown.showDropDown ? 'dropped-down' : ''}">></div>
-    </div>`;
+    </div> `;
 }
 
 /**

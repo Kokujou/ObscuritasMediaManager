@@ -14,10 +14,10 @@ export class MusicFilterService {
         var results = list.filter((item) => {
             var array = item[filterProperty];
             if (!Array.isArray(array)) throw new Error('property must be an array');
-            var anotherArray = array;
+            var itemPropertyValues = array;
             return (
-                allowedValues.every((allowedItem) => anotherArray.some((anotherItem) => anotherItem == allowedItem)) &&
-                anotherArray.every((anotherItem) => forbiddenValues.every((forbiddenItem) => forbiddenItem != anotherItem))
+                allowedValues.every((allowedItem) => itemPropertyValues.some((anotherItem) => anotherItem == allowedItem)) &&
+                itemPropertyValues.every((value) => !forbiddenValues.some((forbiddenItem) => forbiddenItem == value))
             );
         });
         list.length = 0;

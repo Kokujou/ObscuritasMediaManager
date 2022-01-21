@@ -28,6 +28,7 @@
         Parody,
         Ballad,
         FilmMusic,
-        Western
+        Western,
+        Christmas
     }
 }

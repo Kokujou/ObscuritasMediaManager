@@ -62,15 +62,32 @@ export function renderMusicPage(musicPage) {
                               ${musicPage.paginatedTracks.map(
                                   (track) =>
                                       html`
-                                          <link-element .hash="${Pages.musicPlaylist.routes[0]}" .search="track=${track.hash}">
-                                              <audio-tile
-                                                  .track="${track}"
-                                                  .image="${musicPage.getTrackIcon(track)}"
-                                                  ?paused="${musicPage.isPaused ||
-                                                  !musicPage.currentTrackPath.includes(encodeURIComponent(track.path))}"
-                                                  @imageClicked="${() => musicPage.toggleMusic(track)}"
-                                              ></audio-tile>
-                                          </link-element>
+                                          <div class="audio-link-container">
+                                              ${musicPage.selectionMode
+                                                  ? html`<input
+                                                        type="checkbox"
+                                                        class="audio-select"
+                                                        ?checked="${musicPage.selectedHashes.includes(track.hash)}"
+                                                        @change="${(e) => musicPage.toggleTrackSelection(e.target, track.hash)}"
+                                                    />`
+                                                  : ''}
+                                              <link-element
+                                                  class="audio-tile-link"
+                                                  .hash="${Pages.musicPlaylist.routes[0]}"
+                                                  .search="track=${track.hash}"
+                                                  ?disabled="${musicPage.selectionModeTimer == null || musicPage.selectionMode}"
+                                                  @pointerdown="${(e) => musicPage.startSelectionModeTimer(track.hash)}"
+                                                  @pointerup="${(e) => musicPage.stopSelectionModeTimer(track.hash)}"
+                                              >
+                                                  <audio-tile
+                                                      .track="${track}"
+                                                      .image="${musicPage.getTrackIcon(track)}"
+                                                      ?paused="${musicPage.isPaused ||
+                                                      !musicPage.currentTrackPath.includes(encodeURIComponent(track.path))}"
+                                                      @musicToggled="${() => musicPage.toggleMusic(track)}"
+                                                  ></audio-tile>
+                                              </link-element>
+                                          </div>
                                       `
                               )}
                           </div>`}

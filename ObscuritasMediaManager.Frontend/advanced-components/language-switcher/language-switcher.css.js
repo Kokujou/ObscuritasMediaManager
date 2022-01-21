@@ -1,10 +1,11 @@
 import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { css } from '../../exports.js';
-import { arrow } from '../../resources/icons/arrow.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
+import { registerIcons } from '../../resources/icons/icon-registry.js';
 
 export function renderLanguageSwitcherStyles() {
     return css`
+        ${registerIcons()}
+
         :host {
             background: #000c;
             inset: 0;
@@ -38,7 +39,6 @@ export function renderLanguageSwitcherStyles() {
             bottom: 0;
             width: 50px;
 
-            ${renderMaskImage(arrow())};
             background-color: white;
 
             cursor: pointer;

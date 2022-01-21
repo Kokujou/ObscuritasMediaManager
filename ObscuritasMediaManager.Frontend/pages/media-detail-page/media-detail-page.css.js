@@ -1,10 +1,13 @@
 import { css } from '../../exports.js';
+import { registerIcons } from '../../resources/icons/icon-registry.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { editIcon } from './images/edit-icon.svg.js';
 import { trashIcon } from './images/trash-icon.svg.js';
 
 export function renderMediaDetailPageStyles() {
     return css`
+        ${registerIcons()}
+
         #media-detail-container {
             display: flex;
             flex-direction: column;

@@ -6,7 +6,7 @@ import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.resu
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { LitElement } from '../../exports.js';
 import { GenreModel, MusicGenre, UpdateRequestOfMusicModel } from '../../obscuritas-media-manager-backend-client.js';
-import { NoteIcon } from '../../resources/icons/general/note-icon.svg.js';
+import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
 import { randomizeArray } from '../../services/extensions/array.extensions.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
@@ -82,7 +82,7 @@ export class MusicPlaylistPage extends LitElement {
     }
     connectedCallback() {
         super.connectedCallback();
-        setFavicon(NoteIcon());
+        setFavicon(noteIcon());
         var localStorageVolume = localStorage.getItem('volume');
         if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume));
 
@@ -150,6 +150,7 @@ export class MusicPlaylistPage extends LitElement {
 
     async changeTrack(index) {
         await this.updateTrack();
+        if (this.playlist.length == 1) return;
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
         audioElement.pause();
         this.currentTrackIndex = index;

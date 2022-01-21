@@ -1,4 +1,4 @@
-export function volumeIcon() {
+export function changeVolumeIcon() {
     return `<svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 75 75">
     <defs/>
     <path fill="#111" stroke="#111" stroke-linejoin="round" stroke-width="5" d="M39.389 13.769L22.235 28.606H6v19.093h15.989l17.4 15.051V13.769z"/>

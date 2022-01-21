@@ -1,10 +1,10 @@
 import { css } from '../../exports.js';
-import { revertIcon } from '../../resources/icons/general/revert-icon.svg.js';
-import { shufflePlaylistIcon } from '../../resources/icons/playlist-icons/shuffle-playlist-icon.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
+import { registerIcons } from '../../resources/icons/icon-registry.js';
 
 export function renderMediaPlaylistStyles() {
     return css`
+        ${registerIcons()}
+
         :host {
             position: relative;
             width: 100%;
@@ -67,14 +67,6 @@ export function renderMediaPlaylistStyles() {
 
         .playlist-entry[active] {
             background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
-        }
-
-        #random-order-button {
-            ${renderMaskImage(shufflePlaylistIcon())};
-        }
-
-        #reset-order-button {
-            ${renderMaskImage(revertIcon())};
         }
 
         #remove-track-button {

@@ -2,12 +2,15 @@ import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-ty
 import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
+import { registerIcons } from '../../resources/icons/icon-registry.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderAudioTileBaseStyles() {
     return css`
+        ${registerIcons()}
+
         :host {
             position: relative;
             transform: rotate(0deg);

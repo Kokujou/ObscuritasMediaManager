@@ -11,8 +11,12 @@ export function renderAudioTile(audioTile) {
                 ${renderMaskImage(audioTile.image)};
             }
         </style>
-        <div id="tile-container" @click="${() => audioTile.notifyMusicToggled()}" class="${audioTile.track.mood}">
-            <audio-tile-base .track="${audioTile.track}" ?paused="${audioTile.paused}"></audio-tile-base>
+        <div id="tile-container" class="${audioTile.track.mood}">
+            <audio-tile-base
+                .track="${audioTile.track}"
+                ?paused="${audioTile.paused}"
+                @imageClicked="${() => audioTile.notifyMusicToggled()}"
+            ></audio-tile-base>
             <div id="tile-description">
                 <div id="instrument-icons">${renderInstrumentIcons(audioTile)}</div>
                 <div id="audio-title">${audioTile.track.displayName}</div>

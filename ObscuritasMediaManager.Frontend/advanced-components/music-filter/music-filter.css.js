@@ -2,12 +2,12 @@ import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-ty
 import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
-import { revertIcon } from '../../resources/icons/general/revert-icon.svg.js';
-import { popupIcon } from '../../resources/icons/popup-icon.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
+import { registerIcons } from '../../resources/icons/icon-registry.js';
 
 export function renderMusicFilterStyles() {
     return css`
+        ${registerIcons()}
+
         :host {
             display: flex;
             flex-direction: column;
@@ -58,18 +58,16 @@ export function renderMusicFilterStyles() {
             margin: 30px 0;
         }
 
+        .heading-label {
+            margin-right: auto;
+        }
+
         .popup-icon {
-            ${renderMaskImage(popupIcon())};
-            background-color: var(--font-color);
             margin-left: 20px;
-            cursor: pointer;
         }
 
         .reset-icon {
-            ${renderMaskImage(revertIcon())};
-            background-color: var(--font-color);
             margin-right: 20px;
-            cursor: pointer;
             margin-left: auto;
         }
 
@@ -96,11 +94,17 @@ export function renderMusicFilterStyles() {
             margin-right: 20px;
         }
 
-        .inline-icon {
+        .inline-icon,
+        .icon-button {
             width: 30px;
             height: 30px;
+            cursor: pointer;
 
             background-color: #ffffff99;
+        }
+
+        .icon-button {
+            margin: 0 5px;
         }
 
         #complete-input {

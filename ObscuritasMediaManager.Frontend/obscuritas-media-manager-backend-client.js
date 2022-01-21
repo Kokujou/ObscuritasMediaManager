@@ -1154,6 +1154,7 @@ export var MusicGenre;
     MusicGenre["Ballad"] = "Ballad";
     MusicGenre["FilmMusic"] = "FilmMusic";
     MusicGenre["Western"] = "Western";
+    MusicGenre["Christmas"] = "Christmas";
 })(MusicGenre || (MusicGenre = {}));
 export class GenreModel {
     id;

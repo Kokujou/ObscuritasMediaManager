@@ -1,6 +1,6 @@
 import { renderMoodStyles } from '../../data/enumerations/mood.js';
 import { css } from '../../exports.js';
-import { volumeIcon } from '../../resources/icons/music-player-icons/change-volume-icon.svg.js';
+import { changeVolumeIcon } from '../../resources/icons/music-player-icons/change-volume-icon.svg.js';
 import { fastForwardIcon } from '../../resources/icons/music-player-icons/fast-forward-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
@@ -244,7 +244,7 @@ function renderAudioPlayerIcons() {
         }
 
         #change-volume-button {
-            ${renderMaskImage(volumeIcon())};
+            ${renderMaskImage(changeVolumeIcon())};
         }
     `;
 }
