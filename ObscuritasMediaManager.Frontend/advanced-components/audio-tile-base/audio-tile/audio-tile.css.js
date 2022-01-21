@@ -12,8 +12,8 @@ export function renderAudioTileStyles() {
 
         #tile-container {
             position: relative;
-            width: 100%;
             min-height: inherit;
+            width: var(--audio-tile-width);
 
             display: flex;
             flex-direction: column;
@@ -23,6 +23,7 @@ export function renderAudioTileStyles() {
             background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
             box-shadow: 0 0 50px var(--primary-color);
             border-radius: 20px;
+            box-sizing: border-box;
 
             padding: 10px;
 
@@ -31,8 +32,7 @@ export function renderAudioTileStyles() {
         }
 
         audio-tile-base {
-            min-height: inherit;
-            width: inherit;
+            min-height: var(--audio-tile-min-height);
             margin-bottom: 10px;
         }
 

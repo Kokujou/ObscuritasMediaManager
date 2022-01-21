@@ -65,6 +65,7 @@ export function renderMusicPageStyles() {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+            align-items: flex-start;
 
             scrollbar-width: thin;
             scrollbar-color: var(--accent-color) #20625599;
@@ -81,12 +82,13 @@ export function renderMusicPageStyles() {
 
         .audio-link-container {
             position: relative;
+            margin: 25px;
         }
 
         .audio-select {
             position: absolute;
-            top: 50px;
-            right: 20px;
+            top: 0px;
+            right: 0px;
             width: 30px;
             height: 30px;
             z-index: 1;
@@ -95,9 +97,10 @@ export function renderMusicPageStyles() {
         audio-tile {
             display: inline-block;
             position: relative;
-            margin: 35px;
-            width: 250px;
-            min-height: 250px;
+            width: 275px;
+            min-height: 275px;
+            --audio-tile-width: 275px;
+            --audio-tile-min-height: 275px;
         }
     `;
 }

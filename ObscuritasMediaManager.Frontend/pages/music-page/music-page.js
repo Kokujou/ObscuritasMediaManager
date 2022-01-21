@@ -83,6 +83,7 @@ export class MusicPage extends LitElement {
         this.addEventListener('click', () => {
             if (!this.selectionMode) return;
             this.selectionMode = false;
+            this.selectedHashes = [];
             this.requestUpdate(undefined);
         });
     }
