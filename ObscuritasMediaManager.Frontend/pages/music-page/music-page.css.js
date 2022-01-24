@@ -180,5 +180,31 @@ function renderResultOptionsBar() {
         #cleanup-tracks {
             ${renderMaskImage(cleanIcon())};
         }
+
+        #active-track-warning {
+            position: absolute;
+            top: -50px;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0 40px;
+
+            background-color: var(--accent-color);
+            color: orange;
+            white-space: nowrap;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: opacity 1s ease;
+        }
+
+        #active-track-warning[invisible] {
+            opacity: 0;
+        }
     `;
 }

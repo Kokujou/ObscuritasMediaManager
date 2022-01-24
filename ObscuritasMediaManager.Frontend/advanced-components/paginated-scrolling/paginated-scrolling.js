@@ -43,6 +43,19 @@ export class PaginatedScrolling extends LitElement {
         });
     }
 
+    /**
+     * @param {HTMLElement} child
+     */
+    childVisible(child) {
+        /** @type {HTMLElement} */ var scrollContainer = this.shadowRoot.querySelector('.scroll-container');
+        if (
+            child.offsetTop - child.offsetHeight / 2 > scrollContainer.scrollTop &&
+            child.offsetTop + child.offsetHeight * 1.5 < scrollContainer.scrollTop + scrollContainer.offsetHeight
+        )
+            return true;
+        return false;
+    }
+
     requestAdditionalContent() {
         var scrollBottomEvent = new CustomEvent('scrollBottom');
         this.dispatchEvent(scrollBottomEvent);

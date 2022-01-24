@@ -52,6 +52,14 @@ export function renderMusicPage(musicPage) {
                             >
                             </range-slider>
                         </div>
+                        <div
+                            id="active-track-warning"
+                            ?invisible="${musicPage.isPaused}"
+                            @click="${() => musicPage.jumpToActive()}"
+                        >
+                            Ein Track wird gerade abgespielt.&nbsp; <u> Klicken Sie hier </u> &nbsp;um zum aktiven Track zu
+                            springen.
+                        </div>
                     </div>
                 </div>
                 <paginated-scrolling

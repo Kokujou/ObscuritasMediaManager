@@ -1,3 +1,4 @@
+import { PaginatedScrolling } from '../../advanced-components/paginated-scrolling/paginated-scrolling.js';
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { MusicFilterOptions } from '../../data/music-filter-options.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
@@ -292,6 +293,12 @@ export class MusicPage extends LitElement {
             this.selectionModeUnset = true;
         }
         this.requestUpdate(undefined);
+    }
+
+    jumpToActive() {
+        /** @type {PaginatedScrolling} */ var parent = this.shadowRoot.querySelector('paginated-scrolling');
+        var child = this.shadowRoot.querySelector('audio-tile:not([paused])').parentElement;
+        parent.scrollToChild(child.parentElement);
     }
 
     disconnectedCallback() {
