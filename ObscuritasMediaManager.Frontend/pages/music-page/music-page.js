@@ -11,6 +11,7 @@ import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
 import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
+import { sortyBy } from '../../services/extensions/array.extensions.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage } from '../../services/extensions/url.extension.js';
@@ -52,7 +53,11 @@ export class MusicPage extends LitElement {
         if (this.filter.complete != CheckboxState.Ignore)
             filteredTracks = filteredTracks.filter((track) => track.complete == (this.filter.complete == CheckboxState.Allow));
 
-        return filteredTracks;
+        if (this.sortingProperty == 'unset') return filteredTracks;
+
+        var sorted = sortyBy(filteredTracks, this.sortingProperty);
+        if (this.sortingDirection == 'ascending') return sorted;
+        return sorted.reverse();
     }
 
     constructor() {
@@ -67,6 +72,8 @@ export class MusicPage extends LitElement {
         /** @type {boolean} */ this.selectionMode = false;
         /** @type {string[]} */ this.selectedHashes = [];
         /** @type {NodeJS.Timeout} */ this.selectionModeTimer = null;
+        /** @type {import('../../data/music-sorting-properties.js').SortingProperties} */ this.sortingProperty = 'unset';
+        /** @type {import('../../data/sorting-directions.js').Sortings} */ this.sortingDirection = 'ascending';
 
         this.currentPage = 0;
     }
@@ -99,6 +106,13 @@ export class MusicPage extends LitElement {
         }
         var localSearchString = localStorage.getItem(`music.search`);
         if (localSearchString) this.filter = JSON.parse(localSearchString);
+
+        var localSearchString = localStorage.getItem(`music.sorting`);
+        if (localSearchString) {
+            var object = JSON.parse(localSearchString);
+            this.sortingProperty = object.property;
+            this.sortingDirection = object.direction;
+        }
 
         this.loading = false;
         await this.requestUpdate(undefined);
@@ -194,6 +208,17 @@ export class MusicPage extends LitElement {
     updateFilter(filter) {
         this.filter = filter;
         localStorage.setItem(`music.search`, JSON.stringify(this.filter));
+        this.requestUpdate(undefined);
+    }
+
+    updateSorting(sortingProperty, sortingDirection) {
+        console.log(sortingProperty);
+        this.sortingProperty = sortingProperty;
+        this.sortingDirection = sortingDirection;
+        localStorage.setItem(
+            `music.sorting`,
+            JSON.stringify({ property: this.sortingProperty, direction: this.sortingDirection })
+        );
         this.requestUpdate(undefined);
     }
 

@@ -1,5 +1,6 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { MoodColors } from '../../data/enumerations/mood.js';
+import { MusicSortingProperties } from '../../data/music-sorting-properties.js';
 import { html } from '../../exports.js';
 import {
     Instrumentation,
@@ -10,6 +11,7 @@ import {
     Participants,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { IconRegistry } from '../../resources/icons/icon-registry.js';
+import { getKeyFor } from '../../services/extensions/object.extensions.js';
 import { MusicFilter } from './music-filter.js';
 
 /**
@@ -40,6 +42,36 @@ export function renderMusicFilter(musicFilter) {
                     value="${musicFilter.filter.complete}"
                     @valueChanged="${(e) => musicFilter.toggleFilter('complete', '', e.detail.value)}"
                 ></tri-value-checkbox>
+            </div>
+            <div id="mood-filter" class="filter">
+                <div class="filter-heading">
+                    <div class="heading-label">Sortieren:</div>
+                    <div
+                        class="icon-button ${IconRegistry.RevertIcon}"
+                        @click="${() => musicFilter.changeSorting('unset')}"
+                    ></div>
+                </div>
+                <div id="sorting-container">
+                    <drop-down
+                        .value="${MusicSortingProperties[musicFilter.sortingProperty]}"
+                        maxDisplayDepth="5"
+                        .options="${Object.values(MusicSortingProperties)}"
+                        @selectionChange="${(e) => musicFilter.changeSorting(getKeyFor(MusicSortingProperties, e.detail.value))}"
+                    >
+                    </drop-down>
+                    <div
+                        id="ascending-icon"
+                        ?active="${musicFilter.sortingDirection == 'ascending'}"
+                        class="icon-button ${IconRegistry.AscendingIcon}"
+                        @click="${() => musicFilter.changeSorting(null, 'ascending')}"
+                    ></div>
+                    <div
+                        id="descending-icon"
+                        ?active="${musicFilter.sortingDirection == 'descending'}"
+                        class="icon-button ${IconRegistry.DescendingIcon}"
+                        @click="${() => musicFilter.changeSorting(null, 'descending')}"
+                    ></div>
+                </div>
             </div>
             <div id="language-filter" class="filter">
                 <div class="filter-heading">

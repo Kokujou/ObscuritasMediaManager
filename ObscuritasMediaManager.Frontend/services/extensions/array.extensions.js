@@ -9,3 +9,12 @@ export function randomizeArray(array) {
     }
     return resultList;
 }
+
+/**
+ * @template T
+ * @param {T[]} array
+ * @param {keyof T} property
+ */
+export function sortyBy(array, property) {
+    return array.sort((a, b) => (a[property] > b[property] ? 1 : a[property] === b[property] ? 0 : -1));
+}

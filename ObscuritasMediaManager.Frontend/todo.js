@@ -7,7 +7,6 @@
  * - export playlist
  */
 
-//TODO: implement sorting
 //TODO: refine single play functionality (jump to active)
 //TODO: add a fancy audio visualization
 //TODO: Websockets
@@ -29,3 +28,4 @@
 //TODO: save button on music playlist
 //TODO: cleanup function should be extended with "simple" (only existance check) and extended (music validation)
 //TODO: implement album views and think of how to integrate them into the audio page
+//TODO: display and change the audio/media path

@@ -2,7 +2,9 @@ import { unsafeCSS } from '../../exports.js';
 import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { arrowIcon } from './arrow.svg.js';
+import { ascendingIcon } from './general/ascending-icon.svg.js';
 import { cleanIcon } from './general/clean-icon.svg.js';
+import { descendingIcon } from './general/descending-icon.svg.js';
 import { noteIcon } from './general/note-icon.svg.js';
 import { revertIcon } from './general/revert-icon.svg.js';
 import { saveTickIcon } from './general/save-tick-icon.svg.js';
@@ -62,6 +64,8 @@ export class IconRegistry {
     static UnsetIcon = new IconRegistryEntry('UnsetIcon', unsetIcon);
     static SelectAllIcon = new IconRegistryEntry('SelectAllIcon', selectAllIcon);
     static UnselectAllIcon = new IconRegistryEntry('UnselectAllIcon', unselectAllIcon);
+    static AscendingIcon = new IconRegistryEntry('AscendingIcon', ascendingIcon);
+    static DescendingIcon = new IconRegistryEntry('DescendingIcon', descendingIcon);
 
     /** @access private */ constructor() {}
 }

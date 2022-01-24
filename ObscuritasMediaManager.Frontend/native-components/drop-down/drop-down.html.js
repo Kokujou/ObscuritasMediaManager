@@ -35,8 +35,7 @@ function showDropDown(dropdown) {
         <div
             class="options"
             @click="${(e) => {
-                e.stopPropagation();
-                if (dropdown.multiselect) dropdown.showDropDown = true;
+                if (dropdown.multiselect) e.stopPropagation();
             }}"
             @scroll="${(e) => dropdown.scroll(e)}"
             style="display: ${dropdown.showDropDown ? 'block' : 'none'}"

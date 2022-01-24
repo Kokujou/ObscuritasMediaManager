@@ -115,6 +115,31 @@ export function renderMusicFilterStyles() {
         ${renderLanguageFlags()}
         ${renderParticipantCountIcon('#participant-count-filter ')}
         
+        #sorting-container {
+            display: inline-flex;
+            flex-direction: row;
+            width: 100%;
+            margin-right: 10px;
+        }
+
+        #ascending-icon[active],
+        #descending-icon[active] {
+            background-color: white;
+        }
+
+        #ascending-icon,
+        #descending-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        #sorting-container > *:first-child {
+            margin-left: 0;
+        }
+
+        #sorting-container > * {
+            margin: 0 10px;
+        }
 
         drop-down {
             font: inherit;

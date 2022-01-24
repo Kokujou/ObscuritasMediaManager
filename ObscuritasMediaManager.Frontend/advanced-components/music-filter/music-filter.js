@@ -1,11 +1,13 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { MusicFilterOptions } from '../../data/music-filter-options.js';
+import { MusicSortingProperties } from '../../data/music-sorting-properties.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
+import { SortingDirections } from '../../data/sorting-directions.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { LitElement } from '../../exports.js';
-import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
+import { GenreModel, MusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { renderMusicFilterStyles } from './music-filter.css.js';
 import { renderMusicFilter } from './music-filter.html.js';
 
@@ -17,13 +19,30 @@ export class MusicFilter extends LitElement {
     static get properties() {
         return {
             filter: { type: Object, reflect: true },
+            sortingProperty: { type: String, reflect: true },
+            sortingDirection: { type: String, reflect: true },
         };
     }
 
     constructor() {
         super();
+        SortingDirections;
         /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
+        /** @type { import('../../data/music-sorting-properties.js').SortingProperties }  */ this.sortingProperty = 'unset';
+        /** @type {keyof SortingDirections}  */ this.sortingDirection = 'ascending';
         /** @type {Subscription[]} */ this.subscriptions = [];
+
+        if (
+            !Object.keys(MusicSortingProperties).every((property) =>
+                Object.keys(new MusicModel()).concat(['unset']).includes(property)
+            )
+        ) {
+            var missingProperties = Object.keys(MusicSortingProperties).filter((property) =>
+                Object.keys(new MusicModel()).concat(['unset'])
+            );
+            alert("mismatch in sorting properties, the object might've changed:" + missingProperties);
+            throw new Error("mismatch in sorting properties, the object might've changed" + missingProperties);
+        }
     }
 
     connectedCallback() {
@@ -134,6 +153,25 @@ export class MusicFilter extends LitElement {
             .map((x) => session.instruments.current().find((instrument) => instrument.name == x));
 
         return !forcedInstruments.some((x) => x && x.type == type);
+    }
+
+    /**
+     * @param {import('../../data/music-sorting-properties.js').SortingProperties} property
+     * @param {keyof SortingDirections} direction
+     */
+    changeSorting(property = null, direction = null) {
+        if (!property && !direction) console.log(property, direction);
+        if (property) this.sortingProperty = property;
+        if (direction) this.sortingDirection = direction;
+        this.requestUpdate(undefined);
+        this.dispatchEvent(
+            new CustomEvent('sortingUpdated', {
+                detail: {
+                    property: this.sortingProperty,
+                    direction: this.sortingDirection,
+                },
+            })
+        );
     }
 
     disconnectedCallback() {

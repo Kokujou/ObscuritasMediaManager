@@ -12,7 +12,10 @@ export function renderMusicPage(musicPage) {
                 <div id="search-panel-container">
                     <music-filter
                         .filter="${musicPage.filter}"
+                        .sortingProperty="${musicPage.sortingProperty}"
+                        .sortingDirection="${musicPage.sortingDirection}"
                         @filterChanged="${(e) => musicPage.updateFilter(e.detail.filter)}"
+                        @sortingUpdated="${(e) => musicPage.updateSorting(e.detail.property, e.detail.direction)}"
                         id="music-filter"
                     ></music-filter>
                     <div id="result-count-label">
