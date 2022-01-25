@@ -96,8 +96,18 @@ export class MusicFilter extends LitElement {
 
     resetAllFilters() {
         this.filter = new MusicFilterOptions();
+        this.sortingDirection = 'ascending';
+        this.sortingProperty = 'unset';
         this.requestUpdate(undefined);
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
+        this.dispatchEvent(
+            new CustomEvent('sortingUpdated', {
+                detail: {
+                    property: this.sortingProperty,
+                    direction: this.sortingDirection,
+                },
+            })
+        );
     }
 
     /**

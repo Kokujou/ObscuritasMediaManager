@@ -1,12 +1,12 @@
 import { css } from '../../exports.js';
 import { cleanIcon } from '../../resources/icons/general/clean-icon.svg.js';
-import { importIcon } from '../../resources/icons/import-icon.svg.js';
+import { importIcon } from '../../resources/icons/general/import-icon.svg.js';
+import { plusIcon } from '../../resources/icons/general/plus-icon.svg.js';
 import { addPlaylistIcon } from '../../resources/icons/playlist-icons/add-playlist-icon.svg.js';
 import { browsePlaylistIcon } from '../../resources/icons/playlist-icons/browse-playlist-icon.svg.js';
 import { downloadPlaylistIcon } from '../../resources/icons/playlist-icons/download-playlist-icon.svg.js';
 import { playPlaylistIcon } from '../../resources/icons/playlist-icons/play-playlist-icon.svg.js';
 import { savePlaylistIcon } from '../../resources/icons/playlist-icons/save-playlist-icon.svg.js';
-import { plusIcon } from '../../resources/icons/plus-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderMusicPageStyles() {

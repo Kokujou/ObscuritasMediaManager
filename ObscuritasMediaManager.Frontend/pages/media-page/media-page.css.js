@@ -1,6 +1,6 @@
 import { css } from '../../exports.js';
-import { importIcon } from '../../resources/icons/import-icon.svg.js';
-import { plusIcon } from '../../resources/icons/plus-icon.svg.js';
+import { importIcon } from '../../resources/icons/general/import-icon.svg.js';
+import { plusIcon } from '../../resources/icons/general/plus-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderMediaPageStyles() {
@@ -50,15 +50,13 @@ export function renderMediaPageStyles() {
         }
 
         #add-button {
-            ${renderMaskImage(plusIcon())};
-
             background-color: #bbbbbb77;
+            ${renderMaskImage(plusIcon())};
         }
 
         #import-button {
-            ${renderMaskImage(importIcon())};
-
             background-color: #bbbbbb77;
+            ${renderMaskImage(importIcon())};
         }
 
         video:not([src=]) {

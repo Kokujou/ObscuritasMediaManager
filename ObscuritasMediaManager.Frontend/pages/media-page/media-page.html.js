@@ -1,7 +1,7 @@
 import { session } from '../../data/session.js';
 import { html } from '../../exports.js';
-import { importIcon } from '../../resources/icons/import-icon.svg.js';
-import { plusIcon } from '../../resources/icons/plus-icon.svg.js';
+import { importIcon } from '../../resources/icons/general/import-icon.svg.js';
+import { plusIcon } from '../../resources/icons/general/plus-icon.svg.js';
 import { MediaPage } from './media-page.js';
 
 /**
