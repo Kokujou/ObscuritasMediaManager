@@ -54,9 +54,8 @@ export class MusicPage extends LitElement {
         if (this.filter.complete != CheckboxState.Ignore)
             filteredTracks = filteredTracks.filter((track) => track.complete == (this.filter.complete == CheckboxState.Allow));
 
-        if (this.sortingProperty == 'unset') return filteredTracks;
-
-        var sorted = sortyBy(filteredTracks, this.sortingProperty);
+        var sorted = filteredTracks;
+        if (this.sortingProperty != 'unset') sorted = sortyBy(filteredTracks, this.sortingProperty);
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }

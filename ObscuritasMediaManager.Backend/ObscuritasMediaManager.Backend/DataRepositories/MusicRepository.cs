@@ -5,120 +5,130 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Exceptions;
-using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 
-namespace ObscuritasMediaManager.Backend.DataRepositories
+namespace ObscuritasMediaManager.Backend.DataRepositories;
+
+public class MusicRepository
 {
-    public class MusicRepository
+    private readonly DatabaseContext _context;
+
+    public MusicRepository(DatabaseContext context)
     {
-        private readonly DatabaseContext _context;
+        _context = context;
+    }
 
-        public MusicRepository(DatabaseContext context)
+    public async Task UpdateAsync(string hash, MusicModel old, MusicModel updated)
+    {
+        var actual = await _context.Music.SingleOrDefaultAsync(x => x.Hash == hash);
+        if (actual == default)
+            throw new ModelNotFoundException(updated.Hash);
+
+        if (!string.IsNullOrEmpty(updated.Name) && old.Name == actual.Name)
+            actual.Name = updated.Name;
+        if (!string.IsNullOrEmpty(updated.Author) && old.Author == actual.Author)
+            actual.Author = updated.Author;
+        if (updated.Genres != null && !old.Genres.Except(actual.Genres).Any())
+            actual.Genres = updated.Genres;
+        if (updated.Source != null && old.Source == actual.Source)
+            actual.Source = updated.Source;
+        if (updated.Path != null && old.Path == actual.Path)
+            actual.Path = updated.Path;
+        if (updated.Mood != default && old.Mood == actual.Mood)
+            actual.Mood = updated.Mood;
+        if (updated.Instrumentation != default && old.Instrumentation == actual.Instrumentation)
+            actual.Instrumentation = updated.Instrumentation;
+        if (updated.Instruments != null && !old.Instruments.Except(actual.Instruments).Any())
+            actual.Instruments = updated.Instruments;
+        if (updated.Language != default && old.Language == actual.Language)
+            actual.Language = updated.Language;
+        if (updated.Nation != default && old.Nation == actual.Nation)
+            actual.Nation = updated.Nation;
+        if (updated.Participants != default && old.Participants == actual.Participants)
+            actual.Participants = updated.Participants;
+        if (updated.Rating != 0 && old.Rating == actual.Rating)
+            actual.Rating = updated.Rating;
+        if (updated.Complete != null)
+            actual.Complete = updated.Complete;
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task ChangeFilePathAsync(string hash, string newPath)
+    {
+        var actual = await _context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);
+        actual.Path = newPath;
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task RecalculateHashesAsync()
+    {
+        var tracks = await GetAllAsync();
+        foreach (var track in tracks)
         {
-            _context = context;
-        }
-
-        public async Task UpdateAsync(string hash, MusicModel old, MusicModel updated)
-        {
-            var actual = await _context.Music.SingleOrDefaultAsync(x => x.Hash == hash);
-            if (actual == default)
-                throw new ModelNotFoundException(updated.Hash);
-
-            if (!string.IsNullOrEmpty(updated.Name) && old.Name == actual.Name)
-                actual.Name = updated.Name;
-            if (!string.IsNullOrEmpty(updated.Author) && old.Author == actual.Author)
-                actual.Author = updated.Author;
-            if (updated.Genres != null && !old.Genres.Except(actual.Genres).Any())
-                actual.Genres = updated.Genres;
-            if (updated.Source != null && old.Source == actual.Source)
-                actual.Source = updated.Source;
-            if (updated.Path != null && old.Path == actual.Path)
-                actual.Path = updated.Path;
-            if (updated.Mood != default && old.Mood == actual.Mood)
-                actual.Mood = updated.Mood;
-            if (updated.Instrumentation != default && old.Instrumentation == actual.Instrumentation)
-                actual.Instrumentation = updated.Instrumentation;
-            if (updated.Instruments != null && !old.Instruments.Except(actual.Instruments).Any())
-                actual.Instruments = updated.Instruments;
-            if (updated.Language != default && old.Language == actual.Language)
-                actual.Language = updated.Language;
-            if (updated.Nation != default && old.Nation == actual.Nation)
-                actual.Nation = updated.Nation;
-            if (updated.Participants != default && old.Participants == actual.Participants)
-                actual.Participants = updated.Participants;
-            if (updated.Rating != 0 && old.Rating == actual.Rating)
-                actual.Rating = updated.Rating;
-            if (updated.Complete != null)
-                actual.Complete = updated.Complete;
-
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task ChangeFilePathAsync(string hash, string newPath)
-        {
-            var actual = await _context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);
-            actual.Path = newPath;
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task RecalculateHashesAsync()
-        {
-            var tracks = await GetAllAsync();
-            foreach (var track in tracks)
+            if (!File.Exists(track.Path)) continue;
+            track.CalculateHash();
+            try
             {
-                if (!File.Exists(track.Path)) continue;
-                track.CalculateHash();
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception)
-                {
-                    track.Hash = $"{track.Hash}_{new Random().Next()}";
-                    await _context.SaveChangesAsync();
-                }
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                track.Hash = $"{track.Hash}_{new Random().Next()}";
+                await _context.SaveChangesAsync();
             }
         }
+    }
 
-        public async Task<MusicModel> GetAsync(string hash)
-        {
-            var response = await _context.Music.SingleAsync(x => x.Hash == hash);
-            return response;
-        }
+    public async Task<MusicModel> GetAsync(string hash)
+    {
+        var response = await _context.Music.SingleAsync(x => x.Hash == hash);
+        return response;
+    }
 
-        public async Task<Dictionary<string, string>> GetHashValuesAsync()
-        {
-            return await _context.Music.ToDictionaryAsync(x => x.Hash, x => x.Path);
-        }
+    public async Task<Dictionary<string, string>> GetHashValuesAsync()
+    {
+        return await _context.Music.ToDictionaryAsync(x => x.Hash, x => x.Path);
+    }
 
-        public async Task<IEnumerable<MusicModel>> GetAllAsync()
-        {
-            var response = await _context.Music.ToListAsync();
-            var test = response.Where(x => x.Genres.Count() > 1);
-            return response;
-        }
+    public async Task<IEnumerable<MusicModel>> GetAllAsync()
+    {
+        var response = await _context.Music.ToListAsync();
+        var test = response.Where(x => x.Genres.Count() > 1);
+        return response;
+    }
 
-        public async Task<IEnumerable<MusicModel>> GetSelectedAsync(IEnumerable<string> trackHashes)
-        {
-            var query = await _context.Music.Where(track => trackHashes.Contains(track.Hash)).ToListAsync();
-            return query;
-        }
+    public async Task<IEnumerable<MusicModel>> GetSelectedAsync(IEnumerable<string> trackHashes)
+    {
+        var query = await _context.Music.Where(track => trackHashes.Contains(track.Hash)).ToListAsync();
+        return query;
+    }
 
-        public async Task BatchCreateMusicTracksAsync(IEnumerable<MusicModel> media)
+    public async Task BatchCreateMusicTracksAsync(IEnumerable<MusicModel> media)
+    {
+        var errors = new Dictionary<MusicModel, string>();
+        await Task.WhenAll(media.Select(track => Task.Run(() =>
         {
-            await _context.InsertIfNotExistsAsync(media);
-        }
+            try
+            {
+                _context.Music.Add(track);
+            }
+            catch (Exception ex)
+            {
+                errors.Add(track, ex.ToString());
+            }
+        })));
+        if (errors.Count > 0) throw new ModelCreationFailedException<MusicModel>(errors);
+    }
 
-        public async Task<IEnumerable<InstrumentModel>> GetInstruments()
-        {
-            return await _context.Instruments.ToListAsync();
-        }
+    public async Task<IEnumerable<InstrumentModel>> GetInstruments()
+    {
+        return await _context.Instruments.ToListAsync();
+    }
 
-        public async Task BatchDeleteTracks(IEnumerable<MusicModel> tracks)
-        {
-            _context.Music.RemoveRange(tracks);
-            await _context.SaveChangesAsync();
-        }
+    public async Task BatchDeleteTracks(IEnumerable<MusicModel> tracks)
+    {
+        _context.Music.RemoveRange(tracks);
+        await _context.SaveChangesAsync();
     }
 }

@@ -7,7 +7,7 @@
  * - export playlist
  */
 
-//TODO: retrink position and design of language icons (edit-purpose)
+//TODO: language and nation should share the same icon. when editing, show a detailed description
 //TODO: (optional) create templates for edit
 //TODO: improve re-upload algorithm to not overwrite or duplicate data (media-pages)
 //TODO: Fix: if dropdown has one one element -> select by default (Labels)
@@ -27,3 +27,6 @@
 //TODO: Authentication
 //TODO: error page
 //TODO: remove all mentionings of renderMaskImage and replace with iconRegistry
+//TODO: add created at/updated at
+//TODO: fix next track playing if not finished loading
+//TODO: shuffle should switch to the first track in the list
