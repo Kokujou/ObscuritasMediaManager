@@ -74,16 +74,9 @@ public class MusicController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MusicModel>>> GetAllAsync()
+    public IQueryable<MusicModel> GetAll()
     {
-        try
-        {
-            return Ok(await _repository.GetAllAsync());
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        return _repository.GetAll();
     }
 
     [HttpGet("{hash}")]

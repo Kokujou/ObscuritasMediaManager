@@ -91,11 +91,9 @@ public class MusicRepository
         return await _context.Music.ToDictionaryAsync(x => x.Hash, x => x.Path);
     }
 
-    public async Task<IEnumerable<MusicModel>> GetAllAsync()
+    public IQueryable<MusicModel> GetAll()
     {
-        var response = await _context.Music.ToListAsync();
-        var test = response.Where(x => x.Genres.Count() > 1);
-        return response;
+        return _context.Music;
     }
 
     public async Task<IEnumerable<MusicModel>> GetSelectedAsync(IEnumerable<string> trackHashes)
