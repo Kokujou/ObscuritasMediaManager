@@ -144,7 +144,7 @@ export class MediaPage extends LitElement {
         try {
             if (typeof media[property] != typeof value) return;
 
-            var media = media.clone();
+            media = media.clone();
             /** @type {any} */ (media[property]) = value;
             await MediaService.updateMedia(media);
             /** @type {any} */ (media[property]) = value;

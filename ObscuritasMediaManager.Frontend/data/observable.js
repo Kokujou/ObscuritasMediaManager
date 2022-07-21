@@ -14,7 +14,10 @@ export class Observable {
      * @param {( newValue: T,oldValue: T)=> void} observer
      */
     subscribe(observer) {
-        var subscription = new Subscription(observer, () => (this.subscriptions = this.subscriptions.filter((x) => x != subscription)));
+        var subscription = new Subscription(
+            observer,
+            () => (this.subscriptions = this.subscriptions.filter((x) => x != subscription))
+        );
         this.subscriptions.push(subscription);
         observer(this.currentValue, null);
         return subscription;
@@ -30,7 +33,9 @@ export class Observable {
         this.subscriptions.forEach((subscription) => {
             try {
                 subscription.observer(this.currentValue, oldValue);
-            } catch {}
+            } catch {
+                //
+            }
         });
     }
 

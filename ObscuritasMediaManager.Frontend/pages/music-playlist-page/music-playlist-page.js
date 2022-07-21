@@ -121,11 +121,15 @@ export class MusicPlaylistPage extends LitElement {
         return renderMusicPlaylist(this);
     }
 
-    toggleCurrentTrack() {
+    async toggleCurrentTrack() {
         /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
 
-        if (audioElement.paused) audioElement.play();
-        else audioElement.pause();
+        try {
+            if (audioElement.paused) await audioElement.play();
+            else audioElement.pause();
+        } catch {
+            await this.changeTrackBy(1);
+        }
 
         this.requestUpdate(undefined);
     }

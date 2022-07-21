@@ -14,12 +14,19 @@
     },
     "include": ["**/*.js"],
     "exclude": [
-        "./node_modules/**",
+        "node_modules/**",
         "**/*.bundled.js",
         "**/exports.js",
         "./rollup.config.js",
-        "./node_modules/**/*.js",
-        "<node_internals>/**/*.js"
+        "node_modules/**",
+        "<node_internals>/**/*.js",
+        "templates/**",
+        "node_modules",
+        "./node_modules",
+        "./node_modules/*",
+        "./node_modules/@types/node/index.d.ts",
+        "**/*.stories*",
+        "./.storybook/**"
     ],
 
     "compileOnSave": true

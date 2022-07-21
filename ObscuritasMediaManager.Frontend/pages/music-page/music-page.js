@@ -107,7 +107,7 @@ export class MusicPage extends LitElement {
         var localSearchString = localStorage.getItem(`music.search`);
         if (localSearchString) this.filter = JSON.parse(localSearchString);
 
-        var localSearchString = localStorage.getItem(`music.sorting`);
+        localSearchString = localStorage.getItem(`music.sorting`);
         if (localSearchString) {
             var object = JSON.parse(localSearchString);
             this.sortingProperty = object.property;
