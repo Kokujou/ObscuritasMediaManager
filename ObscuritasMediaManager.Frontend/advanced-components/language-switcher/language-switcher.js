@@ -21,7 +21,7 @@ export class LanguageSwitcher extends LitElement {
         super();
         /** @type {Nation} */ this.language;
         /** @type {number} */ this.rotationOffset = 0;
-        this.resolve = (x) => {};
+        /** @type {(Nation)=>void} */ this.resolve = () => {};
 
         this.animationRunning = false;
     }

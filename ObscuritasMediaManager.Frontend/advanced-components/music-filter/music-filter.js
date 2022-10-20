@@ -47,6 +47,7 @@ export class MusicFilter extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
+
         this.subscriptions.push(
             session.instruments.subscribe((newValue) => {
                 if (!newValue) return;

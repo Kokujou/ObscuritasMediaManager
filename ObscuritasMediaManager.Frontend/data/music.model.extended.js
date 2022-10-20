@@ -1,4 +1,4 @@
-import { InstrumentType, MusicModel } from '../obscuritas-media-manager-backend-client.js';
+import { InstrumentType, MusicGenre, MusicModel } from '../obscuritas-media-manager-backend-client.js';
 import { session } from './session.js';
 
 export class ExtendedMusicModel extends MusicModel {
@@ -21,8 +21,8 @@ export class ExtendedMusicModel extends MusicModel {
 
     constructor(args) {
         super(args);
-        if (!this.genres) this.genres = [];
-        if (!this.instruments) this.instruments = [];
+        if (!this.genres) this.genres = /** @type {MusicGenre[]} */ ([]);
+        if (!this.instruments) this.instruments = /** @type {string[]} */ ([]);
     }
 
     /**

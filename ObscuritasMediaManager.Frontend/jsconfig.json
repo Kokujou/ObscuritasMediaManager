@@ -3,30 +3,31 @@
         "module": "esnext",
         "target": "esnext",
         "checkJs": true,
+        "allowJs": true,
         "sourceMap": false,
         "alwaysStrict": true,
         "forceConsistentCasingInFileNames": true,
         "watch": true,
         "pretty": true,
-        "moduleResolution": "node",
         "skipLibCheck": true,
         "skipDefaultLibCheck": true
+        // "plugins": [
+        //     {
+        //         "name": "typescript-lit-events-and-attributes"
+        //     }
+        // ]
     },
     "include": ["**/*.js"],
     "exclude": [
-        "node_modules/**",
         "**/*.bundled.js",
         "**/exports.js",
-        "./rollup.config.js",
-        "node_modules/**",
+        "**/rollup.config.js",
         "<node_internals>/**/*.js",
-        "templates/**",
-        "node_modules",
-        "./node_modules",
-        "./node_modules/*",
-        "./node_modules/@types/node/index.d.ts",
+        "**/templates/**",
+        "**/node_modules/**",
         "**/*.stories*",
-        "./.storybook/**"
+        "**/.storybook/**",
+        "**/obscuritas-media-manager-backend-client.js"
     ],
 
     "compileOnSave": true

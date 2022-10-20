@@ -59,8 +59,8 @@ export class MediaPage extends LitElement {
         return session.mediaList.current().filter((x) => x.type == this.mediaType) || [];
     }
 
-    render(content) {
-        return renderMediaPageTemplate(this, content);
+    render() {
+        return renderMediaPageTemplate(this);
     }
 
     async importFolder() {

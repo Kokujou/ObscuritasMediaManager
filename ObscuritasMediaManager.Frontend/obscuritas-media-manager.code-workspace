@@ -8,6 +8,7 @@
         "todo-tree.tree.showBadges": false,
         "todo-tree.tree.disableCompactFolders": true,
         "blueprint.templatesPath": ["./templates"],
+        "task.allowAutomaticTasks": "on",
         "files.associations": {
             "**/templates/**/*.js": "txt"
         },
@@ -22,6 +23,38 @@
             "**/bower_components": true,
             "**/*.code-search": true,
             "obscuritas-media-manager-backend-client.*": true
-        }
+        },
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "typescript.tsserver.watchOptions": {
+            "watchDirectory": "useFsEvents",
+            "watchFile": "useFsEvents"
+        },
+        "files.watcherInclude": ["**/*.js"],
+        "typescript.tsdk": "node_modules\\typescript\\lib"
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Check for build errors",
+                "type": "shell",
+                "command": "./node_modules/.bin/tsc",
+                "args": ["-p", "./jsconfig.json"],
+                "presentation": {
+                    "reveal": "never",
+                    "echo": false,
+                    "focus": false,
+                    "panel": "dedicated",
+                    "clear": true,
+                    "revealProblems": "never",
+                    "showReuseMessage": false
+                },
+                "problemMatcher": "$tsc-watch",
+                "isBackground": true,
+                "runOptions": {
+                    "runOn": "folderOpen"
+                }
+            }
+        ]
     }
 }

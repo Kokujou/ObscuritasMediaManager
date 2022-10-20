@@ -70,7 +70,7 @@ export class MediaPlaylist extends LitElement {
 
     async scrollToActive() {
         this.maxPlaylistItems = this.index + 1;
-        while (this.maxPlaylistItems.toString().substr(-1) != '0') this.maxPlaylistItems++;
+        while (this.maxPlaylistItems.toString().at(-1) != '0') this.maxPlaylistItems++;
         await this.requestUpdate(undefined);
         /** @type {PaginatedScrolling} */ var playlistScrollContainer = this.shadowRoot.querySelector('#playlist-item-container');
         await playlistScrollContainer.requestUpdate(undefined);

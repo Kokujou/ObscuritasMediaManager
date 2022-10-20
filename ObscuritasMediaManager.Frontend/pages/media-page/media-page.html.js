@@ -7,7 +7,7 @@ import { MediaPage } from './media-page.js';
 /**
  * @param {MediaPage} mediaPage
  */
-export function renderMediaPageTemplate(mediaPage, inner) {
+export function renderMediaPageTemplate(mediaPage) {
     return html`<page-layout>
         <div id="media-page-container">
             <media-search
@@ -48,8 +48,8 @@ export function renderMediaPageTemplate(mediaPage, inner) {
                                         @imageReceived="${(e) => mediaPage.addImageFor(media, e.detail.imageData)}"
                                         @ratingChanged="${(e) => mediaPage.changePropertyOf(media, 'rating', e.detail.newRating)}"
                                         @genresChanged="${(e) => mediaPage.changePropertyOf(media, 'genres', e.detail.genres)}"
-                                    ></media-tile
-                                ></link-element>
+                                    ></media-tile>
+                                </link-element>
                             `
                     )}
 

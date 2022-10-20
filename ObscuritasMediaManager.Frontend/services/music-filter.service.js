@@ -31,9 +31,8 @@ export class MusicFilterService {
      * @param {keyof T} filterProperty
      */
     static applyPropertyFilter(list, filter, filterProperty) {
-        var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
+        // var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
-
         var results = list.filter((item) => {
             var property = item[filterProperty];
             if (forbiddenValues.includes(`${property}`)) return false;

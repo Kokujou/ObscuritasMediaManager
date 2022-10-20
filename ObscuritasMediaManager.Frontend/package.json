@@ -4,11 +4,12 @@
     "description": "",
     "main": "custom-elements.js",
     "dependencies": {
-        "lit-html": "^1.3.0"
+        "typescript-lit-events-and-attributes": "file:../../lit-events-and-attributes/typescript-lit-events-and-attributes",
+        "lit-html": "^1.3.0",
+        "typescript": "latest"
     },
     "devDependencies": {
-        "@open-wc/demoing-storybook": "^2.4.7",
-        "typescript": "^4.7.4"
+        "@open-wc/demoing-storybook": "^2.4.7"
     },
     "scripts": {
         "storybook": "start-storybook"
