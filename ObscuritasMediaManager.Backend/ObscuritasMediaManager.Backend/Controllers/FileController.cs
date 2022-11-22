@@ -1,75 +1,92 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 
-namespace ObscuritasMediaManager.Backend.Controllers
+namespace ObscuritasMediaManager.Backend.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class FileController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class FileController : ControllerBase
+    public static string Logs = "";
+
+    [HttpGet("video")]
+    public ActionResult<object> GetVideo(string videoPath = "")
     {
-        public static string Logs = "";
+        if (string.IsNullOrEmpty(videoPath) || !System.IO.File.Exists(videoPath))
+            return BadRequest("invalid file path");
 
-        [HttpGet("video")]
-        public ActionResult<object> GetVideo(string videoPath = "")
+        var ffmpeg = new Process();
+        var startinfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
+            $"-i \"{videoPath}\" -c:v copy -c:a copy -movflags frag_keyframe+empty_moov+delay_moov -f mp4 -");
+        startinfo.RedirectStandardError = true;
+        startinfo.RedirectStandardOutput = true;
+        startinfo.RedirectStandardInput = true;
+        startinfo.UseShellExecute = false;
+        startinfo.CreateNoWindow = true;
+        ffmpeg.StartInfo = startinfo;
+        ffmpeg.ErrorDataReceived += OnErrorDataReceived;
+
+        ffmpeg.Start();
+        ffmpeg.BeginErrorReadLine();
+
+        return File(new BufferedStream(ffmpeg.StandardOutput.BaseStream), "video/mp4");
+    }
+
+    [HttpGet("audio")]
+    public ActionResult<object> GetAudio(string audioPath = "", bool highCompatibility = false)
+    {
+        if (string.IsNullOrEmpty(audioPath) || !System.IO.File.Exists(audioPath))
+            return BadRequest("invalid file path");
+
+        var path = new FileInfo(audioPath);
+
+        if (!highCompatibility)
         {
-            if (string.IsNullOrEmpty(videoPath) || !System.IO.File.Exists(videoPath))
-                return BadRequest("invalid file path");
-
-            var ffmpeg = new Process();
-            var startinfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
-                $"-i \"{videoPath}\" -c:v copy -c:a copy -movflags frag_keyframe+empty_moov+delay_moov -f mp4 -");
-            startinfo.RedirectStandardError = true;
-            startinfo.RedirectStandardOutput = true;
-            startinfo.RedirectStandardInput = true;
-            startinfo.UseShellExecute = false;
-            startinfo.CreateNoWindow = true;
-            ffmpeg.StartInfo = startinfo;
-            ffmpeg.ErrorDataReceived += OnErrorDataReceived;
-
-            ffmpeg.Start();
-            ffmpeg.BeginErrorReadLine();
-
-            return File(new BufferedStream(ffmpeg.StandardOutput.BaseStream), "video/mp4");
+            new FileExtensionContentTypeProvider().TryGetContentType(audioPath, out var contentType);
+            return File(new BufferedStream(System.IO.File.Open(audioPath, FileMode.Open, FileAccess.Read,
+                FileShare.Read)), "audio/x-caf");
         }
 
-        [HttpGet("audio")]
-        public ActionResult<object> GetAudio(string audioPath = "")
+
+        var ffmpeg = new Process();
+        var startInfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
+            $"-i \"{path.FullName}\" -c:a mp3 -f mp3 -")
         {
-            if (string.IsNullOrEmpty(audioPath) || !System.IO.File.Exists(audioPath))
-                return BadRequest("invalid file path");
+            RedirectStandardError = true,
+            RedirectStandardOutput = true,
+            RedirectStandardInput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+        ffmpeg.EnableRaisingEvents = true;
+        ffmpeg.StartInfo = startInfo;
+        ffmpeg.ErrorDataReceived += OnErrorDataReceived;
+        ffmpeg.Exited += OnFinished;
 
-            var ffmpeg = new Process();
-            var startinfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
-                $"-i \"{audioPath}\" -c:a libopus -f ogg -");
-            startinfo.RedirectStandardError = true;
-            startinfo.RedirectStandardOutput = true;
-            startinfo.RedirectStandardInput = true;
-            startinfo.UseShellExecute = false;
-            startinfo.CreateNoWindow = true;
-            ffmpeg.StartInfo = startinfo;
-            ffmpeg.ErrorDataReceived += OnErrorDataReceived;
+        ffmpeg.Start();
+        ffmpeg.BeginErrorReadLine();
 
-            ffmpeg.Start();
-            ffmpeg.BeginErrorReadLine();
+        return File(new BufferedStream(ffmpeg.StandardOutput.BaseStream), "audio/ogg");
+    }
 
-            return File(new BufferedStream(ffmpeg.StandardOutput.BaseStream), "audio/ogg");
-        }
+    [HttpPost("validate-files")]
+    public ActionResult Validate([FromBody] IEnumerable<string> fileUrls)
+    {
+        foreach (var filePath in fileUrls)
+            if (!System.IO.File.Exists(filePath))
+                return BadRequest($"File: {filePath} does not exist!");
 
-        [HttpPost("validate-files")]
-        public ActionResult Validate([FromBody] IEnumerable<string> fileUrls)
-        {
-            foreach (var filePath in fileUrls)
-                if (!System.IO.File.Exists(filePath))
-                    return BadRequest($"File: {filePath} does not exist!");
+        return Ok();
+    }
 
-            return Ok();
-        }
+    private void OnErrorDataReceived(object sender, DataReceivedEventArgs args)
+    {
+        Logs += args.Data + "\r\n";
+    }
 
-        private void OnErrorDataReceived(object sender, DataReceivedEventArgs args)
-        {
-            Logs += args.Data;
-        }
+    private void OnFinished(object sender, EventArgs args)
+    {
+        Logs = "";
     }
 }

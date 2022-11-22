@@ -1,9 +1,9 @@
 import { LitElement } from '../../exports.js';
-import { {{ pascalCase name }}Result } from '../dialog-result/genre-dialog.result.js';
-import { render{{ pascalCase name }}Styles } from './genre-dialog.css.js';
-import { render{{ pascalCase name }} } from './genre-dialog.html.js';
+import { render{{ pascalCase name }}Styles } from './{{ kebabCase name }}.css.js';
+import { render{{ pascalCase name }} } from './{{ kebabCase name }}.html.js';
 
-export class {{ pascalCase name }} ./__kebabCase_name__.html.js
+export class {{ pascalCase name }} extends LitElement
+{
     static get styles() {
         return render{{ pascalCase name }}Styles();
     }
@@ -20,7 +20,7 @@ export class {{ pascalCase name }} ./__kebabCase_name__.html.js
     }
 
     /**
-     * @returns {{{ pascalCase name }}}
+     * @returns { {{ pascalCase name }} }
      */
     static show() {
         var dialog = new {{ pascalCase name }}();

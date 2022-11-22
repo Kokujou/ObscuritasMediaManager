@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Models;
 
@@ -63,7 +58,7 @@ public class MusicRepository
 
     public async Task RecalculateHashesAsync()
     {
-        var tracks = await GetAllAsync();
+        var tracks = GetAll();
         foreach (var track in tracks)
         {
             if (!File.Exists(track.Path)) continue;
@@ -110,6 +105,7 @@ public class MusicRepository
             try
             {
                 _context.Music.Add(track);
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {

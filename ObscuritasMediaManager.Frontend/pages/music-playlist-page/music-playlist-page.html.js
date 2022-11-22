@@ -124,16 +124,15 @@ export function renderMusicPlaylist(playlist) {
                     @randomize="${() => playlist.randomize()}"
                 ></media-playlist>
             </div>
-            <audio
-                controls
-                preload="auto"
-                @loadedmetadata="${() => playlist.requestUpdate(undefined)}"
-                @ended="${() => playlist.changeTrackBy(1)}"
-                @timeupdate="${() => playlist.requestUpdate(undefined)}"
+            <fallback-audio
                 id="audio-player"
                 .volume="${playlist.currentVolumne}"
                 .src="${playlist.audioSource}"
-            ></audio>
+                .fallbackSrc="${playlist.audioSource + '&highCompatibility=true'}"
+                @loadedmetadata="${() => playlist.requestUpdate(undefined)}"
+                @ended="${() => playlist.changeTrackBy(1)}"
+                @timeupdate="${() => playlist.requestUpdate(undefined)}"
+            ></fallback-audio>
         </page-layout>
     `;
 }

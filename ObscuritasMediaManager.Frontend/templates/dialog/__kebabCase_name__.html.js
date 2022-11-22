@@ -1,10 +1,10 @@
 import { html } from '../../exports.js';
-import { GenreDialog } from './genre-dialog.js';
+import { {{ pascalCase name }} } from './{{ kebabCase name }}.js';
 
 /**
- * @param {GenreDialog} {{ camelCase name }}
+ * @param { {{ pascalCase name }} } dialog
  */
-export function renderGenreDialog({{ camelCase name }}) {
+export function render{{ pascalCase name}}(dialog) {
     return html`
         <dialog-base
             caption="Your caption"

@@ -54,7 +54,7 @@ export function renderMusicPage(musicPage) {
                         </div>
                         <div
                             id="active-track-warning"
-                            ?invisible="${musicPage.isPaused}"
+                            ?invisible="${musicPage.audioElement.paused}"
                             @click="${() => musicPage.jumpToActive()}"
                         >
                             Ein Track wird gerade abgespielt.&nbsp; <u> Klicken Sie hier </u> &nbsp;um zum aktiven Track zu
@@ -93,8 +93,8 @@ export function renderMusicPage(musicPage) {
                                                   <audio-tile
                                                       .track="${track}"
                                                       .image="${musicPage.getTrackIcon(track)}"
-                                                      ?paused="${musicPage.isPaused ||
-                                                      !musicPage.currentTrackPath.includes(encodeURIComponent(track.path))}"
+                                                      ?paused="${musicPage.audioElement.paused ||
+                                                      musicPage.currentTrack.path != track.path}"
                                                       @musicToggled="${() => musicPage.toggleMusic(track)}"
                                                   ></audio-tile>
                                               </link-element>
@@ -104,7 +104,14 @@ export function renderMusicPage(musicPage) {
                           </div>`}
                 </paginated-scrolling>
             </div>
-            <audio id="current-track" .volume="${musicPage.currentVolumne}" .src="${musicPage.currentTrackPath}"></audio>
+            <fallback-audio
+                id="current-track"
+                .volume="${musicPage.currentVolumne}"
+                .src="${musicPage.currentTrackUrl}"
+                .fallbackSrc="${musicPage.currentTrackUrl + '&highCompatibility=true'}"
+                @timeupdate="${() => musicPage.requestUpdate(undefined)}"
+                @loadedmetadata="${() => musicPage.requestUpdate(undefined)}"
+            ></fallback-audio>
         </page-layout>
     `;
 }

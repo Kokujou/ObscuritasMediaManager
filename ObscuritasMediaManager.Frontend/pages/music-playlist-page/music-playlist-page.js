@@ -5,6 +5,7 @@ import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { LitElement } from '../../exports.js';
+import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { GenreModel, MusicGenre, UpdateRequestOfMusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
@@ -30,14 +31,13 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     get paused() {
-        var audioElement = this.shadowRoot.querySelector('audio');
+        /** @type {FallbackAudio} */ var fallbackElement = this.shadowRoot.querySelector('fallback-audio');
+        var audioElement = fallbackElement?.audioElement;
         return audioElement?.paused;
     }
 
     get audioSource() {
-        if (this.currentTrack && this.currentTrack.path)
-            return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.currentTrack.path)}`;
-        return '';
+        return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.currentTrack.path)}`;
     }
 
     get currentTrackPosition() {
@@ -109,8 +109,11 @@ export class MusicPlaylistPage extends LitElement {
         this.updatedTrack = Object.assign(new ExtendedMusicModel(), this.playlist[this.currentTrackIndex]);
         await this.requestUpdate(undefined);
 
-        var audio = this.shadowRoot.querySelector('audio');
-        audio.addEventListener('error', function (e) {
+        /** @type {FallbackAudio} */ var fallbackElement = this.shadowRoot.querySelector('fallback-audio');
+        var audio = fallbackElement.audioElement;
+
+        audio.addEventListener('error', (e) => {
+            if (!audio.error?.code) return;
             alert(`an error occured while playing the audio file: code ${audio.error.code}`);
         });
     }
@@ -122,7 +125,8 @@ export class MusicPlaylistPage extends LitElement {
     }
 
     async toggleCurrentTrack() {
-        /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#audio-player');
+        /** @type {FallbackAudio} */ var fallbackElement = this.shadowRoot.querySelector('#audio-player');
+        var audioElement = fallbackElement.audioElement;
 
         try {
             if (audioElement.paused) await audioElement.play();

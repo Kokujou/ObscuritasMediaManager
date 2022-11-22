@@ -6,8 +6,10 @@ import { Subscription } from '../../data/observable.js';
 import { Pages } from '../../data/pages.js';
 import { session } from '../../data/session.js';
 import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
+import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
 import { LitElement } from '../../exports.js';
+import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
@@ -60,13 +62,21 @@ export class MusicPage extends LitElement {
         return sorted.reverse();
     }
 
+    get currentTrackUrl() {
+        return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.currentTrack.path)}`;
+    }
+
+    /** @type {HTMLAudioElement} */
+    get audioElement() {
+        return this.fallbackElement?.audioElement ?? document.createElement('audio');
+    }
+
     constructor() {
         super();
 
         /** @type {ExtendedMusicModel[]} */ this.musicTracks = [];
-        /** @type {string} */ this.currentTrackPath = '';
+        /** @type {ExtendedMusicModel} */ this.currentTrack = new ExtendedMusicModel();
         /** @type {number} */ this.currentVolumne = 0.1;
-        /** @type {boolean} */ this.isPaused = true;
         /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
         /** @type {Subscription[]} */ this.subcriptions = [];
         /** @type {boolean} */ this.selectionMode = false;
@@ -74,6 +84,7 @@ export class MusicPage extends LitElement {
         /** @type {NodeJS.Timeout} */ this.selectionModeTimer = null;
         /** @type {import('../../data/music-sorting-properties.js').SortingProperties} */ this.sortingProperty = 'unset';
         /** @type {import('../../data/sorting-directions.js').Sortings} */ this.sortingDirection = 'ascending';
+        /** @type {FallbackAudio} */ this.fallbackElement;
 
         this.currentPage = 0;
     }
@@ -85,6 +96,11 @@ export class MusicPage extends LitElement {
             session.instruments.subscribe(() => {
                 this.initializeData();
                 this.requestUpdate(undefined);
+            }),
+            session.currentPage.subscribe((curr) => {
+                if (this.audioElement.paused || curr == 'music') return;
+
+                PlayMusicDialog.show(this.currentTrack, this.currentVolumne, this.audioElement?.currentTime ?? 0);
             })
         );
         this.addEventListener('click', () => {
@@ -118,6 +134,11 @@ export class MusicPage extends LitElement {
         await this.requestUpdate(undefined);
     }
 
+    firstUpdated(_changedProperties) {
+        super.firstUpdated(_changedProperties);
+        this.fallbackElement = this.shadowRoot.querySelector('fallback-audio');
+    }
+
     render() {
         return renderMusicPage(this);
     }
@@ -126,9 +147,8 @@ export class MusicPage extends LitElement {
      * @param {ExtendedMusicModel} track
      */
     getTrackIcon(track) {
-        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
-        if (this.currentTrackPath != trackSrc) return noteIcon();
-        if (this.isPaused) return playIcon();
+        if (this.currentTrack?.path != track?.path) return noteIcon();
+        if (this.audioElement.paused) return playIcon();
         return pauseIcon();
     }
 
@@ -147,19 +167,17 @@ export class MusicPage extends LitElement {
      */
     async toggleMusic(track) {
         if (this.selectionMode || this.selectionModeUnset) return;
-        var trackSrc = `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
-        /** @type {HTMLAudioElement} */ var audioElement = this.shadowRoot.querySelector('#current-track');
-        if (this.currentTrackPath == trackSrc && !audioElement.paused) audioElement.pause();
-        else if (this.currentTrackPath == trackSrc && audioElement.paused) audioElement.play();
-        this.isPaused = audioElement.paused;
-        this.requestUpdate(undefined);
+        PlayMusicDialog.stop();
 
-        if (this.currentTrackPath == trackSrc) return;
-
-        this.currentTrackPath = trackSrc;
+        if (this.currentTrack.path == track.path && !this.audioElement.paused) this.audioElement.pause();
+        else if (this.currentTrack.path == track.path && this.audioElement.paused) await this.audioElement.play();
         await this.requestUpdate(undefined);
-        await audioElement.play();
-        this.isPaused = audioElement.paused;
+
+        if (this.currentTrack.path == track.path) return;
+
+        this.currentTrack = track;
+        await this.requestUpdate(undefined);
+        await this.audioElement.play();
         this.requestUpdate(undefined);
     }
 
