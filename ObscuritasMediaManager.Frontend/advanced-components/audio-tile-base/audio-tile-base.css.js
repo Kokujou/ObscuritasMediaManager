@@ -41,28 +41,34 @@ export function renderAudioTileBaseStyles() {
             filter: drop-shadow(0 0 5px black);
         }
 
+        #nation-icon,
         #language-icon {
             position: absolute;
-            left: 5%;
+            right: 5%;
             top: 5%;
+            width: 20%;
+            height: 20%;
+            border-radius: 100%;
+            cursor: pointer;
+            filter: drop-shadow(0 0 5px black);
         }
 
         #nation-icon {
-            position: absolute;
-            left: 20%;
-            top: 5%;
+            mask: linear-gradient(295deg, white 0 50%, transparent 50% 100%);
+        }
+
+        #language-icon {
+            mask: linear-gradient(115deg, white 0 50%, transparent 50% 100%);
         }
 
         ${renderLanguageFlags()}
 
         #instrumentation-button {
             position: absolute;
-            right: 0;
-            top: 0;
+            left: 0;
+            top: 7.5%;
             width: 40%;
             height: 10%;
-            transform: rotate(45deg);
-            transform-origin: 0 100%;
 
             background: none;
             text-transform: uppercase;

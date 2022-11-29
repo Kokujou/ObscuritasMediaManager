@@ -32,10 +32,9 @@ export function renderMusicPlaylist(playlist) {
                     </div>
                     <audio-tile-base
                         .track="${new ExtendedMusicModel(playlist.updatedTrack)}"
-                        ?paused="${playlist.paused}"
+                        ?paused="${playlist.audioElement.paused}"
                         @imageClicked="${() => playlist.toggleCurrentTrack()}"
                         @changeLanguage="${() => playlist.showLanguageSwitcher()}"
-                        @changeNation="${() => playlist.showNationSwitcher()}"
                         @nextParticipants="${() =>
                             playlist.changeProperty(
                                 'participants',
@@ -99,7 +98,7 @@ export function renderMusicPlaylist(playlist) {
                             <div
                                 id="toggle-track-button"
                                 @click="${() => playlist.toggleCurrentTrack()}"
-                                class="audio-icon ${playlist.paused ? 'paused' : 'playing'}"
+                                class="audio-icon ${playlist.audioElement.paused ? 'paused' : 'playing'}"
                             ></div>
                             <div id="next-track-button" @click="${() => playlist.changeTrackBy(1)}" class="audio-icon"></div>
 

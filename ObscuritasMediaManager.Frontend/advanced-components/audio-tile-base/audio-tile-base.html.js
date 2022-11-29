@@ -17,13 +17,13 @@ export function renderAudioTileBase(audioTile) {
             <div id="audio-image" @click="${(e) => audioTile.notifyEvent('imageClicked', e)}"></div>
             <div
                 id="language-icon"
-                class="inline-icon ${audioTile.track.language}"
+                language="${audioTile.track.language}"
                 @click="${(e) => audioTile.notifyEvent('changeLanguage', e)}"
             ></div>
             <div
                 id="nation-icon"
-                class="inline-icon ${audioTile.track.nation}"
-                @click="${(e) => audioTile.notifyEvent('changeNation', e)}"
+                nation="${audioTile.track.nation}"
+                @click="${(e) => audioTile.notifyEvent('changeLanguage', e)}"
             ></div>
             <div
                 @click="${(e) => audioTile.notifyEvent('nextParticipants', e)}"

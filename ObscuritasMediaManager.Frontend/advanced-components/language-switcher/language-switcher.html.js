@@ -1,6 +1,5 @@
 import { html } from '../../exports.js';
 import { Nation } from '../../obscuritas-media-manager-backend-client.js';
-import { IconRegistry } from '../../resources/icons/icon-registry.js';
 import { LanguageSwitcher } from './language-switcher.js';
 
 /**
@@ -17,27 +16,63 @@ export function renderLanguageSwitcher(languageSwitcher) {
                 height: ${smallestParentSize}px;
             }
         </style>
-        <div id="language-switcher-overlay">
-            <div class="${IconRegistry.ArrowIcon}" id="left-arrow" @click="${() => languageSwitcher.rotateBackward()}"></div>
-            <div id="blocked-area">
-                ${Object.values(Nation).map(
-                    (nation, index) =>
-                        html`
-                            <div
-                                class="language-selector-icon ${nation}"
-                                @click="${() => languageSwitcher.changeLanguage(index)}"
-                            ></div>
-                        `
-                )}
+        <div id="language-switcher-overlay" @wheel="${languageSwitcher.scrollWheel}">
+            ${renderLanguageWheel(languageSwitcher, smallestParentSize)}
+            ${renderNationWheel(languageSwitcher, smallestParentSize)}
+            <div id="confirm-button" @click="${languageSwitcher.confirm}">
+                <div id="confirm-icon"></div>
             </div>
-
-            <div
-                id="selected-language"
-                class="${languageSwitcher.language}"
-                @click="${() => languageSwitcher.notifyLanguageChanged()}"
-            ></div>
-
-            <div class="${IconRegistry.ArrowIcon}" id="right-arrow" @click="${() => languageSwitcher.rotateForward()}"></div>
+            <div id="close-button" @click="${languageSwitcher.destroy}">&times;</div>
         </div>
     `;
+}
+
+/**
+ * @param {LanguageSwitcher} languageSwitcher
+ * @param {number} size
+ */
+function renderLanguageWheel(languageSwitcher, size) {
+    var allLanguages = Object.keys(Nation);
+    var selectedIndex = Object.keys(Nation).indexOf(languageSwitcher.language);
+    return html` <div id="language-part" class="part">
+        ${allLanguages.map((targetLangauge, index) => {
+            var rotation = (360 / allLanguages.length) * index - languageSwitcher.languageRotationOffset;
+            var styles = `transform: rotate(${rotation}deg) `;
+            styles += `translateX(${size / 4}px) `;
+            if (index == selectedIndex) styles += 'scale(2)';
+            styles += `translateX(${size / 8 - 20}px) `;
+            styles += `rotate(${-rotation}deg) `;
+            return html`<div
+                language="${targetLangauge}"
+                class="icon"
+                ?main="${targetLangauge == languageSwitcher.language}"
+                .style="${styles}"
+            ></div>`;
+        })}
+    </div>`;
+}
+
+/**
+ * @param {LanguageSwitcher} languageSwitcher
+ * @param {number} size
+ */
+function renderNationWheel(languageSwitcher, size) {
+    var allLanguages = Object.keys(Nation);
+    var selectedIndex = Object.keys(Nation).indexOf(languageSwitcher.nation);
+    return html` <div id="nation-part" class="part">
+        ${allLanguages.map((targetLangauge, index) => {
+            var rotation = (360 / allLanguages.length) * index - languageSwitcher.nationRotationOffset;
+            var styles = `transform: rotate(${rotation}deg) `;
+            styles += `translateX(${size / 4}px)`;
+            if (index == selectedIndex) styles += 'scale(2)';
+            styles += `translateX(${size / 8 - 20}px)`;
+            styles += `rotate(${-rotation}deg) `;
+            return html`<div
+                language="${targetLangauge}"
+                class="icon"
+                ?main="${targetLangauge == languageSwitcher.nation}"
+                .style="${styles}"
+            ></div>`;
+        })}
+    </div>`;
 }

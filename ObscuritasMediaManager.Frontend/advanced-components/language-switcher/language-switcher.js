@@ -1,8 +1,9 @@
 import { LitElement } from '../../exports.js';
 import { Nation } from '../../obscuritas-media-manager-backend-client.js';
-import { Enum } from '../../services/extensions/enum.extensions.js';
 import { renderLanguageSwitcherStyles } from './language-switcher.css.js';
 import { renderLanguageSwitcher } from './language-switcher.html.js';
+
+/** @typedef {'nation' | 'language'} SwitcherProperty */
 
 export class LanguageSwitcher extends LitElement {
     static get styles() {
@@ -12,30 +13,26 @@ export class LanguageSwitcher extends LitElement {
     static get properties() {
         return {
             language: { type: String, reflect: true },
-
-            rotationOffset: { type: Number, reflect: false },
+            nation: { type: String, reflect: true },
         };
     }
 
-    constructor() {
-        super();
-        /** @type {Nation} */ this.language;
-        /** @type {number} */ this.rotationOffset = 0;
-        /** @type {(Nation)=>void} */ this.resolve = () => {};
-
-        this.animationRunning = false;
-    }
+    static AllLanguages = Object.values(Nation);
 
     /**
      * @param {Element} parent
      * @param {Nation} language
-     * @return {Promise<Nation>}
+     * @param {Nation} nation
+     * @return {Promise<{language:Nation, nation:Nation}>}
      */
-    static spawnAt(parent, language) {
+    static spawnAt(parent, language, nation) {
         var languageSwitcher = new LanguageSwitcher();
         languageSwitcher.language = language;
-        var nations = Object.values(Nation);
-        languageSwitcher.rotationOffset = nations.length - nations.indexOf(language);
+        languageSwitcher.nation = nation;
+        var steps = 360 / this.AllLanguages.length;
+        var missingDegrees = 90 % steps;
+        languageSwitcher.languageRotationOffset = steps * this.AllLanguages.indexOf(language) + missingDegrees / 2;
+        languageSwitcher.nationRotationOffset = steps * this.AllLanguages.indexOf(nation) + missingDegrees / 2;
 
         parent.append(languageSwitcher);
         return new Promise((resolve) => {
@@ -43,96 +40,66 @@ export class LanguageSwitcher extends LitElement {
         });
     }
 
-    /**
-     * @param {Map<any, any>} _changedProperties
-     */
-    updated(_changedProperties) {
-        super.updated(_changedProperties);
+    constructor() {
+        super();
+        /** @type {Nation} */ this.language;
+        /** @type {Nation} */ this.nation;
+        /** @type {number} */ this.languageRotationOffset = 0;
+        /** @type {number} */ this.nationRotationOffset = 0;
 
-        if (!_changedProperties.has('rotationOffset')) return;
+        /** @type {(Nation)=>void} */ this.resolve = () => {};
+    }
 
-        this.animationRunning = true;
-        /** @type {NodeListOf<HTMLElement>} */ var languageIcons = this.shadowRoot.querySelectorAll('.language-selector-icon');
-        /** @type {HTMLElement} */ var container;
-        languageIcons.forEach((item, index) => {
-            var anglePartition = 360.0 / languageIcons.length;
-            var targetAngle = anglePartition * index + (360.0 / languageIcons.length) * this.rotationOffset;
-
-            container = item.parentElement;
-
-            item.style.transform = `rotate(${targetAngle}deg) translateY(-${
-                container.offsetHeight / 3
-            }px) rotate(${-targetAngle}deg)`;
+    connectedCallback() {
+        super.connectedCallback();
+        document.addEventListener('keyup', (e) => {
+            if (e.key == 'Escape') this.destroy();
         });
-        setTimeout(() => {
-            this.animationRunning = false;
-        }, 500);
-    }
-
-    distance(a, b) {
-        return Math.abs(a - b);
-    }
-
-    /**
-     * @param {number} index
-     */
-    changeLanguage(index) {
-        var nations = Object.values(Nation);
-        var oldIndex = nations.indexOf(this.language);
-        this.language = nations[index];
-
-        if (oldIndex == index) return;
-
-        var clampedTargetOffset = nations.length - index;
-        if (index == 0) clampedTargetOffset = 0;
-        var clampedRotationOffset = this.rotationOffset % nations.length;
-        var backSteps = 0;
-        while (true) {
-            backSteps--;
-            var target = clampedRotationOffset + backSteps;
-            if (target < 0) target += nations.length;
-            if (target < 0) break;
-            if (target === clampedTargetOffset) break;
-        }
-        backSteps *= -1;
-
-        var foreSteps = 0;
-        while (true) {
-            foreSteps++;
-            var target = clampedRotationOffset + foreSteps;
-            if (target >= nations.length) target -= nations.length;
-            if (target >= nations.length) break;
-            if (target == clampedTargetOffset) break;
-        }
-
-        if (foreSteps < backSteps) this.rotationOffset += foreSteps;
-        else this.rotationOffset -= backSteps;
-    }
-
-    rotateForward() {
-        if (this.animationRunning) return;
-        if (!this.language) this.language = Nation.Japanese;
-        this.language = Enum.previousValue(Nation, this.language, false);
-        this.rotationOffset++;
-    }
-
-    rotateBackward() {
-        if (this.animationRunning) return;
-        if (!this.language) this.language = Nation.Japanese;
-        this.language = Enum.nextValue(Nation, this.language, false);
-        this.rotationOffset--;
-    }
-
-    notifyLanguageChanged() {
-        this.destroy();
     }
 
     render() {
         return renderLanguageSwitcher(this);
     }
 
+    /**
+     * @param {SwitcherProperty} property
+     * @param {'up' | 'down'} direction
+     */
+    moveProperty(property, direction) {
+        var currentIndex = LanguageSwitcher.AllLanguages.indexOf(this[property]);
+        var offset = 0;
+        if (direction == 'up') currentIndex++;
+        if (direction == 'up') offset += 360 / LanguageSwitcher.AllLanguages.length;
+        if (direction == 'down') currentIndex--;
+        if (direction == 'down') offset -= 360 / LanguageSwitcher.AllLanguages.length;
+        if (currentIndex < 0) currentIndex = LanguageSwitcher.AllLanguages.length - 1;
+        if (currentIndex >= LanguageSwitcher.AllLanguages.length) currentIndex = 0;
+        if (property == 'nation') this.nationRotationOffset += offset;
+        if (property == 'language') this.languageRotationOffset += offset;
+        this[property] = LanguageSwitcher.AllLanguages[currentIndex];
+        console.log(this.language, this.nation, this[property]);
+        this.requestUpdate(undefined);
+    }
+
+    /**
+     * @param {WheelEvent & {wheelDelta: number}} event
+     */
+    scrollWheel(event) {
+        /** @type {'up' | 'down'} */ var direction = event.wheelDelta > 0 ? 'up' : 'down';
+        var parentRect = this.shadowRoot.querySelector('#language-switcher-overlay').getBoundingClientRect();
+        var left = event.clientX - parentRect.left;
+        var parentCenterX = parentRect.width / 2;
+        if (left < parentCenterX) return this.moveProperty('language', direction);
+        if (left >= parentCenterX) return this.moveProperty('nation', direction);
+    }
+
+    confirm() {
+        this.resolve({ language: this.language, nation: this.nation });
+        this.destroy();
+    }
+
     destroy() {
-        this.resolve(this.language);
+        this.resolve(null);
         this.classList.toggle('destroyed', true);
         setTimeout(() => {
             this.remove();

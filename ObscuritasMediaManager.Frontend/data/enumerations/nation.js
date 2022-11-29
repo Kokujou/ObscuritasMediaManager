@@ -13,39 +13,39 @@ import { renderBackgroundImage } from '../../services/extensions/style.extension
 
 export function renderLanguageFlags() {
     return css`
-        .${unsafeCSS(Nation.Japanese)} {
+        [language=${unsafeCSS(Nation.Japanese)}],[nation=${unsafeCSS(Nation.Japanese)}] {
             ${renderBackgroundImage(japanFlag())};
         }
 
-        .${unsafeCSS(Nation.German)} {
+        [language=${unsafeCSS(Nation.German)}] ,[nation=${unsafeCSS(Nation.German)}] {
             ${renderBackgroundImage(germanFlag())};
         }
 
-        .${unsafeCSS(Nation.English)} {
+        [language=${unsafeCSS(Nation.English)}],[nation=${unsafeCSS(Nation.English)}] {
             ${renderBackgroundImage(englishFlag())};
         }
 
-        .${unsafeCSS(Nation.Spain)} {
+        [language=${unsafeCSS(Nation.Spain)}],[nation=${unsafeCSS(Nation.Spain)}] {
             ${renderBackgroundImage(spainFlag())};
         }
 
-        .${unsafeCSS(Nation.Italian)} {
+        [language=${unsafeCSS(Nation.Italian)}] ,[nation=${unsafeCSS(Nation.Italian)}] {
             ${renderBackgroundImage(italyFlag())};
         }
 
-        .${unsafeCSS(Nation.Chinese)} {
+        [language=${unsafeCSS(Nation.Chinese)}] ,[nation=${unsafeCSS(Nation.Chinese)}] {
             ${renderBackgroundImage(chinaFlag())};
         }
 
-        .${unsafeCSS(Nation.SouthAmerican)} {
+        [language=${unsafeCSS(Nation.SouthAmerican)}],[nation=${unsafeCSS(Nation.SouthAmerican)}] {
             ${renderBackgroundImage(southAmericaFlag())};
         }
 
-        .${unsafeCSS(Nation.African)} {
+        [language=${unsafeCSS(Nation.African)}] ,[nation=${unsafeCSS(Nation.African)}] {
             ${renderBackgroundImage(africaFlag())};
         }
 
-        .${unsafeCSS(Nation.Russian)} {
+        [language=${unsafeCSS(Nation.Russian)}] ,[nation=${unsafeCSS(Nation.Russian)}] {
             ${renderBackgroundImage(russiaFlag())};
         }
     `;

@@ -1,6 +1,8 @@
 import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { css } from '../../exports.js';
+import { saveTickIcon } from '../../resources/icons/general/save-tick-icon.svg.js';
 import { registerIcons } from '../../resources/icons/icon-registry.js';
+import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderLanguageSwitcherStyles() {
     return css`
@@ -32,68 +34,59 @@ export function renderLanguageSwitcherStyles() {
             justify-content: center;
         }
 
-        #left-arrow,
-        #right-arrow {
+        .part {
+            position: relative;
+            width: 50%;
+            height: 100%;
+
+            transform-origin: center center;
+            mask: linear-gradient(to right, transparent 0 30%, black 70% 100%, transparent 100%);
+        }
+
+        .part:nth-of-type(2) {
+            transform: scaleX(-1);
+        }
+
+        .icon {
             position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 50px;
-
-            background-color: white;
-
-            cursor: pointer;
-            z-index: 2;
+            top: 50%;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            transition: all 0.5s ease-out;
+            pointer-events: none;
         }
 
-        #left-arrow {
-            left: 0;
-        }
+        ${renderLanguageFlags()}
 
-        #right-arrow {
-            right: 0;
-            rotate: 180deg;
-        }
-
-        #blocked-area {
+        #confirm-button {
             position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            mask: linear-gradient(to bottom, red 0% 50%, transparent 70% 100%);
-        }
-
-        #blocked-area:before {
-            content: ' ';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 70%;
-            bottom: 0%;
+            inset: 0;
+            margin: 33%;
             z-index: 1;
+            cursor: pointer;
         }
 
-        .language-selector-icon {
+        #confirm-icon {
+            margin: 30%;
             position: absolute;
-            left: 40%;
-            top: 40%;
-            width: 60px;
-            height: 60px;
-            background: lightgray;
-            filter: drop-shadow(0 0 10px white);
-            cursor: pointer;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-            transition: all 0.5s linear;
+            background-color: limegreen;
+            ${renderMaskImage(saveTickIcon())};
         }
 
-        #selected-language {
-            width: 100px;
-            height: 100px;
-            filter: drop-shadow(0 0 10px white);
+        #close-button {
+            position: absolute;
+            z-index: 1;
+            right: 0;
+            top: 50px;
+            font-size: 40px;
             cursor: pointer;
         }
-
-        ${renderLanguageFlags()};
 
         @keyframes fadeIn {
             from {

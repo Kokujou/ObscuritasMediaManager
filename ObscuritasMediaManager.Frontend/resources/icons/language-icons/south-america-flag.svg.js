@@ -1,5 +1,5 @@
 export function southAmericaFlag() {
-    return `<svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 1500 1000">
+    return `<svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="250 0 1000 1000">
     <defs/>
     <defs>
       <linearGradient id="a">

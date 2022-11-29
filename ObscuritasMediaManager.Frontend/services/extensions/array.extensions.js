@@ -18,3 +18,15 @@ export function randomizeArray(array) {
 export function sortyBy(array, property) {
     return array.sort((a, b) => (a[property] > b[property] ? 1 : a[property] === b[property] ? 0 : -1));
 }
+
+/**
+ * @template T
+ * @param {T[]} array
+ * @param {T} selectedEntry
+ * @param {T} targetEntry
+ */
+export function getDistance(array, selectedEntry, targetEntry) {
+    var selectedIndex = array.indexOf(selectedEntry);
+    var targetIndex = array.indexOf(targetEntry);
+    return targetIndex - selectedIndex;
+}
