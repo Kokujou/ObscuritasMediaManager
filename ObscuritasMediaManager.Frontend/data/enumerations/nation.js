@@ -6,6 +6,7 @@ import { englishFlag } from '../../resources/icons/language-icons/english-flag.s
 import { germanFlag } from '../../resources/icons/language-icons/german-flag.svg.js';
 import { italyFlag } from '../../resources/icons/language-icons/italy-flag.svg.js';
 import { japanFlag } from '../../resources/icons/language-icons/japan-flag.svg.js';
+import { noLanguageIcon } from '../../resources/icons/language-icons/no-language.svg.js';
 import { russiaFlag } from '../../resources/icons/language-icons/russia-flag.svg.js';
 import { southAmericaFlag } from '../../resources/icons/language-icons/south-america-flag.svg.js';
 import { spainFlag } from '../../resources/icons/language-icons/spain-flag.svg.js';
@@ -47,6 +48,10 @@ export function renderLanguageFlags() {
 
         [language=${unsafeCSS(Nation.Russian)}] ,[nation=${unsafeCSS(Nation.Russian)}] {
             ${renderBackgroundImage(russiaFlag())};
+        }
+
+        [language=${unsafeCSS(Nation.Unset)}] ,[nation=${unsafeCSS(Nation.Unset)}] {
+            ${renderBackgroundImage(noLanguageIcon())};
         }
     `;
 }

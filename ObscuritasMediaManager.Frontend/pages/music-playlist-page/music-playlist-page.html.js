@@ -114,6 +114,10 @@ export function renderMusicPlaylist(playlist) {
                                 ></range-slider>
                             </div>
                         </div>
+                        <div id="change-path-container">
+                            <input disabled id="path-input" .value="${'file:\\\\\\' + playlist.updatedTrack.path}" />
+                            <div id="change-path-button" class="inline-icon" @click="${playlist.changeCurrentTrackPath}"></div>
+                        </div>
                     </div>
                 </div>
                 <media-playlist

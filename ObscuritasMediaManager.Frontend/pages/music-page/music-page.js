@@ -97,8 +97,8 @@ export class MusicPage extends LitElement {
                 this.initializeData();
                 this.requestUpdate(undefined);
             }),
-            session.currentPage.subscribe((curr) => {
-                if (this.audioElement.paused || curr == 'music') return;
+            session.currentPage.subscribe((nextPage) => {
+                if (this.audioElement.paused || nextPage == 'music' || nextPage == 'music-playlist') return;
 
                 PlayMusicDialog.show(this.currentTrack, this.currentVolumne, this.audioElement?.currentTime ?? 0);
             })
@@ -192,6 +192,7 @@ export class MusicPage extends LitElement {
         try {
             var fileImportResult = await importFiles();
             await MusicPage.processFiles(fileImportResult.files, fileImportResult.basePath);
+            MessageDialog.show('Upload successful', 'The requested folder was successfully uploaded');
         } catch (err) {
             console.trace('the import of files was aborted', err);
         }

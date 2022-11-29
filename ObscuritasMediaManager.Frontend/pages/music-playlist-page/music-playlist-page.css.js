@@ -5,6 +5,7 @@ import { fastForwardIcon } from '../../resources/icons/music-player-icons/fast-f
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
+import { editIcon } from '../media-detail-page/images/edit-icon.svg.js';
 
 /**
  * TODO: - change detection - autosave
@@ -123,6 +124,7 @@ export function renderMusicPlaylistStyles() {
             font-size: 30px;
             min-width: 300px;
             max-width: 100%;
+            margin-top: -10px;
         }
 
         #audio-subtitle {
@@ -207,6 +209,35 @@ export function renderMusicPlaylistStyles() {
 
         audio {
             display: none;
+        }
+
+        #change-path-container {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #path-input {
+            color: inherit;
+            font-size: inherit;
+            flex: auto;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid;
+            padding: 10px 10px;
+            white-space: nowrap;
+            user-select: text;
+        }
+
+        #change-path-button {
+            width: 40px;
+            height: 40px;
+            ${renderMaskImage(editIcon())};
         }
     `;
 }

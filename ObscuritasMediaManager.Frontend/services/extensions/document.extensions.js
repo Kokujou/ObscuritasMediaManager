@@ -38,3 +38,20 @@ export function getTargetScrollPosition(element, elementContainer, parent) {
     var targetTop = element.offsetTop + elementContainer.offsetTop - parent.offsetHeight / 2 + element.offsetHeight / 2;
     return { left: -targetLeft, top: -targetTop };
 }
+
+/**
+ * @param {boolean} selectFolders
+ * @returns {Promise<FileList>}
+ */
+export function openFileDialog(selectFolders) {
+    return new Promise((resolve) => {
+        /** @type {HTMLInputElement} */ var fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        if (selectFolders) fileInput.setAttribute('webkitdirectory', '');
+        fileInput.onchange = (e) => {
+            resolve(fileInput.files);
+        };
+        fileInput.click();
+        fileInput.focus();
+    });
+}

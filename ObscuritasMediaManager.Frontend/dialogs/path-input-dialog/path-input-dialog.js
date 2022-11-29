@@ -11,14 +11,23 @@ export class PathInputDialog extends LitElement {
         return {};
     }
 
+    /**
+     *
+     * @returns {Promise<string>}
+     */
     static show() {
-        var dialog = new PathInputDialog();
-        document.body.append(dialog);
-        return dialog;
+        return new Promise((resolve) => {
+            var dialog = new PathInputDialog();
+            dialog.resolve = resolve;
+            document.body.append(dialog);
+            return dialog;
+        });
     }
 
     constructor() {
         super();
+
+        /** @type {(string)=>void} */ this.resolve;
     }
 
     render() {
@@ -27,12 +36,12 @@ export class PathInputDialog extends LitElement {
 
     async notifyAccepted() {
         /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#base-path-input');
-
-        var acceptEvent = new CustomEvent('accept', { detail: { path: input.value } });
-        this.dispatchEvent(acceptEvent);
+        this.resolve(input.value);
+        this.remove();
     }
 
     notifyDeclined() {
-        this.dispatchEvent(new CustomEvent('decline'));
+        this.resolve(null);
+        this.remove();
     }
 }

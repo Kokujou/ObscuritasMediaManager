@@ -66,7 +66,7 @@ function renderNationWheel(languageSwitcher, size) {
             styles += `translateX(${size / 4}px)`;
             if (index == selectedIndex) styles += 'scale(2)';
             styles += `translateX(${size / 8 - 20}px)`;
-            styles += `rotate(${-rotation}deg) `;
+            styles += `rotate(${-rotation}deg) scaleX(-1) `;
             return html`<div
                 language="${targetLangauge}"
                 class="icon"

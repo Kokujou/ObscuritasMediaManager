@@ -7,7 +7,6 @@
  * - export playlist
  */
 
-//TODO: language and nation should share the same icon. when editing, show a detailed description
 //TODO: (optional) create templates for edit
 //TODO: improve re-upload algorithm to not overwrite or duplicate data (media-pages)
 //TODO: Fix: if dropdown has one one element -> select by default (Labels)
@@ -16,7 +15,6 @@
 //TODO: implement message snackbar for error and success notifications
 //TODO: implement loading-indiciation for requests
 //TODO: add delete from playlist and hard delete functionality to playlist
-//TODO: note: add a non-vocal language/nation indicator
 //TODO: cleanup function should be extended with "simple" (only existance check) and extended (music validation)
 //TODO: implement album views and think of how to integrate them into the audio page
 //TODO: display and change the audio/media path

@@ -4,12 +4,14 @@ import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
+import { PathInputDialog } from '../../dialogs/path-input-dialog/path-input-dialog.js';
 import { LitElement } from '../../exports.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { GenreModel, MusicGenre, UpdateRequestOfMusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
 import { randomizeArray } from '../../services/extensions/array.extensions.js';
+import { openFileDialog } from '../../services/extensions/document.extensions.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
 import { renderMusicPlaylistStyles } from './music-playlist-page.css.js';
@@ -248,6 +250,17 @@ export class MusicPlaylistPage extends LitElement {
     async toggleComplete() {
         /** @type {HTMLInputElement}*/ var input = this.shadowRoot.querySelector('#complete-check');
         await this.changeProperty('complete', input.checked);
+    }
+
+    async changeCurrentTrackPath() {
+        var files = await openFileDialog();
+        if (!files || files.length <= 0 || !files[0].name) return;
+        var basePath = await PathInputDialog.show();
+        if (!basePath) return;
+
+        if (!basePath.endsWith('\\')) basePath += '\\';
+        this.updatedTrack.path = basePath + files[0].name;
+        this.requestUpdate(undefined);
     }
 
     randomize() {
