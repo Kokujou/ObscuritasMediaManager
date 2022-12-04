@@ -1,14 +1,15 @@
+import { renderMoodStyles } from '../../../data/enumerations/mood.js';
 import { css } from '../../../exports.js';
 
 export function renderAudioTileStyles() {
     return css`
+        ${renderMoodStyles('#tile-container')}
+
         :host {
             display: inline-flex;
             flex-direction: column;
             position: relative;
         }
-
-        ${renderMoodStyles()}
 
         #tile-container {
             position: relative;
@@ -29,6 +30,7 @@ export function renderAudioTileStyles() {
 
             user-select: none;
             cursor: pointer;
+            color: var(--font-color);
         }
 
         audio-tile-base {
@@ -80,56 +82,6 @@ export function renderAudioTileStyles() {
             margin-bottom: 5px;
             z-index: 1;
             --label-color: var(--primary-color);
-        }
-    `;
-}
-
-function renderMoodStyles() {
-    return css`
-        #tile-container {
-            --primary-color: #dddddd;
-            --font-color: black;
-            color: var(--font-color);
-        }
-        #tile-container.happy {
-            --primary-color: #008000;
-            --font-color: white;
-        }
-        #tile-container.aggressive {
-            --primary-color: #a33000;
-            --font-color: white;
-        }
-        #tile-container.sad {
-            --primary-color: #0055a0;
-            --font-color: white;
-        }
-        #tile-container.calm {
-            --primary-color: #662200;
-            --font-color: white;
-        }
-        #tile-container.romantic {
-            --primary-color: #dd6677;
-            --font-color: white;
-        }
-        #tile-container.dramatic {
-            --primary-color: #333333;
-            --font-color: white;
-        }
-        #tile-container.epic {
-            --primary-color: #773399;
-            --font-color: white;
-        }
-        #tile-container.funny {
-            --primary-color: #a0a000;
-            --font-color: white;
-        }
-        #tile-container.passionate {
-            --primary-color: #bb6622;
-            --font-color: white;
-        }
-        #tile-container.monotonuous {
-            --primary-color: #999999;
-            --font-color: black;
         }
     `;
 }

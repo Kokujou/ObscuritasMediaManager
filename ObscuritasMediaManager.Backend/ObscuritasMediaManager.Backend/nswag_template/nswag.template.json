@@ -5,10 +5,10 @@
         "aspNetCoreToOpenApi": {
             "project": "%%SourceProjectPath%%",
             "msBuildProjectExtensionsPath": null,
-            "configuration": null,
+            "configuration": "x64\%%configuration%%",
             "runtime": "",
             "targetFramework": "%%SourceFramework%%",
-            "noBuild": false,
+            "noBuild": true,
             "verbose": true,
             "workingDirectory": null,
             "requireParametersWithoutDefault": false,
@@ -142,7 +142,7 @@
             "template": "Fetch",
             "promiseType": "Promise",
             "dateTimeType": "Date",
-            "nullValue": "Undefined",
+            "nullValue": "null",
             "generateClientClasses": true,
             "generateClientInterfaces": false,
             "generateOptionalParameters": true,
@@ -157,7 +157,7 @@
             "clientBaseClass": null,
             "generateDtoTypes": true,
             "operationGenerationMode": "MultipleClientsFromOperationId",
-            "markOptionalProperties": true,
+            "markOptionalProperties": false,
             "generateCloneMethod": true,
             "typeStyle": "Class",
             "generateDefaultValues": true,
@@ -170,7 +170,9 @@
             "baseUrlTokenName": "%%TSBaseUrlTokenName%%",
             "queryNullValue": "",
             "output": "%%TSProjectName%%.ts",
-            "useAbortSignal": true
+            "useAbortSignal": true,
+            "generateExceptionClasses": true,
+            "defaultReferenceTypeNullHandling": "NotNull"
         }
     }
 }

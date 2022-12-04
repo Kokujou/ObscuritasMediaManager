@@ -3,11 +3,12 @@ Param(
     [Parameter(Mandatory=$true)]
     $workingDirectory,
 
-    $sourceFramework = "net5.0",
-    $clientTargetRuntime = "Net50"
+    [string] $configuration = "Debug",
+
+    $sourceFramework = "net6.0",
+    $clientTargetRuntime = "Net60"
 )
 cd $PSScriptRoot
-iisreset /stop
 function Resolve-Parameters(){
     $directory = Resolve-Path -Path $workingDirectory
     Write-Host $directory
@@ -38,6 +39,7 @@ $sourceFrameworkPattern = "%%SourceFramework%%"
 $clientTargetRuntimePattern = "%%ClientTargetRuntime%%"
 $tsBaseUrlTokenNamePattern = "%%TSBaseUrlTokenName%%"
 $csExceptionClassNamePattern="%%CSExceptionClassName%%"
+$configurationPattern = "%%configuration%%"
 
 function Rename-CustomProperties([string] $fileContent){
     $fileContent = $fileContent -replace $tsProjectNamePattern, $tsProjectName
@@ -47,6 +49,7 @@ function Rename-CustomProperties([string] $fileContent){
     $fileContent = $fileContent -replace $clientTargetRuntimePattern, $clientTargetRuntime
     $fileContent = $fileContent -replace $tsBaseUrlTokenNamePattern, $tsBaseUrlTokenName
     $fileContent = $fileContent -replace $csExceptionClassNamePattern, $csExceptionClassName
+    $fileContent = $fileContent -replace $configurationPattern, $configuration
 
     return $fileContent
 }
@@ -67,9 +70,9 @@ New-Item "$targetProjectFolder/nswag.json" -Value $(Rename-CustomProperties -fil
 
 Copy-Item .\tsconfig.json "$targetProjectFolder/tsconfig.json" -Force
 
-dotnet publish  $targetProjectFolder
+dotnet publish $targetProjectFolder -c "$configuration"
 cd $targetProjectFolder
-npm install
+npm install typescript -g
 tsc --project tsconfig.json
 cd $PSScriptRoot
-iisreset /start
+copy-item .\nswag_client\dist\* ..\..\..\ObscuritasMediaManager.Frontend\ -Recurse

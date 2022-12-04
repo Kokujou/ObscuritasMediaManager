@@ -1,17 +1,17 @@
-﻿namespace ObscuritasMediaManager.Backend.Data.Music
+﻿namespace ObscuritasMediaManager.Backend.Data.Music;
+
+public enum Mood
 {
-    public enum Mood
-    {
-        Unset,
-        Happy,
-        Aggressive,
-        Sad,
-        Calm,
-        Romantic,
-        Dramatic,
-        Epic,
-        Funny,
-        Passionate,
-        Monotonuous
-    }
+    Unset,
+    Happy,
+    Aggressive,
+    Sad,
+    Cool,
+    Calm,
+    Romantic,
+    Dramatic,
+    Epic,
+    Funny,
+    Passionate,
+    Monotonuous
 }

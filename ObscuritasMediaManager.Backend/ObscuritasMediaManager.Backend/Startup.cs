@@ -1,10 +1,8 @@
-
-
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ObscuritasMediaManager.Backend.DataRepositories;
-using System.Text.Json.Serialization;
 using Xabe.FFmpeg;
 
 namespace ObscuritasMediaManager.Backend;
@@ -16,9 +14,9 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
-        services.AddScoped<GenreRepository>(); 
+        services.AddScoped<GenreRepository>();
         services.AddScoped<MediaRepository>();
-        services.AddScoped<StreamingRepository>(); 
+        services.AddScoped<StreamingRepository>();
         services.AddScoped<MusicRepository>();
 
         services.AddDbContext<DatabaseContext>(x => x.UseSqlite(@"Data Source=database.sqlite"));
@@ -50,8 +48,6 @@ public class Startup
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-
         app.UseRouting();
         app.UseHttpsRedirection();
 

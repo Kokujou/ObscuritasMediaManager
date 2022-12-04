@@ -19,7 +19,7 @@ export declare class FileClient {
     });
     getVideo(videoPath?: string | null | undefined, signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processGetVideo(response: Response): Promise<FileResponse>;
-    getAudio(audioPath?: string | null | undefined, signal?: AbortSignal | undefined): Promise<FileResponse>;
+    getAudio(audioPath?: string | null | undefined, highCompatibility?: boolean | undefined, signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processGetAudio(response: Response): Promise<FileResponse>;
     validate(fileUrls: string[], signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processValidate(response: Response): Promise<FileResponse>;
@@ -101,20 +101,20 @@ export declare class StreamingClient {
     protected processGetStream(response: Response): Promise<StreamingEntryModel>;
 }
 export declare class MusicModel implements IMusicModel {
-    name?: string | undefined;
-    author?: string | undefined;
-    source?: string | undefined;
-    mood?: Mood;
-    language?: Nation;
-    nation?: Nation;
-    instrumentation?: Instrumentation;
-    participants?: Participants;
-    instruments?: string[] | undefined;
-    genres?: MusicGenre[] | undefined;
-    path?: string | undefined;
-    rating?: number;
-    complete?: boolean;
-    hash?: string | undefined;
+    name: string | null;
+    author: string | null;
+    source: string | null;
+    mood: Mood;
+    language: Nation;
+    nation: Nation;
+    instrumentation: Instrumentation;
+    participants: Participants;
+    instruments: string[] | null;
+    genres: MusicGenre[] | null;
+    path: string | null;
+    rating: number;
+    complete: boolean;
+    hash: string | null;
     constructor(data?: IMusicModel);
     init(_data?: any): void;
     static fromJS(data: any): MusicModel;
@@ -122,26 +122,27 @@ export declare class MusicModel implements IMusicModel {
     clone(): MusicModel;
 }
 export interface IMusicModel {
-    name?: string | undefined;
-    author?: string | undefined;
-    source?: string | undefined;
-    mood?: Mood;
-    language?: Nation;
-    nation?: Nation;
-    instrumentation?: Instrumentation;
-    participants?: Participants;
-    instruments?: string[] | undefined;
-    genres?: MusicGenre[] | undefined;
-    path?: string | undefined;
-    rating?: number;
-    complete?: boolean;
-    hash?: string | undefined;
+    name: string | null;
+    author: string | null;
+    source: string | null;
+    mood: Mood;
+    language: Nation;
+    nation: Nation;
+    instrumentation: Instrumentation;
+    participants: Participants;
+    instruments: string[] | null;
+    genres: MusicGenre[] | null;
+    path: string | null;
+    rating: number;
+    complete: boolean;
+    hash: string | null;
 }
 export declare enum Mood {
     Unset = "Unset",
     Happy = "Happy",
     Aggressive = "Aggressive",
     Sad = "Sad",
+    Cool = "Cool",
     Calm = "Calm",
     Romantic = "Romantic",
     Dramatic = "Dramatic",
@@ -207,9 +208,9 @@ export declare enum MusicGenre {
     Christmas = "Christmas"
 }
 export declare class GenreModel implements IGenreModel {
-    id?: string;
-    section?: string | undefined;
-    name?: string | undefined;
+    id: string;
+    section: string | null;
+    name: string | null;
     constructor(data?: IGenreModel);
     init(_data?: any): void;
     static fromJS(data: any): GenreModel;
@@ -217,20 +218,20 @@ export declare class GenreModel implements IGenreModel {
     clone(): GenreModel;
 }
 export interface IGenreModel {
-    id?: string;
-    section?: string | undefined;
-    name?: string | undefined;
+    id: string;
+    section: string | null;
+    name: string | null;
 }
 export declare class MediaModel implements IMediaModel {
-    id?: string;
-    name?: string | undefined;
-    type?: string | undefined;
-    rating?: number;
-    release?: number;
-    genres?: string[] | undefined;
-    state?: number;
-    description?: string | undefined;
-    image?: string | undefined;
+    id: string;
+    name: string | null;
+    type: string | null;
+    rating: number;
+    release: number;
+    genres: string[] | null;
+    state: number;
+    description: string | null;
+    image: string | null;
     constructor(data?: IMediaModel);
     init(_data?: any): void;
     static fromJS(data: any): MediaModel;
@@ -238,19 +239,19 @@ export declare class MediaModel implements IMediaModel {
     clone(): MediaModel;
 }
 export interface IMediaModel {
-    id?: string;
-    name?: string | undefined;
-    type?: string | undefined;
-    rating?: number;
-    release?: number;
-    genres?: string[] | undefined;
-    state?: number;
-    description?: string | undefined;
-    image?: string | undefined;
+    id: string;
+    name: string | null;
+    type: string | null;
+    rating: number;
+    release: number;
+    genres: string[] | null;
+    state: number;
+    description: string | null;
+    image: string | null;
 }
 export declare class InstrumentModel implements IInstrumentModel {
-    name?: string | undefined;
-    type?: InstrumentType;
+    name: string | null;
+    type: InstrumentType;
     constructor(data?: IInstrumentModel);
     init(_data?: any): void;
     static fromJS(data: any): InstrumentModel;
@@ -258,8 +259,8 @@ export declare class InstrumentModel implements IInstrumentModel {
     clone(): InstrumentModel;
 }
 export interface IInstrumentModel {
-    name?: string | undefined;
-    type?: InstrumentType;
+    name: string | null;
+    type: InstrumentType;
 }
 export declare enum InstrumentType {
     Unset = "Unset",
@@ -274,8 +275,8 @@ export declare enum InstrumentType {
     Miscellaneous = "Miscellaneous"
 }
 export declare class UpdateRequestOfMusicModel implements IUpdateRequestOfMusicModel {
-    oldModel?: MusicModel | undefined;
-    newModel?: MusicModel | undefined;
+    oldModel: MusicModel | null;
+    newModel: MusicModel | null;
     constructor(data?: IUpdateRequestOfMusicModel);
     init(_data?: any): void;
     static fromJS(data: any): UpdateRequestOfMusicModel;
@@ -283,14 +284,14 @@ export declare class UpdateRequestOfMusicModel implements IUpdateRequestOfMusicM
     clone(): UpdateRequestOfMusicModel;
 }
 export interface IUpdateRequestOfMusicModel {
-    oldModel?: MusicModel | undefined;
-    newModel?: MusicModel | undefined;
+    oldModel: MusicModel | null;
+    newModel: MusicModel | null;
 }
 export declare class StreamingEntryModel implements IStreamingEntryModel {
-    id?: string;
-    season?: string | undefined;
-    episode?: number;
-    src?: string | undefined;
+    id: string;
+    season: string | null;
+    episode: number;
+    src: string | null;
     constructor(data?: IStreamingEntryModel);
     init(_data?: any): void;
     static fromJS(data: any): StreamingEntryModel;
@@ -298,10 +299,10 @@ export declare class StreamingEntryModel implements IStreamingEntryModel {
     clone(): StreamingEntryModel;
 }
 export interface IStreamingEntryModel {
-    id?: string;
-    season?: string | undefined;
-    episode?: number;
-    src?: string | undefined;
+    id: string;
+    season: string | null;
+    episode: number;
+    src: string | null;
 }
 export interface FileResponse {
     data: Blob;

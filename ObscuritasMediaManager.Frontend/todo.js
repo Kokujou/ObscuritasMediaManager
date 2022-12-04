@@ -28,3 +28,6 @@
 //TODO: fix next track playing if not finished loading
 //TODO: shuffle should switch to the first track in the list
 //TODO: show file in explorer
+//TODO: add text to language switcher to indicate whether you're changing nation/language
+//TODO: build an api for adding new genres, instruments, ...
+//TODO: fix broken language icon in music page

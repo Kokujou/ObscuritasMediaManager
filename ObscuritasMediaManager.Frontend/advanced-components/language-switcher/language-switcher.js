@@ -85,7 +85,7 @@ export class LanguageSwitcher extends LitElement {
      * @param {WheelEvent & {wheelDelta: number}} event
      */
     scrollWheel(event) {
-        /** @type {'up' | 'down'} */ var direction = event.wheelDelta > 0 ? 'up' : 'down';
+        /** @type {'up' | 'down'} */ var direction = event.wheelDelta < 0 ? 'up' : 'down';
         var parentRect = this.shadowRoot.querySelector('#language-switcher-overlay').getBoundingClientRect();
         var left = event.clientX - parentRect.left;
         var parentCenterX = parentRect.width / 2;

@@ -43,7 +43,7 @@ export function getTargetScrollPosition(element, elementContainer, parent) {
  * @param {boolean} selectFolders
  * @returns {Promise<FileList>}
  */
-export function openFileDialog(selectFolders) {
+export function openFileDialog(selectFolders = false) {
     return new Promise((resolve) => {
         /** @type {HTMLInputElement} */ var fileInput = document.createElement('input');
         fileInput.type = 'file';

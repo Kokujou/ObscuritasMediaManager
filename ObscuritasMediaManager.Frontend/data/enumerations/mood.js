@@ -11,7 +11,8 @@ export const MoodColors = {
     Monotonuous: '#999999',
     Passionate: '#bb6622',
     Romantic: '#dd6677',
-    Sad: '#0055a0',
+    Sad: '#0335a0',
+    Cool: '#00aaee',
     Unset: '#dddddd',
 };
 
