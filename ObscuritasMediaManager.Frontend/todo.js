@@ -17,7 +17,6 @@
 //TODO: add delete from playlist and hard delete functionality to playlist
 //TODO: cleanup function should be extended with "simple" (only existance check) and extended (music validation)
 //TODO: implement album views and think of how to integrate them into the audio page
-//TODO: display and change the audio/media path
 //TODO: consider dual moods - it get's really difficult to decide - probably needs a special eye on filtering
 //TODO: feature: add subtitle functionality - think about a nice desgin!
 //TODO: add a fancy audio visualization

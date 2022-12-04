@@ -15,6 +15,7 @@ import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.s
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
 import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
 import { sortyBy } from '../../services/extensions/array.extensions.js';
+import { playAudio } from '../../services/extensions/audio.extension.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage } from '../../services/extensions/url.extension.js';
@@ -169,16 +170,12 @@ export class MusicPage extends LitElement {
         if (this.selectionMode || this.selectionModeUnset) return;
         PlayMusicDialog.stop();
 
-        if (this.currentTrack.path == track.path && !this.audioElement.paused) this.audioElement.pause();
-        else if (this.currentTrack.path == track.path && this.audioElement.paused) await this.audioElement.play();
+        if (this.currentTrack.hash != track.hash) this.currentTrack = track;
         await this.requestUpdate(undefined);
 
-        if (this.currentTrack.path == track.path) return;
-
-        this.currentTrack = track;
+        if (!this.audioElement.paused) this.audioElement.pause();
+        else if (this.audioElement.paused) await playAudio(this.audioElement);
         await this.requestUpdate(undefined);
-        await this.audioElement.play();
-        this.requestUpdate(undefined);
     }
 
     async playPlaylist() {
