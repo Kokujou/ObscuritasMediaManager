@@ -1,107 +1,105 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Models;
 
-namespace ObscuritasMediaManager.Backend.Controllers
+namespace ObscuritasMediaManager.Backend.Controllers;
+
+[Authorize]
+[ApiController]
+[Route("api/[controller]")]
+public class MediaController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class MediaController : ControllerBase
+    private readonly GenreRepository _genreRepository;
+    private readonly MediaRepository _repository;
+
+    public MediaController(MediaRepository repository, GenreRepository genreRepository)
     {
-        private readonly MediaRepository _repository;
-        private readonly GenreRepository _genreRepository;
+        _repository = repository;
+        _genreRepository = genreRepository;
+    }
 
-        public MediaController(MediaRepository repository, GenreRepository genreRepository)
+    [HttpGet("{guid:Guid}")]
+    public async Task<ActionResult<MediaModel>> Get([FromRoute] Guid guid)
+    {
+        try
         {
-            _repository = repository;
-            _genreRepository = genreRepository;
+            return Ok(await _repository.GetAsync(guid));
         }
-
-        [HttpGet("{guid:Guid}")]
-        public async Task<ActionResult<MediaModel>> Get([FromRoute] Guid guid)
+        catch (Exception e)
         {
-            try
-            {
-                return Ok(await _repository.GetAsync(guid));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.ToString());
-            }
+            return BadRequest(e.ToString());
         }
+    }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<MediaModel>>> GetAll([FromQuery] string type = "")
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<MediaModel>>> GetAll([FromQuery] string type = "")
+    {
+        try
         {
-            try
-            {
-                return Ok(await _repository.GetAllAsync(type));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.ToString());
-            }
+            return Ok(await _repository.GetAllAsync(type));
         }
-
-        [HttpPost]
-        public async Task<ActionResult> BatchCreateMediaAsync([FromBody] IEnumerable<MediaModel> media)
+        catch (Exception e)
         {
-            try
-            {
-                await _repository.BatchCreateMediaAsync(media);
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.ToString());
-            }
+            return BadRequest(e.ToString());
         }
+    }
 
-        [HttpPut]
-        public async Task<ActionResult> UpdateMedia([FromBody] MediaModel media)
+    [HttpPost]
+    public async Task<ActionResult> BatchCreateMediaAsync([FromBody] IEnumerable<MediaModel> media)
+    {
+        try
         {
-            try
-            {
-                await _repository.UpdateMediaAsync(media);
-
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.ToString());
-            }
+            await _repository.BatchCreateMediaAsync(media);
+            return NoContent();
         }
-
-        [HttpPut("{guid:Guid}/image")]
-        public async Task<ActionResult> AddMediaImage([FromBody] string image,
-            Guid guid)
+        catch (Exception e)
         {
-            try
-            {
-                await _repository.AddMediaImageAsync(guid, image);
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.ToString());
-            }
+            return BadRequest(e.ToString());
         }
+    }
 
-        [HttpDelete("{guid:Guid}/image")]
-        public async Task<ActionResult> DeleteMediaImage(Guid guid)
+    [HttpPut]
+    public async Task<ActionResult> UpdateMedia([FromBody] MediaModel media)
+    {
+        try
         {
-            try
-            {
-                await _repository.RemoveMediaImageAsync(guid);
-                return NoContent();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.ToString());
-            }
+            await _repository.UpdateMediaAsync(media);
+
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.ToString());
+        }
+    }
+
+    [HttpPut("{guid:Guid}/image")]
+    public async Task<ActionResult> AddMediaImage([FromBody] string image,
+        Guid guid)
+    {
+        try
+        {
+            await _repository.AddMediaImageAsync(guid, image);
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.ToString());
+        }
+    }
+
+    [HttpDelete("{guid:Guid}/image")]
+    public async Task<ActionResult> DeleteMediaImage(Guid guid)
+    {
+        try
+        {
+            await _repository.RemoveMediaImageAsync(guid);
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.ToString());
         }
     }
 }

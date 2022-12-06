@@ -2,18 +2,22 @@ import {
     CleanupClient,
     FileClient,
     GenreClient,
+    LoginClient,
     MediaClient,
     MusicClient,
     PlaylistClient,
     StreamingClient,
 } from '../obscuritas-media-manager-backend-client.js';
+import { AuthenticatedRequestService } from './authenticated-request.service.js';
 
 const baseUrl = '/ObscuritasMediaManager';
 
-export const MusicService = new MusicClient(baseUrl);
-export const MediaService = new MediaClient(baseUrl);
-export const FileService = new FileClient(baseUrl);
-export const StreamingService = new StreamingClient(baseUrl);
-export const PlaylistService = new PlaylistClient(baseUrl);
-export const GenreService = new GenreClient(baseUrl);
-export const CleanupService = new CleanupClient(baseUrl);
+var authenticatedRequestService = new AuthenticatedRequestService();
+export const MusicService = new MusicClient(baseUrl, authenticatedRequestService);
+export const MediaService = new MediaClient(baseUrl, authenticatedRequestService);
+export const FileService = new FileClient(baseUrl, authenticatedRequestService);
+export const StreamingService = new StreamingClient(baseUrl, authenticatedRequestService);
+export const PlaylistService = new PlaylistClient(baseUrl, authenticatedRequestService);
+export const GenreService = new GenreClient(baseUrl, authenticatedRequestService);
+export const CleanupService = new CleanupClient(baseUrl, authenticatedRequestService);
+export const LoginService = new LoginClient(baseUrl, authenticatedRequestService);

@@ -1,6 +1,4 @@
-import { session } from '../../data/session.js';
 import { html, LitElement } from '../../exports.js';
-import { MediaService, MusicService } from '../../services/backend.services.js';
 import { renderObscuritasMediaManagerStyles } from './obscuritas-media-manager.css.js';
 import { renderObscuritasMediaManager } from './obscuritas-media-manager.html.js';
 
@@ -44,33 +42,17 @@ export class ObscuritasMediaManager extends LitElement {
     constructor() {
         super();
 
-        this.loadedResourceIndex = 0;
-        this.loadResources();
-    }
-
-    async loadResources() {
         this.initialized = false;
-
-        try {
-            session.mediaList.next(await MediaService.getAll());
-        } catch (err) {
-            console.error(err);
-        }
-        try {
-            session.instruments.next(await MusicService.getInstruments());
-        } catch (err) {
-            console.error(err);
-        }
-
-        this.initialized = true;
-        this.requestUpdate(undefined);
+        this.loadedResourceIndex = 0;
     }
 
     render() {
-        if (this.loadedResourceIndex >= ObscuritasMediaManager.resourceList.length) return renderObscuritasMediaManager(this);
-        else
+        if (this.loadedResourceIndex < ObscuritasMediaManager.resourceList.length)
             return this.currentResources.map(
                 (resUrl) => html`<img invisible src="${resUrl}" @load="${() => this.loadedResourceIndex++}" />`
             );
+
+        this.initialized = true;
+        return renderObscuritasMediaManager(this);
     }
 }

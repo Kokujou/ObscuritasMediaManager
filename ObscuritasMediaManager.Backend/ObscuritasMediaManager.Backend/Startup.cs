@@ -1,7 +1,10 @@
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using ObscuritasMediaManager.Backend.Authentication;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using Xabe.FFmpeg;
 
@@ -18,6 +21,7 @@ public class Startup
         services.AddScoped<MediaRepository>();
         services.AddScoped<StreamingRepository>();
         services.AddScoped<MusicRepository>();
+        services.AddScoped<UserRepository>();
 
         services.AddDbContext<DatabaseContext>(x => x.UseSqlite(@"Data Source=database.sqlite"));
 
@@ -43,6 +47,10 @@ public class Startup
         FFmpeg.SetExecutablesPath("D:\\Programme\\ffmpeg\\bin");
 
         services.AddSwaggerGen(options => { });
+
+        services.AddAuthentication("basic")
+            .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("basic", null);
+        services.AddAuthorization();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +60,17 @@ public class Startup
         app.UseHttpsRedirection();
 
         app.UseCors("all");
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.UseExceptionHandler(a => a.Run(async context =>
+        {
+            var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+            var exception = exceptionHandlerPathFeature?.Error;
+            context.Response.StatusCode = 400;
+
+            await context.Response.WriteAsJsonAsync(new { Reason = exception.Message });
+        }));
 
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 

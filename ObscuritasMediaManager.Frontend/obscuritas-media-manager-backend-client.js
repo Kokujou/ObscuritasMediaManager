@@ -279,6 +279,54 @@ export class GenreClient {
         return Promise.resolve(null);
     }
 }
+export class LoginClient {
+    http;
+    baseUrl;
+    jsonParseReviver = undefined;
+    constructor(baseUrl, http) {
+        this.http = http ? http : window;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+    login(request, signal) {
+        let url_ = this.baseUrl + "/api/Login";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(request);
+        let options_ = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processLogin(_response);
+        });
+    }
+    processLogin(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null;
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+}
 export class MediaClient {
     http;
     baseUrl;
@@ -1203,6 +1251,42 @@ export class GenreModel {
     clone() {
         const json = this.toJSON();
         let result = new GenreModel();
+        result.init(json);
+        return result;
+    }
+}
+export class CredentialsRequest {
+    username;
+    password;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
+            this.username = _data["username"] !== undefined ? _data["username"] : null;
+            this.password = _data["password"] !== undefined ? _data["password"] : null;
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new CredentialsRequest();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["username"] = this.username !== undefined ? this.username : null;
+        data["password"] = this.password !== undefined ? this.password : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new CredentialsRequest();
         result.init(json);
         return result;
     }

@@ -77,7 +77,6 @@ export class LanguageSwitcher extends LitElement {
         if (property == 'nation') this.nationRotationOffset += offset;
         if (property == 'language') this.languageRotationOffset += offset;
         this[property] = LanguageSwitcher.AllLanguages[currentIndex];
-        console.log(this.language, this.nation, this[property]);
         this.requestUpdate(undefined);
     }
 

@@ -228,7 +228,6 @@ export class MusicPage extends LitElement {
     }
 
     updateSorting(sortingProperty, sortingDirection) {
-        console.log(sortingProperty);
         this.sortingProperty = sortingProperty;
         this.sortingDirection = sortingDirection;
         localStorage.setItem(

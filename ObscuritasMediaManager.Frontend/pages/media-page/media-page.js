@@ -87,7 +87,9 @@ export class MediaPage extends LitElement {
                 var associatedMedia = session.mediaList.current().find((x) => x.name == mediaFileInfo.name);
 
                 if (!associatedMedia) {
-                    associatedMedia = new MediaModel({ name: mediaFileInfo.name, type: mediaType, id: newGuid() });
+                    associatedMedia = new MediaModel(
+                        Object.assign(new MediaModel(), { name: mediaFileInfo.name, type: mediaType, id: newGuid() })
+                    );
                     newMedia.push(associatedMedia);
                 }
 
@@ -95,6 +97,7 @@ export class MediaPage extends LitElement {
                     id: associatedMedia.id,
                     season: mediaFileInfo.season,
                     src: mediaFileInfo.src,
+                    episode: 0,
                 });
                 if (streamingEntries.some((x) => associatedMedia.id == streamingEntry.id && x.season == streamingEntry.season))
                     episode += 1;

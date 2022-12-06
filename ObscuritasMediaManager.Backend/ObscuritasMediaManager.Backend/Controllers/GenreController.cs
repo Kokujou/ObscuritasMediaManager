@@ -1,35 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Models;
 
-namespace ObscuritasMediaManager.Backend.Controllers
+namespace ObscuritasMediaManager.Backend.Controllers;
+
+[Authorize]
+[ApiController]
+[Route("/api/[controller]")]
+public class GenreController : ControllerBase
 {
-    [ApiController]
-    [Route("/api/[controller]")]
-    public class GenreController : ControllerBase
+    private readonly GenreRepository _genreRepository;
+
+    public GenreController(GenreRepository genreRepository)
     {
-        private readonly GenreRepository _genreRepository;
+        _genreRepository = genreRepository;
+    }
 
-        public GenreController(GenreRepository genreRepository)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<GenreModel>>> GetAll()
+    {
+        try
         {
-            _genreRepository = genreRepository;
+            var genreList = await _genreRepository.GetAllAsync();
+            return Ok(genreList);
         }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<GenreModel>>> GetAll()
+        catch (Exception e)
         {
-            try
-            {
-                var genreList = await _genreRepository.GetAllAsync();
-                return Ok(genreList);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+            return BadRequest(e);
         }
     }
 }

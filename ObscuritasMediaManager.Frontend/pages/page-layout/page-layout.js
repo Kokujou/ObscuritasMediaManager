@@ -1,6 +1,8 @@
+import { session } from '../../data/session.js';
 import { LitElement } from '../../exports.js';
+import { MediaService, MusicService } from '../../services/backend.services.js';
 import { renderWebcomponentTemplateStyles as renderPageLayoutStyles } from './page-layout.css.js';
-import { renderPageLayout as renderPageLayout } from './page-layout.html.js';
+import { renderPageLayout } from './page-layout.html.js';
 
 export class PageLayout extends LitElement {
     static get styles() {
@@ -13,6 +15,25 @@ export class PageLayout extends LitElement {
 
     constructor() {
         super();
+        this.loadResources();
+    }
+
+    async loadResources() {
+        this.initialized = false;
+
+        try {
+            session.mediaList.next(await MediaService.getAll());
+        } catch (err) {
+            console.error(err);
+        }
+        try {
+            session.instruments.next(await MusicService.getInstruments());
+        } catch (err) {
+            console.error(err);
+        }
+
+        this.initialized = true;
+        this.requestUpdate(undefined);
     }
 
     render() {

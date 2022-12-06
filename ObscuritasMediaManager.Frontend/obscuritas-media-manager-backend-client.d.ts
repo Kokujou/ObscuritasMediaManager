@@ -34,6 +34,16 @@ export declare class GenreClient {
     getAll(signal?: AbortSignal | undefined): Promise<GenreModel[]>;
     protected processGetAll(response: Response): Promise<GenreModel[]>;
 }
+export declare class LoginClient {
+    private http;
+    private baseUrl;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
+    constructor(baseUrl?: string, http?: {
+        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
+    });
+    login(request: CredentialsRequest, signal?: AbortSignal | undefined): Promise<string>;
+    protected processLogin(response: Response): Promise<string>;
+}
 export declare class MediaClient {
     private http;
     private baseUrl;
@@ -221,6 +231,19 @@ export interface IGenreModel {
     id: string;
     section: string | null;
     name: string | null;
+}
+export declare class CredentialsRequest implements ICredentialsRequest {
+    username: string | null;
+    password: string | null;
+    constructor(data?: ICredentialsRequest);
+    init(_data?: any): void;
+    static fromJS(data: any): CredentialsRequest;
+    toJSON(data?: any): any;
+    clone(): CredentialsRequest;
+}
+export interface ICredentialsRequest {
+    username: string | null;
+    password: string | null;
 }
 export declare class MediaModel implements IMediaModel {
     id: string;

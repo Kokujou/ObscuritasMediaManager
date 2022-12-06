@@ -171,7 +171,6 @@ export class MusicFilter extends LitElement {
      * @param {keyof SortingDirections} direction
      */
     changeSorting(property = null, direction = null) {
-        if (!property && !direction) console.log(property, direction);
         if (property) this.sortingProperty = property;
         if (direction) this.sortingDirection = direction;
         this.requestUpdate(undefined);

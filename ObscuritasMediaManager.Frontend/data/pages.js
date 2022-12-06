@@ -23,6 +23,11 @@ export const Pages = {
         component: '<music-playlist-page></music-playlist-page>',
         withQueries: ['track'],
     },
+    login: {
+        routes: ['login'],
+        component: '<login-page></login-page>',
+        withQueries: [],
+    },
 };
 
 export class RouteDefinition {

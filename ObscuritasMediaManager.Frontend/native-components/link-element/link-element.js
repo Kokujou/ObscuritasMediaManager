@@ -41,7 +41,6 @@ export class LinkElement extends LitElement {
      * @param {Event} event
      */
     handleClick(event) {
-        console.log(this.disabled);
         if (this.disabled) {
             event.stopPropagation();
             event.stopImmediatePropagation();

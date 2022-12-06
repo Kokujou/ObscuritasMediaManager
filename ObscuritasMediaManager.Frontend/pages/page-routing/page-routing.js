@@ -19,6 +19,8 @@ export class PageRouting extends LitElement {
         };
     }
 
+    /** @type {PageRouting} */ static instance;
+
     changeHash(newHash) {
         var searchString = location.search.substring(1);
         var searchQueries = searchString.split('&');
@@ -37,6 +39,7 @@ export class PageRouting extends LitElement {
 
         /** @type {{[key: string]: RouteDefinition}} */ this.routes = {};
         this.defaultFragment = '';
+        PageRouting.instance = this;
 
         window.addEventListener('hashchange', () => {
             this.loadPageFromHash(null);
@@ -116,5 +119,6 @@ export class PageRouting extends LitElement {
         super.disconnectedCallback();
         this.subscriptions.forEach((x) => x.unsubscribe());
         this.subscriptions = [];
+        PageRouting.instance = null;
     }
 }

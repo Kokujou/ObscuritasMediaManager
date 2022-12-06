@@ -31,3 +31,19 @@
 //TODO: add text to language switcher to indicate whether you're changing nation/language
 //TODO: build an api for adding new genres, instruments, ...
 //TODO: fix broken language icon in music page
+//TODO: refactor the route-system
+
+/**
+ * TODO: RECIPE DATABASE
+ * - start with create-functionality
+ * - upload photos/slideshow from google photos, link or img
+ * - add a scaling feature for portions
+ * - add a calculation feature for units
+ * - categories:
+ *      nation,
+ *      course (main, desert, soup, side, salat),
+ *      main ingredient: noodles, meat, fish, rice, bread, ...
+ * - important properties: time (to prepare, to cook, total), difficulty, rating, genres?, tags?
+ *      - tagging system to create new tags
+ *
+ */
