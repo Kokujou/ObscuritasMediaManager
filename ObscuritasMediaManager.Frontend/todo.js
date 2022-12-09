@@ -32,6 +32,8 @@
 //TODO: fix broken language icon in music page
 //TODO: refactor the route-system
 //TODO: refactor the update-system
+//TODO: think about removing nations. probably doesn't make sense and/or is already reflected in the genre-list
+//TODO: think about filtering for dual moods
 
 /**
  * TODO: RECIPE DATABASE

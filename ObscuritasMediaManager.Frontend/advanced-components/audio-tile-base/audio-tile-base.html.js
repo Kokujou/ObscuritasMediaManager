@@ -33,10 +33,10 @@ export function renderAudioTileBase(audioTile) {
             <svg
                 id="instrumentation-button"
                 class="inline-icon"
-                viewBox="0 0 60 18"
+                viewBox="0 0 70 18"
                 @click="${(e) => audioTile.notifyEvent('nextInstrumentation', e)}"
             >
-                <text x="50%" y="80%" text-anchor="middle">${audioTile.track.instrumentation}</text>
+                <text y="80%" text-anchor="start">${audioTile.track.instrumentation}</text>
             </svg>
 
             <div id="rating-container">

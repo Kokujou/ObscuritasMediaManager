@@ -31,7 +31,7 @@ export function renderMusicPlaylist(playlist) {
             : playlist.moodToSwitch == 'mood2'
             ? html`<style>
                   #mood-switcher {
-                      background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
+                      background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
                       border: 2px solid var(--secondary-color);
                   }
               </style>`

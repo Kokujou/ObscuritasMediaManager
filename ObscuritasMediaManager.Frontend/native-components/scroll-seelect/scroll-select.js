@@ -101,7 +101,7 @@ export class ScrollSelect extends LitElement {
     onPointerMove(e) {
         if (!this.mouseDown) return;
         var deltaY = e.movementY;
-        this.mouseStartY += deltaY / 2;
+        this.mouseStartY += deltaY * 3;
         this.scrollItemsContainer.style.transform = `translateY(${this.mouseStartY}px)`;
     }
 

@@ -65,7 +65,7 @@ export function renderAudioTileBaseStyles() {
 
         #instrumentation-button {
             position: absolute;
-            left: 0;
+            left: 7.5%;
             top: 7.5%;
             width: 40%;
             height: 10%;
