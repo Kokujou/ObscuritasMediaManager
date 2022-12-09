@@ -51,4 +51,8 @@ export class FallbackAudio extends LitElement {
         await this.requestUpdate(undefined);
         await this.audioElement.play();
     }
+
+    async overrideFetch(event) {
+        console.log('called');
+    }
 }

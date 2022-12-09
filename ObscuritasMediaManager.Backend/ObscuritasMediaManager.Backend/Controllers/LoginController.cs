@@ -21,6 +21,10 @@ public class LoginController : ControllerBase
     {
         var user = await _userRepository.LogonAsync(request.Username, request.Password);
         if (user is null) return BadRequest("invalid username or password");
-        return $"{request.Username}:{request.Password}".ToBase64String();
+
+        var token = $"{request.Username}:{request.Password}".ToBase64String();
+        Response.Cookies.Append("Authorization", $"Basic {token}",
+            new CookieOptions { Expires = DateTimeOffset.MaxValue });
+        return token;
     }
 }

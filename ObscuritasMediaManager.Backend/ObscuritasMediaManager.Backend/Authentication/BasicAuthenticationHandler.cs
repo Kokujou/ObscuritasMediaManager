@@ -19,10 +19,10 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        var authHeader = Request.Headers["Authorization"].FirstOrDefault(x => x.StartsWith("Basic"));
-        if (authHeader is null) return AuthenticateResult.Fail("invalid auth header");
+        var cookie = Request.Headers.Cookie.GetCookie("Authorization");
+        if (cookie is null) return AuthenticateResult.Fail("invalid auth header");
 
-        var token = authHeader["Basic ".Length..];
+        var token = cookie["Basic ".Length..];
         var decoded = token.FromBase64String();
         if (decoded is null) return AuthenticateResult.Fail("token could not be decoded");
 

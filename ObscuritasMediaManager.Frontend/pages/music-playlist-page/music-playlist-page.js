@@ -120,7 +120,7 @@ export class MusicPlaylistPage extends LitElement {
 
         this.audioElement.addEventListener('error', (e) => {
             if (!this.audioElement.error?.code) return;
-            alert(`an error occured while playing the audio file: code ${this.audioElement.error.code}`);
+            console.error(`an error occured while playing the audio file: code ${this.audioElement.error.code}`);
         });
     }
 

@@ -11,8 +11,6 @@ export class AuthenticatedRequestService {
      * @returns {Promise<Response>}
      */
     async fetch(url, requestInit) {
-        var authTicket = localStorage.getItem(AuthenticatedRequestService.AuthHeaderStorageKey);
-        requestInit.headers['Authorization'] = `Basic ${authTicket}`;
         var response = await fetch(url, requestInit);
 
         if (response.status == 401) {

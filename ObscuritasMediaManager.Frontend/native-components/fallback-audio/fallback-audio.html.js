@@ -15,6 +15,7 @@ export function renderFallbackAudio(audio) {
             @timeupdate="${(e) => audio.dispatchEvent(new Event(e.type, { bubbles: true, composed: true }))}"
             @ended="${(e) => audio.dispatchEvent(new Event(e.type, { bubbles: true, composed: true }))}"
             @loadedmetadata="${(e) => audio.dispatchEvent(new Event(e.type, { bubbles: true, composed: true }))}"
+            @message="${audio.overrideFetch}"
             style="display:none"
         ></audio>
     `;
