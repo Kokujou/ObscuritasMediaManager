@@ -9,7 +9,7 @@ export const MusicSortingProperties = {
     nation: 'Herkunftsland',
     language: 'Sprache',
     rating: 'Bewertung',
-    mood: 'Stimmung',
+    mood1: 'Stimmung',
     instrumentation: 'Instrumentverteilung',
     participants: 'Mitgliederzahl',
     unset: 'Keine Sortierung',

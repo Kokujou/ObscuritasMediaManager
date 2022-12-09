@@ -1,10 +1,7 @@
-import { renderMoodStyles } from '../../../data/enumerations/mood.js';
 import { css } from '../../../exports.js';
 
 export function renderAudioTileStyles() {
     return css`
-        ${renderMoodStyles('#tile-container')}
-
         :host {
             display: inline-flex;
             flex-direction: column;
@@ -21,8 +18,9 @@ export function renderAudioTileStyles() {
             align-items: stretch;
             justify-content: center;
 
-            background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
-            box-shadow: 0 0 50px var(--primary-color);
+            background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--secondary-color) 0 100%);
+            box-shadow: 0 0 50px var(--secondary-color);
+
             border-radius: 20px;
             box-sizing: border-box;
 

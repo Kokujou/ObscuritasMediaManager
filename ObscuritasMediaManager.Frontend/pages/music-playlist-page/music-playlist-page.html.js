@@ -1,3 +1,4 @@
+import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { html } from '../../exports.js';
 import { Instrumentation, Mood, MusicGenre, Participants } from '../../obscuritas-media-manager-backend-client.js';
@@ -8,9 +9,36 @@ import { MusicPlaylistPage } from './music-playlist-page.js';
  * @param {MusicPlaylistPage} playlist
  */
 export function renderMusicPlaylist(playlist) {
+    var mood2 = playlist.updatedTrack.mood2 == Mood.Unset ? playlist.updatedTrack.mood1 : playlist.updatedTrack.mood2;
     return html`
+        <style>
+            :host {
+                --primary-color: ${MoodColors[playlist.updatedTrack.mood1]};
+                --secondary-color: ${MoodColors[mood2]};
+                --font-color: ${getMoodFontColor(playlist.updatedTrack.mood1)};
+                --secondary-font-color: ${getMoodFontColor(mood2)};
+            }
+        </style>
+        ${playlist.moodToSwitch == 'mood1'
+            ? html`
+                  <style>
+                      #mood-switcher {
+                          background: linear-gradient(var(--primary-color) 0% 100%);
+                          border: 2px solid var(--primary-color);
+                      }
+                  </style>
+              `
+            : playlist.moodToSwitch == 'mood2'
+            ? html`<style>
+                  #mood-switcher {
+                      background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
+                      border: 2px solid var(--secondary-color);
+                  }
+              </style>`
+            : ''};
+
         <page-layout>
-            <div id="music-player-container" class="${playlist.updatedTrack.mood}">
+            <div id="music-player-container">
                 <div id="complete-checkbox">
                     <div class="label">Complete:</div>
                     <input
@@ -21,15 +49,22 @@ export function renderMusicPlaylist(playlist) {
                     />
                 </div>
                 <div id="current-track-container">
-                    <div id="mood-switcher">
-                        <scroll-select
-                            id="mood-container"
-                            .options="${Object.values(Mood)}"
-                            .value="${playlist.updatedTrack.mood}"
-                            @valueChanged="${(e) => playlist.changeProperty('mood', e.detail.value)}"
-                        >
-                        </scroll-select>
+                    <div id="mood-switcher-container">
+                        <div id="mood-tabs">
+                            <div id="first-mood" class="mood-tab" @click="${() => (playlist.moodToSwitch = 'mood1')}"></div>
+                            <div id="second-mood" class="mood-tab" @click="${() => (playlist.moodToSwitch = 'mood2')}"></div>
+                        </div>
+                        <div id="mood-switcher">
+                            <scroll-select
+                                id="mood-container"
+                                .options="${Object.values(Mood)}"
+                                .value="${playlist.updatedTrack[playlist.moodToSwitch]}"
+                                @valueChanged="${(e) => playlist.changeProperty(playlist.moodToSwitch, e.detail.value)}"
+                            >
+                            </scroll-select>
+                        </div>
                     </div>
+
                     <audio-tile-base
                         .track="${new ExtendedMusicModel(playlist.updatedTrack)}"
                         ?paused="${playlist.audioElement.paused}"

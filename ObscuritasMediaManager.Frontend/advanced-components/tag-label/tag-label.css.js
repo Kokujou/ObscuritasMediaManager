@@ -8,25 +8,13 @@ export function renderTagLabelStyles() {
             user-select: none;
         }
 
-        #label-container::before {
-            content: ' ';
-            position: absolute;
-            right: calc(100% - 15px);
-            width: 30px;
-            height: 100%;
-            z-index: -1;
-
-            border-top-left-radius: 50%;
-            border-bottom-left-radius: 50%;
-
-            background: var(--label-color);
-        }
-
         #label-container {
             position: relative;
             margin-left: 15px;
             padding-left: 10px;
             background: var(--label-color);
+
+            border-radius: 40px 999em 999em 40px;
 
             display: flex;
             flex-direction: row;

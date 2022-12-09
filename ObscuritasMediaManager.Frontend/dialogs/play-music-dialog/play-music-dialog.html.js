@@ -1,4 +1,4 @@
-import { MoodColors } from '../../data/enumerations/mood.js';
+import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood.js';
 import { html } from '../../exports.js';
 import { PlayMusicDialog } from './play-music-dialog.js';
 
@@ -9,7 +9,9 @@ export function renderPlayMusicDialog(dialog) {
     return html`
         <style>
             :host {
-                background-color: ${MoodColors[dialog.currentTrack.mood] + 'aa'};
+                --primary-color: ${MoodColors[dialog.currentTrack.mood1] ?? '#ddd'};
+                --secondary-color: ${MoodColors[dialog.currentTrack.mood2 ?? dialog.currentTrack.mood1] ?? '#ddd'};
+                --font-color: ${getMoodFontColor(dialog.currentTrack.mood1)};
             }
         </style>
         <div id="player" @click="${() => dialog.toggle()}">

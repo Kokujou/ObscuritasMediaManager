@@ -1,4 +1,3 @@
-import { renderMoodStyles } from '../../data/enumerations/mood.js';
 import { css } from '../../exports.js';
 import { changeVolumeIcon } from '../../resources/icons/music-player-icons/change-volume-icon.svg.js';
 import { fastForwardIcon } from '../../resources/icons/music-player-icons/fast-forward-icon.svg.js';
@@ -19,8 +18,6 @@ export function renderMusicPlaylistStyles() {
             scrollbar-width: thin;
         }
 
-        ${renderMoodStyles('#music-player-container')}
-
         #music-player-container {
             position: absolute;
             left: 50px;
@@ -30,8 +27,8 @@ export function renderMusicPlaylistStyles() {
             display: flex;
             flex-direction: column;
 
-            background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
-            box-shadow: 0 0 50px var(--primary-color);
+            background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
+            box-shadow: 0 0 50px var(--secondary-color);
             border-radius: 20px;
             overflow: hidden;
 
@@ -66,9 +63,41 @@ export function renderMusicPlaylistStyles() {
             margin: 20px;
         }
 
+        #mood-switcher-container {
+            align-self: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #mood-tabs {
+            display: flex;
+            flex-direction: row;
+            align-self: center;
+            margin-top: -60px;
+            margin-bottom: 10px;
+            gap: 20px;
+        }
+
+        .mood-tab {
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #first-mood {
+            background: var(--primary-color);
+            color: var(--font-color);
+        }
+
+        #second-mood {
+            background: var(--secondary-color);
+            color: var(--secondary-font-color);
+        }
+
         #mood-switcher {
             position: relative;
-            align-self: center;
             min-height: 250px;
             max-height: 250px;
             height: 250px;
@@ -78,8 +107,6 @@ export function renderMusicPlaylistStyles() {
 
             border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
-            background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
-            border: 2px solid var(--primary-color);
         }
 
         #mood-container {
@@ -155,7 +182,7 @@ export function renderMusicPlaylistStyles() {
         tag-label {
             font-size: 18px;
             color: var(--font-color);
-            --label-color: linear-gradient(#00000055 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
+            --label-color: linear-gradient(#00000055 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
             margin-bottom: 10px;
         }
 
@@ -202,7 +229,7 @@ export function renderMusicPlaylistStyles() {
 
         range-slider {
             --background-color: #00000055;
-            --slider-color: var(--primary-color);
+            --slider-color: var(--secondary-color);
         }
 
         ${renderAudioPlayerIcons()}

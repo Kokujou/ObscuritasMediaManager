@@ -29,8 +29,10 @@ public class MusicRepository
             actual.Source = updated.Source;
         if (updated.Path != null && old.Path == actual.Path)
             actual.Path = updated.Path;
-        if (updated.Mood != default && old.Mood == actual.Mood)
-            actual.Mood = updated.Mood;
+        if (updated.Mood1 != default && old.Mood1 == actual.Mood1)
+            actual.Mood1 = updated.Mood1;
+        if (updated.Mood2 != default && old.Mood2 == actual.Mood2)
+            actual.Mood2 = updated.Mood2;
         if (updated.Instrumentation != default && old.Instrumentation == actual.Instrumentation)
             actual.Instrumentation = updated.Instrumentation;
         if (updated.Instruments != null && !old.Instruments.Except(actual.Instruments).Any())
@@ -43,8 +45,7 @@ public class MusicRepository
             actual.Participants = updated.Participants;
         if (updated.Rating != 0 && old.Rating == actual.Rating)
             actual.Rating = updated.Rating;
-        if (updated.Complete != null)
-            actual.Complete = updated.Complete;
+        actual.Complete = updated.Complete;
 
         await _context.SaveChangesAsync();
     }

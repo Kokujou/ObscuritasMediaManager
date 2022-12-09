@@ -25,6 +25,7 @@ export class MusicPlaylistPage extends LitElement {
     static get properties() {
         return {
             hoveredRating: { type: Number, reflect: false },
+            moodToSwitch: { type: String, reflect: false },
         };
     }
 
@@ -75,6 +76,7 @@ export class MusicPlaylistPage extends LitElement {
         /** @type {number} */ this.currentVolumne = 0.1;
         /** @type {number} */ this.maxPlaylistItems = 20;
         /** @type {number} */ this.hoveredRating = 0;
+        /** @type {keyof ExtendedMusicModel & ('mood1' | 'mood2')} */ this.moodToSwitch = 'mood1';
         /** @type {FallbackAudio} */ this.fallbackAudio;
 
         this.initializeData();

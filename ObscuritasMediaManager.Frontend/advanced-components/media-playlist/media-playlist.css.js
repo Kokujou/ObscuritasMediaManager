@@ -52,6 +52,7 @@ export function renderMediaPlaylistStyles() {
             overflow-x: hidden;
 
             font-weight: bold;
+            background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
         }
 
         .playlist-entry {

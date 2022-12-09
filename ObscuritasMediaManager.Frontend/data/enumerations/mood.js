@@ -1,4 +1,3 @@
-import { css, unsafeCSS } from '../../exports.js';
 import { Mood } from '../../obscuritas-media-manager-backend-client.js';
 
 export const MoodColors = {
@@ -16,33 +15,8 @@ export const MoodColors = {
     Unset: '#dddddd',
 };
 
-export function renderMoodStyles(parentSelector) {
-    return css`
-        ${unsafeCSS(parentSelector)} {
-            --primary-color: #dddddd;
-            --font-color: black;
-        }
-
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(Mood.Monotonuous)} {
-            --font-color: black !important;
-        }
-
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(Mood.Unset)} {
-            --font-color: black !important;
-        }
-
-        ${unsafeCSS(
-            Object.values(Mood).reduce(
-                (prev, mood) => `
-                        ${unsafeCSS(prev)}
-
-                        ${unsafeCSS(parentSelector)}.${unsafeCSS(mood)} {
-                            --primary-color: ${unsafeCSS(MoodColors[mood])};
-                            --font-color: white;
-                        }
-                    `,
-                ''
-            )
-        )}
-    `;
+/** @param {Mood} mood */
+export function getMoodFontColor(mood) {
+    if (mood == Mood.Monotonuous || mood == Mood.Unset || !Object.values(Mood).includes(mood)) return 'black';
+    return 'white';
 }

@@ -1051,7 +1051,8 @@ export class MusicModel {
     name;
     author;
     source;
-    mood;
+    mood1;
+    mood2;
     language;
     nation;
     instrumentation;
@@ -1075,7 +1076,8 @@ export class MusicModel {
             this.name = _data["name"] !== undefined ? _data["name"] : null;
             this.author = _data["author"] !== undefined ? _data["author"] : null;
             this.source = _data["source"] !== undefined ? _data["source"] : null;
-            this.mood = _data["mood"] !== undefined ? _data["mood"] : null;
+            this.mood1 = _data["mood1"] !== undefined ? _data["mood1"] : null;
+            this.mood2 = _data["mood2"] !== undefined ? _data["mood2"] : null;
             this.language = _data["language"] !== undefined ? _data["language"] : null;
             this.nation = _data["nation"] !== undefined ? _data["nation"] : null;
             this.instrumentation = _data["instrumentation"] !== undefined ? _data["instrumentation"] : null;
@@ -1113,7 +1115,8 @@ export class MusicModel {
         data["name"] = this.name !== undefined ? this.name : null;
         data["author"] = this.author !== undefined ? this.author : null;
         data["source"] = this.source !== undefined ? this.source : null;
-        data["mood"] = this.mood !== undefined ? this.mood : null;
+        data["mood1"] = this.mood1 !== undefined ? this.mood1 : null;
+        data["mood2"] = this.mood2 !== undefined ? this.mood2 : null;
         data["language"] = this.language !== undefined ? this.language : null;
         data["nation"] = this.nation !== undefined ? this.nation : null;
         data["instrumentation"] = this.instrumentation !== undefined ? this.instrumentation : null;

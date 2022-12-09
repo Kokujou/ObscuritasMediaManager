@@ -17,7 +17,6 @@
 //TODO: add delete from playlist and hard delete functionality to playlist
 //TODO: cleanup function should be extended with "simple" (only existance check) and extended (music validation)
 //TODO: implement album views and think of how to integrate them into the audio page
-//TODO: consider dual moods - it get's really difficult to decide - probably needs a special eye on filtering
 //TODO: feature: add subtitle functionality - think about a nice desgin!
 //TODO: add a fancy audio visualization
 //TODO: Websockets
@@ -32,6 +31,7 @@
 //TODO: build an api for adding new genres, instruments, ...
 //TODO: fix broken language icon in music page
 //TODO: refactor the route-system
+//TODO: refactor the update-system
 
 /**
  * TODO: RECIPE DATABASE

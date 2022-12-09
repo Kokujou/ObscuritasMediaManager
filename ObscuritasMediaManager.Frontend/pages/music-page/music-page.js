@@ -10,6 +10,7 @@ import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dial
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
 import { LitElement } from '../../exports.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
+import { Mood } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
@@ -45,9 +46,19 @@ export class MusicPage extends LitElement {
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.instrumentations, 'instrumentation');
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.languages, 'language');
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.nations, 'nation');
-        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.moods, 'mood');
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.participants, 'participants');
         MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.ratings, 'rating');
+
+        var moodStates = this.filter.moods.states;
+        var forbiddenValues = /** @type {Mood[]} */ (
+            Object.keys(moodStates).filter((value) => moodStates[value] == CheckboxState.Forbid)
+        );
+        filteredTracks = filteredTracks.filter((item) => {
+            var mood2 = item.mood2 == Mood.Unset ? item.mood1 : item.mood2;
+            if (forbiddenValues.includes(item.mood1) || forbiddenValues.includes(mood2)) return false;
+            return true;
+        });
+
         filteredTracks = filteredTracks.filter(
             (track) =>
                 track.displayName.toLowerCase().includes((this.filter.search || '').toLowerCase()) ||

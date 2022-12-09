@@ -114,7 +114,8 @@ export declare class MusicModel implements IMusicModel {
     name: string | null;
     author: string | null;
     source: string | null;
-    mood: Mood;
+    mood1: Mood;
+    mood2: Mood;
     language: Nation;
     nation: Nation;
     instrumentation: Instrumentation;
@@ -135,7 +136,8 @@ export interface IMusicModel {
     name: string | null;
     author: string | null;
     source: string | null;
-    mood: Mood;
+    mood1: Mood;
+    mood2: Mood;
     language: Nation;
     nation: Nation;
     instrumentation: Instrumentation;
