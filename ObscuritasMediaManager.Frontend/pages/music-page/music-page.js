@@ -329,9 +329,4 @@ export class MusicPage extends LitElementBase {
         var child = this.shadowRoot.querySelector('audio-tile:not([paused])').parentElement;
         parent.scrollToChild(child.parentElement);
     }
-
-    disconnectedCallback() {
-        super.disconnectedCallback();
-        this.subcriptions.forEach((x) => x.unsubscribe());
-    }
 }

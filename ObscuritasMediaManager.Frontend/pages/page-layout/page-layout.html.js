@@ -7,6 +7,7 @@ import { JDramaPage } from '../jdrama-page/jdrama-page.js';
 import { MusicPage } from '../music-page/music-page.js';
 import { RealMoviesPage } from '../real-movies-page/real-movies-page.js';
 import { RealSeriesPage } from '../real-series-page/real-series-page.js';
+import { RecipesPage } from '../recipes-page/recipes-page.js';
 import { WelcomePage } from '../welcome-page/welcome-page.js';
 
 export function renderPageLayout() {
@@ -55,8 +56,10 @@ function renderNavigation() {
                 </div>
                 <div id="nav-section">
                     <div id="nav-section-heading">Anderes</div>
-
-                    <div id="nav-section-links">${renderNavItem(getPageName(MusicPage), 'Musik')}<br /></div>
+                    <div id="nav-section-links">
+                        ${renderNavItem(getPageName(MusicPage), 'Musik')}<br />
+                        ${renderNavItem(getPageName(RecipesPage), 'Rezepte')}
+                    </div>
                 </div>
             </div>
         </div>

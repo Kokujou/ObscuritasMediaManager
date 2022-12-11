@@ -20,5 +20,7 @@ export function setFavicon(icon) {
         link.rel = 'icon';
         document.getElementsByTagName('head')[0].appendChild(link);
     }
-    link.href = `data:image/svg+xml;base64, ${btoa(icon)}`;
+
+    if (!icon) link.href = 'data:image/svg+xml;base64, R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+    else link.href = `data:image/svg+xml;base64, ${btoa(icon)}`;
 }

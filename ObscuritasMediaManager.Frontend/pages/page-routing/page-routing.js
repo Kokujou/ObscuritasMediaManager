@@ -103,8 +103,6 @@ export class PageRouting extends LitElementBase {
 
     disconnectedCallback() {
         super.disconnectedCallback();
-        this.subscriptions.forEach((x) => x.unsubscribe());
-        this.subscriptions = [];
         PageRouting.instance = null;
     }
 }

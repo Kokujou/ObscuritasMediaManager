@@ -7,6 +7,7 @@ import { JDramaPage } from '../jdrama-page/jdrama-page.js';
 import { MusicPage } from '../music-page/music-page.js';
 import { RealMoviesPage } from '../real-movies-page/real-movies-page.js';
 import { RealSeriesPage } from '../real-series-page/real-series-page.js';
+import { RecipesPage } from '../recipes-page/recipes-page.js';
 
 export function renderWelcomePage() {
     return html`
@@ -36,8 +37,11 @@ export function renderWelcomePage() {
                         ></link-element>
                     </div>
                     <div id="tile-link-section">
-                        <link-element .hash="${getPageName(MusicPage)}"
-                            ><image-tile caption="Musik" src="../../resources/images/music.png"></image-tile
+                        <link-element .hash="${getPageName(MusicPage)}">
+                            <image-tile caption="Musik" src="../../resources/images/music.png"></image-tile
+                        ></link-element>
+                        <link-element .hash="${getPageName(RecipesPage)}">
+                            <image-tile caption="Rezepte" src="../../resources/images/food.png"></image-tile
                         ></link-element>
                     </div>
                 </div>

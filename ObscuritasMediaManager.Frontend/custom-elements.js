@@ -44,6 +44,7 @@ import { PageLayout } from './pages/page-layout/page-layout.js';
 import { PageRouting } from './pages/page-routing/page-routing.js';
 import { RealMoviesPage } from './pages/real-movies-page/real-movies-page.js';
 import { RealSeriesPage } from './pages/real-series-page/real-series-page.js';
+import { RecipesPage } from './pages/recipes-page/recipes-page.js';
 import { VideoPlayerPopup } from './pages/video-player-popup/video-player-popup.js';
 import { WelcomePage } from './pages/welcome-page/welcome-page.js';
 import { pascalToKeabCase } from './services/extensions/convention.extension.js';
@@ -99,6 +100,7 @@ export const RegisteredComponents = [
     FallbackAudio,
     LoginPage,
     MessageSnackbar,
+    RecipesPage,
 ];
 
 export const Pages = Object.fromEntries(

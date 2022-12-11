@@ -34,6 +34,7 @@ export function renderWelcomePageStyles() {
 
         image-tile {
             display: block;
+            border-radius: 50%;
 
             width: 250px;
             height: 250px;

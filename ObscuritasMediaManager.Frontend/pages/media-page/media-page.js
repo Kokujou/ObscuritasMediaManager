@@ -175,7 +175,6 @@ export class MediaPage extends LitElementBase {
 
     disconnectedCallback() {
         super.disconnectedCallback();
-        this.subscriptions.forEach((x) => x.unsubscribe());
         localStorage.setItem(`${this.mediaType}.search`, JSON.stringify(this.filterData));
     }
 }
