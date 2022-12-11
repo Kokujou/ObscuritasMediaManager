@@ -1,7 +1,11 @@
-import { css, LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
+import { css } from '../../exports.js';
 import { renderAnimeGerSubTemplate } from './anime-ger-sub-page.html.js';
 
-export class AnimeGerSubPage extends LitElement {
+export class AnimeGerSubPage extends LitElementBase {
+    static get isPage() {
+        return true;
+    }
     static get styles() {
         return css``;
     }

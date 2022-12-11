@@ -1,4 +1,5 @@
 import { session } from '../../data/session.js';
+import { pascalToKeabCase } from './convention.extension.js';
 
 /** @param {string} query */ export function getQueryValue(query) {
     var queries = location.search.substr(1).split('&');
@@ -16,4 +17,10 @@ export function changePage(target, search = '', reflectInHistory = true) {
     if (reflectInHistory) history.pushState(null, null, newUrl);
     else history.replaceState(null, null, newUrl);
     session.currentPage.next(target);
+}
+
+/** @param  {{isPage: boolean, name: string}} component */
+export function getPageName(component) {
+    var componentName = pascalToKeabCase(component.name);
+    return componentName.replace('-page', '');
 }

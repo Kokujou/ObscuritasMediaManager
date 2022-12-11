@@ -1,4 +1,4 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import { CredentialsRequest } from '../../obscuritas-media-manager-backend-client.js';
 import { LoginService } from '../../services/backend.services.js';
@@ -6,7 +6,10 @@ import { changePage } from '../../services/extensions/url.extension.js';
 import { renderLoginPageStyles } from './login-page.css.js';
 import { renderLoginPage } from './login-page.html.js';
 
-export class LoginPage extends LitElement {
+export class LoginPage extends LitElementBase {
+    static get isPage() {
+        return true;
+    }
     static get styles() {
         return renderLoginPageStyles();
     }

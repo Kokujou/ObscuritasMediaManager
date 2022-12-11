@@ -1,9 +1,9 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { changePage } from '../../services/extensions/url.extension.js';
 import { renderLinkElementStyles } from './link-element.css.js';
 import { renderLinkElement } from './link-element.html.js';
 
-export class LinkElement extends LitElement {
+export class LinkElement extends LitElementBase {
     static get styles() {
         return renderLinkElementStyles();
     }

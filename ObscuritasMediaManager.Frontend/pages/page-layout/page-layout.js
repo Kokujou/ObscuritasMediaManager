@@ -1,10 +1,10 @@
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { session } from '../../data/session.js';
-import { LitElement } from '../../exports.js';
 import { MediaService, MusicService } from '../../services/backend.services.js';
 import { renderWebcomponentTemplateStyles as renderPageLayoutStyles } from './page-layout.css.js';
 import { renderPageLayout } from './page-layout.html.js';
 
-export class PageLayout extends LitElement {
+export class PageLayout extends LitElementBase {
     static get styles() {
         return renderPageLayoutStyles();
     }

@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderPaginatedScrollingStyles } from './paginated-scrolling.css.js';
 import { renderPaginatedScrolling } from './paginated-scrolling.html.js';
 
-export class PaginatedScrolling extends LitElement {
+export class PaginatedScrolling extends LitElementBase {
     static get styles() {
         return renderPaginatedScrollingStyles();
     }

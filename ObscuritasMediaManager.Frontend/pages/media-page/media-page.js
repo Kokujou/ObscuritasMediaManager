@@ -1,7 +1,7 @@
 import { MediaSearchFilterData } from '../../advanced-components/media-search/media-search-filter.data.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
-import { LitElement } from '../../exports.js';
 import { MediaModel, StreamingEntryModel } from '../../obscuritas-media-manager-backend-client.js';
 import { MediaService, StreamingService } from '../../services/backend.services.js';
 import { newGuid } from '../../services/extensions/crypto.extensions.js';
@@ -19,7 +19,7 @@ import { renderMediaPageTemplate } from './media-page.html.js';
     - Release: number select left - right
 */
 
-export class MediaPage extends LitElement {
+export class MediaPage extends LitElementBase {
     static get styles() {
         return renderMediaPageStyles();
     }

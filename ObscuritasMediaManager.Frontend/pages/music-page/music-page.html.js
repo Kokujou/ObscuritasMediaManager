@@ -1,5 +1,6 @@
-import { Pages } from '../../data/pages.js';
 import { html } from '../../exports.js';
+import { getPageName } from '../../services/extensions/url.extension.js';
+import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
 import { MusicPage } from './music-page.js';
 
 /**
@@ -84,7 +85,7 @@ export function renderMusicPage(musicPage) {
                                                   : ''}
                                               <link-element
                                                   class="audio-tile-link"
-                                                  .hash="${Pages.musicPlaylist.routes[0]}"
+                                                  .hash="${getPageName(MusicPlaylistPage)}"
                                                   .search="track=${track.hash}"
                                                   ?disabled="${musicPage.selectionModeTimer == null || musicPage.selectionMode}"
                                                   @pointerdown="${(e) => musicPage.startSelectionModeTimer(track.hash)}"

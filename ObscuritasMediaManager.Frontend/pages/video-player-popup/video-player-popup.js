@@ -1,11 +1,11 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { StreamingEntryModel } from '../../obscuritas-media-manager-backend-client.js';
 import { StreamingService } from '../../services/backend.services.js';
 import { getQueryValue } from '../../services/extensions/url.extension.js';
 import { renderVideoPlayerStyles } from './video-player-popup.css.js';
 import { renderVideoPlayer } from './video-player-popup.html.js';
 
-export class VideoPlayerPopup extends LitElement {
+export class VideoPlayerPopup extends LitElementBase {
     static get styles() {
         return renderVideoPlayerStyles();
     }

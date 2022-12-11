@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderTagLabelStyles } from './tag-label.css.js';
 import { renderTagLabel } from './tag-label.html.js';
 
-export class TagLabel extends LitElement {
+export class TagLabel extends LitElementBase {
     static get styles() {
         return renderTagLabelStyles();
     }

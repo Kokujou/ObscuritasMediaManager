@@ -1,11 +1,11 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderDropDownStyles } from './drop-down.css.js';
 import { renderDropDown } from './drop-down.html.js';
 
 /** @enum {string} */
 export const DropDownStyles = { simple: 'simple', solid: 'solid', compact: 'compact' };
 
-export class DropDown extends LitElement {
+export class DropDown extends LitElementBase {
     static defaultstyle = DropDownStyles.simple;
 
     clickedOnElement = false;

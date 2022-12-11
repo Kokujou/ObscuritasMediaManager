@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderStarRatingStyles } from './star-rating.css.js';
 import { renderStarRating } from './star-rating.html.js';
 
-export class StarRating extends LitElement {
+export class StarRating extends LitElementBase {
     static get styles() {
         return renderStarRatingStyles();
     }

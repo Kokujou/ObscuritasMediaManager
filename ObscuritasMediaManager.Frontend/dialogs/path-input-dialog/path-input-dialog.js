@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderPathInputDialogStyles } from './path-input-dialog.css.js';
 import { renderPathInputDialog } from './path-input-dialog.html.js';
 
-export class PathInputDialog extends LitElement {
+export class PathInputDialog extends LitElementBase {
     static get styles() {
         return renderPathInputDialogStyles();
     }

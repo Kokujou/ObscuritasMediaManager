@@ -1,11 +1,11 @@
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
-import { LitElement } from '../../exports.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { waitForSeconds } from '../../services/extensions/animation.extension.js';
 import { renderPlayMusicDialogStyles } from './play-music-dialog.css.js';
 import { renderPlayMusicDialog } from './play-music-dialog.html.js';
 
-export class PlayMusicDialog extends LitElement {
+export class PlayMusicDialog extends LitElementBase {
     /** @type {PlayMusicDialog} */ static instance;
     static FadeDuration = 0.5;
 

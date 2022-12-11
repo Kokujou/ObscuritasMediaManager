@@ -1,8 +1,11 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderWelcomePageStyles } from './welcome-page.css.js';
 import { renderWelcomePage } from './welcome-page.html.js';
 
-export class WelcomePage extends LitElement {
+export class WelcomePage extends LitElementBase {
+    static get isPage() {
+        return true;
+    }
     static get styles() {
         return renderWelcomePageStyles();
     }

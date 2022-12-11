@@ -1,11 +1,11 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreDialogResult } from '../dialog-result/genre-dialog.result.js';
 import { renderGenreDialogStyles } from './genre-dialog.css.js';
 import { renderGenreDialog } from './genre-dialog.html.js';
 
-export class GenreDialog extends LitElement {
+export class GenreDialog extends LitElementBase {
     static get styles() {
         return renderGenreDialogStyles();
     }

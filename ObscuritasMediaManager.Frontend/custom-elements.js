@@ -46,52 +46,70 @@ import { RealMoviesPage } from './pages/real-movies-page/real-movies-page.js';
 import { RealSeriesPage } from './pages/real-series-page/real-series-page.js';
 import { VideoPlayerPopup } from './pages/video-player-popup/video-player-popup.js';
 import { WelcomePage } from './pages/welcome-page/welcome-page.js';
+import { pascalToKeabCase } from './services/extensions/convention.extension.js';
+import { getPageName } from './services/extensions/url.extension.js';
 
-window.customElements.define('obscuritas-media-manager', ObscuritasMediaManager);
-window.customElements.define('page-routing', PageRouting);
-window.customElements.define('welcome-page', WelcomePage);
-window.customElements.define('page-layout', PageLayout);
-window.customElements.define('image-tile', ImageTile);
-window.customElements.define('anime-ger-sub-page', AnimeGerSubPage);
-window.customElements.define('dual-slider', DualSlider);
-window.customElements.define('expandable-dropdown', ExpandableDropdown);
-window.customElements.define('dialog-base', DialogBase);
-window.customElements.define('message-dialog', MessageDialog);
-window.customElements.define('border-button', BorderButton);
-window.customElements.define('genre-dialog', GenreDialog);
-window.customElements.define('tri-value-checkbox', TriValueCheckbox);
-window.customElements.define('media-search', MediaSearch);
-window.customElements.define('media-tile', MediaTile);
-window.customElements.define('tag-label', TagLabel);
-window.customElements.define('media-detail-page', MediaDetailPage);
-window.customElements.define('path-input-dialog', PathInputDialog);
-window.customElements.define('upload-area', UploadArea);
-window.customElements.define('video-player-popup', VideoPlayerPopup);
-window.customElements.define('media-page', MediaPage);
-window.customElements.define('anime-ger-dub-page', AnimeGerDubPage);
-window.customElements.define('anime-movies-page', AnimeMoviesPage);
-window.customElements.define('real-series-page', RealSeriesPage);
-window.customElements.define('real-movies-page', RealMoviesPage);
-window.customElements.define('jdrama-page', JDramaPage);
-window.customElements.define('music-page', MusicPage);
-window.customElements.define('audio-tile', AudioTile);
-window.customElements.define('side-scroller', SideScroller);
-window.customElements.define('paginated-scrolling', PaginatedScrolling);
-window.customElements.define('range-slider', RangeSlider);
-window.customElements.define('music-playlist-page', MusicPlaylistPage);
-window.customElements.define('scroll-select', ScrollSelect);
-window.customElements.define('editable-label', EditableLabel);
-window.customElements.define('music-filter', MusicFilter);
-window.customElements.define('drop-down', DropDown);
-window.customElements.define('language-switcher', LanguageSwitcher);
-window.customElements.define('media-playlist', MediaPlaylist);
-window.customElements.define('star-rating', StarRating);
-window.customElements.define('custom-toggle', CustomToggle);
-window.customElements.define('audio-tile-base', AudioTileBase);
-window.customElements.define('link-element', LinkElement);
-window.customElements.define('partial-loading', PartialLoading);
-window.customElements.define('select-options-dialog', SelectOptionsDialog);
-window.customElements.define('play-music-dialog', PlayMusicDialog);
-window.customElements.define('fallback-audio', FallbackAudio);
-window.customElements.define('login-page', LoginPage);
-window.customElements.define('message-snackbar', MessageSnackbar);
+/** @type {(CustomElementConstructor | (CustomElementConstructor & {isPage: boolean}))[]} */
+export const RegisteredComponents = [
+    ObscuritasMediaManager,
+    PageRouting,
+    WelcomePage,
+    PageLayout,
+    ImageTile,
+    AnimeGerSubPage,
+    DualSlider,
+    ExpandableDropdown,
+    DialogBase,
+    MessageDialog,
+    BorderButton,
+    GenreDialog,
+    TriValueCheckbox,
+    MediaSearch,
+    MediaTile,
+    TagLabel,
+    MediaDetailPage,
+    PathInputDialog,
+    UploadArea,
+    VideoPlayerPopup,
+    MediaPage,
+    AnimeGerDubPage,
+    AnimeMoviesPage,
+    RealSeriesPage,
+    RealMoviesPage,
+    JDramaPage,
+    MusicPage,
+    AudioTile,
+    SideScroller,
+    PaginatedScrolling,
+    RangeSlider,
+    MusicPlaylistPage,
+    ScrollSelect,
+    EditableLabel,
+    MusicFilter,
+    DropDown,
+    LanguageSwitcher,
+    MediaPlaylist,
+    StarRating,
+    CustomToggle,
+    AudioTileBase,
+    LinkElement,
+    PartialLoading,
+    SelectOptionsDialog,
+    PlayMusicDialog,
+    FallbackAudio,
+    LoginPage,
+    MessageSnackbar,
+];
+
+export const Pages = Object.fromEntries(
+    // @ts-ignore
+    RegisteredComponents.filter((x) => x.isPage).map((x) => [
+        // @ts-ignore
+        getPageName(x),
+        `<${pascalToKeabCase(x.name)}></${pascalToKeabCase(x.name)}>`,
+    ])
+);
+
+for (var element of RegisteredComponents) {
+    window.customElements.define(pascalToKeabCase(element.name), element);
+}

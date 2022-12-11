@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderWebcomponentTemplateStyles as renderImageTileStyles } from './image-tile.css.js';
 import { renderWebcomponentTemplate as renderImageTile } from './image-tile.html.js';
 
-export class ImageTile extends LitElement {
+export class ImageTile extends LitElementBase {
     static get styles() {
         return renderImageTileStyles();
     }

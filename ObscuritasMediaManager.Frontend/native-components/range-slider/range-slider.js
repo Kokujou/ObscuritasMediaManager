@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderRangeSliderStyles } from './range-slider.css.js';
 import { renderRangeSlider } from './range-slider.html.js';
 
-export class RangeSlider extends LitElement {
+export class RangeSlider extends LitElementBase {
     static get styles() {
         return renderRangeSliderStyles();
     }

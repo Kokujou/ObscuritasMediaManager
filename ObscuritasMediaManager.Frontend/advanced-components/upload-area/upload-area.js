@@ -1,9 +1,9 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { fileToDataUrl } from '../../services/extensions/file.extension.js';
 import { renderUploadAreaStyles } from './upload-area.css.js';
 import { renderUploadArea } from './upload-area.html.js';
 
-export class UploadArea extends LitElement {
+export class UploadArea extends LitElementBase {
     static get styles() {
         return renderUploadAreaStyles();
     }

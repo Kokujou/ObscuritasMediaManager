@@ -1,6 +1,6 @@
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
-import { LitElement } from '../../exports.js';
 import { MediaModel, StreamingEntryModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService, StreamingService } from '../../services/backend.services.js';
 import { getQueryValue } from '../../services/extensions/url.extension.js';
@@ -8,7 +8,7 @@ import { VideoPlayerPopup } from '../video-player-popup/video-player-popup.js';
 import { renderMediaDetailPageStyles } from './media-detail-page.css.js';
 import { renderMediaDetailPage } from './media-detail-page.html.js';
 
-export class MediaDetailPage extends LitElement {
+export class MediaDetailPage extends LitElementBase {
     static get styles() {
         return renderMediaDetailPageStyles();
     }

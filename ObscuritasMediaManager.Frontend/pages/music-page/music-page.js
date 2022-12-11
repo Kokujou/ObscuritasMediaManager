@@ -1,14 +1,13 @@
 import { PaginatedScrolling } from '../../advanced-components/paginated-scrolling/paginated-scrolling.js';
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { MusicFilterOptions } from '../../data/music-filter-options.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { Subscription } from '../../data/observable.js';
-import { Pages } from '../../data/pages.js';
 import { session } from '../../data/session.js';
 import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
-import { LitElement } from '../../exports.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { Mood } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
@@ -19,12 +18,17 @@ import { sortyBy } from '../../services/extensions/array.extensions.js';
 import { playAudio } from '../../services/extensions/audio.extension.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
-import { changePage } from '../../services/extensions/url.extension.js';
+import { changePage, getPageName } from '../../services/extensions/url.extension.js';
 import { MusicFilterService } from '../../services/music-filter.service.js';
+import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
 import { renderMusicPageStyles } from './music-page.css.js';
 import { renderMusicPage } from './music-page.html.js';
 
-export class MusicPage extends LitElement {
+export class MusicPage extends LitElementBase {
+    static get isPage() {
+        return true;
+    }
+
     static get styles() {
         return renderMusicPageStyles();
     }
@@ -193,7 +197,7 @@ export class MusicPage extends LitElement {
         var guid = '';
         if (this.selectedHashes.length > 0) guid = await PlaylistService.createTemporaryPlaylist(this.selectedHashes);
         else guid = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash));
-        changePage(Pages.musicPlaylist.routes[0], `?guid=${guid}&track=0`);
+        changePage(getPageName(MusicPlaylistPage), `?guid=${guid}&track=0`);
     }
 
     async importFolder() {

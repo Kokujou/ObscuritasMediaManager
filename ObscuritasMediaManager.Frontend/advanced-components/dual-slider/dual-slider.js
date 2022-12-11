@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderDualSliderStyles } from './dual-slider.css.js';
 import { renderDualSlider } from './dual-slider.html.js';
 
-export class DualSlider extends LitElement {
+export class DualSlider extends LitElementBase {
     static get styles() {
         return renderDualSliderStyles();
     }

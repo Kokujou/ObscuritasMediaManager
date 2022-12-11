@@ -1,5 +1,13 @@
-import { Pages } from '../../data/pages.js';
 import { html } from '../../exports.js';
+import { getPageName } from '../../services/extensions/url.extension.js';
+import { AnimeGerDubPage } from '../anime-ger-dub-page/anime-ger-dub-page.js';
+import { AnimeGerSubPage } from '../anime-ger-sub-page/anime-ger-sub-page.js';
+import { AnimeMoviesPage } from '../anime-movies-page/anime-movies-page.js';
+import { JDramaPage } from '../jdrama-page/jdrama-page.js';
+import { MusicPage } from '../music-page/music-page.js';
+import { RealMoviesPage } from '../real-movies-page/real-movies-page.js';
+import { RealSeriesPage } from '../real-series-page/real-series-page.js';
+import { WelcomePage } from '../welcome-page/welcome-page.js';
 
 export function renderPageLayout() {
     return html`${renderHeader()}<br />
@@ -24,34 +32,31 @@ function renderNavigation() {
             <div id="link-area">
                 <div id="nav-section">
                     <div id="nav-section-links">
-                        <link-element .hash="${Pages.welcome.routes[0]}" id="home-link" class="nav-item"> Start </link-element>
+                        <link-element .hash="${getPageName(WelcomePage)}" id="home-link" class="nav-item"> Start </link-element>
                     </div>
                 </div>
                 <div id="nav-section">
                     <div id="nav-section-heading">Anime</div>
 
                     <div id="nav-section-links">
-                        ${renderNavItem(Pages.animeGerDub.routes[0], 'Animes (Ger Dub)')}<br />
-                        ${renderNavItem(Pages.animeGerSub.routes[0], 'Animes (Ger Sub)')} <br />
-                        ${renderNavItem(Pages.animeMovies.routes[0], 'Animefilme')}<br />
+                        ${renderNavItem(getPageName(AnimeGerDubPage), 'Animes (Ger Dub)')}<br />
+                        ${renderNavItem(getPageName(AnimeGerSubPage), 'Animes (Ger Sub)')} <br />
+                        ${renderNavItem(getPageName(AnimeMoviesPage), 'Animefilme')}<br />
                     </div>
                 </div>
                 <div id="nav-section">
                     <div id="nav-section-heading">Realfilm</div>
 
                     <div id="nav-section-links">
-                        ${renderNavItem(Pages.realSeries.routes[0], 'Realfilmserien')}<br />
-                        ${renderNavItem(Pages.realMovies.routes[0], 'Realfilme')}<br />
-                        ${renderNavItem(Pages.jDrama.routes[0], 'J-Drama')}<br />
+                        ${renderNavItem(getPageName(RealSeriesPage), 'Realfilmserien')}<br />
+                        ${renderNavItem(getPageName(RealMoviesPage), 'Realfilme')}<br />
+                        ${renderNavItem(getPageName(JDramaPage), 'J-Drama')}<br />
                     </div>
                 </div>
                 <div id="nav-section">
                     <div id="nav-section-heading">Anderes</div>
 
-                    <div id="nav-section-links">
-                        ${renderNavItem(Pages.music.routes[0], 'Musik')}<br />
-                        ${renderNavItem(Pages.games.routes[0], 'Games')}<br />
-                    </div>
+                    <div id="nav-section-links">${renderNavItem(getPageName(MusicPage), 'Musik')}<br /></div>
                 </div>
             </div>
         </div>

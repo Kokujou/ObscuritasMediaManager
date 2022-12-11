@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderExpandableDropdownStyles } from './expandable-dropdown.css.js';
 import { renderExpandableDropdown } from './expandable-dropdown.html.js';
 
-export class ExpandableDropdown extends LitElement {
+export class ExpandableDropdown extends LitElementBase {
     static get styles() {
         return renderExpandableDropdownStyles();
     }

@@ -1,9 +1,9 @@
+import { LitElementBase } from '../../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../../data/music.model.extended.js';
-import { LitElement } from '../../../exports.js';
 import { renderAudioTileStyles } from './audio-tile.css.js';
 import { renderAudioTile } from './audio-tile.html.js';
 
-export class AudioTile extends LitElement {
+export class AudioTile extends LitElementBase {
     static get styles() {
         return renderAudioTileStyles();
     }

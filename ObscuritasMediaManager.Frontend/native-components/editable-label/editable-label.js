@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderEditableLabelStyles } from './editable-label.css.js';
 import { renderEditableLabel } from './editable-label.html.js';
 
-export class EditableLabel extends LitElement {
+export class EditableLabel extends LitElementBase {
     static get styles() {
         return renderEditableLabelStyles();
     }

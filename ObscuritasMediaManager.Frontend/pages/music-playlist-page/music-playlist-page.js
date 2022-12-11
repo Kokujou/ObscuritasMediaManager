@@ -1,11 +1,11 @@
 import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher.js';
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { PathInputDialog } from '../../dialogs/path-input-dialog/path-input-dialog.js';
-import { LitElement } from '../../exports.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { GenreModel, MusicGenre, UpdateRequestOfMusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
@@ -17,7 +17,10 @@ import { changePage, getQueryValue } from '../../services/extensions/url.extensi
 import { renderMusicPlaylistStyles } from './music-playlist-page.css.js';
 import { renderMusicPlaylist } from './music-playlist-page.html.js';
 
-export class MusicPlaylistPage extends LitElement {
+export class MusicPlaylistPage extends LitElementBase {
+    static get isPage() {
+        return true;
+    }
     static get styles() {
         return renderMusicPlaylistStyles();
     }

@@ -1,11 +1,11 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { Nation } from '../../obscuritas-media-manager-backend-client.js';
 import { renderLanguageSwitcherStyles } from './language-switcher.css.js';
 import { renderLanguageSwitcher } from './language-switcher.html.js';
 
 /** @typedef {'nation' | 'language'} SwitcherProperty */
 
-export class LanguageSwitcher extends LitElement {
+export class LanguageSwitcher extends LitElementBase {
     static get styles() {
         return renderLanguageSwitcherStyles();
     }

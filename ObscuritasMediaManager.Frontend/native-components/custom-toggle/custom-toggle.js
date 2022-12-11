@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderCustomToggleStyles } from './custom-toggle.css.js';
 import { renderCustomToggle } from './custom-toggle.html.js';
 
-export class CustomToggle extends LitElement {
+export class CustomToggle extends LitElementBase {
     static get styles() {
         return renderCustomToggleStyles();
     }

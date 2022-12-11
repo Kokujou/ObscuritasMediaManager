@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderBorderButtonStyles } from './border-button.css.js';
 import { renderBorderButton } from './border-button.html.js';
 
-export class BorderButton extends LitElement {
+export class BorderButton extends LitElementBase {
     static get styles() {
         return renderBorderButtonStyles();
     }

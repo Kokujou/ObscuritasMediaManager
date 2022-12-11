@@ -3,7 +3,11 @@ import { LitElement } from '../../exports.js';
 import { render{{ pascalCase name }} } from './{{ kebabCase name }}.html.js';
 import { render{{ pascalCase name }}Styles } from './{{ kebabCase name }}.css.js';
 
-export class {{ pascalCase name }} extends LitElement {
+export class {{ pascalCase name }} extends LitElementBase {
+    get component(){
+        return '{{ kebabCase name }}';
+    }
+
     static get styles() {
         return render{{ pascalCase name }}Styles();
     }

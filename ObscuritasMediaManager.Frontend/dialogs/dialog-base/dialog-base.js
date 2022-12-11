@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderDialogBaseStyles } from './dialog-base.css.js';
 import { renderDialogBase } from './dialog-base.html.js';
 
-export class DialogBase extends LitElement {
+export class DialogBase extends LitElementBase {
     static get styles() {
         return renderDialogBaseStyles();
     }

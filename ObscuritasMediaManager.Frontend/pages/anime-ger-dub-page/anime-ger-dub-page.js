@@ -1,7 +1,11 @@
-import { css, LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
+import { css } from '../../exports.js';
 import { renderAnimeGerDubTemplate } from './anime-ger-dub-page.html.js';
 
-export class AnimeGerDubPage extends LitElement {
+export class AnimeGerDubPage extends LitElementBase {
+    static get isPage() {
+        return true;
+    }
     static get styles() {
         return css``;
     }

@@ -1,11 +1,11 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { renderMessageSnackbarStyles } from './message-snackbar.css.js';
 import { renderMessageSnackbar } from './message-snackbar.html.js';
 
 /** @typedef {'error' | 'warning' | 'info' | 'success'} MessageType */
 
-export class MessageSnackbar extends LitElement {
+export class MessageSnackbar extends LitElementBase {
     static get styles() {
         return renderMessageSnackbarStyles();
     }

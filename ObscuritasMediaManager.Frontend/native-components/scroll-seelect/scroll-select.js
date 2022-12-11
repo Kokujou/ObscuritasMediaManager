@@ -1,10 +1,10 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { Mood } from '../../obscuritas-media-manager-backend-client.js';
 import { getTargetScrollPosition, scrollIntoParentViewY } from '../../services/extensions/document.extensions.js';
 import { renderScrollSelectStyles } from './scroll-select.css.js';
 import { renderScrollSelect } from './scroll-select.html.js';
 
-export class ScrollSelect extends LitElement {
+export class ScrollSelect extends LitElementBase {
     static get styles() {
         return renderScrollSelectStyles();
     }

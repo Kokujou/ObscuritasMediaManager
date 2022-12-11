@@ -1,7 +1,7 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderFallbackAudio } from './fallback-audio.html.js';
 
-export class FallbackAudio extends LitElement {
+export class FallbackAudio extends LitElementBase {
     static get properties() {
         return {
             volume: { type: Number, reflect: true },

@@ -1,8 +1,8 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderSelectOptionsDialogStyles } from './select-options-dialog.css.js';
 import { renderSelectOptionsDialog } from './select-options-dialog.html.js';
 
-export class SelectOptionsDialog extends LitElement {
+export class SelectOptionsDialog extends LitElementBase {
     static get styles() {
         return renderSelectOptionsDialogStyles();
     }

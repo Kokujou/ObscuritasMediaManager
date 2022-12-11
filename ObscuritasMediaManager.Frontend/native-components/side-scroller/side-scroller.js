@@ -1,9 +1,9 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { scrollIntoParentViewX } from '../../services/extensions/document.extensions.js';
 import { renderSideScrollerStyles } from './side-scroller.css.js';
 import { renderSideScroller } from './side-scroller.html.js';
 
-export class SideScroller extends LitElement {
+export class SideScroller extends LitElementBase {
     static get styles() {
         return renderSideScrollerStyles();
     }

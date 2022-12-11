@@ -1,9 +1,9 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { PaginatedScrolling } from '../paginated-scrolling/paginated-scrolling.js';
 import { renderMediaPlaylistStyles } from './media-playlist.css.js';
 import { renderMediaPlaylist } from './media-playlist.html.js';
 
-export class MediaPlaylist extends LitElement {
+export class MediaPlaylist extends LitElementBase {
     static get styles() {
         return renderMediaPlaylistStyles();
     }

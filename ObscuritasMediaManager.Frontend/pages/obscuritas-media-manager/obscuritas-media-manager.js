@@ -1,8 +1,9 @@
-import { html, LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
+import { html } from '../../exports.js';
 import { renderObscuritasMediaManagerStyles } from './obscuritas-media-manager.css.js';
 import { renderObscuritasMediaManager } from './obscuritas-media-manager.html.js';
 
-export class ObscuritasMediaManager extends LitElement {
+export class ObscuritasMediaManager extends LitElementBase {
     static imagePrefix = './resources/images/';
 
     static get resourceList() {

@@ -1,20 +1,19 @@
+import { Pages } from '../../custom-elements.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { Subscription } from '../../data/observable.js';
-import { RouteDefinition } from '../../data/pages.js';
 import { session } from '../../data/session.js';
-import { LitElement } from '../../exports.js';
 import { LoadingScreen } from '../../native-components/loading-screen/loading-screen.js';
-import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
+import { changePage } from '../../services/extensions/url.extension.js';
 import { renderPageRoutingStyles } from './page-routing.css.js';
 import { renderPageRouting } from './page-routing.html.js';
 
-export class PageRouting extends LitElement {
+export class PageRouting extends LitElementBase {
     static get styles() {
         return renderPageRoutingStyles();
     }
 
     static get properties() {
         return {
-            routes: { type: Object, reflect: true },
             defaultFragment: { type: String, reflect: true },
         };
     }
@@ -37,7 +36,6 @@ export class PageRouting extends LitElement {
 
         /** @type {Subscription[]} */ this.subscriptions = [];
 
-        /** @type {{[key: string]: RouteDefinition}} */ this.routes = {};
         this.defaultFragment = '';
         PageRouting.instance = this;
 
@@ -71,25 +69,13 @@ export class PageRouting extends LitElement {
         document.querySelector(LoadingScreen.tag).remove();
     }
 
-    get currentRoute() {
-        var matches = Object.values(this.routes)
-            .filter(
-                (route) =>
-                    route.routes.includes(session.currentPage.current()) &&
-                    route.withQueries.every((query) => getQueryValue(query))
-            )
-            .sort((a, b) => b.withQueries.length - a.withQueries.length);
-
-        return matches[0];
-    }
-
     get content() {
-        if (!this.currentRoute) return null;
-        return this.currentRoute.component;
+        var content = Pages[session.currentPage.current()];
+        return content;
     }
 
     get fragments() {
-        return Object.values(this.routes).map((x) => x.routes);
+        return Object.values(Pages);
     }
 
     async switchPage(newValue, oldValue) {
@@ -97,7 +83,7 @@ export class PageRouting extends LitElement {
         if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`))
             this.classList.add(`current-page-${newValue}`);
 
-        if (this.currentRoute) {
+        if (session.currentPage.current()) {
             this.changeHash(newValue);
             return;
         }

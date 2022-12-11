@@ -1,10 +1,10 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { renderTriValueCheckbox } from './tri-value-checkbox.css.js';
 import { renderTriValueCheckboxStyles } from './tri-value-checkbox.html.js';
 
-export class TriValueCheckbox extends LitElement {
+export class TriValueCheckbox extends LitElementBase {
     static get styles() {
         return renderTriValueCheckbox();
     }
