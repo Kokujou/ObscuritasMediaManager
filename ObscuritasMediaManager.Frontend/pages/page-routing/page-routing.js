@@ -3,7 +3,8 @@ import { LitElementBase } from '../../data/lit-element-base.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
 import { LoadingScreen } from '../../native-components/loading-screen/loading-screen.js';
-import { changePage } from '../../services/extensions/url.extension.js';
+import { changePage, getPageName } from '../../services/extensions/url.extension.js';
+import { WelcomePage } from '../welcome-page/welcome-page.js';
 import { renderPageRoutingStyles } from './page-routing.css.js';
 import { renderPageRouting } from './page-routing.html.js';
 
@@ -18,17 +19,19 @@ export class PageRouting extends LitElementBase {
         };
     }
 
-    /** @type {PageRouting} */ static instance;
+    static defaultFragment = getPageName(WelcomePage);
 
-    changeHash(newHash) {
-        var searchString = location.search.substring(1);
-        var searchQueries = searchString.split('&');
-        if (searchQueries.length > 0) searchString = `?${searchQueries.join('&')}`;
-        else searchString = '';
+    get content() {
+        var content = Pages[session.currentPage.current()];
+        return content;
+    }
 
-        var newurl =
-            window.location.protocol + '//' + window.location.host + window.location.pathname + searchString + `#${newHash}`;
-        window.history.replaceState({ path: newurl }, '', newurl);
+    get fragments() {
+        return Object.values(Pages);
+    }
+
+    get currentPage() {
+        return location.hash.length > 1 ? location.hash.substr(1) : getPageName(WelcomePage);
     }
 
     constructor() {
@@ -36,7 +39,6 @@ export class PageRouting extends LitElementBase {
 
         /** @type {Subscription[]} */ this.subscriptions = [];
 
-        this.defaultFragment = '';
         PageRouting.instance = this;
 
         window.addEventListener('hashchange', () => {
@@ -44,7 +46,7 @@ export class PageRouting extends LitElementBase {
         });
 
         window.onpopstate = (e) => {
-            session.currentPage.next(location.hash.length > 1 ? location.hash.substr(1) : 'empty');
+            session.currentPage.next(this.currentPage);
         };
         window.addEventListener('resize', () => this.requestUpdate(undefined));
         var self = this;
@@ -65,17 +67,21 @@ export class PageRouting extends LitElementBase {
 
     firstUpdated(_changedProperties) {
         super.firstUpdated(_changedProperties);
-        session.currentPage.next(location.hash.length > 1 ? location.hash.substr(1) : 'empty');
+        session.currentPage.next(this.currentPage);
         document.querySelector(LoadingScreen.tag).remove();
     }
 
-    get content() {
-        var content = Pages[session.currentPage.current()];
-        return content;
-    }
+    /** @type {PageRouting} */ static instance;
 
-    get fragments() {
-        return Object.values(Pages);
+    changeHash(newHash) {
+        var searchString = location.search.substring(1);
+        var searchQueries = searchString.split('&');
+        if (searchQueries.length > 0) searchString = `?${searchQueries.join('&')}`;
+        else searchString = '';
+
+        var newurl =
+            window.location.protocol + '//' + window.location.host + window.location.pathname + searchString + `#${newHash}`;
+        window.history.replaceState({ path: newurl }, '', newurl);
     }
 
     async switchPage(newValue, oldValue) {
@@ -83,17 +89,19 @@ export class PageRouting extends LitElementBase {
         if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`))
             this.classList.add(`current-page-${newValue}`);
 
-        if (session.currentPage.current()) {
+        if (Object.keys(Pages).includes(session.currentPage.current())) {
             this.changeHash(newValue);
             return;
         }
 
-        if (this.defaultFragment) changePage(this.defaultFragment);
+        console.log(PageRouting.defaultFragment);
+
+        changePage(PageRouting.defaultFragment);
     }
 
     loadPageFromHash(e) {
         e?.preventDefault();
-        var nextPage = location.hash.length > 1 ? location.hash.substr(1) : 'empty';
+        var nextPage = this.currentPage;
         if (session.currentPage.current() != nextPage) changePage(nextPage);
     }
 

@@ -1,6 +1,15 @@
 import { html } from '../../exports.js';
-import { getScaleFactorX, getScaleFactorY, viewportHeight, viewportWidth } from '../../services/extensions/document.extensions.js';
+import {
+    getScaleFactorX,
+    getScaleFactorY,
+    viewportHeight,
+    viewportWidth,
+} from '../../services/extensions/document.extensions.js';
+import { PageRouting } from './page-routing.js';
 
+/**
+ * @param {PageRouting} routing
+ */
 export function renderPageRouting(routing) {
     var scaleX = getScaleFactorX();
     var scaleY = getScaleFactorY();
