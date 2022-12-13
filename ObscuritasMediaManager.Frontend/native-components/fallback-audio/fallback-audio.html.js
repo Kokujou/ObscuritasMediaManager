@@ -12,10 +12,9 @@ export function renderFallbackAudio(audio) {
             .src="${audio.currentSrc}"
             .volume="${audio.volume}"
             @error="${() => audio.initiateFallback()}"
-            @timeupdate="${(e) => audio.dispatchEvent(new Event(e.type, { bubbles: true, composed: true }))}"
-            @ended="${(e) => audio.dispatchEvent(new Event(e.type, { bubbles: true, composed: true }))}"
-            @loadedmetadata="${(e) => audio.dispatchEvent(new Event(e.type, { bubbles: true, composed: true }))}"
-            @message="${audio.overrideFetch}"
+            @timeupdate="${(e) => audio.redispatchEvent(e)}"
+            @ended="${(e) => audio.redispatchEvent(e)}"
+            @loadedmetadata="${(e) => audio.redispatchEvent(e)}"
             style="display:none"
         ></audio>
     `;

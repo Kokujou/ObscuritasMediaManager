@@ -48,13 +48,12 @@ export class TagLabel extends LitElementBase {
      * @param {Event} e
      */
     notifyRemoved(e) {
-        var removedEvent = new CustomEvent('removed');
-        this.dispatchEvent(removedEvent);
+        this.dispatchCustomEvent('removed');
     }
 
     notifyTagCreated() {
         /** @type {HTMLInputElement} */ var tagInput = this.shadowRoot.querySelector('#new-tag-input');
-        this.dispatchEvent(new CustomEvent('tagCreated', { detail: { value: tagInput.value } }));
+        this.dispatchCustomEvent('tagCreated', { value: tagInput.value });
     }
 
     /**@param {KeyboardEvent} event */

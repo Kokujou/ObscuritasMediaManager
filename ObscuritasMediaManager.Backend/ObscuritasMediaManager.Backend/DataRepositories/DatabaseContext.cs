@@ -18,6 +18,7 @@ public class DatabaseContext : DbContext
     public DbSet<MusicModel> Music { get; set; }
     public DbSet<InstrumentModel> Instruments { get; set; }
     public DbSet<UserModel> Users { get; set; }
+    public DbSet<PlaylistEntryModel> PlaylistEntries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

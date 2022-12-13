@@ -57,8 +57,6 @@ export class PaginatedScrolling extends LitElementBase {
     }
 
     requestAdditionalContent() {
-        var scrollBottomEvent = new CustomEvent('scrollBottom');
-        this.dispatchEvent(scrollBottomEvent);
-        this.requestUpdate(undefined);
+        this.dispatchCustomEvent('scrollBottom');
     }
 }

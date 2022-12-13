@@ -1,5 +1,5 @@
+import { InputDialog } from '../../dialogs/input-dialog/input-dialog.js';
 import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
-import { PathInputDialog } from '../../dialogs/path-input-dialog/path-input-dialog.js';
 import { FileService } from '../backend.services.js';
 import { openFileDialog } from './document.extensions.js';
 
@@ -22,7 +22,7 @@ export function fileToDataUrl(file) {
  */
 export async function importFiles() {
     var files = await openFileDialog(true);
-    var basePath = await PathInputDialog.show();
+    var basePath = await InputDialog.show('Bitte den Basispfad des ausgewählten Ordners eingeben:');
     if (!basePath) throw new Error();
 
     var fileSources = [];

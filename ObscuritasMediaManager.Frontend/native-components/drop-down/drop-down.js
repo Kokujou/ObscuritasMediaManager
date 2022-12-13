@@ -18,10 +18,7 @@ export class DropDown extends LitElementBase {
         }
 
         this._currentIndex = value;
-        var selectionChangeEvent = new CustomEvent('selectionChange', {
-            detail: { value: this.multiselect ? this.values : this.value },
-        });
-        this.dispatchEvent(selectionChangeEvent);
+        this.dispatchCustomEvent('selectionChange', { value: this.multiselect ? this.values : this.value });
         this.dispatchEvent(new Event('change'));
         this.requestUpdate(undefined);
     }

@@ -7,8 +7,8 @@ import { MessageDialog } from './message-dialog.js';
 export function renderMessageDialog(messageDialog) {
     return html`
         <dialog-base
-            @accept="${() => messageDialog.dispatchEvent(new CustomEvent('accept'))}"
-            @decline="${() => messageDialog.dispatchEvent(new CustomEvent('decline'))}"
+            @accept="${() => messageDialog.dispatchCustomEvent('accept')}"
+            @decline="${() => messageDialog.dispatchCustomEvent('decline')}"
             >${messageDialog.message}</dialog-base
         >
     `;

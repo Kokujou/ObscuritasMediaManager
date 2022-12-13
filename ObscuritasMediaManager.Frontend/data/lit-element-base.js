@@ -7,6 +7,23 @@ export class LitElementBase extends LitElement {
         /** @type {Subscription[]} */ this.subscriptions = [];
     }
 
+    /**
+     * @template T
+     * @param {string} name
+     * @param {T} [detail]
+     */
+    dispatchCustomEvent(name, detail) {
+        super.dispatchEvent(new CustomEvent(name, { bubbles: true, composed: true, detail }));
+        this.requestUpdate(undefined);
+    }
+
+    /**
+     * @param {Event} event
+     */
+    redispatchEvent(event) {
+        this.dispatchEvent(new Event(event.type, { bubbles: true, composed: true }));
+    }
+
     disconnectedCallback() {
         super.disconnectedCallback();
         this.subscriptions.forEach((x) => x.unsubscribe());

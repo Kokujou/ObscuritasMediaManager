@@ -127,7 +127,7 @@ export class ScrollSelect extends LitElementBase {
             scrollIntoParentViewY(element, element.parentElement, this.scrollContainer);
         }, 100);
 
-        this.dispatchEvent(new CustomEvent('valueChanged', { detail: { value: this.options[this.currentItemIndex] } }));
+        this.dispatchCustomEvent('valueChanged', { value: this.options[this.currentItemIndex] });
         this.requestUpdate(undefined);
     }
 }

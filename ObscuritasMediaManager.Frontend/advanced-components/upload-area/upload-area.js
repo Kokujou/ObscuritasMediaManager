@@ -105,7 +105,6 @@ export class UploadArea extends LitElementBase {
      * @param {string} selectedImageData
      */
     notifyImageAdded(selectedImageData) {
-        var imageReceivedEvent = new CustomEvent('imageReceived', { detail: { imageData: selectedImageData } });
-        this.dispatchEvent(imageReceivedEvent);
+        this.dispatchCustomEvent('imageReceived', { imageData: selectedImageData });
     }
 }

@@ -5,9 +5,14 @@ import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
-import { PathInputDialog } from '../../dialogs/path-input-dialog/path-input-dialog.js';
+import { InputDialog } from '../../dialogs/input-dialog/input-dialog.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
-import { GenreModel, MusicGenre, UpdateRequestOfMusicModel } from '../../obscuritas-media-manager-backend-client.js';
+import {
+    GenreModel,
+    InstrumentType,
+    MusicGenre,
+    UpdateRequestOfMusicModel,
+} from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
 import { randomizeArray } from '../../services/extensions/array.extensions.js';
@@ -240,7 +245,13 @@ export class MusicPlaylistPage extends LitElementBase {
         var allowedInstruments = this.updatedTrack.mappedInstruments.map(
             (instrument, index) => new GenreModel({ id: `${index}`, name: instrument.name, section: instrument.type })
         );
-        var genreDialog = GenreDialog.show(instruments, allowedInstruments, [], false, CheckboxState.Forbid);
+        var genreDialog = GenreDialog.show({
+            genres: instruments,
+            allowedGenres: allowedInstruments,
+            ignoredState: CheckboxState.Forbid,
+            allowAdd: true,
+            allowRemove: true,
+        });
         genreDialog.addEventListener('accept', (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
             var instruments = e.detail.acceptedGenres.map((x) => x.name);
             this.requestUpdate(undefined);
@@ -250,6 +261,24 @@ export class MusicPlaylistPage extends LitElementBase {
         genreDialog.addEventListener('decline', () => {
             genreDialog.remove();
         });
+        genreDialog.addEventListener(
+            'add-genre',
+            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
+                await MusicService.addInstrument(/** @type {InstrumentType} */ (e.detail.section), e.detail.name);
+                genreDialog.options.genres.push(
+                    new GenreModel({ id: e.detail.name, name: e.detail.name, section: e.detail.section })
+                );
+                genreDialog.requestUpdate(undefined);
+            }
+        );
+        genreDialog.addEventListener(
+            'remove-genre',
+            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
+                await MusicService.removeInstrument(/** @type {InstrumentType} */ (e.detail.section), e.detail.name);
+                genreDialog.options.genres = genreDialog.options.genres.filter((x) => x.name != e.detail.name);
+                genreDialog.requestUpdate(undefined);
+            }
+        );
     }
 
     async toggleComplete() {
@@ -260,7 +289,7 @@ export class MusicPlaylistPage extends LitElementBase {
     async changeCurrentTrackPath() {
         var files = await openFileDialog();
         if (!files || files.length <= 0 || !files[0].name) return;
-        var basePath = await PathInputDialog.show();
+        var basePath = await InputDialog.show('Bitte den Basispfad des ausgewählten Ordners eingeben:');
         if (!basePath) return;
 
         if (!basePath.endsWith('\\')) basePath += '\\';

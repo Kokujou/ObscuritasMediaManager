@@ -1,6 +1,6 @@
 import { css } from '../../exports.js';
 
-export function renderPathInputDialogStyles() {
+export function renderInputDialogStyles() {
     return css`
         #dialog-content {
             display: flex;

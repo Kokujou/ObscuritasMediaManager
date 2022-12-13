@@ -22,6 +22,7 @@ public class Startup
         services.AddScoped<StreamingRepository>();
         services.AddScoped<MusicRepository>();
         services.AddScoped<UserRepository>();
+        services.AddScoped<PlaylistRepository>();
 
         services.AddDbContext<DatabaseContext>(x => x.UseSqlite(@"Data Source=database.sqlite"));
 
@@ -58,19 +59,19 @@ public class Startup
     {
         app.UseRouting();
         app.UseHttpsRedirection();
-
-        app.UseCors("all");
-        app.UseAuthentication();
-        app.UseAuthorization();
-
         app.UseExceptionHandler(a => a.Run(async context =>
         {
             var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
             var exception = exceptionHandlerPathFeature?.Error;
             context.Response.StatusCode = 400;
 
-            await context.Response.WriteAsJsonAsync(new { Reason = exception.Message });
+            await context.Response.WriteAsJsonAsync(new { Reason = exception?.Message });
         }));
+
+        app.UseCors("all");
+        app.UseAuthentication();
+        app.UseAuthorization();
+
 
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 

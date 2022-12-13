@@ -16,6 +16,9 @@ export class DialogBase extends LitElementBase {
     constructor() {
         super();
         /** @type {string} */ this.caption;
+        window.addEventListener('keyup', (e) => {
+            if (e.key == 'Escape') this.decline();
+        });
     }
 
     render() {
@@ -23,12 +26,10 @@ export class DialogBase extends LitElementBase {
     }
 
     accept() {
-        var event = new CustomEvent('accept');
-        this.dispatchEvent(event);
+        this.dispatchCustomEvent('accept');
     }
 
     decline() {
-        var event = new CustomEvent('decline', { bubbles: true, composed: true });
-        this.dispatchEvent(event);
+        this.dispatchCustomEvent('decline');
     }
 }

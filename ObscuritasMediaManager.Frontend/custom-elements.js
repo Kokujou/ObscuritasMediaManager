@@ -14,8 +14,8 @@ import { TagLabel } from './advanced-components/tag-label/tag-label.js';
 import { UploadArea } from './advanced-components/upload-area/upload-area.js';
 import { DialogBase } from './dialogs/dialog-base/dialog-base.js';
 import { GenreDialog } from './dialogs/genre-dialog/genre-dialog.js';
+import { InputDialog } from './dialogs/input-dialog/input-dialog.js';
 import { MessageDialog } from './dialogs/message-dialog/message-dialog.js';
-import { PathInputDialog } from './dialogs/path-input-dialog/path-input-dialog.js';
 import { PlayMusicDialog } from './dialogs/play-music-dialog/play-music-dialog.js';
 import { SelectOptionsDialog } from './dialogs/select-options-dialog/select-options-dialog.js';
 import { BorderButton } from './native-components/border-button/border-button.js';
@@ -50,68 +50,66 @@ import { WelcomePage } from './pages/welcome-page/welcome-page.js';
 import { pascalToKeabCase } from './services/extensions/convention.extension.js';
 import { getPageName } from './services/extensions/url.extension.js';
 
-/** @type {(CustomElementConstructor | (CustomElementConstructor & {isPage: boolean}))[]} */
-export const RegisteredComponents = [
-    ObscuritasMediaManager,
-    PageRouting,
-    WelcomePage,
-    PageLayout,
-    ImageTile,
-    AnimeGerSubPage,
-    DualSlider,
-    ExpandableDropdown,
-    DialogBase,
-    MessageDialog,
-    BorderButton,
-    GenreDialog,
-    TriValueCheckbox,
-    MediaSearch,
-    MediaTile,
-    TagLabel,
-    MediaDetailPage,
-    PathInputDialog,
-    UploadArea,
-    VideoPlayerPopup,
-    MediaPage,
-    AnimeGerDubPage,
-    AnimeMoviesPage,
-    RealSeriesPage,
-    RealMoviesPage,
-    JDramaPage,
-    MusicPage,
-    AudioTile,
-    SideScroller,
-    PaginatedScrolling,
-    RangeSlider,
-    MusicPlaylistPage,
-    ScrollSelect,
-    EditableLabel,
-    MusicFilter,
-    DropDown,
-    LanguageSwitcher,
-    MediaPlaylist,
-    StarRating,
-    CustomToggle,
-    AudioTileBase,
-    LinkElement,
-    PartialLoading,
-    SelectOptionsDialog,
-    PlayMusicDialog,
-    FallbackAudio,
-    LoginPage,
-    MessageSnackbar,
-    RecipesPage,
-];
+export const Pages = {};
 
-export const Pages = Object.fromEntries(
-    // @ts-ignore
-    RegisteredComponents.filter((x) => x.isPage).map((x) => [
-        // @ts-ignore
-        getPageName(x),
-        `<${pascalToKeabCase(x.name)}></${pascalToKeabCase(x.name)}>`,
-    ])
-);
+const define = window.customElements.define.bind(window.customElements);
+window.customElements.define = (name, element) => {
+    if (element.isPage) Pages[getPageName(element)] = `<${pascalToKeabCase(element.name)}></${pascalToKeabCase(element.name)}>`;
+    define(name, element);
+};
 
-for (var element of RegisteredComponents) {
-    window.customElements.define(pascalToKeabCase(element.name), element);
-}
+window.customElements.define('obscuritas-media-manager', ObscuritasMediaManager);
+window.customElements.define('page-routing', PageRouting);
+window.customElements.define('welcome-page', WelcomePage);
+window.customElements.define('page-layout', PageLayout);
+window.customElements.define('image-tile', ImageTile);
+window.customElements.define('anime-ger-sub-page', AnimeGerSubPage);
+window.customElements.define('dual-slider', DualSlider);
+window.customElements.define('expandable-dropdown', ExpandableDropdown);
+window.customElements.define('dialog-base', DialogBase);
+window.customElements.define('message-dialog', MessageDialog);
+window.customElements.define('border-button', BorderButton);
+window.customElements.define('genre-dialog', GenreDialog);
+window.customElements.define('tri-value-checkbox', TriValueCheckbox);
+window.customElements.define('media-search', MediaSearch);
+window.customElements.define('media-tile', MediaTile);
+window.customElements.define('tag-label', TagLabel);
+window.customElements.define('media-detail-page', MediaDetailPage);
+window.customElements.define('path-input-dialog', InputDialog);
+window.customElements.define('upload-area', UploadArea);
+window.customElements.define('video-player-popup', VideoPlayerPopup);
+window.customElements.define('media-page', MediaPage);
+window.customElements.define('anime-ger-dub-page', AnimeGerDubPage);
+window.customElements.define('anime-movies-page', AnimeMoviesPage);
+window.customElements.define('real-series-page', RealSeriesPage);
+window.customElements.define('real-movies-page', RealMoviesPage);
+window.customElements.define('j-drama-page', JDramaPage);
+window.customElements.define('music-page', MusicPage);
+window.customElements.define('audio-tile', AudioTile);
+window.customElements.define('side-scroller', SideScroller);
+window.customElements.define('paginated-scrolling', PaginatedScrolling);
+window.customElements.define('range-slider', RangeSlider);
+window.customElements.define('music-playlist-page', MusicPlaylistPage);
+window.customElements.define('scroll-select', ScrollSelect);
+window.customElements.define('editable-label', EditableLabel);
+window.customElements.define('music-filter', MusicFilter);
+window.customElements.define('drop-down', DropDown);
+window.customElements.define('language-switcher', LanguageSwitcher);
+window.customElements.define('media-playlist', MediaPlaylist);
+window.customElements.define('star-rating', StarRating);
+window.customElements.define('custom-toggle', CustomToggle);
+window.customElements.define('audio-tile-base', AudioTileBase);
+window.customElements.define('link-element', LinkElement);
+window.customElements.define('partial-loading', PartialLoading);
+window.customElements.define('select-options-dialog', SelectOptionsDialog);
+window.customElements.define('play-music-dialog', PlayMusicDialog);
+window.customElements.define('fallback-audio', FallbackAudio);
+window.customElements.define('login-page', LoginPage);
+window.customElements.define('message-snackbar', MessageSnackbar);
+window.customElements.define('recipes-page', RecipesPage);
+
+// console.log(
+//     RegisteredComponents.map(
+//         (element) => `window.customElements.define('${pascalToKeabCase(element.name)}', ${element.name})`
+//     ).join('\n')
+// );

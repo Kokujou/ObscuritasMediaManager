@@ -50,7 +50,7 @@ export class EditableLabel extends LitElementBase {
     saveChanges() {
         /** @type {HTMLLabelElement} */ var input = this.shadowRoot.querySelector('#value-input');
         this.value = input.innerText;
-        this.dispatchEvent(new CustomEvent('valueChanged', { detail: { value: this.value } }));
+        this.dispatchCustomEvent('valueChanged', { value: this.value });
         this.editEnabled = false;
         this.requestUpdate(undefined);
     }

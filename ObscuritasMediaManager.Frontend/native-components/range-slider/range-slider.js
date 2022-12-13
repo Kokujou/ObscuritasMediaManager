@@ -32,6 +32,6 @@ export class RangeSlider extends LitElementBase {
         /** @type {HTMLInputElement} */ var sliderElement = this.shadowRoot.querySelector('#slider');
         this.value = sliderElement.value;
         var eventData = { value: this.value };
-        this.dispatchEvent(new CustomEvent('valueChanged', { detail: eventData }));
+        this.dispatchCustomEvent('valueChanged', eventData);
     }
 }

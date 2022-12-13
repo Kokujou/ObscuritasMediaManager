@@ -34,6 +34,10 @@
 //TODO: refactor the update-system
 //TODO: think about removing nations. probably doesn't make sense and/or is already reflected in the genre-list
 //TODO: think about filtering for dual moods
+//TODO: create a playlist browser
+//TODO: think about creating an interceptor for responses to auto-generate 201 and 404 responses
+//TODO:     - 201: void/Task
+//TODO:     - 404: not 201 & result == null/[]
 
 /**
  * TODO: RECIPE DATABASE

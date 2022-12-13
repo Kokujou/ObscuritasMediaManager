@@ -93,7 +93,7 @@ export function renderMusicFilter(musicFilter) {
                                 class="icon-container"
                                 .value="${musicFilter.filter.languages.states[type]}"
                             >
-                                <div class="inline-icon ${type}"></div>
+                                <div class="inline-icon " language="${type}"></div>
                             </tri-value-checkbox>`
                     )}
                 </side-scroller>
@@ -118,7 +118,7 @@ export function renderMusicFilter(musicFilter) {
                                 @valueChanged="${(e) => musicFilter.toggleFilter('nations', type, e.detail.value)}"
                                 .value="${musicFilter.filter.nations.states[type]}"
                             >
-                                <div class="inline-icon ${type}"></div>
+                                <div class="inline-icon" nation="${type}"></div>
                             </tri-value-checkbox>`
                     )}
                 </side-scroller>

@@ -26,10 +26,6 @@ export class PageRouting extends LitElementBase {
         return content;
     }
 
-    get fragments() {
-        return Object.values(Pages);
-    }
-
     get currentPage() {
         return location.hash.length > 1 ? location.hash.substr(1) : getPageName(WelcomePage);
     }
@@ -93,8 +89,6 @@ export class PageRouting extends LitElementBase {
             this.changeHash(newValue);
             return;
         }
-
-        console.log(PageRouting.defaultFragment);
 
         changePage(PageRouting.defaultFragment);
     }

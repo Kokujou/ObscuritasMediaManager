@@ -76,8 +76,7 @@ export class MediaTile extends LitElementBase {
      */
     notifyRatingChanged(newRating, e) {
         e.stopPropagation();
-        var ratingChangedEvent = new CustomEvent('ratingChanged', { detail: { newRating: newRating } });
-        this.dispatchEvent(ratingChangedEvent);
+        this.dispatchCustomEvent('ratingChanged', { newRating: newRating });
     }
 
     /**
@@ -86,11 +85,10 @@ export class MediaTile extends LitElementBase {
      */
     notifyGenresChanged(genres, e) {
         e?.stopPropagation();
-        var genresChangedEvent = new CustomEvent('genresChanged', { detail: { genres: genres } });
-        this.dispatchEvent(genresChangedEvent);
+        this.dispatchCustomEvent('genresChanged', { genres: genres });
     }
 
     notifyImageAdded(imageData) {
-        this.dispatchEvent(new CustomEvent('imageReceived', { detail: { imageData: imageData } }));
+        this.dispatchCustomEvent('imageReceived', { imageData: imageData });
     }
 }

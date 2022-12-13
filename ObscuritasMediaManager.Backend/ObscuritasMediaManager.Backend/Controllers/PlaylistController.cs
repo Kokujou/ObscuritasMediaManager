@@ -14,10 +14,12 @@ public class PlaylistController : ControllerBase
         = new();
 
     private readonly MusicRepository _musicRepository;
+    private readonly PlaylistRepository _playlistRepository;
 
-    public PlaylistController(MusicRepository musicRepository)
+    public PlaylistController(MusicRepository musicRepository, PlaylistRepository playlistRepository)
     {
         _musicRepository = musicRepository;
+        _playlistRepository = playlistRepository;
     }
 
     [HttpPost("temp")]
@@ -31,16 +33,24 @@ public class PlaylistController : ControllerBase
     [HttpGet("temp/{guid:Guid}")]
     public async Task<ActionResult<IEnumerable<MusicModel>>> GetTemporaryPlaylist(Guid guid)
     {
-        try
-        {
-            var trackHashes = TemporaryPlaylistRepository[guid];
-            var tracks = new List<MusicModel>();
-            foreach (var hash in trackHashes) tracks.Add(await _musicRepository.GetAsync(hash));
-            return Ok(tracks);
-        }
-        catch
-        {
+        if (!TemporaryPlaylistRepository.TryGetValue(guid, out var trackHashes))
             return NotFound();
-        }
+        var tracks = new List<MusicModel>();
+        foreach (var hash in trackHashes) tracks.Add(await _musicRepository.GetAsync(hash));
+        return tracks;
+    }
+
+    [HttpGet("{id:Guid}")]
+    public async Task<ActionResult<IEnumerable<MusicModel>>> GetPlaylist(Guid id)
+    {
+        var tracks = await _playlistRepository.GetTracksAsync(id);
+        if (tracks.Count == 0) return NotFound();
+        return tracks;
+    }
+
+    [HttpPost("create/{name}")]
+    public async Task CreatePlaylist(string name, IEnumerable<string> trackHashes)
+    {
+        await _playlistRepository.CreateAsync(name, trackHashes);
     }
 }

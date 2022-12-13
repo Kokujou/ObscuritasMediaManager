@@ -1,17 +1,17 @@
 import { html } from '../../exports.js';
-import { PathInputDialog } from './path-input-dialog.js';
+import { InputDialog } from './input-dialog.js';
 
 /**
- * @param {PathInputDialog} dialog
+ * @param {InputDialog} dialog
  */
-export function renderPathInputDialog(dialog) {
+export function renderInputDialog(dialog) {
     return html` <dialog-base
         caption="Bitte Basispfad auswählen"
         @decline="${() => dialog.notifyDeclined()}"
         @accept="${() => dialog.notifyAccepted()}"
     >
         <div id="dialog-content">
-            <div id="input-description">Bitte den Basispfad des ausgewählten Ordners eingeben:</div>
+            <div id="input-description">${dialog.message}</div>
             <input type="text" id="base-path-input" />
         </div>
     </dialog-base>`;

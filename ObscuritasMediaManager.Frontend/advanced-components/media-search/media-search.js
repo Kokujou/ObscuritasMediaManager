@@ -75,12 +75,12 @@ export class MediaSearch extends LitElementBase {
     }
 
     async showGenreDialog() {
-        var genreDialog = GenreDialog.show(
-            await GenreService.getAll(),
-            this.genreFilter.acceptedGenres,
-            this.genreFilter.forbiddenGenres,
-            true
-        );
+        var genreDialog = GenreDialog.show({
+            genres: await GenreService.getAll(),
+            allowedGenres: this.genreFilter.acceptedGenres,
+            forbiddenGenres: this.genreFilter.forbiddenGenres,
+            allowThreeValues: true,
+        });
         genreDialog.addEventListener('decline', () => genreDialog.remove());
         genreDialog.addEventListener('accept', (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
             this.genreFilter = e.detail;
@@ -96,9 +96,7 @@ export class MediaSearch extends LitElementBase {
     }
 
     notifyFilterUpdated() {
-        var filterData = MediaSearchFilterData.fromInstance(this);
-        var filterUpdatedEvent = new CustomEvent('filterUpdated', { detail: filterData });
-        this.dispatchEvent(filterUpdatedEvent);
+        this.dispatchCustomEvent('filterUpdated', MediaSearchFilterData.fromInstance(this));
         this.requestUpdate(undefined);
     }
 

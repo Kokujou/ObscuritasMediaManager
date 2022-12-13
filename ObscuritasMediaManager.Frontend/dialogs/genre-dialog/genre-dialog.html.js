@@ -9,9 +9,18 @@ export function renderGenreDialog(genreDialog) {
     return html`
         <dialog-base
             caption="Tags auswählen"
-            @decline="${() => genreDialog.dispatchEvent(new CustomEvent('decline'))}"
+            @decline="${() => genreDialog.dispatchCustomEvent('decline')}"
             @accept="${() => genreDialog.accept()}"
         >
+            ${genreDialog.options.allowRemove
+                ? html` <div id="remove-toggle">
+                      <custom-toggle
+                          @toggle="${(e) => genreDialog.toggleAttribute('editModeEnabled', e.target.toggled)}"
+                      ></custom-toggle>
+                      <div id="toggle-text">Bearbeiten</div>
+                  </div>`
+                : ''}
+
             <div id="genre-container">
                 ${Object.keys(genreDialog.genreDict).map((section) =>
                     renderGenreSection(section, genreDialog.genreDict[section], genreDialog)
@@ -29,7 +38,12 @@ export function renderGenreDialog(genreDialog) {
 function renderGenreSection(section, genres, genreDialog) {
     return html`<div class="genre-section">
         <div class="section-title">${section}</div>
-        <div class="genre-list">${genres.map((genre) => renderGenre(genre, genreDialog))}</div>
+        <div class="genre-list">
+            ${genres.map((genre) => renderGenre(genre, genreDialog))}
+            ${genreDialog.options.allowAdd
+                ? html`<div id="add-genre-button" @click="${() => genreDialog.addGenre(section)}">+</div>`
+                : ''}
+        </div>
     </div>`;
 }
 
@@ -39,12 +53,19 @@ function renderGenreSection(section, genres, genreDialog) {
  */
 function renderGenre(genre, genreDialog) {
     return html`<tri-value-checkbox
-        .allowThreeValues="${genreDialog.allowThreeValues}"
+        .allowThreeValues="${genreDialog.options.allowThreeValues}"
         @valueChanged="${(e) => genreDialog.handleGenreSelection(e.detail, genre)}"
         .value="${genreDialog.getValue(genre)}"
-        .ignoredState="${genreDialog.ignoredState}"
+        .ignoredState="${genreDialog.options.ignoredState}"
         class="genre-checkbox"
     >
         ${genre.name}
-    </tri-value-checkbox>`;
+        <div
+            class="remove-genre-button"
+            @click="${(e) => {
+                genreDialog.dispatchCustomEvent('remove-genre', genre);
+                e.stopPropagation();
+            }}"
+        ></div>
+    </tri-value-checkbox> `;
 }

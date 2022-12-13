@@ -44,6 +44,6 @@ export class AudioTileBase extends LitElementBase {
             detail.stopPropagation();
             detail.preventDefault();
         }
-        this.dispatchEvent(new CustomEvent(name, { detail, bubbles: true, composed: true }));
+        this.dispatchCustomEvent(name, detail);
     }
 }

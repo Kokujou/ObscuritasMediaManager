@@ -92,12 +92,11 @@ export class MediaDetailPage extends LitElementBase {
 
     async showGenreSelectionDialog() {
         var genres = await GenreService.getAll();
-        var genreDialog = GenreDialog.show(
+        var genreDialog = GenreDialog.show({
             genres,
-            genres.filter((x) => this.media.genres.includes(x.name)),
-            [],
-            false
-        );
+            allowedGenres: genres.filter((x) => this.media.genres.includes(x.name)),
+            allowAdd: true,
+        });
 
         genreDialog.addEventListener('decline', () => genreDialog.remove());
         genreDialog.addEventListener('accept', async (/** @type {CustomEvent<GenreDialogResult>} */ e) => {

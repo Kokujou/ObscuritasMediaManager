@@ -33,6 +33,7 @@ export function renderDialogBaseStyles() {
         }
 
         #dialog-content {
+            position: relative;
             margin: 20px;
         }
 

@@ -24,7 +24,7 @@ export class CustomToggle extends LitElementBase {
 
         this.onclick = () => {
             this.checked = !this.checked;
-            this.dispatchEvent(new CustomEvent('toggle'));
+            this.dispatchCustomEvent('toggle');
         };
     }
 

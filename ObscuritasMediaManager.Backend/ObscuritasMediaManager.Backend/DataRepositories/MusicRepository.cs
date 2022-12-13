@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Models;
 
@@ -121,9 +122,21 @@ public class MusicRepository
         return await _context.Instruments.ToListAsync();
     }
 
+    public async Task AddInstrumentAsync(InstrumentModel instrument)
+    {
+        await _context.Instruments.AddAsync(instrument);
+        await _context.SaveChangesAsync();
+    }
+
     public async Task BatchDeleteTracks(IEnumerable<MusicModel> tracks)
     {
         _context.Music.RemoveRange(tracks);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task RemoveInstrumentAsync(InstrumentType type, string name)
+    {
+        _context.Instruments.Remove(new() { Name = name, Type = type });
         await _context.SaveChangesAsync();
     }
 }

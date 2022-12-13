@@ -83,6 +83,10 @@ export declare class MusicClient {
     protected processUpdate(response: Response): Promise<FileResponse>;
     getInstruments(signal?: AbortSignal | undefined): Promise<InstrumentModel[]>;
     protected processGetInstruments(response: Response): Promise<InstrumentModel[]>;
+    addInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
+    protected processAddInstrument(response: Response): Promise<void>;
+    removeInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
+    protected processRemoveInstrument(response: Response): Promise<void>;
 }
 export declare class PlaylistClient {
     private http;
@@ -95,6 +99,10 @@ export declare class PlaylistClient {
     protected processCreateTemporaryPlaylist(response: Response): Promise<string>;
     getTemporaryPlaylist(guid: string, signal?: AbortSignal | undefined): Promise<MusicModel[]>;
     protected processGetTemporaryPlaylist(response: Response): Promise<MusicModel[]>;
+    getPlaylist(id: string, signal?: AbortSignal | undefined): Promise<MusicModel[]>;
+    protected processGetPlaylist(response: Response): Promise<MusicModel[]>;
+    createPlaylist(name: string | null, trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
+    protected processCreatePlaylist(response: Response): Promise<void>;
 }
 export declare class StreamingClient {
     private http;

@@ -28,7 +28,7 @@ export class AudioTile extends LitElementBase {
     }
 
     notifyMusicToggled() {
-        this.dispatchEvent(new CustomEvent('musicToggled'));
+        this.dispatchCustomEvent('musicToggled');
     }
 
     render() {

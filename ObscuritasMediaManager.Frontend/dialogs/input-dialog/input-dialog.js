@@ -1,10 +1,10 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { renderPathInputDialogStyles } from './path-input-dialog.css.js';
-import { renderPathInputDialog } from './path-input-dialog.html.js';
+import { renderInputDialogStyles } from './input-dialog.css.js';
+import { renderInputDialog } from './input-dialog.html.js';
 
-export class PathInputDialog extends LitElementBase {
+export class InputDialog extends LitElementBase {
     static get styles() {
-        return renderPathInputDialogStyles();
+        return renderInputDialogStyles();
     }
 
     static get properties() {
@@ -12,14 +12,16 @@ export class PathInputDialog extends LitElementBase {
     }
 
     /**
-     *
+     * @param {string} message
      * @returns {Promise<string>}
      */
-    static show() {
+    static show(message) {
         return new Promise((resolve) => {
-            var dialog = new PathInputDialog();
+            var dialog = new InputDialog();
             dialog.resolve = resolve;
+            dialog.message = message;
             document.body.append(dialog);
+            dialog.requestUpdate(undefined);
             return dialog;
         });
     }
@@ -28,10 +30,11 @@ export class PathInputDialog extends LitElementBase {
         super();
 
         /** @type {(string)=>void} */ this.resolve;
+        /** @type {string} */ this.message;
     }
 
     render() {
-        return renderPathInputDialog(this);
+        return renderInputDialog(this);
     }
 
     async notifyAccepted() {
