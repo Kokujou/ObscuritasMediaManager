@@ -17,11 +17,16 @@ export function renderStarRatingStyles() {
         }
 
         .star[selected] {
-            color: yellow !important;
+            color: yellow;
         }
 
-        .star:hover {
-            color: orange;
+        :host([swords]) .star[selected] {
+            color: red;
+        }
+
+        .star:hover,
+        .star[hovered] {
+            color: orange !important;
         }
     `;
 }

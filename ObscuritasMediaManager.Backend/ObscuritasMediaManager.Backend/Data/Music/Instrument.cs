@@ -1,7 +1,6 @@
-﻿namespace ObscuritasMediaManager.Backend.Data.Music
+﻿namespace ObscuritasMediaManager.Backend.Data.Music;
+
+public enum Instrument
 {
-    public enum Instrument
-    {
-        Unset
-    }
+    Unset
 }

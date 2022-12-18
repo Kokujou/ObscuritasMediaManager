@@ -1,16 +1,15 @@
-﻿namespace ObscuritasMediaManager.Backend.Data.Music
+﻿namespace ObscuritasMediaManager.Backend.Data.Music;
+
+public enum InstrumentType
 {
-    public enum InstrumentType
-    {
-        Unset,
-        Vocal,
-        WoodWind,
-        Brass,
-        Percussion,
-        Stringed,
-        Keyboard,
-        Electronic,
-        HumanBody,
-        Miscellaneous
-    }
+    Unset,
+    Vocal,
+    WoodWind,
+    Brass,
+    Percussion,
+    Stringed,
+    Keyboard,
+    Electronic,
+    HumanBody,
+    Miscellaneous
 }

@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ObscuritasMediaManager.Backend.Data.Music;
 
-namespace ObscuritasMediaManager.Backend.Models
+namespace ObscuritasMediaManager.Backend.Models;
+
+public class InstrumentModel
 {
-    public class InstrumentModel
-    {
-        [Key] public string Name { get; set; }
-        public InstrumentType Type { get; set; }
-    }
+    [Key] public string Name { get; set; }
+    public InstrumentType Type { get; set; }
 }

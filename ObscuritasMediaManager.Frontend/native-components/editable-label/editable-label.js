@@ -10,6 +10,7 @@ export class EditableLabel extends LitElementBase {
     static get properties() {
         return {
             value: { type: String, reflect: true },
+            supportedCharacters: { type: String, reflect: true },
         };
     }
 
@@ -17,6 +18,7 @@ export class EditableLabel extends LitElementBase {
         super();
         /** @type {string} */ this.value;
         /** @type {boolean} */ this.editEnabled;
+        /** @type {string} */ this.supportedCharacters = null;
     }
 
     render() {
@@ -34,9 +36,11 @@ export class EditableLabel extends LitElementBase {
     handleLabelInput(e) {
         if (e.key == 'Enter') this.saveChanges();
         else if (e.key == 'Escape') this.revertChanges();
+        else if (this.supportedCharacters && e.key.length == 1 && !e.key.match(new RegExp(this.supportedCharacters, 'g')))
+            console.warn('unsupported character: ' + e.key);
         else return;
 
-        e.stopPropagation();
+        if (e.code) e.stopPropagation();
         e.preventDefault();
     }
 

@@ -25,4 +25,6 @@ export class RecipesPage extends LitElementBase {
     render() {
         return renderRecipesPage(this);
     }
+
+    loadMoreItems() {}
 }

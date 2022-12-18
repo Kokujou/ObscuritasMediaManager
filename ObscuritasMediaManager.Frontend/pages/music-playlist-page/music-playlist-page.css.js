@@ -266,6 +266,10 @@ export function renderMusicPlaylistStyles() {
             height: 40px;
             ${renderMaskImage(editIcon())};
         }
+
+        editable-label {
+            padding: 10px;
+        }
     `;
 }
 

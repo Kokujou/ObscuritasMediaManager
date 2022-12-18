@@ -34,7 +34,7 @@ function renderValueInput(editableLabel) {
         >
             ${editableLabel.value}
         </div>
-        <div id="abort-icon" class="icon" @click="${() => editableLabel.revertChanges()}">&times;</div>
+        <div id="abort-icon" class="icon" @click="${() => editableLabel.revertChanges()}"></div>
         <div id="save-icon" class="icon" @click="${() => editableLabel.saveChanges()}"></div>
     </div>`;
 }

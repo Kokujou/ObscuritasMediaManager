@@ -1,10 +1,9 @@
-﻿namespace ObscuritasMediaManager.Backend.Data.Music
+﻿namespace ObscuritasMediaManager.Backend.Data.Music;
+
+public enum Instrumentation
 {
-    public enum Instrumentation
-    {
-        Unset,
-        Mono,
-        Groups,
-        Mixed
-    }
+    Unset,
+    Mono,
+    Groups,
+    Mixed
 }

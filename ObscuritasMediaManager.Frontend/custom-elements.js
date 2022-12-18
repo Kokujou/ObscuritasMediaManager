@@ -23,6 +23,7 @@ import { CustomToggle } from './native-components/custom-toggle/custom-toggle.js
 import { DropDown } from './native-components/drop-down/drop-down.js';
 import { EditableLabel } from './native-components/editable-label/editable-label.js';
 import { FallbackAudio } from './native-components/fallback-audio/fallback-audio.js';
+import { GroupedDropdown } from './native-components/grouped-dropdown/grouped-dropdown.js';
 import { LinkElement } from './native-components/link-element/link-element.js';
 import { MessageSnackbar } from './native-components/message-snackbar/message-snackbar.js';
 import { PartialLoading } from './native-components/partial-loading/partial-loading.js';
@@ -33,6 +34,7 @@ import { TriValueCheckbox } from './native-components/tri-value-checkbox/tri-val
 import { AnimeGerDubPage } from './pages/anime-ger-dub-page/anime-ger-dub-page.js';
 import { AnimeGerSubPage } from './pages/anime-ger-sub-page/anime-ger-sub-page.js';
 import { AnimeMoviesPage } from './pages/anime-movies-page/anime-movies-page.js';
+import { CreateRecipePage } from './pages/create-recipe-page/create-recipe-page.js';
 import { JDramaPage } from './pages/jdrama-page/jdrama-page.js';
 import { LoginPage } from './pages/login-page/login-page.js';
 import { MediaDetailPage } from './pages/media-detail-page/media-detail-page.js';
@@ -107,9 +109,5 @@ window.customElements.define('fallback-audio', FallbackAudio);
 window.customElements.define('login-page', LoginPage);
 window.customElements.define('message-snackbar', MessageSnackbar);
 window.customElements.define('recipes-page', RecipesPage);
-
-// console.log(
-//     RegisteredComponents.map(
-//         (element) => `window.customElements.define('${pascalToKeabCase(element.name)}', ${element.name})`
-//     ).join('\n')
-// );
+window.customElements.define('create-recipe-page', CreateRecipePage);
+window.customElements.define('grouped-dropdown', GroupedDropdown);

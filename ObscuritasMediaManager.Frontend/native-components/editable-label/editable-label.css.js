@@ -1,10 +1,15 @@
 import { css } from '../../exports.js';
 import { editIcon } from '../../pages/media-detail-page/images/edit-icon.svg.js';
+import { crossIcon } from '../../resources/icons/general/cross-icon.svg.js';
 import { saveTickIcon } from '../../resources/icons/general/save-tick-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderEditableLabelStyles() {
     return css`
+        :host {
+            --default-label-height: var(--label-height, 35px);
+        }
+
         #editable-label {
             position: relative;
             width: 100%;
@@ -17,12 +22,14 @@ export function renderEditableLabelStyles() {
         }
 
         .icon {
-            min-width: 30px;
-            min-height: 30px;
+            min-height: var(--default-label-height);
+            min-width: var(--default-label-height);
+            max-height: var(--default-label-height);
+            max-width: var(--default-label-height);
             background-color: var(--font-color, black);
 
             cursor: pointer;
-            margin-left: 10px;
+            margin: var(--text-padding);
         }
 
         #edit-icon {
@@ -34,12 +41,7 @@ export function renderEditableLabelStyles() {
         }
 
         #abort-icon {
-            background: transparent;
-            font-size: 50px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            ${renderMaskImage(crossIcon())};
         }
 
         #invisile-text {
@@ -50,21 +52,27 @@ export function renderEditableLabelStyles() {
             outline: none;
             font: inherit;
             border-bottom: 1px solid;
-            padding: 10px;
 
-            max-width: 100%;
-            white-space: nowrap;
             overflow: auto;
             scrollbar-width: none;
-            text-overflow: ellipsis;
+            flex: auto;
         }
 
         #value-label {
-            white-space: nowrap;
-            text-overflow: ellipsis;
             overflow: hidden;
+            flex: auto;
+        }
+
+        #value-input,
+        #value-label {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: var(--default-label-height);
             max-width: 100%;
-            padding: 15px 27px;
+
+            display: flex;
+            align-items: center;
+            padding: var(--text-padding);
         }
     `;
 }

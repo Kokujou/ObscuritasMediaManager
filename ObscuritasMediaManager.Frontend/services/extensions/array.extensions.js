@@ -30,3 +30,16 @@ export function getDistance(array, selectedEntry, targetEntry) {
     var targetIndex = array.indexOf(targetEntry);
     return targetIndex - selectedIndex;
 }
+
+/**
+ * @template T
+ * @param {T[]} array
+ * @param {keyof T} key
+ * @returns { { [key:string] : T[] } }
+ */
+export function groupBy(array, key) {
+    return array.reduce(function (rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+    }, /** @type {any} */ ({}));
+}

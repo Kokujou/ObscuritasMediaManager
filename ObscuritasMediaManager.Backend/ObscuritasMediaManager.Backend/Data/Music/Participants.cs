@@ -1,12 +1,11 @@
-﻿namespace ObscuritasMediaManager.Backend.Data.Music
+﻿namespace ObscuritasMediaManager.Backend.Data.Music;
+
+public enum Participants
 {
-    public enum Participants
-    {
-        Unset,
-        Solo,
-        SmallGroup,
-        LargeGroup,
-        SmallOrchestra,
-        LargeOrchestra
-    }
+    Unset,
+    Solo,
+    SmallGroup,
+    LargeGroup,
+    SmallOrchestra,
+    LargeOrchestra
 }

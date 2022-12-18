@@ -1,22 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Models;
 
-namespace ObscuritasMediaManager.Backend.DataRepositories
+namespace ObscuritasMediaManager.Backend.DataRepositories;
+
+public class GenreRepository
 {
-    public class GenreRepository
+    private readonly DatabaseContext _context;
+
+    public GenreRepository(DatabaseContext context)
     {
-        private readonly DatabaseContext _context;
+        _context = context;
+    }
 
-        public GenreRepository(DatabaseContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<IEnumerable<GenreModel>> GetAllAsync()
-        {
-            return await _context.Genres.ToListAsync();
-        }
+    public async Task<IEnumerable<GenreModel>> GetAllAsync()
+    {
+        return await _context.Genres.ToListAsync();
     }
 }

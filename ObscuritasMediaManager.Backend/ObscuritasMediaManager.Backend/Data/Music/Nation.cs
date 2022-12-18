@@ -1,16 +1,15 @@
-﻿namespace ObscuritasMediaManager.Backend.Data.Music
+﻿namespace ObscuritasMediaManager.Backend.Data.Music;
+
+public enum Nation
 {
-    public enum Nation
-    {
-        Unset,
-        Japanese,
-        English,
-        German,
-        Spain,
-        Chinese,
-        Italian,
-        Russian,
-        SouthAmerican,
-        African
-    }
+    Unset,
+    Japanese,
+    English,
+    German,
+    Spain,
+    Chinese,
+    Italian,
+    Russian,
+    SouthAmerican,
+    African
 }

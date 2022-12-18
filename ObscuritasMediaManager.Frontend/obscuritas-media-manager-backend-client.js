@@ -1068,6 +1068,58 @@ export class PlaylistClient {
         return Promise.resolve(null);
     }
 }
+export class RecipeClient {
+    http;
+    baseUrl;
+    jsonParseReviver = undefined;
+    constructor(baseUrl, http) {
+        this.http = http ? http : window;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+    getAllRecipes(signal) {
+        let url_ = this.baseUrl + "/api/Recipe";
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetAllRecipes(_response);
+        });
+    }
+    processGetAllRecipes(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                if (Array.isArray(resultData200)) {
+                    result200 = [];
+                    for (let item of resultData200)
+                        result200.push(RecipeModel.fromJS(item));
+                }
+                else {
+                    result200 = null;
+                }
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+}
 export class StreamingClient {
     http;
     baseUrl;
@@ -1605,6 +1657,184 @@ export class UpdateRequestOfMusicModel {
         return result;
     }
 }
+export class RecipeModel {
+    title;
+    nation;
+    imageUrl;
+    difficulty;
+    rating;
+    course;
+    mainIngredient;
+    technique;
+    temperatureUnit;
+    preparationTime;
+    cookingTime;
+    totalTime;
+    ingredients;
+    formattedText;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
+            this.title = _data["title"] !== undefined ? _data["title"] : null;
+            this.nation = _data["nation"] !== undefined ? _data["nation"] : null;
+            this.imageUrl = _data["imageUrl"] !== undefined ? _data["imageUrl"] : null;
+            this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : null;
+            this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
+            this.course = _data["course"] !== undefined ? _data["course"] : null;
+            this.mainIngredient = _data["mainIngredient"] !== undefined ? _data["mainIngredient"] : null;
+            this.technique = _data["technique"] !== undefined ? _data["technique"] : null;
+            this.temperatureUnit = _data["temperatureUnit"] !== undefined ? _data["temperatureUnit"] : null;
+            this.preparationTime = _data["preparationTime"] !== undefined ? _data["preparationTime"] : null;
+            this.cookingTime = _data["cookingTime"] !== undefined ? _data["cookingTime"] : null;
+            this.totalTime = _data["totalTime"] !== undefined ? _data["totalTime"] : null;
+            if (Array.isArray(_data["ingredients"])) {
+                this.ingredients = [];
+                for (let item of _data["ingredients"])
+                    this.ingredients.push(IngredientModel.fromJS(item));
+            }
+            else {
+                this.ingredients = null;
+            }
+            this.formattedText = _data["formattedText"] !== undefined ? _data["formattedText"] : null;
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new RecipeModel();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title !== undefined ? this.title : null;
+        data["nation"] = this.nation !== undefined ? this.nation : null;
+        data["imageUrl"] = this.imageUrl !== undefined ? this.imageUrl : null;
+        data["difficulty"] = this.difficulty !== undefined ? this.difficulty : null;
+        data["rating"] = this.rating !== undefined ? this.rating : null;
+        data["course"] = this.course !== undefined ? this.course : null;
+        data["mainIngredient"] = this.mainIngredient !== undefined ? this.mainIngredient : null;
+        data["technique"] = this.technique !== undefined ? this.technique : null;
+        data["temperatureUnit"] = this.temperatureUnit !== undefined ? this.temperatureUnit : null;
+        data["preparationTime"] = this.preparationTime !== undefined ? this.preparationTime : null;
+        data["cookingTime"] = this.cookingTime !== undefined ? this.cookingTime : null;
+        data["totalTime"] = this.totalTime !== undefined ? this.totalTime : null;
+        if (Array.isArray(this.ingredients)) {
+            data["ingredients"] = [];
+            for (let item of this.ingredients)
+                data["ingredients"].push(item.toJSON());
+        }
+        data["formattedText"] = this.formattedText !== undefined ? this.formattedText : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new RecipeModel();
+        result.init(json);
+        return result;
+    }
+}
+export var Course;
+(function (Course) {
+    Course["Starter"] = "Starter";
+    Course["Main"] = "Main";
+    Course["Side"] = "Side";
+    Course["Desert"] = "Desert";
+    Course["Salad"] = "Salad";
+    Course["Soup"] = "Soup";
+    Course["Drink"] = "Drink";
+    Course["Snack"] = "Snack";
+})(Course || (Course = {}));
+export var Ingredient;
+(function (Ingredient) {
+    Ingredient["Meat"] = "Meat";
+    Ingredient["Noodles"] = "Noodles";
+    Ingredient["Rice"] = "Rice";
+    Ingredient["Bread"] = "Bread";
+    Ingredient["Fish"] = "Fish";
+    Ingredient["Vegetables"] = "Vegetables";
+    Ingredient["Fruits"] = "Fruits";
+    Ingredient["Sweets"] = "Sweets";
+    Ingredient["Miscellaneous"] = "Miscellaneous";
+})(Ingredient || (Ingredient = {}));
+export var CookingTechnique;
+(function (CookingTechnique) {
+    CookingTechnique["Boiling"] = "Boiling";
+    CookingTechnique["Baking"] = "Baking";
+    CookingTechnique["Frying"] = "Frying";
+    CookingTechnique["DeepFrying"] = "DeepFrying";
+    CookingTechnique["Steaming"] = "Steaming";
+    CookingTechnique["Mixed"] = "Mixed";
+    CookingTechnique["Freezing"] = "Freezing";
+    CookingTechnique["Grilling"] = "Grilling";
+})(CookingTechnique || (CookingTechnique = {}));
+export var TemperatureUnit;
+(function (TemperatureUnit) {
+    TemperatureUnit["Celsius"] = "Celsius";
+    TemperatureUnit["Fahrenheit"] = "Fahrenheit";
+    TemperatureUnit["GasMark"] = "GasMark";
+    TemperatureUnit["None"] = "None";
+})(TemperatureUnit || (TemperatureUnit = {}));
+export class IngredientModel {
+    name;
+    description;
+    groupName;
+    amount;
+    measurement;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
+            this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.description = _data["description"] !== undefined ? _data["description"] : null;
+            this.groupName = _data["groupName"] !== undefined ? _data["groupName"] : null;
+            this.amount = _data["amount"] !== undefined ? _data["amount"] : null;
+            this.measurement = _data["measurement"] !== undefined ? _data["measurement"] : null;
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new IngredientModel();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : null;
+        data["description"] = this.description !== undefined ? this.description : null;
+        data["groupName"] = this.groupName !== undefined ? this.groupName : null;
+        data["amount"] = this.amount !== undefined ? this.amount : null;
+        data["measurement"] = this.measurement !== undefined ? this.measurement : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new IngredientModel();
+        result.init(json);
+        return result;
+    }
+}
+export var Measurement;
+(function (Measurement) {
+    Measurement["Mass"] = "Mass";
+    Measurement["Volume"] = "Volume";
+    Measurement["Size"] = "Size";
+    Measurement["Pinch"] = "Pinch";
+    Measurement["Piece"] = "Piece";
+    Measurement["Unitless"] = "Unitless";
+})(Measurement || (Measurement = {}));
 export class StreamingEntryModel {
     id;
     season;

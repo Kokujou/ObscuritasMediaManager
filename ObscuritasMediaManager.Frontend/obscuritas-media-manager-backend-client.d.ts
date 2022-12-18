@@ -104,6 +104,16 @@ export declare class PlaylistClient {
     createPlaylist(name: string | null, trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
     protected processCreatePlaylist(response: Response): Promise<void>;
 }
+export declare class RecipeClient {
+    private http;
+    private baseUrl;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
+    constructor(baseUrl?: string, http?: {
+        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
+    });
+    getAllRecipes(signal?: AbortSignal | undefined): Promise<RecipeModel[]>;
+    protected processGetAllRecipes(response: Response): Promise<RecipeModel[]>;
+}
 export declare class StreamingClient {
     private http;
     private baseUrl;
@@ -319,6 +329,107 @@ export declare class UpdateRequestOfMusicModel implements IUpdateRequestOfMusicM
 export interface IUpdateRequestOfMusicModel {
     oldModel: MusicModel | null;
     newModel: MusicModel | null;
+}
+export declare class RecipeModel implements IRecipeModel {
+    title: string | null;
+    nation: Nation;
+    imageUrl: string | null;
+    difficulty: number;
+    rating: number;
+    course: Course;
+    mainIngredient: Ingredient;
+    technique: CookingTechnique;
+    temperatureUnit: TemperatureUnit;
+    preparationTime: string;
+    cookingTime: string;
+    totalTime: string;
+    ingredients: IngredientModel[] | null;
+    formattedText: string | null;
+    constructor(data?: IRecipeModel);
+    init(_data?: any): void;
+    static fromJS(data: any): RecipeModel;
+    toJSON(data?: any): any;
+    clone(): RecipeModel;
+}
+export interface IRecipeModel {
+    title: string | null;
+    nation: Nation;
+    imageUrl: string | null;
+    difficulty: number;
+    rating: number;
+    course: Course;
+    mainIngredient: Ingredient;
+    technique: CookingTechnique;
+    temperatureUnit: TemperatureUnit;
+    preparationTime: string;
+    cookingTime: string;
+    totalTime: string;
+    ingredients: IngredientModel[] | null;
+    formattedText: string | null;
+}
+export declare enum Course {
+    Starter = "Starter",
+    Main = "Main",
+    Side = "Side",
+    Desert = "Desert",
+    Salad = "Salad",
+    Soup = "Soup",
+    Drink = "Drink",
+    Snack = "Snack"
+}
+export declare enum Ingredient {
+    Meat = "Meat",
+    Noodles = "Noodles",
+    Rice = "Rice",
+    Bread = "Bread",
+    Fish = "Fish",
+    Vegetables = "Vegetables",
+    Fruits = "Fruits",
+    Sweets = "Sweets",
+    Miscellaneous = "Miscellaneous"
+}
+export declare enum CookingTechnique {
+    Boiling = "Boiling",
+    Baking = "Baking",
+    Frying = "Frying",
+    DeepFrying = "DeepFrying",
+    Steaming = "Steaming",
+    Mixed = "Mixed",
+    Freezing = "Freezing",
+    Grilling = "Grilling"
+}
+export declare enum TemperatureUnit {
+    Celsius = "Celsius",
+    Fahrenheit = "Fahrenheit",
+    GasMark = "GasMark",
+    None = "None"
+}
+export declare class IngredientModel implements IIngredientModel {
+    name: string | null;
+    description: string | null;
+    groupName: string | null;
+    amount: number;
+    measurement: Measurement;
+    constructor(data?: IIngredientModel);
+    init(_data?: any): void;
+    static fromJS(data: any): IngredientModel;
+    toJSON(data?: any): any;
+    clone(): IngredientModel;
+}
+export interface IIngredientModel {
+    name: string | null;
+    description: string | null;
+    groupName: string | null;
+    amount: number;
+    measurement: Measurement;
+}
+export declare enum Measurement {
+    Mass = "Mass",
+    Volume = "Volume",
+    Size = "Size",
+    Pinch = "Pinch",
+    Piece = "Piece",
+    Unitless = "Unitless"
 }
 export declare class StreamingEntryModel implements IStreamingEntryModel {
     id: string;
