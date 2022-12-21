@@ -10,6 +10,7 @@ export class EditableLabel extends LitElementBase {
     static get properties() {
         return {
             value: { type: String, reflect: true },
+            editEnabled: { type: Boolean, reflect: true },
             supportedCharacters: { type: String, reflect: true },
         };
     }
@@ -19,6 +20,13 @@ export class EditableLabel extends LitElementBase {
         /** @type {string} */ this.value;
         /** @type {boolean} */ this.editEnabled;
         /** @type {string} */ this.supportedCharacters = null;
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+        this.addEventListener('focusin', () => {
+            document.execCommand('selectAll');
+        });
     }
 
     render() {
@@ -45,16 +53,20 @@ export class EditableLabel extends LitElementBase {
     }
 
     revertChanges() {
-        /** @type {HTMLLabelElement} */ var input = this.shadowRoot.querySelector('#value-input');
-        input.innerText = this.value;
+        /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#value-input');
+        input.value = this.value;
         this.editEnabled = false;
         this.requestUpdate(undefined);
     }
 
     saveChanges() {
-        /** @type {HTMLLabelElement} */ var input = this.shadowRoot.querySelector('#value-input');
-        this.value = input.innerText;
+        /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#value-input');
+        this.value = input.value;
         this.dispatchCustomEvent('valueChanged', { value: this.value });
+        this.dispatchEvent(
+            new KeyboardEvent('keydown', { bubbles: true, composed: true, cancelable: true, key: 'Tab', code: 'Tab', keyCode: 9 })
+        );
+
         this.editEnabled = false;
         this.requestUpdate(undefined);
     }

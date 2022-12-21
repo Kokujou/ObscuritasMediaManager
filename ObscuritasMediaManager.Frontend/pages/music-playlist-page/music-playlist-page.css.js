@@ -269,6 +269,7 @@ export function renderMusicPlaylistStyles() {
 
         editable-label {
             padding: 10px;
+            --icon-size: 35px;
         }
     `;
 }

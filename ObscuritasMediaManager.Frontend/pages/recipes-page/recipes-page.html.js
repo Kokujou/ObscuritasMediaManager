@@ -17,6 +17,17 @@ export function renderRecipesPage(recipesPage) {
             >
                 <div id="items">
                     <div id="add-recipe-icon" @click="${() => changePage(getPageName(CreateRecipePage))}"></div>
+                    ${recipesPage.recipes.map(
+                        (x) =>
+                            html`
+                                <div
+                                    class="recipe-tile"
+                                    @click="${() => changePage(getPageName(CreateRecipePage), `?recipe=${x.id}`)}"
+                                >
+                                    ${x.title}
+                                </div>
+                            `
+                    )}
                 </div>
             </paginated-scrolling>
         </page-layout>

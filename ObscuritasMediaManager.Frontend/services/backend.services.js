@@ -6,6 +6,7 @@ import {
     MediaClient,
     MusicClient,
     PlaylistClient,
+    RecipeClient,
     StreamingClient,
 } from '../obscuritas-media-manager-backend-client.js';
 import { AuthenticatedRequestService } from './authenticated-request.service.js';
@@ -21,3 +22,4 @@ export const PlaylistService = new PlaylistClient(baseUrl, authenticatedRequestS
 export const GenreService = new GenreClient(baseUrl, authenticatedRequestService);
 export const CleanupService = new CleanupClient(baseUrl, authenticatedRequestService);
 export const LoginService = new LoginClient(baseUrl, authenticatedRequestService);
+export const RecipeService = new RecipeClient(baseUrl, authenticatedRequestService);

@@ -7,7 +7,11 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 export function renderEditableLabelStyles() {
     return css`
         :host {
-            --default-label-height: var(--label-height, 35px);
+            --default-label-height: var(--label-height, auto);
+        }
+
+        :host(:focus-within) {
+            background: red;
         }
 
         #editable-label {
@@ -22,10 +26,10 @@ export function renderEditableLabelStyles() {
         }
 
         .icon {
-            min-height: var(--default-label-height);
-            min-width: var(--default-label-height);
-            max-height: var(--default-label-height);
-            max-width: var(--default-label-height);
+            min-height: var(--icon-size);
+            min-width: var(--icon-size);
+            max-height: var(--icon-size);
+            max-width: var(--icon-size);
             background-color: var(--font-color, black);
 
             cursor: pointer;
@@ -50,7 +54,10 @@ export function renderEditableLabelStyles() {
 
         #value-input {
             outline: none;
+            background: transparent;
+            color: inherit;
             font: inherit;
+            border: none;
             border-bottom: 1px solid;
 
             overflow: auto;

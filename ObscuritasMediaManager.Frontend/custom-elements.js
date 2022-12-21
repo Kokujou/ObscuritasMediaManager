@@ -1,6 +1,7 @@
 import { AudioTileBase } from './advanced-components/audio-tile-base/audio-tile-base.js';
 import { AudioTile } from './advanced-components/audio-tile-base/audio-tile/audio-tile.js';
 import { DualSlider } from './advanced-components/dual-slider/dual-slider.js';
+import { DurationInput } from './advanced-components/duration-input/duration-input.js';
 import { ExpandableDropdown } from './advanced-components/expandible-dropdown/expandable-dropdown.js';
 import { ImageTile } from './advanced-components/image-tile/image-tile.js';
 import { LanguageSwitcher } from './advanced-components/language-switcher/language-switcher.js';
@@ -111,3 +112,4 @@ window.customElements.define('message-snackbar', MessageSnackbar);
 window.customElements.define('recipes-page', RecipesPage);
 window.customElements.define('create-recipe-page', CreateRecipePage);
 window.customElements.define('grouped-dropdown', GroupedDropdown);
+window.customElements.define('duration-input', DurationInput);

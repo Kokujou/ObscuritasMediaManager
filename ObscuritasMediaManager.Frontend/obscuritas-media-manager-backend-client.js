@@ -1119,6 +1119,80 @@ export class RecipeClient {
         }
         return Promise.resolve(null);
     }
+    createRecipe(recipe, signal) {
+        let url_ = this.baseUrl + "/api/Recipe";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(recipe);
+        let options_ = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processCreateRecipe(_response);
+        });
+    }
+    processCreateRecipe(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    getRecipe(id, signal) {
+        let url_ = this.baseUrl + "/api/Recipe/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetRecipe(_response);
+        });
+    }
+    processGetRecipe(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = RecipeModel.fromJS(resultData200);
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
 }
 export class StreamingClient {
     http;
@@ -1658,6 +1732,7 @@ export class UpdateRequestOfMusicModel {
     }
 }
 export class RecipeModel {
+    id;
     title;
     nation;
     imageUrl;
@@ -1682,6 +1757,7 @@ export class RecipeModel {
     }
     init(_data) {
         if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.title = _data["title"] !== undefined ? _data["title"] : null;
             this.nation = _data["nation"] !== undefined ? _data["nation"] : null;
             this.imageUrl = _data["imageUrl"] !== undefined ? _data["imageUrl"] : null;
@@ -1713,6 +1789,7 @@ export class RecipeModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : null;
         data["title"] = this.title !== undefined ? this.title : null;
         data["nation"] = this.nation !== undefined ? this.nation : null;
         data["imageUrl"] = this.imageUrl !== undefined ? this.imageUrl : null;
@@ -1782,6 +1859,8 @@ export var TemperatureUnit;
     TemperatureUnit["None"] = "None";
 })(TemperatureUnit || (TemperatureUnit = {}));
 export class IngredientModel {
+    id;
+    recipeId;
     name;
     description;
     groupName;
@@ -1797,6 +1876,8 @@ export class IngredientModel {
     }
     init(_data) {
         if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : null;
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null;
             this.name = _data["name"] !== undefined ? _data["name"] : null;
             this.description = _data["description"] !== undefined ? _data["description"] : null;
             this.groupName = _data["groupName"] !== undefined ? _data["groupName"] : null;
@@ -1812,6 +1893,8 @@ export class IngredientModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : null;
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null;
         data["name"] = this.name !== undefined ? this.name : null;
         data["description"] = this.description !== undefined ? this.description : null;
         data["groupName"] = this.groupName !== undefined ? this.groupName : null;

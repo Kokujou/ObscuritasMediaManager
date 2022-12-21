@@ -43,13 +43,13 @@ export function renderUploadAreaStyles() {
         }
 
         #image-container:focus-within #add-icon,
-        #image-container#focus #add-icon {
+        #image-container:focus #add-icon {
             opacity: 0;
             pointer-events: none;
         }
 
         #image-container:focus-within #upload-description,
-        #image-container#focus #upload-description {
+        #image-container:focus #upload-description {
             opacity: 1;
             pointer-events: all;
         }
@@ -68,7 +68,6 @@ export function renderUploadAreaStyles() {
             flex-direction: column;
 
             padding: 10px;
-            margin-right: 60px;
 
             opacity: 1;
             position: absolute;

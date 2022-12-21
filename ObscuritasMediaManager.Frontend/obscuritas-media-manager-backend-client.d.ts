@@ -113,6 +113,10 @@ export declare class RecipeClient {
     });
     getAllRecipes(signal?: AbortSignal | undefined): Promise<RecipeModel[]>;
     protected processGetAllRecipes(response: Response): Promise<RecipeModel[]>;
+    createRecipe(recipe: RecipeModel, signal?: AbortSignal | undefined): Promise<void>;
+    protected processCreateRecipe(response: Response): Promise<void>;
+    getRecipe(id: string, signal?: AbortSignal | undefined): Promise<RecipeModel>;
+    protected processGetRecipe(response: Response): Promise<RecipeModel>;
 }
 export declare class StreamingClient {
     private http;
@@ -331,6 +335,7 @@ export interface IUpdateRequestOfMusicModel {
     newModel: MusicModel | null;
 }
 export declare class RecipeModel implements IRecipeModel {
+    id: string;
     title: string | null;
     nation: Nation;
     imageUrl: string | null;
@@ -352,6 +357,7 @@ export declare class RecipeModel implements IRecipeModel {
     clone(): RecipeModel;
 }
 export interface IRecipeModel {
+    id: string;
     title: string | null;
     nation: Nation;
     imageUrl: string | null;
@@ -405,6 +411,8 @@ export declare enum TemperatureUnit {
     None = "None"
 }
 export declare class IngredientModel implements IIngredientModel {
+    id: string;
+    recipeId: string;
     name: string | null;
     description: string | null;
     groupName: string | null;
@@ -417,6 +425,8 @@ export declare class IngredientModel implements IIngredientModel {
     clone(): IngredientModel;
 }
 export interface IIngredientModel {
+    id: string;
+    recipeId: string;
     name: string | null;
     description: string | null;
     groupName: string | null;

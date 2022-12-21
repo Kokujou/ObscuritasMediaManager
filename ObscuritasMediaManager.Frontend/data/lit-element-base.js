@@ -19,9 +19,11 @@ export class LitElementBase extends LitElement {
 
     /**
      * @param {Event} event
+     * @param {HTMLElement} [target]
      */
-    redispatchEvent(event) {
-        this.dispatchEvent(new Event(event.type, { bubbles: true, composed: true }));
+    redispatchEvent(event, target = null) {
+        target ??= this;
+        target.dispatchEvent(new Event(event.type, { bubbles: true, composed: true }));
     }
 
     disconnectedCallback() {

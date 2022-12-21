@@ -1,5 +1,7 @@
 import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { css } from '../../exports.js';
+import { importIcon } from '../../resources/icons/general/import-icon.svg.js';
+import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderCreateRecipePageStyles() {
     return css`
@@ -9,17 +11,38 @@ export function renderCreateRecipePageStyles() {
             font-size: 18px;
         }
 
+        #page-container {
+            position: absolute;
+            inset: 0;
+            border-radius: 50px;
+            margin-left: 10px;
+            overflow: hidden;
+
+            background: #222;
+        }
+
         #create-recipe-form {
+            position: absolute;
+            inset: 10px;
+            top: 25px;
+            bottom: 25px;
+            padding: 50px;
+            margin: 0 !important;
             display: flex;
             flex-direction: column;
-            margin: 50px;
-            max-width: 100%;
+
+            overflow-y: scroll;
+            overflow-x: hidden;
+            scrollbar-width: thin;
         }
 
         #title {
-            display: flex;
+            display: inline-flex;
             font-size: 36px;
             margin-bottom: 50px;
+            max-width: 800px;
+            width: 800px;
+            --label-height: auto;
         }
 
         #image-ingredients-container {
@@ -77,8 +100,13 @@ export function renderCreateRecipePageStyles() {
 
         #add-ingredient-link,
         #add-group-link {
+            font: inherit;
             font-weight: bold;
             cursor: pointer;
+            background: none;
+            border: none;
+            color: inherit;
+            align-self: flex-start;
         }
 
         #add-ingredient-link:hover,
@@ -89,7 +117,6 @@ export function renderCreateRecipePageStyles() {
 
         #image-container {
             position: relative;
-            background: black;
 
             width: 500px;
             min-width: 500px;
@@ -97,6 +124,49 @@ export function renderCreateRecipePageStyles() {
             min-height: 500px;
             top: 0;
             right: 0;
+
+            display: flex;
+            align-items: center;
+        }
+
+        #image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+
+            cursor: pointer;
+        }
+
+        #image:not(:hover)[set] upload-area {
+            display: none;
+            pointer-events: none;
+        }
+
+        #image[set]:hover upload-area {
+            background: #0006;
+        }
+
+        upload-area {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            border-radius: 20px;
+        }
+
+        #empty-image-placeholder {
+            position: absolute;
+            inset: 100px;
+            background: white;
+
+            cursor: pointer;
+            ${renderMaskImage(importIcon())};
         }
 
         #rating {
@@ -104,6 +174,8 @@ export function renderCreateRecipePageStyles() {
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
+
+            filter: drop-shadow(5px 5px 5px black);
         }
 
         #difficulty {
@@ -111,6 +183,7 @@ export function renderCreateRecipePageStyles() {
             left: 0;
             top: 50%;
             transform: translateY(-50%);
+            filter: drop-shadow(5px 5px 5px black);
         }
 
         #nation-icon {
@@ -156,8 +229,8 @@ export function renderCreateRecipePageStyles() {
         }
 
         editable-label {
-            --text-padding: 5px 10px;
-            --label-height: 25px;
+            --text-padding: 10px 10px;
+            --icon-size: 25px;
             max-width: 300px;
         }
 

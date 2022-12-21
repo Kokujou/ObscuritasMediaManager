@@ -19,6 +19,7 @@ public class DatabaseContext : DbContext
     public DbSet<InstrumentModel> Instruments { get; set; }
     public DbSet<UserModel> Users { get; set; }
     public DbSet<PlaylistEntryModel> PlaylistEntries { get; set; }
+    public DbSet<RecipeModel> Recipes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,6 +43,8 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<GenreModel>();
 
         modelBuilder.Entity<InstrumentModel>();
+
+        RecipeModel.Configure(modelBuilder);
 
         modelBuilder.AddEnumConversion();
     }

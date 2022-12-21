@@ -1,5 +1,15 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { IngredientModel, Measurement, RecipeModel, TemperatureUnit } from '../../obscuritas-media-manager-backend-client.js';
+import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
+import {
+    IngredientModel,
+    Measurement,
+    Nation,
+    RecipeModel,
+    TemperatureUnit,
+} from '../../obscuritas-media-manager-backend-client.js';
+import { RecipeService } from '../../services/backend.services.js';
+import { changePage, getPageName, getQueryValue } from '../../services/extensions/url.extension.js';
+import { RecipesPage } from '../recipes-page/recipes-page.js';
 import { renderCreateRecipePageStyles } from './create-recipe-page.css.js';
 import { renderCreateRecipePage } from './create-recipe-page.html.js';
 
@@ -14,8 +24,11 @@ export class CreateRecipePage extends LitElementBase {
 
     get emptyGroup() {
         var counter = 0;
+
         var defaultGroupName = 'Neue Gruppe';
         var defaultIngredient = new IngredientModel({
+            id: crypto.randomUUID(),
+            recipeId: crypto.randomUUID(),
             amount: 0,
             description: 'Zutat-Beschreibung',
             groupName: 'Neue Gruppe',
@@ -36,27 +49,52 @@ export class CreateRecipePage extends LitElementBase {
         document.title = 'Rezept erstellen';
 
         /** @type {RecipeModel} */ this.recipe = new RecipeModel();
+        this.recipe.id = crypto.randomUUID();
         this.recipe.title = 'Rezepttitel';
-        this.recipe.temperatureUnit = TemperatureUnit.Celsius;
+        this.recipe.temperatureUnit = TemperatureUnit.None;
         this.recipe.ingredients = [];
+        this.recipe.nation = Nation.Unset;
+        this.recipe.difficulty = 0;
+        this.recipe.rating = 0;
+        this.recipe.formattedText = 'Dein Rezept-Text';
         this.recipe.ingredients.push(this.emptyGroup);
+    }
+
+    async connectedCallback() {
+        super.connectedCallback();
+
+        var requestedRecipeId = getQueryValue('recipe');
+        if (requestedRecipeId) {
+            this.recipe = await RecipeService.getRecipe(requestedRecipeId);
+            await this.requestUpdate(undefined);
+        }
     }
 
     render() {
         return renderCreateRecipePage(this);
     }
 
-    addGroup() {
+    /**
+     * @param {Event} event
+     */
+    addGroup(event) {
+        event.stopPropagation();
+        event.preventDefault();
         this.recipe.ingredients.push(this.emptyGroup);
         this.requestUpdate(undefined);
     }
 
     /**
      * @param {string} group
+     * @param {Event} event
      */
-    addIngredient(group) {
+    addIngredient(group, event) {
+        event.stopPropagation();
+        event.preventDefault();
         this.recipe.ingredients.push(
             new IngredientModel({
+                id: crypto.randomUUID(),
+                recipeId: crypto.randomUUID(),
                 amount: 0,
                 description: 'Zutat-Beschreibung',
                 groupName: group,
@@ -89,12 +127,33 @@ export class CreateRecipePage extends LitElementBase {
     }
 
     /**
+     * @param {string} imageData
+     */
+    notifyImageAdded(imageData) {
+        this.recipe.imageUrl = imageData;
+        this.requestUpdate(undefined);
+    }
+
+    /**
      * @param {SubmitEvent} event
      */
-    submit(event) {
-        console.log(this.recipe);
+    async submit(event) {
         event.preventDefault();
         event.stopPropagation();
+
+        if (
+            !this.recipe.course ||
+            !this.recipe.course ||
+            !this.recipe.mainIngredient ||
+            !this.recipe.technique ||
+            !this.recipe.temperatureUnit
+        ) {
+            MessageSnackbar.popup('Bitte alle notwendigen Informationen ausfüllen.', 'error');
+            return;
+        }
+
+        await RecipeService.createRecipe(this.recipe);
+        changePage(getPageName(RecipesPage));
     }
 
     abort() {

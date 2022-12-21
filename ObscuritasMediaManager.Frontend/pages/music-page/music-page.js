@@ -114,7 +114,13 @@ export class MusicPage extends LitElementBase {
                 this.requestUpdate(undefined);
             }),
             session.currentPage.subscribe((nextPage) => {
-                if (this.audioElement.paused || nextPage == 'music' || nextPage == 'music-playlist') return;
+                if (
+                    this.audioElement.paused ||
+                    this.audioElement.currentTime > 0 ||
+                    nextPage == 'music' ||
+                    nextPage == 'music-playlist'
+                )
+                    return;
 
                 PlayMusicDialog.show(this.currentTrack, this.currentVolumne, this.audioElement?.currentTime ?? 0);
             })

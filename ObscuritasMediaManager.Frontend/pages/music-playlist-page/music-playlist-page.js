@@ -126,8 +126,6 @@ export class MusicPlaylistPage extends LitElementBase {
         this.updatedTrack = Object.assign(new ExtendedMusicModel(), this.playlist[this.currentTrackIndex]);
         await this.requestUpdate(undefined);
 
-        /** @type {FallbackAudio} */ var fallbackElement = this.shadowRoot.querySelector('fallback-audio');
-
         this.audioElement.addEventListener('error', (e) => {
             if (!this.audioElement.error?.code) return;
             console.error(`an error occured while playing the audio file: code ${this.audioElement.error.code}`);

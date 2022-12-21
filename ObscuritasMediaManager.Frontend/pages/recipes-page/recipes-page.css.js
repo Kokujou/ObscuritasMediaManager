@@ -33,6 +33,8 @@ export function renderRecipesPageStyles() {
 
         #items {
             margin: 100px 50px 0 50px;
+            display: flex;
+            flex-direction: row;
         }
 
         #add-recipe-icon {
@@ -43,6 +45,13 @@ export function renderRecipesPageStyles() {
 
             background: gray;
             ${renderMaskImage(plusIcon())};
+        }
+
+        .recipe-tile {
+            width: 200px;
+            height: 200px;
+
+            cursor: pointer;
         }
     `;
 }

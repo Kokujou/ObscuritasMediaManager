@@ -3,6 +3,10 @@ import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
 import { FileService } from '../backend.services.js';
 import { openFileDialog } from './document.extensions.js';
 
+/**
+ * @param {File} file
+ * @returns
+ */
 export function fileToDataUrl(file) {
     return new Promise((resolve, reject) => {
         var fileReader = new FileReader();

@@ -1,7 +1,8 @@
-import { session } from '../../data/session.js';
 import { html } from '../../exports.js';
 import { importIcon } from '../../resources/icons/general/import-icon.svg.js';
 import { plusIcon } from '../../resources/icons/general/plus-icon.svg.js';
+import { getPageName } from '../../services/extensions/url.extension.js';
+import { MediaDetailPage } from '../media-detail-page/media-detail-page.js';
 import { MediaPage } from './media-page.js';
 
 /**
@@ -38,7 +39,7 @@ export function renderMediaPageTemplate(mediaPage) {
                     ${mediaPage.filteredMedia.map(
                         (media) =>
                             html`
-                                <link-element .hash="${session.currentPage.current()}" .search="guid=${media.id}">
+                                <link-element .hash="${getPageName(MediaDetailPage)}" .search="guid=${media.id}">
                                     <media-tile
                                         .genres="${media.genres || []}"
                                         .name="${media.name}"

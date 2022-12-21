@@ -25,7 +25,7 @@ export class UploadArea extends LitElementBase {
 
     setFocusToContainer(event) {
         event.stopPropagation();
-        var el = this.shadowRoot.querySelector('.upload-description');
+        var el = this.shadowRoot.querySelector('#upload-description');
         var range = document.createRange();
         var sel = window.getSelection();
 
@@ -65,7 +65,7 @@ export class UploadArea extends LitElementBase {
      */
     dragOver(event) {
         event.preventDefault();
-        var targetElementClasses = this.shadowRoot.querySelector('.image-container').classList;
+        var targetElementClasses = this.shadowRoot.querySelector('#image-container').classList;
         if (!targetElementClasses.contains('focus')) targetElementClasses.add('focus');
     }
 
@@ -74,7 +74,7 @@ export class UploadArea extends LitElementBase {
      */
     dragLeave(event) {
         event.preventDefault();
-        var targetElementClasses = this.shadowRoot.querySelector('.image-container').classList;
+        var targetElementClasses = this.shadowRoot.querySelector('#image-container').classList;
         if (targetElementClasses.contains('focus')) targetElementClasses.remove('focus');
     }
 
@@ -94,7 +94,9 @@ export class UploadArea extends LitElementBase {
      */
     async processImageDataTransfer(dataTransfer) {
         try {
-            var selectedImageData = await fileToDataUrl(dataTransfer.files[0]);
+            if (dataTransfer.files[0])
+                var selectedImageData = await fileToDataUrl(dataTransfer.files[0] ?? dataTransfer.items[0]?.getAsFile());
+            else selectedImageData = dataTransfer.getData('text');
             this.notifyImageAdded(selectedImageData);
         } catch (err) {
             console.error(err);

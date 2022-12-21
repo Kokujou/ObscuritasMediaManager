@@ -1,9 +1,14 @@
-﻿using ObscuritasMediaManager.Backend.Data.Food;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using ObscuritasMediaManager.Backend.Data.Food;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
+[Table("Ingredients", Schema = "dbo")]
 public class IngredientModel
 {
+    [Key] public Guid Id { get; set; }
+    public Guid RecipeId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public string GroupName { get; set; }

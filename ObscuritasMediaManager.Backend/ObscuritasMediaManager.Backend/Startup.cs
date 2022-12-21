@@ -23,6 +23,7 @@ public class Startup
         services.AddScoped<MusicRepository>();
         services.AddScoped<UserRepository>();
         services.AddScoped<PlaylistRepository>();
+        services.AddScoped<RecipeRepository>();
 
         services.AddDbContext<DatabaseContext>(x => x.UseSqlite(@"Data Source=database.sqlite"));
 
@@ -37,7 +38,7 @@ public class Startup
                 new JsonStringEnumConverter());
         });
 
-        JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+        JsonConvert.DefaultSettings = () => new()
         {
             ContractResolver = new DefaultContractResolver
             {
@@ -65,7 +66,8 @@ public class Startup
             var exception = exceptionHandlerPathFeature?.Error;
             context.Response.StatusCode = 400;
 
-            await context.Response.WriteAsJsonAsync(new { Reason = exception?.Message });
+            await context.Response.WriteAsJsonAsync(new
+                { Reason = exception?.Message, InnerException = exception?.InnerException?.Message });
         }));
 
         app.UseCors("all");

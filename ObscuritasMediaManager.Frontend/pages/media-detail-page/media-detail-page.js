@@ -9,6 +9,10 @@ import { renderMediaDetailPageStyles } from './media-detail-page.css.js';
 import { renderMediaDetailPage } from './media-detail-page.html.js';
 
 export class MediaDetailPage extends LitElementBase {
+    static get isPage() {
+        return true;
+    }
+
     static get styles() {
         return renderMediaDetailPageStyles();
     }
