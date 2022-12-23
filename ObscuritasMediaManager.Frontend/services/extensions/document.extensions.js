@@ -55,3 +55,31 @@ export function openFileDialog(selectFolders = false) {
         fileInput.focus();
     });
 }
+
+const focusableElements = ['a', 'input', 'button'];
+
+/**
+ * @param {Element} currentElement
+ */
+export function getNextFocusableElement(currentElement) {
+    var allElements = getAllElementsRecurse(document.body);
+    var elementChildren = [
+        ...(currentElement.querySelectorAll('*') ?? []),
+        ...(currentElement.shadowRoot.querySelectorAll('*') ?? []),
+    ];
+    var nextElements = allElements
+        .slice(allElements.indexOf(/** @type {HTMLElement} */ (currentElement)) + 1)
+        .filter((x) => !elementChildren.includes(x));
+    return nextElements.find((x) => focusableElements.includes(x.tagName) || x.hasAttribute('tabindex'));
+}
+
+/**
+ * @param {HTMLElement} start
+ * @param {HTMLElement[]} array
+ */
+export function getAllElementsRecurse(start, array = []) {
+    array.push(start);
+    var children = [...(start.children ?? []), ...(start.shadowRoot?.children ?? [])];
+    for (var child of children) getAllElementsRecurse(/** @type {HTMLElement} */ (child), array);
+    return array;
+}

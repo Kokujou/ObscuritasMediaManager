@@ -1850,6 +1850,7 @@ export var CookingTechnique;
     CookingTechnique["Mixed"] = "Mixed";
     CookingTechnique["Freezing"] = "Freezing";
     CookingTechnique["Grilling"] = "Grilling";
+    CookingTechnique["Raw"] = "Raw";
 })(CookingTechnique || (CookingTechnique = {}));
 export var TemperatureUnit;
 (function (TemperatureUnit) {

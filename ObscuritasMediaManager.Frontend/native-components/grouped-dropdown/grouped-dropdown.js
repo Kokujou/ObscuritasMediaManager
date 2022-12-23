@@ -20,10 +20,20 @@ export class GroupedDropdown extends LitElementBase {
         };
     }
 
+    get results() {
+        return Object.entries(this.options)
+            .map((x) => x[1].map((y) => /** @type {GroupedDropdownResult} */ ({ category: x[0], value: y })))
+            .flatMap((x) => x);
+    }
+
+    /** @type {GroupedDropdownResult} */
     get result() {
         return this._result;
     }
 
+    /**
+     * @param {GroupedDropdownResult} value
+     */
     set result(value) {
         this._result = value;
         this.dispatchCustomEvent('selectionChange', this._result);
@@ -36,7 +46,28 @@ export class GroupedDropdown extends LitElementBase {
         /** @type {DropdownCategories} */ this.options;
         /** @type {boolean} */ this.showDropDown;
         /** @type {number} */ this.maxDisplayDepth = 5;
-        /** @type {GroupedDropdownResult} */ this._result = {};
+        this._result = /** @type {GroupedDropdownResult} */ ({ category: null, value: null });
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+
+        this.addEventListener('keydown', (e) => {
+            if (e.key != 'ArrowUp' && e.key != 'ArrowDown') return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            var index = this.results.findIndex((x) => x.value == this.result.value);
+
+            if (e.key == 'ArrowUp') index--;
+            else if (e.key == 'ArrowDown') index++;
+
+            if (index < 0) index = this.results.length - 1;
+            if (index >= this.results.length) index = 0;
+
+            this.result = this.results[index];
+        });
     }
 
     render() {

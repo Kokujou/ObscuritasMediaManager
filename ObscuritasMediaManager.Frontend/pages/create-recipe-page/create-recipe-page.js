@@ -8,6 +8,7 @@ import {
     TemperatureUnit,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { RecipeService } from '../../services/backend.services.js';
+import { getNextFocusableElement } from '../../services/extensions/document.extensions.js';
 import { changePage, getPageName, getQueryValue } from '../../services/extensions/url.extension.js';
 import { RecipesPage } from '../recipes-page/recipes-page.js';
 import { renderCreateRecipePageStyles } from './create-recipe-page.css.js';
@@ -68,6 +69,13 @@ export class CreateRecipePage extends LitElementBase {
             this.recipe = await RecipeService.getRecipe(requestedRecipeId);
             await this.requestUpdate(undefined);
         }
+
+        window.addEventListener('keyup', (e) => {
+            if (e.key != 'Enter') return;
+
+            console.log('next element', getNextFocusableElement(this.shadowRoot.activeElement));
+            getNextFocusableElement(this.shadowRoot.activeElement).focus();
+        });
     }
 
     render() {

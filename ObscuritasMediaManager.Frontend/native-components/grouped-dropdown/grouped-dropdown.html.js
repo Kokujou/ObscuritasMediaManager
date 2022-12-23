@@ -24,6 +24,7 @@ export function renderGroupedDropdown(dropdown) {
             </div>
             <div
                 class="options"
+                tabindex="-1"
                 @scroll="${(e) => dropdown.scroll(e)}"
                 style="display: ${dropdown.showDropDown ? 'block' : 'none'}"
             >
@@ -57,7 +58,7 @@ function renderDropdownSection(dropdown, section, values) {
 function renderDropDownOption(dropdown, value) {
     return html`
         <div
-            ?selected="${dropdown.result.value == value}"
+            ?selected="${dropdown.result.value == value.value}"
             class="option"
             .value="${value}"
             @click=${() => (dropdown.result = value)}

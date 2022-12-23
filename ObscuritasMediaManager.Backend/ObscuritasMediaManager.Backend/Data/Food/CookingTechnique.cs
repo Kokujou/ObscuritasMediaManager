@@ -9,5 +9,6 @@ public enum CookingTechnique
     Steaming,
     Mixed,
     Freezing,
-    Grilling
+    Grilling,
+    Raw
 }

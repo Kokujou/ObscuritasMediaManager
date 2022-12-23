@@ -15,11 +15,17 @@ export class EditableLabel extends LitElementBase {
         };
     }
 
+    get inputField() {
+        return (this._inputField ??= this.shadowRoot.querySelector('input'));
+    }
+
     constructor() {
         super();
         /** @type {string} */ this.value;
         /** @type {boolean} */ this.editEnabled;
         /** @type {string} */ this.supportedCharacters = null;
+
+        this._inputField = null;
     }
 
     connectedCallback() {
@@ -53,15 +59,13 @@ export class EditableLabel extends LitElementBase {
     }
 
     revertChanges() {
-        /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#value-input');
-        input.value = this.value;
+        this.inputField.value = this.value;
         this.editEnabled = false;
         this.requestUpdate(undefined);
     }
 
     saveChanges() {
-        /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#value-input');
-        this.value = input.value;
+        this.value = this.inputField.value;
         this.dispatchCustomEvent('valueChanged', { value: this.value });
         this.dispatchEvent(
             new KeyboardEvent('keydown', { bubbles: true, composed: true, cancelable: true, key: 'Tab', code: 'Tab', keyCode: 9 })
@@ -78,5 +82,14 @@ export class EditableLabel extends LitElementBase {
         event.preventDefault();
         var text = event.clipboardData.getData('text/plain');
         document.execCommand('insertHTML', false, text);
+    }
+
+    /**
+     *
+     * @param {FocusOptions} options
+     */
+    focus(options) {
+        super.focus(options);
+        this.inputField.focus(options);
     }
 }

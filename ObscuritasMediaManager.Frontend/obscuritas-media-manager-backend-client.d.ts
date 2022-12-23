@@ -402,7 +402,8 @@ export declare enum CookingTechnique {
     Steaming = "Steaming",
     Mixed = "Mixed",
     Freezing = "Freezing",
-    Grilling = "Grilling"
+    Grilling = "Grilling",
+    Raw = "Raw"
 }
 export declare enum TemperatureUnit {
     Celsius = "Celsius",
