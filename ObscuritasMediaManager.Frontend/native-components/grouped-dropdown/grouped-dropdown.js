@@ -26,33 +26,28 @@ export class GroupedDropdown extends LitElementBase {
             .flatMap((x) => x);
     }
 
-    /** @type {GroupedDropdownResult} */
-    get result() {
-        return this._result;
-    }
-
-    /**
-     * @param {GroupedDropdownResult} value
-     */
-    set result(value) {
-        this._result = value;
-        this.dispatchCustomEvent('selectionChange', this._result);
-        this.requestUpdate(undefined);
-    }
-
     constructor() {
         super();
 
         /** @type {DropdownCategories} */ this.options;
         /** @type {boolean} */ this.showDropDown;
         /** @type {number} */ this.maxDisplayDepth = 5;
-        this._result = /** @type {GroupedDropdownResult} */ ({ category: null, value: null });
+        /** @type {string} */ this.search = '';
+        this.result = /** @type {GroupedDropdownResult} */ ({ category: null, value: null });
     }
 
     connectedCallback() {
         super.connectedCallback();
 
+        this.searchResetCallback = setTimeout(() => (this.search = ''), 1000);
         this.addEventListener('keydown', (e) => {
+            if (e.key.length == 1) {
+                this.search += e.key;
+                clearTimeout(this.searchResetCallback);
+                this.searchResetCallback = setTimeout(() => (this.search = ''), 1000);
+                this.result = this.results.find((x) => x.value.toLowerCase().startsWith(this.search.toLowerCase()));
+            }
+
             if (e.key != 'ArrowUp' && e.key != 'ArrowDown') return;
 
             e.preventDefault();
@@ -68,6 +63,17 @@ export class GroupedDropdown extends LitElementBase {
 
             this.result = this.results[index];
         });
+    }
+
+    /**
+     * @param {Map<string,any>} _changedProperties
+     */
+    updated(_changedProperties) {
+        super.updated(_changedProperties);
+        if (_changedProperties.has('result')) {
+            this.dispatchCustomEvent('selectionChange', this.result);
+            this.requestUpdate(undefined);
+        }
     }
 
     render() {

@@ -13,10 +13,10 @@ export function randomizeArray(array) {
 /**
  * @template T
  * @param {T[]} array
- * @param {keyof T} property
+ * @param {(item: T)=> any} selector
  */
-export function sortyBy(array, property) {
-    return array.sort((a, b) => (a[property] > b[property] ? 1 : a[property] === b[property] ? 0 : -1));
+export function sortBy(array, selector) {
+    return array.sort((a, b) => (selector(a) > selector(b) ? 1 : selector(a) === selector(b) ? 0 : -1));
 }
 
 /**
@@ -42,4 +42,9 @@ export function groupBy(array, key) {
         (rv[x[key]] = rv[x[key]] || []).push(x);
         return rv;
     }, /** @type {any} */ ({}));
+}
+
+export function createRange(from, to) {
+    var diff = to - from;
+    return [...new Array(diff + 1).keys()].map((x) => x + from);
 }

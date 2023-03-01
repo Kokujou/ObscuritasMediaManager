@@ -1,4 +1,5 @@
 import { html } from '../../exports.js';
+import { createRange } from '../../services/extensions/array.extensions.js';
 import { StarRating } from './star-rating.js';
 
 /**
@@ -14,7 +15,7 @@ export function renderStarRating(starRating) {
               </style>`
             : ''}
         <div id="star-container">
-            ${[...new Array(starRating.max).keys()].map(
+            ${createRange(0, starRating.max - 1).map(
                 (x) =>
                     html`<div
                         class="star"

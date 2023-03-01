@@ -10,10 +10,6 @@ export function renderEditableLabelStyles() {
             --default-label-height: var(--label-height, auto);
         }
 
-        :host(:focus-within) {
-            background: red;
-        }
-
         #editable-label {
             position: relative;
             width: 100%;

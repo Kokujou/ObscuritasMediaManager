@@ -16,16 +16,21 @@ export function renderRecipesPage(recipesPage) {
                 @scrollBottom="${() => recipesPage.loadMoreItems()}"
             >
                 <div id="items">
-                    <div id="add-recipe-icon" @click="${() => changePage(getPageName(CreateRecipePage))}"></div>
+                    <div
+                        id="add-recipe-icon"
+                        class="recipe-tile"
+                        @click="${() => changePage(getPageName(CreateRecipePage))}"
+                    ></div>
                     ${recipesPage.recipes.map(
                         (x) =>
                             html`
-                                <div
+                                <recipe-tile
                                     class="recipe-tile"
+                                    .recipe="${x}"
                                     @click="${() => changePage(getPageName(CreateRecipePage), `?recipe=${x.id}`)}"
                                 >
                                     ${x.title}
-                                </div>
+                                </recipe-tile>
                             `
                     )}
                 </div>

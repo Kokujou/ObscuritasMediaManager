@@ -83,3 +83,31 @@ export function getAllElementsRecurse(start, array = []) {
     for (var child of children) getAllElementsRecurse(/** @type {HTMLElement} */ (child), array);
     return array;
 }
+
+/**
+ * @param {HTMLElement} element
+ */
+export function cloneElementAsFixed(element) {
+    var clonedElement = /** @type {HTMLElement} */ (element.cloneNode(true));
+    var elementBoundingRect = element.getBoundingClientRect();
+
+    clonedElement.style.left = elementBoundingRect.left + 'px';
+    clonedElement.style.top = elementBoundingRect.top + 5 + 'px';
+    clonedElement.style.position = 'fixed';
+    clonedElement.style.pointerEvents = 'none';
+
+    return clonedElement;
+}
+
+/**
+ * @param {number} cursorY
+ * @param {NodeListOf<Element>} elements
+ */
+export function findElementIndexMatchingCursorY(cursorY, elements) {
+    for (const [index, element] of elements.entries()) {
+        var boundingRect = element.getBoundingClientRect();
+        if (index == 0 && cursorY < boundingRect.top) return 0;
+        if (cursorY > boundingRect.top && cursorY < boundingRect.bottom) return index;
+    }
+    return elements.length - 1;
+}

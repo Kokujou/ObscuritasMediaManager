@@ -1,14 +1,8 @@
 import { ExtendedIngredientUnit } from '../../data/enumerations/extended-ingerdient-unit.js';
 import { TimeSpan } from '../../data/timespan.js';
 import { html } from '../../exports.js';
-import {
-    CookingTechnique,
-    Course,
-    Ingredient,
-    IngredientModel,
-    TemperatureUnit,
-} from '../../obscuritas-media-manager-backend-client.js';
-import { groupBy } from '../../services/extensions/array.extensions.js';
+import { CookingTechnique, Course, Ingredient, IngredientModel } from '../../obscuritas-media-manager-backend-client.js';
+import { createRange, groupBy } from '../../services/extensions/array.extensions.js';
 import { CreateRecipePage } from './create-recipe-page.js';
 
 /**
@@ -21,13 +15,14 @@ export function renderCreateRecipePage(page) {
                 <form id="create-recipe-form" @submit="${(e) => page.submit(e)}">
                     <div id="image-ingredients-container">
                         <div id="ingredient-container">
-                            <editable-label
-                                tabindex="-1"
-                                editEnabled
+                            <input
+                                type="text"
                                 id="title"
                                 .value="${page.recipe.title}"
-                                @valueChanged="${(e) => page.changeProperty('title', e.detail.value)}"
-                            ></editable-label>
+                                onclick="javascript:this.select()"
+                                @input="${(e) => handleLabelInput(e)}"
+                                @change="${(e) => page.changeProperty('title', e.detail.value)}"
+                            />
                             ${Object.entries(groupBy(page.recipe.ingredients, 'groupName')).map((group) =>
                                 renderIngredientGroup(group, page)
                             )}
@@ -48,6 +43,7 @@ export function renderCreateRecipePage(page) {
                                 id="rating"
                                 max="5"
                                 singleSelect
+                                .values="${createRange(0, page.recipe.rating)}"
                                 @ratingChanged="${(e) => page.changeProperty('rating', e.detail.rating)}"
                             ></star-rating>
                             <star-rating
@@ -56,6 +52,7 @@ export function renderCreateRecipePage(page) {
                                 id="difficulty"
                                 max="5"
                                 singleSelect
+                                .values="${createRange(0, page.recipe.difficulty)}"
                                 @ratingChanged="${(e) => page.changeProperty('difficulty', e.detail.rating)}"
                             ></star-rating>
                             <div id="nation-icon" nation="${page.recipe.nation}"></div>
@@ -92,16 +89,6 @@ export function renderCreateRecipePage(page) {
                                     .options="${Object.values(CookingTechnique)}"
                                     .value="${page.recipe.technique}"
                                     @selectionChange="${(e) => page.changeProperty('technique', e.detail.value)}"
-                                ></drop-down>
-                            </div>
-                            <div class="description-input">
-                                <div class="input-title">Temperatureinheit:</div>
-                                <drop-down
-                                    id="temperature-unit"
-                                    tabindex="0"
-                                    .options="${Object.values(TemperatureUnit)}"
-                                    .value="${page.recipe.temperatureUnit}"
-                                    @selectionChange="${(e) => page.changeProperty('temperatureUnit', e.detail.value)}"
                                 ></drop-down>
                             </div>
                         </div>
@@ -157,13 +144,20 @@ export function renderCreateRecipePage(page) {
 function renderIngredientGroup(group, page) {
     return html`
         <div id="${group[0]}" class="ingredient-group">
-            <editable-label
-                editEnabled
+            <input
+                type="text"
                 class="group-title"
                 .value="${group[0]}"
-                @valueChanged="${(e) => page.renameGroup(group[1], e.detail.value)}"
-            ></editable-label>
-            ${group[1].map((ingredient) => renderIngredient(ingredient))}
+                onclick="javascript:this.select()"
+                @input="${(e) => handleLabelInput(e)}"
+                @change="${(e) => page.renameGroup(group[1], e.detail.value)}"
+            />
+            <priority-list
+                .items="${group[1]}"
+                .itemRenderer="${renderIngredient}"
+                @delete-item="${(e) => page.removeItem(e.detail)}"
+            >
+            </priority-list>
             <button tabindex="0" id="add-ingredient-link" @click="${(e) => page.addIngredient(group[0], e)}">
                 + Zutat hinzufügen
             </button>
@@ -175,35 +169,51 @@ function renderIngredientGroup(group, page) {
  * @param {IngredientModel} ingredient
  */
 function renderIngredient(ingredient) {
-    var unit = ingredient['unit'] ?? 'Gram';
+    var unit = ingredient['unit'] ?? ExtendedIngredientUnit[ingredient.measurement][0];
     return html` <div class="ingredient">
-        <editable-label
-            editEnabled
+        <input
+            type="text"
             class="ingredient-amount"
             supportedCharacters="[0-9.]"
             .value="${ingredient.amount.toString()}"
-            @valueChanged="${(e) => (ingredient.amount = Number.parseFloat(e.detail.value) ?? 0)}"
-        ></editable-label>
+            onclick="javascript:this.select()"
+            @input="${(e) => handleLabelInput(e, /[0-9.]/g)}"
+            @change="${(e) => (ingredient.amount = Number.parseFloat(e.target.value) ?? 0)}"
+        />
         <grouped-dropdown
             tabindex="0"
             compact
-            .options="${ExtendedIngredientUnit}"
-            .value="${ingredient.measurement}"
             .result="${{ category: ingredient.measurement, value: unit }}"
+            .options="${ExtendedIngredientUnit}"
             class="ingredient-unit"
-            @selectionChange="${(e) => ([ingredient.measurement, ingredient['unit']] = [e.detail.category, e.detail.value])}"
+            @change="${(e) => ([ingredient.measurement, ingredient['unit']] = [e.detail.category, e.detail.value])}"
         ></grouped-dropdown>
-        <editable-label
-            editEnabled
+        <input
+            type="text"
             class="ingredient-name"
             .value="${ingredient.name}"
-            @valueChanged="${(e) => (ingredient.name = e.detail.value)}"
-        ></editable-label>
-        <editable-label
-            editEnabled
+            onclick="javascript:this.select()"
+            @input="${(e) => handleLabelInput(e)}"
+            @change="${(e) => (ingredient.name = e.detail.value)}"
+        />
+        <input
+            type="text"
             class="ingredient-description"
             .value="${ingredient.description}"
-            @valueChanged="${(e) => (ingredient.description = e.detail.value)}"
-        ></editable-label>
+            onclick="javascript:this.select()"
+            @input="${(e) => handleLabelInput(e)}"
+            @change="${(e) => (ingredient.description = e.detail.value)}"
+        />
     </div>`;
+}
+
+/**
+ * @param {KeyboardEvent} e
+ * @param {RegExp} [supportedCharacters]
+ */
+function handleLabelInput(e, supportedCharacters) {
+    if (!supportedCharacters || e.key.length != 1 || e.key.match(supportedCharacters)) return;
+    e.target.dispatchEvent(new Event('change'));
+    e.stopPropagation();
+    e.preventDefault();
 }

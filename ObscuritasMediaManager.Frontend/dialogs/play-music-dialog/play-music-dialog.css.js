@@ -15,8 +15,9 @@ export function renderPlayMusicDialogStyles() {
             border-radius: 5px;
             display: flex;
             flex-direction: column;
-            color: white;
 
+            background: var(--primary-color);
+            color: var(--font-color);
             animation-name: fade-in;
             animation-duration: ${unsafeCSS(PlayMusicDialog.FadeDuration)}s;
             animation-timing-function: linear;

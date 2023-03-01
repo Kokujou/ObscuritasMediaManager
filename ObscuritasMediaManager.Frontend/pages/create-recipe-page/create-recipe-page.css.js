@@ -26,7 +26,7 @@ export function renderCreateRecipePageStyles() {
             inset: 10px;
             top: 25px;
             bottom: 25px;
-            padding: 50px;
+            padding: 25px;
             margin: 0 !important;
             display: flex;
             flex-direction: column;
@@ -53,7 +53,7 @@ export function renderCreateRecipePageStyles() {
         #ingredient-container {
             min-height: 500px;
             flex: auto;
-            margin-right: 50px;
+            margin-right: 10px;
         }
 
         #ingredients-section-title {
@@ -70,15 +70,13 @@ export function renderCreateRecipePageStyles() {
             flex-direction: column;
             gap: 10px;
 
-            padding: 20px;
             margin-bottom: 20px;
-
-            border-bottom: 1px solid;
         }
 
         .group-title {
-            font-size: 24px;
+            font-size: 24px !important;
             align-self: flex-start;
+            min-width: 100% !important;
         }
 
         .ingredient {
@@ -91,11 +89,11 @@ export function renderCreateRecipePageStyles() {
         }
 
         .ingredient-amount {
-            max-width: 150px;
+            max-width: 75px !important;
         }
 
         .ingredient-unit {
-            max-width: 150px;
+            min-width: 150px;
         }
 
         #add-ingredient-link,
@@ -225,13 +223,24 @@ export function renderCreateRecipePageStyles() {
 
         drop-down {
             background: transparent;
-            width: 200px;
+            width: 300px;
         }
 
-        editable-label {
-            --text-padding: 10px 10px;
+        input[type='text'] {
+            padding: 10px 10px;
             --icon-size: 25px;
             max-width: 300px;
+            width: 300px;
+
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            border: none;
+            border-bottom: 1px solid;
+
+            overflow: auto;
+            scrollbar-width: none;
+            flex: auto;
         }
 
         #recipe-text {

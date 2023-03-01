@@ -19,11 +19,6 @@ export function renderRecipesPageStyles() {
             position: absolute;
             inset: 0;
 
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            flex: auto;
-
             overflow-y: auto;
             overflow-x: hidden;
 
@@ -35,21 +30,21 @@ export function renderRecipesPageStyles() {
             margin: 100px 50px 0 50px;
             display: flex;
             flex-direction: row;
+            gap: 20px;
         }
 
         #add-recipe-icon {
-            width: 200px;
-            height: 200px;
-
-            cursor: pointer;
-
             background: gray;
+            box-sizing: border-box;
             ${renderMaskImage(plusIcon())};
         }
 
         .recipe-tile {
-            width: 200px;
-            height: 200px;
+            min-width: 300px;
+            width: 300px;
+            min-height: 300px;
+            height: 300px;
+            --font-size: 30px;
 
             cursor: pointer;
         }

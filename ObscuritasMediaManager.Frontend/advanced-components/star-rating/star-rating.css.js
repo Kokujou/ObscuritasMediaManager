@@ -5,16 +5,17 @@ export function renderStarRatingStyles() {
         #star-container {
             display: flex;
             flex-direction: row;
+            font-size: var(--font-size, 50px);
         }
 
         .star {
             color: gray;
-            font-size: 50px;
             font-weight: bold;
             padding: 0 5px;
             margin-top: -15px;
             margin-top: -10px;
             cursor: pointer;
+            text-shadow: 3px 3px 3px black;
         }
 
         .star[selected] {

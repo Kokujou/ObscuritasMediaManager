@@ -26,7 +26,7 @@ public class RecipeController : ControllerBase
     [HttpGet("{id}")]
     public async Task<RecipeModel> GetRecipe(Guid id)
     {
-        return await _recipeRepository.Get(id);
+        return await _recipeRepository.GetAsync(id);
     }
 
     [HttpPost]
@@ -40,5 +40,14 @@ public class RecipeController : ControllerBase
         }
 
         await _recipeRepository.CreateRecipe(recipe);
+    }
+
+    [HttpPatch]
+    public async Task<ActionResult> UpdateRecipeAsync(RecipeModel recipe)
+    {
+        if (!await _recipeRepository.ExistsAsync(recipe.Id)) return NotFound();
+
+        await _recipeRepository.UpdateRecipe(recipe);
+        return NoContent();
     }
 }

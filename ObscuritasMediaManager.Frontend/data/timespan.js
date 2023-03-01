@@ -33,6 +33,15 @@ export class TimeSpan {
         return result;
     }
 
+    static format(input) {
+        var timespan = TimeSpan.fromString(input);
+        var hours = timespan.days * 24 + timespan.hours;
+        var result = '';
+        if (hours) result += hours + ' Std. ';
+        if (timespan.minutes) result += timespan.minutes + ' Min.';
+        return result;
+    }
+
     toString() {
         return (
             this.days +

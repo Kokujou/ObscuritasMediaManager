@@ -10,6 +10,7 @@ import { MediaSearch } from './advanced-components/media-search/media-search.js'
 import { MediaTile } from './advanced-components/media-tile/media-tile.js';
 import { MusicFilter } from './advanced-components/music-filter/music-filter.js';
 import { PaginatedScrolling } from './advanced-components/paginated-scrolling/paginated-scrolling.js';
+import { RecipeTile } from './advanced-components/recipe-tile/recipe-tile.js';
 import { StarRating } from './advanced-components/star-rating/star-rating.js';
 import { TagLabel } from './advanced-components/tag-label/tag-label.js';
 import { UploadArea } from './advanced-components/upload-area/upload-area.js';
@@ -28,6 +29,7 @@ import { GroupedDropdown } from './native-components/grouped-dropdown/grouped-dr
 import { LinkElement } from './native-components/link-element/link-element.js';
 import { MessageSnackbar } from './native-components/message-snackbar/message-snackbar.js';
 import { PartialLoading } from './native-components/partial-loading/partial-loading.js';
+import { PriorityList } from './native-components/priority-list/priority-list.js';
 import { RangeSlider } from './native-components/range-slider/range-slider.js';
 import { ScrollSelect } from './native-components/scroll-seelect/scroll-select.js';
 import { SideScroller } from './native-components/side-scroller/side-scroller.js';
@@ -113,3 +115,5 @@ window.customElements.define('recipes-page', RecipesPage);
 window.customElements.define('create-recipe-page', CreateRecipePage);
 window.customElements.define('grouped-dropdown', GroupedDropdown);
 window.customElements.define('duration-input', DurationInput);
+window.customElements.define('recipe-tile', RecipeTile);
+window.customElements.define('priority-list', PriorityList);

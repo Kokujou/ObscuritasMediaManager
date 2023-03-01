@@ -6,6 +6,7 @@ import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { InputDialog } from '../../dialogs/input-dialog/input-dialog.js';
+import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import {
     GenreModel,
@@ -99,6 +100,32 @@ export class MusicPlaylistPage extends LitElementBase {
         document.onvisibilitychange = async () => {
             await this.updateTrack();
         };
+
+        this.subscriptions.push(
+            session.currentPage.subscribe((nextPage) => {
+                if (
+                    this.audioElement.paused ||
+                    this.audioElement.currentTime <= 0 ||
+                    nextPage == 'music' ||
+                    nextPage == 'music-playlist'
+                )
+                    return;
+
+                PlayMusicDialog.show(this.currentTrack, this.currentVolumne, this.audioElement?.currentTime ?? 0);
+            })
+        );
+
+        window.addEventListener('hashchange', (e) => {
+            if (
+                this.audioElement.paused ||
+                this.audioElement.currentTime <= 0 ||
+                location.hash == 'music' ||
+                location.hash == 'music-playlist'
+            )
+                return;
+
+            PlayMusicDialog.show(this.currentTrack, this.currentVolumne, this.audioElement?.currentTime ?? 0);
+        });
     }
 
     firstUpdated(_changedProperties) {

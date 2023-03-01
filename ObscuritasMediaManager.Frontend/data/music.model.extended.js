@@ -1,4 +1,12 @@
-import { InstrumentType, MusicGenre, MusicModel } from '../obscuritas-media-manager-backend-client.js';
+import {
+    Instrumentation,
+    InstrumentType,
+    Mood,
+    MusicGenre,
+    MusicModel,
+    Nation,
+    Participants,
+} from '../obscuritas-media-manager-backend-client.js';
 import { session } from './session.js';
 
 export class ExtendedMusicModel extends MusicModel {
@@ -30,13 +38,26 @@ export class ExtendedMusicModel extends MusicModel {
      * @param {string} basePath
      */
     static fromFile(file, basePath) {
-        var musicModel = new MusicModel();
         // @ts-ignore
         /** @type {string[]} */ var fileLevels = file.webkitRelativePath.split('/');
-        musicModel.name = fileLevels[fileLevels.length - 1];
-        // @ts-ignore
-        musicModel.path = `${basePath}\\${file.webkitRelativePath}`;
-        musicModel.author = 'undefined';
+        var musicModel = new MusicModel({
+            name: fileLevels[fileLevels.length - 1],
+            mood1: Mood.Unset,
+            mood2: Mood.Unset,
+            complete: false,
+            genres: [],
+            instrumentation: Instrumentation.Mixed,
+            instruments: [],
+            author: 'unset',
+            hash: null,
+            language: Nation.Japanese,
+            nation: Nation.Japanese,
+            participants: Participants.Unset,
+            path: `${basePath}\\${file.webkitRelativePath}`,
+            rating: 0,
+            source: null,
+        });
+
         return musicModel;
     }
 }

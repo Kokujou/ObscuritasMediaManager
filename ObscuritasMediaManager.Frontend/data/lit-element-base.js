@@ -5,6 +5,7 @@ export class LitElementBase extends LitElement {
     constructor() {
         super();
         /** @type {Subscription[]} */ this.subscriptions = [];
+        this.abortController = new AbortController();
     }
 
     /**

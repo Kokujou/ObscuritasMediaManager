@@ -1154,6 +1154,43 @@ export class RecipeClient {
         }
         return Promise.resolve(null);
     }
+    updateRecipe(recipe, signal) {
+        let url_ = this.baseUrl + "/api/Recipe";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(recipe);
+        let options_ = {
+            body: content_,
+            method: "PATCH",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processUpdateRecipe(_response);
+        });
+    }
+    processUpdateRecipe(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
     getRecipe(id, signal) {
         let url_ = this.baseUrl + "/api/Recipe/{id}";
         if (id === undefined || id === null)
@@ -1741,7 +1778,6 @@ export class RecipeModel {
     course;
     mainIngredient;
     technique;
-    temperatureUnit;
     preparationTime;
     cookingTime;
     totalTime;
@@ -1766,7 +1802,6 @@ export class RecipeModel {
             this.course = _data["course"] !== undefined ? _data["course"] : null;
             this.mainIngredient = _data["mainIngredient"] !== undefined ? _data["mainIngredient"] : null;
             this.technique = _data["technique"] !== undefined ? _data["technique"] : null;
-            this.temperatureUnit = _data["temperatureUnit"] !== undefined ? _data["temperatureUnit"] : null;
             this.preparationTime = _data["preparationTime"] !== undefined ? _data["preparationTime"] : null;
             this.cookingTime = _data["cookingTime"] !== undefined ? _data["cookingTime"] : null;
             this.totalTime = _data["totalTime"] !== undefined ? _data["totalTime"] : null;
@@ -1798,7 +1833,6 @@ export class RecipeModel {
         data["course"] = this.course !== undefined ? this.course : null;
         data["mainIngredient"] = this.mainIngredient !== undefined ? this.mainIngredient : null;
         data["technique"] = this.technique !== undefined ? this.technique : null;
-        data["temperatureUnit"] = this.temperatureUnit !== undefined ? this.temperatureUnit : null;
         data["preparationTime"] = this.preparationTime !== undefined ? this.preparationTime : null;
         data["cookingTime"] = this.cookingTime !== undefined ? this.cookingTime : null;
         data["totalTime"] = this.totalTime !== undefined ? this.totalTime : null;
@@ -1852,13 +1886,6 @@ export var CookingTechnique;
     CookingTechnique["Grilling"] = "Grilling";
     CookingTechnique["Raw"] = "Raw";
 })(CookingTechnique || (CookingTechnique = {}));
-export var TemperatureUnit;
-(function (TemperatureUnit) {
-    TemperatureUnit["Celsius"] = "Celsius";
-    TemperatureUnit["Fahrenheit"] = "Fahrenheit";
-    TemperatureUnit["GasMark"] = "GasMark";
-    TemperatureUnit["None"] = "None";
-})(TemperatureUnit || (TemperatureUnit = {}));
 export class IngredientModel {
     id;
     recipeId;
@@ -1867,6 +1894,7 @@ export class IngredientModel {
     groupName;
     amount;
     measurement;
+    order;
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -1884,6 +1912,7 @@ export class IngredientModel {
             this.groupName = _data["groupName"] !== undefined ? _data["groupName"] : null;
             this.amount = _data["amount"] !== undefined ? _data["amount"] : null;
             this.measurement = _data["measurement"] !== undefined ? _data["measurement"] : null;
+            this.order = _data["order"] !== undefined ? _data["order"] : null;
         }
     }
     static fromJS(data) {
@@ -1901,6 +1930,7 @@ export class IngredientModel {
         data["groupName"] = this.groupName !== undefined ? this.groupName : null;
         data["amount"] = this.amount !== undefined ? this.amount : null;
         data["measurement"] = this.measurement !== undefined ? this.measurement : null;
+        data["order"] = this.order !== undefined ? this.order : null;
         return data;
     }
     clone() {

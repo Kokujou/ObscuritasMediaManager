@@ -22,10 +22,11 @@ export function fileToDataUrl(file) {
 }
 
 /**
+ * @param {FileList} files
  * @returns {Promise<{files:FileList, basePath:string}>}
  */
-export async function importFiles() {
-    var files = await openFileDialog(true);
+export async function importFiles(files = null) {
+    files ??= await openFileDialog(true);
     var basePath = await InputDialog.show('Bitte den Basispfad des ausgewählten Ordners eingeben:');
     if (!basePath) throw new Error();
 

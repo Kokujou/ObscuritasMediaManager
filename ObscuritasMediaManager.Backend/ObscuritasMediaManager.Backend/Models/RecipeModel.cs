@@ -17,7 +17,6 @@ public class RecipeModel
     public Course Course { get; set; }
     public Ingredient MainIngredient { get; set; }
     public CookingTechnique Technique { get; set; }
-    public TemperatureUnit TemperatureUnit { get; set; }
     public TimeSpan PreparationTime { get; set; }
     public TimeSpan CookingTime { get; set; }
     public TimeSpan TotalTime => PreparationTime + CookingTime;

@@ -115,6 +115,8 @@ export declare class RecipeClient {
     protected processGetAllRecipes(response: Response): Promise<RecipeModel[]>;
     createRecipe(recipe: RecipeModel, signal?: AbortSignal | undefined): Promise<void>;
     protected processCreateRecipe(response: Response): Promise<void>;
+    updateRecipe(recipe: RecipeModel, signal?: AbortSignal | undefined): Promise<FileResponse>;
+    protected processUpdateRecipe(response: Response): Promise<FileResponse>;
     getRecipe(id: string, signal?: AbortSignal | undefined): Promise<RecipeModel>;
     protected processGetRecipe(response: Response): Promise<RecipeModel>;
 }
@@ -344,7 +346,6 @@ export declare class RecipeModel implements IRecipeModel {
     course: Course;
     mainIngredient: Ingredient;
     technique: CookingTechnique;
-    temperatureUnit: TemperatureUnit;
     preparationTime: string;
     cookingTime: string;
     totalTime: string;
@@ -366,7 +367,6 @@ export interface IRecipeModel {
     course: Course;
     mainIngredient: Ingredient;
     technique: CookingTechnique;
-    temperatureUnit: TemperatureUnit;
     preparationTime: string;
     cookingTime: string;
     totalTime: string;
@@ -405,12 +405,6 @@ export declare enum CookingTechnique {
     Grilling = "Grilling",
     Raw = "Raw"
 }
-export declare enum TemperatureUnit {
-    Celsius = "Celsius",
-    Fahrenheit = "Fahrenheit",
-    GasMark = "GasMark",
-    None = "None"
-}
 export declare class IngredientModel implements IIngredientModel {
     id: string;
     recipeId: string;
@@ -419,6 +413,7 @@ export declare class IngredientModel implements IIngredientModel {
     groupName: string | null;
     amount: number;
     measurement: Measurement;
+    order: number;
     constructor(data?: IIngredientModel);
     init(_data?: any): void;
     static fromJS(data: any): IngredientModel;
@@ -433,6 +428,7 @@ export interface IIngredientModel {
     groupName: string | null;
     amount: number;
     measurement: Measurement;
+    order: number;
 }
 export declare enum Measurement {
     Mass = "Mass",

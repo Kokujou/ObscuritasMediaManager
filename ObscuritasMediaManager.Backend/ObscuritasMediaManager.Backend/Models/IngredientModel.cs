@@ -14,4 +14,5 @@ public class IngredientModel
     public string GroupName { get; set; }
     public double Amount { get; set; }
     public Measurement Measurement { get; set; }
+    public int Order { get; set; }
 }

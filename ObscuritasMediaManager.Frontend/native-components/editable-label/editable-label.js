@@ -50,9 +50,12 @@ export class EditableLabel extends LitElementBase {
     handleLabelInput(e) {
         if (e.key == 'Enter') this.saveChanges();
         else if (e.key == 'Escape') this.revertChanges();
+        else if (e.ctrlKey) return;
         else if (this.supportedCharacters && e.key.length == 1 && !e.key.match(new RegExp(this.supportedCharacters, 'g')))
             console.warn('unsupported character: ' + e.key);
         else return;
+
+        console.log(e.code);
 
         if (e.code) e.stopPropagation();
         e.preventDefault();
@@ -81,7 +84,12 @@ export class EditableLabel extends LitElementBase {
     handlePaste(event) {
         event.preventDefault();
         var text = event.clipboardData.getData('text/plain');
-        document.execCommand('insertHTML', false, text);
+        document.execCommand('insertText', false, text);
+
+        // var input = /** @type {HTMLInputElement} */ (event.target);
+        // navigator.clipboard.writeText(data)
+        // input.value = input.value.substring(0, input.selectionStart) + text + input.value.substring(input.selectionEnd);
+        // input.setSelectionRange(input.value.length, input.value.length);
     }
 
     /**

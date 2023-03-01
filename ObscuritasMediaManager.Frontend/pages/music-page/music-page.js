@@ -14,7 +14,7 @@ import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
 import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
-import { sortyBy } from '../../services/extensions/array.extensions.js';
+import { sortBy } from '../../services/extensions/array.extensions.js';
 import { playAudio } from '../../services/extensions/audio.extension.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
@@ -73,7 +73,7 @@ export class MusicPage extends LitElementBase {
             filteredTracks = filteredTracks.filter((track) => track.complete == (this.filter.complete == CheckboxState.Allow));
 
         var sorted = filteredTracks;
-        if (this.sortingProperty != 'unset') sorted = sortyBy(filteredTracks, this.sortingProperty);
+        if (this.sortingProperty != 'unset') sorted = sortBy(filteredTracks, (x) => x[this.sortingProperty]);
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }
@@ -125,6 +125,7 @@ export class MusicPage extends LitElementBase {
                 PlayMusicDialog.show(this.currentTrack, this.currentVolumne, this.audioElement?.currentTime ?? 0);
             })
         );
+
         this.addEventListener('click', () => {
             if (!this.selectionMode) return;
             this.selectionMode = false;
