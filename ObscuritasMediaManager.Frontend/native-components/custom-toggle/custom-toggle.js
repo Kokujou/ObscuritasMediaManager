@@ -22,7 +22,9 @@ export class CustomToggle extends LitElementBase {
     connectedCallback() {
         super.connectedCallback();
 
-        this.onclick = () => {
+        this.onclick = (e) => {
+            e.stopPropagation();
+            e.preventDefault();
             this.checked = !this.checked;
             this.dispatchCustomEvent('toggle');
         };

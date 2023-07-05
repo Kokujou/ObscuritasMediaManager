@@ -15,8 +15,9 @@ export class EditableLabel extends LitElementBase {
         };
     }
 
+    /** @type {HTMLDivElement} */
     get inputField() {
-        return (this._inputField ??= this.shadowRoot.querySelector('input'));
+        return (this._inputField ??= this.shadowRoot.querySelector('#value-input'));
     }
 
     constructor() {
@@ -55,20 +56,17 @@ export class EditableLabel extends LitElementBase {
             console.warn('unsupported character: ' + e.key);
         else return;
 
-        console.log(e.code);
-
         if (e.code) e.stopPropagation();
         e.preventDefault();
     }
 
     revertChanges() {
-        this.inputField.value = this.value;
         this.editEnabled = false;
         this.requestUpdate(undefined);
     }
 
     saveChanges() {
-        this.value = this.inputField.value;
+        this.value = this.inputField.innerText;
         this.dispatchCustomEvent('valueChanged', { value: this.value });
         this.dispatchEvent(
             new KeyboardEvent('keydown', { bubbles: true, composed: true, cancelable: true, key: 'Tab', code: 'Tab', keyCode: 9 })
@@ -85,11 +83,6 @@ export class EditableLabel extends LitElementBase {
         event.preventDefault();
         var text = event.clipboardData.getData('text/plain');
         document.execCommand('insertText', false, text);
-
-        // var input = /** @type {HTMLInputElement} */ (event.target);
-        // navigator.clipboard.writeText(data)
-        // input.value = input.value.substring(0, input.selectionStart) + text + input.value.substring(input.selectionEnd);
-        // input.setSelectionRange(input.value.length, input.value.length);
     }
 
     /**

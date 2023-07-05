@@ -22,7 +22,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         var cookie = Request.Headers.Cookie.GetCookie("Authorization");
         if (cookie is null) return AuthenticateResult.Fail("invalid auth header");
 
-        var token = cookie["Basic ".Length..];
+        var token = cookie["Basic ".Length..].Split(";")[0];
         var decoded = token.FromBase64String();
         if (decoded is null) return AuthenticateResult.Fail("token could not be decoded");
 

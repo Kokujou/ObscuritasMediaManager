@@ -1,5 +1,6 @@
 import { session } from '../../data/session.js';
 import { pascalToKeabCase } from './convention.extension.js';
+import { setFavicon } from './style.extensions.js';
 
 /** @param {string} query */ export function getQueryValue(query) {
     var queries = location.search.substr(1).split('&');
@@ -13,6 +14,7 @@ import { pascalToKeabCase } from './convention.extension.js';
  * @param {string} target
  */
 export function changePage(target, search = '', reflectInHistory = true) {
+    setFavicon(null);
     var newUrl = '/' + search + `#${target}`;
     if (reflectInHistory) history.pushState(null, null, newUrl);
     else history.replaceState(null, null, newUrl);

@@ -6,16 +6,16 @@ import { EditableLabel } from './editable-label.js';
  */
 export function renderEditableLabel(editableLabel) {
     return html` <div id="editable-label">
-        <input
-            type="${editableLabel.editEnabled ? 'text' : 'hidden'}"
+        <div
+            ?invisible="${!editableLabel.editEnabled}"
             id="value-input"
             contenteditable
             class="value-item"
             tabindex="0"
             @keydown="${(e) => editableLabel.handleLabelInput(e)}"
             @paste="${(e) => editableLabel.handlePaste(e)}"
-            .value="${editableLabel.value}"
-        />
+            .innerText="${editableLabel.value}"
+        ></div>
         ${editableLabel.editEnabled ? renderValueInput(editableLabel) : renderValueLabel(editableLabel)}
     </div>`;
 }

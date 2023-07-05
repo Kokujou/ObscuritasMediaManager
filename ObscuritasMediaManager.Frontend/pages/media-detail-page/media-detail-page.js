@@ -1,8 +1,10 @@
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { MediaModel, StreamingEntryModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService, StreamingService } from '../../services/backend.services.js';
+import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { getQueryValue } from '../../services/extensions/url.extension.js';
 import { VideoPlayerPopup } from '../video-player-popup/video-player-popup.js';
 import { renderMediaDetailPageStyles } from './media-detail-page.css.js';
@@ -19,6 +21,8 @@ export class MediaDetailPage extends LitElementBase {
 
     static get properties() {
         return {
+            editMode: { type: Boolean, reflect: true },
+
             newGenre: { type: Boolean, reflect: false },
             hoveredRating: { type: Number, reflect: false },
             selectedSeason: { type: Number, reflect: false },
@@ -36,17 +40,18 @@ export class MediaDetailPage extends LitElementBase {
     constructor() {
         super();
 
-        this.media = new MediaModel();
+        /** @type {MediaModel} */ this.media = null;
         /** @type {StreamingEntryModel[]} */ this.streamingEntries = [];
-        this.newGenre = false;
         this.hoveredRating = 0;
         this.selectedSeason = 0;
+        this.editMode = false;
     }
 
-    connectedCallback() {
+    async connectedCallback() {
         super.connectedCallback();
 
-        this.getMediaFromRoute();
+        await this.getMediaFromRoute();
+        setFavicon(this.media.image, 'url');
     }
 
     async getMediaFromRoute() {
@@ -84,22 +89,14 @@ export class MediaDetailPage extends LitElementBase {
         return renderMediaDetailPage(this);
     }
 
-    /**
-     * @param {HTMLElement} element
-     */
-    enableEditingFor(element) {
-        /** @type {HTMLInputElement} */ var propertyValueInput = element.parentElement.querySelector('.property-value');
-        propertyValueInput.removeAttribute('disabled');
-        propertyValueInput.setAttribute('contenteditable', '');
-        this.requestUpdate(undefined);
-    }
-
     async showGenreSelectionDialog() {
         var genres = await GenreService.getAll();
         var genreDialog = GenreDialog.show({
             genres,
+            ignoredState: CheckboxState.Forbid,
             allowedGenres: genres.filter((x) => this.media.genres.includes(x.name)),
             allowAdd: true,
+            allowRemove: true,
         });
 
         genreDialog.addEventListener('decline', () => genreDialog.remove());
@@ -136,7 +133,7 @@ export class MediaDetailPage extends LitElementBase {
      */
     async addImage(imageData) {
         try {
-            await MediaService.addMediaImage(this.media.id, imageData);
+            await MediaService.addMediaImage(imageData, this.media.id);
             this.media.image = imageData;
             this.requestUpdate(undefined);
         } catch (err) {

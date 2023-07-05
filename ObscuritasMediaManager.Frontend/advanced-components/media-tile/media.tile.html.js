@@ -18,20 +18,8 @@ export function renderMediaTile(tile) {
         <div id="caption">${tile.name}</div>
         ${tile.displayStyle == 'solid'
             ? html`
-                  <div id="genre-list">
+                  <div id="genre-list" @click="${(e) => e.preventDefault()}">
                       ${tile.genres.map((genre) => renderGenreTag(tile, genre))} <br />
-                      ${tile.newGenre ? renderGenreTag(tile, 'test', true) : ''}
-                      ${!tile.newGenre
-                          ? html`<div
-                                id="add-genre-button"
-                                @click="${(e) => {
-                                    e.stopPropagation();
-                                    tile.newGenre = true;
-                                }}"
-                            >
-                                +
-                            </div>`
-                          : ''}
                   </div>
               `
             : ''}
@@ -54,13 +42,13 @@ function renderImageContainer(tile) {
  * @param {string} genre
  * @param {MediaTile} tile
  */
-function renderGenreTag(tile, genre = '', newGenre = false) {
+function renderGenreTag(tile, genre = '') {
     if (!genre) return;
     return html`<tag-label
+        .autocomplete="${tile.autocompleteGenres}"
         @tagCreated="${(e) => tile.addGenre(e.detail.value)}"
         @removed="${() => tile.removeGenre(genre)}"
         text="${genre}"
-        .createNew="${newGenre}"
     ></tag-label>`;
 }
 

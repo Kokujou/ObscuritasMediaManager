@@ -8,6 +8,34 @@ export function renderMediaDetailPageStyles() {
     return css`
         ${registerIcons()}
 
+        #edit-button {
+            position: fixed;
+            right: 0;
+            top: 50px;
+            width: 400px;
+            z-index: 1;
+
+            display: flex;
+            flex-direction: row;
+
+            cursor: pointer;
+        }
+
+        #edit-toggle {
+            margin-right: 20px;
+
+            --untoggled-color: white;
+            --toggled-color: red;
+        }
+
+        #toggle-edit-text {
+            font-size: 24px;
+        }
+
+        :host([editMode]) #toggle-edit-text {
+            color: red;
+        }
+
         #media-detail-container {
             display: flex;
             flex-direction: column;
@@ -118,9 +146,14 @@ export function renderMediaDetailPageStyles() {
             margin-bottom: 10px;
         }
 
+        .genre-entry .property-value {
+            align-items: center;
+        }
+
         tag-label {
             margin-right: 10px;
-            margin-bottom: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
 
         .edit-icon {
@@ -143,11 +176,14 @@ export function renderMediaDetailPageStyles() {
         input[disabled],
         textarea[disabled] {
             user-select: none;
+            border: none;
         }
 
         input {
             background: none;
             border: none;
+            border-bottom: 1px solid;
+            padding: 5px 10px;
         }
 
         .textarea {
@@ -165,7 +201,8 @@ export function renderMediaDetailPageStyles() {
             box-sizing: border-box;
             display: inline-block;
             word-wrap: break-word;
-            line-break: strict;
+            line-break: normal;
+            caret-color: white;
         }
 
         #add-genre-button {
@@ -272,6 +309,10 @@ export function renderMediaDetailPageStyles() {
         .link.active {
             text-decoration: underline;
             text-underline-offset: 10px;
+        }
+
+        *[disabled] {
+            pointer-events: none;
         }
     `;
 }

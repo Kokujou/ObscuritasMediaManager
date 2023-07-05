@@ -7,7 +7,7 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 export function renderEditableLabelStyles() {
     return css`
         :host {
-            --default-label-height: var(--label-height, auto);
+            --default-label-height: var(--label-height, 100%);
         }
 
         #editable-label {
@@ -59,6 +59,7 @@ export function renderEditableLabelStyles() {
             overflow: auto;
             scrollbar-width: none;
             flex: auto;
+            height: var(--default-label-height);
         }
 
         #value-label {
@@ -72,10 +73,13 @@ export function renderEditableLabelStyles() {
             white-space: nowrap;
             height: var(--default-label-height);
             max-width: 100%;
+            margin-right: 20px;
 
-            display: flex;
-            align-items: center;
             padding: var(--text-padding);
+        }
+
+        *[invisible] {
+            display: none;
         }
     `;
 }

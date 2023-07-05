@@ -46,6 +46,7 @@ export function renderMediaPageTemplate(mediaPage) {
                                         .rating="${media.rating}"
                                         .status="${media.state}"
                                         .imageSource="${media.image}"
+                                        .autocompleteGenres="${mediaPage.genreList}"
                                         @imageReceived="${(e) => mediaPage.addImageFor(media, e.detail.imageData)}"
                                         @ratingChanged="${(e) => mediaPage.changePropertyOf(media, 'rating', e.detail.newRating)}"
                                         @genresChanged="${(e) => mediaPage.changePropertyOf(media, 'genres', e.detail.genres)}"

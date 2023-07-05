@@ -3,7 +3,7 @@ import { LitElementBase } from '../../data/lit-element-base.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
 import { MediaModel, StreamingEntryModel } from '../../obscuritas-media-manager-backend-client.js';
-import { MediaService, StreamingService } from '../../services/backend.services.js';
+import { GenreService, MediaService, StreamingService } from '../../services/backend.services.js';
 import { newGuid } from '../../services/extensions/crypto.extensions.js';
 import { analyzeMediaFile, importFiles } from '../../services/extensions/file.extension.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
@@ -37,10 +37,13 @@ export class MediaPage extends LitElementBase {
 
         /** @type {MediaSearchFilterData} */ this.filterData = new MediaSearchFilterData();
         /** @type {Subscription[]} */ this.subscriptions = [];
+        /** @type {string[]} */ this.genreList = [];
     }
 
-    connectedCallback() {
+    async connectedCallback() {
         super.connectedCallback();
+
+        this.genreList = (await GenreService.getAll()).map((x) => x.name);
 
         var localSearchString = localStorage.getItem(`${this.mediaType}.search`);
         if (localSearchString) this.filterData = JSON.parse(localSearchString);
@@ -147,7 +150,6 @@ export class MediaPage extends LitElementBase {
         try {
             if (typeof media[property] != typeof value) return;
 
-            media = media.clone();
             /** @type {any} */ (media[property]) = value;
             await MediaService.updateMedia(media);
             /** @type {any} */ (media[property]) = value;

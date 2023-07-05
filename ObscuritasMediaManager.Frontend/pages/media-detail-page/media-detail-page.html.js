@@ -11,7 +11,14 @@ export function renderMediaDetailPage(detailPage) {
                 background-image: url(${detailPage.media.image});
             }
         </style>
-
+        <div
+            id="edit-button"
+            onclick="this.dispatchEvent(new CustomEvent('toggle'))"
+            @toggle="${(e) => (detailPage.editMode = !detailPage.editMode)}"
+        >
+            <custom-toggle ?checked="${detailPage.editMode}" id="edit-toggle"></custom-toggle>
+            <div id="toggle-edit-text">${detailPage.editMode ? 'Bearbeitung deaktivieren' : 'Bearbeitung aktivieren'}</div>
+        </div>
         <page-layout>
             <div id="media-detail-container">
                 <div id="content-panels">
@@ -27,19 +34,18 @@ export function renderMediaDetailPage(detailPage) {
                                   </div>`
                                 : ''}
                         </media-tile>
-                        <div id="media-rating">${renderRating(detailPage)}</div>
+                        <div id="media-rating" ?disabled="${!detailPage.editMode}">${renderRating(detailPage)}</div>
                     </div>
                     <div id="middle-panel">
                         <div class="property-entry">
                             <div class="property-name">Inhaltswarnungen:</div>
                             <div id="content-warnings"></div>
-                            <div class="edit-icon"></div>
                         </div>
                     </div>
                     <div id="right-panel">
                         <div id="media-heading">
                             <input
-                                disabled
+                                ?disabled="${!detailPage.editMode}"
                                 type="text"
                                 id="media-name"
                                 @change="${() => detailPage.changeProperty('name', detailPage.nameInputValue)}"
@@ -48,29 +54,27 @@ export function renderMediaDetailPage(detailPage) {
                                 .value="${detailPage.media.name}"
                                 .defaultValue="${detailPage.media.name}"
                             />
-                            <div class="edit-icon" @click="${(e) => detailPage.enableEditingFor(e.target)}"></div>
                         </div>
                         ${renderGenreSection(detailPage)}
                         <div class="property-entry">
                             <div class="property-name">Release:</div>
                             <input
-                                disabled
+                                ?disabled="${!detailPage.editMode}"
                                 type="text"
                                 class="property-value"
                                 .value="${detailPage.media.release.toString()}"
                                 .defaultValue="${detailPage.media.release.toString()}"
                             />
-                            <div class="edit-icon" @click="${(e) => detailPage.enableEditingFor(e.target)}"></div>
                         </div>
                         <div class="property-group">
                             <div class="property-entry">
                                 <div class="property-name">Beschreibung:</div>
-                                <div class="edit-icon" @click="${(e) => detailPage.enableEditingFor(e.target.parentNode)}"></div>
                             </div>
                             <textarea
-                                disabled
+                                ?disabled="${!detailPage.editMode}"
                                 class="textarea property-value"
                                 id="description-input"
+                                onclick="this.focus()"
                                 @change="${() => detailPage.changeProperty('description', detailPage.descriptionInputValue)}"
                                 @keyup="${(e) => detailPage.handleKeyPress(e)}"
                                 .value="${detailPage.media.description}"
@@ -143,8 +147,9 @@ function renderGenreSection(detailPage) {
                         .text="${x}"
                     ></tag-label>`
             )}
-            ${detailPage.newGenre ? html`<tag-label .createNew="${true}"></tag-label>` : ''}
-            <div id="add-genre-button" @click="${() => detailPage.showGenreSelectionDialog()}">+</div>
+            ${detailPage.editMode
+                ? html` <div id="add-genre-button" @click="${() => detailPage.showGenreSelectionDialog()}">+</div> `
+                : ''}
         </div>
     </div> `;
 }

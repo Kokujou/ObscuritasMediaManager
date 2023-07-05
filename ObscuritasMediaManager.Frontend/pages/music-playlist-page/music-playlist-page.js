@@ -293,6 +293,8 @@ export class MusicPlaylistPage extends LitElementBase {
                 genreDialog.options.genres.push(
                     new GenreModel({ id: e.detail.name, name: e.detail.name, section: e.detail.section })
                 );
+                session.instruments.next(await MusicService.getInstruments());
+
                 genreDialog.requestUpdate(undefined);
             }
         );
@@ -301,6 +303,7 @@ export class MusicPlaylistPage extends LitElementBase {
             /** @param {CustomEvent<GenreModel>} e */ async (e) => {
                 await MusicService.removeInstrument(/** @type {InstrumentType} */ (e.detail.section), e.detail.name);
                 genreDialog.options.genres = genreDialog.options.genres.filter((x) => x.name != e.detail.name);
+                session.instruments.next(await MusicService.getInstruments());
                 genreDialog.requestUpdate(undefined);
             }
         );

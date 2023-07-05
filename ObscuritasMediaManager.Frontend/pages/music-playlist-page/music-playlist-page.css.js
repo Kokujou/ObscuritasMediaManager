@@ -149,7 +149,6 @@ export function renderMusicPlaylistStyles() {
 
         #audio-title {
             font-size: 30px;
-            min-width: 300px;
             max-width: 100%;
             margin-top: -10px;
         }

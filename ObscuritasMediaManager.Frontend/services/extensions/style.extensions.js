@@ -13,14 +13,30 @@ export function renderBackgroundImage(image) {
 `);
 }
 
-export function setFavicon(icon) {
+/**
+ * @param {string} icon
+ * @param {'icon' | 'image' | 'url'} mode
+ */
+export function setFavicon(icon, mode = 'icon') {
     /** @type {HTMLLinkElement} */ var link = document.querySelector("link[rel~='icon']");
+
     if (!link) {
         link = document.createElement('link');
         link.rel = 'icon';
-        document.getElementsByTagName('head')[0].appendChild(link);
+        document.head.appendChild(link);
     }
 
-    if (!icon) link.href = 'data:image/svg+xml;base64, R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-    else link.href = `data:image/svg+xml;base64, ${btoa(icon)}`;
+    link.href = 'data:image/svg+xml;base64, R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+    if (!icon) return;
+
+    switch (mode) {
+        case 'icon':
+            return (link.href = `data:image/svg+xml;base64, ${btoa(icon)}`);
+        case 'image':
+            return (link.href = `data:image/png;baes64, ${icon}`);
+        case 'url':
+            return (link.href = icon);
+        default:
+            throw new Error('no mode specified for setting favicon');
+    }
 }

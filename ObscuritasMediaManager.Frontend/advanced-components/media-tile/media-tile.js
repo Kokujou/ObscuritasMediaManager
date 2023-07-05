@@ -14,10 +14,10 @@ export class MediaTile extends LitElementBase {
             imageSource: { type: String, reflect: true },
             rating: { type: Number, reflect: true },
             genres: { type: Array, reflect: true },
+            autocompleteGenres: { type: Array, reflect: true },
             status: { type: Number, reflect: true },
 
             hoveredRating: { type: Number, reflect: false },
-            newGenre: { type: Boolean, reflect: false },
         };
     }
 
@@ -29,15 +29,10 @@ export class MediaTile extends LitElementBase {
         /** @type {string} */ this.imageSource;
         /** @type {number} */ this.rating;
         /** @type {string[]} */ this.genres = [];
+        /** @type {string[]} */ this.autocompleteGenres = [];
         /** @type {number} */ this.status;
 
         /** @type {number} */ this.hoveredRating = 0;
-        /** @type {boolean} */ this.newGenre = false;
-    }
-
-    attributeChangedCallback(name, old, value) {
-        super.attributeChangedCallback(name, old, value);
-        if (name == 'genres') this.newGenre = false;
     }
 
     render() {
@@ -47,6 +42,7 @@ export class MediaTile extends LitElementBase {
      * @param {string} genre
      */
     addGenre(genre) {
+        if (!genre) return;
         if (genre) this.genres = this.genres.filter((x) => x);
 
         if (!genre) {
@@ -76,6 +72,7 @@ export class MediaTile extends LitElementBase {
      */
     notifyRatingChanged(newRating, e) {
         e.stopPropagation();
+        e.preventDefault();
         this.dispatchCustomEvent('ratingChanged', { newRating: newRating });
     }
 

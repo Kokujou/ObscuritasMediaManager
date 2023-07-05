@@ -53,7 +53,7 @@ public class FileController : ControllerBase
 
         var ffmpeg = new Process();
         var startInfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
-            $"-i \"{path.FullName}\" -c:a mp3 -f mp3 -")
+            $"-i \"{path.FullName}\" -c:a libmp3lame -q:a 2 -filter:a loudnorm -f mp3 pipe:1")
         {
             RedirectStandardError = true,
             RedirectStandardOutput = true,

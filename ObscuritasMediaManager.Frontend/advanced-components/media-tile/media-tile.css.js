@@ -75,7 +75,7 @@ export function renderMediaTileStyles() {
             flex-wrap: wrap;
             align-items: center;
             max-height: 35px;
-            overflow: hidden;
+            //    overflow: hidden;
             transition: max-height 1s ease;
         }
 

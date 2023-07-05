@@ -5,7 +5,7 @@ export function renderCustomToggleStyles() {
         :host {
             position: relative;
             display: block;
-            background-color: #0007;
+            background-color: var(--untoggled-color, #0007);
             border-radius: 5px;
             --width: 60px;
             --height: 30px;
