@@ -148,5 +148,9 @@ export function renderAudioTileBaseStyles() {
         :host([paused]) #audio-image {
             ${renderMaskImage(playIcon())};
         }
+
+        *[disabled] {
+            pointer-events: none;
+        }
     `;
 }

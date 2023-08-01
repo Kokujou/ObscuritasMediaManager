@@ -18,14 +18,17 @@ export function renderAudioTileBase(audioTile) {
             <div
                 id="language-icon"
                 language="${audioTile.track.language}"
+                ?disabled="${audioTile.disabled}"
                 @click="${(e) => audioTile.notifyEvent('changeLanguage', e)}"
             ></div>
             <div
                 id="nation-icon"
                 nation="${audioTile.track.nation}"
+                ?disabled="${audioTile.disabled}"
                 @click="${(e) => audioTile.notifyEvent('changeLanguage', e)}"
             ></div>
             <div
+                ?disabled="${audioTile.disabled}"
                 @click="${(e) => audioTile.notifyEvent('nextParticipants', e)}"
                 id="participant-count-button"
                 class="inline-icon ${audioTile.track.participants}"
@@ -34,12 +37,13 @@ export function renderAudioTileBase(audioTile) {
                 id="instrumentation-button"
                 class="inline-icon"
                 viewBox="0 0 70 18"
+                ?disabled="${audioTile.disabled}"
                 @click="${(e) => audioTile.notifyEvent('nextInstrumentation', e)}"
             >
                 <text y="80%" text-anchor="start">${audioTile.track.instrumentation}</text>
             </svg>
 
-            <div id="rating-container">
+            <div id="rating-container" ?disabled="${audioTile.disabled}">
                 ${[1, 2, 3, 4, 5].map(
                     (rating) =>
                         html` <svg
@@ -61,7 +65,11 @@ export function renderAudioTileBase(audioTile) {
                 )}
             </div>
 
-            <div id="instruments-container" @click="${(e) => audioTile.notifyEvent('changeInstruemnts', e)}">
+            <div
+                id="instruments-container"
+                ?disabled="${audioTile.disabled}"
+                @click="${(e) => audioTile.notifyEvent('changeInstruemnts', e)}"
+            >
                 ${audioTile.track.instrumentTypes?.length == 0 ? html`<a id="add-instruments-link">Add Instruments</a>` : ''}
                 ${audioTile.track.instrumentTypes.map(
                     (instrument) => html` <div class="instrument-icon inline-icon ${instrument}"></div> `

@@ -74,6 +74,11 @@ export function renderTagLabelStyles() {
             color: lightgray;
         }
 
+        :host([disabled]) #x-button {
+            pointer-events: none;
+            opacity: 0;
+        }
+
         #autocomplete-list {
             position: absolute;
             top: 100%;

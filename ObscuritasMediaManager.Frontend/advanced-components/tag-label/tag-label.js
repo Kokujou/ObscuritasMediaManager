@@ -12,6 +12,7 @@ export class TagLabel extends LitElementBase {
             text: { type: String, reflect: true },
             createNew: { type: Boolean, reflect: true },
             autocomplete: { type: Array, reflect: true },
+            disabled: { type: Boolean, reflect: true },
             showAutocomplete: { type: Boolean, reflect: false },
         };
     }
@@ -28,6 +29,7 @@ export class TagLabel extends LitElementBase {
         super();
         /** @type {string} */ this.text;
         /** @type {boolean} */ this.createNew = false;
+        /** @type {boolean} */ this.disabled = false;
         /** @type {string[]} */ this.autocomplete = [];
         /** @type {number} */ this.autofillIndex = -1;
         /** @type {boolean} */ this.showAutocomplete = false;

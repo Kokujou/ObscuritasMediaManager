@@ -14,12 +14,14 @@ export class AudioTileBase extends LitElementBase {
             track: { type: Object, reflect: true },
             hoveredRating: { type: Number, reflect: true },
             paused: { type: Boolean, reflect: true },
+            disabled: { type: Boolean, reflect: true },
         };
     }
 
     constructor() {
         super();
 
+        /** @type {boolean} */ this.disabled = false;
         /** @type {ExtendedMusicModel} */ this.track = new ExtendedMusicModel();
         /** @type {Number} */ this.hoveredRating = 0;
 

@@ -145,6 +145,7 @@ export function renderMusicPlaylistStyles() {
             margin: 50px;
             min-width: 0;
             padding: 20px;
+            gap: 20px;
         }
 
         #audio-title {
@@ -182,7 +183,6 @@ export function renderMusicPlaylistStyles() {
             font-size: 18px;
             color: var(--font-color);
             --label-color: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
-            margin-bottom: 10px;
         }
 
         #track-position-container {
@@ -210,7 +210,6 @@ export function renderMusicPlaylistStyles() {
             display: flex;
             flex-direction: row;
             filter: drop-shadow(0 0 10px #000000);
-            margin-top: 10px;
         }
 
         #audio-controls > * {
@@ -238,7 +237,6 @@ export function renderMusicPlaylistStyles() {
         }
 
         #change-path-container {
-            margin-top: 20px;
             width: 100%;
             display: flex;
             flex-direction: row;
@@ -266,9 +264,10 @@ export function renderMusicPlaylistStyles() {
             ${renderMaskImage(editIcon())};
         }
 
-        editable-label {
-            padding: 10px;
-            --icon-size: 35px;
+        .editable-label[contenteditable] {
+            outline: none;
+            border: none;
+            border-bottom: 1px solid;
         }
     `;
 }
@@ -307,6 +306,10 @@ function renderAudioPlayerIcons() {
 
         #change-volume-button {
             ${renderMaskImage(changeVolumeIcon())};
+        }
+
+        *[disabled] * {
+            pointer-events: none;
         }
     `;
 }

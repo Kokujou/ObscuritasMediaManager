@@ -50,12 +50,12 @@ export function renderMusicPlaylist(playlist) {
                     />
                 </div>
                 <div id="current-track-container">
-                    <div id="mood-switcher-container">
+                    <div id="mood-switcher-container" ?disabled="${playlist.updatedTrack.complete}">
                         <div id="mood-tabs">
                             <div id="first-mood" class="mood-tab" @click="${() => (playlist.moodToSwitch = 'mood1')}"></div>
                             <div id="second-mood" class="mood-tab" @click="${() => (playlist.moodToSwitch = 'mood2')}"></div>
                         </div>
-                        <div id="mood-switcher">
+                        <div id="mood-switcher" ?disabled="${playlist.updatedTrack.complete}">
                             <scroll-select
                                 id="mood-container"
                                 .options="${Object.values(Mood)}"
@@ -67,6 +67,7 @@ export function renderMusicPlaylist(playlist) {
                     </div>
 
                     <audio-tile-base
+                        ?disabled="${playlist.updatedTrack.complete}"
                         .track="${new ExtendedMusicModel(playlist.updatedTrack)}"
                         ?paused="${playlist.audioElement.paused}"
                         @imageClicked="${() => playlist.toggleCurrentTrack()}"
@@ -85,40 +86,49 @@ export function renderMusicPlaylist(playlist) {
                         @changeInstruemnts="${() => playlist.openInstrumentsDialog()}"
                     ></audio-tile-base>
                     <div id="audio-control-container">
-                        <editable-label
+                        <div
                             id="audio-title"
-                            .value="${playlist.updatedTrack.name}"
-                            ?editEnabled="${!playlist.updatedTrack.complete}"
+                            class="editable-label"
+                            ?contenteditable="${!playlist.updatedTrack.complete}"
                             @valueChanged="${(e) => playlist.changeProperty('name', e.detail.value)}"
-                        ></editable-label>
+                        >
+                            ${playlist.updatedTrack.name}
+                        </div>
                         <div id="audio-subtitle">
-                            <editable-label
+                            <div
                                 id="audio-author"
-                                .value="${playlist.updatedTrack.author}"
-                                ?editEnabled="${!playlist.updatedTrack.complete}"
+                                class="editable-label"
+                                ?contenteditable="${!playlist.updatedTrack.complete}"
                                 @valueChanged="${(e) => playlist.changeProperty('author', e.detail.value)}"
-                            ></editable-label>
+                            >
+                                ${playlist.updatedTrack.author}
+                            </div>
                             <div id="subtitle-separator">-</div>
-                            <editable-label
+                            <div
                                 id="audio-source"
-                                .value="${playlist.updatedTrack.source || '---'}"
-                                ?editEnabled="${!playlist.updatedTrack.complete}"
+                                class="editable-label"
+                                ?contenteditable="${!playlist.updatedTrack.complete}"
                                 @valueChanged="${(e) => playlist.changeProperty('source', e.detail.value)}"
-                            ></editable-label>
+                            >
+                                ${playlist.updatedTrack.source || '---'}
+                            </div>
                         </div>
                         <div id="genre-section">
                             ${playlist.updatedTrack.genres.map(
                                 (genreKey) =>
                                     html`<tag-label
                                         .text="${MusicGenre[genreKey]}"
+                                        ?disabled="${playlist.updatedTrack.complete}"
                                         @removed="${() => playlist.removeGenreKey(genreKey)}"
                                     ></tag-label>`
                             )}
-                            <tag-label
-                                createNew
-                                .autocomplete="${playlist.autocompleteGenres}"
-                                @tagCreated="${(e) => playlist.addGenre(e.detail.value)}"
-                            ></tag-label>
+                            ${playlist.updatedTrack.complete
+                                ? ''
+                                : html` <tag-label
+                                      createNew
+                                      .autocomplete="${playlist.autocompleteGenres}"
+                                      @tagCreated="${(e) => playlist.addGenre(e.detail.value)}"
+                                  ></tag-label>`}
                         </div>
                         <div id="track-position-container">
                             <div id="track-position-label">${playlist.currentTrackPositionText}</div>
@@ -155,7 +165,13 @@ export function renderMusicPlaylist(playlist) {
                         </div>
                         <div id="change-path-container">
                             <input disabled id="path-input" .value="${'file:\\\\\\' + playlist.updatedTrack.path}" />
-                            <div id="change-path-button" class="inline-icon" @click="${playlist.changeCurrentTrackPath}"></div>
+                            ${playlist.updatedTrack.complete
+                                ? ''
+                                : html`<div
+                                      id="change-path-button"
+                                      class="inline-icon"
+                                      @click="${playlist.changeCurrentTrackPath}"
+                                  ></div>`}
                         </div>
                     </div>
                 </div>
