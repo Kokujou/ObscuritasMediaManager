@@ -937,6 +937,49 @@ export class PlaylistClient {
         }
         return Promise.resolve(null);
     }
+    listPlaylists(signal) {
+        let url_ = this.baseUrl + "/api/Playlist/list";
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processListPlaylists(_response);
+        });
+    }
+    processListPlaylists(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                if (Array.isArray(resultData200)) {
+                    result200 = [];
+                    for (let item of resultData200)
+                        result200.push(PlaylistModel.fromJS(item));
+                }
+                else {
+                    result200 = null;
+                }
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
     getTemporaryPlaylist(guid, signal) {
         let url_ = this.baseUrl + "/api/Playlist/temp/{guid}";
         if (guid === undefined || guid === null)
@@ -1764,6 +1807,68 @@ export class UpdateRequestOfMusicModel {
     clone() {
         const json = this.toJSON();
         let result = new UpdateRequestOfMusicModel();
+        result.init(json);
+        return result;
+    }
+}
+export class PlaylistModel {
+    id;
+    name;
+    autor;
+    image;
+    rating;
+    complete;
+    genres;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : null;
+            this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.autor = _data["autor"] !== undefined ? _data["autor"] : null;
+            this.image = _data["image"] !== undefined ? _data["image"] : null;
+            this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
+            this.complete = _data["complete"] !== undefined ? _data["complete"] : null;
+            if (Array.isArray(_data["genres"])) {
+                this.genres = [];
+                for (let item of _data["genres"])
+                    this.genres.push(item);
+            }
+            else {
+                this.genres = null;
+            }
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaylistModel();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : null;
+        data["name"] = this.name !== undefined ? this.name : null;
+        data["autor"] = this.autor !== undefined ? this.autor : null;
+        data["image"] = this.image !== undefined ? this.image : null;
+        data["rating"] = this.rating !== undefined ? this.rating : null;
+        data["complete"] = this.complete !== undefined ? this.complete : null;
+        if (Array.isArray(this.genres)) {
+            data["genres"] = [];
+            for (let item of this.genres)
+                data["genres"].push(item);
+        }
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new PlaylistModel();
         result.init(json);
         return result;
     }

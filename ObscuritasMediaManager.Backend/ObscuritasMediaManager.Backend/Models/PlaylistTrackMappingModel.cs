@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
-[Table("Playlists", Schema = "dbo")]
-public class PlaylistEntryModel
+[Table("PlaylistTrackMapping", Schema = "dbo")]
+public class PlaylistTrackMappingModel
 {
     [Key] public Guid PlaylistId { get; set; }
     public string PlaylistName { get; set; }

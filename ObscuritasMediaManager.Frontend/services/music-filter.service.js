@@ -12,7 +12,7 @@ export class MusicFilterService {
         var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
         var results = list.filter((item) => {
-            var array = item[filterProperty];
+            var array = item[filterProperty] ?? [];
             if (!Array.isArray(array)) throw new Error('property must be an array');
             var itemPropertyValues = array;
             return (

@@ -30,6 +30,12 @@ public class PlaylistController : ControllerBase
         return Ok(guid);
     }
 
+    [HttpGet("list")]
+    public IQueryable<PlaylistModel> ListPlaylists()
+    {
+        return _playlistRepository.GetAll();
+    }
+
     [HttpGet("temp/{guid:Guid}")]
     public async Task<ActionResult<IEnumerable<MusicModel>>> GetTemporaryPlaylist(Guid guid)
     {

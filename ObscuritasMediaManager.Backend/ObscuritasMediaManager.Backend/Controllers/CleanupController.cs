@@ -63,7 +63,7 @@ public class CleanupController : ControllerBase
 
             return fileInfo.AudioStreams.Any();
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return false;
         }

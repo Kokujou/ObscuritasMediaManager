@@ -21,8 +21,13 @@ public class PlaylistRepository
 
     public async Task CreateAsync(string name, IEnumerable<string> trackHashes)
     {
-        await _context.AddRangeAsync(trackHashes.Select(x => new PlaylistEntryModel
-            { PlaylistId = Guid.NewGuid(), TrackHash = x, PlaylistName = name }));
+        await _context.AddRangeAsync(trackHashes.Select(x => new PlaylistTrackMappingModel
+        { PlaylistId = Guid.NewGuid(), TrackHash = x, PlaylistName = name }));
         await _context.SaveChangesAsync();
+    }
+
+    public IQueryable<PlaylistModel> GetAll()
+    {
+        return _context.Playlists;
     }
 }

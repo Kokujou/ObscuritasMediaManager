@@ -10,6 +10,7 @@ import { MediaSearch } from './advanced-components/media-search/media-search.js'
 import { MediaTile } from './advanced-components/media-tile/media-tile.js';
 import { MusicFilter } from './advanced-components/music-filter/music-filter.js';
 import { PaginatedScrolling } from './advanced-components/paginated-scrolling/paginated-scrolling.js';
+import { PlaylistTile } from './advanced-components/playlist-tile/playlist-tile.js';
 import { RecipeTile } from './advanced-components/recipe-tile/recipe-tile.js';
 import { StarRating } from './advanced-components/star-rating/star-rating.js';
 import { TagLabel } from './advanced-components/tag-label/tag-label.js';
@@ -117,3 +118,4 @@ window.customElements.define('grouped-dropdown', GroupedDropdown);
 window.customElements.define('duration-input', DurationInput);
 window.customElements.define('recipe-tile', RecipeTile);
 window.customElements.define('priority-list', PriorityList);
+window.customElements.define('playlist-tile', PlaylistTile);

@@ -107,7 +107,8 @@ export function renderMusicFilterStyles() {
             margin: 0 5px;
         }
 
-        #complete-input {
+        #complete-input,
+        #show-playlists-input {
             margin-left: 20px;
         }
 
@@ -166,7 +167,8 @@ export function renderMusicFilterStyles() {
             margin: 0 20px;
         }
 
-        #complete-filter {
+        #complete-filter,
+        #show-playlists-filter {
             margin-top: 30px;
             display: flex;
             align-items: center;

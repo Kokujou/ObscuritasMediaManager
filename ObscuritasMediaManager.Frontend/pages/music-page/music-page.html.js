@@ -71,6 +71,31 @@ export function renderMusicPage(musicPage) {
                     ${musicPage.loading
                         ? html`<partial-loading></partial-loading>`
                         : html` <div id="search-results">
+                              ${musicPage.paginatedPlaylists.map(
+                                  (playlist) =>
+                                      html`
+                                          <div class="audio-link-container">
+                                              ${musicPage.selectionMode
+                                                  ? html`<input
+                                                        type="checkbox"
+                                                        class="audio-select"
+                                                        ?checked="${musicPage.selectedHashes.includes(playlist.id)}"
+                                                        @change="${(e) => musicPage.toggleTrackSelection(e.target, playlist.id)}"
+                                                    />`
+                                                  : ''}
+                                              <link-element
+                                                  class="audio-tile-link"
+                                                  .hash="${getPageName(MusicPlaylistPage)}"
+                                                  .search="guid=${playlist.id}"
+                                                  ?disabled="${musicPage.selectionModeTimer == null || musicPage.selectionMode}"
+                                                  @pointerdown="${(e) => musicPage.startSelectionModeTimer(playlist.id)}"
+                                                  @pointerup="${(e) => musicPage.stopSelectionModeTimer(playlist.id)}"
+                                              >
+                                                  <playlist-tile .track="${playlist}"></playlist-tile>
+                                              </link-element>
+                                          </div>
+                                      `
+                              )}
                               ${musicPage.paginatedTracks.map(
                                   (track) =>
                                       html`

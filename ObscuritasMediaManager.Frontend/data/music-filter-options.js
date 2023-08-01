@@ -13,6 +13,7 @@ import { session } from './session.js';
 export class MusicFilterOptions {
     /** @type {string} */ search = '';
     /** @type {CheckboxState} */ complete = CheckboxState.Ignore;
+    /** @type {CheckboxState} */ showPlaylists = CheckboxState.Ignore;
 
     languages = new FilterEntry(Nation, CheckboxState.Allow);
     ratings = new FilterEntry(['1', '2', '3', '4', '5'], CheckboxState.Allow);

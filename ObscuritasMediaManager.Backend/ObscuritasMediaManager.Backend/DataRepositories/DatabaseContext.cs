@@ -18,7 +18,8 @@ public class DatabaseContext : DbContext
     public DbSet<MusicModel> Music { get; set; }
     public DbSet<InstrumentModel> Instruments { get; set; }
     public DbSet<UserModel> Users { get; set; }
-    public DbSet<PlaylistEntryModel> PlaylistEntries { get; set; }
+    public DbSet<PlaylistTrackMappingModel> PlaylistEntries { get; set; }
+    public DbSet<PlaylistModel> Playlists { get; set; }
     public DbSet<RecipeModel> Recipes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,6 +30,11 @@ public class DatabaseContext : DbContext
 
         modelBuilder.Entity<MusicModel>()
             .Property(x => x.Genres).HasConversion(x => string.Join(",", x),
+                x => x.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                    .Select(y => ParseEnumOrDefault<MusicGenre>(y))
+                    .ToList());
+
+        modelBuilder.Entity<PlaylistModel>().Property(x => x.Genres).HasConversion(x => string.Join(",", x),
                 x => x.Split(",", StringSplitOptions.RemoveEmptyEntries)
                     .Select(y => ParseEnumOrDefault<MusicGenre>(y))
                     .ToList());

@@ -27,8 +27,13 @@ export class ExtendedMusicModel extends MusicModel {
         return result;
     }
 
-    constructor(args) {
+    /**
+     * @param {import("../obscuritas-media-manager-backend-client.js").IMusicModel} [args]
+     * @param {'track' | 'playlist'} [type]
+     */
+    constructor(args = null, type = 'track') {
         super(args);
+        this.type = type;
         if (!this.genres) this.genres = /** @type {MusicGenre[]} */ ([]);
         if (!this.instruments) this.instruments = /** @type {string[]} */ ([]);
     }

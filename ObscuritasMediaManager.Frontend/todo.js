@@ -11,7 +11,6 @@
 //TODO: improve re-upload algorithm to not overwrite or duplicate data (media-pages)
 //TODO: Fix: if dropdown has one one element -> select by default (Labels)
 //TODO: tooltips
-//TODO: optional: disable edit when "complete" checkbox is ticked
 //TODO: implement message snackbar for error and success notifications
 //TODO: implement loading-indiciation for requests
 //TODO: add delete from playlist and hard delete functionality to playlist

@@ -97,6 +97,8 @@ export declare class PlaylistClient {
     });
     createTemporaryPlaylist(hashes: string[], signal?: AbortSignal | undefined): Promise<string>;
     protected processCreateTemporaryPlaylist(response: Response): Promise<string>;
+    listPlaylists(signal?: AbortSignal | undefined): Promise<PlaylistModel[]>;
+    protected processListPlaylists(response: Response): Promise<PlaylistModel[]>;
     getTemporaryPlaylist(guid: string, signal?: AbortSignal | undefined): Promise<MusicModel[]>;
     protected processGetTemporaryPlaylist(response: Response): Promise<MusicModel[]>;
     getPlaylist(id: string, signal?: AbortSignal | undefined): Promise<MusicModel[]>;
@@ -335,6 +337,29 @@ export declare class UpdateRequestOfMusicModel implements IUpdateRequestOfMusicM
 export interface IUpdateRequestOfMusicModel {
     oldModel: MusicModel | null;
     newModel: MusicModel | null;
+}
+export declare class PlaylistModel implements IPlaylistModel {
+    id: string;
+    name: string | null;
+    autor: string | null;
+    image: string | null;
+    rating: number;
+    complete: boolean;
+    genres: MusicGenre[] | null;
+    constructor(data?: IPlaylistModel);
+    init(_data?: any): void;
+    static fromJS(data: any): PlaylistModel;
+    toJSON(data?: any): any;
+    clone(): PlaylistModel;
+}
+export interface IPlaylistModel {
+    id: string;
+    name: string | null;
+    autor: string | null;
+    image: string | null;
+    rating: number;
+    complete: boolean;
+    genres: MusicGenre[] | null;
 }
 export declare class RecipeModel implements IRecipeModel {
     id: string;

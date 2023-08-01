@@ -43,6 +43,15 @@ export function renderMusicFilter(musicFilter) {
                     @valueChanged="${(e) => musicFilter.toggleFilter('complete', '', e.detail.value)}"
                 ></tri-value-checkbox>
             </div>
+            <div id="show-playlists-filter" class="filter">
+                <label for="scales">Playlists anzeigen: </label>
+                <tri-value-checkbox
+                    allowThreeValues
+                    id="show-playlists-input"
+                    value="${musicFilter.filter.showPlaylists}"
+                    @valueChanged="${(e) => musicFilter.toggleFilter('showPlaylists', '', e.detail.value)}"
+                ></tri-value-checkbox>
+            </div>
             <div id="mood-filter" class="filter">
                 <div class="filter-heading">
                     <div class="heading-label">Sortieren:</div>

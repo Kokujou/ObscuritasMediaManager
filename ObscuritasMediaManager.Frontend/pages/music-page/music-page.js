@@ -8,9 +8,8 @@ import { session } from '../../data/session.js';
 import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
-import { render } from '../../exports.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
-import { Mood } from '../../obscuritas-media-manager-backend-client.js';
+import { Mood, PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
@@ -38,11 +37,42 @@ export class MusicPage extends LitElementBase {
         return {};
     }
 
+    get paginatedPlaylists() {
+        return this.filteredPlaylists.slice(0, 6 + 3 * this.currentPage);
+    }
+
     get paginatedTracks() {
-        return this.filteredTracks.slice(0, 6 + 3 * this.currentPage);
+        var pageSize = 6 + 3 * this.currentPage - this.filteredPlaylists.length;
+        if (pageSize < 0) pageSize = 0;
+        return this.filteredTracks.slice(0, pageSize);
+    }
+
+    get filteredPlaylists() {
+        if (this.filter.showPlaylists == CheckboxState.Forbid) return [];
+
+        var filteredPlaylists = [...this.playlists];
+
+        MusicFilterService.applyArrayFilter(filteredPlaylists, this.filter.genres, 'genres');
+        MusicFilterService.applyPropertyFilter(filteredPlaylists, this.filter.ratings, 'rating');
+        filteredPlaylists = filteredPlaylists.filter(
+            (track) =>
+                track.name.toLowerCase().includes((this.filter.search || '').toLowerCase()) ||
+                track.autor.toLowerCase().includes((this.filter.search || '').toLowerCase())
+        );
+
+        if (this.filter.complete != CheckboxState.Ignore)
+            filteredPlaylists = filteredPlaylists.filter(
+                (track) => track.complete == (this.filter.complete == CheckboxState.Allow)
+            );
+
+        var sorted = filteredPlaylists;
+        if (this.sortingProperty != 'unset') sorted = sortBy(filteredPlaylists, (x) => x[this.sortingProperty]);
+        if (this.sortingDirection == 'ascending') return sorted;
+        return sorted.reverse();
     }
 
     get filteredTracks() {
+        if (this.filter.showPlaylists == CheckboxState.Allow) return [];
         var filteredTracks = [...this.musicTracks];
 
         MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instrumentTypes, 'instrumentTypes');
@@ -92,6 +122,7 @@ export class MusicPage extends LitElementBase {
         super();
 
         /** @type {ExtendedMusicModel[]} */ this.musicTracks = [];
+        /** @type {PlaylistModel[]} */ this.playlists = [];
         /** @type {ExtendedMusicModel} */ this.currentTrack = new ExtendedMusicModel();
         /** @type {number} */ this.currentVolumne = 0.1;
         /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
@@ -141,12 +172,13 @@ export class MusicPage extends LitElementBase {
         await this.requestUpdate(undefined);
 
         try {
+            this.playlists = await PlaylistService.listPlaylists();
             this.musicTracks = (await MusicService.getAll()).map((x) => new ExtendedMusicModel(x));
         } catch (err) {
             console.error(err);
         }
         var localSearchString = localStorage.getItem(`music.search`);
-        if (localSearchString) this.filter = JSON.parse(localSearchString);
+        if (localSearchString) this.filter = Object.assign(new MusicFilterOptions(), JSON.parse(localSearchString));
 
         localSearchString = localStorage.getItem(`music.sorting`);
         if (localSearchString) {

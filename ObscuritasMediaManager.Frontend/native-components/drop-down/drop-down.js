@@ -54,7 +54,7 @@ export class DropDown extends LitElementBase {
             values: { type: Array, reflect: true },
             maxDisplayDepth: { type: Number, reflect: true },
             required: { type: Boolean, reflect: true },
-            colors: { type: Array, reflect: true },
+            colors: { type: Object, reflect: true },
             showDropDown: { type: Boolean, reflect: false },
             useSearch: { type: Boolean, reflect: false },
             multiselect: { type: Boolean, reflect: false },
@@ -71,7 +71,7 @@ export class DropDown extends LitElementBase {
         this.multiselect = false;
         this.searchFilter = '';
         /** @type {string[]} */ this.values = [];
-        /** @type {string[]} */ this.colors = [];
+        /** @type {Object.<string,string>} */ this.colors = {};
 
         this.addEventListener('click', () => {
             this.clickedOnElement = true;
