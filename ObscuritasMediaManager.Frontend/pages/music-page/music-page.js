@@ -8,6 +8,7 @@ import { session } from '../../data/session.js';
 import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
+import { render } from '../../exports.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { Mood } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
@@ -117,6 +118,7 @@ export class MusicPage extends LitElementBase {
                 if (
                     this.audioElement.paused ||
                     this.audioElement.currentTime > 0 ||
+                    !this.audioElement ||
                     nextPage == 'music' ||
                     nextPage == 'music-playlist'
                 )

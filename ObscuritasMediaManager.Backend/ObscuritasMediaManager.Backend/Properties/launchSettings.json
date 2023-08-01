@@ -1,31 +1,24 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iis": {
-      "applicationUrl": "https://localhost/ObscuritasMediaManager",
-      "sslPort": 0
+    "iisSettings": {
+        "windowsAuthentication": false,
+        "anonymousAuthentication": true,
+        "iis": {
+            "applicationUrl": "https://localhost/ObscuritasMediaManager",
+            "sslPort": 0
+        },
+      "iisExpress": {
+        "applicationUrl": "https://localhost/ObscuritasMediaManager",
+        "sslPort": 0
+      }
     },
-    "iisExpress": {
-      "applicationUrl": "http://localhost:52516",
-      "sslPort": 44331
+    "profiles": {
+        "IIS Express": {
+            "commandName": "IIS",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "use64Bit": true
+        },
+      
     }
-  },
-  "profiles": {
-    "IIS Express": {
-      "commandName": "IIS",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "use64Bit": true
-    },
-    "ObscuritasMediaManager.Backend": {
-      "commandName": "Project",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": "true",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
-    }
-  }
 }

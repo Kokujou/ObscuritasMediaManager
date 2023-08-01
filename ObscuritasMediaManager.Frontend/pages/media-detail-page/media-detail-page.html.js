@@ -25,6 +25,7 @@ export function renderMediaDetailPage(detailPage) {
                     <div id="left-panel">
                         <media-tile
                             displayStyle="simple"
+                            ?disabled="${!detailPage.editMode}"
                             .imageSource="${detailPage.media.image}"
                             @imageReceived="${(e) => detailPage.addImage(e.detail.imageData)}"
                         >

@@ -229,7 +229,7 @@ export class MusicPlaylistPage extends LitElementBase {
             /** @type {any} */ (this.updatedTrack[property]) = value;
         }
 
-        this.requestUpdate(undefined);
+        await this.requestUpdate(undefined);
     }
 
     async showLanguageSwitcher() {

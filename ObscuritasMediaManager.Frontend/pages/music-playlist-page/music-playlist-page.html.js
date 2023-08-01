@@ -44,8 +44,9 @@ export function renderMusicPlaylist(playlist) {
                     <input
                         type="checkbox"
                         id="complete-check"
-                        .checked="${playlist.updatedTrack.complete}"
-                        @input="${() => playlist.toggleComplete()}"
+                        ?checked="${playlist.updatedTrack.complete}"
+                        oninput="this.dispatchEvent(new Event('change'))"
+                        @change="${() => playlist.toggleComplete()}"
                     />
                 </div>
                 <div id="current-track-container">
@@ -87,18 +88,21 @@ export function renderMusicPlaylist(playlist) {
                         <editable-label
                             id="audio-title"
                             .value="${playlist.updatedTrack.name}"
+                            ?editEnabled="${!playlist.updatedTrack.complete}"
                             @valueChanged="${(e) => playlist.changeProperty('name', e.detail.value)}"
                         ></editable-label>
                         <div id="audio-subtitle">
                             <editable-label
                                 id="audio-author"
                                 .value="${playlist.updatedTrack.author}"
+                                ?editEnabled="${!playlist.updatedTrack.complete}"
                                 @valueChanged="${(e) => playlist.changeProperty('author', e.detail.value)}"
                             ></editable-label>
                             <div id="subtitle-separator">-</div>
                             <editable-label
                                 id="audio-source"
                                 .value="${playlist.updatedTrack.source || '---'}"
+                                ?editEnabled="${!playlist.updatedTrack.complete}"
                                 @valueChanged="${(e) => playlist.changeProperty('source', e.detail.value)}"
                             ></editable-label>
                         </div>

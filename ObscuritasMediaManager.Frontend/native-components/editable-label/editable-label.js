@@ -23,7 +23,7 @@ export class EditableLabel extends LitElementBase {
     constructor() {
         super();
         /** @type {string} */ this.value;
-        /** @type {boolean} */ this.editEnabled;
+        /** @type {boolean} */ this.editEnabled = false;
         /** @type {string} */ this.supportedCharacters = null;
 
         this._inputField = null;
@@ -40,40 +40,17 @@ export class EditableLabel extends LitElementBase {
         return renderEditableLabel(this);
     }
 
-    enableEditing() {
-        this.editEnabled = true;
-        this.requestUpdate(undefined);
-    }
-
     /**
      * @param {KeyboardEvent} e
      */
     handleLabelInput(e) {
-        if (e.key == 'Enter') this.saveChanges();
-        else if (e.key == 'Escape') this.revertChanges();
-        else if (e.ctrlKey) return;
+        if (e.ctrlKey) return;
         else if (this.supportedCharacters && e.key.length == 1 && !e.key.match(new RegExp(this.supportedCharacters, 'g')))
             console.warn('unsupported character: ' + e.key);
         else return;
 
         if (e.code) e.stopPropagation();
         e.preventDefault();
-    }
-
-    revertChanges() {
-        this.editEnabled = false;
-        this.requestUpdate(undefined);
-    }
-
-    saveChanges() {
-        this.value = this.inputField.innerText;
-        this.dispatchCustomEvent('valueChanged', { value: this.value });
-        this.dispatchEvent(
-            new KeyboardEvent('keydown', { bubbles: true, composed: true, cancelable: true, key: 'Tab', code: 'Tab', keyCode: 9 })
-        );
-
-        this.editEnabled = false;
-        this.requestUpdate(undefined);
     }
 
     /**

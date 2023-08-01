@@ -16,7 +16,7 @@ export function renderEditableLabel(editableLabel) {
             @paste="${(e) => editableLabel.handlePaste(e)}"
             .innerText="${editableLabel.value}"
         ></div>
-        ${editableLabel.editEnabled ? renderValueInput(editableLabel) : renderValueLabel(editableLabel)}
+        ${editableLabel.editEnabled ? '' : renderValueLabel(editableLabel)}
     </div>`;
 }
 
@@ -24,18 +24,5 @@ export function renderEditableLabel(editableLabel) {
  * @param {EditableLabel} editableLabel
  */
 function renderValueLabel(editableLabel) {
-    return html`
-        <div id="value-label" class="value-item">${editableLabel.value}</div>
-        <div id="edit-icon" class="icon" @click="${() => editableLabel.enableEditing()}"></div>
-    `;
-}
-
-/**
- * @param {EditableLabel} editableLabel
- */
-function renderValueInput(editableLabel) {
-    return html`
-        <div id="abort-icon" class="icon" @click="${() => editableLabel.revertChanges()}"></div>
-        <div id="save-icon" class="icon" @click="${() => editableLabel.saveChanges()}"></div>
-    `;
+    return html` <div id="value-label" class="value-item">${editableLabel.value}</div> `;
 }
