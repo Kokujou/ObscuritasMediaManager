@@ -15,49 +15,6 @@ export class CleanupClient {
         this.http = http ? http : window;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
-    getBrokenAudioTracks(signal) {
-        let url_ = this.baseUrl + "/api/Cleanup/music";
-        url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "GET",
-            signal,
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processGetBrokenAudioTracks(_response);
-        });
-    }
-    processGetBrokenAudioTracks(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [];
-                    for (let item of resultData200)
-                        result200.push(MusicModel.fromJS(item));
-                }
-                else {
-                    result200 = null;
-                }
-                return result200;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
     cleanupMusic(trackHashes, signal) {
         let url_ = this.baseUrl + "/api/Cleanup/music";
         url_ = url_.replace(/[?&]$/, "");
@@ -104,6 +61,49 @@ export class CleanupClient {
         }
         return Promise.resolve(null);
     }
+    getBrokenAudioTracks(signal) {
+        let url_ = this.baseUrl + "/api/Cleanup/music";
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetBrokenAudioTracks(_response);
+        });
+    }
+    processGetBrokenAudioTracks(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                if (Array.isArray(resultData200)) {
+                    result200 = [];
+                    for (let item of resultData200)
+                        result200.push(MusicModel.fromJS(item));
+                }
+                else {
+                    result200 = null;
+                }
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
 }
 export class FileClient {
     http;
@@ -112,42 +112,6 @@ export class FileClient {
     constructor(baseUrl, http) {
         this.http = http ? http : window;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-    getVideo(videoPath, signal) {
-        let url_ = this.baseUrl + "/api/File/video?";
-        if (videoPath !== undefined && videoPath !== null)
-            url_ += "videoPath=" + encodeURIComponent("" + videoPath) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "GET",
-            signal,
-            headers: {
-                "Accept": "application/octet-stream"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processGetVideo(_response);
-        });
-    }
-    processGetVideo(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
     }
     getAudio(audioPath, highCompatibility, signal) {
         let url_ = this.baseUrl + "/api/File/audio?";
@@ -170,6 +134,42 @@ export class FileClient {
         });
     }
     processGetAudio(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    getVideo(videoPath, signal) {
+        let url_ = this.baseUrl + "/api/File/video?";
+        if (videoPath !== undefined && videoPath !== null)
+            url_ += "videoPath=" + encodeURIComponent("" + videoPath) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/octet-stream"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetVideo(_response);
+        });
+    }
+    processGetVideo(response) {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
@@ -335,164 +335,6 @@ export class MediaClient {
         this.http = http ? http : window;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
-    get(guid, signal) {
-        let url_ = this.baseUrl + "/api/Media/{guid}";
-        if (guid === undefined || guid === null)
-            throw new Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
-        url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "GET",
-            signal,
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processGet(_response);
-        });
-    }
-    processGet(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = MediaModel.fromJS(resultData200);
-                return result200;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-    getAll(type, signal) {
-        let url_ = this.baseUrl + "/api/Media?";
-        if (type !== undefined && type !== null)
-            url_ += "type=" + encodeURIComponent("" + type) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "GET",
-            signal,
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processGetAll(_response);
-        });
-    }
-    processGetAll(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [];
-                    for (let item of resultData200)
-                        result200.push(MediaModel.fromJS(item));
-                }
-                else {
-                    result200 = null;
-                }
-                return result200;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-    batchCreateMedia(media, signal) {
-        let url_ = this.baseUrl + "/api/Media";
-        url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(media);
-        let options_ = {
-            body: content_,
-            method: "POST",
-            signal,
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processBatchCreateMedia(_response);
-        });
-    }
-    processBatchCreateMedia(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-    updateMedia(media, signal) {
-        let url_ = this.baseUrl + "/api/Media";
-        url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(media);
-        let options_ = {
-            body: content_,
-            method: "PUT",
-            signal,
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processUpdateMedia(_response);
-        });
-    }
-    processUpdateMedia(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
     addMediaImage(image, guid, signal) {
         let url_ = this.baseUrl + "/api/Media/{guid}/image";
         if (guid === undefined || guid === null)
@@ -570,6 +412,164 @@ export class MediaClient {
         }
         return Promise.resolve(null);
     }
+    batchCreateMedia(media, signal) {
+        let url_ = this.baseUrl + "/api/Media";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(media);
+        let options_ = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processBatchCreateMedia(_response);
+        });
+    }
+    processBatchCreateMedia(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    getAll(type, signal) {
+        let url_ = this.baseUrl + "/api/Media?";
+        if (type !== undefined && type !== null)
+            url_ += "type=" + encodeURIComponent("" + type) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetAll(_response);
+        });
+    }
+    processGetAll(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                if (Array.isArray(resultData200)) {
+                    result200 = [];
+                    for (let item of resultData200)
+                        result200.push(MediaModel.fromJS(item));
+                }
+                else {
+                    result200 = null;
+                }
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    updateMedia(media, signal) {
+        let url_ = this.baseUrl + "/api/Media";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(media);
+        let options_ = {
+            body: content_,
+            method: "PUT",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processUpdateMedia(_response);
+        });
+    }
+    processUpdateMedia(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    get(guid, signal) {
+        let url_ = this.baseUrl + "/api/Media/{guid}";
+        if (guid === undefined || guid === null)
+            throw new Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGet(_response);
+        });
+    }
+    processGet(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = MediaModel.fromJS(resultData200);
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
 }
 export class MusicClient {
     http;
@@ -578,6 +578,80 @@ export class MusicClient {
     constructor(baseUrl, http) {
         this.http = http ? http : window;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+    addInstrument(type, name, signal) {
+        let url_ = this.baseUrl + "/api/Music/instrument/{name}/type/{type}";
+        if (type === undefined || type === null)
+            throw new Error("The parameter 'type' must be defined.");
+        url_ = url_.replace("{type}", encodeURIComponent("" + type));
+        if (name === undefined || name === null)
+            throw new Error("The parameter 'name' must be defined.");
+        url_ = url_.replace("{name}", encodeURIComponent("" + name));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "PUT",
+            signal,
+            headers: {}
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processAddInstrument(_response);
+        });
+    }
+    processAddInstrument(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    removeInstrument(type, name, signal) {
+        let url_ = this.baseUrl + "/api/Music/instrument/{name}/type/{type}";
+        if (type === undefined || type === null)
+            throw new Error("The parameter 'type' must be defined.");
+        url_ = url_.replace("{type}", encodeURIComponent("" + type));
+        if (name === undefined || name === null)
+            throw new Error("The parameter 'name' must be defined.");
+        url_ = url_.replace("{name}", encodeURIComponent("" + name));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "DELETE",
+            signal,
+            headers: {}
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processRemoveInstrument(_response);
+        });
+    }
+    processRemoveInstrument(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
     }
     batchCreateMusicTracks(tracks, signal) {
         let url_ = this.baseUrl + "/api/Music";
@@ -651,40 +725,6 @@ export class MusicClient {
                 }
                 return result200;
             });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-    recalculateHashes(signal) {
-        let url_ = this.baseUrl + "/api/Music/recalculate-hashes";
-        url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "POST",
-            signal,
-            headers: {
-                "Accept": "application/octet-stream"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processRecalculateHashes(_response);
-        });
-    }
-    processRecalculateHashes(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -815,72 +855,32 @@ export class MusicClient {
         }
         return Promise.resolve(null);
     }
-    addInstrument(type, name, signal) {
-        let url_ = this.baseUrl + "/api/Music/instrument/{name}/type/{type}";
-        if (type === undefined || type === null)
-            throw new Error("The parameter 'type' must be defined.");
-        url_ = url_.replace("{type}", encodeURIComponent("" + type));
-        if (name === undefined || name === null)
-            throw new Error("The parameter 'name' must be defined.");
-        url_ = url_.replace("{name}", encodeURIComponent("" + name));
+    recalculateHashes(signal) {
+        let url_ = this.baseUrl + "/api/Music/recalculate-hashes";
         url_ = url_.replace(/[?&]$/, "");
         let options_ = {
-            method: "PUT",
+            method: "POST",
             signal,
-            headers: {}
+            headers: {
+                "Accept": "application/octet-stream"
+            }
         };
         return this.http.fetch(url_, options_).then((_response) => {
-            return this.processAddInstrument(_response);
+            return this.processRecalculateHashes(_response);
         });
     }
-    processAddInstrument(response) {
+    processRecalculateHashes(response) {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                return;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-    removeInstrument(type, name, signal) {
-        let url_ = this.baseUrl + "/api/Music/instrument/{name}/type/{type}";
-        if (type === undefined || type === null)
-            throw new Error("The parameter 'type' must be defined.");
-        url_ = url_.replace("{type}", encodeURIComponent("" + type));
-        if (name === undefined || name === null)
-            throw new Error("The parameter 'name' must be defined.");
-        url_ = url_.replace("{name}", encodeURIComponent("" + name));
-        url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "DELETE",
-            signal,
-            headers: {}
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processRemoveInstrument(_response);
-        });
-    }
-    processRemoveInstrument(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                return;
-            });
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -937,6 +937,83 @@ export class PlaylistClient {
         }
         return Promise.resolve(null);
     }
+    getPlaylist(playlistId, signal) {
+        let url_ = this.baseUrl + "/api/Playlist/{playlistId}";
+        if (playlistId === undefined || playlistId === null)
+            throw new Error("The parameter 'playlistId' must be defined.");
+        url_ = url_.replace("{playlistId}", encodeURIComponent("" + playlistId));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetPlaylist(_response);
+        });
+    }
+    processGetPlaylist(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = PlaylistModel.fromJS(resultData200);
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    updatePlaylistData(playlistId, updateRequest, signal) {
+        let url_ = this.baseUrl + "/api/Playlist/{playlistId}";
+        if (playlistId === undefined || playlistId === null)
+            throw new Error("The parameter 'playlistId' must be defined.");
+        url_ = url_.replace("{playlistId}", encodeURIComponent("" + playlistId));
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(updateRequest);
+        let options_ = {
+            body: content_,
+            method: "PUT",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processUpdatePlaylistData(_response);
+        });
+    }
+    processUpdatePlaylistData(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
     listPlaylists(signal) {
         let url_ = this.baseUrl + "/api/Playlist/list";
         url_ = url_.replace(/[?&]$/, "");
@@ -980,105 +1057,19 @@ export class PlaylistClient {
         }
         return Promise.resolve(null);
     }
-    getTemporaryPlaylist(guid, signal) {
-        let url_ = this.baseUrl + "/api/Playlist/temp/{guid}";
-        if (guid === undefined || guid === null)
-            throw new Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+}
+export class RecipeClient {
+    http;
+    baseUrl;
+    jsonParseReviver = undefined;
+    constructor(baseUrl, http) {
+        this.http = http ? http : window;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+    createRecipe(recipe, signal) {
+        let url_ = this.baseUrl + "/api/Recipe";
         url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "GET",
-            signal,
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processGetTemporaryPlaylist(_response);
-        });
-    }
-    processGetTemporaryPlaylist(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [];
-                    for (let item of resultData200)
-                        result200.push(MusicModel.fromJS(item));
-                }
-                else {
-                    result200 = null;
-                }
-                return result200;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-    getPlaylist(id, signal) {
-        let url_ = this.baseUrl + "/api/Playlist/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
-        url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "GET",
-            signal,
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processGetPlaylist(_response);
-        });
-    }
-    processGetPlaylist(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [];
-                    for (let item of resultData200)
-                        result200.push(MusicModel.fromJS(item));
-                }
-                else {
-                    result200 = null;
-                }
-                return result200;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-    createPlaylist(name, trackHashes, signal) {
-        let url_ = this.baseUrl + "/api/Playlist/create/{name}";
-        if (name === undefined || name === null)
-            throw new Error("The parameter 'name' must be defined.");
-        url_ = url_.replace("{name}", encodeURIComponent("" + name));
-        url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(trackHashes);
+        const content_ = JSON.stringify(recipe);
         let options_ = {
             body: content_,
             method: "POST",
@@ -1088,10 +1079,10 @@ export class PlaylistClient {
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
-            return this.processCreatePlaylist(_response);
+            return this.processCreateRecipe(_response);
         });
     }
-    processCreatePlaylist(response) {
+    processCreateRecipe(response) {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
@@ -1109,15 +1100,6 @@ export class PlaylistClient {
             });
         }
         return Promise.resolve(null);
-    }
-}
-export class RecipeClient {
-    http;
-    baseUrl;
-    jsonParseReviver = undefined;
-    constructor(baseUrl, http) {
-        this.http = http ? http : window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
     getAllRecipes(signal) {
         let url_ = this.baseUrl + "/api/Recipe";
@@ -1153,41 +1135,6 @@ export class RecipeClient {
                     result200 = null;
                 }
                 return result200;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-    createRecipe(recipe, signal) {
-        let url_ = this.baseUrl + "/api/Recipe";
-        url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(recipe);
-        let options_ = {
-            body: content_,
-            method: "POST",
-            signal,
-            headers: {
-                "Content-Type": "application/json",
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processCreateRecipe(_response);
-        });
-    }
-    processCreateRecipe(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                return;
             });
         }
         else if (status !== 200 && status !== 204) {
@@ -1319,6 +1266,51 @@ export class StreamingClient {
         }
         return Promise.resolve(null);
     }
+    getStream(guid, season, episode, signal) {
+        let url_ = this.baseUrl + "/api/Streaming/{guid}/season/{season}/episode/{episode}";
+        if (guid === undefined || guid === null)
+            throw new Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        if (season === undefined || season === null)
+            throw new Error("The parameter 'season' must be defined.");
+        url_ = url_.replace("{season}", encodeURIComponent("" + season));
+        if (episode === undefined || episode === null)
+            throw new Error("The parameter 'episode' must be defined.");
+        url_ = url_.replace("{episode}", encodeURIComponent("" + episode));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetStream(_response);
+        });
+    }
+    processGetStream(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = StreamingEntryModel.fromJS(resultData200);
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
     getStreamingEntries(guid, signal) {
         let url_ = this.baseUrl + "/api/Streaming/{guid}";
         if (guid === undefined || guid === null)
@@ -1365,95 +1357,37 @@ export class StreamingClient {
         }
         return Promise.resolve(null);
     }
-    getStream(guid, season, episode, signal) {
-        let url_ = this.baseUrl + "/api/Streaming/{guid}/season/{season}/episode/{episode}";
-        if (guid === undefined || guid === null)
-            throw new Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
-        if (season === undefined || season === null)
-            throw new Error("The parameter 'season' must be defined.");
-        url_ = url_.replace("{season}", encodeURIComponent("" + season));
-        if (episode === undefined || episode === null)
-            throw new Error("The parameter 'episode' must be defined.");
-        url_ = url_.replace("{episode}", encodeURIComponent("" + episode));
-        url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "GET",
-            signal,
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processGetStream(_response);
-        });
-    }
-    processGetStream(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = StreamingEntryModel.fromJS(resultData200);
-                return result200;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
 }
 export class MusicModel {
-    name;
     author;
-    source;
+    complete;
+    displayName;
+    genres;
+    hash;
+    instrumentation;
+    instruments;
+    language;
     mood1;
     mood2;
-    language;
+    name;
     nation;
-    instrumentation;
     participants;
-    instruments;
-    genres;
     path;
     rating;
-    complete;
-    hash;
+    source;
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property))
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
                     this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
-            this.name = _data["name"] !== undefined ? _data["name"] : null;
             this.author = _data["author"] !== undefined ? _data["author"] : null;
-            this.source = _data["source"] !== undefined ? _data["source"] : null;
-            this.mood1 = _data["mood1"] !== undefined ? _data["mood1"] : null;
-            this.mood2 = _data["mood2"] !== undefined ? _data["mood2"] : null;
-            this.language = _data["language"] !== undefined ? _data["language"] : null;
-            this.nation = _data["nation"] !== undefined ? _data["nation"] : null;
-            this.instrumentation = _data["instrumentation"] !== undefined ? _data["instrumentation"] : null;
-            this.participants = _data["participants"] !== undefined ? _data["participants"] : null;
-            if (Array.isArray(_data["instruments"])) {
-                this.instruments = [];
-                for (let item of _data["instruments"])
-                    this.instruments.push(item);
-            }
-            else {
-                this.instruments = null;
-            }
+            this.complete = _data["complete"] !== undefined ? _data["complete"] : null;
+            this.displayName = _data["displayName"] !== undefined ? _data["displayName"] : null;
             if (Array.isArray(_data["genres"])) {
                 this.genres = [];
                 for (let item of _data["genres"])
@@ -1462,10 +1396,25 @@ export class MusicModel {
             else {
                 this.genres = null;
             }
+            this.hash = _data["hash"] !== undefined ? _data["hash"] : null;
+            this.instrumentation = _data["instrumentation"] !== undefined ? _data["instrumentation"] : null;
+            if (Array.isArray(_data["instruments"])) {
+                this.instruments = [];
+                for (let item of _data["instruments"])
+                    this.instruments.push(item);
+            }
+            else {
+                this.instruments = null;
+            }
+            this.language = _data["language"] !== undefined ? _data["language"] : null;
+            this.mood1 = _data["mood1"] !== undefined ? _data["mood1"] : null;
+            this.mood2 = _data["mood2"] !== undefined ? _data["mood2"] : null;
+            this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.nation = _data["nation"] !== undefined ? _data["nation"] : null;
+            this.participants = _data["participants"] !== undefined ? _data["participants"] : null;
             this.path = _data["path"] !== undefined ? _data["path"] : null;
             this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
-            this.complete = _data["complete"] !== undefined ? _data["complete"] : null;
-            this.hash = _data["hash"] !== undefined ? _data["hash"] : null;
+            this.source = _data["source"] !== undefined ? _data["source"] : null;
         }
     }
     static fromJS(data) {
@@ -1476,29 +1425,30 @@ export class MusicModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data["name"] = this.name !== undefined ? this.name : null;
         data["author"] = this.author !== undefined ? this.author : null;
-        data["source"] = this.source !== undefined ? this.source : null;
-        data["mood1"] = this.mood1 !== undefined ? this.mood1 : null;
-        data["mood2"] = this.mood2 !== undefined ? this.mood2 : null;
-        data["language"] = this.language !== undefined ? this.language : null;
-        data["nation"] = this.nation !== undefined ? this.nation : null;
-        data["instrumentation"] = this.instrumentation !== undefined ? this.instrumentation : null;
-        data["participants"] = this.participants !== undefined ? this.participants : null;
-        if (Array.isArray(this.instruments)) {
-            data["instruments"] = [];
-            for (let item of this.instruments)
-                data["instruments"].push(item);
-        }
+        data["complete"] = this.complete !== undefined ? this.complete : null;
+        data["displayName"] = this.displayName !== undefined ? this.displayName : null;
         if (Array.isArray(this.genres)) {
             data["genres"] = [];
             for (let item of this.genres)
                 data["genres"].push(item);
         }
+        data["hash"] = this.hash !== undefined ? this.hash : null;
+        data["instrumentation"] = this.instrumentation !== undefined ? this.instrumentation : null;
+        if (Array.isArray(this.instruments)) {
+            data["instruments"] = [];
+            for (let item of this.instruments)
+                data["instruments"].push(item);
+        }
+        data["language"] = this.language !== undefined ? this.language : null;
+        data["mood1"] = this.mood1 !== undefined ? this.mood1 : null;
+        data["mood2"] = this.mood2 !== undefined ? this.mood2 : null;
+        data["name"] = this.name !== undefined ? this.name : null;
+        data["nation"] = this.nation !== undefined ? this.nation : null;
+        data["participants"] = this.participants !== undefined ? this.participants : null;
         data["path"] = this.path !== undefined ? this.path : null;
         data["rating"] = this.rating !== undefined ? this.rating : null;
-        data["complete"] = this.complete !== undefined ? this.complete : null;
-        data["hash"] = this.hash !== undefined ? this.hash : null;
+        data["source"] = this.source !== undefined ? this.source : null;
         return data;
     }
     clone() {
@@ -1508,50 +1458,6 @@ export class MusicModel {
         return result;
     }
 }
-export var Mood;
-(function (Mood) {
-    Mood["Unset"] = "Unset";
-    Mood["Happy"] = "Happy";
-    Mood["Aggressive"] = "Aggressive";
-    Mood["Sad"] = "Sad";
-    Mood["Cool"] = "Cool";
-    Mood["Calm"] = "Calm";
-    Mood["Romantic"] = "Romantic";
-    Mood["Dramatic"] = "Dramatic";
-    Mood["Epic"] = "Epic";
-    Mood["Funny"] = "Funny";
-    Mood["Passionate"] = "Passionate";
-    Mood["Monotonuous"] = "Monotonuous";
-})(Mood || (Mood = {}));
-export var Nation;
-(function (Nation) {
-    Nation["Unset"] = "Unset";
-    Nation["Japanese"] = "Japanese";
-    Nation["English"] = "English";
-    Nation["German"] = "German";
-    Nation["Spain"] = "Spain";
-    Nation["Chinese"] = "Chinese";
-    Nation["Italian"] = "Italian";
-    Nation["Russian"] = "Russian";
-    Nation["SouthAmerican"] = "SouthAmerican";
-    Nation["African"] = "African";
-})(Nation || (Nation = {}));
-export var Instrumentation;
-(function (Instrumentation) {
-    Instrumentation["Unset"] = "Unset";
-    Instrumentation["Mono"] = "Mono";
-    Instrumentation["Groups"] = "Groups";
-    Instrumentation["Mixed"] = "Mixed";
-})(Instrumentation || (Instrumentation = {}));
-export var Participants;
-(function (Participants) {
-    Participants["Unset"] = "Unset";
-    Participants["Solo"] = "Solo";
-    Participants["SmallGroup"] = "SmallGroup";
-    Participants["LargeGroup"] = "LargeGroup";
-    Participants["SmallOrchestra"] = "SmallOrchestra";
-    Participants["LargeOrchestra"] = "LargeOrchestra";
-})(Participants || (Participants = {}));
 export var MusicGenre;
 (function (MusicGenre) {
     MusicGenre["Unset"] = "Unset";
@@ -1583,14 +1489,58 @@ export var MusicGenre;
     MusicGenre["Western"] = "Western";
     MusicGenre["Christmas"] = "Christmas";
 })(MusicGenre || (MusicGenre = {}));
+export var Instrumentation;
+(function (Instrumentation) {
+    Instrumentation["Unset"] = "Unset";
+    Instrumentation["Mono"] = "Mono";
+    Instrumentation["Groups"] = "Groups";
+    Instrumentation["Mixed"] = "Mixed";
+})(Instrumentation || (Instrumentation = {}));
+export var Nation;
+(function (Nation) {
+    Nation["Unset"] = "Unset";
+    Nation["Japanese"] = "Japanese";
+    Nation["English"] = "English";
+    Nation["German"] = "German";
+    Nation["Spain"] = "Spain";
+    Nation["Chinese"] = "Chinese";
+    Nation["Italian"] = "Italian";
+    Nation["Russian"] = "Russian";
+    Nation["SouthAmerican"] = "SouthAmerican";
+    Nation["African"] = "African";
+})(Nation || (Nation = {}));
+export var Mood;
+(function (Mood) {
+    Mood["Unset"] = "Unset";
+    Mood["Happy"] = "Happy";
+    Mood["Aggressive"] = "Aggressive";
+    Mood["Sad"] = "Sad";
+    Mood["Cool"] = "Cool";
+    Mood["Calm"] = "Calm";
+    Mood["Romantic"] = "Romantic";
+    Mood["Dramatic"] = "Dramatic";
+    Mood["Epic"] = "Epic";
+    Mood["Funny"] = "Funny";
+    Mood["Passionate"] = "Passionate";
+    Mood["Monotonuous"] = "Monotonuous";
+})(Mood || (Mood = {}));
+export var Participants;
+(function (Participants) {
+    Participants["Unset"] = "Unset";
+    Participants["Solo"] = "Solo";
+    Participants["SmallGroup"] = "SmallGroup";
+    Participants["LargeGroup"] = "LargeGroup";
+    Participants["SmallOrchestra"] = "SmallOrchestra";
+    Participants["LargeOrchestra"] = "LargeOrchestra";
+})(Participants || (Participants = {}));
 export class GenreModel {
     id;
-    section;
     name;
+    section;
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property))
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
                     this[property] = data[property];
             }
         }
@@ -1598,8 +1548,8 @@ export class GenreModel {
     init(_data) {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : null;
-            this.section = _data["section"] !== undefined ? _data["section"] : null;
             this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.section = _data["section"] !== undefined ? _data["section"] : null;
         }
     }
     static fromJS(data) {
@@ -1611,8 +1561,8 @@ export class GenreModel {
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : null;
-        data["section"] = this.section !== undefined ? this.section : null;
         data["name"] = this.name !== undefined ? this.name : null;
+        data["section"] = this.section !== undefined ? this.section : null;
         return data;
     }
     clone() {
@@ -1628,7 +1578,7 @@ export class CredentialsRequest {
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property))
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
                     this[property] = data[property];
             }
         }
@@ -1659,30 +1609,26 @@ export class CredentialsRequest {
     }
 }
 export class MediaModel {
+    description;
+    genres;
     id;
+    image;
     name;
-    type;
     rating;
     release;
-    genres;
     state;
-    description;
-    image;
+    type;
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property))
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
                     this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : null;
-            this.name = _data["name"] !== undefined ? _data["name"] : null;
-            this.type = _data["type"] !== undefined ? _data["type"] : null;
-            this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
-            this.release = _data["release"] !== undefined ? _data["release"] : null;
+            this.description = _data["description"] !== undefined ? _data["description"] : null;
             if (Array.isArray(_data["genres"])) {
                 this.genres = [];
                 for (let item of _data["genres"])
@@ -1691,73 +1637,41 @@ export class MediaModel {
             else {
                 this.genres = null;
             }
-            this.state = _data["state"] !== undefined ? _data["state"] : null;
-            this.description = _data["description"] !== undefined ? _data["description"] : null;
+            this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.image = _data["image"] !== undefined ? _data["image"] : null;
-        }
-    }
-    static fromJS(data) {
-        data = typeof data === 'object' ? data : {};
-        let result = new MediaModel();
-        result.init(data);
-        return result;
-    }
-    toJSON(data) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : null;
-        data["name"] = this.name !== undefined ? this.name : null;
-        data["type"] = this.type !== undefined ? this.type : null;
-        data["rating"] = this.rating !== undefined ? this.rating : null;
-        data["release"] = this.release !== undefined ? this.release : null;
-        if (Array.isArray(this.genres)) {
-            data["genres"] = [];
-            for (let item of this.genres)
-                data["genres"].push(item);
-        }
-        data["state"] = this.state !== undefined ? this.state : null;
-        data["description"] = this.description !== undefined ? this.description : null;
-        data["image"] = this.image !== undefined ? this.image : null;
-        return data;
-    }
-    clone() {
-        const json = this.toJSON();
-        let result = new MediaModel();
-        result.init(json);
-        return result;
-    }
-}
-export class InstrumentModel {
-    name;
-    type;
-    constructor(data) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    this[property] = data[property];
-            }
-        }
-    }
-    init(_data) {
-        if (_data) {
             this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
+            this.release = _data["release"] !== undefined ? _data["release"] : null;
+            this.state = _data["state"] !== undefined ? _data["state"] : null;
             this.type = _data["type"] !== undefined ? _data["type"] : null;
         }
     }
     static fromJS(data) {
         data = typeof data === 'object' ? data : {};
-        let result = new InstrumentModel();
+        let result = new MediaModel();
         result.init(data);
         return result;
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
+        data["description"] = this.description !== undefined ? this.description : null;
+        if (Array.isArray(this.genres)) {
+            data["genres"] = [];
+            for (let item of this.genres)
+                data["genres"].push(item);
+        }
+        data["id"] = this.id !== undefined ? this.id : null;
+        data["image"] = this.image !== undefined ? this.image : null;
         data["name"] = this.name !== undefined ? this.name : null;
+        data["rating"] = this.rating !== undefined ? this.rating : null;
+        data["release"] = this.release !== undefined ? this.release : null;
+        data["state"] = this.state !== undefined ? this.state : null;
         data["type"] = this.type !== undefined ? this.type : null;
         return data;
     }
     clone() {
         const json = this.toJSON();
-        let result = new InstrumentModel();
+        let result = new MediaModel();
         result.init(json);
         return result;
     }
@@ -1775,21 +1689,57 @@ export var InstrumentType;
     InstrumentType["HumanBody"] = "HumanBody";
     InstrumentType["Miscellaneous"] = "Miscellaneous";
 })(InstrumentType || (InstrumentType = {}));
-export class UpdateRequestOfMusicModel {
-    oldModel;
-    newModel;
+export class InstrumentModel {
+    name;
+    type;
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property))
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
                     this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
-            this.oldModel = _data["oldModel"] ? MusicModel.fromJS(_data["oldModel"]) : null;
+            this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.type = _data["type"] !== undefined ? _data["type"] : null;
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new InstrumentModel();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : null;
+        data["type"] = this.type !== undefined ? this.type : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new InstrumentModel();
+        result.init(json);
+        return result;
+    }
+}
+export class UpdateRequestOfMusicModel {
+    newModel;
+    oldModel;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
             this.newModel = _data["newModel"] ? MusicModel.fromJS(_data["newModel"]) : null;
+            this.oldModel = _data["oldModel"] ? MusicModel.fromJS(_data["oldModel"]) : null;
         }
     }
     static fromJS(data) {
@@ -1800,8 +1750,8 @@ export class UpdateRequestOfMusicModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data["oldModel"] = this.oldModel ? this.oldModel.toJSON() : null;
         data["newModel"] = this.newModel ? this.newModel.toJSON() : null;
+        data["oldModel"] = this.oldModel ? this.oldModel.toJSON() : null;
         return data;
     }
     clone() {
@@ -1812,28 +1762,28 @@ export class UpdateRequestOfMusicModel {
     }
 }
 export class PlaylistModel {
-    id;
-    name;
-    autor;
-    image;
-    rating;
+    author;
     complete;
     genres;
+    id;
+    image;
+    isTemporary;
+    language;
+    name;
+    nation;
+    rating;
+    tracks;
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property))
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
                     this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : null;
-            this.name = _data["name"] !== undefined ? _data["name"] : null;
-            this.autor = _data["autor"] !== undefined ? _data["autor"] : null;
-            this.image = _data["image"] !== undefined ? _data["image"] : null;
-            this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
+            this.author = _data["author"] !== undefined ? _data["author"] : null;
             this.complete = _data["complete"] !== undefined ? _data["complete"] : null;
             if (Array.isArray(_data["genres"])) {
                 this.genres = [];
@@ -1842,6 +1792,21 @@ export class PlaylistModel {
             }
             else {
                 this.genres = null;
+            }
+            this.id = _data["id"] !== undefined ? _data["id"] : null;
+            this.image = _data["image"] !== undefined ? _data["image"] : null;
+            this.isTemporary = _data["isTemporary"] !== undefined ? _data["isTemporary"] : null;
+            this.language = _data["language"] !== undefined ? _data["language"] : null;
+            this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.nation = _data["nation"] !== undefined ? _data["nation"] : null;
+            this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
+            if (Array.isArray(_data["tracks"])) {
+                this.tracks = [];
+                for (let item of _data["tracks"])
+                    this.tracks.push(MusicModel.fromJS(item));
+            }
+            else {
+                this.tracks = null;
             }
         }
     }
@@ -1853,16 +1818,24 @@ export class PlaylistModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : null;
-        data["name"] = this.name !== undefined ? this.name : null;
-        data["autor"] = this.autor !== undefined ? this.autor : null;
-        data["image"] = this.image !== undefined ? this.image : null;
-        data["rating"] = this.rating !== undefined ? this.rating : null;
+        data["author"] = this.author !== undefined ? this.author : null;
         data["complete"] = this.complete !== undefined ? this.complete : null;
         if (Array.isArray(this.genres)) {
             data["genres"] = [];
             for (let item of this.genres)
                 data["genres"].push(item);
+        }
+        data["id"] = this.id !== undefined ? this.id : null;
+        data["image"] = this.image !== undefined ? this.image : null;
+        data["isTemporary"] = this.isTemporary !== undefined ? this.isTemporary : null;
+        data["language"] = this.language !== undefined ? this.language : null;
+        data["name"] = this.name !== undefined ? this.name : null;
+        data["nation"] = this.nation !== undefined ? this.nation : null;
+        data["rating"] = this.rating !== undefined ? this.rating : null;
+        if (Array.isArray(this.tracks)) {
+            data["tracks"] = [];
+            for (let item of this.tracks)
+                data["tracks"].push(item.toJSON());
         }
         return data;
     }
@@ -1873,43 +1846,73 @@ export class PlaylistModel {
         return result;
     }
 }
-export class RecipeModel {
-    id;
-    title;
-    nation;
-    imageUrl;
-    difficulty;
-    rating;
-    course;
-    mainIngredient;
-    technique;
-    preparationTime;
-    cookingTime;
-    totalTime;
-    ingredients;
-    formattedText;
+export class UpdateRequestOfPlaylistModel {
+    newModel;
+    oldModel;
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property))
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
                     this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : null;
-            this.title = _data["title"] !== undefined ? _data["title"] : null;
-            this.nation = _data["nation"] !== undefined ? _data["nation"] : null;
-            this.imageUrl = _data["imageUrl"] !== undefined ? _data["imageUrl"] : null;
-            this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : null;
-            this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
-            this.course = _data["course"] !== undefined ? _data["course"] : null;
-            this.mainIngredient = _data["mainIngredient"] !== undefined ? _data["mainIngredient"] : null;
-            this.technique = _data["technique"] !== undefined ? _data["technique"] : null;
-            this.preparationTime = _data["preparationTime"] !== undefined ? _data["preparationTime"] : null;
+            this.newModel = _data["newModel"] ? PlaylistModel.fromJS(_data["newModel"]) : null;
+            this.oldModel = _data["oldModel"] ? PlaylistModel.fromJS(_data["oldModel"]) : null;
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateRequestOfPlaylistModel();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["newModel"] = this.newModel ? this.newModel.toJSON() : null;
+        data["oldModel"] = this.oldModel ? this.oldModel.toJSON() : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new UpdateRequestOfPlaylistModel();
+        result.init(json);
+        return result;
+    }
+}
+export class RecipeModel {
+    cookingTime;
+    course;
+    difficulty;
+    formattedText;
+    id;
+    imageUrl;
+    ingredients;
+    mainIngredient;
+    nation;
+    preparationTime;
+    rating;
+    technique;
+    title;
+    totalTime;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
             this.cookingTime = _data["cookingTime"] !== undefined ? _data["cookingTime"] : null;
-            this.totalTime = _data["totalTime"] !== undefined ? _data["totalTime"] : null;
+            this.course = _data["course"] !== undefined ? _data["course"] : null;
+            this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : null;
+            this.formattedText = _data["formattedText"] !== undefined ? _data["formattedText"] : null;
+            this.id = _data["id"] !== undefined ? _data["id"] : null;
+            this.imageUrl = _data["imageUrl"] !== undefined ? _data["imageUrl"] : null;
             if (Array.isArray(_data["ingredients"])) {
                 this.ingredients = [];
                 for (let item of _data["ingredients"])
@@ -1918,7 +1921,13 @@ export class RecipeModel {
             else {
                 this.ingredients = null;
             }
-            this.formattedText = _data["formattedText"] !== undefined ? _data["formattedText"] : null;
+            this.mainIngredient = _data["mainIngredient"] !== undefined ? _data["mainIngredient"] : null;
+            this.nation = _data["nation"] !== undefined ? _data["nation"] : null;
+            this.preparationTime = _data["preparationTime"] !== undefined ? _data["preparationTime"] : null;
+            this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
+            this.technique = _data["technique"] !== undefined ? _data["technique"] : null;
+            this.title = _data["title"] !== undefined ? _data["title"] : null;
+            this.totalTime = _data["totalTime"] !== undefined ? _data["totalTime"] : null;
         }
     }
     static fromJS(data) {
@@ -1929,24 +1938,24 @@ export class RecipeModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : null;
-        data["title"] = this.title !== undefined ? this.title : null;
-        data["nation"] = this.nation !== undefined ? this.nation : null;
-        data["imageUrl"] = this.imageUrl !== undefined ? this.imageUrl : null;
-        data["difficulty"] = this.difficulty !== undefined ? this.difficulty : null;
-        data["rating"] = this.rating !== undefined ? this.rating : null;
-        data["course"] = this.course !== undefined ? this.course : null;
-        data["mainIngredient"] = this.mainIngredient !== undefined ? this.mainIngredient : null;
-        data["technique"] = this.technique !== undefined ? this.technique : null;
-        data["preparationTime"] = this.preparationTime !== undefined ? this.preparationTime : null;
         data["cookingTime"] = this.cookingTime !== undefined ? this.cookingTime : null;
-        data["totalTime"] = this.totalTime !== undefined ? this.totalTime : null;
+        data["course"] = this.course !== undefined ? this.course : null;
+        data["difficulty"] = this.difficulty !== undefined ? this.difficulty : null;
+        data["formattedText"] = this.formattedText !== undefined ? this.formattedText : null;
+        data["id"] = this.id !== undefined ? this.id : null;
+        data["imageUrl"] = this.imageUrl !== undefined ? this.imageUrl : null;
         if (Array.isArray(this.ingredients)) {
             data["ingredients"] = [];
             for (let item of this.ingredients)
                 data["ingredients"].push(item.toJSON());
         }
-        data["formattedText"] = this.formattedText !== undefined ? this.formattedText : null;
+        data["mainIngredient"] = this.mainIngredient !== undefined ? this.mainIngredient : null;
+        data["nation"] = this.nation !== undefined ? this.nation : null;
+        data["preparationTime"] = this.preparationTime !== undefined ? this.preparationTime : null;
+        data["rating"] = this.rating !== undefined ? this.rating : null;
+        data["technique"] = this.technique !== undefined ? this.technique : null;
+        data["title"] = this.title !== undefined ? this.title : null;
+        data["totalTime"] = this.totalTime !== undefined ? this.totalTime : null;
         return data;
     }
     clone() {
@@ -1967,6 +1976,69 @@ export var Course;
     Course["Drink"] = "Drink";
     Course["Snack"] = "Snack";
 })(Course || (Course = {}));
+export class IngredientModel {
+    amount;
+    description;
+    groupName;
+    id;
+    measurement;
+    name;
+    order;
+    recipeId;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data) {
+        if (_data) {
+            this.amount = _data["amount"] !== undefined ? _data["amount"] : null;
+            this.description = _data["description"] !== undefined ? _data["description"] : null;
+            this.groupName = _data["groupName"] !== undefined ? _data["groupName"] : null;
+            this.id = _data["id"] !== undefined ? _data["id"] : null;
+            this.measurement = _data["measurement"] !== undefined ? _data["measurement"] : null;
+            this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.order = _data["order"] !== undefined ? _data["order"] : null;
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null;
+        }
+    }
+    static fromJS(data) {
+        data = typeof data === 'object' ? data : {};
+        let result = new IngredientModel();
+        result.init(data);
+        return result;
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["amount"] = this.amount !== undefined ? this.amount : null;
+        data["description"] = this.description !== undefined ? this.description : null;
+        data["groupName"] = this.groupName !== undefined ? this.groupName : null;
+        data["id"] = this.id !== undefined ? this.id : null;
+        data["measurement"] = this.measurement !== undefined ? this.measurement : null;
+        data["name"] = this.name !== undefined ? this.name : null;
+        data["order"] = this.order !== undefined ? this.order : null;
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new IngredientModel();
+        result.init(json);
+        return result;
+    }
+}
+export var Measurement;
+(function (Measurement) {
+    Measurement["Mass"] = "Mass";
+    Measurement["Volume"] = "Volume";
+    Measurement["Size"] = "Size";
+    Measurement["Pinch"] = "Pinch";
+    Measurement["Piece"] = "Piece";
+    Measurement["Unitless"] = "Unitless";
+})(Measurement || (Measurement = {}));
 export var Ingredient;
 (function (Ingredient) {
     Ingredient["Meat"] = "Meat";
@@ -1991,87 +2063,24 @@ export var CookingTechnique;
     CookingTechnique["Grilling"] = "Grilling";
     CookingTechnique["Raw"] = "Raw";
 })(CookingTechnique || (CookingTechnique = {}));
-export class IngredientModel {
-    id;
-    recipeId;
-    name;
-    description;
-    groupName;
-    amount;
-    measurement;
-    order;
-    constructor(data) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    this[property] = data[property];
-            }
-        }
-    }
-    init(_data) {
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : null;
-            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null;
-            this.name = _data["name"] !== undefined ? _data["name"] : null;
-            this.description = _data["description"] !== undefined ? _data["description"] : null;
-            this.groupName = _data["groupName"] !== undefined ? _data["groupName"] : null;
-            this.amount = _data["amount"] !== undefined ? _data["amount"] : null;
-            this.measurement = _data["measurement"] !== undefined ? _data["measurement"] : null;
-            this.order = _data["order"] !== undefined ? _data["order"] : null;
-        }
-    }
-    static fromJS(data) {
-        data = typeof data === 'object' ? data : {};
-        let result = new IngredientModel();
-        result.init(data);
-        return result;
-    }
-    toJSON(data) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : null;
-        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null;
-        data["name"] = this.name !== undefined ? this.name : null;
-        data["description"] = this.description !== undefined ? this.description : null;
-        data["groupName"] = this.groupName !== undefined ? this.groupName : null;
-        data["amount"] = this.amount !== undefined ? this.amount : null;
-        data["measurement"] = this.measurement !== undefined ? this.measurement : null;
-        data["order"] = this.order !== undefined ? this.order : null;
-        return data;
-    }
-    clone() {
-        const json = this.toJSON();
-        let result = new IngredientModel();
-        result.init(json);
-        return result;
-    }
-}
-export var Measurement;
-(function (Measurement) {
-    Measurement["Mass"] = "Mass";
-    Measurement["Volume"] = "Volume";
-    Measurement["Size"] = "Size";
-    Measurement["Pinch"] = "Pinch";
-    Measurement["Piece"] = "Piece";
-    Measurement["Unitless"] = "Unitless";
-})(Measurement || (Measurement = {}));
 export class StreamingEntryModel {
+    episode;
     id;
     season;
-    episode;
     src;
     constructor(data) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property))
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
                     this[property] = data[property];
             }
         }
     }
     init(_data) {
         if (_data) {
+            this.episode = _data["episode"] !== undefined ? _data["episode"] : null;
             this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.season = _data["season"] !== undefined ? _data["season"] : null;
-            this.episode = _data["episode"] !== undefined ? _data["episode"] : null;
             this.src = _data["src"] !== undefined ? _data["src"] : null;
         }
     }
@@ -2083,9 +2092,9 @@ export class StreamingEntryModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
+        data["episode"] = this.episode !== undefined ? this.episode : null;
         data["id"] = this.id !== undefined ? this.id : null;
         data["season"] = this.season !== undefined ? this.season : null;
-        data["episode"] = this.episode !== undefined ? this.episode : null;
         data["src"] = this.src !== undefined ? this.src : null;
         return data;
     }

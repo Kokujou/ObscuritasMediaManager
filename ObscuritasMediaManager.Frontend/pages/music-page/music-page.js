@@ -57,7 +57,7 @@ export class MusicPage extends LitElementBase {
         filteredPlaylists = filteredPlaylists.filter(
             (track) =>
                 track.name.toLowerCase().includes((this.filter.search || '').toLowerCase()) ||
-                track.autor.toLowerCase().includes((this.filter.search || '').toLowerCase())
+                track.author.toLowerCase().includes((this.filter.search || '').toLowerCase())
         );
 
         if (this.filter.complete != CheckboxState.Ignore)
@@ -235,10 +235,10 @@ export class MusicPage extends LitElementBase {
     }
 
     async playPlaylist() {
-        var guid = '';
-        if (this.selectedHashes.length > 0) guid = await PlaylistService.createTemporaryPlaylist(this.selectedHashes);
-        else guid = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash));
-        changePage(getPageName(MusicPlaylistPage), `?guid=${guid}&track=0`);
+        var playlistId = -1;
+        if (this.selectedHashes.length > 0) playlistId = await PlaylistService.createTemporaryPlaylist(this.selectedHashes);
+        else playlistId = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash));
+        changePage(getPageName(MusicPlaylistPage), `?guid=${playlistId}&track=0`);
     }
 
     async importFolder() {

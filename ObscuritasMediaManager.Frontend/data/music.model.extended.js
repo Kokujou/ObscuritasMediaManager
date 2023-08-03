@@ -20,13 +20,6 @@ export class ExtendedMusicModel extends MusicModel {
         return this.mappedInstruments.map((x) => x.type).filter((instrument, index, self) => self.indexOf(instrument) == index);
     }
 
-    get displayName() {
-        var result = this.name;
-        if (this.author && this.author != 'undefined') result = result.concat(` - ${this.author}`);
-        if (this.source) result = result.concat(` (${this.source})`);
-        return result;
-    }
-
     /**
      * @param {import("../obscuritas-media-manager-backend-client.js").IMusicModel} [args]
      * @param {'track' | 'playlist'} [type]

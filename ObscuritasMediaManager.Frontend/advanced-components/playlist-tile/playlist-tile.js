@@ -11,6 +11,7 @@ export class PlaylistTile extends LitElementBase {
     static get properties() {
         return {
             playlist: { type: Object, reflect: true },
+            hoveredRating: { type: Number, reflect: false },
         };
     }
 
@@ -18,6 +19,7 @@ export class PlaylistTile extends LitElementBase {
         super();
 
         /** @type {PlaylistModel} */ this.playlist;
+        /** @type {number} */ this.hoveredRating;
     }
 
     render() {

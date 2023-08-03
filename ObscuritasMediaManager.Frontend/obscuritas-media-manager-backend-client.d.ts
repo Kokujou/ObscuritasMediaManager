@@ -5,10 +5,10 @@ export declare class CleanupClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
-    getBrokenAudioTracks(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
-    protected processGetBrokenAudioTracks(response: Response): Promise<MusicModel[]>;
     cleanupMusic(trackHashes: string[], signal?: AbortSignal | undefined): Promise<string[]>;
     protected processCleanupMusic(response: Response): Promise<string[]>;
+    getBrokenAudioTracks(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
+    protected processGetBrokenAudioTracks(response: Response): Promise<MusicModel[]>;
 }
 export declare class FileClient {
     private http;
@@ -17,10 +17,10 @@ export declare class FileClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
-    getVideo(videoPath?: string | null | undefined, signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processGetVideo(response: Response): Promise<FileResponse>;
     getAudio(audioPath?: string | null | undefined, highCompatibility?: boolean | undefined, signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processGetAudio(response: Response): Promise<FileResponse>;
+    getVideo(videoPath?: string | null | undefined, signal?: AbortSignal | undefined): Promise<FileResponse>;
+    protected processGetVideo(response: Response): Promise<FileResponse>;
     validate(fileUrls: string[], signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processValidate(response: Response): Promise<FileResponse>;
 }
@@ -51,18 +51,18 @@ export declare class MediaClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
-    get(guid: string, signal?: AbortSignal | undefined): Promise<MediaModel>;
-    protected processGet(response: Response): Promise<MediaModel>;
-    getAll(type?: string | null | undefined, signal?: AbortSignal | undefined): Promise<MediaModel[]>;
-    protected processGetAll(response: Response): Promise<MediaModel[]>;
-    batchCreateMedia(media: MediaModel[], signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processBatchCreateMedia(response: Response): Promise<FileResponse>;
-    updateMedia(media: MediaModel, signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processUpdateMedia(response: Response): Promise<FileResponse>;
     addMediaImage(image: string, guid: string, signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processAddMediaImage(response: Response): Promise<FileResponse>;
     deleteMediaImage(guid: string, signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processDeleteMediaImage(response: Response): Promise<FileResponse>;
+    batchCreateMedia(media: MediaModel[], signal?: AbortSignal | undefined): Promise<FileResponse>;
+    protected processBatchCreateMedia(response: Response): Promise<FileResponse>;
+    getAll(type?: string | null | undefined, signal?: AbortSignal | undefined): Promise<MediaModel[]>;
+    protected processGetAll(response: Response): Promise<MediaModel[]>;
+    updateMedia(media: MediaModel, signal?: AbortSignal | undefined): Promise<FileResponse>;
+    protected processUpdateMedia(response: Response): Promise<FileResponse>;
+    get(guid: string, signal?: AbortSignal | undefined): Promise<MediaModel>;
+    protected processGet(response: Response): Promise<MediaModel>;
 }
 export declare class MusicClient {
     private http;
@@ -71,22 +71,22 @@ export declare class MusicClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
+    addInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
+    protected processAddInstrument(response: Response): Promise<void>;
+    removeInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
+    protected processRemoveInstrument(response: Response): Promise<void>;
     batchCreateMusicTracks(tracks: MusicModel[], signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processBatchCreateMusicTracks(response: Response): Promise<FileResponse>;
     getAll(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
     protected processGetAll(response: Response): Promise<MusicModel[]>;
-    recalculateHashes(signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processRecalculateHashes(response: Response): Promise<FileResponse>;
     get(hash: string | null, signal?: AbortSignal | undefined): Promise<MusicModel>;
     protected processGet(response: Response): Promise<MusicModel>;
     update(hash: string | null, updateRequest: UpdateRequestOfMusicModel, signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processUpdate(response: Response): Promise<FileResponse>;
     getInstruments(signal?: AbortSignal | undefined): Promise<InstrumentModel[]>;
     protected processGetInstruments(response: Response): Promise<InstrumentModel[]>;
-    addInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
-    protected processAddInstrument(response: Response): Promise<void>;
-    removeInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
-    protected processRemoveInstrument(response: Response): Promise<void>;
+    recalculateHashes(signal?: AbortSignal | undefined): Promise<FileResponse>;
+    protected processRecalculateHashes(response: Response): Promise<FileResponse>;
 }
 export declare class PlaylistClient {
     private http;
@@ -95,16 +95,14 @@ export declare class PlaylistClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
-    createTemporaryPlaylist(hashes: string[], signal?: AbortSignal | undefined): Promise<string>;
-    protected processCreateTemporaryPlaylist(response: Response): Promise<string>;
+    createTemporaryPlaylist(hashes: string[], signal?: AbortSignal | undefined): Promise<number>;
+    protected processCreateTemporaryPlaylist(response: Response): Promise<number>;
+    getPlaylist(playlistId: number, signal?: AbortSignal | undefined): Promise<PlaylistModel>;
+    protected processGetPlaylist(response: Response): Promise<PlaylistModel>;
+    updatePlaylistData(playlistId: number, updateRequest: UpdateRequestOfPlaylistModel, signal?: AbortSignal | undefined): Promise<void>;
+    protected processUpdatePlaylistData(response: Response): Promise<void>;
     listPlaylists(signal?: AbortSignal | undefined): Promise<PlaylistModel[]>;
     protected processListPlaylists(response: Response): Promise<PlaylistModel[]>;
-    getTemporaryPlaylist(guid: string, signal?: AbortSignal | undefined): Promise<MusicModel[]>;
-    protected processGetTemporaryPlaylist(response: Response): Promise<MusicModel[]>;
-    getPlaylist(id: string, signal?: AbortSignal | undefined): Promise<MusicModel[]>;
-    protected processGetPlaylist(response: Response): Promise<MusicModel[]>;
-    createPlaylist(name: string | null, trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
-    protected processCreatePlaylist(response: Response): Promise<void>;
 }
 export declare class RecipeClient {
     private http;
@@ -113,10 +111,10 @@ export declare class RecipeClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
-    getAllRecipes(signal?: AbortSignal | undefined): Promise<RecipeModel[]>;
-    protected processGetAllRecipes(response: Response): Promise<RecipeModel[]>;
     createRecipe(recipe: RecipeModel, signal?: AbortSignal | undefined): Promise<void>;
     protected processCreateRecipe(response: Response): Promise<void>;
+    getAllRecipes(signal?: AbortSignal | undefined): Promise<RecipeModel[]>;
+    protected processGetAllRecipes(response: Response): Promise<RecipeModel[]>;
     updateRecipe(recipe: RecipeModel, signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processUpdateRecipe(response: Response): Promise<FileResponse>;
     getRecipe(id: string, signal?: AbortSignal | undefined): Promise<RecipeModel>;
@@ -131,89 +129,51 @@ export declare class StreamingClient {
     });
     batchPostStreamingEntries(streamingEntries: StreamingEntryModel[], signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processBatchPostStreamingEntries(response: Response): Promise<FileResponse>;
-    getStreamingEntries(guid: string, signal?: AbortSignal | undefined): Promise<StreamingEntryModel[]>;
-    protected processGetStreamingEntries(response: Response): Promise<StreamingEntryModel[]>;
     getStream(guid: string, season: string | null, episode: number, signal?: AbortSignal | undefined): Promise<StreamingEntryModel>;
     protected processGetStream(response: Response): Promise<StreamingEntryModel>;
+    getStreamingEntries(guid: string, signal?: AbortSignal | undefined): Promise<StreamingEntryModel[]>;
+    protected processGetStreamingEntries(response: Response): Promise<StreamingEntryModel[]>;
 }
 export declare class MusicModel implements IMusicModel {
-    name: string | null;
     author: string | null;
-    source: string | null;
+    complete: boolean;
+    displayName: string | null;
+    genres: MusicGenre[] | null;
+    hash: string | null;
+    instrumentation: Instrumentation;
+    instruments: string[] | null;
+    language: Nation;
     mood1: Mood;
     mood2: Mood;
-    language: Nation;
+    name: string | null;
     nation: Nation;
-    instrumentation: Instrumentation;
     participants: Participants;
-    instruments: string[] | null;
-    genres: MusicGenre[] | null;
     path: string | null;
     rating: number;
-    complete: boolean;
-    hash: string | null;
-    constructor(data?: IMusicModel);
+    source: string | null;
+    constructor(data?: Partial<IMusicModel>);
     init(_data?: any): void;
     static fromJS(data: any): MusicModel;
     toJSON(data?: any): any;
     clone(): MusicModel;
 }
 export interface IMusicModel {
-    name: string | null;
     author: string | null;
-    source: string | null;
+    complete: boolean;
+    displayName: string | null;
+    genres: MusicGenre[] | null;
+    hash: string | null;
+    instrumentation: Instrumentation;
+    instruments: string[] | null;
+    language: Nation;
     mood1: Mood;
     mood2: Mood;
-    language: Nation;
+    name: string | null;
     nation: Nation;
-    instrumentation: Instrumentation;
     participants: Participants;
-    instruments: string[] | null;
-    genres: MusicGenre[] | null;
     path: string | null;
     rating: number;
-    complete: boolean;
-    hash: string | null;
-}
-export declare enum Mood {
-    Unset = "Unset",
-    Happy = "Happy",
-    Aggressive = "Aggressive",
-    Sad = "Sad",
-    Cool = "Cool",
-    Calm = "Calm",
-    Romantic = "Romantic",
-    Dramatic = "Dramatic",
-    Epic = "Epic",
-    Funny = "Funny",
-    Passionate = "Passionate",
-    Monotonuous = "Monotonuous"
-}
-export declare enum Nation {
-    Unset = "Unset",
-    Japanese = "Japanese",
-    English = "English",
-    German = "German",
-    Spain = "Spain",
-    Chinese = "Chinese",
-    Italian = "Italian",
-    Russian = "Russian",
-    SouthAmerican = "SouthAmerican",
-    African = "African"
-}
-export declare enum Instrumentation {
-    Unset = "Unset",
-    Mono = "Mono",
-    Groups = "Groups",
-    Mixed = "Mixed"
-}
-export declare enum Participants {
-    Unset = "Unset",
-    Solo = "Solo",
-    SmallGroup = "SmallGroup",
-    LargeGroup = "LargeGroup",
-    SmallOrchestra = "SmallOrchestra",
-    LargeOrchestra = "LargeOrchestra"
+    source: string | null;
 }
 export declare enum MusicGenre {
     Unset = "Unset",
@@ -245,11 +205,51 @@ export declare enum MusicGenre {
     Western = "Western",
     Christmas = "Christmas"
 }
+export declare enum Instrumentation {
+    Unset = "Unset",
+    Mono = "Mono",
+    Groups = "Groups",
+    Mixed = "Mixed"
+}
+export declare enum Nation {
+    Unset = "Unset",
+    Japanese = "Japanese",
+    English = "English",
+    German = "German",
+    Spain = "Spain",
+    Chinese = "Chinese",
+    Italian = "Italian",
+    Russian = "Russian",
+    SouthAmerican = "SouthAmerican",
+    African = "African"
+}
+export declare enum Mood {
+    Unset = "Unset",
+    Happy = "Happy",
+    Aggressive = "Aggressive",
+    Sad = "Sad",
+    Cool = "Cool",
+    Calm = "Calm",
+    Romantic = "Romantic",
+    Dramatic = "Dramatic",
+    Epic = "Epic",
+    Funny = "Funny",
+    Passionate = "Passionate",
+    Monotonuous = "Monotonuous"
+}
+export declare enum Participants {
+    Unset = "Unset",
+    Solo = "Solo",
+    SmallGroup = "SmallGroup",
+    LargeGroup = "LargeGroup",
+    SmallOrchestra = "SmallOrchestra",
+    LargeOrchestra = "LargeOrchestra"
+}
 export declare class GenreModel implements IGenreModel {
     id: string;
-    section: string | null;
     name: string | null;
-    constructor(data?: IGenreModel);
+    section: string | null;
+    constructor(data?: Partial<IGenreModel>);
     init(_data?: any): void;
     static fromJS(data: any): GenreModel;
     toJSON(data?: any): any;
@@ -257,13 +257,13 @@ export declare class GenreModel implements IGenreModel {
 }
 export interface IGenreModel {
     id: string;
-    section: string | null;
     name: string | null;
+    section: string | null;
 }
 export declare class CredentialsRequest implements ICredentialsRequest {
     username: string | null;
     password: string | null;
-    constructor(data?: ICredentialsRequest);
+    constructor(data?: Partial<ICredentialsRequest>);
     init(_data?: any): void;
     static fromJS(data: any): CredentialsRequest;
     toJSON(data?: any): any;
@@ -274,44 +274,31 @@ export interface ICredentialsRequest {
     password: string | null;
 }
 export declare class MediaModel implements IMediaModel {
+    description: string | null;
+    genres: string[] | null;
     id: string;
+    image: string | null;
     name: string | null;
-    type: string | null;
     rating: number;
     release: number;
-    genres: string[] | null;
     state: number;
-    description: string | null;
-    image: string | null;
-    constructor(data?: IMediaModel);
+    type: string | null;
+    constructor(data?: Partial<IMediaModel>);
     init(_data?: any): void;
     static fromJS(data: any): MediaModel;
     toJSON(data?: any): any;
     clone(): MediaModel;
 }
 export interface IMediaModel {
+    description: string | null;
+    genres: string[] | null;
     id: string;
+    image: string | null;
     name: string | null;
-    type: string | null;
     rating: number;
     release: number;
-    genres: string[] | null;
     state: number;
-    description: string | null;
-    image: string | null;
-}
-export declare class InstrumentModel implements IInstrumentModel {
-    name: string | null;
-    type: InstrumentType;
-    constructor(data?: IInstrumentModel);
-    init(_data?: any): void;
-    static fromJS(data: any): InstrumentModel;
-    toJSON(data?: any): any;
-    clone(): InstrumentModel;
-}
-export interface IInstrumentModel {
-    name: string | null;
-    type: InstrumentType;
+    type: string | null;
 }
 export declare enum InstrumentType {
     Unset = "Unset",
@@ -325,78 +312,112 @@ export declare enum InstrumentType {
     HumanBody = "HumanBody",
     Miscellaneous = "Miscellaneous"
 }
+export declare class InstrumentModel implements IInstrumentModel {
+    name: string | null;
+    type: InstrumentType;
+    constructor(data?: Partial<IInstrumentModel>);
+    init(_data?: any): void;
+    static fromJS(data: any): InstrumentModel;
+    toJSON(data?: any): any;
+    clone(): InstrumentModel;
+}
+export interface IInstrumentModel {
+    name: string | null;
+    type: InstrumentType;
+}
 export declare class UpdateRequestOfMusicModel implements IUpdateRequestOfMusicModel {
-    oldModel: MusicModel | null;
     newModel: MusicModel | null;
-    constructor(data?: IUpdateRequestOfMusicModel);
+    oldModel: MusicModel | null;
+    constructor(data?: Partial<IUpdateRequestOfMusicModel>);
     init(_data?: any): void;
     static fromJS(data: any): UpdateRequestOfMusicModel;
     toJSON(data?: any): any;
     clone(): UpdateRequestOfMusicModel;
 }
 export interface IUpdateRequestOfMusicModel {
-    oldModel: MusicModel | null;
     newModel: MusicModel | null;
+    oldModel: MusicModel | null;
 }
 export declare class PlaylistModel implements IPlaylistModel {
-    id: string;
-    name: string | null;
-    autor: string | null;
-    image: string | null;
-    rating: number;
+    author: string | null;
     complete: boolean;
     genres: MusicGenre[] | null;
-    constructor(data?: IPlaylistModel);
+    id: number;
+    image: string | null;
+    isTemporary: boolean;
+    language: Nation;
+    name: string | null;
+    nation: Nation;
+    rating: number;
+    tracks: MusicModel[] | null;
+    constructor(data?: Partial<IPlaylistModel>);
     init(_data?: any): void;
     static fromJS(data: any): PlaylistModel;
     toJSON(data?: any): any;
     clone(): PlaylistModel;
 }
 export interface IPlaylistModel {
-    id: string;
-    name: string | null;
-    autor: string | null;
-    image: string | null;
-    rating: number;
+    author: string | null;
     complete: boolean;
     genres: MusicGenre[] | null;
+    id: number;
+    image: string | null;
+    isTemporary: boolean;
+    language: Nation;
+    name: string | null;
+    nation: Nation;
+    rating: number;
+    tracks: MusicModel[] | null;
+}
+export declare class UpdateRequestOfPlaylistModel implements IUpdateRequestOfPlaylistModel {
+    newModel: PlaylistModel | null;
+    oldModel: PlaylistModel | null;
+    constructor(data?: Partial<IUpdateRequestOfPlaylistModel>);
+    init(_data?: any): void;
+    static fromJS(data: any): UpdateRequestOfPlaylistModel;
+    toJSON(data?: any): any;
+    clone(): UpdateRequestOfPlaylistModel;
+}
+export interface IUpdateRequestOfPlaylistModel {
+    newModel: PlaylistModel | null;
+    oldModel: PlaylistModel | null;
 }
 export declare class RecipeModel implements IRecipeModel {
-    id: string;
-    title: string | null;
-    nation: Nation;
-    imageUrl: string | null;
-    difficulty: number;
-    rating: number;
-    course: Course;
-    mainIngredient: Ingredient;
-    technique: CookingTechnique;
-    preparationTime: string;
     cookingTime: string;
-    totalTime: string;
-    ingredients: IngredientModel[] | null;
+    course: Course;
+    difficulty: number;
     formattedText: string | null;
-    constructor(data?: IRecipeModel);
+    id: string;
+    imageUrl: string | null;
+    ingredients: IngredientModel[] | null;
+    mainIngredient: Ingredient;
+    nation: Nation;
+    preparationTime: string;
+    rating: number;
+    technique: CookingTechnique;
+    title: string | null;
+    totalTime: string;
+    constructor(data?: Partial<IRecipeModel>);
     init(_data?: any): void;
     static fromJS(data: any): RecipeModel;
     toJSON(data?: any): any;
     clone(): RecipeModel;
 }
 export interface IRecipeModel {
-    id: string;
-    title: string | null;
-    nation: Nation;
-    imageUrl: string | null;
-    difficulty: number;
-    rating: number;
-    course: Course;
-    mainIngredient: Ingredient;
-    technique: CookingTechnique;
-    preparationTime: string;
     cookingTime: string;
-    totalTime: string;
-    ingredients: IngredientModel[] | null;
+    course: Course;
+    difficulty: number;
     formattedText: string | null;
+    id: string;
+    imageUrl: string | null;
+    ingredients: IngredientModel[] | null;
+    mainIngredient: Ingredient;
+    nation: Nation;
+    preparationTime: string;
+    rating: number;
+    technique: CookingTechnique;
+    title: string | null;
+    totalTime: string;
 }
 export declare enum Course {
     Starter = "Starter",
@@ -407,6 +428,39 @@ export declare enum Course {
     Soup = "Soup",
     Drink = "Drink",
     Snack = "Snack"
+}
+export declare class IngredientModel implements IIngredientModel {
+    amount: number;
+    description: string | null;
+    groupName: string | null;
+    id: string;
+    measurement: Measurement;
+    name: string | null;
+    order: number;
+    recipeId: string;
+    constructor(data?: Partial<IIngredientModel>);
+    init(_data?: any): void;
+    static fromJS(data: any): IngredientModel;
+    toJSON(data?: any): any;
+    clone(): IngredientModel;
+}
+export interface IIngredientModel {
+    amount: number;
+    description: string | null;
+    groupName: string | null;
+    id: string;
+    measurement: Measurement;
+    name: string | null;
+    order: number;
+    recipeId: string;
+}
+export declare enum Measurement {
+    Mass = "Mass",
+    Volume = "Volume",
+    Size = "Size",
+    Pinch = "Pinch",
+    Piece = "Piece",
+    Unitless = "Unitless"
 }
 export declare enum Ingredient {
     Meat = "Meat",
@@ -430,54 +484,21 @@ export declare enum CookingTechnique {
     Grilling = "Grilling",
     Raw = "Raw"
 }
-export declare class IngredientModel implements IIngredientModel {
-    id: string;
-    recipeId: string;
-    name: string | null;
-    description: string | null;
-    groupName: string | null;
-    amount: number;
-    measurement: Measurement;
-    order: number;
-    constructor(data?: IIngredientModel);
-    init(_data?: any): void;
-    static fromJS(data: any): IngredientModel;
-    toJSON(data?: any): any;
-    clone(): IngredientModel;
-}
-export interface IIngredientModel {
-    id: string;
-    recipeId: string;
-    name: string | null;
-    description: string | null;
-    groupName: string | null;
-    amount: number;
-    measurement: Measurement;
-    order: number;
-}
-export declare enum Measurement {
-    Mass = "Mass",
-    Volume = "Volume",
-    Size = "Size",
-    Pinch = "Pinch",
-    Piece = "Piece",
-    Unitless = "Unitless"
-}
 export declare class StreamingEntryModel implements IStreamingEntryModel {
+    episode: number;
     id: string;
     season: string | null;
-    episode: number;
     src: string | null;
-    constructor(data?: IStreamingEntryModel);
+    constructor(data?: Partial<IStreamingEntryModel>);
     init(_data?: any): void;
     static fromJS(data: any): StreamingEntryModel;
     toJSON(data?: any): any;
     clone(): StreamingEntryModel;
 }
 export interface IStreamingEntryModel {
+    episode: number;
     id: string;
     season: string | null;
-    episode: number;
     src: string | null;
 }
 export interface FileResponse {

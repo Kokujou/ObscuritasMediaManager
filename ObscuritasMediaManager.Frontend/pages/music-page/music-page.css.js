@@ -94,7 +94,8 @@ export function renderMusicPageStyles() {
             z-index: 1;
         }
 
-        audio-tile {
+        audio-tile,
+        playlist-tile {
             display: inline-block;
             position: relative;
             width: 275px;

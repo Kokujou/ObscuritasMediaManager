@@ -172,7 +172,8 @@
             "output": "%%TSProjectName%%.ts",
             "useAbortSignal": true,
             "generateExceptionClasses": true,
-            "defaultReferenceTypeNullHandling": "NotNull"
+            "defaultReferenceTypeNullHandling": "NotNull",
+            "templateDirectory": "../hotfix_template"
         }
     }
 }

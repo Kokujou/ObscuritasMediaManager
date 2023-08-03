@@ -79,8 +79,9 @@ export function renderMusicPage(musicPage) {
                                                   ? html`<input
                                                         type="checkbox"
                                                         class="audio-select"
-                                                        ?checked="${musicPage.selectedHashes.includes(playlist.id)}"
-                                                        @change="${(e) => musicPage.toggleTrackSelection(e.target, playlist.id)}"
+                                                        ?checked="${musicPage.selectedHashes.includes(playlist.id.toString())}"
+                                                        @change="${(e) =>
+                                                            musicPage.toggleTrackSelection(e.target, playlist.id.toString())}"
                                                     />`
                                                   : ''}
                                               <link-element
@@ -88,10 +89,11 @@ export function renderMusicPage(musicPage) {
                                                   .hash="${getPageName(MusicPlaylistPage)}"
                                                   .search="guid=${playlist.id}"
                                                   ?disabled="${musicPage.selectionModeTimer == null || musicPage.selectionMode}"
-                                                  @pointerdown="${(e) => musicPage.startSelectionModeTimer(playlist.id)}"
+                                                  @pointerdown="${(e) =>
+                                                      musicPage.startSelectionModeTimer(playlist.id.toString())}"
                                                   @pointerup="${(e) => musicPage.stopSelectionModeTimer(playlist.id)}"
                                               >
-                                                  <playlist-tile .track="${playlist}"></playlist-tile>
+                                                  <playlist-tile .playlist="${playlist}"></playlist-tile>
                                               </link-element>
                                           </div>
                                       `
