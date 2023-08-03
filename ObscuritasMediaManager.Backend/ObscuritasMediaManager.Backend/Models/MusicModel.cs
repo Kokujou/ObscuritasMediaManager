@@ -1,13 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-using ObscuritasMediaManager.Backend.Data.Music;
+﻿using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Extensions;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
 public class MusicModel
 {
     public string Name { get; set; }
+    public string DisplayName => GetDisplayName();
     public string Author { get; set; }
     public string Source { get; set; }
     public Mood Mood1 { get; set; }
@@ -40,5 +41,15 @@ public class MusicModel
     public override string ToString()
     {
         return $"{Name} - {Author} ({Source})\n{Path}";
+    }
+
+    private string GetDisplayName()
+    {
+        var result = Name;
+        if ((Author is not null) && (Author != "undefined"))
+            result += " - ${ Author}";
+        if (!string.IsNullOrEmpty(Source))
+            result += $"({Source})";
+        return result;
     }
 }

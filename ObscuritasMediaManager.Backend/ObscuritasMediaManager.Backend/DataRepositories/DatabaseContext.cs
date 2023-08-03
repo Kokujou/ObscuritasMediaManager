@@ -34,10 +34,7 @@ public class DatabaseContext : DbContext
                     .Select(y => ParseEnumOrDefault<MusicGenre>(y))
                     .ToList());
 
-        modelBuilder.Entity<PlaylistModel>().Property(x => x.Genres).HasConversion(x => string.Join(",", x),
-                x => x.Split(",", StringSplitOptions.RemoveEmptyEntries)
-                    .Select(y => ParseEnumOrDefault<MusicGenre>(y))
-                    .ToList());
+        PlaylistModel.Configure(modelBuilder);
 
         modelBuilder.Entity<MusicModel>()
             .Property(x => x.Instruments).HasConversion(x => string.Join(",", x),

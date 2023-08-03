@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Models;
 
@@ -10,8 +11,7 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Route("api/[controller]")]
 public class PlaylistController : ControllerBase
 {
-    private static readonly Dictionary<Guid, IEnumerable<string>> TemporaryPlaylistRepository
-        = new();
+    private static readonly List<IEnumerable<string>> TemporaryPlaylistRepository = new();
 
     private readonly MusicRepository _musicRepository;
     private readonly PlaylistRepository _playlistRepository;
@@ -23,11 +23,19 @@ public class PlaylistController : ControllerBase
     }
 
     [HttpPost("temp")]
-    public ActionResult<Guid> CreateTemporaryPlaylist([FromBody] IEnumerable<string> hashes)
+    public int CreateTemporaryPlaylist([FromBody] IEnumerable<string> hashes)
     {
-        var guid = Guid.NewGuid();
-        TemporaryPlaylistRepository.Add(guid, hashes);
-        return Ok(guid);
+        TemporaryPlaylistRepository.Add(hashes);
+        return TemporaryPlaylistRepository.Count - 1;
+    }
+
+    [HttpGet("{playlistId}")]
+    public async Task<PlaylistModel> GetPlaylist(int playlistId)
+    {
+        if (TemporaryPlaylistRepository.ElementAtOrDefault(playlistId) is not IEnumerable<string> trackHashes)
+            return await _playlistRepository.GetPlaylistAsync(playlistId);
+
+        return new PlaylistModel { Tracks = await Task.WhenAll(trackHashes.Select(_musicRepository.GetAsync)), IsTemporary = true, Id = playlistId };
     }
 
     [HttpGet("list")]
@@ -36,27 +44,12 @@ public class PlaylistController : ControllerBase
         return _playlistRepository.GetAll();
     }
 
-    [HttpGet("temp/{guid:Guid}")]
-    public async Task<ActionResult<IEnumerable<MusicModel>>> GetTemporaryPlaylist(Guid guid)
+    [HttpPut("{playlistId:guid}")]
+    public async Task UpdatePlaylistDataAsync(int playlistId, [FromBody] UpdateRequest<PlaylistModel> updateRequest)
     {
-        if (!TemporaryPlaylistRepository.TryGetValue(guid, out var trackHashes))
-            return NotFound();
-        var tracks = new List<MusicModel>();
-        foreach (var hash in trackHashes) tracks.Add(await _musicRepository.GetAsync(hash));
-        return tracks;
-    }
+        if ((updateRequest.OldModel.Id != default) && (playlistId != updateRequest.OldModel.Id))
+            throw new Exception("Ids of objects did not match");
 
-    [HttpGet("{id:Guid}")]
-    public async Task<ActionResult<IEnumerable<MusicModel>>> GetPlaylist(Guid id)
-    {
-        var tracks = await _playlistRepository.GetTracksAsync(id);
-        if (tracks.Count == 0) return NotFound();
-        return tracks;
-    }
-
-    [HttpPost("create/{name}")]
-    public async Task CreatePlaylist(string name, IEnumerable<string> trackHashes)
-    {
-        await _playlistRepository.CreateAsync(name, trackHashes);
+        await _playlistRepository.UpdateAsync(playlistId, updateRequest.OldModel, updateRequest.NewModel);
     }
 }

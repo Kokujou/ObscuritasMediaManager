@@ -6,7 +6,9 @@ namespace ObscuritasMediaManager.Backend.Models;
 [Table("PlaylistTrackMapping", Schema = "dbo")]
 public class PlaylistTrackMappingModel
 {
-    [Key] public Guid PlaylistId { get; set; }
+    [Key] public int PlaylistId { get; set; }
+
     public string PlaylistName { get; set; }
+
     public string TrackHash { get; set; }
 }
