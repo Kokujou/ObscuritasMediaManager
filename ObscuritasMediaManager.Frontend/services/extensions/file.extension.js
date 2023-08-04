@@ -1,5 +1,5 @@
+import { DialogBase } from '../../dialogs/dialog-base/dialog-base.js';
 import { InputDialog } from '../../dialogs/input-dialog/input-dialog.js';
-import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
 import { FileService } from '../backend.services.js';
 import { openFileDialog } from './document.extensions.js';
 
@@ -22,26 +22,40 @@ export function fileToDataUrl(file) {
 }
 
 /**
- * @param {FileList} files
- * @returns {Promise<{files:FileList, basePath:string}>}
+ * @param {File[]} files
+ * @param {Promise<{files:File[], basePath:string}>} files
+ */
+export async function importDroppedFiles(files) {
+    var basePath = await InputDialog.show('Bitte den Basispfad des ausgewählten Ordners eingeben:');
+    if (!basePath) throw new Error();
+
+    var fileSources = files.map((file) => `${basePath}\\${file.name}`.replaceAll('/', '\\'));
+
+    if (!(await FileService.validate(fileSources)))
+        await DialogBase.show('Ungültiger Basispfad!', {
+            content: 'Die Dateien konnten mit dem eingegebenen Basispfad nicht zurückverfolgt werden!',
+            declineActionText: 'Ok',
+        });
+    else return { files, basePath };
+}
+
+/**
+ * @param {File[]} files
+ * @returns {Promise<{files:File[], basePath:string}>}
  */
 export async function importFiles(files = null) {
     files ??= await openFileDialog(true);
     var basePath = await InputDialog.show('Bitte den Basispfad des ausgewählten Ordners eingeben:');
     if (!basePath) throw new Error();
 
-    var fileSources = [];
-    var basePath = basePath.substring(0, basePath.lastIndexOf('\\'));
-    for (var i = 0; i < files.length; i++) {
-        // @ts-ignore
-        fileSources.push(`${basePath}\\${files[i].webkitRelativePath}`.replaceAll('/', '\\'));
-    }
+    basePath = basePath.substring(0, basePath.lastIndexOf('\\'));
+    var fileSources = files.map((file) => `${basePath}\\${file.webkitRelativePath}`.replaceAll('/', '\\'));
 
     if (!(await FileService.validate(fileSources)))
-        await MessageDialog.show(
-            'Ungültiger Basispfad!',
-            'Die Dateien konnten mit dem eingegebenen Basispfad nicht zurückverfolgt werden!'
-        );
+        await DialogBase.show('Ungültiger Basispfad!', {
+            content: 'Die Dateien konnten mit dem eingegebenen Basispfad nicht zurückverfolgt werden!',
+            declineActionText: 'Ok',
+        });
     else return { files, basePath };
 }
 

@@ -6,7 +6,14 @@ import { SelectOptionsDialog } from './select-options-dialog.js';
  */
 export function renderSelectOptionsDialog(dialog) {
     return html`
-        <dialog-base caption="Make your choice" @accept="${() => dialog.accept()}">
+        <dialog-base
+            showBorder
+            canAccept
+            caption="Make your choice"
+            acceptActionText="Auswählen"
+            declineActionText="Abbrechen"
+            @accept="${() => dialog.accept()}"
+        >
             <div id="content">
                 ${Object.keys(dialog.options).map(
                     (key) =>

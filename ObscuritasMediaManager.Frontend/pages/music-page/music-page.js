@@ -5,7 +5,7 @@ import { MusicFilterOptions } from '../../data/music-filter-options.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
-import { MessageDialog } from '../../dialogs/message-dialog/message-dialog.js';
+import { DialogBase } from '../../dialogs/dialog-base/dialog-base.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
@@ -245,30 +245,23 @@ export class MusicPage extends LitElementBase {
         try {
             var fileImportResult = await importFiles();
             await MusicPage.processFiles(fileImportResult.files, fileImportResult.basePath);
-            MessageDialog.show('Upload successful', 'The requested folder was successfully uploaded');
+            DialogBase.show('Upload successful', {
+                content: 'The requested folder was successfully uploaded',
+                declineActionText: 'Ok',
+            });
         } catch (err) {
             console.trace('the import of files was aborted', err);
         }
     }
 
     /**
-     * @param {FileList} files
+     * @param {File[]} files
      * @param {string} basePath
      */
     static async processFiles(files, basePath) {
-        var musickTracks = [];
-        for (var i = 0; i < files.length; i++) {
-            try {
-                var track = ExtendedMusicModel.fromFile(files[i], basePath);
-                if (musickTracks.some((x) => x.name == track.name)) continue;
-                musickTracks.push(track);
-            } catch (err) {
-                continue;
-            }
-        }
-
         try {
-            await MusicService.batchCreateMusicTracks(musickTracks);
+            var musicTracks = ExtendedMusicModel.createFromFiles(files, basePath);
+            await MusicService.batchCreateMusicTracks(musicTracks);
         } catch (err) {
             console.error(err);
         }
@@ -297,7 +290,10 @@ export class MusicPage extends LitElementBase {
         var brokenTracks = (await CleanupService.getBrokenAudioTracks()).map((x) => new ExtendedMusicModel(x));
 
         if (brokenTracks.length <= 0)
-            MessageDialog.show('Alles Ok!', 'Alle in Tracks in der Datenbank sind valide Audio-Dateien.');
+            DialogBase.show('Alles Ok!', {
+                content: 'Alle in Tracks in der Datenbank sind valide Audio-Dateien.',
+                declineActionText: 'Ok',
+            });
 
         var dialog = SelectOptionsDialog.show(
             brokenTracks.reduce((prev, curr) => {
@@ -312,17 +308,17 @@ export class MusicPage extends LitElementBase {
                 var selected = /** @type {CustomEvent<{selected: string[]}>} */ (e).detail.selected;
                 var failedTracks = await CleanupService.cleanupMusic(selected);
                 if (failedTracks && failedTracks.length > 0)
-                    await MessageDialog.show(
-                        'Warnung!',
-                        `Die folgenden Tracks konnten nicht gelöscht werden:
-                        ${failedTracks.map((hash) => brokenTracks.find((track) => track.hash == hash).displayName).join('\n')} 
-                    `
-                    );
+                    await DialogBase.show('Warnung!', {
+                        content: `Die folgenden Tracks konnten nicht gelöscht werden:
+                        ${failedTracks.map((hash) => brokenTracks.find((track) => track.hash == hash).displayName).join('\n')}
+                    `,
+                        declineActionText: 'Ok',
+                    });
                 dialog.remove();
                 location.reload();
             } catch (err) {
                 console.error(err);
-                MessageDialog.show('Bereinigung fehlgeschlagen', err);
+                DialogBase.show('Bereinigung fehlgeschlagen', { content: err, declineActionText: 'Ok' });
             }
         });
     }

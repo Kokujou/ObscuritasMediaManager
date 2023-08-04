@@ -97,9 +97,9 @@ export declare class PlaylistClient {
     });
     createTemporaryPlaylist(hashes: string[], signal?: AbortSignal | undefined): Promise<number>;
     protected processCreateTemporaryPlaylist(response: Response): Promise<number>;
-    getPlaylist(playlistId: number, signal?: AbortSignal | undefined): Promise<PlaylistModel>;
+    getPlaylist(playlistId: string, signal?: AbortSignal | undefined): Promise<PlaylistModel>;
     protected processGetPlaylist(response: Response): Promise<PlaylistModel>;
-    updatePlaylistData(playlistId: number, updateRequest: UpdateRequestOfPlaylistModel, signal?: AbortSignal | undefined): Promise<void>;
+    updatePlaylistData(playlistId: string, updateRequest: UpdateRequestOfPlaylistModel, signal?: AbortSignal | undefined): Promise<void>;
     protected processUpdatePlaylistData(response: Response): Promise<void>;
     listPlaylists(signal?: AbortSignal | undefined): Promise<PlaylistModel[]>;
     protected processListPlaylists(response: Response): Promise<PlaylistModel[]>;
@@ -151,6 +151,7 @@ export declare class MusicModel implements IMusicModel {
     rating: number;
     complete: boolean;
     hash: string | null;
+    fileBytes: number;
     constructor(data?: Partial<IMusicModel>);
     init(_data?: any): void;
     static fromJS(data: any): MusicModel;
@@ -174,6 +175,7 @@ export interface IMusicModel {
     rating: number;
     complete: boolean;
     hash: string | null;
+    fileBytes: number;
 }
 export declare enum Mood {
     Unset = "Unset",
@@ -339,7 +341,7 @@ export interface IUpdateRequestOfMusicModel {
     newModel: MusicModel | null;
 }
 export declare class PlaylistModel implements IPlaylistModel {
-    id: number;
+    id: string;
     name: string | null;
     author: string | null;
     image: string | null;
@@ -357,7 +359,7 @@ export declare class PlaylistModel implements IPlaylistModel {
     clone(): PlaylistModel;
 }
 export interface IPlaylistModel {
-    id: number;
+    id: string;
     name: string | null;
     author: string | null;
     image: string | null;

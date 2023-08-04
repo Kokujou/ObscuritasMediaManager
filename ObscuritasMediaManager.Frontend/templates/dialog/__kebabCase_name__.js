@@ -14,11 +14,6 @@ export class {{ pascalCase name }} extends LitElement
         };
     }
 
-    constructor() {
-        super();
-        /** @type {String} */ this.someProperty = '';
-    }
-
     /**
      * @returns { {{ pascalCase name }} }
      */
@@ -29,6 +24,11 @@ export class {{ pascalCase name }} extends LitElement
         dialog.requestUpdate(undefined);
 
         return dialog;
+    }
+
+    constructor() {
+        super();
+        /** @type {String} */ this.someProperty = '';
     }
 
     render() {

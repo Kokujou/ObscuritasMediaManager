@@ -1375,6 +1375,7 @@ export class MusicModel {
     rating;
     complete;
     hash;
+    fileBytes;
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -1415,6 +1416,7 @@ export class MusicModel {
             this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
             this.complete = _data["complete"] !== undefined ? _data["complete"] : null;
             this.hash = _data["hash"] !== undefined ? _data["hash"] : null;
+            this.fileBytes = _data["fileBytes"] !== undefined ? _data["fileBytes"] : null;
         }
     }
     static fromJS(data) {
@@ -1449,6 +1451,7 @@ export class MusicModel {
         data["rating"] = this.rating !== undefined ? this.rating : null;
         data["complete"] = this.complete !== undefined ? this.complete : null;
         data["hash"] = this.hash !== undefined ? this.hash : null;
+        data["fileBytes"] = this.fileBytes !== undefined ? this.fileBytes : null;
         return data;
     }
     clone() {

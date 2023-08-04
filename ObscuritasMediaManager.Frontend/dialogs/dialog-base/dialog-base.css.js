@@ -3,7 +3,7 @@ import { css } from '../../exports.js';
 export function renderDialogBaseStyles() {
     return css`
         #dialog-outer {
-            position: fixed;
+            position: absolute;
             top: 0;
             right: 0;
             bottom: 0;
@@ -18,27 +18,44 @@ export function renderDialogBaseStyles() {
             justify-content: center;
         }
 
-        #dialog-border {
-            padding: 10px;
-            border: 1px solid #333355;
+        #dialog-border:not([invisible]) {
+            padding: 5px;
+            border: 3px solid #333;
             border-radius: 20px;
         }
 
         #dialog-container {
+            position: relative;
             display: flex;
             flex-direction: column;
             background-color: #222;
             border-radius: 20px;
             padding: 30px;
+            z-index: 0;
         }
 
-        #dialog-content {
+        #x-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 36px;
+            cursor: pointer;
+        }
+
+        #dialog-content,
+        #dialog-text {
+            white-space: pre-line;
             position: relative;
             margin: 20px;
+            font-size: 24px;
+        }
+
+        #dialog-text {
+            max-width: 600px;
         }
 
         #dialog-title {
-            font-size: 48px;
+            font-size: 36px;
             margin-bottom: 20px;
         }
 
@@ -48,6 +65,7 @@ export function renderDialogBaseStyles() {
             margin-top: 20px;
             position: relative;
             justify-content: flex-end;
+            font-size: 24px;
         }
 
         #dialog-actions > * {

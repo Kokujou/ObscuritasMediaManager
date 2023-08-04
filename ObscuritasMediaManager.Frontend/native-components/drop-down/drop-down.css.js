@@ -86,8 +86,6 @@ export function renderDropDownStyles() {
         .options {
             position: absolute;
             top: 100%;
-            left: 0;
-            right: 0;
 
             padding: 10px 25px;
 

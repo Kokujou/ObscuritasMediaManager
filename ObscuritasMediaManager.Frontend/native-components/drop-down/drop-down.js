@@ -51,7 +51,6 @@ export class DropDown extends LitElementBase {
         return {
             options: { type: Array, reflect: true },
             value: { type: String, reflect: true },
-            values: { type: Array, reflect: true },
             maxDisplayDepth: { type: Number, reflect: true },
             required: { type: Boolean, reflect: true },
             colors: { type: Object, reflect: true },

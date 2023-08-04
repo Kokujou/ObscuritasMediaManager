@@ -8,7 +8,11 @@ import { GenreDialog } from './genre-dialog.js';
 export function renderGenreDialog(genreDialog) {
     return html`
         <dialog-base
+            showBorder
+            canAccept
             caption="Tags auswählen"
+            acceptActionText="Speichern"
+            declineActionText="Abbrechen"
             @decline="${() => genreDialog.dispatchCustomEvent('decline')}"
             @accept="${() => genreDialog.accept()}"
         >

@@ -4,6 +4,7 @@ import { LitElementBase } from '../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
+import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { InputDialog } from '../../dialogs/input-dialog/input-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
@@ -137,7 +138,7 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     async initializeData() {
-        var playlistId = Number.parseInt(getQueryValue('guid'));
+        var playlistId = getQueryValue('guid');
         var trackId = getQueryValue('track');
 
         if (!playlistId) {
@@ -161,7 +162,8 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     render() {
-        document.title = this.currentTrack.displayName;
+        if (this.playlist?.isTemporary || !this.playlist?.name) document.title = this.currentTrack.displayName;
+        else document.title = this.playlist.name + ' - ' + this.currentTrack.name;
         if (this.currentTrackIndex) document.title = this.currentTrack.displayName;
         return renderMusicPlaylist(this);
     }
@@ -260,6 +262,7 @@ export class MusicPlaylistPage extends LitElementBase {
      * @param {MusicGenre} genre
      */
     addGenre(genre) {
+        if (!genre || !Object.values(MusicGenre).includes(genre)) return;
         var newGenres = this.updatedTrack.genres.concat([genre]);
         this.changeProperty('genres', newGenres);
     }
@@ -313,6 +316,10 @@ export class MusicPlaylistPage extends LitElementBase {
                 genreDialog.requestUpdate(undefined);
             }
         );
+    }
+
+    openEditPlaylistDialog() {
+        EditPlaylistDialog.show(this.playlist);
     }
 
     async toggleComplete() {

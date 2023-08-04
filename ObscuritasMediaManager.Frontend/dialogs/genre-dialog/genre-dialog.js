@@ -1,6 +1,7 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
+import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { GenreDialogResult } from '../dialog-result/genre-dialog.result.js';
 import { InputDialog } from '../input-dialog/input-dialog.js';
 import { renderGenreDialogStyles } from './genre-dialog.css.js';
@@ -30,7 +31,7 @@ export class GenreDialog extends LitElementBase {
 
         Object.assign(dialog.options, options);
 
-        document.body.append(dialog);
+        PageRouting.container.append(dialog);
         dialog.requestUpdate(undefined);
 
         return dialog;

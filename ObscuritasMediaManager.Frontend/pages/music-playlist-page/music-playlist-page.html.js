@@ -172,12 +172,22 @@ export function renderMusicPlaylist(page) {
                         </div>
                     </div>
                 </div>
-                <media-playlist
-                    .items="${page.playlist.tracks.map((x) => x.displayName)}"
-                    .index="${page.currentTrackIndex}"
-                    @indexChanged="${(e) => page.changeTrack(e.detail.index)}"
-                    @randomize="${() => page.randomize()}"
-                ></media-playlist>
+                ${page.playlist.isTemporary
+                    ? ''
+                    : html`
+                          <div id="edit-playlist-link" @click="${() => page.openEditPlaylistDialog()}">
+                              <div id="edit-playlist-icon"></div>
+                              <div id="edit-playlist-text">Playlist bearbeiten</div>
+                          </div>
+                      `}
+                <div id="media-playlist-container">
+                    <media-playlist
+                        .items="${page.playlist.tracks.map((x) => x.displayName)}"
+                        .index="${page.currentTrackIndex}"
+                        @indexChanged="${(e) => page.changeTrack(e.detail.index)}"
+                        @randomize="${() => page.randomize()}"
+                    ></media-playlist>
+                </div>
             </div>
             <fallback-audio
                 id="audio-player"

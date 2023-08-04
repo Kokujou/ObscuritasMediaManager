@@ -7,6 +7,10 @@ import { InputDialog } from './input-dialog.js';
 export function renderInputDialog(dialog) {
     return html` <dialog-base
         caption="Bitte Basispfad auswählen"
+        showBorder
+        canAccept
+        acceptActionText="Weiter"
+        declineActionText="Abbrechen"
         @decline="${() => dialog.notifyDeclined()}"
         @accept="${() => dialog.notifyAccepted()}"
     >

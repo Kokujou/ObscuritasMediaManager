@@ -143,6 +143,7 @@ export function renderMusicPlaylistStyles() {
             flex: auto;
             border-radius: 20px;
             margin: 50px;
+            margin-bottom: 0;
             min-width: 0;
             padding: 20px;
             gap: 20px;
@@ -268,6 +269,43 @@ export function renderMusicPlaylistStyles() {
             outline: none;
             border: none;
             border-bottom: 1px solid;
+        }
+
+        #edit-playlist-link {
+            font-size: 30px;
+            font-weight: bold;
+            align-self: center;
+            justify-self: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 4px solid;
+            border-color: transparent;
+        }
+
+        #edit-playlist-link:hover {
+            border-color: inherit;
+        }
+
+        #edit-playlist-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--font-color);
+
+            ${renderMaskImage(editIcon())};
+        }
+
+        #media-playlist-container {
+            display: inline-flex;
+            flex: auto;
+            padding: 0 50px;
+            padding-bottom: 20px;
         }
     `;
 }

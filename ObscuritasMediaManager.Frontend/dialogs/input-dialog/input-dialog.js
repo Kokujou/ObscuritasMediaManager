@@ -1,4 +1,5 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { renderInputDialogStyles } from './input-dialog.css.js';
 import { renderInputDialog } from './input-dialog.html.js';
 
@@ -20,7 +21,7 @@ export class InputDialog extends LitElementBase {
             var dialog = new InputDialog();
             dialog.resolve = resolve;
             dialog.message = message;
-            document.body.append(dialog);
+            PageRouting.container.append(dialog);
             dialog.requestUpdate(undefined);
             return dialog;
         });

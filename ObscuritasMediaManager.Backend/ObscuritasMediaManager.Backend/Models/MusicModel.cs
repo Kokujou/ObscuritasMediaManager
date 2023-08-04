@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using ObscuritasMediaManager.Backend.Data.Music;
+﻿using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Extensions;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
@@ -26,9 +25,7 @@ public class MusicModel
     public byte Rating { get; set; }
     public bool Complete { get; set; }
     [Key] public string Hash { get; set; }
-    [JsonIgnore]
-    [Newtonsoft.Json.JsonIgnore]
-    public long FileBytes { get; set; }
+    [JsonIgnore] public long FileBytes { get; set; }
 
     public MusicModel CalculateHash()
     {
@@ -48,9 +45,9 @@ public class MusicModel
     {
         var result = Name;
         if ((Author is not null) && (Author != "undefined"))
-            result += " - ${ Author}";
+            result += $" - {Author}";
         if (!string.IsNullOrEmpty(Source))
-            result += $"({Source})";
+            result += $" ({Source})";
         return result;
     }
 }

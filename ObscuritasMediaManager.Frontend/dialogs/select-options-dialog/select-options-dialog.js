@@ -1,4 +1,5 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { renderSelectOptionsDialogStyles } from './select-options-dialog.css.js';
 import { renderSelectOptionsDialog } from './select-options-dialog.html.js';
 
@@ -22,7 +23,7 @@ export class SelectOptionsDialog extends LitElementBase {
         dialog.options = options;
         dialog.multiselect = multiselect;
 
-        document.body.append(dialog);
+        PageRouting.container.append(dialog);
 
         return dialog;
     }

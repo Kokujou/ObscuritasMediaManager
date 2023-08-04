@@ -32,12 +32,34 @@ export class ExtendedMusicModel extends MusicModel {
     }
 
     /**
+     * @param {File[]} files
+     * @param {string} basePath
+     */
+    static createFromFiles(files, basePath) {
+        var musicTracks = [];
+        for (var i = 0; i < files.length; i++) {
+            try {
+                var track = ExtendedMusicModel.fromFile(files[i], basePath);
+                if (musicTracks.some((x) => x.name == track.name)) continue;
+                musicTracks.push(track);
+            } catch (err) {
+                continue;
+            }
+        }
+
+        return musicTracks;
+    }
+
+    /**
      * @param {File} file
      * @param {string} basePath
      */
     static fromFile(file, basePath) {
+        var filePath = file.webkitRelativePath;
+        if (!(file.webkitRelativePath?.length > 0)) filePath = file.name;
+
         // @ts-ignore
-        /** @type {string[]} */ var fileLevels = file.webkitRelativePath.split('/');
+        /** @type {string[]} */ var fileLevels = filePath.split('/');
         var musicModel = new MusicModel({
             name: fileLevels[fileLevels.length - 1],
             mood1: Mood.Unset,
@@ -51,7 +73,7 @@ export class ExtendedMusicModel extends MusicModel {
             language: Nation.Japanese,
             nation: Nation.Japanese,
             participants: Participants.Unset,
-            path: `${basePath}\\${file.webkitRelativePath}`,
+            path: `${basePath}\\${filePath}`,
             rating: 0,
             source: null,
         });

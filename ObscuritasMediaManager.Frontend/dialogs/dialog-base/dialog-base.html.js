@@ -2,18 +2,32 @@ import { html } from '../../exports.js';
 import { DialogBase } from './dialog-base.js';
 
 /**
- * @param {DialogBase} dialogBase
+ * @param {DialogBase} dialog
  */
-export function renderDialogBase(dialogBase) {
+export function renderDialogBase(dialog) {
     return html`
         <div id="dialog-outer">
-            <div id="dialog-border">
-                <div id="dialog-container">
-                    <div id="dialog-title">${dialogBase.caption}</div>
-                    <div id="dialog-content"><slot></slot></div>
+            <div id="dialog-border" ?invisible="${!dialog.properties?.showBorder}">
+                <div id="dialog-container" tabindex="0" autofocus>
+                    <div id="dialog-title">${dialog.caption}</div>
+                    ${dialog.declineActionText ? html` <div id="x-button" @click="${() => dialog.decline()}">&times;</div>` : ''}
+                    ${dialog.properties?.content
+                        ? html`<div id="dialog-text">${dialog.properties.content}</div>`
+                        : html` <div id="dialog-content"><slot></slot></div>`}
+
                     <div id="dialog-actions">
-                        <border-button @click="${() => dialogBase.decline()}" text="Abbrechen"></border-button>
-                        <border-button @click="${() => dialogBase.accept()}" text="Ok"></border-button>
+                        ${dialog.declineActionText
+                            ? html`<border-button
+                                  @click="${() => dialog.decline()}"
+                                  text="${dialog.declineActionText}"
+                              ></border-button>`
+                            : ''}
+                        ${dialog.acceptActionText
+                            ? html` <border-button
+                                  @click="${() => dialog.accept()}"
+                                  text="${dialog.acceptActionText}"
+                              ></border-button>`
+                            : ''}
                     </div>
                 </div>
             </div>

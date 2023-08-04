@@ -23,11 +23,12 @@ public class PlaylistModel
               .WithMany()
               .UsingEntity<PlaylistTrackMappingModel>(
                   right => right.HasOne<MusicModel>().WithMany().HasForeignKey(x => x.TrackHash),
-                  left => left.HasOne<PlaylistModel>().WithMany().HasForeignKey(x => x.PlaylistId));
+                  left => left.HasOne<PlaylistModel>().WithMany().HasForeignKey(x => x.PlaylistId),
+                  join => join.HasKey("TrackHash", "PlaylistId"));
         entity.Navigation(x => x.Tracks).AutoInclude();
     }
 
-    [Key] public int Id { get; set; }
+    [Key] public Guid Id { get; set; }
     public string Name { get; set; }
     public string Author { get; set; }
     public string Image { get; set; }

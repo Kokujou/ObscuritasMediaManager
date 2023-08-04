@@ -48,3 +48,13 @@ export function createRange(from, to) {
     var diff = to - from;
     return [...new Array(diff + 1).keys()].map((x) => x + from);
 }
+
+/**
+ * @template T
+ * @param  {...T[]} params
+ */
+export function union(...params) {
+    if (params.length == 0) return [];
+    if (params.length == 1) return params[0];
+    return Array.from(new Set(params.flatMap((x) => x)));
+}

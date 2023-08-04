@@ -11,7 +11,7 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Route("api/[controller]")]
 public class PlaylistController : ControllerBase
 {
-    private static readonly List<IEnumerable<string>> TemporaryPlaylistRepository = new();
+    private static readonly Dictionary<Guid, List<string>> TemporaryPlaylistRepository = new();
 
     private readonly MusicRepository _musicRepository;
     private readonly PlaylistRepository _playlistRepository;
@@ -23,16 +23,16 @@ public class PlaylistController : ControllerBase
     }
 
     [HttpPost("temp")]
-    public int CreateTemporaryPlaylist([FromBody] IEnumerable<string> hashes)
+    public int CreateTemporaryPlaylist([FromBody] List<string> hashes)
     {
-        TemporaryPlaylistRepository.Add(hashes);
+        TemporaryPlaylistRepository.Add(Guid.NewGuid(), hashes);
         return TemporaryPlaylistRepository.Count - 1;
     }
 
     [HttpGet("{playlistId}")]
-    public async Task<PlaylistModel> GetPlaylist(int playlistId)
+    public async Task<PlaylistModel> GetPlaylist(Guid playlistId)
     {
-        if (TemporaryPlaylistRepository.ElementAtOrDefault(playlistId) is not IEnumerable<string> trackHashes)
+        if (!TemporaryPlaylistRepository.TryGetValue(playlistId, out var trackHashes))
             return await _playlistRepository.GetPlaylistAsync(playlistId);
 
         return new PlaylistModel
@@ -50,11 +50,13 @@ public class PlaylistController : ControllerBase
     }
 
     [HttpPut("{playlistId:guid}")]
-    public async Task UpdatePlaylistDataAsync(int playlistId, [FromBody] UpdateRequest<PlaylistModel> updateRequest)
+    public async Task UpdatePlaylistDataAsync(Guid playlistId, [FromBody] UpdateRequest<PlaylistModel> updateRequest)
     {
         if ((updateRequest.OldModel.Id != default) && (playlistId != updateRequest.OldModel.Id))
             throw new Exception("Ids of objects did not match");
 
-        await _playlistRepository.UpdateAsync(playlistId, updateRequest.OldModel, updateRequest.NewModel);
+        await _playlistRepository.UpdateDataAsync(playlistId, updateRequest.OldModel, updateRequest.NewModel);
+        await _playlistRepository.UpdateTracksAsync(playlistId, updateRequest.OldModel, updateRequest.NewModel);
+        await _playlistRepository.UpdatePlaylistTrackMappingAsync(playlistId, updateRequest.NewModel);
     }
 }

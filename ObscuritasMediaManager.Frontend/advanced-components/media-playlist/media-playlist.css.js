@@ -18,7 +18,6 @@ export function renderMediaPlaylistStyles() {
             border-radius: 20px;
             box-sizing: border-box;
             border: 20px solid var(--primary-color);
-            margin: 20px 50px;
 
             position: absolute;
             inset: 0;

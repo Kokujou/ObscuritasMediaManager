@@ -44,7 +44,7 @@ export function getTargetScrollPosition(element, elementContainer, parent) {
 
 /**
  * @param {boolean} selectFolders
- * @returns {Promise<FileList>}
+ * @returns {Promise<File[]>}
  */
 export function openFileDialog(selectFolders = false) {
     return new Promise((resolve) => {
@@ -52,7 +52,7 @@ export function openFileDialog(selectFolders = false) {
         fileInput.type = 'file';
         if (selectFolders) fileInput.setAttribute('webkitdirectory', '');
         fileInput.onchange = (e) => {
-            resolve(fileInput.files);
+            resolve(Array.from(fileInput.files));
         };
         fileInput.click();
         fileInput.focus();

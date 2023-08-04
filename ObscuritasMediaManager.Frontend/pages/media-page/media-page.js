@@ -76,7 +76,7 @@ export class MediaPage extends LitElementBase {
     }
 
     /**
-     * @param {FileList} files
+     * @param {File[]} files
      * @param {string} basePath
      * @param {string} mediaType
      */

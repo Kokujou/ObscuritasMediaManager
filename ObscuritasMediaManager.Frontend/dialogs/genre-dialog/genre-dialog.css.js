@@ -19,8 +19,8 @@ export function renderGenreDialogStyles() {
         }
 
         #genre-container {
-            max-height: 50vh;
-            max-width: 50vw;
+            max-height: 600px;
+            max-width: 700px;
             overflow-y: auto;
         }
 

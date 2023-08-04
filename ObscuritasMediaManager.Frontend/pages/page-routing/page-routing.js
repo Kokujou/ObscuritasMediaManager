@@ -21,6 +21,11 @@ export class PageRouting extends LitElementBase {
 
     static defaultFragment = getPageName(WelcomePage);
 
+    static get container() {
+        if (!PageRouting.instance?.shadowRoot) return null;
+        return PageRouting.instance.shadowRoot.querySelector('#current-page');
+    }
+
     get content() {
         var content = Pages[session.currentPage.current()];
         return content;

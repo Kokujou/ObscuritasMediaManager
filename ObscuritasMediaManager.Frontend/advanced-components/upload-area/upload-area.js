@@ -8,17 +8,6 @@ export class UploadArea extends LitElementBase {
         return renderUploadAreaStyles();
     }
 
-    static get properties() {
-        return {
-            someProperty: { type: String, reflect: true },
-        };
-    }
-
-    constructor() {
-        super();
-        /** @type {string} */ this.someProperty;
-    }
-
     render() {
         return renderUploadArea(this);
     }

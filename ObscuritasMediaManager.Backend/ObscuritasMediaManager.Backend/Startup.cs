@@ -23,12 +23,13 @@ public class Startup
         services.AddScoped<PlaylistRepository>();
         services.AddScoped<RecipeRepository>();
 
-        services.AddDbContext<DatabaseContext>(x => x.UseSqlite(@"Data Source=database.sqlite"));
+        services.AddDbContext<DatabaseContext>(
+            x => x.UseSqlite(@"Data Source=database.sqlite")
+                  .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                  .EnableSensitiveDataLogging());
 
-        services.AddCors(
-            x =>
-                x.AddPolicy("all",
-                            builder =>
+        services.AddCors(x =>
+                x.AddPolicy("all", builder =>
                                 builder.WithOrigins("https://localhost", "https://obscuritas.strangled.net")
                                        .AllowAnyHeader()
                                        .AllowAnyMethod()));
@@ -50,12 +51,11 @@ public class Startup
         services.AddAuthorization();
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app)
     {
         app.UseRouting();
         app.UseHttpsRedirection();
-        app.UseExceptionHandler(
-            a =>
+        app.UseExceptionHandler(a =>
                 a.Run(async context =>
                 {
                     var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();

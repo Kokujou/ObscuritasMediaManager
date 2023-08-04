@@ -18,26 +18,26 @@ export function renderBorderButtonStyles() {
 
         .border {
             position: absolute;
-            transition: all 0.5s ease;
+            transition: all 0.25s ease;
         }
 
-        #button-container:hover #top,
-        #button-container:hover #bottom {
+        #button-container:hover .top,
+        #button-container:hover .bottom {
             height: 40%;
         }
 
-        #button-container:hover #left,
-        #button-container:hover #right {
+        #button-container:hover .left,
+        #button-container:hover .right {
             width: 40%;
         }
 
-        #button-container:active #top,
-        #button-container:active #bottom {
+        #button-container:active .top,
+        #button-container:active .bottom {
             height: 50%;
         }
 
-        #button-container:active #left,
-        #button-container:active #right {
+        #button-container:active .left,
+        #button-container:active .right {
             width: 50%;
         }
 
@@ -72,8 +72,8 @@ export function renderBorderButtonStyles() {
         }
 
         #button {
-            font-size: 18px;
-            padding: 20px 40px;
+            font-size: inherit;
+            padding: 15px 20px;
             background-color: var(--primary-color);
             border: none;
             color: black;

@@ -1,6 +1,7 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
+import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { waitForSeconds } from '../../services/extensions/animation.extension.js';
 import { renderPlayMusicDialogStyles } from './play-music-dialog.css.js';
 import { renderPlayMusicDialog } from './play-music-dialog.html.js';
@@ -57,7 +58,7 @@ export class PlayMusicDialog extends LitElementBase {
         }
 
         var dialog = new PlayMusicDialog();
-        document.body.append(dialog);
+        PageRouting.container.append(dialog);
         dialog.reinitialize(track, initialVolume, startPosition);
         this.instance = dialog;
 
