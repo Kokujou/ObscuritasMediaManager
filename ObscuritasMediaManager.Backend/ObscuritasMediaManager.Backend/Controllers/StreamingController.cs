@@ -18,8 +18,7 @@ public class StreamingController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> BatchPostStreamingEntries(
-        [FromBody] IEnumerable<StreamingEntryModel> streamingEntries)
+    public async Task<ActionResult> BatchPostStreamingEntries([FromBody] IEnumerable<StreamingEntryModel> streamingEntries)
     {
         try
         {

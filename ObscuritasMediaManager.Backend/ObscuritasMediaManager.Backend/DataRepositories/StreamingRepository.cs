@@ -20,17 +20,14 @@ public class StreamingRepository
 
     public async Task<IEnumerable<StreamingEntryModel>> GetAsync(Guid guid)
     {
-        var response = await _context.StreamingEntries
-            .Where(x => x.Id == guid).ToListAsync();
+        var response = await _context.StreamingEntries.Where(x => x.Id == guid).ToListAsync();
         return response;
     }
 
-    public async Task<StreamingEntryModel> GetAsync(Guid guid, string season,
-        int episode)
+    public async Task<StreamingEntryModel> GetAsync(Guid guid, string season, int episode)
     {
-        var response = await _context.StreamingEntries.SingleAsync(x => x.Id == guid
-                                                                        && x.Season == season
-                                                                        && x.Episode == episode);
+        var response = await _context.StreamingEntries
+                                     .SingleAsync(x => (x.Id == guid) && (x.Season == season) && (x.Episode == episode));
         return response;
     }
 

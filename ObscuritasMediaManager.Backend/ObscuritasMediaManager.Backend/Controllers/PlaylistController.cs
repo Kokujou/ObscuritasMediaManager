@@ -35,7 +35,12 @@ public class PlaylistController : ControllerBase
         if (TemporaryPlaylistRepository.ElementAtOrDefault(playlistId) is not IEnumerable<string> trackHashes)
             return await _playlistRepository.GetPlaylistAsync(playlistId);
 
-        return new PlaylistModel { Tracks = await Task.WhenAll(trackHashes.Select(_musicRepository.GetAsync)), IsTemporary = true, Id = playlistId };
+        return new PlaylistModel
+               {
+                   Tracks = await Task.WhenAll(trackHashes.Select(_musicRepository.GetAsync)),
+                   IsTemporary = true,
+                   Id = playlistId
+               };
     }
 
     [HttpGet("list")]

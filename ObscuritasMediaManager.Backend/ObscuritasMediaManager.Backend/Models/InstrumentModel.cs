@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using ObscuritasMediaManager.Backend.Data.Music;
+﻿using ObscuritasMediaManager.Backend.Data.Music;
+using System.ComponentModel.DataAnnotations;
 
 namespace ObscuritasMediaManager.Backend.Models;
 

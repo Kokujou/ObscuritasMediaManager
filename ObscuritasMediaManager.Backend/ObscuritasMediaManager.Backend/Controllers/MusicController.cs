@@ -37,7 +37,7 @@ public class MusicController : ControllerBase
 
                 track.CalculateHash();
 
-                if (existingTracks.ContainsKey(track.Hash) && existingTracks[track.Hash] == track.Path)
+                if (existingTracks.ContainsKey(track.Hash) && (existingTracks[track.Hash] == track.Path))
                     continue;
 
                 if (existingTracks.ContainsKey(track.Hash) && System.IO.File.Exists(existingTracks[track.Hash]))
@@ -115,7 +115,7 @@ public class MusicController : ControllerBase
     {
         try
         {
-            if (updateRequest.OldModel.Hash != default && hash != updateRequest.OldModel.Hash)
+            if ((updateRequest.OldModel.Hash != default) && (hash != updateRequest.OldModel.Hash))
                 return BadRequest("Ids of objects did not match");
             var invalidInstruments = await GetInvalidInstrumentsAsync(updateRequest.NewModel.Instruments);
             if (invalidInstruments.Count > 0)

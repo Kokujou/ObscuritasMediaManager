@@ -11,6 +11,20 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [ApiController]
 public class CleanupController : ControllerBase
 {
+    private static bool ValidateAudio(string path)
+    {
+        try
+        {
+            var fileInfo = FFmpeg.GetMediaInfo(path).Result;
+
+            return fileInfo.AudioStreams.Any();
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
     private readonly MusicRepository _musicRepository;
 
     public CleanupController(MusicRepository musicRepository)
@@ -52,20 +66,6 @@ public class CleanupController : ControllerBase
         catch (Exception e)
         {
             return BadRequest(e.ToString());
-        }
-    }
-
-    private static bool ValidateAudio(string path)
-    {
-        try
-        {
-            var fileInfo = FFmpeg.GetMediaInfo(path).Result;
-
-            return fileInfo.AudioStreams.Any();
-        }
-        catch (Exception)
-        {
-            return false;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ObscuritasMediaManager.Backend.Data.Music;
+﻿using Newtonsoft.Json;
+using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Extensions;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
@@ -8,7 +9,9 @@ namespace ObscuritasMediaManager.Backend.Models;
 public class MusicModel
 {
     public string Name { get; set; }
+
     public string DisplayName => GetDisplayName();
+
     public string Author { get; set; }
     public string Source { get; set; }
     public Mood Mood1 { get; set; }
@@ -22,9 +25,7 @@ public class MusicModel
     public string Path { get; set; }
     public byte Rating { get; set; }
     public bool Complete { get; set; }
-
     [Key] public string Hash { get; set; }
-
     [JsonIgnore]
     [Newtonsoft.Json.JsonIgnore]
     public long FileBytes { get; set; }

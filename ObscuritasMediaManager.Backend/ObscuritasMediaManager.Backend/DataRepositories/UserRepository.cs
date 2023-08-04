@@ -24,8 +24,7 @@ public class UserRepository
     public async Task CreateUser(string username, string password)
     {
         var encryptedPassword = password.Encrypt();
-        await _dbContext.Users.AddAsync(new UserModel
-            { Password = encryptedPassword, Name = username, Id = Guid.NewGuid() });
+        await _dbContext.Users.AddAsync(new UserModel { Password = encryptedPassword, Name = username, Id = Guid.NewGuid() });
         await _dbContext.SaveChangesAsync();
     }
 }

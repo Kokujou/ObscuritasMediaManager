@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Root Type="DevExpress.CodeRush.Platform.Options.StorageStreamOptions">
   <Options Language="Neutral">
-    <Streams>
-      <Item Id="{1b06e923-8b62-440f-b1c2-48411c67f02a}">
-        <StoragePath>ObscuritasMediaManager.Backend</StoragePath>
-      </Item>
-    </Streams>
+    <Streams />
   </Options>
 </Root>

@@ -75,8 +75,7 @@ public class MediaController : ControllerBase
     }
 
     [HttpPut("{guid:Guid}/image")]
-    public async Task<ActionResult> AddMediaImage([FromBody] string image,
-        Guid guid)
+    public async Task<ActionResult> AddMediaImage([FromBody] string image, Guid guid)
     {
         try
         {

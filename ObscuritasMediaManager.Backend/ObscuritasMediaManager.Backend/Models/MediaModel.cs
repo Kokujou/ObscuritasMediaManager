@@ -10,7 +10,6 @@ public class MediaModel
     public int Rating { get; set; }
     public int Release { get; set; }
     public IEnumerable<string> Genres { get; set; } = new List<string>();
-
     public int State { get; set; }
     public string Description { get; set; }
     public string Image { get; set; }

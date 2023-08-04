@@ -23,8 +23,7 @@ public class LoginController : ControllerBase
         if (user is null) return BadRequest("invalid username or password");
 
         var token = $"{request.Username}:{request.Password}".ToBase64String();
-        Response.Cookies.Append("Authorization", $"Basic {token}",
-            new CookieOptions { Expires = DateTimeOffset.MaxValue });
+        Response.Cookies.Append("Authorization", $"Basic {token}", new CookieOptions { Expires = DateTimeOffset.MaxValue });
         return token;
     }
 }

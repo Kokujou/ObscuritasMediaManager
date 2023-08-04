@@ -9,7 +9,6 @@ public class StreamingEntryModel
     public int Episode { get; set; }
     public string Src { get; set; }
 
-
     public override string ToString()
     {
         return JsonConvert.SerializeObject(this);

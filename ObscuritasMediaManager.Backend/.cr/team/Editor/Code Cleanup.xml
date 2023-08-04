@@ -2,10 +2,7 @@
 <Root Type="DevExpress.CodeAnalysis.CodeCleanUp.CodeCleanUpOptions">
   <Options Language="C#">
     <Providers>
-      <Item Id="{53ccb10f-f7af-40a6-9472-d05054672052}">
-        <Enabled>True</Enabled>
-        <ApplyOnSave>True</ApplyOnSave>
-      </Item>
+      <Item Id="{53ccb10f-f7af-40a6-9472-d05054672052}" />
       <Item Id="{bb96a982-bed0-4d8f-93a7-1e1ce7493e96}">
         <Enabled>True</Enabled>
         <ApplyOnSave>True</ApplyOnSave>
@@ -144,7 +141,7 @@
         <ApplyOnSave>True</ApplyOnSave>
       </Item>
     </Providers>
-    <IsNewVersion>True</IsNewVersion>
     <CleanupOnSave>True</CleanupOnSave>
+    <IsNewVersion>True</IsNewVersion>
   </Options>
 </Root>

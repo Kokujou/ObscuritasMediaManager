@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ObscuritasMediaManager.Backend.Data.Food;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ObscuritasMediaManager.Backend.Data.Food;
 
 namespace ObscuritasMediaManager.Backend.Models;
 

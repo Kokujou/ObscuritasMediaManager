@@ -10,5 +10,6 @@ public class UserModel : IIdentity
     public string Password { get; set; }
     public string Name { get; set; }
     [NotMapped] public string AuthenticationType => "basic";
+
     [NotMapped] public bool IsAuthenticated => true;
 }

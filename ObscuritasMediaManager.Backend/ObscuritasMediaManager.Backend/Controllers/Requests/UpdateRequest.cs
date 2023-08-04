@@ -1,4 +1,5 @@
-﻿namespace ObscuritasMediaManager.Backend.Controllers.Requests;
+﻿
+namespace ObscuritasMediaManager.Backend.Controllers.Requests;
 
 public class UpdateRequest<T>
 {

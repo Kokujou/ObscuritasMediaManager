@@ -7,8 +7,6 @@ namespace ObscuritasMediaManager.Backend.Models;
 public class PlaylistTrackMappingModel
 {
     [Key] public int PlaylistId { get; set; }
-
     public string PlaylistName { get; set; }
-
     public string TrackHash { get; set; }
 }
