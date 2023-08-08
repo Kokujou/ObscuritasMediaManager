@@ -36,14 +36,15 @@ export class CleanupClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(MusicModel.fromJS(item));
+                        result200.push(MusicModel.fromJS(item, _mappings));
                 }
                 else {
                     result200 = null;
@@ -85,7 +86,7 @@ export class CleanupClient {
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
@@ -256,14 +257,15 @@ export class GenreClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(GenreModel.fromJS(item));
+                        result200.push(GenreModel.fromJS(item, _mappings));
                 }
                 else {
                     result200 = null;
@@ -314,7 +316,7 @@ export class LoginClient {
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : null;
                 return result200;
             });
@@ -359,11 +361,12 @@ export class MediaClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = MediaModel.fromJS(resultData200);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = MediaModel.fromJS(resultData200, _mappings);
                 return result200;
             });
         }
@@ -397,14 +400,15 @@ export class MediaClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(MediaModel.fromJS(item));
+                        result200.push(MediaModel.fromJS(item, _mappings));
                 }
                 else {
                     result200 = null;
@@ -637,14 +641,15 @@ export class MusicClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(MusicModel.fromJS(item));
+                        result200.push(MusicModel.fromJS(item, _mappings));
                 }
                 else {
                     result200 = null;
@@ -717,11 +722,12 @@ export class MusicClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = MusicModel.fromJS(resultData200);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = MusicModel.fromJS(resultData200, _mappings);
                 return result200;
             });
         }
@@ -793,14 +799,15 @@ export class MusicClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(InstrumentModel.fromJS(item));
+                        result200.push(InstrumentModel.fromJS(item, _mappings));
                 }
                 else {
                     result200 = null;
@@ -925,7 +932,7 @@ export class PlaylistClient {
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : null;
                 return result200;
             });
@@ -961,11 +968,12 @@ export class PlaylistClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = PlaylistModel.fromJS(resultData200);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = PlaylistModel.fromJS(resultData200, _mappings);
                 return result200;
             });
         }
@@ -1035,14 +1043,15 @@ export class PlaylistClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(PlaylistModel.fromJS(item));
+                        result200.push(PlaylistModel.fromJS(item, _mappings));
                 }
                 else {
                     result200 = null;
@@ -1087,14 +1096,15 @@ export class RecipeClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(RecipeModel.fromJS(item));
+                        result200.push(RecipeModel.fromJS(item, _mappings));
                 }
                 else {
                     result200 = null;
@@ -1205,11 +1215,12 @@ export class RecipeClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = RecipeModel.fromJS(resultData200);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = RecipeModel.fromJS(resultData200, _mappings);
                 return result200;
             });
         }
@@ -1290,14 +1301,15 @@ export class StreamingClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(StreamingEntryModel.fromJS(item));
+                        result200.push(StreamingEntryModel.fromJS(item, _mappings));
                 }
                 else {
                     result200 = null;
@@ -1342,11 +1354,12 @@ export class StreamingClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
-                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = StreamingEntryModel.fromJS(resultData200);
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = StreamingEntryModel.fromJS(resultData200, _mappings);
                 return result200;
             });
         }
@@ -1384,7 +1397,7 @@ export class MusicModel {
             }
         }
     }
-    init(_data) {
+    init(_data, _mappings) {
         if (_data) {
             this.name = _data["name"] !== undefined ? _data["name"] : null;
             this.displayName = _data["displayName"] !== undefined ? _data["displayName"] : null;
@@ -1419,11 +1432,9 @@ export class MusicModel {
             this.fileBytes = _data["fileBytes"] !== undefined ? _data["fileBytes"] : null;
         }
     }
-    static fromJS(data) {
+    static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        let result = new MusicModel();
-        result.init(data);
-        return result;
+        return createInstance(data, _mappings, MusicModel);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
@@ -1548,18 +1559,16 @@ export class GenreModel {
             }
         }
     }
-    init(_data) {
+    init(_data, _mappings) {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.section = _data["section"] !== undefined ? _data["section"] : null;
             this.name = _data["name"] !== undefined ? _data["name"] : null;
         }
     }
-    static fromJS(data) {
+    static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        let result = new GenreModel();
-        result.init(data);
-        return result;
+        return createInstance(data, _mappings, GenreModel);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
@@ -1586,17 +1595,15 @@ export class CredentialsRequest {
             }
         }
     }
-    init(_data) {
+    init(_data, _mappings) {
         if (_data) {
             this.username = _data["username"] !== undefined ? _data["username"] : null;
             this.password = _data["password"] !== undefined ? _data["password"] : null;
         }
     }
-    static fromJS(data) {
+    static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        let result = new CredentialsRequest();
-        result.init(data);
-        return result;
+        return createInstance(data, _mappings, CredentialsRequest);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
@@ -1629,7 +1636,7 @@ export class MediaModel {
             }
         }
     }
-    init(_data) {
+    init(_data, _mappings) {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.name = _data["name"] !== undefined ? _data["name"] : null;
@@ -1649,11 +1656,9 @@ export class MediaModel {
             this.image = _data["image"] !== undefined ? _data["image"] : null;
         }
     }
-    static fromJS(data) {
+    static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        let result = new MediaModel();
-        result.init(data);
-        return result;
+        return createInstance(data, _mappings, MediaModel);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
@@ -1690,17 +1695,15 @@ export class InstrumentModel {
             }
         }
     }
-    init(_data) {
+    init(_data, _mappings) {
         if (_data) {
             this.name = _data["name"] !== undefined ? _data["name"] : null;
             this.type = _data["type"] !== undefined ? _data["type"] : null;
         }
     }
-    static fromJS(data) {
+    static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        let result = new InstrumentModel();
-        result.init(data);
-        return result;
+        return createInstance(data, _mappings, InstrumentModel);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
@@ -1739,17 +1742,15 @@ export class UpdateRequestOfMusicModel {
             }
         }
     }
-    init(_data) {
+    init(_data, _mappings) {
         if (_data) {
-            this.oldModel = _data["oldModel"] ? MusicModel.fromJS(_data["oldModel"]) : null;
-            this.newModel = _data["newModel"] ? MusicModel.fromJS(_data["newModel"]) : null;
+            this.oldModel = _data["oldModel"] ? MusicModel.fromJS(_data["oldModel"], _mappings) : null;
+            this.newModel = _data["newModel"] ? MusicModel.fromJS(_data["newModel"], _mappings) : null;
         }
     }
-    static fromJS(data) {
+    static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        let result = new UpdateRequestOfMusicModel();
-        result.init(data);
-        return result;
+        return createInstance(data, _mappings, UpdateRequestOfMusicModel);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
@@ -1784,7 +1785,7 @@ export class PlaylistModel {
             }
         }
     }
-    init(_data) {
+    init(_data, _mappings) {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.name = _data["name"] !== undefined ? _data["name"] : null;
@@ -1806,18 +1807,16 @@ export class PlaylistModel {
             if (Array.isArray(_data["tracks"])) {
                 this.tracks = [];
                 for (let item of _data["tracks"])
-                    this.tracks.push(MusicModel.fromJS(item));
+                    this.tracks.push(MusicModel.fromJS(item, _mappings));
             }
             else {
                 this.tracks = null;
             }
         }
     }
-    static fromJS(data) {
+    static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        let result = new PlaylistModel();
-        result.init(data);
-        return result;
+        return createInstance(data, _mappings, PlaylistModel);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
@@ -1860,17 +1859,15 @@ export class UpdateRequestOfPlaylistModel {
             }
         }
     }
-    init(_data) {
+    init(_data, _mappings) {
         if (_data) {
-            this.oldModel = _data["oldModel"] ? PlaylistModel.fromJS(_data["oldModel"]) : null;
-            this.newModel = _data["newModel"] ? PlaylistModel.fromJS(_data["newModel"]) : null;
+            this.oldModel = _data["oldModel"] ? PlaylistModel.fromJS(_data["oldModel"], _mappings) : null;
+            this.newModel = _data["newModel"] ? PlaylistModel.fromJS(_data["newModel"], _mappings) : null;
         }
     }
-    static fromJS(data) {
+    static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        let result = new UpdateRequestOfPlaylistModel();
-        result.init(data);
-        return result;
+        return createInstance(data, _mappings, UpdateRequestOfPlaylistModel);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
@@ -1908,7 +1905,7 @@ export class RecipeModel {
             }
         }
     }
-    init(_data) {
+    init(_data, _mappings) {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.title = _data["title"] !== undefined ? _data["title"] : null;
@@ -1925,7 +1922,7 @@ export class RecipeModel {
             if (Array.isArray(_data["ingredients"])) {
                 this.ingredients = [];
                 for (let item of _data["ingredients"])
-                    this.ingredients.push(IngredientModel.fromJS(item));
+                    this.ingredients.push(IngredientModel.fromJS(item, _mappings));
             }
             else {
                 this.ingredients = null;
@@ -1933,11 +1930,9 @@ export class RecipeModel {
             this.formattedText = _data["formattedText"] !== undefined ? _data["formattedText"] : null;
         }
     }
-    static fromJS(data) {
+    static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        let result = new RecipeModel();
-        result.init(data);
-        return result;
+        return createInstance(data, _mappings, RecipeModel);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
@@ -2020,7 +2015,7 @@ export class IngredientModel {
             }
         }
     }
-    init(_data) {
+    init(_data, _mappings) {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null;
@@ -2032,11 +2027,9 @@ export class IngredientModel {
             this.order = _data["order"] !== undefined ? _data["order"] : null;
         }
     }
-    static fromJS(data) {
+    static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        let result = new IngredientModel();
-        result.init(data);
-        return result;
+        return createInstance(data, _mappings, IngredientModel);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
@@ -2079,7 +2072,7 @@ export class StreamingEntryModel {
             }
         }
     }
-    init(_data) {
+    init(_data, _mappings) {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.season = _data["season"] !== undefined ? _data["season"] : null;
@@ -2087,11 +2080,9 @@ export class StreamingEntryModel {
             this.src = _data["src"] !== undefined ? _data["src"] : null;
         }
     }
-    static fromJS(data) {
+    static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        let result = new StreamingEntryModel();
-        result.init(data);
-        return result;
+        return createInstance(data, _mappings, StreamingEntryModel);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
@@ -2107,6 +2098,58 @@ export class StreamingEntryModel {
         result.init(json);
         return result;
     }
+}
+function jsonParse(json, reviver) {
+    json = JSON.parse(json, reviver);
+    var byid = {};
+    var refs = [];
+    json = (function recurse(obj, prop, parent) {
+        if (typeof obj !== 'object' || !obj)
+            return obj;
+        if ("$ref" in obj) {
+            let ref = obj.$ref;
+            if (ref in byid)
+                return byid[ref];
+            refs.push([parent, prop, ref]);
+            return undefined;
+        }
+        else if ("$id" in obj) {
+            let id = obj.$id;
+            delete obj.$id;
+            if ("$values" in obj)
+                obj = obj.$values;
+            byid[id] = obj;
+        }
+        if (Array.isArray(obj)) {
+            obj = obj.map((v, i) => recurse(v, i, obj));
+        }
+        else {
+            for (var p in obj) {
+                if (obj.hasOwnProperty(p) && obj[p] && typeof obj[p] === 'object')
+                    obj[p] = recurse(obj[p], p, obj);
+            }
+        }
+        return obj;
+    })(json);
+    for (let i = 0; i < refs.length; i++) {
+        const ref = refs[i];
+        ref[0][ref[1]] = byid[ref[2]];
+    }
+    return json;
+}
+function createInstance(data, mappings, type) {
+    if (!mappings)
+        mappings = [];
+    if (!data)
+        return null;
+    const mappingIndexName = "__mappingIndex";
+    if (data[mappingIndexName])
+        return mappings[data[mappingIndexName]].target;
+    data[mappingIndexName] = mappings.length;
+    let result = new type();
+    mappings.push({ source: data, target: result });
+    result.init(data, mappings);
+    return result;
 }
 export class SwaggerException extends Error {
     message;

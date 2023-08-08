@@ -12,10 +12,14 @@ export function renderMessageSnackbarStyles() {
             display: flex;
             flex-direction: row;
 
+            margin-right: 20px;
             transition: top 0.3s linear;
         }
 
         #x-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
             cursor: pointer;
         }
     `;

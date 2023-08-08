@@ -23,10 +23,11 @@ public class PlaylistController : ControllerBase
     }
 
     [HttpPost("temp")]
-    public int CreateTemporaryPlaylist([FromBody] List<string> hashes)
+    public Guid CreateTemporaryPlaylist([FromBody] List<string> hashes)
     {
-        TemporaryPlaylistRepository.Add(Guid.NewGuid(), hashes);
-        return TemporaryPlaylistRepository.Count - 1;
+        var playlistId = Guid.NewGuid();
+        TemporaryPlaylistRepository.Add(playlistId, hashes);
+        return playlistId;
     }
 
     [HttpGet("{playlistId}")]
@@ -37,7 +38,10 @@ public class PlaylistController : ControllerBase
 
         return new PlaylistModel
                {
-                   Tracks = await Task.WhenAll(trackHashes.Select(_musicRepository.GetAsync)),
+                   TrackMappings =
+                       await Task.WhenAll(trackHashes.Select(async (trackId, index) =>
+                               PlaylistTrackMappingModel.Create(playlistId, string.Empty,
+                                                                await _musicRepository.GetAsync(trackId), index))),
                    IsTemporary = true,
                    Id = playlistId
                };
@@ -55,8 +59,21 @@ public class PlaylistController : ControllerBase
         if ((updateRequest.OldModel.Id != default) && (playlistId != updateRequest.OldModel.Id))
             throw new Exception("Ids of objects did not match");
 
-        await _playlistRepository.UpdateDataAsync(playlistId, updateRequest.OldModel, updateRequest.NewModel);
-        await _playlistRepository.UpdateTracksAsync(playlistId, updateRequest.OldModel, updateRequest.NewModel);
-        await _playlistRepository.UpdatePlaylistTrackMappingAsync(playlistId, updateRequest.NewModel);
+        TemporaryPlaylistRepository.Remove(playlistId);
+
+        foreach (var track in updateRequest.NewModel.Tracks.Where(x => x.Hash is null))
+            track.CalculateHash();
+
+        var actual = await _playlistRepository.GetPlaylistAsync(playlistId);
+        if (actual is null)
+        {
+            await _playlistRepository.CreatePlaylistAsync(updateRequest.NewModel);
+            return;
+        }
+
+        await _playlistRepository.UpdateDataAsync(actual, updateRequest.OldModel, updateRequest.NewModel);
+        await _playlistRepository.UpdateTracksAsync(updateRequest.NewModel);
+        await _playlistRepository.UpdatePlaylistTrackMappingAsync(updateRequest.NewModel.Id, updateRequest.NewModel.Name,
+                                                                  updateRequest.NewModel.Tracks);
     }
 }

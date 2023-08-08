@@ -143,7 +143,7 @@ export class MusicPlaylistPage extends LitElementBase {
 
         if (!playlistId) {
             var currentTrack = await MusicService.get(trackId);
-            this.playlist = new PlaylistModel({ tracks: [new ExtendedMusicModel(currentTrack)] });
+            this.playlist = new PlaylistModel({ tracks: [new ExtendedMusicModel(currentTrack)], isTemporary: true, genres: [] });
             this.currentTrackIndex = 0;
         } else {
             this.playlist = await PlaylistService.getPlaylist(playlistId);
@@ -318,8 +318,9 @@ export class MusicPlaylistPage extends LitElementBase {
         );
     }
 
-    openEditPlaylistDialog() {
-        EditPlaylistDialog.show(this.playlist);
+    async openEditPlaylistDialog() {
+        await EditPlaylistDialog.show(this.playlist);
+        await this.initializeData();
     }
 
     async toggleComplete() {

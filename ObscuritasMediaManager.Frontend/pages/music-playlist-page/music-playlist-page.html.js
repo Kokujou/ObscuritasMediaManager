@@ -83,32 +83,33 @@ export function renderMusicPlaylist(page) {
                         @changeInstruemnts="${() => page.openInstrumentsDialog()}"
                     ></audio-tile-base>
                     <div id="audio-control-container">
-                        <div
+                        <input
+                            type="text"
                             id="audio-title"
                             class="editable-label"
-                            ?contenteditable="${!page.updatedTrack.complete}"
+                            ?disabled="${page.updatedTrack.complete}"
+                            .value=" ${page.updatedTrack.name}"
                             @valueChanged="${(e) => page.changeProperty('name', e.detail.value)}"
-                        >
-                            ${page.updatedTrack.name}
-                        </div>
+                        />
+
                         <div id="audio-subtitle">
-                            <div
+                            <input
+                                type="text"
                                 id="audio-author"
                                 class="editable-label"
-                                ?contenteditable="${!page.updatedTrack.complete}"
+                                ?disabled="${page.updatedTrack.complete}"
+                                .value="${page.updatedTrack.author}"
                                 @valueChanged="${(e) => page.changeProperty('author', e.detail.value)}"
-                            >
-                                ${page.updatedTrack.author}
-                            </div>
+                            />
                             <div id="subtitle-separator">-</div>
-                            <div
+                            <input
+                                type="text"
                                 id="audio-source"
                                 class="editable-label"
-                                ?contenteditable="${!page.updatedTrack.complete}"
+                                .value="${page.updatedTrack.source || '---'}"
+                                ?disabled="${page.updatedTrack.complete}"
                                 @valueChanged="${(e) => page.changeProperty('source', e.detail.value)}"
-                            >
-                                ${page.updatedTrack.source || '---'}
-                            </div>
+                            />
                         </div>
                         <div id="genre-section">
                             ${page.updatedTrack.genres.map(
@@ -173,7 +174,12 @@ export function renderMusicPlaylist(page) {
                     </div>
                 </div>
                 ${page.playlist.isTemporary
-                    ? ''
+                    ? html`
+                          <div id="edit-playlist-link" @click="${() => page.openEditPlaylistDialog()}">
+                              <div id="edit-playlist-icon"></div>
+                              <div id="edit-playlist-text">Zu Playlist befördern</div>
+                          </div>
+                      `
                     : html`
                           <div id="edit-playlist-link" @click="${() => page.openEditPlaylistDialog()}">
                               <div id="edit-playlist-icon"></div>

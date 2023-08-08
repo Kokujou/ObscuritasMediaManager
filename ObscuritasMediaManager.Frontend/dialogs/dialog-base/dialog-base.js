@@ -1,4 +1,5 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { session } from '../../data/session.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { renderDialogBaseStyles } from './dialog-base.css.js';
 import { renderDialogBase } from './dialog-base.html.js';
@@ -80,6 +81,11 @@ export class DialogBase extends LitElementBase {
                 if (e.key == 'Enter' && !this.properties?.noImplicitAccept) this.accept();
             },
             { signal: this.abortController.signal }
+        );
+        this.subscriptions.push(
+            session.currentPage.subscribe((oldValue, newValue) => {
+                if (oldValue != newValue) this.decline();
+            })
         );
     }
 

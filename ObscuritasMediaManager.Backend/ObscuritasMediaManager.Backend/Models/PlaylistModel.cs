@@ -3,6 +3,8 @@ using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Extensions;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
@@ -19,13 +21,21 @@ public class PlaylistModel
                                    .Select(y => y.ParseEnumOrDefault<MusicGenre>())
                                    .ToList());
 
-        entity.HasMany(x => x.Tracks)
-              .WithMany()
-              .UsingEntity<PlaylistTrackMappingModel>(
-                  right => right.HasOne<MusicModel>().WithMany().HasForeignKey(x => x.TrackHash),
-                  left => left.HasOne<PlaylistModel>().WithMany().HasForeignKey(x => x.PlaylistId),
-                  join => join.HasKey("TrackHash", "PlaylistId"));
-        entity.Navigation(x => x.Tracks).AutoInclude();
+        var mappingEntity = builder.Entity<PlaylistTrackMappingModel>();
+        mappingEntity
+            .HasOne(x => x.Playlist)
+            .WithMany(x => x.TrackMappings)
+            .HasForeignKey(x => x.PlaylistId);
+
+        mappingEntity
+            .HasOne(x => x.Track)
+            .WithMany()
+            .HasForeignKey(x => x.TrackHash);
+
+        mappingEntity.HasKey(x => new { x.PlaylistId, x.TrackHash });
+        mappingEntity.Navigation(x => x.Playlist).AutoInclude();
+        mappingEntity.Navigation(x => x.Track).AutoInclude();
+        entity.Navigation(x => x.TrackMappings).AutoInclude();
     }
 
     [Key] public Guid Id { get; set; }
@@ -35,8 +45,20 @@ public class PlaylistModel
     public int Rating { get; set; }
     public Nation Language { get; set; }
     public Nation Nation { get; set; }
-    public IEnumerable<MusicGenre> Genres { get; set; }
+    public IEnumerable<MusicGenre> Genres { get; set; } = Enumerable.Empty<MusicGenre>();
     public bool Complete { get; set; }
     [NotMapped] public bool IsTemporary { get; set; }
-    public IEnumerable<MusicModel> Tracks { get; set; }
+    [IgnoreDataMember]
+    [JsonIgnore] public IEnumerable<PlaylistTrackMappingModel> TrackMappings { get; set; }
+    [NotMapped]
+    public IEnumerable<MusicModel> Tracks
+    {
+        get => TrackMappings?.OrderBy(x => x.Order)?.Select(x => x.Track);
+        set => CreateMappingsFromTracks(value);
+    }
+
+    private void CreateMappingsFromTracks(IEnumerable<MusicModel> tracks)
+    {
+        TrackMappings = tracks.Select((track, index) => PlaylistTrackMappingModel.Create(Id, Name, track, index));
+    }
 }

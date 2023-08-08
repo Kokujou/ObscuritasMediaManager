@@ -57,6 +57,8 @@ export class PlayMusicDialog extends LitElementBase {
             return;
         }
 
+        if (!track) return;
+
         var dialog = new PlayMusicDialog();
         PageRouting.container.append(dialog);
         dialog.reinitialize(track, initialVolume, startPosition);

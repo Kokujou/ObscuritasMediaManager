@@ -74,6 +74,7 @@ export class OrderedList extends LitElementBase {
                 this.selectedIndices = [];
                 this.lastIndex = 0;
                 this.requestUpdate(undefined);
+                this.dispatchEvent(new CustomEvent('items-changed', { detail: this.items }));
             }
         });
 
@@ -85,21 +86,22 @@ export class OrderedList extends LitElementBase {
             var currentIndex = Number.parseInt(this.dragged.getAttribute('index'));
             var targetIndex = Number.parseInt(this.lastHovered.getAttribute('index'));
 
-            var draggedItems = [JSON.parse(JSON.stringify(this.items[currentIndex]))];
-            var oldItems = [this.items[currentIndex]];
-            if (this.selectedIndices && this.selectedIndices.includes(Number.parseInt(this.dragged.getAttribute('index')))) {
-                oldItems = this.selectedIndices.sort().map((id) => this.items[id]);
-                draggedItems = oldItems.map((item) => JSON.parse(JSON.stringify(item)));
+            if (!this.selectedIndices || !this.selectedIndices.includes(Number.parseInt(this.dragged.getAttribute('index'))))
+                this.selectedIndices = [currentIndex];
+
+            var draggedItems = this.selectedIndices.sort().map((id) => this.items[id]);
+            for (var id of this.selectedIndices) {
+                this.items[id] = JSON.parse(JSON.stringify(this.items[id]));
+                this.items[id]['__deprecated'] = true;
             }
-            oldItems.forEach((x) => (x.__deprecated = true));
 
             this.items.splice(targetIndex, 0, ...draggedItems);
             this.items = this.items.filter((x) => !x.__deprecated);
 
             this.lastHovered = null;
             this.dragged = null;
-            oldItems.forEach((x) => (x.__deprecated = undefined));
             this.requestUpdate('items');
+            this.dispatchEvent(new CustomEvent('items-changed', { detail: this.items }));
         });
     }
 

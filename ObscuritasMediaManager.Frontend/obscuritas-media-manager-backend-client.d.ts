@@ -95,8 +95,8 @@ export declare class PlaylistClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
-    createTemporaryPlaylist(hashes: string[], signal?: AbortSignal | undefined): Promise<number>;
-    protected processCreateTemporaryPlaylist(response: Response): Promise<number>;
+    createTemporaryPlaylist(hashes: string[], signal?: AbortSignal | undefined): Promise<string>;
+    protected processCreateTemporaryPlaylist(response: Response): Promise<string>;
     getPlaylist(playlistId: string, signal?: AbortSignal | undefined): Promise<PlaylistModel>;
     protected processGetPlaylist(response: Response): Promise<PlaylistModel>;
     updatePlaylistData(playlistId: string, updateRequest: UpdateRequestOfPlaylistModel, signal?: AbortSignal | undefined): Promise<void>;
@@ -153,8 +153,8 @@ export declare class MusicModel implements IMusicModel {
     hash: string | null;
     fileBytes: number;
     constructor(data?: Partial<IMusicModel>);
-    init(_data?: any): void;
-    static fromJS(data: any): MusicModel;
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): MusicModel | null;
     toJSON(data?: any): any;
     clone(): MusicModel;
 }
@@ -252,8 +252,8 @@ export declare class GenreModel implements IGenreModel {
     section: string | null;
     name: string | null;
     constructor(data?: Partial<IGenreModel>);
-    init(_data?: any): void;
-    static fromJS(data: any): GenreModel;
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): GenreModel | null;
     toJSON(data?: any): any;
     clone(): GenreModel;
 }
@@ -266,8 +266,8 @@ export declare class CredentialsRequest implements ICredentialsRequest {
     username: string | null;
     password: string | null;
     constructor(data?: Partial<ICredentialsRequest>);
-    init(_data?: any): void;
-    static fromJS(data: any): CredentialsRequest;
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): CredentialsRequest | null;
     toJSON(data?: any): any;
     clone(): CredentialsRequest;
 }
@@ -286,8 +286,8 @@ export declare class MediaModel implements IMediaModel {
     description: string | null;
     image: string | null;
     constructor(data?: Partial<IMediaModel>);
-    init(_data?: any): void;
-    static fromJS(data: any): MediaModel;
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): MediaModel | null;
     toJSON(data?: any): any;
     clone(): MediaModel;
 }
@@ -306,8 +306,8 @@ export declare class InstrumentModel implements IInstrumentModel {
     name: string | null;
     type: InstrumentType;
     constructor(data?: Partial<IInstrumentModel>);
-    init(_data?: any): void;
-    static fromJS(data: any): InstrumentModel;
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): InstrumentModel | null;
     toJSON(data?: any): any;
     clone(): InstrumentModel;
 }
@@ -331,8 +331,8 @@ export declare class UpdateRequestOfMusicModel implements IUpdateRequestOfMusicM
     oldModel: MusicModel | null;
     newModel: MusicModel | null;
     constructor(data?: Partial<IUpdateRequestOfMusicModel>);
-    init(_data?: any): void;
-    static fromJS(data: any): UpdateRequestOfMusicModel;
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): UpdateRequestOfMusicModel | null;
     toJSON(data?: any): any;
     clone(): UpdateRequestOfMusicModel;
 }
@@ -353,8 +353,8 @@ export declare class PlaylistModel implements IPlaylistModel {
     isTemporary: boolean;
     tracks: MusicModel[] | null;
     constructor(data?: Partial<IPlaylistModel>);
-    init(_data?: any): void;
-    static fromJS(data: any): PlaylistModel;
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): PlaylistModel | null;
     toJSON(data?: any): any;
     clone(): PlaylistModel;
 }
@@ -375,8 +375,8 @@ export declare class UpdateRequestOfPlaylistModel implements IUpdateRequestOfPla
     oldModel: PlaylistModel | null;
     newModel: PlaylistModel | null;
     constructor(data?: Partial<IUpdateRequestOfPlaylistModel>);
-    init(_data?: any): void;
-    static fromJS(data: any): UpdateRequestOfPlaylistModel;
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): UpdateRequestOfPlaylistModel | null;
     toJSON(data?: any): any;
     clone(): UpdateRequestOfPlaylistModel;
 }
@@ -400,8 +400,8 @@ export declare class RecipeModel implements IRecipeModel {
     ingredients: IngredientModel[] | null;
     formattedText: string | null;
     constructor(data?: Partial<IRecipeModel>);
-    init(_data?: any): void;
-    static fromJS(data: any): RecipeModel;
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): RecipeModel | null;
     toJSON(data?: any): any;
     clone(): RecipeModel;
 }
@@ -463,8 +463,8 @@ export declare class IngredientModel implements IIngredientModel {
     measurement: Measurement;
     order: number;
     constructor(data?: Partial<IIngredientModel>);
-    init(_data?: any): void;
-    static fromJS(data: any): IngredientModel;
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): IngredientModel | null;
     toJSON(data?: any): any;
     clone(): IngredientModel;
 }
@@ -492,8 +492,8 @@ export declare class StreamingEntryModel implements IStreamingEntryModel {
     episode: number;
     src: string | null;
     constructor(data?: Partial<IStreamingEntryModel>);
-    init(_data?: any): void;
-    static fromJS(data: any): StreamingEntryModel;
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): StreamingEntryModel | null;
     toJSON(data?: any): any;
     clone(): StreamingEntryModel;
 }

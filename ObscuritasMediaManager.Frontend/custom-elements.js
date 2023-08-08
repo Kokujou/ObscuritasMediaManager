@@ -24,7 +24,6 @@ import { SelectOptionsDialog } from './dialogs/select-options-dialog/select-opti
 import { BorderButton } from './native-components/border-button/border-button.js';
 import { CustomToggle } from './native-components/custom-toggle/custom-toggle.js';
 import { DropDown } from './native-components/drop-down/drop-down.js';
-import { EditableLabel } from './native-components/editable-label/editable-label.js';
 import { FallbackAudio } from './native-components/fallback-audio/fallback-audio.js';
 import { GroupedDropdown } from './native-components/grouped-dropdown/grouped-dropdown.js';
 import { LinkElement } from './native-components/link-element/link-element.js';
@@ -97,7 +96,6 @@ window.customElements.define('paginated-scrolling', PaginatedScrolling);
 window.customElements.define('range-slider', RangeSlider);
 window.customElements.define('music-playlist-page', MusicPlaylistPage);
 window.customElements.define('scroll-select', ScrollSelect);
-window.customElements.define('editable-label', EditableLabel);
 window.customElements.define('music-filter', MusicFilter);
 window.customElements.define('drop-down', DropDown);
 window.customElements.define('language-switcher', LanguageSwitcher);

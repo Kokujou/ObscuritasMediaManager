@@ -265,10 +265,18 @@ export function renderMusicPlaylistStyles() {
             ${renderMaskImage(editIcon())};
         }
 
-        .editable-label[contenteditable] {
+        input.editable-label {
             outline: none;
             border: none;
             border-bottom: 1px solid;
+            font: inherit;
+            color: inherit;
+            background: none;
+            min-width: 300px;
+        }
+
+        input.editable-label[disabled] {
+            border: none;
         }
 
         #edit-playlist-link {

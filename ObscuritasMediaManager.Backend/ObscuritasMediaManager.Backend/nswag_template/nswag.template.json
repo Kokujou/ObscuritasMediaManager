@@ -162,7 +162,7 @@
             "typeStyle": "Class",
             "generateDefaultValues": true,
             "excludedTypeNames": [],
-            "handleReferences": false,
+            "handleReferences": true,
             "generateConstructorInterface": true,
             "convertConstructorInterfaceData": false,
             "importRequiredTypes": true,

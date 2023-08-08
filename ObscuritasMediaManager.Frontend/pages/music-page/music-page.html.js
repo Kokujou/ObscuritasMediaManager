@@ -75,23 +75,10 @@ export function renderMusicPage(musicPage) {
                                   (playlist) =>
                                       html`
                                           <div class="audio-link-container">
-                                              ${musicPage.selectionMode
-                                                  ? html`<input
-                                                        type="checkbox"
-                                                        class="audio-select"
-                                                        ?checked="${musicPage.selectedHashes.includes(playlist.id.toString())}"
-                                                        @change="${(e) =>
-                                                            musicPage.toggleTrackSelection(e.target, playlist.id.toString())}"
-                                                    />`
-                                                  : ''}
                                               <link-element
                                                   class="audio-tile-link"
                                                   .hash="${getPageName(MusicPlaylistPage)}"
                                                   .search="guid=${playlist.id}"
-                                                  ?disabled="${musicPage.selectionModeTimer == null || musicPage.selectionMode}"
-                                                  @pointerdown="${(e) =>
-                                                      musicPage.startSelectionModeTimer(playlist.id.toString())}"
-                                                  @pointerup="${(e) => musicPage.stopSelectionModeTimer(playlist.id)}"
                                               >
                                                   <playlist-tile .playlist="${playlist}"></playlist-tile>
                                               </link-element>

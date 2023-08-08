@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
@@ -20,16 +19,23 @@ public class PlaylistRepository
 
     public async Task<PlaylistModel> GetPlaylistAsync(Guid playlistId)
     {
-        var _ = _context.Playlists.Where(x => x.Id == playlistId).ToQueryString();
-        return await _context.Playlists.SingleAsync(x => x.Id == playlistId);
+        return await _context.Playlists.SingleOrDefaultAsync(x => x.Id == playlistId);
     }
 
-    public async Task UpdateDataAsync(Guid playlistId, PlaylistModel old, PlaylistModel updated)
+    public async Task CreatePlaylistAsync(PlaylistModel playlist)
     {
-        var actual = await _context.Playlists.SingleOrDefaultAsync(x => x.Id == playlistId);
-        if (actual == default)
-            throw new ModelNotFoundException(updated.Id.ToString());
+        await UpdateTracksAsync(playlist);
 
+        var cached = playlist.Tracks.ToList();
+        playlist.TrackMappings = null;
+        await _context.Playlists.AddAsync(playlist);
+        await _context.SaveChangesAsync();
+
+        await UpdatePlaylistTrackMappingAsync(playlist.Id, playlist.Name, cached);
+    }
+
+    public async Task UpdateDataAsync(PlaylistModel actual, PlaylistModel old, PlaylistModel updated)
+    {
         if (!string.IsNullOrEmpty(updated.Name) && (old.Name == actual.Name))
             actual.Name = updated.Name;
         if (!string.IsNullOrEmpty(updated.Author) && (old.Author == actual.Author))
@@ -44,53 +50,45 @@ public class PlaylistRepository
             actual.Rating = updated.Rating;
         if ((updated.Image != default) && (old.Image == actual.Image))
             actual.Image = updated.Image;
-        foreach (var track in updated.Tracks) track.CalculateHash();
-        actual.Tracks = updated.Tracks;
         actual.Complete = updated.Complete;
 
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateTracksAsync(Guid playlistId, PlaylistModel old, PlaylistModel updated)
+    public async Task UpdateTracksAsync(PlaylistModel playlist)
     {
-        var tracksToRemove = old.Tracks.Except(updated.Tracks);
-        var removeTrackIds = tracksToRemove.Select(u => u.Hash).ToArray();
-        var hashsToRemoveInDb = _context.Music.Where(u => removeTrackIds.Contains(u.Hash)).Select(u => u.Hash).ToArray();
-        tracksToRemove = tracksToRemove.Where(x => hashsToRemoveInDb.Contains(x.Hash));
+        var tracksToAdd = playlist.Tracks;
+        if (tracksToAdd is null) return;
 
-        var tracksToAdd = updated.Tracks.Except(old.Tracks);
         var newTrackIds = tracksToAdd.Select(u => u.Hash).ToArray();
         var hashsToAddInDb = _context.Music.Where(u => newTrackIds.Contains(u.Hash)).Select(u => u.Hash).ToArray();
         tracksToAdd = tracksToAdd.Where(x => !hashsToAddInDb.Contains(x.Hash));
 
-        _ = await _context.Playlists.SingleOrDefaultAsync(x => x.Id == playlistId);
+        if (!tracksToAdd.Any()) return;
 
-        _context.Music.RemoveRange(tracksToRemove);
-        await _context.SaveChangesAsync();
         _context.Music.AddRange(tracksToAdd);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdatePlaylistTrackMappingAsync(Guid playlistId, PlaylistModel updated)
+    public async Task UpdatePlaylistTrackMappingAsync(Guid playlistId, string playlistName, IEnumerable<MusicModel> updatedTracks)
     {
         var actualMapping = await _context.PlaylistEntries.Where(x => x.PlaylistId == playlistId).ToListAsync();
-        var updatedTrackMappings = updated.Tracks
-                                          .Select(
-                                              x => new PlaylistTrackMappingModel
-                                                   {
-                                                       PlaylistId = playlistId,
-                                                       PlaylistName = updated.Name,
-                                                       TrackHash = x.Hash
-                                                   })
+        var updatedTrackMappings = updatedTracks
+                                          .Select((track, index) =>
+                                              PlaylistTrackMappingModel.Create(playlistId, playlistName, track, index))
                                           .ToList();
+
         var newTracks = updatedTrackMappings
-            .Where(x => !actualMapping.Any(y => x.TrackHash == y.TrackHash))
+            .Where(x => !actualMapping.Contains(x))
+            .Select(x => x with { Track = null, Playlist = null })
             .ToList();
         var removedTracks = actualMapping
-            .Where(x => !updatedTrackMappings.Any(y => x.TrackHash == y.TrackHash))
+            .Where(x => !updatedTrackMappings.Contains(x))
+            .Select(x => x with { Track = null, Playlist = null })
             .ToList();
-        await _context.PlaylistEntries.AddRangeAsync(newTracks);
-        _context.PlaylistEntries.RemoveRange(removedTracks);
+        if (removedTracks.Any()) _context.PlaylistEntries.RemoveRange(removedTracks);
+        await _context.SaveChangesAsync();
+        if (newTracks.Any()) await _context.PlaylistEntries.AddRangeAsync(newTracks);
         await _context.SaveChangesAsync();
     }
 }

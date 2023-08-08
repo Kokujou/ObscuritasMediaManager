@@ -13,8 +13,6 @@ export function renderEditPlaylistDialog(dialog) {
             caption="Playlist bearbeiten"
             acceptActionText="Speichern"
             declineActionText="Abbrechen"
-            @decline="${() => dialog.decline()}"
-            @accept="${() => dialog.accept()}"
         >
             <div id="container">
                 <div id="meta-configuration">
@@ -101,6 +99,7 @@ export function renderEditPlaylistDialog(dialog) {
                     <ordered-list
                         id="tracks-container"
                         .items="${dialog.newPlaylist?.tracks ?? []}"
+                        @items-changed="${(e) => dialog.changeProperty('tracks', e.detail)}"
                         propertyName="name"
                     ></ordered-list>
                 </div>

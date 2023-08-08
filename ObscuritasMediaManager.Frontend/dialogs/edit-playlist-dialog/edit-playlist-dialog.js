@@ -1,5 +1,6 @@
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { LitElement } from '../../exports.js';
+import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import { MusicGenre, PlaylistModel, UpdateRequestOfPlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { PlaylistService } from '../../services/backend.services.js';
@@ -24,13 +25,35 @@ export class EditPlaylistDialog extends LitElement {
      */
     static show(playlist) {
         var dialog = new EditPlaylistDialog();
-        dialog.oldPlaylist = new PlaylistModel(JSON.parse(JSON.stringify(playlist)));
-        dialog.newPlaylist = new PlaylistModel(JSON.parse(JSON.stringify(playlist)));
+        dialog.oldPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist)));
+        dialog.newPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist)));
 
         PageRouting.container.append(dialog);
         dialog.requestUpdate(undefined);
 
-        return dialog;
+        return new Promise((resolve) => {
+            dialog.addEventListener('accept', async () => {
+                try {
+                    await PlaylistService.updatePlaylistData(
+                        dialog.newPlaylist.id,
+                        new UpdateRequestOfPlaylistModel({ oldModel: dialog.oldPlaylist, newModel: dialog.newPlaylist })
+                    );
+                    await MessageSnackbar.popup('Playlist was successfully added', 'success');
+                    resolve();
+                    dialog.remove();
+                } catch (err) {
+                    console.error(err);
+                    await DialogBase.show('Ein Fehler ist beim bearbeiten der Playlist aufgetreten:' + err, {
+                        declineActionText: 'Ok',
+                    });
+                }
+            });
+
+            dialog.addEventListener('decline', () => {
+                resolve();
+                dialog.remove();
+            });
+        });
     }
 
     get autocompleteGenres() {
@@ -44,17 +67,6 @@ export class EditPlaylistDialog extends LitElement {
         /** @type {boolean} */ this.draggingFiles;
     }
 
-    async accept() {
-        await PlaylistService.updatePlaylistData(
-            this.newPlaylist.id,
-            new UpdateRequestOfPlaylistModel({ oldModel: this.oldPlaylist, newModel: this.newPlaylist })
-        );
-    }
-
-    async decline() {
-        this.remove();
-    }
-
     render() {
         return renderEditPlaylistDialog(this);
     }
@@ -65,7 +77,6 @@ export class EditPlaylistDialog extends LitElement {
      * @param {PlaylistModel[T]} value
      */
     changeProperty(propertyName, value) {
-        console.log('change property', propertyName, value);
         this.newPlaylist[propertyName] = value;
         this.requestUpdate(undefined);
     }
@@ -107,9 +118,7 @@ export class EditPlaylistDialog extends LitElement {
             var fileImportResult = await importFiles();
             this.newPlaylist.tracks = await ExtendedMusicModel.createFromFiles(fileImportResult.files, fileImportResult.basePath);
             this.requestUpdate(undefined);
-        } catch (err) {
-            console.trace('the import of files was aborted', err);
-        }
+        } catch (err) {}
     }
 
     /**
@@ -128,8 +137,11 @@ export class EditPlaylistDialog extends LitElement {
     async dropFiles(event) {
         event.preventDefault();
         var result = await importDroppedFiles(Array.from(event.dataTransfer.items).map((x) => x.getAsFile()));
-        this.newPlaylist.tracks = ExtendedMusicModel.createFromFiles(result.files, result.basePath);
+        this.newPlaylist.tracks = this.newPlaylist.tracks.concat(
+            ...ExtendedMusicModel.createFromFiles(result.files, result.basePath)
+        );
         this.requestUpdate(undefined);
+        this.requestUpdate('newPlaylist');
 
         this.draggingFiles = false;
     }

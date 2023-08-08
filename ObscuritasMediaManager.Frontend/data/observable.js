@@ -19,7 +19,7 @@ export class Observable {
             () => (this.subscriptions = this.subscriptions.filter((x) => x != subscription))
         );
         this.subscriptions.push(subscription);
-        observer(this.currentValue, null);
+        observer(this.currentValue, this.currentValue);
         return subscription;
     }
 

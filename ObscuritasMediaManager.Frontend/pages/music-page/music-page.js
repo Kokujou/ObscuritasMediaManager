@@ -235,7 +235,7 @@ export class MusicPage extends LitElementBase {
     }
 
     async playPlaylist() {
-        var playlistId = -1;
+        var playlistId = '';
         if (this.selectedHashes.length > 0) playlistId = await PlaylistService.createTemporaryPlaylist(this.selectedHashes);
         else playlistId = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash));
         changePage(getPageName(MusicPlaylistPage), `?guid=${playlistId}&track=0`);
@@ -249,9 +249,7 @@ export class MusicPage extends LitElementBase {
                 content: 'The requested folder was successfully uploaded',
                 declineActionText: 'Ok',
             });
-        } catch (err) {
-            console.trace('the import of files was aborted', err);
-        }
+        } catch (err) {}
     }
 
     /**
