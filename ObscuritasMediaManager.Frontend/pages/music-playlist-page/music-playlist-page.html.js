@@ -89,7 +89,8 @@ export function renderMusicPlaylist(page) {
                             class="editable-label"
                             ?disabled="${page.updatedTrack.complete}"
                             .value=" ${page.updatedTrack.name}"
-                            @valueChanged="${(e) => page.changeProperty('name', e.detail.value)}"
+                            oninput="this.dispatchEvent(new Event('change')"
+                            @change="${(e) => page.changeProperty('name', e.currentTarget.value)}"
                         />
 
                         <div id="audio-subtitle">
@@ -99,7 +100,8 @@ export function renderMusicPlaylist(page) {
                                 class="editable-label"
                                 ?disabled="${page.updatedTrack.complete}"
                                 .value="${page.updatedTrack.author}"
-                                @valueChanged="${(e) => page.changeProperty('author', e.detail.value)}"
+                                oninput="this.dispatchEvent(new Event('change')"
+                                @change="${(e) => page.changeProperty('author', e.currentTarget.value)}"
                             />
                             <div id="subtitle-separator">-</div>
                             <input
@@ -108,7 +110,8 @@ export function renderMusicPlaylist(page) {
                                 class="editable-label"
                                 .value="${page.updatedTrack.source || '---'}"
                                 ?disabled="${page.updatedTrack.complete}"
-                                @valueChanged="${(e) => page.changeProperty('source', e.detail.value)}"
+                                oninput="this.dispatchEvent(new Event('change')"
+                                @change="${(e) => page.changeProperty('source', e.currentTarget.value)}"
                             />
                         </div>
                         <div id="genre-section">

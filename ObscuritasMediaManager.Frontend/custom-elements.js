@@ -13,7 +13,6 @@ import { PaginatedScrolling } from './advanced-components/paginated-scrolling/pa
 import { PlaylistTile } from './advanced-components/playlist-tile/playlist-tile.js';
 import { RecipeTile } from './advanced-components/recipe-tile/recipe-tile.js';
 import { StarRating } from './advanced-components/star-rating/star-rating.js';
-import { TagLabel } from './advanced-components/tag-label/tag-label.js';
 import { UploadArea } from './advanced-components/upload-area/upload-area.js';
 import { DialogBase } from './dialogs/dialog-base/dialog-base.js';
 import { EditPlaylistDialog } from './dialogs/edit-playlist-dialog/edit-playlist-dialog.js';
@@ -34,6 +33,7 @@ import { PriorityList } from './native-components/priority-list/priority-list.js
 import { RangeSlider } from './native-components/range-slider/range-slider.js';
 import { ScrollSelect } from './native-components/scroll-seelect/scroll-select.js';
 import { SideScroller } from './native-components/side-scroller/side-scroller.js';
+import { TagLabel } from './native-components/tag-label/tag-label.js';
 import { TriValueCheckbox } from './native-components/tri-value-checkbox/tri-value-checkbox.js';
 import { AnimeGerDubPage } from './pages/anime-ger-dub-page/anime-ger-dub-page.js';
 import { AnimeGerSubPage } from './pages/anime-ger-sub-page/anime-ger-sub-page.js';

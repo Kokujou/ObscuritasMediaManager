@@ -11,13 +11,15 @@ export function renderPlaylistTileStyles() {
             transform: rotate(0deg);
             display: inline-flex;
             flex-direction: column;
+
+            text-shadow: 2px 2px 5px black;
         }
 
         #playlist-tile-container {
             min-height: var(--audio-tile-min-height);
             margin-bottom: 10px;
             border-radius: 10%;
-            background-color: var(--primary-color);
+            background: var(--primary-color);
             overflow: hidden;
             position: relative;
         }
@@ -136,8 +138,7 @@ export function renderPlaylistTileStyles() {
             align-items: stretch;
             justify-content: center;
 
-            background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--secondary-color) 0 100%);
-            box-shadow: 0 0 50px var(--secondary-color);
+            background: linear-gradient(#00000055 0% 100%), var(--secondary-color);
 
             border-radius: 20px;
             box-sizing: border-box;
@@ -147,6 +148,18 @@ export function renderPlaylistTileStyles() {
             user-select: none;
             cursor: pointer;
             color: var(--font-color);
+        }
+
+        #tile-container:before {
+            content: '';
+            background: var(--primary-color);
+            position: absolute;
+            inset: 0;
+            z-index: -5;
+            filter: blur(20px);
+            transform: translateZ(-20px);
+            transform-style: preserve-3d;
+            border-radius: 50px;
         }
 
         #tile-description {

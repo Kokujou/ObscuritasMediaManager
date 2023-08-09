@@ -16,7 +16,7 @@ public class MusicRepository
 
     public async Task UpdateAsync(string hash, MusicModel old, MusicModel updated)
     {
-        var actual = await _context.Music.SingleOrDefaultAsync(x => x.Hash == hash);
+        var actual = await _context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);
         if (actual == default)
             throw new ModelNotFoundException(updated.Hash);
 

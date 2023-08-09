@@ -4,19 +4,19 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { PlaylistTile } from './playlist-tile.js';
 
 /**
- * @param { PlaylistTile } playlistTile
+ * @param { PlaylistTile } playlist
  */
-export function renderPlaylistTile(playlistTile) {
+export function renderPlaylistTile(playlist) {
     return html`
         <style>
             :host {
-                --primary-color: black;
-                --secondary-color: white;
+                --primary-color: linear-gradient(45deg, ${playlist.playlistColors.join(',')});
+                --secondary-color: var(--primary-color);
                 --font-color: white;
             }
 
             #playlist-image {
-                ${renderMaskImage(playlistTile.playlist.image ?? playlistIcon())};
+                ${renderMaskImage(playlist.playlist.image ?? playlistIcon())};
             }
         </style>
 
@@ -25,16 +25,16 @@ export function renderPlaylistTile(playlistTile) {
                 <div id="playlist-image"></div>
                 <div
                     id="language-icon"
-                    language="${playlistTile.playlist.language}"
-                    @click="${(e) => playlistTile.dispatchCustomEvent('changeLanguage')}"
+                    language="${playlist.playlist.language}"
+                    @click="${(e) => playlist.dispatchCustomEvent('changeLanguage')}"
                 ></div>
                 <svg id="instrumentation-button" class="inline-icon" viewBox="0 0 80 18">
                     <text y="80%" text-anchor="start"><!---->Playlist<!----></text>
                 </svg>
                 <div
                     id="nation-icon"
-                    nation="${playlistTile.playlist.nation}"
-                    @click="${(e) => playlistTile.dispatchCustomEvent('changeLanguage')}"
+                    nation="${playlist.playlist.nation}"
+                    @click="${(e) => playlist.dispatchCustomEvent('changeLanguage')}"
                 ></div>
                 <svg id="author-label" viewbox="0 0 200 18">
                     <text
@@ -42,10 +42,10 @@ export function renderPlaylistTile(playlistTile) {
                         y="50%"
                         dominant-baseline="middle"
                         text-anchor="middle"
-                        textLength="${playlistTile.playlist.author.length > 20 ? '200' : 'None'}"
-                        lengthAdjust="${playlistTile.playlist.author.length > 20 ? 'spacingAndGlyphs' : 'None'}"
+                        textLength="${playlist.playlist.author.length > 20 ? '200' : 'None'}"
+                        lengthAdjust="${playlist.playlist.author.length > 20 ? 'spacingAndGlyphs' : 'None'}"
                     >
-                        ${playlistTile.playlist.author}
+                        ${playlist.playlist.author}
                     </text>
                 </svg>
                 <div id="rating-container">
@@ -53,17 +53,17 @@ export function renderPlaylistTile(playlistTile) {
                         (rating) =>
                             html` <svg
                                 viewBox="0 0 15 18"
-                                class="star ${rating <= playlistTile.playlist.rating ? 'selected' : ''} ${rating <=
-                                playlistTile.hoveredRating
+                                class="star ${rating <= playlist.playlist.rating ? 'selected' : ''} ${rating <=
+                                playlist.hoveredRating
                                     ? 'hovered'
                                     : ''}"
                             >
                                 <text
                                     x="0"
                                     y="15"
-                                    @pointerover="${() => (playlistTile.hoveredRating = rating)}"
-                                    @pointerout="${() => (playlistTile.hoveredRating = 0)}"
-                                    @click="${(e) => playlistTile.dispatchCustomEvent('changeRating', { rating })}"
+                                    @pointerover="${() => (playlist.hoveredRating = rating)}"
+                                    @pointerout="${() => (playlist.hoveredRating = 0)}"
+                                    @click="${(e) => playlist.dispatchCustomEvent('changeRating', { rating })}"
                                 >
                                     ★
                                 </text>
@@ -72,8 +72,8 @@ export function renderPlaylistTile(playlistTile) {
                 </div>
             </div>
             <div id="tile-description">
-                <div id="playlist-title">${playlistTile.playlist.name}</div>
-                <div id="playlist-genre-section">${renderGenreTags(playlistTile)}</div>
+                <div id="playlist-title">${playlist.playlist.name}</div>
+                <div id="playlist-genre-section">${renderGenreTags(playlist)}</div>
             </div>
         </div>
     `;

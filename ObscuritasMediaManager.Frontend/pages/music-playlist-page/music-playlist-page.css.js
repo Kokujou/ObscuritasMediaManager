@@ -273,6 +273,7 @@ export function renderMusicPlaylistStyles() {
             color: inherit;
             background: none;
             min-width: 300px;
+            text-align: center;
         }
 
         input.editable-label[disabled] {

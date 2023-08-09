@@ -43,10 +43,12 @@ function renderNewLabelForm(tagLabel) {
             )}
         </div>
         <div id="invisible-text">
-            ${tagLabel.shadowRoot
-                .querySelector('#new-tag-input')
-                // @ts-ignore
-                ?.value.replaceAll(' ', '\xA0')}
+            ${
+                /** @type {HTMLInputElement} */ (tagLabel.shadowRoot.querySelector('#new-tag-input'))?.value.replaceAll(
+                    ' ',
+                    '\xA0'
+                )
+            }
         </div>
     </form>`;
 }
