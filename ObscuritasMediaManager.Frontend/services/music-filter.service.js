@@ -17,6 +17,18 @@ export class MusicFilterService {
         ObjectFilterService.applyPropertyFilter(filteredPlaylists, filter.ratings, 'rating');
         ObjectFilterService.applyMultiPropertySearch(filteredPlaylists, filter.search, 'name', 'author');
 
+        var forbiddenMoods = Object.entries(filter.moods.states)
+            .filter((x) => x[1] == CheckboxState.Forbid)
+            .map((x) => x[0]);
+        filteredPlaylists = filteredPlaylists.filter(
+            (x) =>
+                !x.tracks.some(
+                    (track) =>
+                        forbiddenMoods.includes(track.mood1) ||
+                        (track.mood2 != Mood.Unset && forbiddenMoods.includes(track.mood2))
+                )
+        );
+
         if (filter.complete != CheckboxState.Ignore)
             filteredPlaylists = filteredPlaylists.filter((track) => track.complete == (filter.complete == CheckboxState.Allow));
 
@@ -54,6 +66,6 @@ export class MusicFilterService {
         if (filter.complete != CheckboxState.Ignore)
             filteredTracks = filteredTracks.filter((track) => track.complete == (filter.complete == CheckboxState.Allow));
 
-        return tracks;
+        return filteredTracks;
     }
 }
