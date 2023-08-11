@@ -2,7 +2,7 @@ import { LitElementBase } from '../../data/lit-element-base.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { GenreService } from '../../services/backend.services.js';
-import { MediaSearchFilterData } from './media-search-filter.data.js';
+import { MediaSearchFilter } from './media-search-filter.data.js';
 import { renderMediaSearchStyles } from './media-search.css.js';
 import { renderMediaSearch } from './media-search.html.js';
 
@@ -17,10 +17,7 @@ export class MediaSearch extends LitElementBase {
 
     constructor() {
         super();
-        this.searchText = '';
-        this.ratingFilter = [1, 2, 3, 4, 5];
-        this.episodeCountFilter = { left: 0, right: 0 };
-        this.genreFilter = new GenreDialogResult();
+        this.filter = new MediaSearchFilter();
     }
 
     render() {
@@ -96,7 +93,7 @@ export class MediaSearch extends LitElementBase {
     }
 
     notifyFilterUpdated() {
-        this.dispatchCustomEvent('filterUpdated', MediaSearchFilterData.fromInstance(this));
+        this.dispatchCustomEvent('filterUpdated', this.filter);
         this.requestUpdate(undefined);
     }
 

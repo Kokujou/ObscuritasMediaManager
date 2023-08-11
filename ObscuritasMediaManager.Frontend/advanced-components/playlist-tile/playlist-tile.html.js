@@ -10,7 +10,8 @@ export function renderPlaylistTile(playlist) {
     return html`
         <style>
             :host {
-                --primary-color: linear-gradient(45deg, ${playlist.playlistColors.join(',')});
+                --primary-color:radial-gradient(${playlist.radialColorString}) ,
+                                conic-gradient( ${playlist.conicColorArray.join(',')});
                 --secondary-color: var(--primary-color);
                 --font-color: white;
             }

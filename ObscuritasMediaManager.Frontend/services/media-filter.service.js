@@ -1,29 +1,6 @@
-import { GenreDialogResult } from '../dialogs/dialog-result/genre-dialog.result.js';
 import { MediaModel } from '../obscuritas-media-manager-backend-client.js';
 
 export class MediaFilterService {
-    /**
-     * @param {MediaModel[]} mediaList
-     * @param {number[]} filter
-     */
-    static applyRatingFilter(filter, mediaList) {
-        return mediaList.filter(
-            (media) => filter.includes(media.rating) || filter.length == 5 || (filter.length == 0 && media.rating == 0)
-        );
-    }
-
-    /**
-     * @param {GenreDialogResult} filter
-     * @param {MediaModel[]} mediaList
-     */
-    static applyGenreFilter(filter, mediaList) {
-        return mediaList.filter(
-            (media) =>
-                filter.acceptedGenres.every((genre) => media.genres.includes(genre.name)) &&
-                media.genres.every((genre) => filter.forbiddenGenres.every((x) => x.name != genre))
-        );
-    }
-
     /**
      * @param {string } filter
      * @param {MediaModel[]} mediaList

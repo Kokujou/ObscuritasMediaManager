@@ -1,5 +1,4 @@
 import { PaginatedScrolling } from '../../advanced-components/paginated-scrolling/paginated-scrolling.js';
-import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { MusicFilterOptions } from '../../data/music-filter-options.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
@@ -9,7 +8,7 @@ import { DialogBase } from '../../dialogs/dialog-base/dialog-base.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
-import { Mood, PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
+import { PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
@@ -48,63 +47,15 @@ export class MusicPage extends LitElementBase {
     }
 
     get filteredPlaylists() {
-        if (this.filter.showPlaylists == CheckboxState.Forbid) return [];
-
-        var filteredPlaylists = [...this.playlists];
-
-        MusicFilterService.applyArrayFilter(filteredPlaylists, this.filter.genres, 'genres');
-        MusicFilterService.applyPropertyFilter(filteredPlaylists, this.filter.ratings, 'rating');
-        filteredPlaylists = filteredPlaylists.filter(
-            (track) =>
-                track.name.toLowerCase().includes((this.filter.search || '').toLowerCase()) ||
-                track.author.toLowerCase().includes((this.filter.search || '').toLowerCase())
-        );
-
-        if (this.filter.complete != CheckboxState.Ignore)
-            filteredPlaylists = filteredPlaylists.filter(
-                (track) => track.complete == (this.filter.complete == CheckboxState.Allow)
-            );
-
-        var sorted = filteredPlaylists;
-        if (this.sortingProperty != 'unset') sorted = sortBy(filteredPlaylists, (x) => x[this.sortingProperty]);
+        var sorted = MusicFilterService.filterPlaylists(this.playlists, this.filter);
+        if (this.sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[this.sortingProperty]);
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }
 
     get filteredTracks() {
-        if (this.filter.showPlaylists == CheckboxState.Allow) return [];
-        var filteredTracks = [...this.musicTracks];
-
-        MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instrumentTypes, 'instrumentTypes');
-        MusicFilterService.applyArrayFilter(filteredTracks, this.filter.instruments, 'instruments');
-        MusicFilterService.applyArrayFilter(filteredTracks, this.filter.genres, 'genres');
-        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.instrumentations, 'instrumentation');
-        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.languages, 'language');
-        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.nations, 'nation');
-        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.participants, 'participants');
-        MusicFilterService.applyPropertyFilter(filteredTracks, this.filter.ratings, 'rating');
-
-        var moodStates = this.filter.moods.states;
-        var forbiddenValues = /** @type {Mood[]} */ (
-            Object.keys(moodStates).filter((value) => moodStates[value] == CheckboxState.Forbid)
-        );
-        filteredTracks = filteredTracks.filter((item) => {
-            var mood2 = item.mood2 == Mood.Unset ? item.mood1 : item.mood2;
-            if (forbiddenValues.includes(item.mood1) || forbiddenValues.includes(mood2)) return false;
-            return true;
-        });
-
-        filteredTracks = filteredTracks.filter(
-            (track) =>
-                track.displayName.toLowerCase().includes((this.filter.search || '').toLowerCase()) ||
-                track.path.toLowerCase().includes((this.filter.search || '').toLowerCase())
-        );
-
-        if (this.filter.complete != CheckboxState.Ignore)
-            filteredTracks = filteredTracks.filter((track) => track.complete == (this.filter.complete == CheckboxState.Allow));
-
-        var sorted = filteredTracks;
-        if (this.sortingProperty != 'unset') sorted = sortBy(filteredTracks, (x) => x[this.sortingProperty]);
+        var sorted = MusicFilterService.filterTracks(this.musicTracks, this.filter);
+        if (this.sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[this.sortingProperty]);
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }

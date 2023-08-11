@@ -1,4 +1,6 @@
-import { MediaSearchFilterData } from '../../advanced-components/media-search/media-search-filter.data.js';
+import { MediaSearchFilter } from '../../advanced-components/media-search/media-search-filter.data.js';
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
+import { FilterEntry } from '../../data/filter-entry.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
@@ -7,6 +9,7 @@ import { GenreService, MediaService, StreamingService } from '../../services/bac
 import { newGuid } from '../../services/extensions/crypto.extensions.js';
 import { analyzeMediaFile, importFiles } from '../../services/extensions/file.extension.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
+import { ObjectFilterService } from '../../services/object-filter.service.js';
 import { renderMediaPageStyles } from './media-page.css.js';
 import { renderMediaPageTemplate } from './media-page.html.js';
 
@@ -35,7 +38,7 @@ export class MediaPage extends LitElementBase {
 
         /** @type {string} */ this.mediaType = '';
 
-        /** @type {MediaSearchFilterData} */ this.filterData = new MediaSearchFilterData();
+        /** @type {MediaSearchFilter} */ this.filter = new MediaSearchFilter();
         /** @type {Subscription[]} */ this.subscriptions = [];
         /** @type {string[]} */ this.genreList = [];
     }
@@ -46,7 +49,7 @@ export class MediaPage extends LitElementBase {
         this.genreList = (await GenreService.getAll()).map((x) => x.name);
 
         var localSearchString = localStorage.getItem(`${this.mediaType}.search`);
-        if (localSearchString) this.filterData = JSON.parse(localSearchString);
+        if (localSearchString) this.filter = JSON.parse(localSearchString);
 
         this.subscriptions.push(session.mediaList.subscribe(() => this.requestUpdate(undefined)));
     }
@@ -159,24 +162,25 @@ export class MediaPage extends LitElementBase {
         }
     }
     /**
-     * @param {MediaSearchFilterData} filterData
+     * @param {MediaSearchFilter} filterData
      */
     updateSearchFilter(filterData) {
-        this.filterData = filterData;
+        this.filter = filterData;
         this.requestUpdate(undefined);
     }
 
     get filteredMedia() {
-        if (!this.filterData) return this.mediaList;
+        if (!this.filter) return this.mediaList;
 
-        var result = MediaFilterService.applyRatingFilter(this.filterData.ratingFilter, this.mediaList);
-        result = MediaFilterService.applyGenreFilter(this.filterData.genreFilter, result);
-        result = MediaFilterService.applyTextFilter(this.filterData.searchText || '', result);
+        var result = [...this.mediaList];
+        ObjectFilterService.applyPropertyFilter(result, new FilterEntry(this.filter.ratings, CheckboxState.Allow), 'rating');
+        ObjectFilterService.applyArrayFilter(result, this.filter.genres, 'genres');
+        MediaFilterService.applyTextFilter(this.filter.search || '', result);
         return result;
     }
 
     disconnectedCallback() {
         super.disconnectedCallback();
-        localStorage.setItem(`${this.mediaType}.search`, JSON.stringify(this.filterData));
+        localStorage.setItem(`${this.mediaType}.search`, JSON.stringify(this.filter));
     }
 }

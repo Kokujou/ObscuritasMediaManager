@@ -13,10 +13,7 @@ export function renderMediaPageTemplate(mediaPage) {
         <div id="media-page-container">
             <media-search
                 @filterUpdated="${(e) => mediaPage.updateSearchFilter(e.detail)}"
-                .episodeCountFilter="${mediaPage.filterData.episodeCountFilter}"
-                .genreFilter="${mediaPage.filterData.genreFilter}"
-                .ratingFilter="${mediaPage.filterData.ratingFilter}"
-                .searchText="${mediaPage.filterData.searchText}"
+                .filter="${mediaPage.filter}"
             ></media-search>
             <div id="search-result-container">
                 <div id="left-container">

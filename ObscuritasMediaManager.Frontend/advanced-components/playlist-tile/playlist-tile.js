@@ -1,6 +1,7 @@
 import { MoodColors } from '../../data/enumerations/mood.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Mood, PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
+import { rgbHexToHsv } from '../../services/extensions/style.extensions.js';
 import { renderPlaylistTileStyles } from './playlist-tile.css.js';
 import { renderPlaylistTile } from './playlist-tile.html.js';
 
@@ -16,90 +17,52 @@ export class PlaylistTile extends LitElementBase {
         };
     }
 
-    get playlistColors() {
-        function getColorHue(color) {
-            // Remove # from the color code
-            const hex = color.slice(1);
+    get moods() {
+        return this.playlist.tracks
+            .map((x) => x.mood1)
+            .concat(this.playlist.tracks.map((x) => x.mood2).filter((x) => x != Mood.Unset));
+    }
 
-            // Convert hex to RGB
-            const r = parseInt(hex.substring(0, 2), 16) / 255;
-            const g = parseInt(hex.substring(2, 4), 16) / 255;
-            const b = parseInt(hex.substring(4, 6), 16) / 255;
+    get conicColorArray() {
+        var allMoodColors = this.moods.filter((x) => !MoodColors.HasNoHue(x));
+        if (allMoodColors.length == 0) allMoodColors = this.moods;
 
-            var max = Math.max(r, g, b),
-                min = Math.min(r, g, b);
-            var h,
-                s,
-                v = max;
+        var distinctMoods = new Array(...new Set(allMoodColors)).sort((a, b) => {
+            const hsvA = rgbHexToHsv(MoodColors[a]);
+            const hsvB = rgbHexToHsv(MoodColors[b]);
 
-            var d = max - min;
-            s = max == 0 ? 0 : d / max;
-
-            if (max == min) {
-                h = 0; // achromatic
-            } else {
-                switch (max) {
-                    case r:
-                        h = (g - b) / d + (g < b ? 6 : 0);
-                        break;
-                    case g:
-                        h = (b - r) / d + 2;
-                        break;
-                    case b:
-                        h = (r - g) / d + 4;
-                        break;
-                }
-
-                h /= 6;
-            }
-            return h;
-        }
-
-        function getColorValue(color) {
-            const hex = color.slice(1);
-            const r = parseInt(hex.substring(0, 2), 16);
-            const g = parseInt(hex.substring(2, 4), 16);
-            const b = parseInt(hex.substring(4, 6), 16);
-
-            const max = Math.max(r, g, b);
-            const value = max / 255;
-
-            return value;
-        }
-
-        var allMoodColors = this.playlist.tracks
-            .map((x) => [x.mood1, x.mood2])
-            .flatMap((x) => x)
-            .filter((x) => x != Mood.Unset)
-            .map((x) => MoodColors[x]);
-        var distinctMoods = new Array(...new Set(allMoodColors)).sort(function (a, b) {
-            const hueA = getColorHue(a);
-            const hueB = getColorHue(b);
-
-            // Compare by hue
-            if (hueA !== hueB) {
-                return hueA - hueB;
-            }
-
-            const valueA = getColorValue(a);
-            const valueB = getColorValue(b);
-
-            return valueA - valueB;
+            return hsvA.h * 10 + hsvA.v - (hsvB.h * 10 + hsvB.v);
         });
 
-        var percentages = distinctMoods.reduce(
-            (prev, curr) => {
-                var lastItem = (prev.at(-1) || [])[1];
-                if (!lastItem) lastItem = 0;
+        if (distinctMoods.length == 1) return [distinctMoods[0], distinctMoods[0]].map((x) => MoodColors[x]);
 
-                return prev.concat([
-                    [lastItem, lastItem + (allMoodColors.filter((x) => x == curr).length / allMoodColors.length) * 100],
-                ]);
-            },
-            /** @type {[number,number][]} */ []
+        var portionsInDeg = distinctMoods.map((x) => this.getPercentage(x) * 3.6);
+
+        portionsInDeg[0] = portionsInDeg[0] / 2;
+        portionsInDeg.push(portionsInDeg[0] / 2);
+        distinctMoods.push(distinctMoods[0]);
+
+        return distinctMoods.map((mood, index) => {
+            var lastDegree = portionsInDeg.slice(0, index).reduce((a, b) => a + b, 0);
+            return `${MoodColors[mood]} ${lastDegree + portionsInDeg[index] / 2}deg`;
+        });
+    }
+
+    get radialColorString() {
+        if (this.moods.every((x) => MoodColors.HasNoHue(x)) || !this.moods.some((x) => MoodColors.HasNoHue(x)))
+            return 'transparent, transparent';
+
+        var dict = {};
+        dict[Mood.Dramatic] = ` 0 ${this.getPercentage(Mood.Dramatic) / 2}%`;
+        dict[Mood.Monotonuous] = `${100 - this.getPercentage(Mood.Unset) / 2 - this.getPercentage(Mood.Monotonuous) / 2}%`;
+        dict[Mood.Unset] = `${100 - this.getPercentage(Mood.Unset) / 2}% 100%`;
+
+        return (
+            Object.entries(dict)
+                .filter((x) => this.moods.find((mood) => x[0] == mood))
+                .map((x) => MoodColors[x[0]] + ' ' + x[1])
+                .join(',transparent,') + ', transparent'
         );
-
-        return distinctMoods.map((color, index) => `${color} ${percentages[index][0]}%`);
     }
 
     constructor() {
@@ -111,5 +74,12 @@ export class PlaylistTile extends LitElementBase {
 
     render() {
         return renderPlaylistTile(this);
+    }
+
+    /**
+     * @param {Mood} mood
+     */
+    getPercentage(mood) {
+        return (this.moods.filter((x) => x == mood).length / this.moods.length) * 100;
     }
 }

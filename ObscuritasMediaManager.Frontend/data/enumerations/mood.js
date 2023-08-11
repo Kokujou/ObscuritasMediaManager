@@ -13,6 +13,8 @@ export const MoodColors = {
     Sad: '#0335a0',
     Cool: '#00aaee',
     Unset: '#dddddd',
+
+    HasNoHue: (mood) => mood == Mood.Unset || mood == Mood.Monotonuous || mood == Mood.Dramatic,
 };
 
 /** @param {Mood} mood */
