@@ -34,7 +34,7 @@ export function renderMusicPage(musicPage) {
                         </div>
                         <div class="option-section" id="playlist-section">
                             <a id="save-playlist"></a>
-                            <a id="add-to-playlist"></a>
+                            <a id="add-to-playlist" @click="${() => musicPage.showPlaylistSelectionDialog()}"></a>
                             <a id="play-playlist" @click="${() => musicPage.playPlaylist()}"></a>
                             <a id="browse-playlists"></a>
                         </div>

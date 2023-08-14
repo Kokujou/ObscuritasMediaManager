@@ -6,6 +6,7 @@ import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
+import { PlaylistSelectionDialog } from '../../dialogs/playlist-selection-dialog/playlist-selection-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
@@ -98,9 +99,9 @@ export class MusicPage extends LitElementBase {
             }),
             session.currentPage.subscribe((nextPage) => {
                 if (
+                    !this.audioElement ||
                     this.audioElement.paused ||
                     this.audioElement.currentTime > 0 ||
-                    !this.audioElement ||
                     nextPage == 'music' ||
                     nextPage == 'music-playlist'
                 )
@@ -314,5 +315,12 @@ export class MusicPage extends LitElementBase {
         /** @type {PaginatedScrolling} */ var parent = this.shadowRoot.querySelector('paginated-scrolling');
         var child = this.shadowRoot.querySelector('audio-tile:not([paused])').parentElement;
         parent.scrollToChild(child.parentElement);
+    }
+
+    async showPlaylistSelectionDialog() {
+        /** @type {PlaylistModel} */ var playlist = await PlaylistSelectionDialog.requestPlaylist();
+
+        await PlaylistService.addTracksToPlaylist(playlist.id, this.selectedHashes);
+        await this.initializeData();
     }
 }

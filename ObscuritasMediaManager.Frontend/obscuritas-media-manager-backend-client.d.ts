@@ -103,6 +103,8 @@ export declare class PlaylistClient {
     protected processUpdatePlaylistData(response: Response): Promise<void>;
     listPlaylists(signal?: AbortSignal | undefined): Promise<PlaylistModel[]>;
     protected processListPlaylists(response: Response): Promise<PlaylistModel[]>;
+    addTracksToPlaylist(playlistId: string, trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
+    protected processAddTracksToPlaylist(response: Response): Promise<void>;
 }
 export declare class RecipeClient {
     private http;

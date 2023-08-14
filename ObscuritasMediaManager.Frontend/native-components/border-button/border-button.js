@@ -10,6 +10,7 @@ export class BorderButton extends LitElementBase {
     static get properties() {
         return {
             text: { type: String, reflect: true },
+            disabled: { type: Boolean, reflect: true },
         };
     }
 

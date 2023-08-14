@@ -1066,6 +1066,44 @@ export class PlaylistClient {
         }
         return Promise.resolve(null);
     }
+    addTracksToPlaylist(playlistId, trackHashes, signal) {
+        let url_ = this.baseUrl + "/api/Playlist/{playlistId}/tracks";
+        if (playlistId === undefined || playlistId === null)
+            throw new Error("The parameter 'playlistId' must be defined.");
+        url_ = url_.replace("{playlistId}", encodeURIComponent("" + playlistId));
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(trackHashes);
+        let options_ = {
+            body: content_,
+            method: "PUT",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processAddTracksToPlaylist(_response);
+        });
+    }
+    processAddTracksToPlaylist(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
 }
 export class RecipeClient {
     http;

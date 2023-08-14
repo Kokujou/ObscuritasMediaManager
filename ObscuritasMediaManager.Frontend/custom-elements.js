@@ -19,6 +19,7 @@ import { EditPlaylistDialog } from './dialogs/edit-playlist-dialog/edit-playlist
 import { GenreDialog } from './dialogs/genre-dialog/genre-dialog.js';
 import { InputDialog } from './dialogs/input-dialog/input-dialog.js';
 import { PlayMusicDialog } from './dialogs/play-music-dialog/play-music-dialog.js';
+import { PlaylistSelectionDialog } from './dialogs/playlist-selection-dialog/playlist-selection-dialog.js';
 import { SelectOptionsDialog } from './dialogs/select-options-dialog/select-options-dialog.js';
 import { BorderButton } from './native-components/border-button/border-button.js';
 import { CustomToggle } from './native-components/custom-toggle/custom-toggle.js';
@@ -119,3 +120,4 @@ window.customElements.define('priority-list', PriorityList);
 window.customElements.define('playlist-tile', PlaylistTile);
 window.customElements.define('edit-playlist-dialog', EditPlaylistDialog);
 window.customElements.define('ordered-list', OrderedList);
+window.customElements.define('playlist-selection-dilaog', PlaylistSelectionDialog);

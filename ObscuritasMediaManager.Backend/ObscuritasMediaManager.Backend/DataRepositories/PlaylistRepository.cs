@@ -91,4 +91,13 @@ public class PlaylistRepository
         if (newTracks.Any()) await _context.PlaylistEntries.AddRangeAsync(newTracks);
         await _context.SaveChangesAsync();
     }
+
+    public async Task AddTracksAsync(Guid playlistId, IEnumerable<string> trackHashes)
+    {
+        var playlist = await _context.Playlists.SingleOrDefaultAsync(x => x.Id == playlistId);
+        trackHashes = trackHashes.Union(playlist.Tracks.Select(x => x.Hash));
+        if (!trackHashes.Any()) return;
+        var selectedTracks = await _context.Music.Where(x => trackHashes.Contains(x.Hash)).ToListAsync();
+        await UpdatePlaylistTrackMappingAsync(playlistId, playlist.Name, selectedTracks);
+    }
 }

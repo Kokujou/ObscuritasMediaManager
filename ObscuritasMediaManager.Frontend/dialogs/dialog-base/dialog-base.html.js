@@ -24,6 +24,7 @@ export function renderDialogBase(dialog) {
                             : ''}
                         ${dialog.acceptActionText
                             ? html` <border-button
+                                  ?disabled="${!dialog.canAccept}"
                                   @click="${() => dialog.accept()}"
                                   text="${dialog.acceptActionText}"
                               ></border-button>`

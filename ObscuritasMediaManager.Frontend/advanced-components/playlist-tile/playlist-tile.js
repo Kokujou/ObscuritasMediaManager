@@ -26,6 +26,7 @@ export class PlaylistTile extends LitElementBase {
     get conicColorArray() {
         var allMoodColors = this.moods.filter((x) => !MoodColors.HasNoHue(x));
         if (allMoodColors.length == 0) allMoodColors = this.moods;
+        if (allMoodColors.length == 0) allMoodColors = [Mood.Unset];
 
         var distinctMoods = new Array(...new Set(allMoodColors)).sort((a, b) => {
             const hsvA = rgbHexToHsv(MoodColors[a]);

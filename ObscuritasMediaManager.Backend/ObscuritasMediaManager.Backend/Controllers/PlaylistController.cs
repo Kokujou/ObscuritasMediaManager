@@ -76,4 +76,10 @@ public class PlaylistController : ControllerBase
         await _playlistRepository.UpdatePlaylistTrackMappingAsync(updateRequest.NewModel.Id, updateRequest.NewModel.Name,
                                                                   updateRequest.NewModel.Tracks);
     }
+
+    [HttpPut("{playlistId}/tracks")]
+    public async Task AddTracksToPlaylistAsync(Guid playlistId, [FromBody] IEnumerable<string> trackHashes)
+    {
+        await _playlistRepository.AddTracksAsync(playlistId, trackHashes);
+    }
 }

@@ -8,6 +8,16 @@ export function renderBorderButtonStyles() {
 
             --primary-color: darkgray;
             --border: 1px solid var(--primary-color);
+            color: black;
+        }
+
+        :host([disabled]) .border {
+            opacity: 0;
+        }
+
+        :host([disabled]) {
+            pointer-events: none;
+            color: gray;
         }
 
         #button-container {
@@ -76,7 +86,6 @@ export function renderBorderButtonStyles() {
             padding: 15px 20px;
             background-color: var(--primary-color);
             border: none;
-            color: black;
         }
 
         #button-container:active:after {
