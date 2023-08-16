@@ -6,34 +6,37 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 export function renderMediaPageStyles() {
     return css`
         #media-page-container {
+            position: absolute;
+            inset: 0;
             display: flex;
             flex-direction: column;
             max-height: 100%;
         }
 
-        #search-result-container {
-            overflow-y: scroll;
-            position: relative;
+        #media-filter {
+            position: absolute;
+            right: 0px;
+            top: 10px;
+            width: 450px;
+            height: 700px;
+        }
+
+        #results {
+            position: absolute;
             bottom: 0;
             top: 0;
             left: 0;
-            right: 0;
-
-            margin-top: 100px;
-            scrollbar-color: #20625599 transparent;
-            scrollbar-width: thin;
+            right: 500px;
+            margin-left: 60px;
         }
 
-        #right-container {
+        #result-container {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
             align-items: flex-start;
-        }
-
-        #right-container > * {
-            margin-left: 60px;
-            margin-bottom: 60px;
+            gap: 60px;
+            padding: 80px 0;
         }
 
         #tile-button {
@@ -45,8 +48,8 @@ export function renderMediaPageStyles() {
 
         media-tile {
             cursor: pointer;
-            width: 300px;
-            min-height: 300px;
+            width: 200px;
+            min-height: 200px;
         }
 
         #add-button {

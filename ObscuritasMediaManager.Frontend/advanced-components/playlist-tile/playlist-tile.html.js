@@ -27,7 +27,7 @@ export function renderPlaylistTile(playlist) {
                 <div
                     id="language-icon"
                     language="${playlist.playlist.language}"
-                    @click="${(e) => playlist.dispatchCustomEvent('changeLanguage')}"
+                    @click="${(e) => playlist.dispatchEvent(new CustomEvent('changeLanguage'))}"
                 ></div>
                 <svg id="instrumentation-button" class="inline-icon" viewBox="0 0 80 18">
                     <text y="80%" text-anchor="start"><!---->Playlist<!----></text>
@@ -35,7 +35,7 @@ export function renderPlaylistTile(playlist) {
                 <div
                     id="nation-icon"
                     nation="${playlist.playlist.nation}"
-                    @click="${(e) => playlist.dispatchCustomEvent('changeLanguage')}"
+                    @click="${(e) => playlist.dispatchEvent(new CustomEvent('changeLanguage'))}"
                 ></div>
                 <svg id="author-label" viewbox="0 0 200 18">
                     <text
@@ -64,7 +64,8 @@ export function renderPlaylistTile(playlist) {
                                     y="15"
                                     @pointerover="${() => (playlist.hoveredRating = rating)}"
                                     @pointerout="${() => (playlist.hoveredRating = 0)}"
-                                    @click="${(e) => playlist.dispatchCustomEvent('changeRating', { rating })}"
+                                    @click="${(e) =>
+                                        playlist.dispatchEvent(new CustomEvent('changeRating', { detail: { rating } }))}"
                                 >
                                     ★
                                 </text>

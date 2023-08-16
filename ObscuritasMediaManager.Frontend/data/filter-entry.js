@@ -9,6 +9,7 @@ export class FilterEntry {
 
     /**
      * @param {T} type
+     * @param {CheckboxState} defaultValue
      */
     constructor(type, defaultValue = CheckboxState.Ignore) {
         this.states = {};

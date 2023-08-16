@@ -53,7 +53,7 @@ export declare class MediaClient {
     });
     get(guid: string, signal?: AbortSignal | undefined): Promise<MediaModel>;
     protected processGet(response: Response): Promise<MediaModel>;
-    getAll(type?: string | null | undefined, signal?: AbortSignal | undefined): Promise<MediaModel[]>;
+    getAll(signal?: AbortSignal | undefined): Promise<MediaModel[]>;
     protected processGetAll(response: Response): Promise<MediaModel[]>;
     batchCreateMedia(media: MediaModel[], signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processBatchCreateMedia(response: Response): Promise<FileResponse>;
@@ -280,13 +280,17 @@ export interface ICredentialsRequest {
 export declare class MediaModel implements IMediaModel {
     id: string;
     name: string | null;
-    type: string | null;
-    rating: number;
-    release: number;
+    type: MediaCategory | null;
+    rating: number | null;
+    release: number | null;
+    language: Nation | null;
+    status: MediaStatus | null;
     genres: string[] | null;
-    state: number;
+    targetGroup: TargetGroup | null;
+    contentWarnings: ContentWarning[] | null;
     description: string | null;
     image: string | null;
+    hash: string | null;
     constructor(data?: Partial<IMediaModel>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): MediaModel | null;
@@ -296,13 +300,45 @@ export declare class MediaModel implements IMediaModel {
 export interface IMediaModel {
     id: string;
     name: string | null;
-    type: string | null;
-    rating: number;
-    release: number;
+    type: MediaCategory | null;
+    rating: number | null;
+    release: number | null;
+    language: Nation | null;
+    status: MediaStatus | null;
     genres: string[] | null;
-    state: number;
+    targetGroup: TargetGroup | null;
+    contentWarnings: ContentWarning[] | null;
     description: string | null;
     image: string | null;
+    hash: string | null;
+}
+export declare enum MediaCategory {
+    AnimeSeries = "AnimeSeries",
+    AnimeMovie = "AnimeMovie",
+    RealMovie = "RealMovie",
+    RealSeries = "RealSeries",
+    JDrama = "JDrama"
+}
+export declare enum MediaStatus {
+    Completed = "Completed",
+    Airing = "Airing",
+    PreAiring = "PreAiring",
+    Aborted = "Aborted"
+}
+export declare enum TargetGroup {
+    Children = "Children",
+    Adolescents = "Adolescents",
+    Adults = "Adults",
+    Families = "Families"
+}
+export declare enum ContentWarning {
+    Violence = "Violence",
+    Nudity = "Nudity",
+    Gore = "Gore",
+    Horror = "Horror",
+    Vulgarity = "Vulgarity",
+    Drugs = "Drugs",
+    Depression = "Depression"
 }
 export declare class InstrumentModel implements IInstrumentModel {
     name: string | null;

@@ -46,6 +46,6 @@ export class AudioTileBase extends LitElementBase {
             detail.stopPropagation();
             detail.preventDefault();
         }
-        this.dispatchCustomEvent(name, detail);
+        this.dispatchEvent(new CustomEvent(name, { detail }));
     }
 }

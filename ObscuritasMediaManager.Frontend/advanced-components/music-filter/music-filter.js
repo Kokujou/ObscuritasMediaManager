@@ -80,7 +80,7 @@ export class MusicFilter extends LitElementBase {
         else this.filter[filter].states[enumKey] = state;
 
         this.requestUpdate(undefined);
-        this.dispatchCustomEvent('filterChanged', { filter: this.filter });
+        this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
 
     /**
@@ -95,7 +95,7 @@ export class MusicFilter extends LitElementBase {
             for (var key in this.filter[filter].states) this.filter[filter].states[key] = value;
         }
         this.requestUpdate(undefined);
-        this.dispatchCustomEvent('filterChanged', { filter: this.filter });
+        this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
 
     resetAllFilters() {
@@ -103,11 +103,15 @@ export class MusicFilter extends LitElementBase {
         this.sortingDirection = 'ascending';
         this.sortingProperty = 'unset';
         this.requestUpdate(undefined);
-        this.dispatchCustomEvent('filterChanged', { filter: this.filter });
-        this.dispatchCustomEvent('sortingUpdated', {
-            property: this.sortingProperty,
-            direction: this.sortingDirection,
-        });
+        this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
+        this.dispatchEvent(
+            new CustomEvent('sortingUpdated', {
+                detail: {
+                    property: this.sortingProperty,
+                    direction: this.sortingDirection,
+                },
+            })
+        );
     }
 
     /**
@@ -155,7 +159,7 @@ export class MusicFilter extends LitElementBase {
             }
 
             this.requestUpdate(undefined);
-            this.dispatchCustomEvent('filterChanged', { filter: this.filter });
+            this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
             genreDialog.remove();
         });
         genreDialog.addEventListener('decline', () => {
@@ -179,10 +183,14 @@ export class MusicFilter extends LitElementBase {
         if (property) this.sortingProperty = property;
         if (direction) this.sortingDirection = direction;
         this.requestUpdate(undefined);
-        this.dispatchCustomEvent('sortingUpdated', {
-            property: this.sortingProperty,
-            direction: this.sortingDirection,
-        });
+        this.dispatchEvent(
+            new CustomEvent('sortingUpdated', {
+                detail: {
+                    property: this.sortingProperty,
+                    direction: this.sortingDirection,
+                },
+            })
+        );
     }
 
     disconnectedCallback() {

@@ -1,12 +1,7 @@
 import { html } from '../../exports.js';
 import { getPageName } from '../../services/extensions/url.extension.js';
-import { AnimeGerDubPage } from '../anime-ger-dub-page/anime-ger-dub-page.js';
-import { AnimeGerSubPage } from '../anime-ger-sub-page/anime-ger-sub-page.js';
-import { AnimeMoviesPage } from '../anime-movies-page/anime-movies-page.js';
-import { JDramaPage } from '../jdrama-page/jdrama-page.js';
+import { MediaPage } from '../media-page/media-page.js';
 import { MusicPage } from '../music-page/music-page.js';
-import { RealMoviesPage } from '../real-movies-page/real-movies-page.js';
-import { RealSeriesPage } from '../real-series-page/real-series-page.js';
 import { RecipesPage } from '../recipes-page/recipes-page.js';
 import { WelcomePage } from '../welcome-page/welcome-page.js';
 
@@ -37,26 +32,10 @@ function renderNavigation() {
                     </div>
                 </div>
                 <div id="nav-section">
-                    <div id="nav-section-heading">Anime</div>
+                    <div id="nav-section-heading">Zeugs</div>
 
                     <div id="nav-section-links">
-                        ${renderNavItem(getPageName(AnimeGerDubPage), 'Animes (Ger Dub)')}<br />
-                        ${renderNavItem(getPageName(AnimeGerSubPage), 'Animes (Ger Sub)')} <br />
-                        ${renderNavItem(getPageName(AnimeMoviesPage), 'Animefilme')}<br />
-                    </div>
-                </div>
-                <div id="nav-section">
-                    <div id="nav-section-heading">Realfilm</div>
-
-                    <div id="nav-section-links">
-                        ${renderNavItem(getPageName(RealSeriesPage), 'Realfilmserien')}<br />
-                        ${renderNavItem(getPageName(RealMoviesPage), 'Realfilme')}<br />
-                        ${renderNavItem(getPageName(JDramaPage), 'J-Drama')}<br />
-                    </div>
-                </div>
-                <div id="nav-section">
-                    <div id="nav-section-heading">Anderes</div>
-                    <div id="nav-section-links">
+                        ${renderNavItem(getPageName(MediaPage), 'Serien & Filme')}<br />
                         ${renderNavItem(getPageName(MusicPage), 'Musik')}<br />
                         ${renderNavItem(getPageName(RecipesPage), 'Rezepte')}
                     </div>

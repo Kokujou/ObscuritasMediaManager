@@ -33,16 +33,9 @@ public class MediaController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MediaModel>>> GetAll([FromQuery] string type = "")
+    public IQueryable<MediaModel> GetAll()
     {
-        try
-        {
-            return Ok(await _repository.GetAllAsync(type));
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        return _repository.GetAll();
     }
 
     [HttpPost]

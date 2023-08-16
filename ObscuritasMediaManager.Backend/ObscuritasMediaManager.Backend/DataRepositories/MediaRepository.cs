@@ -2,6 +2,7 @@
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
+using System.Text.Json;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -16,26 +17,15 @@ public class MediaRepository
 
     public async Task UpdateMediaAsync(MediaModel updated)
     {
-        var item = await _context.Media.SingleOrDefaultAsync(x => x.Id == updated.Id);
+        var current = await _context.Media.AsTracking().SingleOrDefaultAsync(x => x.Id == updated.Id);
 
-        if (item == default)
+        if (current == default)
             throw new ModelNotFoundException(updated.Id);
 
-        if (!string.IsNullOrEmpty(updated.Name))
-            item.Name = updated.Name;
-        if (!string.IsNullOrEmpty(updated.Type))
-            item.Type = updated.Type;
-        if (updated.Description != null)
-            item.Description = updated.Description;
-        if (updated.Genres != null)
-            item.Genres = updated.Genres;
-        if (updated.Rating > 0)
-            item.Rating = updated.Rating;
-        if (updated.Release > 0)
-            item.Release = updated.Release;
-        if (updated.State >= 0)
-            item.State = updated.State;
+        if (current.Hash != updated.Hash)   
+            throw new ArgumentException(nameof(updated), "The object has been modified");
 
+        _context.Entry(current).CurrentValues.SetValues(updated);
         await _context.SaveChangesAsync();
     }
 
@@ -65,12 +55,19 @@ public class MediaRepository
         return response;
     }
 
-    public async Task<IEnumerable<MediaModel>> GetAllAsync(string type = "")
+    public  IQueryable<MediaModel> GetAll()
     {
-        if (string.IsNullOrEmpty(type)) return await _context.Media.ToListAsync();
-
-        var response = await _context.Media.Where(x => x.Type == type).ToListAsync();
-        return response;
+        var test = _context.Media.ToList();
+        var test2 = test.Find(x => x.Name == "Primeval");
+        try
+        {
+            var test3 = JsonSerializer.Serialize(test);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        return  _context.Media;
     }
 
     public async Task BatchCreateMediaAsync(IEnumerable<MediaModel> media)

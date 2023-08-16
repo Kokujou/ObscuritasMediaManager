@@ -21,13 +21,20 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<MediaModel>().Property(x => x.Genres).HasConversion(x => string.Join(",", x), x => x.Split(",", StringSplitOptions.RemoveEmptyEntries));
+        MediaModel.Configure(modelBuilder);
 
-        modelBuilder.Entity<MusicModel>().Property(x => x.Genres).HasConversion(x => string.Join(",", x), x => x.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(y => y.ParseEnumOrDefault<MusicGenre>()).ToList());
+        modelBuilder.Entity<MusicModel>()
+                    .Property(x => x.Genres)
+                    .HasConversion(x => string.Join(",", x),
+                                   x => x.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                                         .Select(y => y.ParseEnumOrDefault<MusicGenre>())
+                                         .ToList());
 
         PlaylistModel.Configure(modelBuilder);
 
-        modelBuilder.Entity<MusicModel>().Property(x => x.Instruments).HasConversion(x => string.Join(",", x), x => x.Split(",", StringSplitOptions.RemoveEmptyEntries));
+        modelBuilder.Entity<MusicModel>()
+                    .Property(x => x.Instruments)
+                    .HasConversion(x => string.Join(",", x), x => x.Split(",", StringSplitOptions.RemoveEmptyEntries));
 
         modelBuilder.Entity<StreamingEntryModel>().HasKey(x => new { x.Id, x.Season, x.Episode });
 

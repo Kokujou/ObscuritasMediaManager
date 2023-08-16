@@ -15,7 +15,7 @@ export class MediaTile extends LitElementBase {
             rating: { type: Number, reflect: true },
             genres: { type: Array, reflect: true },
             autocompleteGenres: { type: Array, reflect: true },
-            status: { type: Number, reflect: true },
+            status: { type: String, reflect: true },
 
             hoveredRating: { type: Number, reflect: false },
         };
@@ -30,7 +30,7 @@ export class MediaTile extends LitElementBase {
         /** @type {number} */ this.rating;
         /** @type {string[]} */ this.genres = [];
         /** @type {string[]} */ this.autocompleteGenres = [];
-        /** @type {number} */ this.status;
+        /** @type {string} */ this.status;
 
         /** @type {number} */ this.hoveredRating = 0;
     }
@@ -73,7 +73,7 @@ export class MediaTile extends LitElementBase {
     notifyRatingChanged(newRating, e) {
         e.stopPropagation();
         e.preventDefault();
-        this.dispatchCustomEvent('ratingChanged', { newRating: newRating });
+        this.dispatchEvent(new CustomEvent('ratingChanged', { detail: { newRating: newRating } }));
     }
 
     /**
@@ -82,10 +82,10 @@ export class MediaTile extends LitElementBase {
      */
     notifyGenresChanged(genres, e) {
         e?.stopPropagation();
-        this.dispatchCustomEvent('genresChanged', { genres: genres });
+        this.dispatchEvent(new CustomEvent('genresChanged', { detail: { genres: genres } }));
     }
 
     notifyImageAdded(imageData) {
-        this.dispatchCustomEvent('imageReceived', { imageData: imageData });
+        this.dispatchEvent(new CustomEvent('imageReceived', { detail: { imageData: imageData } }));
     }
 }

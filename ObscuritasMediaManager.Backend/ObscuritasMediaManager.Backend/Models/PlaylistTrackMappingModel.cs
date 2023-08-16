@@ -2,7 +2,7 @@
 
 namespace ObscuritasMediaManager.Backend.Models;
 
-[Table("PlaylistTrackMapping", Schema = "dbo")]
+[Table("PlaylistTrackMapping")]
 public record PlaylistTrackMappingModel
 {
     public static PlaylistTrackMappingModel Create(Guid playlistId, string playlistName, MusicModel track, int index)

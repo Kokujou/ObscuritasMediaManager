@@ -43,7 +43,7 @@ export class DualSlider extends LitElementBase {
 
             if (oldLeftValue == this.leftValue && oldRightValue == this.rightValue) return;
 
-            this.dispatchCustomEvent('valueSpanChanged', { left: this.leftValue, right: this.rightValue });
+            this.dispatchEvent(new CustomEvent('valueSpanChanged', { detail: { left: this.leftValue, right: this.rightValue } }));
             this.requestUpdate(undefined);
         });
 

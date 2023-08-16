@@ -1,18 +1,28 @@
+import { MediaFilter } from '../advanced-components/media-filter-sidebar/media-filter.js';
 import { MediaModel } from '../obscuritas-media-manager-backend-client.js';
+import { sortBy } from './extensions/array.extensions.js';
+import { ObjectFilterService } from './object-filter.service.js';
 
 export class MediaFilterService {
     /**
-     * @param {string } filter
-     * @param {MediaModel[]} mediaList
+     *
+     * @param {MediaModel[]} result
+     * @param {MediaFilter} filter
      */
-    static applyTextFilter(filter, mediaList) {
-        if (filter)
-            return mediaList.filter(
-                (media) =>
-                    media.name.toLowerCase().includes(filter.toLocaleLowerCase()) ||
-                    media.name.toLowerCase().match(filter.toLowerCase())
-            );
+    static filter(result, filter) {
+        ObjectFilterService.applyPropertyFilter(result, filter.ratings, 'rating');
+        ObjectFilterService.applyArrayFilter(result, filter.genres, 'genres');
+        ObjectFilterService.applyMultiPropertySearch(result, filter.search ?? '', 'name', 'description');
+        ObjectFilterService.applyPropertyFilter(result, filter.status, 'status');
+        ObjectFilterService.applyRangeFilter(result, filter.release, 'release');
+        ObjectFilterService.applyPropertyFilter(result, filter.language, 'language');
+        ObjectFilterService.applyPropertyFilter(result, filter.category, 'type');
+        ObjectFilterService.applyArrayFilter(result, filter.contentWarnings, 'contentWarnings');
+        ObjectFilterService.applyPropertyFilter(result, filter.targetGroups, 'targetGroup');
 
-        return mediaList;
+        if (!filter.sortingProperty) return result;
+        var sorted = sortBy(result, (x) => x[filter.sortingProperty]);
+        if (!filter.sortingDirection || filter.sortingDirection == 'ascending') return sorted;
+        else return sorted.reverse();
     }
 }

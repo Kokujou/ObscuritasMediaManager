@@ -111,17 +111,18 @@ export class MediaDetailPage extends LitElementBase {
     }
 
     /**
-     * @param {keyof MediaModel} property
-     * @param {typeof this.media[property]} value
+     * @template {keyof MediaModel} T
+     * @param {T} property
+     * @param {MediaModel[T]} value
      */
     async changeProperty(property, value) {
         try {
             if (typeof this.media[property] != typeof value) return;
 
             var media = this.media.clone();
-            /** @type {any} */ (media[property]) = value;
+            media[property] = value;
             await MediaService.updateMedia(media);
-            /** @type {any} */ (this.media[property]) = value;
+            this.media[property] = value;
             this.requestUpdate(undefined);
         } catch (err) {
             console.error(err);

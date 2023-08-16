@@ -26,7 +26,7 @@ export class CustomToggle extends LitElementBase {
             e.stopPropagation();
             e.preventDefault();
             this.checked = !this.checked;
-            this.dispatchCustomEvent('toggle');
+            this.dispatchEvent(new CustomEvent('toggle'));
         };
     }
 

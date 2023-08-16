@@ -69,7 +69,10 @@ export function renderPriorityList(priorityList) {
                         @dragstart="${(e) => priorityList.registerDragItem(e, index)}"
                     ></div>
                     ${priorityList.itemRenderer(item)}
-                    <div class="delete-icon icon" @click="${() => priorityList.dispatchCustomEvent('delete-item', item)}"></div>
+                    <div
+                        class="delete-icon icon"
+                        @click="${() => priorityList.dispatchEvent(new CustomEvent('delete-item', { detail: item }))}"
+                    ></div>
                 </div>
             `;
         })}`;

@@ -8,7 +8,7 @@ export function renderTagLabel(tagLabel) {
     return html`
         <div id="label-container" @click="${(e) => e.stopPropagation()}">
             ${tagLabel.createNew ? renderNewLabelForm(tagLabel) : html`<div id="label-text">${tagLabel.text}</div>`}
-            <div id="x-button" @click="${(e) => tagLabel.notifyRemoved(e)}">&times</div>
+            <div id="x-button" @click="${(e) => tagLabel.notifyRemoved(e)}">&times;</div>
         </div>
     `;
 }

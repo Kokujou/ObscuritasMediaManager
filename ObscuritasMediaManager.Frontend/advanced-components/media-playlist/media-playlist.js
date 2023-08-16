@@ -53,7 +53,7 @@ export class MediaPlaylist extends LitElementBase {
     }
 
     async randomizeOrder() {
-        this.dispatchCustomEvent('randomize');
+        this.dispatchEvent(new CustomEvent('randomize'));
     }
 
     restoreOrder() {
@@ -62,7 +62,7 @@ export class MediaPlaylist extends LitElementBase {
     }
 
     notifyIndexChanged(index) {
-        this.dispatchCustomEvent('indexChanged', { index });
+        this.dispatchEvent(new CustomEvent('indexChanged', { detail: { index } }));
         this.index = index;
         this.requestUpdate(undefined);
         this.scrollToActive();

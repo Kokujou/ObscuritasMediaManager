@@ -9,8 +9,7 @@
         "forceConsistentCasingInFileNames": true,
         "watch": true,
         "pretty": true,
-        "skipLibCheck": true,
-        "skipDefaultLibCheck": true
+        "skipLibCheck": true
         // "plugins": [
         //     {
         //         "name": "typescript-lit-events-and-attributes"

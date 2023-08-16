@@ -377,10 +377,8 @@ export class MediaClient {
         }
         return Promise.resolve(null);
     }
-    getAll(type, signal) {
-        let url_ = this.baseUrl + "/api/Media?";
-        if (type !== undefined && type !== null)
-            url_ += "type=" + encodeURIComponent("" + type) + "&";
+    getAll(signal) {
+        let url_ = this.baseUrl + "/api/Media";
         url_ = url_.replace(/[?&]$/, "");
         let options_ = {
             method: "GET",
@@ -1662,10 +1660,14 @@ export class MediaModel {
     type;
     rating;
     release;
+    language;
+    status;
     genres;
-    state;
+    targetGroup;
+    contentWarnings;
     description;
     image;
+    hash;
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -1681,6 +1683,8 @@ export class MediaModel {
             this.type = _data["type"] !== undefined ? _data["type"] : null;
             this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
             this.release = _data["release"] !== undefined ? _data["release"] : null;
+            this.language = _data["language"] !== undefined ? _data["language"] : null;
+            this.status = _data["status"] !== undefined ? _data["status"] : null;
             if (Array.isArray(_data["genres"])) {
                 this.genres = [];
                 for (let item of _data["genres"])
@@ -1689,9 +1693,18 @@ export class MediaModel {
             else {
                 this.genres = null;
             }
-            this.state = _data["state"] !== undefined ? _data["state"] : null;
+            this.targetGroup = _data["targetGroup"] !== undefined ? _data["targetGroup"] : null;
+            if (Array.isArray(_data["contentWarnings"])) {
+                this.contentWarnings = [];
+                for (let item of _data["contentWarnings"])
+                    this.contentWarnings.push(item);
+            }
+            else {
+                this.contentWarnings = null;
+            }
             this.description = _data["description"] !== undefined ? _data["description"] : null;
             this.image = _data["image"] !== undefined ? _data["image"] : null;
+            this.hash = _data["hash"] !== undefined ? _data["hash"] : null;
         }
     }
     static fromJS(data, _mappings) {
@@ -1705,14 +1718,22 @@ export class MediaModel {
         data["type"] = this.type !== undefined ? this.type : null;
         data["rating"] = this.rating !== undefined ? this.rating : null;
         data["release"] = this.release !== undefined ? this.release : null;
+        data["language"] = this.language !== undefined ? this.language : null;
+        data["status"] = this.status !== undefined ? this.status : null;
         if (Array.isArray(this.genres)) {
             data["genres"] = [];
             for (let item of this.genres)
                 data["genres"].push(item);
         }
-        data["state"] = this.state !== undefined ? this.state : null;
+        data["targetGroup"] = this.targetGroup !== undefined ? this.targetGroup : null;
+        if (Array.isArray(this.contentWarnings)) {
+            data["contentWarnings"] = [];
+            for (let item of this.contentWarnings)
+                data["contentWarnings"].push(item);
+        }
         data["description"] = this.description !== undefined ? this.description : null;
         data["image"] = this.image !== undefined ? this.image : null;
+        data["hash"] = this.hash !== undefined ? this.hash : null;
         return data;
     }
     clone() {
@@ -1722,6 +1743,38 @@ export class MediaModel {
         return result;
     }
 }
+export var MediaCategory;
+(function (MediaCategory) {
+    MediaCategory["AnimeSeries"] = "AnimeSeries";
+    MediaCategory["AnimeMovie"] = "AnimeMovie";
+    MediaCategory["RealMovie"] = "RealMovie";
+    MediaCategory["RealSeries"] = "RealSeries";
+    MediaCategory["JDrama"] = "JDrama";
+})(MediaCategory || (MediaCategory = {}));
+export var MediaStatus;
+(function (MediaStatus) {
+    MediaStatus["Completed"] = "Completed";
+    MediaStatus["Airing"] = "Airing";
+    MediaStatus["PreAiring"] = "PreAiring";
+    MediaStatus["Aborted"] = "Aborted";
+})(MediaStatus || (MediaStatus = {}));
+export var TargetGroup;
+(function (TargetGroup) {
+    TargetGroup["Children"] = "Children";
+    TargetGroup["Adolescents"] = "Adolescents";
+    TargetGroup["Adults"] = "Adults";
+    TargetGroup["Families"] = "Families";
+})(TargetGroup || (TargetGroup = {}));
+export var ContentWarning;
+(function (ContentWarning) {
+    ContentWarning["Violence"] = "Violence";
+    ContentWarning["Nudity"] = "Nudity";
+    ContentWarning["Gore"] = "Gore";
+    ContentWarning["Horror"] = "Horror";
+    ContentWarning["Vulgarity"] = "Vulgarity";
+    ContentWarning["Drugs"] = "Drugs";
+    ContentWarning["Depression"] = "Depression";
+})(ContentWarning || (ContentWarning = {}));
 export class InstrumentModel {
     name;
     type;

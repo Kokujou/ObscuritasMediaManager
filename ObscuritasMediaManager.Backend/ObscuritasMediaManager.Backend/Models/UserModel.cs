@@ -3,7 +3,7 @@ using System.Security.Principal;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
-[Table("Users", Schema = "dbo")]
+[Table("Users")]
 public class UserModel : IIdentity
 {
     public Guid Id { get; set; }

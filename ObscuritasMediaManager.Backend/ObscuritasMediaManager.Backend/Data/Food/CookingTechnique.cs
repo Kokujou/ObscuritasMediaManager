@@ -1,5 +1,4 @@
-﻿
-namespace ObscuritasMediaManager.Backend.Data.Food;
+﻿namespace ObscuritasMediaManager.Backend.Data.Food;
 
 public enum CookingTechnique
 {
@@ -12,4 +11,4 @@ public enum CookingTechnique
     Freezing,
     Grilling,
     Raw
-}
+} 

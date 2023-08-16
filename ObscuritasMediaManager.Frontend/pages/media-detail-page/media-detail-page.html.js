@@ -131,26 +131,25 @@ export function renderMediaDetailPage(detailPage) {
 }
 
 /**
- * @param {MediaDetailPage} detailPage
+ * @param {MediaDetailPage} page
  */
-function renderGenreSection(detailPage) {
+function renderGenreSection(page) {
     return html`<div class="property-entry genre-entry">
         <div class="property-name">Genres:</div>
         <div class="property-value">
-            ${detailPage.media.genres.map(
+            ${page.media.genres.map(
                 (x) =>
                     html`<tag-label
+                        ?disabled="${!page.editMode}"
                         @removed="${() =>
-                            detailPage.changeProperty(
+                            page.changeProperty(
                                 'genres',
-                                detailPage.media.genres.filter((genre) => genre != x)
+                                page.media.genres.filter((genre) => genre != x)
                             )}"
                         .text="${x}"
                     ></tag-label>`
             )}
-            ${detailPage.editMode
-                ? html` <div id="add-genre-button" @click="${() => detailPage.showGenreSelectionDialog()}">+</div> `
-                : ''}
+            ${page.editMode ? html` <div id="add-genre-button" @click="${() => page.showGenreSelectionDialog()}">+</div> ` : ''}
         </div>
     </div> `;
 }

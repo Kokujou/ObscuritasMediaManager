@@ -52,12 +52,12 @@ export class PlayMusicDialog extends LitElementBase {
      * @param {number} startPosition
      */
     static show(track, initialVolume, startPosition) {
+        if (!track?.path) return;
+
         if (this.instance) {
             this.instance.reinitialize(track, initialVolume, startPosition);
             return;
         }
-
-        if (!track) return;
 
         var dialog = new PlayMusicDialog();
         PageRouting.container.append(dialog);

@@ -9,16 +9,6 @@ export class LitElementBase extends LitElement {
     }
 
     /**
-     * @template T
-     * @param {string} name
-     * @param {T} [detail]
-     */
-    dispatchCustomEvent(name, detail) {
-        super.dispatchEvent(new CustomEvent(name, { bubbles: true, composed: true, detail }));
-        this.requestUpdate(undefined);
-    }
-
-    /**
      * @param {Event} event
      * @param {HTMLElement} [target]
      */

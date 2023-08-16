@@ -40,6 +40,6 @@ export class TriValueCheckbox extends LitElementBase {
         if (this.value == this.ignoredState && !this.allowThreeValues)
             this.value = Enum.nextValue(CheckboxState, this.value, false);
 
-        this.dispatchCustomEvent('valueChanged', { value: this.value });
+        this.dispatchEvent(new CustomEvent('valueChanged', { detail: { value: this.value } }));
     }
 }

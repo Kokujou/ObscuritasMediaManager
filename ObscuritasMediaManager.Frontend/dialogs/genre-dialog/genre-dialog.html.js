@@ -13,7 +13,7 @@ export function renderGenreDialog(genreDialog) {
             caption="Tags auswählen"
             acceptActionText="Speichern"
             declineActionText="Abbrechen"
-            @decline="${() => genreDialog.dispatchCustomEvent('decline')}"
+            @decline="${() => genreDialog.dispatchEvent(new CustomEvent('decline'))}"
             @accept="${() => genreDialog.accept()}"
         >
             ${genreDialog.options.allowRemove
@@ -67,7 +67,7 @@ function renderGenre(genre, genreDialog) {
         <div
             class="remove-genre-button"
             @click="${(e) => {
-                genreDialog.dispatchCustomEvent('remove-genre', genre);
+                genreDialog.dispatchEvent(new CustomEvent('remove-genre', { detail: genre }));
                 e.stopPropagation();
             }}"
         ></div>

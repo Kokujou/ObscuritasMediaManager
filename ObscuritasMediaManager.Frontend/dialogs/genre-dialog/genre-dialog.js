@@ -92,7 +92,7 @@ export class GenreDialog extends LitElementBase {
         var result = new GenreDialogResult();
         result.acceptedGenres = this.options.allowedGenres;
         result.forbiddenGenres = this.options.forbiddenGenres;
-        this.dispatchCustomEvent('accept', result);
+        this.dispatchEvent(new CustomEvent('accept', { detail: result }));
     }
 
     /**
@@ -109,6 +109,6 @@ export class GenreDialog extends LitElementBase {
      */
     async addGenre(section) {
         var name = await InputDialog.show('Bitte Namen eingeben:');
-        this.dispatchCustomEvent('add-genre', { name, section });
+        this.dispatchEvent(new CustomEvent('add-genre', { detail: { name, section } }));
     }
 }

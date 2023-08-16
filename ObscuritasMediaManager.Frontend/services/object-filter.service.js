@@ -56,4 +56,16 @@ export class ObjectFilterService {
         list.length = 0;
         list.push(...results);
     }
+
+    /**
+     * @template U
+     * @param {{min, max}} filter
+     * @param {U[]} list
+     * @param {keyof U} property
+     */
+    static applyRangeFilter(list, filter, property) {
+        var results = list.filter((x) => x[property] >= filter.min && x[property] <= filter.max);
+        list.length = 0;
+        list.push(...results);
+    }
 }
