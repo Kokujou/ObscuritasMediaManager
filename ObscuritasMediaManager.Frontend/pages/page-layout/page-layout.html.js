@@ -1,3 +1,4 @@
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { html } from '../../exports.js';
 import { getPageName } from '../../services/extensions/url.extension.js';
 import { MediaPage } from '../media-page/media-page.js';
@@ -35,9 +36,9 @@ function renderNavigation() {
                     <div id="nav-section-heading">Zeugs</div>
 
                     <div id="nav-section-links">
-                        ${renderNavItem(getPageName(MediaPage), 'Serien & Filme')}<br />
-                        ${renderNavItem(getPageName(MusicPage), 'Musik')}<br />
-                        ${renderNavItem(getPageName(RecipesPage), 'Rezepte')}
+                        ${renderNavItem(MediaPage)}<br />
+                        ${renderNavItem(MusicPage)}<br />
+                        ${renderNavItem(RecipesPage)}
                     </div>
                 </div>
             </div>
@@ -46,9 +47,9 @@ function renderNavigation() {
 }
 
 /**
- * @param {string} target
- * @param {string} text
+ * @template {typeof LitElementBase & {isPage: boolean, pageName: string}} T
+ * @param {T} element
  */
-function renderNavItem(target, text) {
-    return html`<link-element .hash="${target}" class="nav-item"> ${text} </link-element>`;
+function renderNavItem(element) {
+    return html`<link-element .hash="${getPageName(element)}" class="nav-item"> ${element.pageName} </link-element>`;
 }

@@ -1,5 +1,6 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
+import { ContentWarning, MediaCategory, Nation, TargetGroup } from '../../obscuritas-media-manager-backend-client.js';
 import { IconRegistry } from '../../resources/icons/icon-registry.js';
 import { MediaFilterSidebar } from './media-filter-sidebar.js';
 import { MediaFilter } from './media-filter.js';
@@ -56,15 +57,48 @@ export function renderMediaFilterSidebar(sidebar) {
                     ></div>
                 </div>
             </div>
-            <div id="language-filter" class="filter-entry" complex>
+            <div id="language-filter" class="filter-entry" simple>
                 <div class="filter-heading">
                     <div class="filter-label">Sprache:</div>
+                </div>
+                <div id="language-switcher-mini">
+                    <tri-value-checkbox
+                        @valueChanged="${(e) => sidebar.setFilterProperty('languages', Nation.German, e.detail.value)}"
+                        class="icon-container"
+                        .value="${sidebar.filter.languages.states[Nation.German]}"
+                    >
+                        <div class="icon-button" language="${Nation.German}"></div>
+                    </tri-value-checkbox>
+                    <tri-value-checkbox
+                        @valueChanged="${(e) => sidebar.setFilterProperty('languages', Nation.Japanese, e.detail.value)}"
+                        class="icon-container"
+                        .value="${sidebar.filter.languages.states[Nation.Japanese]}"
+                    >
+                        <div class="icon-button" language="${Nation.Japanese}"></div>
+                    </tri-value-checkbox>
                 </div>
             </div>
             <div id="category-filter" class="filter-entry" complex>
                 <div class="filter-heading">
                     <div class="filter-label">Kategorie:</div>
+                    <div
+                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        @click="${() => sidebar.setArrayFilter('category', 'all', CheckboxState.Ignore)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        @click="${() => sidebar.setArrayFilter('category', 'all', CheckboxState.Forbid)}"
+                    ></div>
                 </div>
+                <drop-down
+                    .values="${Object.entries(sidebar.filter.category.states)
+                        .filter((x) => x[1] == CheckboxState.Ignore)
+                        .map((x) => x[0])}"
+                    .options="${Object.values(MediaCategory)}"
+                    multiselect
+                    maxDisplayDepth="5"
+                    @selectionChange="${(e) => sidebar.handleDropdownChange('category', e.detail.value)}"
+                ></drop-down>
             </div>
             <div id="rating-filter" class="filter-entry" complex>
                 <div class="filter-heading">
@@ -76,7 +110,7 @@ export function renderMediaFilterSidebar(sidebar) {
                         .filter((x) => sidebar.filter.ratings.states[x] == CheckboxState.Allow)
                         .map((x) => Number.parseInt(x))}"
                     @ratingChanged="${(e) =>
-                        sidebar.toggleFilter(
+                        sidebar.setFilterProperty(
                             'ratings',
                             e.detail.rating,
                             e.detail.include ? CheckboxState.Allow : CheckboxState.Forbid
@@ -85,7 +119,19 @@ export function renderMediaFilterSidebar(sidebar) {
             </div>
             <div id="genre-filter" class="filter-entry" complex>
                 <div class="filter-heading">
-                    <div class="filter-label">Genres:</div>
+                    <div class="filter-label">
+                        Genres:
+                        <div class="icon-button ${IconRegistry.PopupIcon}" @click="${() => sidebar.openGenreDialog()}"></div>
+                    </div>
+
+                    <div
+                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        @click="${() => sidebar.setArrayFilter('genres', 'all', CheckboxState.Ignore)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        @click="${() => sidebar.setArrayFilter('genres', 'all', CheckboxState.Forbid)}"
+                    ></div>
                 </div>
             </div>
             <div id="release-filter" class="filter-entry" complex>
@@ -106,11 +152,33 @@ export function renderMediaFilterSidebar(sidebar) {
                 <div class="filter-heading">
                     <div class="filter-label">Inhaltswarnungen:</div>
                 </div>
+                <side-scroller>
+                    ${Object.values(ContentWarning).map(
+                        (warning) =>
+                            html` <tri-value-checkbox
+                                allowThreeValues
+                                .value="${sidebar.filter.contentWarnings.states[warning]}"
+                                @valueChanged="${(e) => sidebar.setFilterProperty('contentWarnings', warning, e.detail.value)}"
+                                ><div class="icon-button" content-warning="${warning}"></div
+                            ></tri-value-checkbox>`
+                    )}
+                </side-scroller>
             </div>
             <div id="target-group-filter" class="filter-entry" complex>
                 <div class="filter-heading">
                     <div class="filter-label">Zielgruppe:</div>
                 </div>
+                <side-scroller>
+                    ${Object.values(TargetGroup).map(
+                        (group) => html` <tri-value-checkbox
+                            allowThreeValues
+                            .value="${sidebar.filter.targetGroups.states[group]}"
+                            @valueChanged="${(e) => sidebar.setFilterProperty('targetGroups', group, e.detail.value)}"
+                        >
+                            <div class="icon-button" target-group="${group}"></div
+                        ></tri-value-checkbox>`
+                    )}</side-scroller
+                >
             </div>
         </div>
     `;

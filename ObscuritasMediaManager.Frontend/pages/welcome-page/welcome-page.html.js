@@ -11,15 +11,15 @@ export function renderWelcomePage() {
                 <div id="tile-link-area">
                     <div id="tile-link-section">
                         <link-element .hash="${getPageName(MediaPage)}"
-                            ><image-tile caption="Serien & Filme" src="../../resources/images/real-series.png"></image-tile
+                            ><image-tile caption="${MediaPage.pageName}" src="../../resources/images/real-series.png"></image-tile
                         ></link-element>
                     </div>
                     <div id="tile-link-section">
                         <link-element .hash="${getPageName(MusicPage)}">
-                            <image-tile caption="Musik" src="../../resources/images/music.png"></image-tile
+                            <image-tile caption="${MusicPage.pageName}" src="../../resources/images/music.png"></image-tile
                         ></link-element>
                         <link-element .hash="${getPageName(RecipesPage)}">
-                            <image-tile caption="Rezepte" src="../../resources/images/food.png"></image-tile
+                            <image-tile caption="${RecipesPage.pageName}" src="../../resources/images/food.png"></image-tile
                         ></link-element>
                     </div>
                 </div>

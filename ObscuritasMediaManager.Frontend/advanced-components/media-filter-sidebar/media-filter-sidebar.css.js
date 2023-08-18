@@ -1,3 +1,4 @@
+import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { css } from '../../exports.js';
 import { revertIcon } from '../../resources/icons/general/revert-icon.svg.js';
 import { registerIcons } from '../../resources/icons/icon-registry.js';
@@ -6,6 +7,8 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 export function renderMediaFilterSidebarStyles() {
     return css`
         ${registerIcons()}
+
+        ${renderLanguageFlags()}
 
         :host {
             border-radius: 50px;
@@ -62,6 +65,17 @@ export function renderMediaFilterSidebarStyles() {
             justify-content: center;
         }
 
+        .filter-entry[complex] .filter-label {
+            flex: auto;
+        }
+
+        .filter-label {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+
         .filter-heading {
             display: flex;
             flex-direction: row;
@@ -114,7 +128,11 @@ export function renderMediaFilterSidebarStyles() {
 
             cursor: pointer;
 
-            background: white;
+            background-color: white;
+        }
+
+        tri-value-checkbox {
+            margin: 0 5px;
         }
     `;
 }

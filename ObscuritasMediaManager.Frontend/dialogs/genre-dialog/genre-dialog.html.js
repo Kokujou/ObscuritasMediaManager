@@ -64,12 +64,6 @@ function renderGenre(genre, genreDialog) {
         class="genre-checkbox"
     >
         ${genre.name}
-        <div
-            class="remove-genre-button"
-            @click="${(e) => {
-                genreDialog.dispatchEvent(new CustomEvent('remove-genre', { detail: genre }));
-                e.stopPropagation();
-            }}"
-        ></div>
+        <div class="remove-genre-button" @click="${(e) => genreDialog.removeGenre(e, genre)}"></div>
     </tri-value-checkbox> `;
 }

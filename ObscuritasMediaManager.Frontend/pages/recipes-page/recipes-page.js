@@ -5,9 +5,8 @@ import { renderRecipesPageStyles } from './recipes-page.css.js';
 import { renderRecipesPage } from './recipes-page.html.js';
 
 export class RecipesPage extends LitElementBase {
-    static get isPage() {
-        return true;
-    }
+    static isPage = true;
+    static pageName = 'Rezepte';
 
     static get styles() {
         return renderRecipesPageStyles();
@@ -21,7 +20,6 @@ export class RecipesPage extends LitElementBase {
 
     constructor() {
         super();
-        document.title = 'Rezepte';
         /** @type {RecipeModel[]} */ this.recipes = [];
     }
 

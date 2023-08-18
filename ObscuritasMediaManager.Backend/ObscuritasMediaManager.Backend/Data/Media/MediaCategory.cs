@@ -4,8 +4,8 @@ namespace ObscuritasMediaManager.Backend.Data.Media;
 public enum MediaCategory
 {
     AnimeSeries,
-    AnimeMovie,
-    RealMovie,
+    AnimeMovies,
+    RealMovies,
     RealSeries,
     JDrama
 }

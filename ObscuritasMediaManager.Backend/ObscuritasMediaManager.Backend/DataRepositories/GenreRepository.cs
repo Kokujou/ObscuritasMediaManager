@@ -12,8 +12,22 @@ public class GenreRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<GenreModel>> GetAllAsync()
+    public IQueryable<GenreModel> GetAll()
     {
-        return await _context.Genres.ToListAsync();
+        return _context.Genres;
+    }
+
+    public async Task AddGenreAsync(GenreModel genreModel)
+    {
+        await _context.Genres.AddAsync(genreModel);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task RemoveGenreAsync(Guid id)
+    {
+        var genre = await _context.Genres.FirstOrDefaultAsync(x => x.Id == id);
+        if (genre is null) return;
+        _context.Genres.Remove(genre);
+        await _context.SaveChangesAsync();
     }
 }

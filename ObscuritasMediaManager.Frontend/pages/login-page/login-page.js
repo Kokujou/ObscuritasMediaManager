@@ -7,9 +7,9 @@ import { renderLoginPageStyles } from './login-page.css.js';
 import { renderLoginPage } from './login-page.html.js';
 
 export class LoginPage extends LitElementBase {
-    static get isPage() {
-        return true;
-    }
+    static isPage = true;
+    static pageName = 'Login';
+
     static get styles() {
         return renderLoginPageStyles();
     }
@@ -20,7 +20,6 @@ export class LoginPage extends LitElementBase {
 
     constructor() {
         super();
-        document.title = 'Login';
 
         this.username = '';
         this.password = '';

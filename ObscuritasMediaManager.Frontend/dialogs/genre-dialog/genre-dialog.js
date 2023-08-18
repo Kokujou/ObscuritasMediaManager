@@ -111,4 +111,13 @@ export class GenreDialog extends LitElementBase {
         var name = await InputDialog.show('Bitte Namen eingeben:');
         this.dispatchEvent(new CustomEvent('add-genre', { detail: { name, section } }));
     }
+
+    /**
+     * @param {Event} event
+     * @param {GenreModel} genre
+     */
+    async removeGenre(event, genre) {
+        this.dispatchEvent(new CustomEvent('remove-genre', { detail: genre }));
+        event.stopPropagation();
+    }
 }

@@ -18,16 +18,20 @@ public class GenreController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<GenreModel>>> GetAll()
+    public IQueryable<GenreModel> GetAll()
     {
-        try
-        {
-            var genreList = await _genreRepository.GetAllAsync();
-            return Ok(genreList);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e);
-        }
+        return _genreRepository.GetAll();
+    }
+
+    [HttpPut("section/{section}/name/{name}")]
+    public async Task AddGenre(string section, string name)
+    {
+        await _genreRepository.AddGenreAsync(new GenreModel { Id = Guid.NewGuid(), Section = section, Name = name });
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task RemoveGenre(Guid id)
+    {
+        await _genreRepository.RemoveGenreAsync(id);
     }
 }

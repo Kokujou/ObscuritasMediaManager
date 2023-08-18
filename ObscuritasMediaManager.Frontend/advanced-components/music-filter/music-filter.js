@@ -8,7 +8,6 @@ import { SortingDirections } from '../../data/sorting-directions.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { GenreModel, MusicModel } from '../../obscuritas-media-manager-backend-client.js';
-import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { renderMusicFilterStyles } from './music-filter.css.js';
 import { renderMusicFilter } from './music-filter.html.js';
 
@@ -191,10 +190,5 @@ export class MusicFilter extends LitElementBase {
                 },
             })
         );
-    }
-
-    disconnectedCallback() {
-        super.disconnectedCallback();
-        setFavicon(null);
     }
 }

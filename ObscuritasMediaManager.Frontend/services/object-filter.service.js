@@ -4,8 +4,9 @@ import { FilterEntry } from '../data/filter-entry.js';
 export class ObjectFilterService {
     /**
      * @template T
+     * @template U
      * @param {T[]} list
-     * @param {FilterEntry<T>} filter
+     * @param {FilterEntry<U>} filter
      * @param {keyof T} filterProperty
      */
     static applyArrayFilter(list, filter, filterProperty) {
@@ -26,21 +27,47 @@ export class ObjectFilterService {
 
     /**
      * @template T
+     * @template U
      * @param {T[]} list
-     * @param {FilterEntry<T>} filter
+     * @param {FilterEntry<U>} filter
      * @param {keyof T} filterProperty
+     * @param {CheckboxState} ignoreState
      */
-    static applyPropertyFilter(list, filter, filterProperty) {
-        // var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
-        var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
-        var results = list.filter((item) => {
-            var property = item[filterProperty];
-            if (forbiddenValues.includes(`${property}`)) return false;
-            if (forbiddenValues.length > 0 && !property) return false;
-            return true;
-        });
+    static applyPropertyFilter(list, filter, filterProperty, ignoreState = CheckboxState.Allow) {
+        var results = this.#filterForbidden([...list], filter, filterProperty);
+        if (ignoreState == CheckboxState.Allow) return;
+        results = this.#filterNotForced([...results], filter, filterProperty);
+
         list.length = 0;
         list.push(...results);
+    }
+
+    /**
+     * @template T
+     * @template U
+     * @param {T[]} list
+     * @param {FilterEntry<U>} filter
+     * @param {keyof T} filterProperty
+     */
+    static #filterForbidden(list, filter, filterProperty) {
+        var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
+        if (forbiddenValues.length == 0) return list;
+
+        return list.filter((item) => !item[filterProperty] || forbiddenValues.includes(`${item[filterProperty]}`));
+    }
+
+    /**
+     * @template T
+     * @template U
+     * @param {T[]} list
+     * @param {FilterEntry<U>} filter
+     * @param {keyof T} filterProperty
+     */
+    static #filterNotForced(list, filter, filterProperty) {
+        var forcedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
+        if (forcedValues.length == 0) return list;
+
+        return list.filter((item) => forcedValues.includes(`${item[filterProperty]}`));
     }
 
     /**
@@ -64,6 +91,7 @@ export class ObjectFilterService {
      * @param {keyof U} property
      */
     static applyRangeFilter(list, filter, property) {
+        if (!filter.max || !filter.min) return list;
         var results = list.filter((x) => x[property] >= filter.min && x[property] <= filter.max);
         list.length = 0;
         list.push(...results);

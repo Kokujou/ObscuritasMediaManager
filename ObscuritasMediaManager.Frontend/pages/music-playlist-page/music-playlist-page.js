@@ -20,15 +20,14 @@ import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
 import { randomizeArray } from '../../services/extensions/array.extensions.js';
 import { openFileDialog } from '../../services/extensions/document.extensions.js';
-import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
 import { renderMusicPlaylistStyles } from './music-playlist-page.css.js';
 import { renderMusicPlaylist } from './music-playlist-page.html.js';
 
 export class MusicPlaylistPage extends LitElementBase {
-    static get isPage() {
-        return true;
-    }
+    static isPage = true;
+    static icon = noteIcon();
+
     static get styles() {
         return renderMusicPlaylistStyles();
     }
@@ -95,7 +94,6 @@ export class MusicPlaylistPage extends LitElementBase {
 
     connectedCallback() {
         super.connectedCallback();
-        setFavicon(noteIcon());
         var localStorageVolume = localStorage.getItem('volume');
         if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume));
 

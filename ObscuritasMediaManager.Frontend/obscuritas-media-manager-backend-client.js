@@ -280,6 +280,77 @@ export class GenreClient {
         }
         return Promise.resolve(null);
     }
+    addGenre(section, name, signal) {
+        let url_ = this.baseUrl + "/api/Genre/section/{section}/name/{name}";
+        if (section === undefined || section === null)
+            throw new Error("The parameter 'section' must be defined.");
+        url_ = url_.replace("{section}", encodeURIComponent("" + section));
+        if (name === undefined || name === null)
+            throw new Error("The parameter 'name' must be defined.");
+        url_ = url_.replace("{name}", encodeURIComponent("" + name));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "PUT",
+            signal,
+            headers: {}
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processAddGenre(_response);
+        });
+    }
+    processAddGenre(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    removeGenre(id, signal) {
+        let url_ = this.baseUrl + "/api/Genre/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "DELETE",
+            signal,
+            headers: {}
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processRemoveGenre(_response);
+        });
+    }
+    processRemoveGenre(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
 }
 export class LoginClient {
     http;
@@ -1746,8 +1817,8 @@ export class MediaModel {
 export var MediaCategory;
 (function (MediaCategory) {
     MediaCategory["AnimeSeries"] = "AnimeSeries";
-    MediaCategory["AnimeMovie"] = "AnimeMovie";
-    MediaCategory["RealMovie"] = "RealMovie";
+    MediaCategory["AnimeMovies"] = "AnimeMovies";
+    MediaCategory["RealMovies"] = "RealMovies";
     MediaCategory["RealSeries"] = "RealSeries";
     MediaCategory["JDrama"] = "JDrama";
 })(MediaCategory || (MediaCategory = {}));

@@ -17,7 +17,6 @@ import { CleanupService, MusicService, PlaylistService } from '../../services/ba
 import { sortBy } from '../../services/extensions/array.extensions.js';
 import { playAudio } from '../../services/extensions/audio.extension.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
-import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage, getPageName } from '../../services/extensions/url.extension.js';
 import { MusicFilterService } from '../../services/music-filter.service.js';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
@@ -25,9 +24,9 @@ import { renderMusicPageStyles } from './music-page.css.js';
 import { renderMusicPage } from './music-page.html.js';
 
 export class MusicPage extends LitElementBase {
-    static get isPage() {
-        return true;
-    }
+    static isPage = true;
+    static pageName = 'Musik';
+    static icon = noteIcon();
 
     static get styles() {
         return renderMusicPageStyles();
@@ -90,8 +89,6 @@ export class MusicPage extends LitElementBase {
     }
     connectedCallback() {
         super.connectedCallback();
-        document.title = 'Musik';
-        setFavicon(noteIcon());
         this.subcriptions.push(
             session.instruments.subscribe(() => {
                 this.initializeData();

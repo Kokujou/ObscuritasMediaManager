@@ -15,16 +15,16 @@ export class MusicFilterOptions {
     /** @type {CheckboxState} */ complete = CheckboxState.Ignore;
     /** @type {CheckboxState} */ showPlaylists = CheckboxState.Ignore;
 
-    languages = new FilterEntry(Nation, CheckboxState.Allow);
+    languages = new FilterEntry(Object.values(Nation), CheckboxState.Allow);
     ratings = new FilterEntry(['1', '2', '3', '4', '5'], CheckboxState.Allow);
-    nations = new FilterEntry(Nation, CheckboxState.Allow);
-    instrumentTypes = new FilterEntry(InstrumentType);
+    nations = new FilterEntry(Object.values(Nation), CheckboxState.Allow);
+    instrumentTypes = new FilterEntry(Object.values(InstrumentType));
     instruments = new FilterEntry(
         session.instruments.current().map((x) => x.name),
         CheckboxState.Ignore
     );
-    moods = new FilterEntry(Mood, CheckboxState.Ignore);
-    genres = new FilterEntry(MusicGenre, CheckboxState.Ignore);
-    instrumentations = new FilterEntry(Instrumentation, CheckboxState.Ignore);
-    participants = new FilterEntry(Participants, CheckboxState.Allow);
+    moods = new FilterEntry(Object.values(Mood), CheckboxState.Ignore);
+    genres = new FilterEntry(Object.values(MusicGenre), CheckboxState.Ignore);
+    instrumentations = new FilterEntry(Object.values(Instrumentation), CheckboxState.Ignore);
+    participants = new FilterEntry(Object.values(Participants), CheckboxState.Allow);
 }

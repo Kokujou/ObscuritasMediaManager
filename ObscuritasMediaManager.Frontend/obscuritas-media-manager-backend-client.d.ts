@@ -33,6 +33,10 @@ export declare class GenreClient {
     });
     getAll(signal?: AbortSignal | undefined): Promise<GenreModel[]>;
     protected processGetAll(response: Response): Promise<GenreModel[]>;
+    addGenre(section: string | null, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
+    protected processAddGenre(response: Response): Promise<void>;
+    removeGenre(id: string, signal?: AbortSignal | undefined): Promise<void>;
+    protected processRemoveGenre(response: Response): Promise<void>;
 }
 export declare class LoginClient {
     private http;
@@ -314,8 +318,8 @@ export interface IMediaModel {
 }
 export declare enum MediaCategory {
     AnimeSeries = "AnimeSeries",
-    AnimeMovie = "AnimeMovie",
-    RealMovie = "RealMovie",
+    AnimeMovies = "AnimeMovies",
+    RealMovies = "RealMovies",
     RealSeries = "RealSeries",
     JDrama = "JDrama"
 }

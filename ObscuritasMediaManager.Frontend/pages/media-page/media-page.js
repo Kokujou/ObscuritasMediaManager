@@ -28,6 +28,10 @@ export class MediaPage extends LitElementBase {
         return true;
     }
 
+    static get pageName() {
+        return 'Filme & Serien';
+    }
+
     get filteredMedia() {
         if (!this.filter) return session.mediaList.current();
 
@@ -39,22 +43,22 @@ export class MediaPage extends LitElementBase {
 
         /** @type {Subscription[]} */ this.subscriptions = [];
         /** @type {string[]} */ this.genreList = [];
-        this.filter = new MediaFilter();
         this.loading = true;
     }
 
     async connectedCallback() {
-        super.connectedCallback();
-
-        this.genreList = (await GenreService.getAll()).map((x) => x.name);
+        var genres = await GenreService.getAll();
+        this.genreList = genres.map((x) => x.name);
+        this.filter = new MediaFilter(genres.map((x) => x.id));
 
         var localSearchString = localStorage.getItem(`media.search`);
-        if (localSearchString) this.filter = JSON.parse(localSearchString);
+        if (localSearchString) this.filter = MediaFilter.fromJSON(localSearchString);
 
         this.subscriptions.push(session.mediaList.subscribe(() => this.requestUpdate(undefined)));
 
         this.loading = false;
         this.requestUpdate(undefined);
+        super.connectedCallback();
     }
 
     /**

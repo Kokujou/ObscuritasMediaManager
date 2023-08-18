@@ -8,9 +8,8 @@ import { renderCreateRecipePageStyles } from './create-recipe-page.css.js';
 import { renderCreateRecipePage } from './create-recipe-page.html.js';
 
 export class CreateRecipePage extends LitElementBase {
-    static get isPage() {
-        return true;
-    }
+    static isPage = true;
+    static pageName = 'Rezept erstellen';
 
     static get styles() {
         return renderCreateRecipePageStyles();
@@ -41,7 +40,6 @@ export class CreateRecipePage extends LitElementBase {
 
     constructor() {
         super();
-        document.title = 'Rezept erstellen';
 
         /** @type {RecipeModel} */ this.recipe = new RecipeModel();
         this.recipe.id = crypto.randomUUID();

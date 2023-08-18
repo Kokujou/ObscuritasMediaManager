@@ -3,6 +3,7 @@ import { LitElementBase } from '../../data/lit-element-base.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
 import { LoadingScreen } from '../../native-components/loading-screen/loading-screen.js';
+import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage, getPageName } from '../../services/extensions/url.extension.js';
 import { WelcomePage } from '../welcome-page/welcome-page.js';
 import { renderPageRoutingStyles } from './page-routing.css.js';
@@ -26,13 +27,8 @@ export class PageRouting extends LitElementBase {
         return PageRouting.instance.shadowRoot.querySelector('#current-page');
     }
 
-    get content() {
-        var content = Pages[session.currentPage.current()];
-        return content;
-    }
-
     get currentPage() {
-        return location.hash.length > 1 ? location.hash.substr(1) : getPageName(WelcomePage);
+        return Pages.find((x) => x.hash == location.hash.substr(1)) ?? Pages.find((x) => x.hash == getPageName(WelcomePage));
     }
 
     constructor() {
@@ -47,7 +43,7 @@ export class PageRouting extends LitElementBase {
         });
 
         window.onpopstate = (e) => {
-            session.currentPage.next(this.currentPage);
+            session.currentPage.next(this.currentPage.hash);
         };
         window.addEventListener('resize', () => this.requestUpdate(undefined));
         var self = this;
@@ -68,7 +64,7 @@ export class PageRouting extends LitElementBase {
 
     firstUpdated(_changedProperties) {
         super.firstUpdated(_changedProperties);
-        session.currentPage.next(this.currentPage);
+        session.currentPage.next(this.currentPage.hash);
         document.querySelector(LoadingScreen.tag).remove();
     }
 
@@ -85,12 +81,16 @@ export class PageRouting extends LitElementBase {
         window.history.replaceState({ path: newurl }, '', newurl);
     }
 
+    /**
+     * @param {string} newValue
+     * @param {string} oldValue
+     */
     async switchPage(newValue, oldValue) {
         // @ts-ignore
         if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`))
             this.classList.add(`current-page-${newValue}`);
 
-        if (Object.keys(Pages).includes(session.currentPage.current())) {
+        if (Pages.some((x) => x.hash == session.currentPage.current())) {
             this.changeHash(newValue);
             return;
         }
@@ -101,10 +101,12 @@ export class PageRouting extends LitElementBase {
     loadPageFromHash(e) {
         e?.preventDefault();
         var nextPage = this.currentPage;
-        if (session.currentPage.current() != nextPage) changePage(nextPage);
+        if (session.currentPage.current() != nextPage.hash) changePage(nextPage.hash);
     }
 
     render() {
+        if (this.currentPage.element.pageName) document.title = this.currentPage.element.pageName;
+        if (this.currentPage.element.icon) setFavicon(this.currentPage.element.icon);
         return renderPageRouting(this);
     }
 

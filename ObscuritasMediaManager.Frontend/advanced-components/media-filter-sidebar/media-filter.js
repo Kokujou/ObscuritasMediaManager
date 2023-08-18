@@ -20,15 +20,31 @@ export class MediaFilter {
         ];
     }
 
+    /**
+     * @param {string} text
+     */
+    static fromJSON(text) {
+        var object = JSON.parse(text);
+        for (var key in object) if (object[key]?.states) Object.setPrototypeOf(object[key], FilterEntry.prototype);
+        return object;
+    }
+
     /** @type {string} */ search;
     /** @type {'ascending' | 'descending'} */ sortingDirection = 'ascending';
     /** @type {keyof MediaModel} */ sortingProperty;
-    status = new FilterEntry(MediaStatus, CheckboxState.Ignore);
+    status = new FilterEntry(Object.values(MediaStatus), CheckboxState.Ignore);
     ratings = new FilterEntry([1, 2, 3, 4, 5], CheckboxState.Allow);
-    genres = new FilterEntry(String, CheckboxState.Ignore);
+    /** @type {FilterEntry<string>} */ genres;
     release = { min: null, max: null };
-    language = new FilterEntry(Nation, CheckboxState.Ignore);
-    category = new FilterEntry(MediaCategory, CheckboxState.Ignore);
-    contentWarnings = new FilterEntry(ContentWarning, CheckboxState.Ignore);
-    targetGroups = new FilterEntry(TargetGroup, CheckboxState.Ignore);
+    languages = new FilterEntry(Object.values(Nation), CheckboxState.Allow);
+    category = new FilterEntry(Object.values(MediaCategory), CheckboxState.Ignore);
+    contentWarnings = new FilterEntry(Object.values(ContentWarning), CheckboxState.Ignore);
+    targetGroups = new FilterEntry(Object.values(TargetGroup), CheckboxState.Ignore);
+
+    /**
+     * @param {string[]} genreIds
+     */
+    constructor(genreIds) {
+        this.genres = new FilterEntry(genreIds, CheckboxState.Ignore);
+    }
 }
