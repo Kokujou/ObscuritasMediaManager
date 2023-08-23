@@ -1835,6 +1835,8 @@ export var TargetGroup;
     TargetGroup["Adolescents"] = "Adolescents";
     TargetGroup["Adults"] = "Adults";
     TargetGroup["Families"] = "Families";
+    TargetGroup["Men"] = "Men";
+    TargetGroup["Women"] = "Women";
 })(TargetGroup || (TargetGroup = {}));
 export var ContentWarning;
 (function (ContentWarning) {

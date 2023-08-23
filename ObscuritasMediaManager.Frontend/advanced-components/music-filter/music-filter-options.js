@@ -1,3 +1,6 @@
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
+import { FilterEntry } from '../../data/filter-entry.js';
+import { session } from '../../data/session.js';
 import {
     Instrumentation,
     InstrumentType,
@@ -5,10 +8,7 @@ import {
     MusicGenre,
     Nation,
     Participants,
-} from '../obscuritas-media-manager-backend-client.js';
-import { CheckboxState } from './enumerations/checkbox-state.js';
-import { FilterEntry } from './filter-entry.js';
-import { session } from './session.js';
+} from '../../obscuritas-media-manager-backend-client.js';
 
 export class MusicFilterOptions {
     /** @type {string} */ search = '';
@@ -27,4 +27,13 @@ export class MusicFilterOptions {
     genres = new FilterEntry(Object.values(MusicGenre), CheckboxState.Ignore);
     instrumentations = new FilterEntry(Object.values(Instrumentation), CheckboxState.Ignore);
     participants = new FilterEntry(Object.values(Participants), CheckboxState.Allow);
+
+    /**
+     * @param {string} text
+     */
+    static fromJSON(text) {
+        var object = JSON.parse(text);
+        for (var key in object) if (object[key]?.states) Object.setPrototypeOf(object[key], FilterEntry.prototype);
+        return object;
+    }
 }

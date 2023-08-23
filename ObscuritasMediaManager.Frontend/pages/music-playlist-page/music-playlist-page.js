@@ -16,7 +16,7 @@ import {
     PlaylistModel,
     UpdateRequestOfMusicModel,
 } from '../../obscuritas-media-manager-backend-client.js';
-import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
+import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
 import { randomizeArray } from '../../services/extensions/array.extensions.js';
 import { openFileDialog } from '../../services/extensions/document.extensions.js';

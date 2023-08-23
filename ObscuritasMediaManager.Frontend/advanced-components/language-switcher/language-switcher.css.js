@@ -1,7 +1,7 @@
 import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { css } from '../../exports.js';
-import { saveTickIcon } from '../../resources/icons/general/save-tick-icon.svg.js';
-import { registerIcons } from '../../resources/icons/icon-registry.js';
+import { saveTickIcon } from '../../resources/inline-icons/general/save-tick-icon.svg.js';
+import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderLanguageSwitcherStyles() {

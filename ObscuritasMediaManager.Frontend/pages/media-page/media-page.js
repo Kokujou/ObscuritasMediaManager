@@ -47,6 +47,7 @@ export class MediaPage extends LitElementBase {
     }
 
     async connectedCallback() {
+        super.connectedCallback();
         var genres = await GenreService.getAll();
         this.genreList = genres.map((x) => x.name);
         this.filter = new MediaFilter(genres.map((x) => x.id));
@@ -58,7 +59,6 @@ export class MediaPage extends LitElementBase {
 
         this.loading = false;
         this.requestUpdate(undefined);
-        super.connectedCallback();
     }
 
     /**

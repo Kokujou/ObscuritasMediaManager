@@ -1,5 +1,5 @@
 import { html } from '../../exports.js';
-import { playlistIcon } from '../../resources/icons/playlist-icons/playlist-icon.svg.js';
+import { playlistIcon } from '../../resources/inline-icons/playlist-icons/playlist-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { PlaylistTile } from './playlist-tile.js';
 

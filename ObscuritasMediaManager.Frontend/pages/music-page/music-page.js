@@ -1,6 +1,6 @@
+import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options.js';
 import { PaginatedScrolling } from '../../advanced-components/paginated-scrolling/paginated-scrolling.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { MusicFilterOptions } from '../../data/music-filter-options.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
@@ -10,9 +10,9 @@ import { PlaylistSelectionDialog } from '../../dialogs/playlist-selection-dialog
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
-import { noteIcon } from '../../resources/icons/general/note-icon.svg.js';
-import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
-import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
+import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
+import { pauseIcon } from '../../resources/inline-icons/music-player-icons/pause-icon.svg.js';
+import { playIcon } from '../../resources/inline-icons/music-player-icons/play-icon.svg.js';
 import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
 import { sortBy } from '../../services/extensions/array.extensions.js';
 import { playAudio } from '../../services/extensions/audio.extension.js';
@@ -127,7 +127,7 @@ export class MusicPage extends LitElementBase {
             console.error(err);
         }
         var localSearchString = localStorage.getItem(`music.search`);
-        if (localSearchString) this.filter = Object.assign(new MusicFilterOptions(), JSON.parse(localSearchString));
+        if (localSearchString) this.filter = MusicFilterOptions.fromJSON(localSearchString);
 
         localSearchString = localStorage.getItem(`music.sorting`);
         if (localSearchString) {

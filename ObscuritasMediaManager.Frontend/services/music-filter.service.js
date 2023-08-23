@@ -1,5 +1,5 @@
+import { MusicFilterOptions } from '../advanced-components/music-filter/music-filter-options.js';
 import { CheckboxState } from '../data/enumerations/checkbox-state.js';
-import { MusicFilterOptions } from '../data/music-filter-options.js';
 import { ExtendedMusicModel } from '../data/music.model.extended.js';
 import { Mood, PlaylistModel } from '../obscuritas-media-manager-backend-client.js';
 import { ObjectFilterService } from './object-filter.service.js';
@@ -52,16 +52,9 @@ export class MusicFilterService {
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.participants, 'participants');
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.ratings, 'rating');
         ObjectFilterService.applyMultiPropertySearch(filteredTracks, filter.search, 'name', 'author', 'source');
-
-        var moodStates = filter.moods.states;
-        var forbiddenValues = /** @type {Mood[]} */ (
-            Object.keys(moodStates).filter((value) => moodStates[value] == CheckboxState.Forbid)
+        ObjectFilterService.applyMultiPropertyFilter(filteredTracks, filter.moods, (item) =>
+            [item.mood1].concat(item.mood2 == Mood.Unset ? [] : item.mood2)
         );
-        filteredTracks = filteredTracks.filter((item) => {
-            var mood2 = item.mood2 == Mood.Unset ? item.mood1 : item.mood2;
-            if (forbiddenValues.includes(item.mood1) || forbiddenValues.includes(mood2)) return false;
-            return true;
-        });
 
         if (filter.complete != CheckboxState.Ignore)
             filteredTracks = filteredTracks.filter((track) => track.complete == (filter.complete == CheckboxState.Allow));

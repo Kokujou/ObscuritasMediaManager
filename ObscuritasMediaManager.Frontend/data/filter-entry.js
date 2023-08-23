@@ -5,22 +5,22 @@ import { CheckboxState } from './enumerations/checkbox-state.js';
  * @template {Object.<string, U> | U[]} T
  */
 export class FilterEntry {
-    get allowed() {
+    get required() {
         return Object.entries(this.states)
             .filter((x) => x[1] == CheckboxState.Allow)
-            .map((x) => x[0]);
+            .map((x) => /** @type {U} */ (x[0]));
     }
 
     get ignored() {
         return Object.entries(this.states)
             .filter((x) => x[1] == CheckboxState.Ignore)
-            .map((x) => x[0]);
+            .map((x) => /** @type {U} */ (x[0]));
     }
 
     get forbidden() {
         return Object.entries(this.states)
             .filter((x) => x[1] == CheckboxState.Forbid)
-            .map((x) => x[0]);
+            .map((x) => /** @type {U} */ (x[0]));
     }
 
     /**@type  {Object.<U, CheckboxState>} */ states;

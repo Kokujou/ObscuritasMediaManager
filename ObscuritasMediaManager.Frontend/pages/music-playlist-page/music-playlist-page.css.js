@@ -1,8 +1,8 @@
 import { css } from '../../exports.js';
-import { changeVolumeIcon } from '../../resources/icons/music-player-icons/change-volume-icon.svg.js';
-import { fastForwardIcon } from '../../resources/icons/music-player-icons/fast-forward-icon.svg.js';
-import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
-import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
+import { changeVolumeIcon } from '../../resources/inline-icons/music-player-icons/change-volume-icon.svg.js';
+import { fastForwardIcon } from '../../resources/inline-icons/music-player-icons/fast-forward-icon.svg.js';
+import { pauseIcon } from '../../resources/inline-icons/music-player-icons/pause-icon.svg.js';
+import { playIcon } from '../../resources/inline-icons/music-player-icons/play-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { editIcon } from '../media-detail-page/images/edit-icon.svg.js';
 

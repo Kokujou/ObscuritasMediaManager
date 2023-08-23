@@ -1,3 +1,4 @@
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
 import { MediaDetailPage } from './media-detail-page.js';
 
@@ -16,7 +17,10 @@ export function renderMediaDetailPage(detailPage) {
             onclick="this.dispatchEvent(new CustomEvent('toggle'))"
             @toggle="${(e) => (detailPage.editMode = !detailPage.editMode)}"
         >
-            <custom-toggle ?checked="${detailPage.editMode}" id="edit-toggle"></custom-toggle>
+            <custom-toggle
+                .state="${detailPage.editMode ? CheckboxState.Allow : CheckboxState.Forbid}"
+                id="edit-toggle"
+            ></custom-toggle>
             <div id="toggle-edit-text">${detailPage.editMode ? 'Bearbeitung deaktivieren' : 'Bearbeitung aktivieren'}</div>
         </div>
         <page-layout>

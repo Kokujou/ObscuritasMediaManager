@@ -1,6 +1,6 @@
 import { css } from '../../exports.js';
 import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg.js';
-import { importIcon } from '../../resources/icons/general/import-icon.svg.js';
+import { importIcon } from '../../resources/inline-icons/general/import-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderEditPlaylistDialogStyles() {

@@ -2,6 +2,7 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { MoodColors } from '../../data/enumerations/mood.js';
 import { MusicSortingProperties } from '../../data/music-sorting-properties.js';
 import { html } from '../../exports.js';
+import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
 import {
     Instrumentation,
     InstrumentType,
@@ -10,8 +11,7 @@ import {
     Nation,
     Participants,
 } from '../../obscuritas-media-manager-backend-client.js';
-import { IconRegistry } from '../../resources/icons/icon-registry.js';
-import { getKeyFor } from '../../services/extensions/object.extensions.js';
+import { IconRegistry } from '../../resources/inline-icons/icon-registry.js';
 import { MusicFilter } from './music-filter.js';
 
 /**
@@ -62,10 +62,16 @@ export function renderMusicFilter(musicFilter) {
                 </div>
                 <div id="sorting-container">
                     <drop-down
-                        .value="${MusicSortingProperties[musicFilter.sortingProperty]}"
+                        .options="${Object.entries(MusicSortingProperties).map((x) =>
+                            DropDownOption.create({
+                                value: x[0],
+                                text: x[1],
+                                state: x[0] == musicFilter.sortingProperty ? CheckboxState.Ignore : CheckboxState.Forbid,
+                            })
+                        )}"
+                        unsetText="Keine Sortierung"
                         maxDisplayDepth="5"
-                        .options="${Object.values(MusicSortingProperties)}"
-                        @selectionChange="${(e) => musicFilter.changeSorting(getKeyFor(MusicSortingProperties, e.detail.value))}"
+                        @selectionChange="${(e) => musicFilter.changeSorting(e.detail.option.value)}"
                     >
                     </drop-down>
                     <div
@@ -222,14 +228,20 @@ export function renderMusicFilter(musicFilter) {
                     ></div>
                 </div>
                 <drop-down
-                    @selectionChange="${(e) => musicFilter.handleDropdownChange('moods', e.detail.value)}"
-                    .values="${Object.keys(musicFilter.filter.moods.states).filter(
-                        (key) => musicFilter.filter.moods.states[key] == CheckboxState.Ignore
+                    @selectionChange="${(e) => musicFilter.toggleFilter('moods', e.detail.option.value, e.detail.option.state)}"
+                    .options="${Object.entries(Mood).map((x) =>
+                        DropDownOption.create({
+                            value: x[0],
+                            text: x[1],
+                            color: MoodColors[x[0]],
+                            state: musicFilter.filter.moods.states[x[0]],
+                        })
                     )}"
+                    unsetText="Keine Einträge ausgewählt"
                     multiselect
+                    threeValues
+                    useToggle
                     maxDisplayDepth="5"
-                    .options="${Object.values(Mood)}"
-                    .colors="${MoodColors}"
                 >
                 </drop-down>
             </div>
@@ -246,13 +258,15 @@ export function renderMusicFilter(musicFilter) {
                     ></div>
                 </div>
                 <drop-down
-                    @selectionChange="${(e) => musicFilter.handleDropdownChange('genres', e.detail.value)}"
-                    .values="${Object.keys(musicFilter.filter.genres.states).filter(
-                        (key) => musicFilter.filter.genres.states[key] == CheckboxState.Ignore
+                    @selectionChange="${(e) => musicFilter.toggleFilter('genres', e.detail.option.value, e.detail.option.state)}"
+                    .options="${Object.entries(MusicGenre).map((x) =>
+                        DropDownOption.create({ value: x[0], state: musicFilter.filter.genres.states[x[0]], text: x[1] })
                     )}"
                     multiselect
+                    useToggle
+                    threeValues
+                    unsetText="Keine Einträge ausgewählt"
                     maxDisplayDepth="5"
-                    .options="${Object.values(MusicGenre)}"
                 >
                 </drop-down>
             </div>
@@ -269,13 +283,14 @@ export function renderMusicFilter(musicFilter) {
                     ></div>
                 </div>
                 <drop-down
-                    @selectionChange="${(e) => musicFilter.handleDropdownChange('instrumentations', e.detail.value)}"
-                    .values="${Object.keys(musicFilter.filter.instrumentations.states).filter(
-                        (key) => musicFilter.filter.instrumentations.states[key] == CheckboxState.Ignore
+                    @selectionChange="${(e) =>
+                        musicFilter.toggleFilter('instrumentations', e.detail.option.value, e.detail.option.state)}"
+                    .options="${Object.values(Instrumentation).map((key) =>
+                        DropDownOption.create({ value: key, text: key, state: musicFilter.filter.instrumentations.states[key] })
                     )}"
+                    useToggle
                     multiselect
                     maxDisplayDepth="5"
-                    .options="${Object.values(Instrumentation)}"
                 >
                 </drop-down>
             </div>

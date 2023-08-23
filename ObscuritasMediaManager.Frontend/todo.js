@@ -10,6 +10,7 @@
  * - browse existing tracks to add to playlist
  */
 
+//TODO: think about mood filter, so you can search for a mood being either mood1 or mood2
 //TODO: (optional) create templates for edit
 //TODO: improve re-upload algorithm to not overwrite or duplicate data (media-pages)
 //TODO: Fix: if dropdown has one one element -> select by default (Labels)

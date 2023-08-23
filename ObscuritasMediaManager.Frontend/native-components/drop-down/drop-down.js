@@ -1,4 +1,6 @@
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { DropDownOption } from './drop-down-option.js';
 import { renderDropDownStyles } from './drop-down.css.js';
 import { renderDropDown } from './drop-down.html.js';
 
@@ -10,41 +12,6 @@ export class DropDown extends LitElementBase {
 
     clickedOnElement = false;
 
-    set value(value) {
-        if (this.multiselect && this.values.includes(value)) {
-            this.values = this.values.filter((x) => x != value);
-        } else if (this.multiselect) {
-            this.values.push(value);
-        }
-
-        this._currentIndex = value;
-        this.dispatchEvent(
-            new CustomEvent('selectionChange', { detail: { value: this.multiselect ? this.values : this.value } })
-        );
-        this.dispatchEvent(new Event('change'));
-        this.requestUpdate(undefined);
-    }
-
-    get caption() {
-        if (!this.multiselect) return this.value;
-        else if (this.values.length == 0) return 'Keine Einträge ausgewählt';
-        else return this.values.join(', ');
-    }
-
-    get value() {
-        return this._currentIndex;
-    }
-
-    get filteredOptions() {
-        if (!this.useSearch) return this.options;
-
-        return this.options.filter((x) => x.toLocaleLowerCase().match(this.searchFilter.toLocaleLowerCase()));
-    }
-
-    checkValidity() {
-        return true;
-    }
-
     static get styles() {
         return renderDropDownStyles();
     }
@@ -52,28 +19,37 @@ export class DropDown extends LitElementBase {
     static get properties() {
         return {
             options: { type: Array, reflect: true },
-            value: { type: String, reflect: true },
+            unsetText: { type: String, reflect: true },
             maxDisplayDepth: { type: Number, reflect: true },
             required: { type: Boolean, reflect: true },
+            threeValues: { type: Boolean, reflect: true },
+            multiselect: { type: Boolean, reflect: true },
+            useSearch: { type: Boolean, reflect: true },
+            useToggle: { type: Boolean, reflect: true },
             colors: { type: Object, reflect: true },
             showDropDown: { type: Boolean, reflect: false },
-            useSearch: { type: Boolean, reflect: false },
-            multiselect: { type: Boolean, reflect: false },
         };
+    }
+
+    get caption() {
+        var notForbiddenOptions = this.options.filter((x) => x.state != CheckboxState.Forbid);
+        if (!this.multiselect) return notForbiddenOptions[0]?.text ?? this.unsetText;
+        else if (notForbiddenOptions.length == 0) return this.unsetText;
+        else return notForbiddenOptions.map((x) => x.text).join(', ');
     }
 
     constructor() {
         super();
         this.maxDisplayDepth = 5;
-        /** @type {string[]} */ this.options = [];
-        this._currentIndex = '';
+        this._currentIndex = 0;
+        this.unsetText = 'Unset';
         this.required = false;
         this.useSearch = false;
+        this.useToggle = false;
         this.multiselect = false;
+        this.threeValues = false;
         this.searchFilter = '';
-        /** @type {string[]} */ this.values = [];
-        /** @type {Object.<string,string>} */ this.colors = {};
-
+        /** @type {DropDownOption[]} */ this.options = [];
         this.addEventListener('click', () => {
             this.clickedOnElement = true;
         });
@@ -105,9 +81,17 @@ export class DropDown extends LitElementBase {
         this.requestUpdate(undefined);
     }
 
-    valueActive(value) {
-        if (this.multiselect && this.values.includes(value)) return true;
-        if (!this.multiselect && this.value == value) return true;
-        return false;
+    /**
+     *
+     * @param {DropDownOption} option
+     * @param {CheckboxState} state
+     */
+    changeOptionState(option, state) {
+        if (state != CheckboxState.Forbid && !this.multiselect) for (let o of this.options) o.state = CheckboxState.Forbid;
+        option.state = state;
+
+        this.dispatchEvent(new CustomEvent('selectionChange', { detail: { option } }));
+        this.dispatchEvent(new Event('change'));
+        this.requestUpdate(undefined);
     }
 }

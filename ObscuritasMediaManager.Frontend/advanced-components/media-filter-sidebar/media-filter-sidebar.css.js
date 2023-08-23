@@ -1,7 +1,7 @@
 import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { css } from '../../exports.js';
-import { revertIcon } from '../../resources/icons/general/revert-icon.svg.js';
-import { registerIcons } from '../../resources/icons/icon-registry.js';
+import { revertIcon } from '../../resources/inline-icons/general/revert-icon.svg.js';
+import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderMediaFilterSidebarStyles() {
@@ -9,6 +9,7 @@ export function renderMediaFilterSidebarStyles() {
         ${registerIcons()}
 
         ${renderLanguageFlags()}
+
 
         :host {
             border-radius: 50px;
@@ -122,6 +123,17 @@ export function renderMediaFilterSidebarStyles() {
             width: 100%;
         }
 
+        #content-warning-filter tri-value-checkbox,
+        #target-group-filter tri-value-checkbox {
+            --padding: 15px;
+        }
+
+        #content-warning-filter tri-value-checkbox .icon-button,
+        #target-group-filter tri-value-checkbox .icon-button {
+            width: 35px;
+            height: 35px;
+        }
+
         .icon-button {
             width: 30px;
             height: 30px;
@@ -133,6 +145,16 @@ export function renderMediaFilterSidebarStyles() {
 
         tri-value-checkbox {
             margin: 0 5px;
+        }
+
+        #footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 10px;
         }
     `;
 }

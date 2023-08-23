@@ -1,7 +1,10 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
+import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
 import { ContentWarning, MediaCategory, Nation, TargetGroup } from '../../obscuritas-media-manager-backend-client.js';
-import { IconRegistry } from '../../resources/icons/icon-registry.js';
+import { registerContentWarnings } from '../../resources/icons/content-warnings/register-content-warnings.js';
+import { registerTargetGroups } from '../../resources/icons/target-groups/register-target-groups.js';
+import { IconRegistry } from '../../resources/inline-icons/icon-registry.js';
 import { MediaFilterSidebar } from './media-filter-sidebar.js';
 import { MediaFilter } from './media-filter.js';
 
@@ -10,6 +13,9 @@ import { MediaFilter } from './media-filter.js';
  */
 export function renderMediaFilterSidebar(sidebar) {
     return html`
+        ${registerContentWarnings()}
+        <!-- -->
+        ${registerTargetGroups()}
         <div id="heading">
             <div id="heading-text">Suche</div>
             <div class="icon-button reset-button" @click="${() => sidebar.resetFilter()}"></div>
@@ -32,15 +38,17 @@ export function renderMediaFilterSidebar(sidebar) {
                 <div id="sort-input">
                     <drop-down
                         id="sorting-property-dropdown"
-                        .value="${MediaFilter.SortableProperties.find((x) => x.property == sidebar.filter.sortingProperty)
-                            ?.translation ?? 'Keine Sortierung'}"
+                        .options="${MediaFilter.SortableProperties.map((x) =>
+                            DropDownOption.create({
+                                value: x,
+                                text: x.translation,
+                                state: x.property == sidebar.filter.sortingProperty ? CheckboxState.Ignore : CheckboxState.Forbid,
+                            })
+                        )}"
+                        unsetText="Keine Sortierung"
                         maxDisplayDepth="5"
-                        .options="${MediaFilter.SortableProperties.map((x) => x.translation)}"
                         @selectionChange="${(e) =>
-                            sidebar.changeFilterProperty(
-                                'sortingProperty',
-                                MediaFilter.SortableProperties.find((x) => x.translation == e.detail.value)?.property
-                            )}"
+                            sidebar.changeFilterProperty('sortingProperty', e.detail.option.value.property)}"
                     >
                     </drop-down>
                     <div
@@ -91,13 +99,14 @@ export function renderMediaFilterSidebar(sidebar) {
                     ></div>
                 </div>
                 <drop-down
-                    .values="${Object.entries(sidebar.filter.category.states)
-                        .filter((x) => x[1] == CheckboxState.Ignore)
-                        .map((x) => x[0])}"
-                    .options="${Object.values(MediaCategory)}"
+                    .options="${Object.values(MediaCategory).map((x) =>
+                        DropDownOption.create({ value: x, state: sidebar.filter.category.states[x], text: x })
+                    )}"
+                    useToggle
                     multiselect
                     maxDisplayDepth="5"
-                    @selectionChange="${(e) => sidebar.handleDropdownChange('category', e.detail.value)}"
+                    @selectionChange="${(e) =>
+                        sidebar.setFilterProperty('category', e.detail.option.value, e.detail.option.state)}"
                 ></drop-down>
             </div>
             <div id="rating-filter" class="filter-entry" complex>
@@ -123,7 +132,6 @@ export function renderMediaFilterSidebar(sidebar) {
                         Genres:
                         <div class="icon-button ${IconRegistry.PopupIcon}" @click="${() => sidebar.openGenreDialog()}"></div>
                     </div>
-
                     <div
                         class="icon-button ${IconRegistry.SelectAllIcon}"
                         @click="${() => sidebar.setArrayFilter('genres', 'all', CheckboxState.Ignore)}"
@@ -151,6 +159,10 @@ export function renderMediaFilterSidebar(sidebar) {
             <div id="content-warning-filter" class="filter-entry" complex>
                 <div class="filter-heading">
                     <div class="filter-label">Inhaltswarnungen:</div>
+                    <div
+                        class="icon-button reset-button"
+                        @click="${() => sidebar.setArrayFilter('contentWarnings', 'all', CheckboxState.Ignore)}"
+                    ></div>
                 </div>
                 <side-scroller>
                     ${Object.values(ContentWarning).map(
@@ -159,14 +171,19 @@ export function renderMediaFilterSidebar(sidebar) {
                                 allowThreeValues
                                 .value="${sidebar.filter.contentWarnings.states[warning]}"
                                 @valueChanged="${(e) => sidebar.setFilterProperty('contentWarnings', warning, e.detail.value)}"
-                                ><div class="icon-button" content-warning="${warning}"></div
-                            ></tri-value-checkbox>`
+                            >
+                                <div class="icon-button" content-warning="${warning}"></div>
+                            </tri-value-checkbox>`
                     )}
                 </side-scroller>
             </div>
             <div id="target-group-filter" class="filter-entry" complex>
                 <div class="filter-heading">
                     <div class="filter-label">Zielgruppe:</div>
+                    <div
+                        class="icon-button reset-button"
+                        @click="${() => sidebar.setArrayFilter('targetGroups', 'all', CheckboxState.Ignore)}"
+                    ></div>
                 </div>
                 <side-scroller>
                     ${Object.values(TargetGroup).map(
@@ -181,5 +198,6 @@ export function renderMediaFilterSidebar(sidebar) {
                 >
             </div>
         </div>
+        <slot id="footer" name="footer"></slot>
     `;
 }

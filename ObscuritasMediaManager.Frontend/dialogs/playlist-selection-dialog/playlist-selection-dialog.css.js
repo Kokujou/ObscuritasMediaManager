@@ -1,5 +1,5 @@
 import { css } from '../../exports.js';
-import { popupIcon } from '../../resources/icons/general/popup-icon.svg.js';
+import { popupIcon } from '../../resources/inline-icons/general/popup-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderPlaylistSelectionDialogStyles() {

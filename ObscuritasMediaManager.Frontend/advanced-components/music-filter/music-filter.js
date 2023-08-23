@@ -1,6 +1,5 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { MusicFilterOptions } from '../../data/music-filter-options.js';
 import { MusicSortingProperties } from '../../data/music-sorting-properties.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
@@ -8,6 +7,7 @@ import { SortingDirections } from '../../data/sorting-directions.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { GenreModel, MusicModel } from '../../obscuritas-media-manager-backend-client.js';
+import { MusicFilterOptions } from './music-filter-options.js';
 import { renderMusicFilterStyles } from './music-filter.css.js';
 import { renderMusicFilter } from './music-filter.html.js';
 

@@ -1,6 +1,6 @@
 import { html } from '../../exports.js';
-import { importIcon } from '../../resources/icons/general/import-icon.svg.js';
-import { plusIcon } from '../../resources/icons/general/plus-icon.svg.js';
+import { importIcon } from '../../resources/inline-icons/general/import-icon.svg.js';
+import { plusIcon } from '../../resources/inline-icons/general/plus-icon.svg.js';
 import { getPageName } from '../../services/extensions/url.extension.js';
 import { MediaDetailPage } from '../media-detail-page/media-detail-page.js';
 import { MediaPage } from './media-page.js';
@@ -11,11 +11,9 @@ import { MediaPage } from './media-page.js';
 export function renderMediaPageTemplate(page) {
     return html`<page-layout>
             <div id="media-page-container">
-                <media-filter-sidebar
-                    id="media-filter"
-                    .filter="${page.filter}"
-                    @change="${() => page.requestUpdate(undefined)}"
-                ></media-filter-sidebar>
+                <media-filter-sidebar id="media-filter" .filter="${page.filter}" @change="${() => page.requestUpdate(undefined)}">
+                    <div slot="footer" id="result-overview">${page.filteredMedia.length} Ergebnisse gefunden</div>
+                </media-filter-sidebar>
                 <paginated-scrolling id="results" scrollTopThreshold="50">
                     ${page.loading
                         ? html`<partial-loading></partial-loading>`

@@ -7,4 +7,6 @@ public enum TargetGroup
     Adolescents,
     Adults,
     Families,
+    Men,
+    Women
 }

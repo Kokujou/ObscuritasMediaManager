@@ -1,6 +1,7 @@
 import { ExtendedIngredientUnit } from '../../data/enumerations/extended-ingerdient-unit.js';
 import { TimeSpan } from '../../data/timespan.js';
 import { html } from '../../exports.js';
+import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
 import { CookingTechnique, Course, Ingredient, IngredientModel } from '../../obscuritas-media-manager-backend-client.js';
 import { createRange, groupBy } from '../../services/extensions/array.extensions.js';
 import { CreateRecipePage } from './create-recipe-page.js';
@@ -66,9 +67,8 @@ export function renderCreateRecipePage(page) {
                                 <drop-down
                                     id="course"
                                     tabindex="0"
-                                    .options="${Object.values(Course)}"
-                                    .value="${page.recipe.course}"
-                                    @selectionChange="${(e) => page.changeProperty('course', e.detail.value)}"
+                                    .options="${DropDownOption.createSimpleArray(Object.values(Course), page.recipe.course)}"
+                                    @selectionChange="${(e) => page.changeProperty('course', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                             <div class="description-input">
@@ -76,9 +76,11 @@ export function renderCreateRecipePage(page) {
                                 <drop-down
                                     id="main-ingredient"
                                     tabindex="0"
-                                    .options="${Object.values(Ingredient)}"
-                                    .value="${page.recipe.mainIngredient}"
-                                    @selectionChange="${(e) => page.changeProperty('mainIngredient', e.detail.value)}"
+                                    .options="${DropDownOption.createSimpleArray(
+                                        Object.values(Ingredient),
+                                        page.recipe.mainIngredient
+                                    )}"
+                                    @selectionChange="${(e) => page.changeProperty('mainIngredient', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                             <div class="description-input">
@@ -86,9 +88,11 @@ export function renderCreateRecipePage(page) {
                                 <drop-down
                                     id="technique"
                                     tabindex="0"
-                                    .options="${Object.values(CookingTechnique)}"
-                                    .value="${page.recipe.technique}"
-                                    @selectionChange="${(e) => page.changeProperty('technique', e.detail.value)}"
+                                    .options="${DropDownOption.createSimpleArray(
+                                        Object.values(CookingTechnique),
+                                        page.recipe.technique
+                                    )}"
+                                    @selectionChange="${(e) => page.changeProperty('technique', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                         </div>

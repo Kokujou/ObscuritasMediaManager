@@ -1,5 +1,5 @@
 import { html } from '../../exports.js';
-import { IconRegistry } from '../../resources/icons/icon-registry.js';
+import { IconRegistry } from '../../resources/inline-icons/icon-registry.js';
 import { MediaPlaylist } from './media-playlist.js';
 
 /**

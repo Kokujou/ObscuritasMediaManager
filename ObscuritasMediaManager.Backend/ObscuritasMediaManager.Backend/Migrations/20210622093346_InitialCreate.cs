@@ -20,8 +20,7 @@ public partial class InitialCreate : Migration
 
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.CreateTable(name: "Genres",
-                                     columns: table =>
+        migrationBuilder.CreateTable(name: "Genres", columns: table =>
                                                   new
                                                   {
                                                       Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -30,8 +29,7 @@ public partial class InitialCreate : Migration
                                                   },
                                      constraints: table => table.PrimaryKey("PK_Genres", x => x.Id));
 
-        migrationBuilder.CreateTable(name: "Instruments",
-                                     columns: table =>
+        migrationBuilder.CreateTable(name: "Instruments", columns: table =>
                                                   new
                                                   {
                                                       Name = table.Column<string>(type: "TEXT", nullable: false),
@@ -39,8 +37,7 @@ public partial class InitialCreate : Migration
                                                   },
                                      constraints: table => table.PrimaryKey("PK_Instruments", x => x.Name));
 
-        migrationBuilder.CreateTable(name: "Media",
-                                     columns: table =>
+        migrationBuilder.CreateTable(name: "Media", columns: table =>
                                                   new
                                                   {
                                                       Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -55,8 +52,7 @@ public partial class InitialCreate : Migration
                                                   },
                                      constraints: table => table.PrimaryKey("PK_Media", x => x.Id));
 
-        migrationBuilder.CreateTable(name: "Music",
-                                     columns: table =>
+        migrationBuilder.CreateTable(name: "Music", columns: table =>
                                                   new
                                                   {
                                                       Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -74,8 +70,7 @@ public partial class InitialCreate : Migration
                                                   },
                                      constraints: table => table.PrimaryKey("PK_Music", x => x.Id));
 
-        migrationBuilder.CreateTable(name: "StreamingEntries",
-                                     columns: table =>
+        migrationBuilder.CreateTable(name: "StreamingEntries", columns: table =>
                                                   new
                                                   {
                                                       Id = table.Column<Guid>(type: "TEXT", nullable: false),

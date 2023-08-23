@@ -333,7 +333,9 @@ export declare enum TargetGroup {
     Children = "Children",
     Adolescents = "Adolescents",
     Adults = "Adults",
-    Families = "Families"
+    Families = "Families",
+    Men = "Men",
+    Women = "Women"
 }
 export declare enum ContentWarning {
     Violence = "Violence",

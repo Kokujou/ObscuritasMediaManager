@@ -1,6 +1,6 @@
 import { html } from '../../exports.js';
 import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg.js';
-import { dragIcon } from '../../resources/icons/general/drag-icon.svg.js';
+import { dragIcon } from '../../resources/inline-icons/general/drag-icon.svg.js';
 import { sortBy } from '../../services/extensions/array.extensions.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { PriorityList } from './priority-list.js';

@@ -1,5 +1,5 @@
 import { css } from '../../exports.js';
-import { plusIcon } from '../../resources/icons/general/plus-icon.svg.js';
+import { plusIcon } from '../../resources/inline-icons/general/plus-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderRecipesPageStyles() {

@@ -1,15 +1,15 @@
 import { css, unsafeCSS } from '../../exports.js';
 import { Nation } from '../../obscuritas-media-manager-backend-client.js';
-import { africaFlag } from '../../resources/icons/language-icons/africa-flag.svg.js';
-import { chinaFlag } from '../../resources/icons/language-icons/china-flag.svg.js';
-import { englishFlag } from '../../resources/icons/language-icons/english-flag.svg.js';
-import { germanFlag } from '../../resources/icons/language-icons/german-flag.svg.js';
-import { italyFlag } from '../../resources/icons/language-icons/italy-flag.svg.js';
-import { japanFlag } from '../../resources/icons/language-icons/japan-flag.svg.js';
-import { noLanguageIcon } from '../../resources/icons/language-icons/no-language.svg.js';
-import { russiaFlag } from '../../resources/icons/language-icons/russia-flag.svg.js';
-import { southAmericaFlag } from '../../resources/icons/language-icons/south-america-flag.svg.js';
-import { spainFlag } from '../../resources/icons/language-icons/spain-flag.svg.js';
+import { africaFlag } from '../../resources/inline-icons/language-icons/africa-flag.svg.js';
+import { chinaFlag } from '../../resources/inline-icons/language-icons/china-flag.svg.js';
+import { englishFlag } from '../../resources/inline-icons/language-icons/english-flag.svg.js';
+import { germanFlag } from '../../resources/inline-icons/language-icons/german-flag.svg.js';
+import { italyFlag } from '../../resources/inline-icons/language-icons/italy-flag.svg.js';
+import { japanFlag } from '../../resources/inline-icons/language-icons/japan-flag.svg.js';
+import { noLanguageIcon } from '../../resources/inline-icons/language-icons/no-language.svg.js';
+import { russiaFlag } from '../../resources/inline-icons/language-icons/russia-flag.svg.js';
+import { southAmericaFlag } from '../../resources/inline-icons/language-icons/south-america-flag.svg.js';
+import { spainFlag } from '../../resources/inline-icons/language-icons/spain-flag.svg.js';
 import { renderBackgroundImage } from '../../services/extensions/style.extensions.js';
 
 export function renderLanguageFlags() {

@@ -1,5 +1,5 @@
 import { css } from '../../exports.js';
-import { registerIcons } from '../../resources/icons/icon-registry.js';
+import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { editIcon } from './images/edit-icon.svg.js';
 import { trashIcon } from './images/trash-icon.svg.js';

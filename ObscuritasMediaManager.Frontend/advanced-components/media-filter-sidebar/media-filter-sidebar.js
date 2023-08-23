@@ -81,16 +81,6 @@ export class MediaFilterSidebar extends LitElementBase {
         this.notifyFilterUpdated();
     }
 
-    /**
-     * @param {StringKeyOf<MediaFilter>} filter
-     * @param {string[]} selectedValues
-     */
-    handleDropdownChange(filter, selectedValues) {
-        Object.keys(this.filter[filter].states).forEach((key) => {
-            this.setFilterProperty(filter, key, selectedValues.includes(key) ? CheckboxState.Ignore : CheckboxState.Forbid);
-        });
-    }
-
     resetFilter() {
         var newFilter = new MediaFilter(Object.keys(this.filter.genres.states));
         for (var prop in newFilter) this.filter[prop] = newFilter[prop];
@@ -105,7 +95,7 @@ export class MediaFilterSidebar extends LitElementBase {
 
     async openGenreDialog() {
         var genres = await GenreService.getAll();
-        var allowedGenres = genres.filter((x) => this.filter.genres.allowed.includes(x.id));
+        var allowedGenres = genres.filter((x) => this.filter.genres.required.includes(x.id));
         var forbiddenGenres = genres.filter((x) => this.filter.genres.forbidden.includes(x.id));
         var dialog = GenreDialog.show({
             genres,

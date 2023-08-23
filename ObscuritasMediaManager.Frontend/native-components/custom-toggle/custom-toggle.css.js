@@ -1,4 +1,5 @@
-import { css } from '../../exports.js';
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
+import { css, unsafeCSS } from '../../exports.js';
 
 export function renderCustomToggleStyles() {
     return css`
@@ -10,12 +11,16 @@ export function renderCustomToggleStyles() {
             --width: 60px;
             --height: 30px;
             height: var(--height);
-            width: var(--width);
+            min-width: var(--width);
             cursor: pointer;
             transition: background-color 1s ease;
 
             filter: saturate(1.5);
             box-shadow: 0 0 5px black;
+        }
+
+        :host([threeValues]) {
+            --width: 90px;
         }
 
         #slider {
@@ -29,11 +34,21 @@ export function renderCustomToggleStyles() {
             transition: all 1s ease;
         }
 
-        :host([checked]) {
+        :host([state='${unsafeCSS(CheckboxState.Ignore)}']) {
             background-color: var(--toggled-color, var(--background-color));
         }
 
-        :host([checked]) #slider {
+        :host([state='${unsafeCSS(CheckboxState.Ignore)}']) #slider {
+            margin-left: calc(var(--width) / 2 - var(--height) / 2 + 5px);
+            rotate: 90deg;
+        }
+
+        :host([state='${unsafeCSS(CheckboxState.Allow)}']) {
+            background-color: var(--toggled-color, var(--background-color));
+        }
+
+        :host([state='${unsafeCSS(CheckboxState.Allow)}']) #slider,
+        :host(:not([threeValues])[state='${unsafeCSS(CheckboxState.Ignore)}']) #slider {
             margin-left: calc(var(--width) - var(--height) + 5px);
             rotate: 180deg;
         }

@@ -2,7 +2,7 @@ import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-ty
 import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
-import { registerIcons } from '../../resources/icons/icon-registry.js';
+import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
 export function renderMusicFilterStyles() {
     return css`

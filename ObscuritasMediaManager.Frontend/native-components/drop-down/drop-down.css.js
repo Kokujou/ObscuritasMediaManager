@@ -87,7 +87,7 @@ export function renderDropDownStyles() {
             position: absolute;
             top: 100%;
 
-            padding: 10px 25px;
+            padding: 10px 0;
 
             color: var(--font-color);
             border: none;
@@ -103,14 +103,15 @@ export function renderDropDownStyles() {
             font-weight: 400;
             text-transform: capitalize;
 
-            padding: 0 10px;
-            width: auto;
+            padding: 0 35px;
+            width: calc(100% - 70px);
             height: 40px;
 
             white-space: nowrap;
 
-            display: flex;
+            display: inline-flex;
             align-items: center;
+            gap: 10px;
         }
 
         .label {
@@ -118,7 +119,7 @@ export function renderDropDownStyles() {
             flex: auto;
         }
 
-        :host(:not([useSearch]):not([multiselect])).option:hover,
+        .option:hover,
         .option.selected {
             cursor: pointer;
             color: var(--dropdown-compact-hover-color, inherit);

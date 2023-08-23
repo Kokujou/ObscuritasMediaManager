@@ -1,6 +1,6 @@
 import { css, unsafeCSS } from '../../exports.js';
-import { pauseIcon } from '../../resources/icons/music-player-icons/pause-icon.svg.js';
-import { playIcon } from '../../resources/icons/music-player-icons/play-icon.svg.js';
+import { pauseIcon } from '../../resources/inline-icons/music-player-icons/pause-icon.svg.js';
+import { playIcon } from '../../resources/inline-icons/music-player-icons/play-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { PlayMusicDialog } from './play-music-dialog.js';
 

@@ -1,6 +1,6 @@
 import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { css } from '../../exports.js';
-import { registerIcons } from '../../resources/icons/icon-registry.js';
+import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
 export function renderPlaylistTileStyles() {
     return css`

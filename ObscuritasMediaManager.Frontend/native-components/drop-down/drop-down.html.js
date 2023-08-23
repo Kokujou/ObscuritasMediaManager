@@ -1,4 +1,6 @@
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
+import { DropDownOption } from './drop-down-option.js';
 import { DropDown } from './drop-down.js';
 
 /**
@@ -60,9 +62,9 @@ function showDropDown(dropdown) {
                   `
                 : ''}
             ${dropdown.options
-                .filter((x) => x.toLocaleLowerCase().match(dropdown.searchFilter.toLocaleLowerCase()))
-                .map((option) => {
-                    return renderDropDownOption(dropdown, option, option);
+                .filter((x) => x.text.toLocaleLowerCase().match(dropdown.searchFilter.toLocaleLowerCase()))
+                .map((options) => {
+                    return renderDropDownOption(dropdown, options);
                 })}
         </div>
         <div class="dropdown-icon-container ${dropdown.showDropDown ? 'dropped-down' : ''}">></div>
@@ -71,36 +73,36 @@ function showDropDown(dropdown) {
 
 /**
  * @param {DropDown} dropdown
- * @param {String} key
- * @param {String} value
+ * @param {DropDownOption} option
  */
-function renderDropDownOption(dropdown, key, value) {
+function renderDropDownOption(dropdown, option) {
     return html`
         <div
-            ?selected="${dropdown.valueActive(value)}"
+            ?selected="${option.state != CheckboxState.Forbid}"
             class="option"
-            value="${value}"
-            @click=${() => {
-                if (!dropdown.multiselect || dropdown.useSearch) dropdown.value = value;
-            }}
+            @click=${() =>
+                dropdown.changeOptionState(
+                    option,
+                    option.state == CheckboxState.Ignore ? CheckboxState.Forbid : CheckboxState.Ignore
+                )}
         >
-            ${dropdown.multiselect && !dropdown.useSearch ? renderToggle(dropdown, key, value) : key}
+            ${dropdown.multiselect && dropdown.useToggle ? renderToggle(dropdown, option) : option.text}
         </div>
     `;
 }
 
 /**
  * @param {DropDown} dropdown
- * @param {String} key
- * @param {String} value
+ * @param {DropDownOption} option
  */
-function renderToggle(dropdown, key, value) {
+function renderToggle(dropdown, option) {
     return html`
-        <div class="label">${key}</div>
+        <div class="label">${option.text}</div>
         <custom-toggle
-            style="--toggled-color:${dropdown.colors[key] || 'unset'}"
-            ?checked="${dropdown.valueActive(value)}"
-            @toggle="${() => (dropdown.value = value)}"
+            style="--toggled-color:${option.color || 'unset'}"
+            .state="${option.state}"
+            ?threeValues="${dropdown.threeValues}"
+            @toggle="${(e) => dropdown.changeOptionState(option, e.detail)}"
         ></custom-toggle>
     `;
 }

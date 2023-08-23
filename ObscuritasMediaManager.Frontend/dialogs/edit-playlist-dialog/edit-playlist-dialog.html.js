@@ -1,4 +1,5 @@
 import { html } from '../../exports.js';
+import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
 import { Nation } from '../../obscuritas-media-manager-backend-client.js';
 import { EditPlaylistDialog } from './edit-playlist-dialog.js';
 
@@ -68,15 +69,24 @@ export function renderEditPlaylistDialog(dialog) {
                             <div class="property-label">Sprache:</div>
                             <div class="property-value">
                                 <drop-down
-                                    .value="${dialog.newPlaylist.language}"
-                                    .options="${Object.values(Nation)}"
+                                    .options="${DropDownOption.createSimpleArray(
+                                        Object.values(Nation),
+                                        dialog.newPlaylist.language
+                                    )}"
+                                    @selectionChange="${(e) => dialog.changeProperty('language', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                         </div>
                         <div id="playlist-nation" class="property">
                             <div class="property-label">Nation:</div>
                             <div class="property-value">
-                                <drop-down .value="${dialog.newPlaylist.nation}" .options="${Object.values(Nation)}"></drop-down>
+                                <drop-down
+                                    .options="${DropDownOption.createSimpleArray(
+                                        Object.values(Nation),
+                                        dialog.newPlaylist.nation
+                                    )}"
+                                    @selectionChange="${(e) => dialog.changeProperty('nation', e.detail.option.value)}"
+                                ></drop-down>
                             </div>
                         </div>
                     </div>

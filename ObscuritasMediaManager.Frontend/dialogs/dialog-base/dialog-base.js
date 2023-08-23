@@ -95,11 +95,11 @@ export class DialogBase extends LitElementBase {
 
     accept() {
         if (!this.canAccept || !this.acceptActionText) return;
-        this.dispatchEvent(new CustomEvent('accept'));
+        this.dispatchEvent(new CustomEvent('accept', { composed: true, bubbles: true }));
     }
 
     decline() {
         if (!this.declineActionText) return;
-        this.dispatchEvent(new CustomEvent('decline'));
+        this.dispatchEvent(new CustomEvent('decline', { composed: true, bubbles: true }));
     }
 }

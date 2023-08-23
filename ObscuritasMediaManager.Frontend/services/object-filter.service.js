@@ -35,8 +35,7 @@ export class ObjectFilterService {
      */
     static applyPropertyFilter(list, filter, filterProperty, ignoreState = CheckboxState.Allow) {
         var results = this.#filterForbidden([...list], filter, filterProperty);
-        if (ignoreState == CheckboxState.Allow) return;
-        results = this.#filterNotForced([...results], filter, filterProperty);
+        if (ignoreState != CheckboxState.Allow) results = this.#filterNotForced([...results], filter, filterProperty);
 
         list.length = 0;
         list.push(...results);
@@ -53,7 +52,7 @@ export class ObjectFilterService {
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
         if (forbiddenValues.length == 0) return list;
 
-        return list.filter((item) => !item[filterProperty] || forbiddenValues.includes(`${item[filterProperty]}`));
+        return list.filter((item) => !item[filterProperty] || !forbiddenValues.includes(`${item[filterProperty]}`));
     }
 
     /**
@@ -93,6 +92,25 @@ export class ObjectFilterService {
     static applyRangeFilter(list, filter, property) {
         if (!filter.max || !filter.min) return list;
         var results = list.filter((x) => x[property] >= filter.min && x[property] <= filter.max);
+        list.length = 0;
+        list.push(...results);
+    }
+
+    /**
+     * @template T
+     * @template U
+     * @param {T[]} list
+     * @param {FilterEntry<U>} filter
+     * @param  {(item: T)=>U[]} selector
+     */
+    static applyMultiPropertyFilter(list, filter, selector) {
+        var results = list.filter((item) => {
+            var array = selector(item);
+            if (array.some((prop) => filter.forbidden.includes(prop))) return false;
+            if (!filter.required.every((prop) => array.includes(prop))) return false;
+            return true;
+        });
+
         list.length = 0;
         list.push(...results);
     }
