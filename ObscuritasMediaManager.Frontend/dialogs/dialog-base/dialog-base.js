@@ -17,6 +17,8 @@ import { renderDialogBase } from './dialog-base.html.js';
  */
 
 export class DialogBase extends LitElementBase {
+    static instantiated = 0;
+
     static get styles() {
         return renderDialogBaseStyles();
     }
@@ -67,6 +69,7 @@ export class DialogBase extends LitElementBase {
         /** @type {string} */ this.declineActionText;
         /** @type {Partial<DialogProperties>} */ this.properties;
         /** @type {Boolean} */ this.canAccept;
+        DialogBase.instantiated++;
     }
 
     connectedCallback() {

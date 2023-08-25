@@ -138,7 +138,6 @@
                 <Item Id="{5ef37331-e893-4f47-9a23-1a1aa2b81f1e}">
                   <Sorting>Visibility</Sorting>
                   <Order>Descending</Order>
-                  <Order>Descending</Order>
                 </Item>
               </Sortings>
             </SortingRule>

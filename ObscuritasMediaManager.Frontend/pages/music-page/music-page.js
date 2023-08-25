@@ -5,6 +5,7 @@ import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base.js';
+import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { PlaylistSelectionDialog } from '../../dialogs/playlist-selection-dialog/playlist-selection-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
@@ -319,5 +320,9 @@ export class MusicPage extends LitElementBase {
 
         await PlaylistService.addTracksToPlaylist(playlist.id, this.selectedHashes);
         await this.initializeData();
+    }
+
+    showCreatePlaylistDialog() {
+        EditPlaylistDialog.show(new PlaylistModel());
     }
 }

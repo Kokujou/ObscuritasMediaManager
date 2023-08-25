@@ -158,11 +158,11 @@ function renderResultOptionsBar() {
             ${renderMaskImage(plusIcon(true))};
         }
 
-        #save-playlist {
+        #add-to-playlist {
             ${renderMaskImage(savePlaylistIcon())};
         }
 
-        #add-to-playlist {
+        #create-playlist {
             ${renderMaskImage(addPlaylistIcon())};
         }
 

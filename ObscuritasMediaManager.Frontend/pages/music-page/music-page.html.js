@@ -33,14 +33,21 @@ export function renderMusicPage(musicPage) {
                             <a id="cleanup-tracks" @click="${() => musicPage.cleanupTracks()}"></a>
                         </div>
                         <div class="option-section" id="playlist-section">
-                            <a id="save-playlist"></a>
-                            <a id="add-to-playlist" @click="${() => musicPage.showPlaylistSelectionDialog()}"></a>
-                            <a id="play-playlist" @click="${() => musicPage.playPlaylist()}"></a>
-                            <a id="browse-playlists"></a>
-                        </div>
-
-                        <div class="option-section">
-                            <a id="download-playlist"></a>
+                            <a
+                                id="add-to-playlist"
+                                tooltip="Zu einer Playlist hinzufügen"
+                                @click="${() => musicPage.showPlaylistSelectionDialog()}"
+                            ></a>
+                            <a
+                                id="create-playlist"
+                                tooltip="Playlist erstellen"
+                                @click="${() => musicPage.showCreatePlaylistDialog()}"
+                            ></a>
+                            <a
+                                id="play-playlist"
+                                tooltip="Ausgewählte Tracks abspielen"
+                                @click="${() => musicPage.playPlaylist()}"
+                            ></a>
                         </div>
 
                         <div class="option-section">

@@ -25,6 +25,7 @@ import { SelectOptionsDialog } from './dialogs/select-options-dialog/select-opti
 import { html, TemplateResult } from './exports.js';
 import { BorderButton } from './native-components/border-button/border-button.js';
 import { CustomToggle } from './native-components/custom-toggle/custom-toggle.js';
+import { CustomTooltip } from './native-components/custom-tooltip/custom-tooltip.js';
 import { DropDown } from './native-components/drop-down/drop-down.js';
 import { FallbackAudio } from './native-components/fallback-audio/fallback-audio.js';
 import { GroupedDropdown } from './native-components/grouped-dropdown/grouped-dropdown.js';
@@ -129,3 +130,4 @@ window.customElements.define('ordered-list', OrderedList);
 window.customElements.define('playlist-selection-dilaog', PlaylistSelectionDialog);
 window.customElements.define('media-filter-sidebar', MediaFilterSidebar);
 window.customElements.define('range-selector', RangeSelector);
+window.customElements.define('custom-tooltip', CustomTooltip);
