@@ -322,7 +322,9 @@ export class MusicPage extends LitElementBase {
         await this.initializeData();
     }
 
-    showCreatePlaylistDialog() {
-        EditPlaylistDialog.show(new PlaylistModel());
+    async showCreatePlaylistDialog() {
+        var dummyPlaylist = await PlaylistService.getDummyPlaylist();
+        await EditPlaylistDialog.show(dummyPlaylist);
+        await this.initializeData();
     }
 }

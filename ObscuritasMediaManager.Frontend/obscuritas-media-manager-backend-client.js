@@ -974,6 +974,43 @@ export class PlaylistClient {
         this.http = http ? http : window;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
+    getDummyPlaylist(signal) {
+        let url_ = this.baseUrl + "/api/Playlist/dummy";
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetDummyPlaylist(_response);
+        });
+    }
+    processGetDummyPlaylist(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        let _mappings = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = PlaylistModel.fromJS(resultData200, _mappings);
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
     createTemporaryPlaylist(hashes, signal) {
         let url_ = this.baseUrl + "/api/Playlist/temp";
         url_ = url_.replace(/[?&]$/, "");
@@ -1126,6 +1163,41 @@ export class PlaylistClient {
                     result200 = null;
                 }
                 return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    createPlaylist(playlist, signal) {
+        let url_ = this.baseUrl + "/api/Playlist/create";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(playlist);
+        let options_ = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processCreatePlaylist(_response);
+        });
+    }
+    processCreatePlaylist(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
             });
         }
         else if (status !== 200 && status !== 204) {

@@ -99,6 +99,8 @@ export declare class PlaylistClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
+    getDummyPlaylist(signal?: AbortSignal | undefined): Promise<PlaylistModel>;
+    protected processGetDummyPlaylist(response: Response): Promise<PlaylistModel>;
     createTemporaryPlaylist(hashes: string[], signal?: AbortSignal | undefined): Promise<string>;
     protected processCreateTemporaryPlaylist(response: Response): Promise<string>;
     getPlaylist(playlistId: string, signal?: AbortSignal | undefined): Promise<PlaylistModel>;
@@ -107,6 +109,8 @@ export declare class PlaylistClient {
     protected processUpdatePlaylistData(response: Response): Promise<void>;
     listPlaylists(signal?: AbortSignal | undefined): Promise<PlaylistModel[]>;
     protected processListPlaylists(response: Response): Promise<PlaylistModel[]>;
+    createPlaylist(playlist: PlaylistModel, signal?: AbortSignal | undefined): Promise<void>;
+    protected processCreatePlaylist(response: Response): Promise<void>;
     addTracksToPlaylist(playlistId: string, trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
     protected processAddTracksToPlaylist(response: Response): Promise<void>;
 }

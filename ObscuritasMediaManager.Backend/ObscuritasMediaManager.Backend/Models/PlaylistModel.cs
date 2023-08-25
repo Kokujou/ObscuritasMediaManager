@@ -53,7 +53,7 @@ public class PlaylistModel
     [NotMapped]
     public IEnumerable<MusicModel> Tracks
     {
-        get => TrackMappings?.OrderBy(x => x.Order)?.Select(x => x.Track);
+        get => TrackMappings?.OrderBy(x => x.Order)?.Select(x => x.Track) ?? Enumerable.Empty<MusicModel>();
         set => CreateMappingsFromTracks(value);
     }
 

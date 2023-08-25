@@ -25,6 +25,7 @@ export class EditPlaylistDialog extends LitElement {
      */
     static show(playlist) {
         var dialog = new EditPlaylistDialog();
+        playlist.genres ??= [];
         dialog.oldPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist)));
         dialog.newPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist)));
 
@@ -34,10 +35,12 @@ export class EditPlaylistDialog extends LitElement {
         return new Promise((resolve) => {
             dialog.addEventListener('accept', async () => {
                 try {
-                    await PlaylistService.updatePlaylistData(
-                        dialog.newPlaylist.id,
-                        new UpdateRequestOfPlaylistModel({ oldModel: dialog.oldPlaylist, newModel: dialog.newPlaylist })
-                    );
+                    if (dialog.newPlaylist.id)
+                        await PlaylistService.updatePlaylistData(
+                            dialog.newPlaylist.id,
+                            new UpdateRequestOfPlaylistModel({ oldModel: dialog.oldPlaylist, newModel: dialog.newPlaylist })
+                        );
+                    else await PlaylistService.createPlaylist(dialog.newPlaylist);
                     await MessageSnackbar.popup('Playlist was successfully added', 'success');
                     resolve();
                     dialog.remove();

@@ -130,11 +130,6 @@ public class MusicController : ControllerBase
         }
     }
 
-    public void test()
-    {
-        Console.WriteLine("shit");
-    }
-
     private async Task<List<string>> GetInvalidInstrumentsAsync(IEnumerable<string> instrumentNames)
     {
         instrumentNames = instrumentNames.ToList();

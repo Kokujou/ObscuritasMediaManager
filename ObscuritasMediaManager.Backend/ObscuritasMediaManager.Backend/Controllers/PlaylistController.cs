@@ -22,6 +22,12 @@ public class PlaylistController : ControllerBase
         _playlistRepository = playlistRepository;
     }
 
+    [HttpGet("dummy")]
+    public PlaylistModel GetDummyPlaylist()
+    {
+        return new PlaylistModel();
+    }
+
     [HttpPost("temp")]
     public Guid CreateTemporaryPlaylist([FromBody] List<string> hashes)
     {
@@ -53,16 +59,18 @@ public class PlaylistController : ControllerBase
         return _playlistRepository.GetAll();
     }
 
+    [HttpPost("create")]
+    public async Task CreatePlaylistAsync(PlaylistModel playlist)
+    {
+        playlist.Id = Guid.NewGuid();
+        await _playlistRepository.CreatePlaylistAsync(playlist);
+    }
+
     [HttpPut("{playlistId:guid}")]
     public async Task UpdatePlaylistDataAsync(Guid playlistId, [FromBody] UpdateRequest<PlaylistModel> updateRequest)
     {
         if ((updateRequest.OldModel.Id != default) && (playlistId != updateRequest.OldModel.Id))
             throw new Exception("Ids of objects did not match");
-
-        TemporaryPlaylistRepository.Remove(playlistId);
-
-        foreach (var track in updateRequest.NewModel.Tracks.Where(x => x.Hash is null))
-            track.CalculateHash();
 
         var actual = await _playlistRepository.GetPlaylistAsync(playlistId);
         if (actual is null)
@@ -70,6 +78,11 @@ public class PlaylistController : ControllerBase
             await _playlistRepository.CreatePlaylistAsync(updateRequest.NewModel);
             return;
         }
+
+        TemporaryPlaylistRepository.Remove(playlistId);
+
+        foreach (var track in updateRequest.NewModel.Tracks.Where(x => x.Hash is null))
+            track.CalculateHash();
 
         await _playlistRepository.UpdateDataAsync(actual, updateRequest.OldModel, updateRequest.NewModel);
         await _playlistRepository.UpdateTracksAsync(updateRequest.NewModel);
