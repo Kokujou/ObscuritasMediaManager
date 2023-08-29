@@ -22,7 +22,7 @@ export class CustomTooltip extends LitElementBase {
 
     /**
      * @param {string} text
-     * @param {PointerEvent} pointerEvent
+     * @param {Event} pointerEvent
      * @param { 'top' | 'bottom' | 'right' | 'left'  } anchor
      */
     static show(text, pointerEvent, anchor = 'top') {

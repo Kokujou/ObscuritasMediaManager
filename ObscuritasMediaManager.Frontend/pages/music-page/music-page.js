@@ -10,7 +10,8 @@ import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dial
 import { PlaylistSelectionDialog } from '../../dialogs/playlist-selection-dialog/playlist-selection-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
-import { PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
+import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
+import { MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/inline-icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/inline-icons/music-player-icons/play-icon.svg.js';
@@ -326,5 +327,58 @@ export class MusicPage extends LitElementBase {
         var dummyPlaylist = await PlaylistService.getDummyPlaylist();
         await EditPlaylistDialog.show(dummyPlaylist);
         await this.initializeData();
+    }
+
+    /**
+     * @param {'local' | 'global'} mode
+     * @param {MusicModel} track
+     */
+    getTrackPath(mode, track) {
+        if (mode == 'local') return track.path;
+        return `https://localhost/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
+    }
+
+    /**
+     * @param {'local' | 'global'} mode
+     * @param {PlaylistModel} playlist
+     */
+    async exportPlaylist(mode, playlist) {
+        var m3uString = '#EXTM3U\r\n';
+        m3uString += playlist.tracks
+            .map((track) => `#EXTINF:-1, ${track.displayName.replaceAll('\n', '')}\r\n${this.getTrackPath(mode, track)}`)
+            .join('\r\n');
+
+        var blob = new Blob([m3uString], { type: 'audio/x-mpegurl' });
+        var url = URL.createObjectURL(blob);
+
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = `${playlist.name}.m3u`;
+        document.body.appendChild(link);
+        link.click();
+    }
+
+    /**
+     * @param {PlaylistModel} playlist
+     */
+    async removePlaylist(playlist) {
+        var accpeted = await DialogBase.show('Bist du sicher?', {
+            content: `Bist du sicher, dass du die Playlist löschen möchtest?\r\n
+                Diese Aktion kann nicht rückgängig gemacht werden!`,
+            acceptActionText: 'Ja',
+            declineActionText: 'Nein',
+            noImplicitAccept: true,
+            showBorder: true,
+        });
+
+        if (!accpeted) return;
+
+        try {
+            await PlaylistService.deletePlaylist(playlist.id);
+            MessageSnackbar.popup('Die Playlist wurde erfolgreich gelöscht', 'success');
+            await this.initializeData();
+        } catch (err) {
+            MessageSnackbar.popup(`Ein Fehler ist beim Löschen der Playlist aufgetreten: \r\n ${err}`, 'error');
+        }
     }
 }

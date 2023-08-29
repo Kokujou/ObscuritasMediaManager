@@ -46,6 +46,7 @@ export class LitElementBase extends LitElement {
 
     disconnectedCallback() {
         super.disconnectedCallback();
+        this.abortController.abort();
         this.subscriptions.forEach((x) => x.unsubscribe());
         this.subscriptions = [];
     }

@@ -1,6 +1,9 @@
 import { MoodColors } from '../../data/enumerations/mood.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { ContextMenu } from '../../native-components/context-menu/context-menu.js';
 import { Mood, PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
+import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg.js';
+import { downloadPlaylistIcon } from '../../resources/inline-icons/playlist-icons/download-playlist-icon.svg.js';
 import { rgbHexToHsv } from '../../services/extensions/style.extensions.js';
 import { renderPlaylistTileStyles } from './playlist-tile.css.js';
 import { renderPlaylistTile } from './playlist-tile.html.js';
@@ -71,6 +74,38 @@ export class PlaylistTile extends LitElementBase {
 
         /** @type {PlaylistModel} */ this.playlist;
         /** @type {number} */ this.hoveredRating;
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+
+        this.addEventListener(
+            'contextmenu',
+            (e) => {
+                e.preventDefault();
+                ContextMenu.popup(
+                    [
+                        {
+                            iconString: downloadPlaylistIcon(),
+                            text: 'Lokal Exportieren',
+                            action: () => this.dispatchEvent(new CustomEvent('local-export')),
+                        },
+                        {
+                            iconString: downloadPlaylistIcon(),
+                            text: 'Global Exportieren',
+                            action: () => this.dispatchEvent(new CustomEvent('global-export')),
+                        },
+                        {
+                            iconString: trashIcon(),
+                            text: 'Entfernen',
+                            action: () => this.dispatchEvent(new CustomEvent('remove')),
+                        },
+                    ],
+                    e
+                );
+            },
+            { signal: this.abortController.signal }
+        );
     }
 
     render() {

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediaInfoLib;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
 using System.Diagnostics;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
@@ -35,6 +35,7 @@ public class FileController : ControllerBase
         return File(new BufferedStream(ffmpeg.StandardOutput.BaseStream), "video/mp4");
     }
 
+    [AllowAnonymous]
     [HttpGet("audio")]
     public ActionResult<object> GetAudio(string audioPath = "", bool highCompatibility = false)
     {
@@ -43,12 +44,15 @@ public class FileController : ControllerBase
 
         var path = new FileInfo(audioPath);
 
+        var info = new MediaInfoLib.MediaInfo();
+        info.Open(audioPath);
+        var format = info.Get(StreamKind.General, 0, "Format");
+        if ((format == "MPEG-4") && (info.Get(StreamKind.General, 0, "IsStreamable") != "Yes"))
+            highCompatibility = true;
         if (!highCompatibility)
-        {
-            new FileExtensionContentTypeProvider().TryGetContentType(audioPath, out _);
+
             return File(new BufferedStream(System.IO.File.Open(audioPath, FileMode.Open, FileAccess.Read, FileShare.Read)),
                         "audio/x-caf");
-        }
 
         var ffmpeg = new Process();
         var startInfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",

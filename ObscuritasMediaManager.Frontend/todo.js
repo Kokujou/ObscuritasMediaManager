@@ -2,12 +2,8 @@
 /**
  * - single track creation
  * - permanent playlist creation
- * - permanent playlist search/selection
- * - permanent playlist change
  * - export playlist
  * - playlist deletion
- * - add tracks to existing playlist
- * - browse existing tracks to add to playlist
  */
 
 //TODO: think about mood filter, so you can search for a mood being either mood1 or mood2

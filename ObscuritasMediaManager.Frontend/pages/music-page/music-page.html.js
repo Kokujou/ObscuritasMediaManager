@@ -87,7 +87,12 @@ export function renderMusicPage(musicPage) {
                                                   .hash="${getPageName(MusicPlaylistPage)}"
                                                   .search="guid=${playlist.id}"
                                               >
-                                                  <playlist-tile .playlist="${playlist}"></playlist-tile>
+                                                  <playlist-tile
+                                                      .playlist="${playlist}"
+                                                      @local-export="${() => musicPage.exportPlaylist('local', playlist)}"
+                                                      @global-export="${() => musicPage.exportPlaylist('global', playlist)}"
+                                                      @remove="${() => musicPage.removePlaylist(playlist)}"
+                                                  ></playlist-tile>
                                               </link-element>
                                           </div>
                                       `

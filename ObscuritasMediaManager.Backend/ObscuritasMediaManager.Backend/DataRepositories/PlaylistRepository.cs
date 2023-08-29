@@ -36,6 +36,7 @@ public class PlaylistRepository
 
     public async Task UpdateDataAsync(PlaylistModel actual, PlaylistModel old, PlaylistModel updated)
     {
+        _context.Entry(actual).State = EntityState.Unchanged;
         if (!string.IsNullOrEmpty(updated.Name) && (old.Name == actual.Name))
             actual.Name = updated.Name;
         if (!string.IsNullOrEmpty(updated.Author) && (old.Author == actual.Author))
@@ -99,5 +100,11 @@ public class PlaylistRepository
         if (!trackHashes.Any()) return;
         var selectedTracks = await _context.Music.Where(x => trackHashes.Contains(x.Hash)).ToListAsync();
         await UpdatePlaylistTrackMappingAsync(playlistId, playlist.Name, selectedTracks);
+    }
+
+    public async Task DeletePlaylistAsync(Guid playlistId)
+    {
+        _context.Remove(new PlaylistModel { Id = playlistId });
+        await _context.SaveChangesAsync();
     }
 }

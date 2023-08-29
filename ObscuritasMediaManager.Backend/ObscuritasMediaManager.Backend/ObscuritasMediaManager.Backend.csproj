@@ -19,6 +19,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="MediaInfo.Core.Native" Version="21.9.1" />
+		<PackageReference Include="MediaInfoDotNet" Version="0.7.79.40925" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" /> <!--if you remove this, you will die--> 
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
@@ -35,6 +37,9 @@
 	<ItemGroup>
 		<None Update="database.sqlite">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="MediaInfo.dll">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 

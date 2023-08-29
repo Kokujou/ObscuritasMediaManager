@@ -107,6 +107,8 @@ export declare class PlaylistClient {
     protected processGetPlaylist(response: Response): Promise<PlaylistModel>;
     updatePlaylistData(playlistId: string, updateRequest: UpdateRequestOfPlaylistModel, signal?: AbortSignal | undefined): Promise<void>;
     protected processUpdatePlaylistData(response: Response): Promise<void>;
+    deletePlaylist(playlistId: string, signal?: AbortSignal | undefined): Promise<void>;
+    protected processDeletePlaylist(response: Response): Promise<void>;
     listPlaylists(signal?: AbortSignal | undefined): Promise<PlaylistModel[]>;
     protected processListPlaylists(response: Response): Promise<PlaylistModel[]>;
     createPlaylist(playlist: PlaylistModel, signal?: AbortSignal | undefined): Promise<void>;

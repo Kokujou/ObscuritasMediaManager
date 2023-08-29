@@ -95,4 +95,10 @@ public class PlaylistController : ControllerBase
     {
         await _playlistRepository.AddTracksAsync(playlistId, trackHashes);
     }
+
+    [HttpDelete("{playlistId}")]
+    public async Task DeletePlaylist(Guid playlistId)
+    {
+        await _playlistRepository.DeletePlaylistAsync(playlistId);
+    }
 }
