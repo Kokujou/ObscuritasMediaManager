@@ -40,22 +40,19 @@ public class CleanupController : ControllerBase
         return tracks.AsParallel().Where(track => !ValidateAudio(track.Path));
     }
 
-    [HttpDelete("music")]
-    public async Task<IEnumerable<string>> CleanupMusic([FromBody] List<string> trackHashes)
+    [HttpDelete("music/soft")]
+    public async Task SoftDeleteTracks([FromBody] List<string> trackHashes)
     {
-        if (!trackHashes.Any()) return null;
+        if (!trackHashes.Any()) return;
 
-        var selectedTracks = await _musicRepository.GetSelectedAsync(trackHashes);
-        var selectedBrokenTracks = selectedTracks.AsParallel().Where(x => !ValidateAudio(x.Path)).ToList();
-        var succeededHashes = selectedBrokenTracks.Select(x => x.Hash).ToList();
-        var failedHashes = trackHashes.Except(succeededHashes).ToList();
+        await _musicRepository.SoftDeleteTracksAsync(trackHashes);
+    }
 
-        if (!succeededHashes.Any())
-                throw new Exception("None of the provided hashes matches an existing broken track.");
+    [HttpDelete("music/hard")]
+    public async Task HardDeleteTracks([FromBody] List<string> trackHashes)
+    {
+        if (!trackHashes.Any()) return;
 
-        await _musicRepository.BatchDeleteTracks(selectedBrokenTracks);
-
-        if (failedHashes.Any()) return failedHashes;
-        return null;
+        await _musicRepository.HardDeleteTracksAsync(trackHashes);
     }
 }

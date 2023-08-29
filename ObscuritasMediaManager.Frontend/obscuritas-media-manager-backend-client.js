@@ -59,8 +59,8 @@ export class CleanupClient {
         }
         return Promise.resolve(null);
     }
-    cleanupMusic(trackHashes, signal) {
-        let url_ = this.baseUrl + "/api/Cleanup/music";
+    softDeleteTracks(trackHashes, signal) {
+        let url_ = this.baseUrl + "/api/Cleanup/music/soft";
         url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(trackHashes);
         let options_ = {
@@ -69,14 +69,13 @@ export class CleanupClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json"
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
-            return this.processCleanupMusic(_response);
+            return this.processSoftDeleteTracks(_response);
         });
     }
-    processCleanupMusic(response) {
+    processSoftDeleteTracks(response) {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
@@ -85,17 +84,42 @@ export class CleanupClient {
         ;
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [];
-                    for (let item of resultData200)
-                        result200.push(item);
-                }
-                else {
-                    result200 = null;
-                }
-                return result200;
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    hardDeleteTracks(trackHashes, signal) {
+        let url_ = this.baseUrl + "/api/Cleanup/music/hard";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(trackHashes);
+        let options_ = {
+            body: content_,
+            method: "DELETE",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processHardDeleteTracks(_response);
+        });
+    }
+    processHardDeleteTracks(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
             });
         }
         else if (status !== 200 && status !== 204) {
@@ -200,7 +224,7 @@ export class FileClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
@@ -214,11 +238,13 @@ export class FileClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null;
+                return result200;
+            });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -502,7 +528,6 @@ export class MediaClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
@@ -516,11 +541,10 @@ export class MediaClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -539,7 +563,6 @@ export class MediaClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
@@ -553,11 +576,10 @@ export class MediaClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -579,7 +601,6 @@ export class MediaClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
@@ -593,11 +614,10 @@ export class MediaClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -615,9 +635,7 @@ export class MediaClient {
         let options_ = {
             method: "DELETE",
             signal,
-            headers: {
-                "Accept": "application/octet-stream"
-            }
+            headers: {}
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processDeleteMediaImage(_response);
@@ -630,11 +648,10 @@ export class MediaClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -662,7 +679,6 @@ export class MusicClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
@@ -676,11 +692,10 @@ export class MusicClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -739,9 +754,7 @@ export class MusicClient {
         let options_ = {
             method: "POST",
             signal,
-            headers: {
-                "Accept": "application/octet-stream"
-            }
+            headers: {}
         };
         return this.http.fetch(url_, options_).then((_response) => {
             return this.processRecalculateHashes(_response);
@@ -754,11 +767,10 @@ export class MusicClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -820,7 +832,6 @@ export class MusicClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
@@ -834,11 +845,10 @@ export class MusicClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -1377,7 +1387,6 @@ export class RecipeClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
@@ -1391,11 +1400,10 @@ export class RecipeClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -1463,7 +1471,6 @@ export class StreamingClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
@@ -1477,11 +1484,10 @@ export class StreamingClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
         }
         else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -1602,6 +1608,7 @@ export class MusicModel {
     complete;
     hash;
     fileBytes;
+    deleted;
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -1643,6 +1650,7 @@ export class MusicModel {
             this.complete = _data["complete"] !== undefined ? _data["complete"] : null;
             this.hash = _data["hash"] !== undefined ? _data["hash"] : null;
             this.fileBytes = _data["fileBytes"] !== undefined ? _data["fileBytes"] : null;
+            this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : null;
         }
     }
     static fromJS(data, _mappings) {
@@ -1676,6 +1684,7 @@ export class MusicModel {
         data["complete"] = this.complete !== undefined ? this.complete : null;
         data["hash"] = this.hash !== undefined ? this.hash : null;
         data["fileBytes"] = this.fileBytes !== undefined ? this.fileBytes : null;
+        data["deleted"] = this.deleted !== undefined ? this.deleted : null;
         return data;
     }
     clone() {

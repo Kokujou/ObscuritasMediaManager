@@ -239,7 +239,7 @@ export class MusicPage extends LitElementBase {
         var brokenTracks = (await CleanupService.getBrokenAudioTracks()).map((x) => new ExtendedMusicModel(x));
 
         if (brokenTracks.length <= 0)
-            DialogBase.show('Alles Ok!', {
+            return await DialogBase.show('Alles Ok!', {
                 content: 'Alle in Tracks in der Datenbank sind valide Audio-Dateien.',
                 declineActionText: 'Ok',
             });
@@ -254,19 +254,20 @@ export class MusicPage extends LitElementBase {
         dialog.addEventListener('decline', () => dialog.remove());
         dialog.addEventListener('accept', async (e) => {
             try {
+                var accpeted = await DialogBase.show('Achtung!!', {
+                    content:
+                        'Diese Aktion wird sämtliche ausgewählten Dateien endgültig löschen.\r\n Diese Aktion kann nicht rückgägnig gemacht werden.\r\nFortfahren?',
+                    acceptActionText: 'Ja',
+                    declineActionText: 'Nein',
+                    noImplicitAccept: true,
+                });
+                if (!accpeted) return dialog.remove();
+
                 var selected = /** @type {CustomEvent<{selected: string[]}>} */ (e).detail.selected;
-                var failedTracks = await CleanupService.cleanupMusic(selected);
-                if (failedTracks && failedTracks.length > 0)
-                    await DialogBase.show('Warnung!', {
-                        content: `Die folgenden Tracks konnten nicht gelöscht werden:
-                        ${failedTracks.map((hash) => brokenTracks.find((track) => track.hash == hash).displayName).join('\n')}
-                    `,
-                        declineActionText: 'Ok',
-                    });
+                await CleanupService.hardDeleteTracks(selected);
                 dialog.remove();
-                location.reload();
+                await this.initializeData();
             } catch (err) {
-                console.error(err);
                 DialogBase.show('Bereinigung fehlgeschlagen', { content: err, declineActionText: 'Ok' });
             }
         });

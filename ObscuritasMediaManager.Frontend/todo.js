@@ -1,8 +1,3 @@
-//TODO: implement audio page
-/**
- * - single track creation
- */
-
 /**
  * Running tasks:
  * - Add tooltips for all icons
@@ -10,9 +5,17 @@
  *
  */
 
+/**
+ *
+ * Fette Änderung:
+ * Sämtliche Update calls umstellen auf das Context.Model.ExecuteUpdate pattern
+ * das ist viel geiler!
+ *
+ */
+
+//TODO: Audio single track creation
 //TODO: (optional) create templates for edit
 //TODO: improve re-upload algorithm to not overwrite or duplicate data (media-pages)
-//TODO: Fix: if dropdown has one one element -> select by default (Labels)
 //TODO: implement loading-indiciation for requests
 //TODO: music tracks: implement soft delete so files don't get re-added, + hard-delete so files can be erased from disk
 //TODO: cleanup function should be extended with "simple" (only existance check) and extended (music validation)

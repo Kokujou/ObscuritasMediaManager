@@ -91,7 +91,7 @@ public class MusicRepository
 
     public IQueryable<MusicModel> GetAll()
     {
-        return _context.Music;
+        return _context.Music.Where(x => !x.Deleted);
     }
 
     public async Task<IEnumerable<MusicModel>> GetSelectedAsync(IEnumerable<string> trackHashes)
@@ -129,10 +129,38 @@ public class MusicRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task BatchDeleteTracks(IEnumerable<MusicModel> tracks)
+    public async Task SoftDeleteTracksAsync(IEnumerable<string> trackHashes)
     {
-        _context.Music.RemoveRange(tracks);
-        await _context.SaveChangesAsync();
+        await _context.Music
+                      .Where(x => trackHashes.Contains(x.Hash))
+                      .ExecuteUpdateAsync(builder => builder.SetProperty(x => x.Deleted, x => true));
+    }
+
+    public async Task HardDeleteTracksAsync(IEnumerable<string> trackHashes)
+    {
+        var tracks = await _context.Music.Where(x => trackHashes.Contains(x.Hash)).ToListAsync();
+        var failedTrackDictionary = new Dictionary<string, string>();
+        foreach (var track in tracks)
+            try
+            {
+                File.Delete(track.Path);
+            }
+            catch (Exception ex)
+            {
+                failedTrackDictionary.Add(track.DisplayName, ex.Message);
+            }
+
+        var succeededTrackHashes = trackHashes.Except(failedTrackDictionary.Keys);
+        var deleted = await _context.Music.Where(x => succeededTrackHashes.Contains(x.Hash)).ExecuteDeleteAsync();
+
+        if (deleted != succeededTrackHashes.Count())
+            failedTrackDictionary.Add("Unknown", "Some weird SQL error");
+
+        if (failedTrackDictionary.Count <= 0)
+            return;
+
+        var trackReasonString = string.Join("\r\n", failedTrackDictionary.Select(x => $"Track: {x.Key}, Reason: {x.Value}"));
+        throw new Exception($"The following tracks could not be deleted: \r\n{trackReasonString}");
     }
 
     public async Task RemoveInstrumentAsync(InstrumentType type, string name)

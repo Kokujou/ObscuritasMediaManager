@@ -7,8 +7,10 @@ export declare class CleanupClient {
     });
     getBrokenAudioTracks(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
     protected processGetBrokenAudioTracks(response: Response): Promise<MusicModel[]>;
-    cleanupMusic(trackHashes: string[], signal?: AbortSignal | undefined): Promise<string[]>;
-    protected processCleanupMusic(response: Response): Promise<string[]>;
+    softDeleteTracks(trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
+    protected processSoftDeleteTracks(response: Response): Promise<void>;
+    hardDeleteTracks(trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
+    protected processHardDeleteTracks(response: Response): Promise<void>;
 }
 export declare class FileClient {
     private http;
@@ -21,8 +23,8 @@ export declare class FileClient {
     protected processGetVideo(response: Response): Promise<FileResponse>;
     getAudio(audioPath?: string | null | undefined, highCompatibility?: boolean | undefined, signal?: AbortSignal | undefined): Promise<FileResponse>;
     protected processGetAudio(response: Response): Promise<FileResponse>;
-    validate(fileUrls: string[], signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processValidate(response: Response): Promise<FileResponse>;
+    validate(fileUrls: string[], signal?: AbortSignal | undefined): Promise<boolean>;
+    protected processValidate(response: Response): Promise<boolean>;
 }
 export declare class GenreClient {
     private http;
@@ -59,14 +61,14 @@ export declare class MediaClient {
     protected processGet(response: Response): Promise<MediaModel>;
     getAll(signal?: AbortSignal | undefined): Promise<MediaModel[]>;
     protected processGetAll(response: Response): Promise<MediaModel[]>;
-    batchCreateMedia(media: MediaModel[], signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processBatchCreateMedia(response: Response): Promise<FileResponse>;
-    updateMedia(media: MediaModel, signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processUpdateMedia(response: Response): Promise<FileResponse>;
-    addMediaImage(image: string, guid: string, signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processAddMediaImage(response: Response): Promise<FileResponse>;
-    deleteMediaImage(guid: string, signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processDeleteMediaImage(response: Response): Promise<FileResponse>;
+    batchCreateMedia(media: MediaModel[], signal?: AbortSignal | undefined): Promise<void>;
+    protected processBatchCreateMedia(response: Response): Promise<void>;
+    updateMedia(media: MediaModel, signal?: AbortSignal | undefined): Promise<void>;
+    protected processUpdateMedia(response: Response): Promise<void>;
+    addMediaImage(image: string, guid: string, signal?: AbortSignal | undefined): Promise<void>;
+    protected processAddMediaImage(response: Response): Promise<void>;
+    deleteMediaImage(guid: string, signal?: AbortSignal | undefined): Promise<void>;
+    protected processDeleteMediaImage(response: Response): Promise<void>;
 }
 export declare class MusicClient {
     private http;
@@ -75,16 +77,16 @@ export declare class MusicClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
-    batchCreateMusicTracks(tracks: MusicModel[], signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processBatchCreateMusicTracks(response: Response): Promise<FileResponse>;
+    batchCreateMusicTracks(tracks: MusicModel[], signal?: AbortSignal | undefined): Promise<void>;
+    protected processBatchCreateMusicTracks(response: Response): Promise<void>;
     getAll(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
     protected processGetAll(response: Response): Promise<MusicModel[]>;
-    recalculateHashes(signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processRecalculateHashes(response: Response): Promise<FileResponse>;
+    recalculateHashes(signal?: AbortSignal | undefined): Promise<void>;
+    protected processRecalculateHashes(response: Response): Promise<void>;
     get(hash: string | null, signal?: AbortSignal | undefined): Promise<MusicModel>;
     protected processGet(response: Response): Promise<MusicModel>;
-    update(hash: string | null, updateRequest: UpdateRequestOfMusicModel, signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processUpdate(response: Response): Promise<FileResponse>;
+    update(hash: string | null, updateRequest: UpdateRequestOfMusicModel, signal?: AbortSignal | undefined): Promise<void>;
+    protected processUpdate(response: Response): Promise<void>;
     getInstruments(signal?: AbortSignal | undefined): Promise<InstrumentModel[]>;
     protected processGetInstruments(response: Response): Promise<InstrumentModel[]>;
     addInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
@@ -127,8 +129,8 @@ export declare class RecipeClient {
     protected processGetAllRecipes(response: Response): Promise<RecipeModel[]>;
     createRecipe(recipe: RecipeModel, signal?: AbortSignal | undefined): Promise<void>;
     protected processCreateRecipe(response: Response): Promise<void>;
-    updateRecipe(recipe: RecipeModel, signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processUpdateRecipe(response: Response): Promise<FileResponse>;
+    updateRecipe(recipe: RecipeModel, signal?: AbortSignal | undefined): Promise<void>;
+    protected processUpdateRecipe(response: Response): Promise<void>;
     getRecipe(id: string, signal?: AbortSignal | undefined): Promise<RecipeModel>;
     protected processGetRecipe(response: Response): Promise<RecipeModel>;
 }
@@ -139,8 +141,8 @@ export declare class StreamingClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
-    batchPostStreamingEntries(streamingEntries: StreamingEntryModel[], signal?: AbortSignal | undefined): Promise<FileResponse>;
-    protected processBatchPostStreamingEntries(response: Response): Promise<FileResponse>;
+    batchPostStreamingEntries(streamingEntries: StreamingEntryModel[], signal?: AbortSignal | undefined): Promise<void>;
+    protected processBatchPostStreamingEntries(response: Response): Promise<void>;
     getStreamingEntries(guid: string, signal?: AbortSignal | undefined): Promise<StreamingEntryModel[]>;
     protected processGetStreamingEntries(response: Response): Promise<StreamingEntryModel[]>;
     getStream(guid: string, season: string | null, episode: number, signal?: AbortSignal | undefined): Promise<StreamingEntryModel>;
@@ -164,6 +166,7 @@ export declare class MusicModel implements IMusicModel {
     complete: boolean;
     hash: string | null;
     fileBytes: number;
+    deleted: boolean;
     constructor(data?: Partial<IMusicModel>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): MusicModel | null;
@@ -188,6 +191,7 @@ export interface IMusicModel {
     complete: boolean;
     hash: string | null;
     fileBytes: number;
+    deleted: boolean;
 }
 export declare enum Mood {
     Unset = "Unset",

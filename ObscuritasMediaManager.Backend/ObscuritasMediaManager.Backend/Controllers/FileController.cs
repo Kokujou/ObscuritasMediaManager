@@ -76,11 +76,12 @@ public class FileController : ControllerBase
     }
 
     [HttpPost("validate-files")]
-    public void Validate([FromBody] IEnumerable<string> fileUrls)
+    public bool Validate([FromBody] IEnumerable<string> fileUrls)
     {
         foreach (var filePath in fileUrls)
             if (!System.IO.File.Exists(filePath))
-                throw new Exception($"File: {filePath} does not exist!");
+                return false;
+        return true;
     }
 
     private void OnErrorDataReceived(object sender, DataReceivedEventArgs args)
