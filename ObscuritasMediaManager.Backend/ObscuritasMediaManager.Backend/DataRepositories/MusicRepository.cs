@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.FileIO;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Models;
@@ -143,7 +144,7 @@ public class MusicRepository
         foreach (var track in tracks)
             try
             {
-                File.Delete(track.Path);
+                FileSystem.DeleteFile(track.Path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
             }
             catch (Exception ex)
             {
