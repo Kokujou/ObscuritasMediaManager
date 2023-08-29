@@ -2,7 +2,6 @@
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
-using System.Text.Json;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -57,16 +56,6 @@ public class MediaRepository
 
     public  IQueryable<MediaModel> GetAll()
     {
-        var test = _context.Media.ToList();
-        var test2 = test.Find(x => x.Name == "Primeval");
-        try
-        {
-            var test3 = JsonSerializer.Serialize(test);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
         return  _context.Media;
     }
 

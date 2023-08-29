@@ -17,10 +17,10 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<string>> LoginAsync(CredentialsRequest request)
+    public async Task<string> LoginAsync(CredentialsRequest request)
     {
         var user = await _userRepository.LogonAsync(request.Username, request.Password);
-        if (user is null) return BadRequest("invalid username or password");
+        if (user is null) throw new Exception("invalid username or password");
 
         var token = $"{request.Username}:{request.Password}".ToBase64String();
         Response.Cookies.Append("Authorization", $"Basic {token}", new CookieOptions { Expires = DateTimeOffset.MaxValue });

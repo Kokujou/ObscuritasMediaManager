@@ -41,31 +41,21 @@ public class CleanupController : ControllerBase
     }
 
     [HttpDelete("music")]
-    public async Task<ActionResult<IEnumerable<string>>> CleanupMusic([FromBody] List<string> trackHashes)
+    public async Task<IEnumerable<string>> CleanupMusic([FromBody] List<string> trackHashes)
     {
-        try
-        {
-            if (!trackHashes.Any())
-                return NoContent();
+        if (!trackHashes.Any()) return null;
 
-            var selectedTracks = await _musicRepository.GetSelectedAsync(trackHashes);
-            var selectedBrokenTracks = selectedTracks.AsParallel().Where(x => !ValidateAudio(x.Path)).ToList();
-            var succeededHashes = selectedBrokenTracks.Select(x => x.Hash).ToList();
-            var failedHashes = trackHashes.Except(succeededHashes).ToList();
+        var selectedTracks = await _musicRepository.GetSelectedAsync(trackHashes);
+        var selectedBrokenTracks = selectedTracks.AsParallel().Where(x => !ValidateAudio(x.Path)).ToList();
+        var succeededHashes = selectedBrokenTracks.Select(x => x.Hash).ToList();
+        var failedHashes = trackHashes.Except(succeededHashes).ToList();
 
-            if (!succeededHashes.Any())
+        if (!succeededHashes.Any())
                 throw new Exception("None of the provided hashes matches an existing broken track.");
 
-            await _musicRepository.BatchDeleteTracks(selectedBrokenTracks);
+        await _musicRepository.BatchDeleteTracks(selectedBrokenTracks);
 
-            if (failedHashes.Any())
-                return Ok(failedHashes);
-
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        if (failedHashes.Any()) return failedHashes;
+        return null;
     }
 }

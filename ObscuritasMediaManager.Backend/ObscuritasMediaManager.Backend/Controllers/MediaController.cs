@@ -20,16 +20,9 @@ public class MediaController : ControllerBase
     }
 
     [HttpGet("{guid:Guid}")]
-    public async Task<ActionResult<MediaModel>> Get([FromRoute] Guid guid)
+    public async Task<MediaModel> Get([FromRoute] Guid guid)
     {
-        try
-        {
-            return Ok(await _repository.GetAsync(guid));
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        return await _repository.GetAsync(guid);
     }
 
     [HttpGet]
@@ -39,59 +32,26 @@ public class MediaController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> BatchCreateMediaAsync([FromBody] IEnumerable<MediaModel> media)
+    public async Task BatchCreateMediaAsync([FromBody] IEnumerable<MediaModel> media)
     {
-        try
-        {
-            await _repository.BatchCreateMediaAsync(media);
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        await _repository.BatchCreateMediaAsync(media);
     }
 
     [HttpPut]
-    public async Task<ActionResult> UpdateMedia([FromBody] MediaModel media)
+    public async Task UpdateMedia([FromBody] MediaModel media)
     {
-        try
-        {
-            await _repository.UpdateMediaAsync(media);
-
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        await _repository.UpdateMediaAsync(media);
     }
 
     [HttpPut("{guid:Guid}/image")]
-    public async Task<ActionResult> AddMediaImage([FromBody] string image, Guid guid)
+    public async Task AddMediaImage([FromBody] string image, Guid guid)
     {
-        try
-        {
-            await _repository.AddMediaImageAsync(guid, image);
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        await _repository.AddMediaImageAsync(guid, image);
     }
 
     [HttpDelete("{guid:Guid}/image")]
-    public async Task<ActionResult> DeleteMediaImage(Guid guid)
+    public async Task DeleteMediaImage(Guid guid)
     {
-        try
-        {
-            await _repository.RemoveMediaImageAsync(guid);
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        await _repository.RemoveMediaImageAsync(guid);
     }
 }

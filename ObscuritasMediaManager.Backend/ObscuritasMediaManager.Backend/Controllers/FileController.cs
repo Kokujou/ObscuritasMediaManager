@@ -13,10 +13,10 @@ public class FileController : ControllerBase
     public static string Logs = string.Empty;
 
     [HttpGet("video")]
-    public ActionResult<object> GetVideo(string videoPath = "")
+    public FileStreamResult GetVideo(string videoPath = "")
     {
         if (string.IsNullOrEmpty(videoPath) || !System.IO.File.Exists(videoPath))
-            return BadRequest("invalid file path");
+            throw new Exception("invalid file path");
 
         var ffmpeg = new Process();
         var startinfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
@@ -37,20 +37,20 @@ public class FileController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet("audio")]
-    public ActionResult<object> GetAudio(string audioPath = "", bool highCompatibility = false)
+    public FileStreamResult GetAudio(string audioPath = "", bool highCompatibility = false)
     {
         if (string.IsNullOrEmpty(audioPath) || !System.IO.File.Exists(audioPath))
-            return BadRequest("invalid file path");
+            throw new Exception("invalid file path");
 
         var path = new FileInfo(audioPath);
 
-        var info = new MediaInfoLib.MediaInfo();
+        var info = new MediaInfo();
         info.Open(audioPath);
         var format = info.Get(StreamKind.General, 0, "Format");
         if ((format == "MPEG-4") && (info.Get(StreamKind.General, 0, "IsStreamable") != "Yes"))
             highCompatibility = true;
-        if (!highCompatibility)
 
+        if (!highCompatibility)
             return File(new BufferedStream(System.IO.File.Open(audioPath, FileMode.Open, FileAccess.Read, FileShare.Read)),
                         "audio/x-caf");
 
@@ -76,13 +76,11 @@ public class FileController : ControllerBase
     }
 
     [HttpPost("validate-files")]
-    public ActionResult Validate([FromBody] IEnumerable<string> fileUrls)
+    public void Validate([FromBody] IEnumerable<string> fileUrls)
     {
         foreach (var filePath in fileUrls)
             if (!System.IO.File.Exists(filePath))
-                return BadRequest($"File: {filePath} does not exist!");
-
-        return Ok();
+                throw new Exception($"File: {filePath} does not exist!");
     }
 
     private void OnErrorDataReceived(object sender, DataReceivedEventArgs args)

@@ -18,36 +18,20 @@ public class StreamingController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> BatchPostStreamingEntries([FromBody] IEnumerable<StreamingEntryModel> streamingEntries)
+    public async Task BatchPostStreamingEntries([FromBody] IEnumerable<StreamingEntryModel> streamingEntries)
     {
-        try
-        {
-            await _repository.BatchCreateStreamingEntriesAsync(streamingEntries);
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        await _repository.BatchCreateStreamingEntriesAsync(streamingEntries);
     }
 
     [HttpGet("{guid:Guid}")]
-    public async Task<ActionResult<IEnumerable<StreamingEntryModel>>> GetStreamingEntries(Guid guid)
+    public async Task<IEnumerable<StreamingEntryModel>> GetStreamingEntries(Guid guid)
     {
-        try
-        {
-            return Ok(await _repository.GetAsync(guid));
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        return await _repository.GetAsync(guid);
     }
 
     [HttpGet("{guid:Guid}/season/{season}/episode/{episode}")]
-    public async Task<ActionResult<StreamingEntryModel>> GetStream(Guid guid, string season, int episode)
+    public async Task<StreamingEntryModel> GetStream(Guid guid, string season, int episode)
     {
-        var entry = await _repository.GetAsync(guid, season, episode);
-        return Ok(entry);
+        return await _repository.GetAsync(guid, season, episode);
     }
 }

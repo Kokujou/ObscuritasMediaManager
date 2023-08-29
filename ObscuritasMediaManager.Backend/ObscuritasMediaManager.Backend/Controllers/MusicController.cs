@@ -20,56 +20,40 @@ public class MusicController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> BatchCreateMusicTracks(IEnumerable<MusicModel> tracks)
+    public async Task BatchCreateMusicTracks(IEnumerable<MusicModel> tracks)
     {
-        try
+        var existingTracks = await _musicRepository.GetHashValuesAsync();
+        var invalidTracks = new List<MusicModel>();
+        var validTracks = new List<MusicModel>();
+        foreach (var track in tracks)
         {
-            var existingTracks = await _musicRepository.GetHashValuesAsync();
-            var invalidTracks = new List<MusicModel>();
-            var validTracks = new List<MusicModel>();
-            foreach (var track in tracks)
+            if (!System.IO.File.Exists(track.Path))
             {
-                if (!System.IO.File.Exists(track.Path))
-                {
-                    invalidTracks.Add(track);
-                    continue;
-                }
-
-                track.CalculateHash();
-
-                if (existingTracks.ContainsKey(track.Hash) && (existingTracks[track.Hash] == track.Path))
-                    continue;
-
-                if (existingTracks.ContainsKey(track.Hash) && System.IO.File.Exists(existingTracks[track.Hash]))
-                    invalidTracks.Add(track);
-                else if (existingTracks.ContainsKey(track.Hash))
-                    await _musicRepository.ChangeFilePathAsync(track.Hash, track.Path);
-                else
-                    validTracks.Add(track.CalculateHash());
+                invalidTracks.Add(track);
+                continue;
             }
 
-            if (validTracks.Count > 0)
+            track.CalculateHash();
+
+            if (existingTracks.ContainsKey(track.Hash) && (existingTracks[track.Hash] == track.Path))
+                continue;
+
+            if (existingTracks.ContainsKey(track.Hash) && System.IO.File.Exists(existingTracks[track.Hash]))
+                invalidTracks.Add(track);
+            else if (existingTracks.ContainsKey(track.Hash))
+                await _musicRepository.ChangeFilePathAsync(track.Hash, track.Path);
+            else
+                validTracks.Add(track.CalculateHash());
+        }
+
+        if (validTracks.Count > 0)
                 await _musicRepository.BatchCreateMusicTracksAsync(validTracks);
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
     }
 
     [HttpPost("recalculate-hashes")]
-    public async Task<ActionResult> RecalculateHashes()
+    public async Task RecalculateHashes()
     {
-        try
-        {
-            await _musicRepository.RecalculateHashesAsync();
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        await _musicRepository.RecalculateHashesAsync();
     }
 
     [HttpGet]
@@ -79,22 +63,15 @@ public class MusicController : ControllerBase
     }
 
     [HttpGet("{hash}")]
-    public async Task<ActionResult<MusicModel>> GetAsync(string hash)
+    public async Task<MusicModel> GetAsync(string hash)
     {
-        try
-        {
-            return Ok(await _musicRepository.GetAsync(hash));
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        return await _musicRepository.GetAsync(hash);
     }
 
     [HttpGet("instruments")]
-    public async Task<ActionResult<IEnumerable<InstrumentModel>>> GetInstruments()
+    public async Task<IEnumerable<InstrumentModel>> GetInstruments()
     {
-        return Ok(await _musicRepository.GetInstruments());
+        return await _musicRepository.GetInstruments();
     }
 
     [HttpPut("instrument/{name}/type/{type}")]
@@ -111,23 +88,15 @@ public class MusicController : ControllerBase
     }
 
     [HttpPut("{hash}")]
-    public async Task<ActionResult> UpdateAsync(string hash, [FromBody] UpdateRequest<MusicModel> updateRequest)
+    public async Task UpdateAsync(string hash, [FromBody] UpdateRequest<MusicModel> updateRequest)
     {
-        try
-        {
-            if ((updateRequest.OldModel.Hash != default) && (hash != updateRequest.OldModel.Hash))
-                return BadRequest("Ids of objects did not match");
-            var invalidInstruments = await GetInvalidInstrumentsAsync(updateRequest.NewModel.Instruments);
-            if (invalidInstruments.Count > 0)
-                return BadRequest($"sent instruments invalid: {string.Join(",", invalidInstruments)}");
+        if ((updateRequest.OldModel.Hash != default) && (hash != updateRequest.OldModel.Hash))
+                throw new Exception("Ids of objects did not match");
+        var invalidInstruments = await GetInvalidInstrumentsAsync(updateRequest.NewModel.Instruments);
+        if (invalidInstruments.Count > 0)
+                throw new Exception($"sent instruments invalid: {string.Join(",", invalidInstruments)}");
 
-            await _musicRepository.UpdateAsync(hash, updateRequest.OldModel, updateRequest.NewModel);
-            return NoContent();
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.ToString());
-        }
+        await _musicRepository.UpdateAsync(hash, updateRequest.OldModel, updateRequest.NewModel);
     }
 
     private async Task<List<string>> GetInvalidInstrumentsAsync(IEnumerable<string> instrumentNames)
