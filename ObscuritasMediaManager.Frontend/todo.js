@@ -1,39 +1,32 @@
 //TODO: implement audio page
 /**
  * - single track creation
- * - permanent playlist creation
- * - export playlist
- * - playlist deletion
  */
 
-//TODO: think about mood filter, so you can search for a mood being either mood1 or mood2
+/**
+ * Running tasks:
+ * - Add tooltips for all icons
+ * - Add Message Snackbar for all Update/Delete/Create actions
+ *
+ */
+
 //TODO: (optional) create templates for edit
 //TODO: improve re-upload algorithm to not overwrite or duplicate data (media-pages)
 //TODO: Fix: if dropdown has one one element -> select by default (Labels)
-//TODO: tooltips
-//TODO: implement message snackbar for error and success notifications
 //TODO: implement loading-indiciation for requests
-//TODO: add delete from playlist and hard delete functionality to playlist
+//TODO: music tracks: implement soft delete so files don't get re-added, + hard-delete so files can be erased from disk
 //TODO: cleanup function should be extended with "simple" (only existance check) and extended (music validation)
-//TODO: implement album views and think of how to integrate them into the audio page
 //TODO: feature: add subtitle functionality - think about a nice desgin!
 //TODO: add a fancy audio visualization
 //TODO: Websockets
-//TODO: Authentication
-//TODO: error page
 //TODO: remove all mentionings of renderMaskImage and replace with iconRegistry
 //TODO: add created at/updated at
 //TODO: fix next track playing if not finished loading
-//TODO: shuffle should switch to the first track in the list
-//TODO: show file in explorer
 //TODO: add text to language switcher to indicate whether you're changing nation/language
-//TODO: build an api for adding new genres, instruments, ...
 //TODO: fix broken language icon in music page
 //TODO: refactor the route-system
 //TODO: refactor the update-system
 //TODO: think about removing nations. probably doesn't make sense and/or is already reflected in the genre-list
-//TODO: think about filtering for dual moods
-//TODO: create a playlist browser
 //TODO: think about creating an interceptor for responses to auto-generate 201 and 404 responses
 //TODO:     - 201: void/Task
 //TODO:     - 404: not 201 & result == null/[]

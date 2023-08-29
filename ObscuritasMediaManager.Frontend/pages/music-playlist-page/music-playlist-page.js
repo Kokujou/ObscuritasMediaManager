@@ -338,10 +338,8 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     randomize() {
-        var currentItem = this.playlist.tracks[this.currentTrackIndex];
         this.playlist.tracks = randomizeArray(this.playlist.tracks);
-        this.currentTrackIndex = this.playlist.tracks.indexOf(currentItem);
-
+        this.currentTrackIndex = 0;
         this.requestUpdate(undefined);
     }
 }
