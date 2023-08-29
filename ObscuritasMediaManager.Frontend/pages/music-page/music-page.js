@@ -336,7 +336,7 @@ export class MusicPage extends LitElementBase {
      */
     getTrackPath(mode, track) {
         if (mode == 'local') return track.path;
-        return `https://localhost/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
+        return `https://${location.hostname}/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
     }
 
     /**

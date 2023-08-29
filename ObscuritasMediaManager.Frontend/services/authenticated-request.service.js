@@ -11,13 +11,18 @@ export class AuthenticatedRequestService {
      * @returns {Promise<Response>}
      */
     async fetch(url, requestInit) {
-        var response = await fetch(url, requestInit);
+        try {
+            requestInit.integrity;
+            var response = await fetch(url, requestInit);
 
-        if (response.status == 401) {
+            if (response.status == 401) {
+                changePage('login');
+            }
+
+            return response;
+        } catch (err) {
             changePage('login');
-            await new Promise(() => {});
+            console.log(err);
         }
-
-        return response;
     }
 }
