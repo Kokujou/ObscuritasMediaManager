@@ -32,7 +32,7 @@ export class TriValueCheckbox extends LitElementBase {
 
     firstUpdated(_changedProperties) {
         super.firstUpdated(_changedProperties);
-        if (!this.allowThreeValues && this.value == this.ignoredState) this.value = CheckboxState.Allow;
+        if (!this.allowThreeValues && this.value == this.ignoredState) this.value = CheckboxState.Require;
     }
 
     nextState() {

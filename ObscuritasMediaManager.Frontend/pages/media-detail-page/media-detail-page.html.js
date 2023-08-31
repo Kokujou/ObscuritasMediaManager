@@ -18,7 +18,7 @@ export function renderMediaDetailPage(detailPage) {
             @toggle="${(e) => (detailPage.editMode = !detailPage.editMode)}"
         >
             <custom-toggle
-                .state="${detailPage.editMode ? CheckboxState.Allow : CheckboxState.Forbid}"
+                .state="${detailPage.editMode ? CheckboxState.Require : CheckboxState.Forbid}"
                 id="edit-toggle"
             ></custom-toggle>
             <div id="toggle-edit-text">${detailPage.editMode ? 'Bearbeitung deaktivieren' : 'Bearbeitung aktivieren'}</div>

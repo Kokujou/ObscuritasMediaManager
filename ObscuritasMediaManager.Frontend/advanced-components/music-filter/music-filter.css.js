@@ -29,6 +29,7 @@ export function renderMusicFilterStyles() {
             width: 100%;
             flex: auto;
             margin: 20px 0;
+            gap: 30px;
 
             font-size: 24px;
             overflow-y: auto;
@@ -57,7 +58,28 @@ export function renderMusicFilterStyles() {
             display: flex;
             flex-direction: row;
             width: 100%;
-            margin: 30px 0;
+            margin-bottom: 20px;
+        }
+
+        .filter[simple] {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .filter[simple] label {
+            width: 250px;
+        }
+
+        custom-toggle {
+            box-shadow: 0 0 10px #999;
+        }
+
+        #show-deleted-toggle {
+            --slider-color: #aaa;
+            --toggled-color: #f008;
+            --untoggled-color: #f004;
         }
 
         .heading-label {
@@ -171,7 +193,6 @@ export function renderMusicFilterStyles() {
 
         #complete-filter,
         #show-playlists-filter {
-            margin-top: 30px;
             display: flex;
             align-items: center;
         }

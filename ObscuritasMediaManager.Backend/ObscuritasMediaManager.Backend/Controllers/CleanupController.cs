@@ -39,20 +39,4 @@ public class CleanupController : ControllerBase
 
         return tracks.AsParallel().Where(track => !ValidateAudio(track.Path));
     }
-
-    [HttpDelete("music/soft")]
-    public async Task SoftDeleteTracks([FromBody] List<string> trackHashes)
-    {
-        if (!trackHashes.Any()) return;
-
-        await _musicRepository.SoftDeleteTracksAsync(trackHashes);
-    }
-
-    [HttpDelete("music/hard")]
-    public async Task HardDeleteTracks([FromBody] List<string> trackHashes)
-    {
-        if (!trackHashes.Any()) return;
-
-        await _musicRepository.HardDeleteTracksAsync(trackHashes);
-    }
 }

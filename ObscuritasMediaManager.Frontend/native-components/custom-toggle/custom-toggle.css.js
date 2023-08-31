@@ -7,7 +7,7 @@ export function renderCustomToggleStyles() {
             position: relative;
             display: block;
             background-color: var(--untoggled-color, #0007);
-            border-radius: 5px;
+            border-radius: 7px;
             --width: 60px;
             --height: 30px;
             height: var(--height);
@@ -26,11 +26,11 @@ export function renderCustomToggleStyles() {
         #slider {
             position: absolute;
             display: inline-block;
-            background-color: var(--accent-color-full);
+            background-color: var(--slider-color, #333);
             width: calc(var(--height) - 10px);
             height: calc(var(--height) - 10px);
             margin: 5px;
-            border-radius: 3px;
+            border-radius: 5px;
             transition: all 1s ease;
         }
 
@@ -43,11 +43,12 @@ export function renderCustomToggleStyles() {
             rotate: 90deg;
         }
 
-        :host([state='${unsafeCSS(CheckboxState.Allow)}']) {
+        :host([state='${unsafeCSS(CheckboxState.Require)}']),
+        :host(:not([threeValues])[toggled]) {
             background-color: var(--toggled-color, var(--background-color));
         }
 
-        :host([state='${unsafeCSS(CheckboxState.Allow)}']) #slider,
+        :host([state='${unsafeCSS(CheckboxState.Require)}']) #slider,
         :host(:not([threeValues])[state='${unsafeCSS(CheckboxState.Ignore)}']) #slider {
             margin-left: calc(var(--width) - var(--height) + 5px);
             rotate: 180deg;

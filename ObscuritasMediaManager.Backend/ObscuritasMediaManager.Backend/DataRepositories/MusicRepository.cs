@@ -92,7 +92,7 @@ public class MusicRepository
 
     public IQueryable<MusicModel> GetAll()
     {
-        return _context.Music.Where(x => !x.Deleted);
+        return _context.Music;
     }
 
     public async Task<IEnumerable<MusicModel>> GetSelectedAsync(IEnumerable<string> trackHashes)
@@ -135,6 +135,13 @@ public class MusicRepository
         await _context.Music
                       .Where(x => trackHashes.Contains(x.Hash))
                       .ExecuteUpdateAsync(builder => builder.SetProperty(x => x.Deleted, x => true));
+    }
+
+    public async Task UndeleteTracksAsync(IEnumerable<string> trackHashes)
+    {
+        await _context.Music
+                      .Where(x => trackHashes.Contains(x.Hash))
+                      .ExecuteUpdateAsync(builder => builder.SetProperty(x => x.Deleted, x => false));
     }
 
     public async Task HardDeleteTracksAsync(IEnumerable<string> trackHashes)

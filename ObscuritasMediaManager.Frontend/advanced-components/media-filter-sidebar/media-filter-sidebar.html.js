@@ -116,13 +116,13 @@ export function renderMediaFilterSidebar(sidebar) {
                 <star-rating
                     max="5"
                     .values="${Object.keys(sidebar.filter.ratings.states)
-                        .filter((x) => sidebar.filter.ratings.states[x] == CheckboxState.Allow)
+                        .filter((x) => sidebar.filter.ratings.states[x] == CheckboxState.Require)
                         .map((x) => Number.parseInt(x))}"
                     @ratingChanged="${(e) =>
                         sidebar.setFilterProperty(
                             'ratings',
                             e.detail.rating,
-                            e.detail.include ? CheckboxState.Allow : CheckboxState.Forbid
+                            e.detail.include ? CheckboxState.Require : CheckboxState.Forbid
                         )}"
                 ></star-rating>
             </div>

@@ -33,10 +33,10 @@ export class MediaFilter {
     /** @type {'ascending' | 'descending'} */ sortingDirection = 'ascending';
     /** @type {keyof MediaModel} */ sortingProperty;
     status = new FilterEntry(Object.values(MediaStatus), CheckboxState.Ignore);
-    ratings = new FilterEntry([1, 2, 3, 4, 5], CheckboxState.Allow);
+    ratings = new FilterEntry([1, 2, 3, 4, 5], CheckboxState.Require);
     /** @type {FilterEntry<string>} */ genres;
     release = { min: null, max: null };
-    languages = new FilterEntry(Object.values(Nation), CheckboxState.Allow);
+    languages = new FilterEntry(Object.values(Nation), CheckboxState.Require);
     category = new FilterEntry(Object.values(MediaCategory), CheckboxState.Ignore);
     contentWarnings = new FilterEntry(Object.values(ContentWarning), CheckboxState.Ignore);
     targetGroups = new FilterEntry(Object.values(TargetGroup), CheckboxState.Ignore);

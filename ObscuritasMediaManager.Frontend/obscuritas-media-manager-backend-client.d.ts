@@ -7,10 +7,6 @@ export declare class CleanupClient {
     });
     getBrokenAudioTracks(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
     protected processGetBrokenAudioTracks(response: Response): Promise<MusicModel[]>;
-    softDeleteTracks(trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
-    protected processSoftDeleteTracks(response: Response): Promise<void>;
-    hardDeleteTracks(trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
-    protected processHardDeleteTracks(response: Response): Promise<void>;
 }
 export declare class FileClient {
     private http;
@@ -93,6 +89,12 @@ export declare class MusicClient {
     protected processAddInstrument(response: Response): Promise<void>;
     removeInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
     protected processRemoveInstrument(response: Response): Promise<void>;
+    softDeleteTracks(trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
+    protected processSoftDeleteTracks(response: Response): Promise<void>;
+    undeleteTracks(trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
+    protected processUndeleteTracks(response: Response): Promise<void>;
+    hardDeleteTracks(trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
+    protected processHardDeleteTracks(response: Response): Promise<void>;
 }
 export declare class PlaylistClient {
     private http;

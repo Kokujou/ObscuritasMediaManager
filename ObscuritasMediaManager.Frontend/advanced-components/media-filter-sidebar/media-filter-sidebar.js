@@ -46,17 +46,17 @@ export class MediaFilterSidebar extends LitElementBase {
 
     /**
      * @template T
-     * @typedef {{[K in keyof T]: T[K] extends FilterEntry ? K : never}[keyof T]} StringKeyOf
+     * @typedef {{[K in keyof T]: T[K] extends FilterEntry ? K : never}[keyof T]} FilterEntryKeyOf
      */
 
     /**
      * @template T
-     * @template {StringKeyOf<T>} K
+     * @template {FilterEntryKeyOf<T>} K
      * @typedef {T[K] extends FilterEntry<infer U> ?  U : never} FilterType
      */
 
     /**
-     * @template {StringKeyOf<MediaFilter>} T
+     * @template {FilterEntryKeyOf<MediaFilter>} T
      * @param {T} property
      * @param {string} key
      * @param {CheckboxState} value
@@ -69,7 +69,7 @@ export class MediaFilterSidebar extends LitElementBase {
 
     /**
      * @template {MediaFilter[T]['_type']} U
-     * @template {StringKeyOf<MediaFilter>} T
+     * @template {FilterEntryKeyOf<MediaFilter>} T
      * @param {T} property
      * @param {U[] | 'all'} keys
      * @param {CheckboxState} value
@@ -111,7 +111,7 @@ export class MediaFilterSidebar extends LitElementBase {
             /** @param {CustomEvent<GenreDialogResult>} e */ (e) => {
                 var acceptedGenreIds = e.detail.acceptedGenres.map((x) => x.id);
                 var forbiddendGenreIds = e.detail.forbiddenGenres.map((x) => x.id);
-                this.setArrayFilter('genres', acceptedGenreIds, CheckboxState.Allow);
+                this.setArrayFilter('genres', acceptedGenreIds, CheckboxState.Require);
                 this.setArrayFilter('genres', forbiddendGenreIds, CheckboxState.Forbid);
                 this.notifyFilterUpdated();
                 dialog.remove();

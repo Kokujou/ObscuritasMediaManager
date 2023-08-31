@@ -7,7 +7,7 @@ import { CheckboxState } from './enumerations/checkbox-state.js';
 export class FilterEntry {
     get required() {
         return Object.entries(this.states)
-            .filter((x) => x[1] == CheckboxState.Allow)
+            .filter((x) => x[1] == CheckboxState.Require)
             .map((x) => /** @type {U} */ (x[0]));
     }
 

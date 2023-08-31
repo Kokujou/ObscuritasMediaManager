@@ -26,11 +26,15 @@ export function renderMusicPage(musicPage) {
                 <div id="result-options-container">
                     <div id="result-options">
                         <div class="option-section" id="import-section">
-                            <a id="import-files" @click="${() => musicPage.importFolder()}"></a>
+                            <a id="import-files" @click="${() => musicPage.importFolder()}" tooltip="Tracks importieren"></a>
                             <a id="create-song"></a>
                         </div>
                         <div class="option-section" id="import-section">
-                            <a id="cleanup-tracks" @click="${() => musicPage.cleanupTracks()}"></a>
+                            <a
+                                id="cleanup-tracks"
+                                @click="${() => musicPage.cleanupTracks()}"
+                                tooltip="Defekte Tracks bereinigen"
+                            ></a>
                         </div>
                         <div class="option-section" id="playlist-section">
                             <a
@@ -60,6 +64,7 @@ export function renderMusicPage(musicPage) {
                             >
                             </range-slider>
                         </div>
+
                         <div
                             id="active-track-warning"
                             ?invisible="${musicPage.audioElement.paused}"
@@ -114,8 +119,8 @@ export function renderMusicPage(musicPage) {
                                                   .hash="${getPageName(MusicPlaylistPage)}"
                                                   .search="track=${track.hash}"
                                                   ?disabled="${musicPage.selectionModeTimer == null || musicPage.selectionMode}"
-                                                  @pointerdown="${(e) => musicPage.startSelectionModeTimer(track.hash)}"
-                                                  @pointerup="${(e) => musicPage.stopSelectionModeTimer(track.hash)}"
+                                                  @pointerdown="${(e) => musicPage.startSelectionModeTimer(track.hash, e)}"
+                                                  @pointerup="${(e) => musicPage.stopSelectionModeTimer(track.hash, e)}"
                                               >
                                                   <audio-tile
                                                       .track="${track}"
@@ -123,6 +128,9 @@ export function renderMusicPage(musicPage) {
                                                       ?paused="${musicPage.audioElement.paused ||
                                                       musicPage.currentTrack.path != track.path}"
                                                       @musicToggled="${() => musicPage.toggleMusic(track)}"
+                                                      @soft-delete="${() => musicPage.softDeleteTrack(track)}"
+                                                      @hard-delete="${() => musicPage.hardDeleteTrack(track)}"
+                                                      @restore="${() => musicPage.undeleteTrack(track)}"
                                                   ></audio-tile>
                                               </link-element>
                                           </div>

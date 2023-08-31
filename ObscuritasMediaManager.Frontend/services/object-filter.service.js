@@ -10,7 +10,7 @@ export class ObjectFilterService {
      * @param {keyof T} filterProperty
      */
     static applyArrayFilter(list, filter, filterProperty) {
-        var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
+        var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Require);
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
         var results = list.filter((item) => {
             var array = item[filterProperty] ?? [];
@@ -33,10 +33,23 @@ export class ObjectFilterService {
      * @param {keyof T} filterProperty
      * @param {CheckboxState} ignoreState
      */
-    static applyPropertyFilter(list, filter, filterProperty, ignoreState = CheckboxState.Allow) {
+    static applyPropertyFilter(list, filter, filterProperty, ignoreState = CheckboxState.Require) {
         var results = this.#filterForbidden([...list], filter, filterProperty);
-        if (ignoreState != CheckboxState.Allow) results = this.#filterNotForced([...results], filter, filterProperty);
+        if (ignoreState != CheckboxState.Require) results = this.#filterNotForced([...results], filter, filterProperty);
 
+        list.length = 0;
+        list.push(...results);
+    }
+
+    /**
+     * @template T
+     * @param {T[]} list
+     * @param {CheckboxState} state
+     * @param {keyof T} filterProperty
+     */
+    static applyValueFilter(list, state, filterProperty) {
+        if (state == CheckboxState.Ignore) return;
+        var results = list.filter((x) => x[filterProperty] == (state == CheckboxState.Require));
         list.length = 0;
         list.push(...results);
     }
@@ -63,7 +76,7 @@ export class ObjectFilterService {
      * @param {keyof T} filterProperty
      */
     static #filterNotForced(list, filter, filterProperty) {
-        var forcedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Allow);
+        var forcedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Require);
         if (forcedValues.length == 0) return list;
 
         return list.filter((item) => forcedValues.includes(`${item[filterProperty]}`));

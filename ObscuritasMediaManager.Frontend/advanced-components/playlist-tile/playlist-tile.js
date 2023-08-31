@@ -97,7 +97,7 @@ export class PlaylistTile extends LitElementBase {
                         },
                         {
                             iconString: trashIcon(),
-                            text: 'Entfernen',
+                            text: 'Endgültig Löschen',
                             action: () => this.dispatchEvent(new CustomEvent('remove')),
                         },
                     ],

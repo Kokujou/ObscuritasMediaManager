@@ -59,76 +59,6 @@ export class CleanupClient {
         }
         return Promise.resolve(null);
     }
-    softDeleteTracks(trackHashes, signal) {
-        let url_ = this.baseUrl + "/api/Cleanup/music/soft";
-        url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(trackHashes);
-        let options_ = {
-            body: content_,
-            method: "DELETE",
-            signal,
-            headers: {
-                "Content-Type": "application/json",
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processSoftDeleteTracks(_response);
-        });
-    }
-    processSoftDeleteTracks(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                return;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-    hardDeleteTracks(trackHashes, signal) {
-        let url_ = this.baseUrl + "/api/Cleanup/music/hard";
-        url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(trackHashes);
-        let options_ = {
-            body: content_,
-            method: "DELETE",
-            signal,
-            headers: {
-                "Content-Type": "application/json",
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processHardDeleteTracks(_response);
-        });
-    }
-    processHardDeleteTracks(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                return;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
 }
 export class FileClient {
     http;
@@ -957,6 +887,111 @@ export class MusicClient {
         });
     }
     processRemoveInstrument(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    softDeleteTracks(trackHashes, signal) {
+        let url_ = this.baseUrl + "/api/Music/music/soft";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(trackHashes);
+        let options_ = {
+            body: content_,
+            method: "DELETE",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processSoftDeleteTracks(_response);
+        });
+    }
+    processSoftDeleteTracks(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    undeleteTracks(trackHashes, signal) {
+        let url_ = this.baseUrl + "/api/Music/music/undelete";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(trackHashes);
+        let options_ = {
+            body: content_,
+            method: "PUT",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processUndeleteTracks(_response);
+        });
+    }
+    processUndeleteTracks(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    hardDeleteTracks(trackHashes, signal) {
+        let url_ = this.baseUrl + "/api/Music/music/hard";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(trackHashes);
+        let options_ = {
+            body: content_,
+            method: "DELETE",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processHardDeleteTracks(_response);
+        });
+    }
+    processHardDeleteTracks(response) {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {

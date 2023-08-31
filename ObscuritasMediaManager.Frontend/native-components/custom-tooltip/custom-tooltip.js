@@ -100,7 +100,7 @@ export class CustomTooltip extends LitElementBase {
     remove() {
         this.toggleAttribute('removed', true);
         CustomTooltip.timeout = setTimeout(() => {
-            this.remove();
+            super.remove();
             CustomTooltip.currentInstance = null;
         }, 250);
     }

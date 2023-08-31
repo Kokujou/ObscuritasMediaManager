@@ -1,4 +1,5 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
+import { FilterEntry } from '../../data/filter-entry.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { MusicSortingProperties } from '../../data/music-sorting-properties.js';
 import { Subscription } from '../../data/observable.js';
@@ -66,33 +67,38 @@ export class MusicFilter extends LitElementBase {
     }
 
     /**
-     * @param {keyof MusicFilterOptions} filter
+     * @template T
+     * @typedef {{[K in keyof T]: T[K] extends FilterEntry ? K : never}[keyof T]} FilterEntryKeyOf
+     */
+
+    /**
+     * @param {FilterEntryKeyOf<MusicFilterOptions>} filter
      * @param {string} enumKey
      * @param {CheckboxState} state
      */
-    toggleFilter(filter, enumKey, state) {
-        state;
-        if (filter == 'search') {
-            this.filter[filter] = state;
-        } else if (filter == 'complete') this.filter.complete = state;
-        else if (filter == 'showPlaylists') this.filter.showPlaylists = state;
-        else this.filter[filter].states[enumKey] = state;
-
+    setFilterEntryValue(filter, enumKey, state) {
+        this.filter[filter].states[enumKey] = state;
         this.requestUpdate(undefined);
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
 
     /**
-     * @param {keyof MusicFilterOptions} filter
+     * @template {Exclude<keyof MusicFilterOptions, FilterEntryKeyOf<MusicFilterOptions>>} T
+     * @param {T} filter
+     * @param {MusicFilterOptions[T]} state
+     */
+    setfilterEntry(filter, state) {
+        this.filter[filter] = state;
+        this.requestUpdate(undefined);
+        this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
+    }
+
+    /**
+     * @param {FilterEntryKeyOf<MusicFilterOptions>} filter
      * @param {CheckboxState} value
      */
     setArrayFilter(filter, value) {
-        if (filter == 'search') this.filter[filter] = '';
-        else if (filter == 'complete') this.filter.complete = value;
-        else if (filter == 'showPlaylists') this.filter.showPlaylists = value;
-        else {
-            for (var key in this.filter[filter].states) this.filter[filter].states[key] = value;
-        }
+        for (var key in this.filter[filter].states) this.filter[filter].states[key] = value;
         this.requestUpdate(undefined);
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
@@ -114,13 +120,12 @@ export class MusicFilter extends LitElementBase {
     }
 
     /**
-     * @param {keyof MusicFilterOptions} filter
+     * @param {FilterEntryKeyOf<MusicFilterOptions>} filter
      * @param {string[]} selectedValues
      */
     handleDropdownChange(filter, selectedValues) {
-        if (filter == 'search' || filter == 'complete' || filter == 'showPlaylists') return;
         Object.keys(this.filter[filter].states).forEach((key) => {
-            this.toggleFilter(filter, key, selectedValues.includes(key) ? CheckboxState.Ignore : CheckboxState.Forbid);
+            this.setFilterEntryValue(filter, key, selectedValues.includes(key) ? CheckboxState.Ignore : CheckboxState.Forbid);
         });
     }
 
@@ -132,7 +137,7 @@ export class MusicFilter extends LitElementBase {
         /** @type {GenreModel[]} */ var forbiddenInstruments = [];
 
         for (var key of Object.keys(this.filter.instruments.states)) {
-            if (this.filter.instruments.states[key] == CheckboxState.Allow)
+            if (this.filter.instruments.states[key] == CheckboxState.Require)
                 allowedInstruments.push(instruments.find((x) => x.name == key));
             else if (this.filter.instruments.states[key] == CheckboxState.Forbid)
                 forbiddenInstruments.push(instruments.find((x) => x.name == key));
@@ -150,8 +155,8 @@ export class MusicFilter extends LitElementBase {
                 this.filter.instruments.states[key] = CheckboxState.Ignore;
             }
             for (var allowed of e.detail.acceptedGenres) {
-                this.filter.instruments.states[allowed.name] = CheckboxState.Allow;
-                this.filter.instrumentTypes.states[allowed.section] = CheckboxState.Allow;
+                this.filter.instruments.states[allowed.name] = CheckboxState.Require;
+                this.filter.instrumentTypes.states[allowed.section] = CheckboxState.Require;
             }
             for (var forbidden of e.detail.forbiddenGenres) {
                 this.filter.instruments.states[forbidden.name] = CheckboxState.Forbid;
@@ -168,7 +173,7 @@ export class MusicFilter extends LitElementBase {
 
     canFilterInstrumentType(type) {
         var forcedInstruments = Object.keys(this.filter.instruments.states)
-            .filter((x) => this.filter.instruments.states[x] == CheckboxState.Allow)
+            .filter((x) => this.filter.instruments.states[x] == CheckboxState.Require)
             .map((x) => session.instruments.current().find((instrument) => instrument.name == x));
 
         return !forcedInstruments.some((x) => x && x.type == type);

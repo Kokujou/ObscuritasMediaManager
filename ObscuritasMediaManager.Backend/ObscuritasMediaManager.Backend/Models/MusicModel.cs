@@ -26,7 +26,7 @@ public class MusicModel
     public bool Complete { get; set; }
     [Key] public string Hash { get; set; }
     [JsonIgnore] public long FileBytes { get; set; }
-    [JsonIgnore] public bool Deleted { get; set; }
+    public bool Deleted { get; set; }
 
     public MusicModel CalculateHash()
     {

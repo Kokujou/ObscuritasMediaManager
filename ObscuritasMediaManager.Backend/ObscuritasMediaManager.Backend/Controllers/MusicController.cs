@@ -99,6 +99,30 @@ public class MusicController : ControllerBase
         await _musicRepository.UpdateAsync(hash, updateRequest.OldModel, updateRequest.NewModel);
     }
 
+    [HttpDelete("music/soft")]
+    public async Task SoftDeleteTracks([FromBody] List<string> trackHashes)
+    {
+        if (!trackHashes.Any()) return;
+
+        await _musicRepository.SoftDeleteTracksAsync(trackHashes);
+    }
+
+    [HttpPut("music/undelete")]
+    public async Task UndeleteTracks([FromBody] List<string> trackHashes)
+    {
+        if (!trackHashes.Any()) return;
+
+        await _musicRepository.UndeleteTracksAsync(trackHashes);
+    }
+
+    [HttpDelete("music/hard")]
+    public async Task HardDeleteTracks([FromBody] List<string> trackHashes)
+    {
+        if (!trackHashes.Any()) return;
+
+        await _musicRepository.HardDeleteTracksAsync(trackHashes);
+    }
+
     private async Task<List<string>> GetInvalidInstrumentsAsync(IEnumerable<string> instrumentNames)
     {
         instrumentNames = instrumentNames.ToList();

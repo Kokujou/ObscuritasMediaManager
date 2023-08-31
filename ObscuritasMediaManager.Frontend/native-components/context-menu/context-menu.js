@@ -4,12 +4,11 @@ import { getScaleFactorX, getScaleFactorY } from '../../services/extensions/docu
 import { renderContextMenuStyles } from './context-menu.css.js';
 import { renderContextMenu } from './context-menu.html.js';
 
-/**
- * @typedef {Object} ContextMenuItem
- * @prop {string} iconString
- * @prop {string} text
- * @prop {()=>void} action
- */
+export class ContextMenuItem {
+    /** @type {string} */ text;
+    /** @type {string} */ iconString;
+    /** @type {()=>void} */ action;
+}
 
 export class ContextMenu extends LitElementBase {
     /** @type {ContextMenu} */ static instance = null;

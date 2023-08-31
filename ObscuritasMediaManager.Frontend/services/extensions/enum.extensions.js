@@ -8,10 +8,9 @@ export class Enum {
         var enumKeys = Object.keys(enumType);
         var currentIndex = enumKeys.findIndex((x) => enumType[x] == currentValue);
 
-        if (currentIndex < enumKeys.length - 1) currentIndex++;
-        else currentIndex = excludeFirst ? 1 : 0;
+        if (currentIndex >= enumKeys.length - 1) return currentValue;
 
-        return Object.values(enumType)[currentIndex];
+        return Object.values(enumType)[currentIndex + 1];
     }
 
     /**
@@ -23,8 +22,9 @@ export class Enum {
         var enumKeys = Object.keys(enumType);
         var currentIndex = enumKeys.findIndex((x) => enumType[x] == currentValue);
 
-        if (currentIndex > (excludeFirst ? 1 : 0)) currentIndex--;
-        else currentIndex = enumKeys.length - 1;
+        if (currentIndex <= (excludeFirst ? 1 : 0)) return currentValue;
+
+        currentIndex--;
         return Object.values(enumType)[currentIndex];
     }
 }

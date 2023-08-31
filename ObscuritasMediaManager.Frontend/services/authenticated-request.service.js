@@ -12,7 +12,6 @@ export class AuthenticatedRequestService {
      */
     async fetch(url, requestInit) {
         try {
-            requestInit.integrity;
             var response = await fetch(url, requestInit);
 
             if (response.status == 401) {
@@ -21,7 +20,6 @@ export class AuthenticatedRequestService {
 
             return response;
         } catch (err) {
-            changePage('login');
             console.log(err);
         }
     }

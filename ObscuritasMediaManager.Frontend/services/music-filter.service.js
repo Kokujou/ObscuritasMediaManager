@@ -10,27 +10,24 @@ export class MusicFilterService {
      * @param {MusicFilterOptions} filter
      */
     static filterPlaylists(playlists, filter) {
-        if (filter.showPlaylists == CheckboxState.Forbid) return [];
+        if (filter.showPlaylists == CheckboxState.Forbid || filter.showDeleted == CheckboxState.Require) return [];
 
         var filteredPlaylists = [...playlists];
         ObjectFilterService.applyArrayFilter(filteredPlaylists, filter.genres, 'genres');
         ObjectFilterService.applyPropertyFilter(filteredPlaylists, filter.ratings, 'rating');
         ObjectFilterService.applyMultiPropertySearch(filteredPlaylists, filter.search, 'name', 'author');
+        ObjectFilterService.applyValueFilter(filteredPlaylists, filter.showComplete, 'complete');
 
-        var forbiddenMoods = Object.entries(filter.moods.states)
-            .filter((x) => x[1] == CheckboxState.Forbid)
-            .map((x) => x[0]);
+        var forbiddenMoods = filter.moods.forbidden;
+        var requiredMoods = filter.moods.required;
         filteredPlaylists = filteredPlaylists.filter(
             (x) =>
                 !x.tracks.some(
                     (track) =>
                         forbiddenMoods.includes(track.mood1) ||
                         (track.mood2 != Mood.Unset && forbiddenMoods.includes(track.mood2))
-                )
+                ) && requiredMoods.every((mood) => x.tracks.some((track) => track.mood1 == mood || track.mood2 == mood))
         );
-
-        if (filter.complete != CheckboxState.Ignore)
-            filteredPlaylists = filteredPlaylists.filter((track) => track.complete == (filter.complete == CheckboxState.Allow));
 
         return filteredPlaylists;
     }
@@ -40,7 +37,7 @@ export class MusicFilterService {
      * @param {MusicFilterOptions} filter
      */
     static filterTracks(tracks, filter) {
-        if (filter.showPlaylists == CheckboxState.Allow) return [];
+        if (filter.showPlaylists == CheckboxState.Require) return [];
         var filteredTracks = [...tracks];
 
         ObjectFilterService.applyArrayFilter(filteredTracks, filter.instrumentTypes, 'instrumentTypes');
@@ -52,12 +49,11 @@ export class MusicFilterService {
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.participants, 'participants');
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.ratings, 'rating');
         ObjectFilterService.applyMultiPropertySearch(filteredTracks, filter.search, 'name', 'author', 'source');
+        ObjectFilterService.applyValueFilter(filteredTracks, filter.showComplete, 'complete');
+        ObjectFilterService.applyValueFilter(filteredTracks, filter.showDeleted, 'deleted');
         ObjectFilterService.applyMultiPropertyFilter(filteredTracks, filter.moods, (item) =>
             [item.mood1].concat(item.mood2 == Mood.Unset ? [] : item.mood2)
         );
-
-        if (filter.complete != CheckboxState.Ignore)
-            filteredTracks = filteredTracks.filter((track) => track.complete == (filter.complete == CheckboxState.Allow));
 
         return filteredTracks;
     }

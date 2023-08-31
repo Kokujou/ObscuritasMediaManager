@@ -9,6 +9,7 @@ import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-play
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { PlaylistSelectionDialog } from '../../dialogs/playlist-selection-dialog/playlist-selection-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
+import { ContextMenu } from '../../native-components/context-menu/context-menu.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import { MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
@@ -35,7 +36,9 @@ export class MusicPage extends LitElementBase {
     }
 
     static get properties() {
-        return {};
+        return {
+            deletionMode: { type: Boolean, reflect: true },
+        };
     }
 
     get paginatedPlaylists() {
@@ -111,7 +114,7 @@ export class MusicPage extends LitElementBase {
         );
 
         this.addEventListener('click', () => {
-            if (!this.selectionMode) return;
+            if (!this.selectionMode || ContextMenu.instance) return;
             this.selectionMode = false;
             this.selectedHashes = [];
             this.requestUpdate(undefined);
@@ -264,7 +267,7 @@ export class MusicPage extends LitElementBase {
                 if (!accpeted) return dialog.remove();
 
                 var selected = /** @type {CustomEvent<{selected: string[]}>} */ (e).detail.selected;
-                await CleanupService.hardDeleteTracks(selected);
+                await MusicService.hardDeleteTracks(selected);
                 dialog.remove();
                 await this.initializeData();
             } catch (err) {
@@ -275,8 +278,10 @@ export class MusicPage extends LitElementBase {
 
     /**
      * @param {string} audioHash
+     * @param {PointerEvent} event
      */
-    startSelectionModeTimer(audioHash) {
+    startSelectionModeTimer(audioHash, event) {
+        if (event.button != 0) return;
         if (this.selectionModeUnset) this.selectionModeUnset = false;
         if (this.selectionMode) return;
         this.selectionModeTimer = setTimeout(() => {
@@ -289,7 +294,12 @@ export class MusicPage extends LitElementBase {
         this.requestUpdate(undefined);
     }
 
-    stopSelectionModeTimer(hash) {
+    /**
+     * @param {string} hash
+     * @param {PointerEvent} event
+     */
+    stopSelectionModeTimer(hash, event) {
+        if (event.button != 0) return;
         if (this.selectionMode && !this.selectionModeSet) this.toggleTrackSelection(null, hash);
         this.selectionModeSet = false;
         if (!this.selectionModeTimer) return;
@@ -380,6 +390,80 @@ export class MusicPage extends LitElementBase {
             await this.initializeData();
         } catch (err) {
             MessageSnackbar.popup(`Ein Fehler ist beim Löschen der Playlist aufgetreten: \r\n ${err}`, 'error');
+        }
+    }
+
+    /**
+     * @param {MusicModel} track
+     */
+    async softDeleteTrack(track) {
+        var trackHashes = [track.hash];
+        if (this.selectionMode && this.selectedHashes.includes(track.hash)) {
+            trackHashes = this.selectedHashes;
+            var accepted = await DialogBase.show('Bist du sicher?', {
+                content: 'Sie sind dabei mehrere Tracks zu löschen.\r\n Sind Sie sicher?',
+                acceptActionText: 'Ja',
+                declineActionText: 'Nein',
+            });
+            if (!accepted) return;
+        }
+
+        try {
+            await MusicService.softDeleteTracks(trackHashes);
+            await this.initializeData();
+            MessageSnackbar.popup('Tracks erfolgreich gelöscht.', 'success');
+        } catch (err) {
+            MessageSnackbar.popup(`Ein Fehler ist beim Löschen aufgetreten: \r\n ${err}.`, 'error');
+        }
+    }
+
+    async hardDeleteTrack(track) {
+        var trackHashes = [track.hash];
+        if (this.selectionMode && this.selectedHashes.includes(track.hash)) {
+            trackHashes = this.selectedHashes;
+            var accepted = await DialogBase.show('Vorsicht!', {
+                content:
+                    'Sie sind dabei mehrere Tracks permanent zu löschen.\r\n' +
+                    'Diese Aktion kann nicht rückgängig gemacht werden!\r\n' +
+                    'Sind Sie sicher?',
+                acceptActionText: 'Ja',
+                declineActionText: 'Nein',
+            });
+            if (!accepted) return;
+        } else {
+            var accepted = await DialogBase.show('Vorsicht!', {
+                content:
+                    'Sie sind dabei einen Track permanent zu löschen.\r\n' +
+                    'Diese Aktion kann nicht rückgängig gemacht werden!\r\n' +
+                    'Sind Sie sicher?',
+                acceptActionText: 'Ja',
+                declineActionText: 'Nein',
+            });
+            if (!accepted) return;
+        }
+
+        try {
+            await MusicService.hardDeleteTracks(trackHashes);
+            await this.initializeData();
+            MessageSnackbar.popup('Tracks erfolgreich permanent gelöscht.', 'success');
+        } catch (err) {
+            MessageSnackbar.popup(`Ein Fehler ist beim permanenten Löschen aufgetreten: \r\n ${err}.`, 'error');
+        }
+    }
+
+    /**
+     * @param {MusicModel} track
+     */
+    async undeleteTrack(track) {
+        var trackHashes = [track.hash];
+        if (this.selectionMode && this.selectedHashes.includes(track.hash)) trackHashes = this.selectedHashes;
+
+        try {
+            await MusicService.undeleteTracks(trackHashes);
+            await this.initializeData();
+            MessageSnackbar.popup('Die Track(s) wurden erfolgreich wiederhergestellt', 'success');
+        } catch (err) {
+            MessageSnackbar.popup('Ein Fehler ist beim wiederherstellen der Track(s) aufgetreten: \r\n' + err, 'error');
         }
     }
 }

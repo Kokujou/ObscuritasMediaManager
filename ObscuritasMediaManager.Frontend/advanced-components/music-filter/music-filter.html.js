@@ -24,33 +24,42 @@ export function renderMusicFilter(musicFilter) {
             <div class="icon-button ${IconRegistry.RevertIcon}" @click="${() => musicFilter.resetAllFilters()}"></div>
         </div>
         <div id="search-panel">
-            <div id="text-filter" class="filter">
+            <div id="text-filter" class="filter" simple>
                 <input
                     type="text"
                     id="search-input"
                     placeholder="Suchbegriff eingeben..."
                     oninput="this.dispatchEvent(new Event('change'))"
-                    @change="${(e) => musicFilter.toggleFilter('search', '', e.target.value)}"
+                    @change="${(e) => musicFilter.setfilterEntry('search', e.target.value)}"
                     .value="${musicFilter.filter.search || ''}"
                 />
             </div>
-            <div id="complete-filter" class="filter">
+            <div id="complete-filter" class="filter" simple>
                 <label for="scales">Vollständig: </label>
-                <tri-value-checkbox
-                    allowThreeValues
-                    id="complete-input"
-                    value="${musicFilter.filter.complete}"
-                    @valueChanged="${(e) => musicFilter.toggleFilter('complete', '', e.detail.value)}"
-                ></tri-value-checkbox>
+                <custom-toggle
+                    id="show-complete-toggle"
+                    .state="${musicFilter.filter.showComplete}"
+                    threeValues
+                    @toggle="${(e) => musicFilter.setfilterEntry('showComplete', e.detail)}"
+                ></custom-toggle>
             </div>
-            <div id="show-playlists-filter" class="filter">
+            <div id="show-playlists-filter" class="filter" simple>
                 <label for="scales">Playlists anzeigen: </label>
-                <tri-value-checkbox
-                    allowThreeValues
-                    id="show-playlists-input"
-                    value="${musicFilter.filter.showPlaylists}"
-                    @valueChanged="${(e) => musicFilter.toggleFilter('showPlaylists', '', e.detail.value)}"
-                ></tri-value-checkbox>
+                <custom-toggle
+                    id="show-playlists-toggle"
+                    .state="${musicFilter.filter.showPlaylists}"
+                    threeValues
+                    @toggle="${(e) => musicFilter.setfilterEntry('showPlaylists', e.detail)}"
+                ></custom-toggle>
+            </div>
+            <div id="show-deleted-filter" class="filter" simple>
+                <label for="scales">Gelöschte anzeigen: </label>
+                <custom-toggle
+                    id="show-deleted-toggle"
+                    .state="${musicFilter.filter.showDeleted}"
+                    threeValues
+                    @toggle="${(e) => musicFilter.setfilterEntry('showDeleted', e.detail)}"
+                ></custom-toggle>
             </div>
             <div id="mood-filter" class="filter">
                 <div class="filter-heading">
@@ -93,7 +102,7 @@ export function renderMusicFilter(musicFilter) {
                     <div class="heading-label">Sprache:</div>
                     <div
                         class="icon-button ${IconRegistry.SelectAllIcon}"
-                        @click="${() => musicFilter.setArrayFilter('languages', CheckboxState.Allow)}"
+                        @click="${() => musicFilter.setArrayFilter('languages', CheckboxState.Require)}"
                     ></div>
                     <div
                         class="icon-button ${IconRegistry.UnselectAllIcon}"
@@ -104,7 +113,7 @@ export function renderMusicFilter(musicFilter) {
                     ${Object.values(Nation).map(
                         (type) =>
                             html` <tri-value-checkbox
-                                @valueChanged="${(e) => musicFilter.toggleFilter('languages', type, e.detail.value)}"
+                                @valueChanged="${(e) => musicFilter.setFilterEntryValue('languages', type, e.detail.value)}"
                                 class="icon-container"
                                 .value="${musicFilter.filter.languages.states[type]}"
                             >
@@ -118,7 +127,7 @@ export function renderMusicFilter(musicFilter) {
                     <div class="heading-label">Herkunftsland:</div>
                     <div
                         class="icon-button ${IconRegistry.SelectAllIcon}"
-                        @click="${() => musicFilter.setArrayFilter('nations', CheckboxState.Allow)}"
+                        @click="${() => musicFilter.setArrayFilter('nations', CheckboxState.Require)}"
                     ></div>
                     <div
                         class="icon-button ${IconRegistry.UnselectAllIcon}"
@@ -130,44 +139,44 @@ export function renderMusicFilter(musicFilter) {
                         (type) =>
                             html` <tri-value-checkbox
                                 class="icon-container"
-                                @valueChanged="${(e) => musicFilter.toggleFilter('nations', type, e.detail.value)}"
+                                @valueChanged="${(e) => musicFilter.setFilterEntryValue('nations', type, e.detail.value)}"
                                 .value="${musicFilter.filter.nations.states[type]}"
                             >
                                 <div class="inline-icon" nation="${type}"></div>
                             </tri-value-checkbox>`
                     )}
                 </side-scroller>
-                <div id="instrument-type-filter" class="filter">
-                    <div class="filter-heading">
-                        <div class="heading-label">Instrument Typen:</div>
-                        <div
-                            class="icon-button ${IconRegistry.SelectAllIcon}"
-                            @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Allow)}"
-                        ></div>
-                        <div
-                            class="icon-button ${IconRegistry.UnselectAllIcon}"
-                            @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Forbid)}"
-                        ></div>
-                        <div
-                            class="icon-button ${IconRegistry.RevertIcon}"
-                            @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Ignore)}"
-                        ></div>
-                    </div>
-                    <side-scroller>
-                        ${Object.values(InstrumentType).map(
-                            (type) =>
-                                html` <tri-value-checkbox
-                                    class="icon-container"
-                                    allowThreeValues
-                                    @valueChanged="${(e) => musicFilter.toggleFilter('instrumentTypes', type, e.detail.value)}"
-                                    .value="${musicFilter.filter.instrumentTypes.states[type]}"
-                                    .disabled="${!musicFilter.canFilterInstrumentType(type)}"
-                                >
-                                    <div class="inline-icon ${type}"></div>
-                                </tri-value-checkbox>`
-                        )}
-                    </side-scroller>
+            </div>
+            <div id="instrument-type-filter" class="filter">
+                <div class="filter-heading">
+                    <div class="heading-label">Instrument Typen:</div>
+                    <div
+                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Require)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Forbid)}"
+                    ></div>
+                    <div
+                        class="icon-button ${IconRegistry.RevertIcon}"
+                        @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Ignore)}"
+                    ></div>
                 </div>
+                <side-scroller>
+                    ${Object.values(InstrumentType).map(
+                        (type) =>
+                            html` <tri-value-checkbox
+                                class="icon-container"
+                                allowThreeValues
+                                @valueChanged="${(e) => musicFilter.setFilterEntryValue('instrumentTypes', type, e.detail.value)}"
+                                .value="${musicFilter.filter.instrumentTypes.states[type]}"
+                                .disabled="${!musicFilter.canFilterInstrumentType(type)}"
+                            >
+                                <div class="inline-icon ${type}"></div>
+                            </tri-value-checkbox>`
+                    )}
+                </side-scroller>
             </div>
             <div id="instrument-filter" class="filter">
                 <div class="filter-heading">
@@ -178,7 +187,7 @@ export function renderMusicFilter(musicFilter) {
                     ></div>
                     <div
                         class="icon-button ${IconRegistry.SelectAllIcon}"
-                        @click="${() => musicFilter.setArrayFilter('instruments', CheckboxState.Allow)}"
+                        @click="${() => musicFilter.setArrayFilter('instruments', CheckboxState.Require)}"
                     ></div>
                     <div
                         class="icon-button ${IconRegistry.UnselectAllIcon}"
@@ -195,7 +204,7 @@ export function renderMusicFilter(musicFilter) {
                     <div class="heading-label">Bewertung:</div>
                     <div
                         class="icon-button ${IconRegistry.SelectAllIcon}"
-                        @click="${() => musicFilter.setArrayFilter('ratings', CheckboxState.Allow)}"
+                        @click="${() => musicFilter.setArrayFilter('ratings', CheckboxState.Require)}"
                     ></div>
                     <div
                         class="icon-button ${IconRegistry.UnselectAllIcon}"
@@ -205,13 +214,13 @@ export function renderMusicFilter(musicFilter) {
                 <star-rating
                     max="5"
                     .values="${Object.keys(musicFilter.filter.ratings.states)
-                        .filter((x) => musicFilter.filter.ratings.states[x] == CheckboxState.Allow)
+                        .filter((x) => musicFilter.filter.ratings.states[x] == CheckboxState.Require)
                         .map((x) => Number.parseInt(x))}"
                     @ratingChanged="${(e) =>
-                        musicFilter.toggleFilter(
+                        musicFilter.setFilterEntryValue(
                             'ratings',
                             `${e.detail.rating}`,
-                            e.detail.include ? CheckboxState.Allow : CheckboxState.Forbid
+                            e.detail.include ? CheckboxState.Require : CheckboxState.Forbid
                         )}"
                 ></star-rating>
             </div>
@@ -228,7 +237,8 @@ export function renderMusicFilter(musicFilter) {
                     ></div>
                 </div>
                 <drop-down
-                    @selectionChange="${(e) => musicFilter.toggleFilter('moods', e.detail.option.value, e.detail.option.state)}"
+                    @selectionChange="${(e) =>
+                        musicFilter.setFilterEntryValue('moods', e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.entries(Mood).map((x) =>
                         DropDownOption.create({
                             value: x[0],
@@ -258,7 +268,8 @@ export function renderMusicFilter(musicFilter) {
                     ></div>
                 </div>
                 <drop-down
-                    @selectionChange="${(e) => musicFilter.toggleFilter('genres', e.detail.option.value, e.detail.option.state)}"
+                    @selectionChange="${(e) =>
+                        musicFilter.setFilterEntryValue('genres', e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.entries(MusicGenre).map((x) =>
                         DropDownOption.create({ value: x[0], state: musicFilter.filter.genres.states[x[0]], text: x[1] })
                     )}"
@@ -284,7 +295,7 @@ export function renderMusicFilter(musicFilter) {
                 </div>
                 <drop-down
                     @selectionChange="${(e) =>
-                        musicFilter.toggleFilter('instrumentations', e.detail.option.value, e.detail.option.state)}"
+                        musicFilter.setFilterEntryValue('instrumentations', e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.values(Instrumentation).map((key) =>
                         DropDownOption.create({ value: key, text: key, state: musicFilter.filter.instrumentations.states[key] })
                     )}"
@@ -299,7 +310,7 @@ export function renderMusicFilter(musicFilter) {
                     <div class="heading-label">Mitgliederzahl:</div>
                     <div
                         class="icon-button ${IconRegistry.SelectAllIcon}"
-                        @click="${() => musicFilter.setArrayFilter('participants', CheckboxState.Allow)}"
+                        @click="${() => musicFilter.setArrayFilter('participants', CheckboxState.Require)}"
                     ></div>
                     <div
                         class="icon-button ${IconRegistry.UnselectAllIcon}"
@@ -311,7 +322,7 @@ export function renderMusicFilter(musicFilter) {
                         (type) =>
                             html` <tri-value-checkbox
                                 class="icon-container"
-                                @valueChanged="${(e) => musicFilter.toggleFilter('participants', type, e.detail.value)}"
+                                @valueChanged="${(e) => musicFilter.setFilterEntryValue('participants', type, e.detail.value)}"
                                 .value="${musicFilter.filter.participants.states[type]}"
                             >
                                 <div class="inline-icon ${type}"></div>

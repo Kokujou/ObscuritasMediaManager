@@ -78,7 +78,7 @@ export class GenreDialog extends LitElementBase {
                 this.options.forbiddenGenres = this.options.forbiddenGenres.filter((x) => x.name != genre.name);
                 this.options.allowedGenres = this.options.allowedGenres.filter((x) => x.name != genre.name);
                 break;
-            case CheckboxState.Allow:
+            case CheckboxState.Require:
                 this.options.allowedGenres.push(genre);
                 this.options.forbiddenGenres = this.options.forbiddenGenres.filter((x) => x.name != genre.name);
                 break;
@@ -99,7 +99,7 @@ export class GenreDialog extends LitElementBase {
      * @param {GenreModel} genre
      */
     getValue(genre) {
-        if (this.options.allowedGenres.some((x) => x.name == genre.name)) return CheckboxState.Allow;
+        if (this.options.allowedGenres.some((x) => x.name == genre.name)) return CheckboxState.Require;
         if (this.options.forbiddenGenres.some((x) => x.name == genre.name)) return CheckboxState.Forbid;
         return CheckboxState.Ignore;
     }

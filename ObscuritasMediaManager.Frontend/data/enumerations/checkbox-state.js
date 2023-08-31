@@ -2,5 +2,5 @@
 export const CheckboxState = {
     Forbid: 'forbid',
     Ignore: 'ignore',
-    Allow: 'allow',
+    Require: 'allow',
 };

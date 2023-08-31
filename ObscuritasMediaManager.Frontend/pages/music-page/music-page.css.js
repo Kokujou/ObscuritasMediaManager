@@ -8,6 +8,7 @@ import { downloadPlaylistIcon } from '../../resources/inline-icons/playlist-icon
 import { playPlaylistIcon } from '../../resources/inline-icons/playlist-icons/play-playlist-icon.svg.js';
 import { savePlaylistIcon } from '../../resources/inline-icons/playlist-icons/save-playlist-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
+import { trashIcon } from '../media-detail-page/images/trash-icon.svg.js';
 
 export function renderMusicPageStyles() {
     return css`
@@ -180,6 +181,12 @@ function renderResultOptionsBar() {
 
         #cleanup-tracks {
             ${renderMaskImage(cleanIcon())};
+        }
+
+        #trash-bin-icon {
+            width: 35px;
+            height: 35px;
+            ${renderMaskImage(trashIcon())};
         }
 
         #active-track-warning {
