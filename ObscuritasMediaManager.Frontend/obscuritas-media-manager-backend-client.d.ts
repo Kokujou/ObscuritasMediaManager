@@ -59,7 +59,7 @@ export declare class MediaClient {
     protected processGetAll(response: Response): Promise<MediaModel[]>;
     batchCreateMedia(media: MediaModel[], signal?: AbortSignal | undefined): Promise<void>;
     protected processBatchCreateMedia(response: Response): Promise<void>;
-    updateMedia(media: MediaModel, signal?: AbortSignal | undefined): Promise<void>;
+    updateMedia(id: string, _: UpdateRequestOfMediaModel, signal?: AbortSignal | undefined): Promise<void>;
     protected processUpdateMedia(response: Response): Promise<void>;
     addMediaImage(image: string, guid: string, signal?: AbortSignal | undefined): Promise<void>;
     protected processAddMediaImage(response: Response): Promise<void>;
@@ -81,7 +81,7 @@ export declare class MusicClient {
     protected processRecalculateHashes(response: Response): Promise<void>;
     get(hash: string | null, signal?: AbortSignal | undefined): Promise<MusicModel>;
     protected processGet(response: Response): Promise<MusicModel>;
-    update(hash: string | null, updateRequest: UpdateRequestOfMusicModel, signal?: AbortSignal | undefined): Promise<void>;
+    update(hash: string | null, _: UpdateRequestOfMusicModel, signal?: AbortSignal | undefined): Promise<void>;
     protected processUpdate(response: Response): Promise<void>;
     getInstruments(signal?: AbortSignal | undefined): Promise<InstrumentModel[]>;
     protected processGetInstruments(response: Response): Promise<InstrumentModel[]>;
@@ -167,7 +167,6 @@ export declare class MusicModel implements IMusicModel {
     rating: number;
     complete: boolean;
     hash: string | null;
-    fileBytes: number;
     deleted: boolean;
     constructor(data?: Partial<IMusicModel>);
     init(_data?: any, _mappings?: any): void;
@@ -192,7 +191,6 @@ export interface IMusicModel {
     rating: number;
     complete: boolean;
     hash: string | null;
-    fileBytes: number;
     deleted: boolean;
 }
 export declare enum Mood {
@@ -357,6 +355,19 @@ export declare enum ContentWarning {
     Vulgarity = "Vulgarity",
     Drugs = "Drugs",
     Depression = "Depression"
+}
+export declare class UpdateRequestOfMediaModel implements IUpdateRequestOfMediaModel {
+    oldModel: MediaModel | null;
+    newModel: MediaModel | null;
+    constructor(data?: Partial<IUpdateRequestOfMediaModel>);
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): UpdateRequestOfMediaModel | null;
+    toJSON(data?: any): any;
+    clone(): UpdateRequestOfMediaModel;
+}
+export interface IUpdateRequestOfMediaModel {
+    oldModel: MediaModel | null;
+    newModel: MediaModel | null;
 }
 export declare class InstrumentModel implements IInstrumentModel {
     name: string | null;

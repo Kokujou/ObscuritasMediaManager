@@ -48,8 +48,8 @@ public class PlaylistModel
     public IEnumerable<MusicGenre> Genres { get; set; } = Enumerable.Empty<MusicGenre>();
     public bool Complete { get; set; }
     [NotMapped] public bool IsTemporary { get; set; }
-    [IgnoreDataMember]
-    [JsonIgnore] public IEnumerable<PlaylistTrackMappingModel> TrackMappings { get; set; }
+    [JsonIgnore]
+    [IgnoreDataMember]     public IEnumerable<PlaylistTrackMappingModel> TrackMappings { get; set; }
     [NotMapped]
     public IEnumerable<MusicModel> Tracks
     {

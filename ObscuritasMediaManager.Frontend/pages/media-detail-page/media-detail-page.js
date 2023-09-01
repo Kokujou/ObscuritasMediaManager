@@ -2,7 +2,7 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
-import { MediaModel, StreamingEntryModel } from '../../obscuritas-media-manager-backend-client.js';
+import { MediaModel, StreamingEntryModel, UpdateRequestOfMediaModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService, StreamingService } from '../../services/backend.services.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { getQueryValue } from '../../services/extensions/url.extension.js';
@@ -121,7 +121,7 @@ export class MediaDetailPage extends LitElementBase {
 
             var media = this.media.clone();
             media[property] = value;
-            await MediaService.updateMedia(media);
+            await MediaService.updateMedia(media.id, new UpdateRequestOfMediaModel({ oldModel: null, newModel: media }));
             this.media[property] = value;
             this.requestUpdate(undefined);
         } catch (err) {

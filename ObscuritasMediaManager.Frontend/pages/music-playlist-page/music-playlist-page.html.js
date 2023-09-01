@@ -40,7 +40,7 @@ export function renderMusicPlaylist(page) {
         <page-layout>
             <div id="music-player-container">
                 <div id="complete-checkbox">
-                    <div class="label">Complete:</div>
+                    <label for="complete-check" class="label">Complete:</label>
                     <input
                         type="checkbox"
                         id="complete-check"

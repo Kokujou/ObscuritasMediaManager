@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.DataRepositories;
+using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
+using System.Text.Json;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
 
@@ -13,10 +16,12 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 public class MusicController : ControllerBase
 {
     private readonly MusicRepository _musicRepository;
+    private readonly JsonSerializerOptions _jsonOptions;
 
-    public MusicController(MusicRepository repository)
+    public MusicController(MusicRepository repository, IOptions<JsonOptions> jsonOptions)
     {
         _musicRepository = repository;
+        _jsonOptions = jsonOptions.Value.JsonSerializerOptions;
     }
 
     [HttpPost]
@@ -88,15 +93,10 @@ public class MusicController : ControllerBase
     }
 
     [HttpPut("{hash}")]
-    public async Task UpdateAsync(string hash, [FromBody] UpdateRequest<MusicModel> updateRequest)
+    public async Task UpdateAsync(string hash, [FromBody] UpdateRequest<MusicModel> _)
     {
-        if ((updateRequest.OldModel.Hash != default) && (hash != updateRequest.OldModel.Hash))
-                throw new Exception("Ids of objects did not match");
-        var invalidInstruments = await GetInvalidInstrumentsAsync(updateRequest.NewModel.Instruments);
-        if (invalidInstruments.Count > 0)
-                throw new Exception($"sent instruments invalid: {string.Join(",", invalidInstruments)}");
-
-        await _musicRepository.UpdateAsync(hash, updateRequest.OldModel, updateRequest.NewModel);
+        var deserialized = await HttpContext.ReadRequestBodyAsync<UpdateRequest<JsonElement>>(_jsonOptions);
+        await _musicRepository.UpdateAsync(hash, deserialized.OldModel, deserialized.NewModel, _jsonOptions);
     }
 
     [HttpDelete("music/soft")]
@@ -121,16 +121,5 @@ public class MusicController : ControllerBase
         if (!trackHashes.Any()) return;
 
         await _musicRepository.HardDeleteTracksAsync(trackHashes);
-    }
-
-    private async Task<List<string>> GetInvalidInstrumentsAsync(IEnumerable<string> instrumentNames)
-    {
-        instrumentNames = instrumentNames.ToList();
-        if (!instrumentNames.Any()) return new List<string>();
-
-        var instruments = await _musicRepository.GetInstruments();
-        var instrumentStrings = instruments.Select(x => x.Name);
-        var invalidInstruments = instrumentNames.Except(instrumentStrings).ToList();
-        return invalidInstruments;
     }
 }

@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using ObscuritasMediaManager.Backend.Authentication;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using System.Text.Json.Serialization;
@@ -36,13 +34,6 @@ public class Startup
 
         services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
-        JsonConvert.DefaultSettings = () =>
-                                          new()
-                                          {
-                                              ContractResolver =
-                                                  new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() }
-                                          };
-
         FFmpeg.SetExecutablesPath("D:\\Programme\\ffmpeg\\bin");
 
         services.AddSwaggerGen(options => { });
@@ -53,6 +44,11 @@ public class Startup
 
     public void Configure(IApplicationBuilder app)
     {
+        app.Use(async (context, next) =>
+            {
+                context.Request.EnableBuffering();
+                await next();
+            });
         app.UseRouting();
         app.UseHttpsRedirection();
         app.UseExceptionHandler(a =>

@@ -2,18 +2,10 @@
  * Running tasks:
  * - Add tooltips for all icons
  * - Add Message Snackbar for all Update/Delete/Create actions
- *
- */
-
-/**
- *
- * Fette Änderung:
- * Sämtliche Update calls umstellen auf das Context.Model.ExecuteUpdate pattern
- * das ist viel geiler!
- *
  */
 
 //TODO: Audio single track creation
+//TODO: Media page finalization + currently edit mode is broken
 //TODO: (optional) create templates for edit
 //TODO: improve re-upload algorithm to not overwrite or duplicate data (media-pages)
 //TODO: implement loading-indiciation for requests

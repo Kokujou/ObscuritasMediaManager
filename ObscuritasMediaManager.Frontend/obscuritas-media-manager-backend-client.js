@@ -483,10 +483,13 @@ export class MediaClient {
         }
         return Promise.resolve(null);
     }
-    updateMedia(media, signal) {
-        let url_ = this.baseUrl + "/api/Media";
+    updateMedia(id, _, signal) {
+        let url_ = this.baseUrl + "/api/Media/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
         url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(media);
+        const content_ = JSON.stringify(_);
         let options_ = {
             body: content_,
             method: "PUT",
@@ -749,13 +752,13 @@ export class MusicClient {
         }
         return Promise.resolve(null);
     }
-    update(hash, updateRequest, signal) {
+    update(hash, _, signal) {
         let url_ = this.baseUrl + "/api/Music/{hash}";
         if (hash === undefined || hash === null)
             throw new Error("The parameter 'hash' must be defined.");
         url_ = url_.replace("{hash}", encodeURIComponent("" + hash));
         url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(updateRequest);
+        const content_ = JSON.stringify(_);
         let options_ = {
             body: content_,
             method: "PUT",
@@ -1642,7 +1645,6 @@ export class MusicModel {
     rating;
     complete;
     hash;
-    fileBytes;
     deleted;
     constructor(data) {
         if (data) {
@@ -1684,7 +1686,6 @@ export class MusicModel {
             this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
             this.complete = _data["complete"] !== undefined ? _data["complete"] : null;
             this.hash = _data["hash"] !== undefined ? _data["hash"] : null;
-            this.fileBytes = _data["fileBytes"] !== undefined ? _data["fileBytes"] : null;
             this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : null;
         }
     }
@@ -1718,7 +1719,6 @@ export class MusicModel {
         data["rating"] = this.rating !== undefined ? this.rating : null;
         data["complete"] = this.complete !== undefined ? this.complete : null;
         data["hash"] = this.hash !== undefined ? this.hash : null;
-        data["fileBytes"] = this.fileBytes !== undefined ? this.fileBytes : null;
         data["deleted"] = this.deleted !== undefined ? this.deleted : null;
         return data;
     }
@@ -1998,6 +1998,40 @@ export var ContentWarning;
     ContentWarning["Drugs"] = "Drugs";
     ContentWarning["Depression"] = "Depression";
 })(ContentWarning || (ContentWarning = {}));
+export class UpdateRequestOfMediaModel {
+    oldModel;
+    newModel;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data, _mappings) {
+        if (_data) {
+            this.oldModel = _data["oldModel"] ? MediaModel.fromJS(_data["oldModel"], _mappings) : null;
+            this.newModel = _data["newModel"] ? MediaModel.fromJS(_data["newModel"], _mappings) : null;
+        }
+    }
+    static fromJS(data, _mappings) {
+        data = typeof data === 'object' ? data : {};
+        return createInstance(data, _mappings, UpdateRequestOfMediaModel);
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["oldModel"] = this.oldModel ? this.oldModel.toJSON() : null;
+        data["newModel"] = this.newModel ? this.newModel.toJSON() : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new UpdateRequestOfMediaModel();
+        result.init(json);
+        return result;
+    }
+}
 export class InstrumentModel {
     name;
     type;

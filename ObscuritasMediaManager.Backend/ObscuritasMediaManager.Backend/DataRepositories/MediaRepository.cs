@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
+
 using ObscuritasMediaManager.Backend.Models;
+using System.Text.Json;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -14,17 +16,12 @@ public class MediaRepository
         _context = context;
     }
 
-    public async Task UpdateMediaAsync(MediaModel updated)
+    public async Task UpdateAsync(Guid id, JsonElement old, JsonElement updated, JsonSerializerOptions serializerOptions)
     {
-        var current = await _context.Media.AsTracking().SingleOrDefaultAsync(x => x.Id == updated.Id);
+        var actual = await _context.Media.AsTracking().SingleOrDefaultAsync(x => x.Id == id);
+        if (actual == default) throw new ModelNotFoundException(id);
 
-        if (current == default)
-            throw new ModelNotFoundException(updated.Id);
-
-        if (current.Hash != updated.Hash)   
-            throw new ArgumentException(nameof(updated), "The object has been modified");
-
-        _context.Entry(current).CurrentValues.SetValues(updated);
+        actual.UpdateFromJson(old, updated, serializerOptions);
         await _context.SaveChangesAsync();
     }
 

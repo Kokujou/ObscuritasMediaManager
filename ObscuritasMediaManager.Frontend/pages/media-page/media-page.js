@@ -2,7 +2,7 @@ import { MediaFilter } from '../../advanced-components/media-filter-sidebar/medi
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Subscription } from '../../data/observable.js';
 import { session } from '../../data/session.js';
-import { MediaModel } from '../../obscuritas-media-manager-backend-client.js';
+import { MediaModel, UpdateRequestOfMediaModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService } from '../../services/backend.services.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
 import { MediaFileservice } from '../../services/media-file.service.js';
@@ -110,7 +110,7 @@ export class MediaPage extends LitElementBase {
             if (typeof media[property] != typeof value) return;
 
             media[property] = value;
-            await MediaService.updateMedia(media);
+            await MediaService.updateMedia(media.id, new UpdateRequestOfMediaModel({ oldModel: null, newModel: media }));
             media[property] = value;
             this.requestUpdate(undefined);
         } catch (err) {

@@ -1,6 +1,7 @@
 ﻿using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Extensions;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace ObscuritasMediaManager.Backend.Models;
@@ -25,7 +26,8 @@ public class MusicModel
     public byte Rating { get; set; }
     public bool Complete { get; set; }
     [Key] public string Hash { get; set; }
-    [JsonIgnore] public long FileBytes { get; set; }
+    [JsonIgnore]
+    [IgnoreDataMember] public long FileBytes { get; set; }
     public bool Deleted { get; set; }
 
     public MusicModel CalculateHash()
