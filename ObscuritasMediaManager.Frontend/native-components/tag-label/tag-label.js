@@ -79,7 +79,7 @@ export class TagLabel extends LitElementBase {
         } else if (event.key == 'Enter')
             this.setSearchText(this.autocompleteItems[this.autofillIndex > 0 ? this.autofillIndex : 0]);
 
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
         var selectedElement = this.selectedElement;
         if (!selectedElement) return;
         if (selectedElement.offsetTop == 0) selectedElement.parentElement.scrollTo({ top: 0 });
@@ -90,7 +90,7 @@ export class TagLabel extends LitElementBase {
     setSearchText(text) {
         /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#new-tag-input');
         input.value = text;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
         this.notifyTagCreated();
         input.value = '';
     }

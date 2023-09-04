@@ -25,8 +25,8 @@ export class ExpandableDropdown extends LitElementBase {
 
     constructor() {
         super();
-        /** @type {string} */ this.caption;
-        /** @type {boolean} */ this.disabled;
+        /** @type {string} */ this.caption = '';
+        /** @type {boolean} */ this.disabled = false;
     }
 
     render() {

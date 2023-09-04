@@ -21,7 +21,7 @@ function renderNewLabelForm(tagLabel) {
         <input
             id="new-tag-input"
             @keyup="${(e) => tagLabel.handleInput(e)}"
-            @input="${() => tagLabel.requestUpdate(undefined)}"
+            @input="${() => tagLabel.requestFullUpdate()}"
             @focus="${() => (tagLabel.showAutocomplete = true)}"
             @focusout="${() => (tagLabel.showAutocomplete = false)}"
             type="text"
@@ -34,7 +34,7 @@ function renderNewLabelForm(tagLabel) {
                     class="autocomplete-item ${tagLabel.autofillIndex == index ? 'active' : ''}"
                     @pointerover="${() => {
                         tagLabel.autofillIndex = index;
-                        tagLabel.requestUpdate(undefined);
+                        tagLabel.requestFullUpdate();
                     }}"
                     @pointerdown="${() => tagLabel.setSearchText(x)}"
                 >

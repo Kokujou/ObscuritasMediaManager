@@ -51,15 +51,18 @@ export class MediaDetailPage extends LitElementBase {
         super.connectedCallback();
 
         await this.getMediaFromRoute();
+
         setFavicon(this.media.image, 'url');
     }
 
     async getMediaFromRoute() {
         var guid = getQueryValue('guid');
-        this.media = await MediaService.get(guid);
+        var media = await MediaService.get(guid);
+        this.currentTrack = Object.assign(new MediaModel(), media);
+        this.updatedTrack = Object.assign(new MediaModel(), media);
         this.streamingEntries = await StreamingService.getStreamingEntries(guid);
 
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
         document.title = this.media.name;
     }
 
@@ -123,10 +126,30 @@ export class MediaDetailPage extends LitElementBase {
             media[property] = value;
             await MediaService.updateMedia(media.id, new UpdateRequestOfMediaModel({ oldModel: null, newModel: media }));
             this.media[property] = value;
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         } catch (err) {
             console.error(err);
         }
+    }
+
+    /**
+     * @param {HTMLInputElement} inputElement
+     */
+    async ratingChanged(inputElement) {
+        var numberValue = Number.parseInt(inputElement.value);
+        var maxYears = new Date().getFullYear() + 2;
+        if (numberValue < 1900) numberValue = 1900;
+        if (numberValue > maxYears) numberValue = maxYears;
+        if (`${numberValue}` != inputElement.value) inputElement.value = `${numberValue}`;
+        else this.changeProperty('rating', numberValue);
+    }
+
+    /**
+     * @param {HTMLInputElement} inputElement
+     */
+    async ratingInput(inputElement) {
+        var numberValue = Number.parseInt(inputElement.value);
+        if (`${numberValue}` != inputElement.value) inputElement.value = `${numberValue}`;
     }
 
     /**
@@ -136,7 +159,7 @@ export class MediaDetailPage extends LitElementBase {
         try {
             await MediaService.addMediaImage(imageData, this.media.id);
             this.media.image = imageData;
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         } catch (err) {
             console.error(err);
         }
@@ -146,27 +169,9 @@ export class MediaDetailPage extends LitElementBase {
         try {
             await MediaService.deleteMediaImage(this.media.id);
             this.media.image = null;
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         } catch (err) {
             console.error(err);
-        }
-    }
-
-    /**
-     * @param {KeyboardEvent} event
-     */
-    handleKeyPress(event) {
-        if (!(event.target instanceof HTMLInputElement) && !(event.target instanceof HTMLTextAreaElement))
-            throw new Error('this function only intended for input elements!');
-
-        var test = event.target;
-        if (event.key == 'Escape') {
-            test.value = test.defaultValue;
-            test.setAttribute('disabled', 'true');
-        }
-        if (event.key == 'Enter' && !(event.target instanceof HTMLTextAreaElement)) {
-            test.blur();
-            test.setAttribute('disabled', 'true');
         }
     }
 

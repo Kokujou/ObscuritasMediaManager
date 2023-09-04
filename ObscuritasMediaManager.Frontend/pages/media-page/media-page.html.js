@@ -11,7 +11,7 @@ import { MediaPage } from './media-page.js';
 export function renderMediaPageTemplate(page) {
     return html`<page-layout>
             <div id="media-page-container">
-                <media-filter-sidebar id="media-filter" .filter="${page.filter}" @change="${() => page.requestUpdate(undefined)}">
+                <media-filter-sidebar id="media-filter" .filter="${page.filter}" @change="${() => page.requestFullUpdate()}">
                     <div slot="footer" id="result-overview">${page.filteredMedia.length} Ergebnisse gefunden</div>
                 </media-filter-sidebar>
                 <paginated-scrolling id="results" scrollTopThreshold="50">

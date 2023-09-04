@@ -22,6 +22,7 @@ export class MediaFilterSidebar extends LitElementBase {
 
     constructor() {
         super();
+        /** @type {MediaFilter} */ this.filter = new MediaFilter([]);
     }
 
     async connectedCallback() {
@@ -88,7 +89,7 @@ export class MediaFilterSidebar extends LitElementBase {
     }
 
     notifyFilterUpdated() {
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
         this.dispatchEvent(new Event('change', { composed: true }));
         localStorage.setItem(`media.search`, JSON.stringify(this.filter));
     }
@@ -123,7 +124,7 @@ export class MediaFilterSidebar extends LitElementBase {
             /** @param {CustomEvent<{section, name}>} e */ async (e) => {
                 await GenreService.addGenre(e.detail.section, e.detail.name);
                 dialog.options.genres = await GenreService.getAll();
-                dialog.requestUpdate(undefined);
+                dialog.requestFullUpdate();
             }
         );
 
@@ -132,7 +133,7 @@ export class MediaFilterSidebar extends LitElementBase {
             /** @param {CustomEvent<GenreModel>} e */ async (e) => {
                 await GenreService.removeGenre(e.detail.id);
                 dialog.options.genres = await GenreService.getAll();
-                dialog.requestUpdate(undefined);
+                dialog.requestFullUpdate();
             }
         );
 

@@ -133,7 +133,7 @@ export class MusicPlaylistPage extends LitElementBase {
         super.firstUpdated(_changedProperties);
         /** @type {FallbackAudio} */ var fallbackAudio = this.shadowRoot.querySelector('fallback-audio');
         this.fallbackAudio = fallbackAudio;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     async initializeData() {
@@ -152,7 +152,7 @@ export class MusicPlaylistPage extends LitElementBase {
 
         this.currentTrack = Object.assign(new ExtendedMusicModel(), this.playlist.tracks[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new ExtendedMusicModel(), this.playlist.tracks[this.currentTrackIndex]);
-        await this.requestUpdate(undefined);
+        await this.requestFullUpdate();
 
         this.audioElement.addEventListener('error', (e) => {
             if (!this.audioElement.error?.code) return;
@@ -175,7 +175,7 @@ export class MusicPlaylistPage extends LitElementBase {
             await this.changeTrackBy(1);
         }
 
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     async updateTrack() {
@@ -211,7 +211,7 @@ export class MusicPlaylistPage extends LitElementBase {
 
         changePage(session.currentPage.current(), `?guid=${this.id}&track=${this.currentTrackIndex}`, false);
 
-        await this.requestUpdate(undefined);
+        await this.requestFullUpdate();
         this.audioElement.play();
     }
 
@@ -221,7 +221,7 @@ export class MusicPlaylistPage extends LitElementBase {
     changeVolume(newVolume) {
         this.currentVolumne = newVolume / 100;
         localStorage.setItem('volume', newVolume.toString());
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -236,7 +236,7 @@ export class MusicPlaylistPage extends LitElementBase {
             /** @type {any} */ (this.updatedTrack[property]) = value;
         }
 
-        await this.requestUpdate(undefined);
+        await this.requestFullUpdate();
     }
 
     async showLanguageSwitcher() {
@@ -287,7 +287,7 @@ export class MusicPlaylistPage extends LitElementBase {
         });
         genreDialog.addEventListener('accept', (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
             var instruments = e.detail.acceptedGenres.map((x) => x.name);
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
             this.changeProperty('instruments', instruments);
             genreDialog.remove();
         });
@@ -303,7 +303,7 @@ export class MusicPlaylistPage extends LitElementBase {
                 );
                 session.instruments.next(await MusicService.getInstruments());
 
-                genreDialog.requestUpdate(undefined);
+                genreDialog.requestFullUpdate();
             }
         );
         genreDialog.addEventListener(
@@ -312,7 +312,7 @@ export class MusicPlaylistPage extends LitElementBase {
                 await MusicService.removeInstrument(/** @type {InstrumentType} */ (e.detail.section), e.detail.name);
                 genreDialog.options.genres = genreDialog.options.genres.filter((x) => x.name != e.detail.name);
                 session.instruments.next(await MusicService.getInstruments());
-                genreDialog.requestUpdate(undefined);
+                genreDialog.requestFullUpdate();
             }
         );
     }
@@ -335,12 +335,12 @@ export class MusicPlaylistPage extends LitElementBase {
 
         if (!basePath.endsWith('\\')) basePath += '\\';
         this.updatedTrack.path = basePath + files[0].name;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     randomize() {
         this.playlist.tracks = randomizeArray(this.playlist.tracks);
         this.currentTrackIndex = 0;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 }

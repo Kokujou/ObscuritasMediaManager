@@ -25,27 +25,10 @@ export class AudioTileBase extends LitElementBase {
         /** @type {ExtendedMusicModel} */ this.track = new ExtendedMusicModel();
         /** @type {Number} */ this.hoveredRating = 0;
 
-        session.instruments.subscribe(() => this.requestUpdate(undefined));
+        session.instruments.subscribe(() => this.requestFullUpdate());
     }
 
     render() {
         return renderAudioTileBase(this);
-    }
-
-    /**
-     * @param {string} name
-     * @param {any} detail
-     * @param {Event} event
-     */
-    notifyEvent(name, detail, event = null) {
-        if (event) {
-            event.stopPropagation();
-            event.preventDefault();
-        }
-        if (detail instanceof Event) {
-            detail.stopPropagation();
-            detail.preventDefault();
-        }
-        this.dispatchEvent(new CustomEvent(name, { detail }));
     }
 }

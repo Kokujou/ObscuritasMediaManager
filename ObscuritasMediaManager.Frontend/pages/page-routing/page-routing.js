@@ -45,10 +45,10 @@ export class PageRouting extends LitElementBase {
         window.onpopstate = (e) => {
             session.currentPage.next(this.currentPage.hash);
         };
-        window.addEventListener('resize', () => this.requestUpdate(undefined));
+        window.addEventListener('resize', () => this.requestFullUpdate());
         var self = this;
         window.addEventListener('orientationchanged', function () {
-            self.requestUpdate(undefined);
+            self.requestFullUpdate();
         });
     }
 
@@ -57,7 +57,7 @@ export class PageRouting extends LitElementBase {
 
         this.subscriptions.push(
             session.currentPage.subscribe((newValue, oldValue) => {
-                if (newValue) this.switchPage(newValue, oldValue).then(() => this.requestUpdate(undefined));
+                if (newValue) this.switchPage(newValue, oldValue).then(() => this.requestFullUpdate());
             })
         );
     }

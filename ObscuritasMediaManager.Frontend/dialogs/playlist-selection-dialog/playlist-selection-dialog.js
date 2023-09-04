@@ -1,10 +1,10 @@
-import { LitElement } from '../../exports.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
 import { PlaylistService } from '../../services/backend.services.js';
 import { renderPlaylistSelectionDialogStyles } from './playlist-selection-dialog.css.js';
 import { renderPlaylistSelectionDialog } from './playlist-selection-dialog.html.js';
 
-export class PlaylistSelectionDialog extends LitElement {
+export class PlaylistSelectionDialog extends LitElementBase {
     static get styles() {
         return renderPlaylistSelectionDialogStyles();
     }
@@ -24,7 +24,7 @@ export class PlaylistSelectionDialog extends LitElement {
         dialog.playlists = await PlaylistService.listPlaylists();
 
         document.body.append(dialog);
-        dialog.requestUpdate(undefined);
+        dialog.requestFullUpdate();
 
         return new Promise((resolve) => {
             dialog.addEventListener('accept', (x) => {

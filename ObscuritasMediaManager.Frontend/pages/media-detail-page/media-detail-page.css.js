@@ -138,8 +138,9 @@ export function renderMediaDetailPageStyles() {
         }
 
         .genre-entry {
-            flex-direction: column;
-            align-items: flex-start;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
         }
 
         .genre-entry .property-name {

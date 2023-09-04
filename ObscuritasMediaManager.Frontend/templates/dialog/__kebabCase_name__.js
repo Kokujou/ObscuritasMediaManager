@@ -2,7 +2,7 @@ import { LitElement } from '../../exports.js';
 import { render{{ pascalCase name }}Styles } from './{{ kebabCase name }}.css.js';
 import { render{{ pascalCase name }} } from './{{ kebabCase name }}.html.js';
 
-export class {{ pascalCase name }} extends LitElement
+export class {{ pascalCase name }} extends LitElementBase
 {
     static get styles() {
         return render{{ pascalCase name }}Styles();
@@ -21,7 +21,7 @@ export class {{ pascalCase name }} extends LitElement
         var dialog = new {{ pascalCase name }}();
 
         document.body.append(dialog);
-        dialog.requestUpdate(undefined);
+        dialog.requestFullUpdate();
 
         return dialog;
     }

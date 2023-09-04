@@ -32,7 +32,7 @@ export class GenreDialog extends LitElementBase {
         Object.assign(dialog.options, options);
 
         PageRouting.container.append(dialog);
-        dialog.requestUpdate(undefined);
+        dialog.requestFullUpdate();
 
         return dialog;
     }
@@ -85,7 +85,7 @@ export class GenreDialog extends LitElementBase {
             default:
                 throw new Error('unsupported tri-value-checkbox value');
         }
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     accept() {

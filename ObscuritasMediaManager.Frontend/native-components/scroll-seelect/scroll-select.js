@@ -92,7 +92,7 @@ export class ScrollSelect extends LitElementBase {
         var element = this.scrollChildren[this.currentItemIndex];
         this.mouseStartY = getTargetScrollPosition(element, element.parentElement, this.scrollContainer).top;
         this.scrollItemsContainer.classList.toggle('user-interaction', true);
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -128,6 +128,6 @@ export class ScrollSelect extends LitElementBase {
         }, 100);
 
         this.dispatchEvent(new CustomEvent('valueChanged', { detail: { value: this.options[this.currentItemIndex] } }));
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 }

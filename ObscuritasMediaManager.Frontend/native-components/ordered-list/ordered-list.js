@@ -52,13 +52,13 @@ export class OrderedList extends LitElementBase {
             event.stopPropagation();
             this.lastHovered = null;
             this.dragged = null;
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         });
 
         this.addEventListener('keydown', async (event) => {
             if (event.ctrlKey && event.key == 'a') {
                 this.selectedIndices = Array.from(this.getRangeBetween(0, this.items.length - 1));
-                this.requestUpdate(undefined);
+                this.requestFullUpdate();
             } else if (event.key == 'Delete') {
                 var accepted = await DialogBase.show('Entfernen', {
                     content: `Folgende Einträge werden entfernt: 
@@ -73,7 +73,7 @@ export class OrderedList extends LitElementBase {
                 this.items = this.items.filter((_, id) => !this.selectedIndices.includes(id));
                 this.selectedIndices = [];
                 this.lastIndex = 0;
-                this.requestUpdate(undefined);
+                this.requestFullUpdate();
                 this.dispatchEvent(new CustomEvent('items-changed', { detail: this.items }));
             }
         });
@@ -122,7 +122,7 @@ export class OrderedList extends LitElementBase {
         if (event.ctrlKey) this.selectedIndices = union(this.selectedIndices, newValues);
         else this.selectedIndices = newValues;
 
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**

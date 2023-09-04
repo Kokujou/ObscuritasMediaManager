@@ -1,5 +1,5 @@
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
-import { LitElement } from '../../exports.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import { MusicGenre, PlaylistModel, UpdateRequestOfPlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
@@ -9,7 +9,7 @@ import { DialogBase } from '../dialog-base/dialog-base.js';
 import { renderEditPlaylistDialogStyles } from './edit-playlist-dialog.css.js';
 import { renderEditPlaylistDialog } from './edit-playlist-dialog.html.js';
 
-export class EditPlaylistDialog extends LitElement {
+export class EditPlaylistDialog extends LitElementBase {
     static get styles() {
         return renderEditPlaylistDialogStyles();
     }
@@ -26,11 +26,11 @@ export class EditPlaylistDialog extends LitElement {
     static show(playlist) {
         var dialog = new EditPlaylistDialog();
         playlist.genres ??= [];
-        dialog.oldPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist)));
-        dialog.newPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist)));
+        dialog.oldPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist))) ?? new PlaylistModel();
+        dialog.newPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist))) ?? new PlaylistModel();
 
         PageRouting.container.append(dialog);
-        dialog.requestUpdate(undefined);
+        dialog.requestFullUpdate();
 
         return new Promise((resolve) => {
             dialog.addEventListener('accept', async () => {
@@ -81,7 +81,7 @@ export class EditPlaylistDialog extends LitElement {
      */
     changeProperty(propertyName, value) {
         this.newPlaylist[propertyName] = value;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -113,14 +113,14 @@ export class EditPlaylistDialog extends LitElement {
         if (!accepted) return;
 
         this.newPlaylist.tracks = [];
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     async openImportDialog() {
         try {
             var fileImportResult = await importFiles();
             this.newPlaylist.tracks = await ExtendedMusicModel.createFromFiles(fileImportResult.files, fileImportResult.basePath);
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         } catch (err) {}
     }
 
@@ -131,7 +131,7 @@ export class EditPlaylistDialog extends LitElement {
         if (!event.dataTransfer.types.includes('Files')) return;
         event.preventDefault();
         this.draggingFiles = true;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -143,7 +143,7 @@ export class EditPlaylistDialog extends LitElement {
         this.newPlaylist.tracks = this.newPlaylist.tracks.concat(
             ...ExtendedMusicModel.createFromFiles(result.files, result.basePath)
         );
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
         this.requestUpdate('newPlaylist');
 
         this.draggingFiles = false;

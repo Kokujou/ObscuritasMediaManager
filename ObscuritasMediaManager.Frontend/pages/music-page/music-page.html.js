@@ -146,8 +146,8 @@ export function renderMusicPage(musicPage) {
                 .volume="${musicPage.currentVolumne}"
                 .src="${musicPage.currentTrackUrl}"
                 .fallbackSrc="${musicPage.currentTrackUrl + '&highCompatibility=true'}"
-                @timeupdate="${() => musicPage.requestUpdate(undefined)}"
-                @loadedmetadata="${() => musicPage.requestUpdate(undefined)}"
+                @timeupdate="${() => musicPage.requestFullUpdate()}"
+                @loadedmetadata="${() => musicPage.requestFullUpdate()}"
             ></fallback-audio>
         </page-layout>
     `;

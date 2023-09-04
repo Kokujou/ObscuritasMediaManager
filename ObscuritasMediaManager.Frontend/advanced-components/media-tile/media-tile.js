@@ -25,12 +25,12 @@ export class MediaTile extends LitElementBase {
         super();
 
         /** @type {string} */ this.displayStyle = 'solid';
-        /** @type {string} */ this.name;
-        /** @type {string} */ this.imageSource;
-        /** @type {number} */ this.rating;
+        /** @type {string} */ this.name = '';
+        /** @type {string} */ this.imageSource = '';
+        /** @type {number} */ this.rating = 0;
         /** @type {string[]} */ this.genres = [];
         /** @type {string[]} */ this.autocompleteGenres = [];
-        /** @type {string} */ this.status;
+        /** @type {string} */ this.status = '';
 
         /** @type {number} */ this.hoveredRating = 0;
     }
@@ -47,7 +47,7 @@ export class MediaTile extends LitElementBase {
 
         if (!genre) {
             this.genres.push(genre);
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
             return;
         }
 

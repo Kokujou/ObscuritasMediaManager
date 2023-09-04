@@ -20,7 +20,7 @@ export function renderOrderedList(list) {
                         e.stopPropagation();
                         e.preventDefault();
                         list.lastHovered = e.currentTarget;
-                        list.requestUpdate(undefined);
+                        list.requestFullUpdate();
                     }}"
                     @dragstart="${(e) => (list.dragged = e.currentTarget)}"
                     draggable="true"

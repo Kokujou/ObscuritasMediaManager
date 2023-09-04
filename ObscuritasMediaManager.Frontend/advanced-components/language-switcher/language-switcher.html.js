@@ -6,8 +6,11 @@ import { LanguageSwitcher } from './language-switcher.js';
  * @param {LanguageSwitcher} languageSwitcher
  */
 export function renderLanguageSwitcher(languageSwitcher) {
-    var smallestParentSize = languageSwitcher.parentElement.offsetWidth;
-    if (languageSwitcher.parentElement.offsetWidth > languageSwitcher.parentElement.offsetHeight)
+    var smallestParentSize = languageSwitcher.parentElement?.offsetWidth ?? 0;
+    if (
+        languageSwitcher.parentElement &&
+        languageSwitcher.parentElement.offsetWidth > languageSwitcher.parentElement.offsetHeight
+    )
         smallestParentSize = languageSwitcher.parentElement.offsetHeight;
     return html`
         <style>

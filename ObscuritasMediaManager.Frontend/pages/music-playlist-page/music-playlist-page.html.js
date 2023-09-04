@@ -203,9 +203,9 @@ export function renderMusicPlaylist(page) {
                 .volume="${page.currentVolumne}"
                 .src="${page.audioSource}"
                 .fallbackSrc="${page.audioSource + '&highCompatibility=true'}"
-                @loadedmetadata="${() => page.requestUpdate(undefined)}"
+                @loadedmetadata="${() => page.requestFullUpdate()}"
                 @ended="${() => page.changeTrackBy(1)}"
-                @timeupdate="${() => page.requestUpdate(undefined)}"
+                @timeupdate="${() => page.requestFullUpdate()}"
             ></fallback-audio>
         </page-layout>
     `;

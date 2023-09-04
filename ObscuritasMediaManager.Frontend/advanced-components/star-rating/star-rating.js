@@ -47,6 +47,6 @@ export class StarRating extends LitElementBase {
             this.values.push(rating);
         }
         this.dispatchEvent(new CustomEvent('ratingChanged', { detail: { rating, include } }));
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 }

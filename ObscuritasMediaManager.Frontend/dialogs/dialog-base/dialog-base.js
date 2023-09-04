@@ -46,7 +46,7 @@ export class DialogBase extends LitElementBase {
         dialog.properties = properties;
 
         PageRouting.container.appendChild(dialog);
-        dialog.requestUpdate(undefined);
+        dialog.requestFullUpdate();
 
         return new Promise((resolve) => {
             dialog.addEventListener('accept', () => {

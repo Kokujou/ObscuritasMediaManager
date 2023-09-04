@@ -9,6 +9,11 @@ export class LitElementBase extends LitElement {
         /** @type {Element[]} */ this.elementsWithTooltips = [];
     }
 
+    async requestFullUpdate() {
+        //@ts-ignore
+        await super.requestUpdate(undefined);
+    }
+
     updated(_changedProperties) {
         super.updated(_changedProperties);
 

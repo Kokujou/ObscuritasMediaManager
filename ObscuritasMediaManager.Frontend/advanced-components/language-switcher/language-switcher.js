@@ -42,8 +42,8 @@ export class LanguageSwitcher extends LitElementBase {
 
     constructor() {
         super();
-        /** @type {Nation} */ this.language;
-        /** @type {Nation} */ this.nation;
+        /** @type {Nation} */ this.language = Nation.Unset;
+        /** @type {Nation} */ this.nation = Nation.Unset;
         /** @type {number} */ this.languageRotationOffset = 0;
         /** @type {number} */ this.nationRotationOffset = 0;
 
@@ -77,7 +77,7 @@ export class LanguageSwitcher extends LitElementBase {
         if (property == 'nation') this.nationRotationOffset += offset;
         if (property == 'language') this.languageRotationOffset += offset;
         this[property] = LanguageSwitcher.AllLanguages[currentIndex];
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -85,7 +85,8 @@ export class LanguageSwitcher extends LitElementBase {
      */
     scrollWheel(event) {
         /** @type {'up' | 'down'} */ var direction = event.wheelDelta < 0 ? 'up' : 'down';
-        var parentRect = this.shadowRoot.querySelector('#language-switcher-overlay').getBoundingClientRect();
+        var parentRect = this.shadowRoot?.querySelector('#language-switcher-overlay')?.getBoundingClientRect();
+        if (!parentRect) return;
         var left = event.clientX - parentRect.left;
         var parentCenterX = parentRect.width / 2;
         if (left < parentCenterX) return this.moveProperty('language', direction);

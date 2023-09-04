@@ -26,7 +26,7 @@ export class RecipesPage extends LitElementBase {
     async connectedCallback() {
         super.connectedCallback();
         this.recipes = await RecipeService.getAllRecipes();
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     render() {

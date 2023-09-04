@@ -33,7 +33,7 @@ export class FallbackAudio extends LitElementBase {
         super.updated(_changedProperties);
         if (_changedProperties.has('src')) {
             this.fallback = false;
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         }
     }
 
@@ -52,7 +52,7 @@ export class FallbackAudio extends LitElementBase {
     async initiateFallback(event) {
         if (this.fallback) return;
         this.fallback = true;
-        await this.requestUpdate(undefined);
+        await this.requestFullUpdate();
         await this.audioElement.play();
     }
 }

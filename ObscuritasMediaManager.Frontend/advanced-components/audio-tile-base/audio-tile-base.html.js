@@ -11,25 +11,28 @@ export function renderAudioTileBase(audioTile) {
             @click="${(e) => {
                 e.stopPropagation();
                 e.preventDefault();
-                audioTile.notifyEvent('toggle');
+                audioTile.dispatchEvent(new CustomEvent('toggle', { composed: true, bubbles: true }));
             }}"
         >
-            <div id="audio-image" @click="${(e) => audioTile.notifyEvent('imageClicked', e)}"></div>
+            <div
+                id="audio-image"
+                @click="${(e) => audioTile.dispatchEvent(new CustomEvent('imageClicked', { composed: true, bubbles: true }))}"
+            ></div>
             <div
                 id="language-icon"
                 language="${audioTile.track.language}"
                 ?disabled="${audioTile.disabled}"
-                @click="${(e) => audioTile.notifyEvent('changeLanguage', e)}"
+                @click="${(e) => audioTile.dispatchEvent(new CustomEvent('changeLanguage', { bubbles: true, composed: true }))}"
             ></div>
             <div
                 id="nation-icon"
                 nation="${audioTile.track.nation}"
                 ?disabled="${audioTile.disabled}"
-                @click="${(e) => audioTile.notifyEvent('changeLanguage', e)}"
+                @click="${(e) => audioTile.dispatchEvent(new CustomEvent('changeLanguage', { bubbles: true, composed: true }))}"
             ></div>
             <div
                 ?disabled="${audioTile.disabled}"
-                @click="${(e) => audioTile.notifyEvent('nextParticipants', e)}"
+                @click="${(e) => audioTile.dispatchEvent(new CustomEvent('nextParticipants', { bubbles: true, composed: true }))}"
                 id="participant-count-button"
                 class="inline-icon ${audioTile.track.participants}"
             ></div>
@@ -38,7 +41,8 @@ export function renderAudioTileBase(audioTile) {
                 class="inline-icon"
                 viewBox="0 0 70 18"
                 ?disabled="${audioTile.disabled}"
-                @click="${(e) => audioTile.notifyEvent('nextInstrumentation', e)}"
+                @click="${(e) =>
+                    audioTile.dispatchEvent(new CustomEvent('nextInstrumentation', { bubbles: true, composed: true }))}"
             >
                 <text y="80%" text-anchor="start">${audioTile.track.instrumentation}</text>
             </svg>
@@ -57,7 +61,10 @@ export function renderAudioTileBase(audioTile) {
                                 y="15"
                                 @pointerover="${() => (audioTile.hoveredRating = rating)}"
                                 @pointerout="${() => (audioTile.hoveredRating = 0)}"
-                                @click="${(e) => audioTile.notifyEvent('changeRating', { rating }, e)}"
+                                @click="${(e) =>
+                                    audioTile.dispatchEvent(
+                                        new CustomEvent('changeRating', { bubbles: true, composed: true, detail: rating })
+                                    )}"
                             >
                                 ★
                             </text>
@@ -68,7 +75,8 @@ export function renderAudioTileBase(audioTile) {
             <div
                 id="instruments-container"
                 ?disabled="${audioTile.disabled}"
-                @click="${(e) => audioTile.notifyEvent('changeInstruemnts', e)}"
+                @click="${(e) =>
+                    audioTile.dispatchEvent(new CustomEvent('changeInstruemnts', { bubbles: true, composed: true }))}"
             >
                 ${audioTile.track.instrumentTypes?.length == 0 ? html`<a id="add-instruments-link">Add Instruments</a>` : ''}
                 ${audioTile.track.instrumentTypes.map(

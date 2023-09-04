@@ -71,14 +71,14 @@ export class DropDown extends LitElementBase {
     updateSearchFilter() {
         /** @type {HTMLInputElement} */ var searchBox = this.shadowRoot.querySelector('#dropdown-search');
         this.searchFilter = searchBox.value;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     resetSearchFilter() {
         /** @type {HTMLInputElement} */ var searchBox = this.shadowRoot.querySelector('#dropdown-search');
         this.searchFilter = '';
         searchBox.value = '';
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -92,6 +92,6 @@ export class DropDown extends LitElementBase {
 
         this.dispatchEvent(new CustomEvent('selectionChange', { detail: { option } }));
         this.dispatchEvent(new Event('change'));
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 }

@@ -20,10 +20,10 @@ export class DualSlider extends LitElementBase {
         /** @type {number} */ this.leftValue = 0;
         /** @type {number} */ this.rightValue = 100;
 
-        /** @type {HTMLElement} */ this.dragElement;
+        /** @type {HTMLElement | null} */ this.dragElement = null;
 
         this.addEventListener('resize', () => {
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         });
 
         document.addEventListener('pointermove', (e) => {
@@ -44,10 +44,10 @@ export class DualSlider extends LitElementBase {
             if (oldLeftValue == this.leftValue && oldRightValue == this.rightValue) return;
 
             this.dispatchEvent(new CustomEvent('valueSpanChanged', { detail: { left: this.leftValue, right: this.rightValue } }));
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         });
 
-        document.addEventListener('pointerup', () => (this.dragElement = undefined));
+        document.addEventListener('pointerup', () => (this.dragElement = null));
     }
 
     getClosestPosition(position) {
@@ -64,6 +64,7 @@ export class DualSlider extends LitElementBase {
             if (lastDiff < currentDiff) return lastStepPosition * 100;
             return stepPosition * 100;
         }
+        return 0;
     }
 
     render() {

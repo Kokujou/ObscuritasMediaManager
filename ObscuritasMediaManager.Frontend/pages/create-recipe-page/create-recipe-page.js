@@ -58,7 +58,7 @@ export class CreateRecipePage extends LitElementBase {
         var requestedRecipeId = getQueryValue('recipe');
         if (requestedRecipeId) {
             this.recipe = await RecipeService.getRecipe(requestedRecipeId);
-            await this.requestUpdate(undefined);
+            await this.requestFullUpdate();
         }
     }
 
@@ -73,7 +73,7 @@ export class CreateRecipePage extends LitElementBase {
         event.stopPropagation();
         event.preventDefault();
         this.recipe.ingredients.push(this.emptyGroup);
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -95,7 +95,7 @@ export class CreateRecipePage extends LitElementBase {
                 order: this.recipe.ingredients.filter((x) => x.groupName == group).length,
             })
         );
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -105,7 +105,7 @@ export class CreateRecipePage extends LitElementBase {
      */
     changeProperty(property, value) {
         /** @type {any} */ (this.recipe[property]) = value;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -116,7 +116,7 @@ export class CreateRecipePage extends LitElementBase {
     renameGroup(affectedIngredients, newName) {
         for (var ingredient of affectedIngredients) ingredient.groupName = newName;
 
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -124,7 +124,7 @@ export class CreateRecipePage extends LitElementBase {
      */
     notifyImageAdded(imageData) {
         this.recipe.imageUrl = imageData;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -132,7 +132,7 @@ export class CreateRecipePage extends LitElementBase {
      */
     removeItem(ingredient) {
         this.recipe.ingredients = this.recipe.ingredients.filter((x) => x.id != ingredient.id);
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**

@@ -25,7 +25,7 @@ export class MessageSnackbar extends LitElementBase {
         snackbar.message = message;
         snackbar.messageType = messageType;
         PageRouting.instance.shadowRoot.appendChild(snackbar);
-        snackbar.requestUpdate(undefined);
+        snackbar.requestFullUpdate();
         MessageSnackbar.recalculateHeights();
 
         setTimeout(() => {

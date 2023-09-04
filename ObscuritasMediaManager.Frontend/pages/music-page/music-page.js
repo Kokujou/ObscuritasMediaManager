@@ -98,7 +98,7 @@ export class MusicPage extends LitElementBase {
         this.subcriptions.push(
             session.instruments.subscribe(() => {
                 this.initializeData();
-                this.requestUpdate(undefined);
+                this.requestFullUpdate();
             }),
             session.currentPage.subscribe((nextPage) => {
                 if (
@@ -118,13 +118,13 @@ export class MusicPage extends LitElementBase {
             if (!this.selectionMode || ContextMenu.instance) return;
             this.selectionMode = false;
             this.selectedHashes = [];
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         });
     }
 
     async initializeData() {
         this.loading = true;
-        await this.requestUpdate(undefined);
+        await this.requestFullUpdate();
 
         try {
             this.playlists = await PlaylistService.listPlaylists();
@@ -143,7 +143,7 @@ export class MusicPage extends LitElementBase {
         }
 
         this.loading = false;
-        await this.requestUpdate(undefined);
+        await this.requestFullUpdate();
     }
 
     firstUpdated(_changedProperties) {
@@ -166,12 +166,12 @@ export class MusicPage extends LitElementBase {
 
     loadNext() {
         this.currentPage++;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     changeVolume(newVolume) {
         this.currentVolumne = newVolume / 100;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -182,11 +182,11 @@ export class MusicPage extends LitElementBase {
         PlayMusicDialog.stop();
 
         if (this.currentTrack.hash != track.hash) this.currentTrack = track;
-        await this.requestUpdate(undefined);
+        await this.requestFullUpdate();
 
         if (!this.audioElement.paused) this.audioElement.pause();
         else if (this.audioElement.paused) await playAudio(this.audioElement);
-        await this.requestUpdate(undefined);
+        await this.requestFullUpdate();
     }
 
     async playPlaylist() {
@@ -226,7 +226,7 @@ export class MusicPage extends LitElementBase {
     updateFilter(filter) {
         this.filter = filter;
         localStorage.setItem(`music.search`, JSON.stringify(this.filter));
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     updateSorting(sortingProperty, sortingDirection) {
@@ -236,7 +236,7 @@ export class MusicPage extends LitElementBase {
             `music.sorting`,
             JSON.stringify({ property: this.sortingProperty, direction: this.sortingDirection })
         );
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     async cleanupTracks() {
@@ -290,9 +290,9 @@ export class MusicPage extends LitElementBase {
             this.selectionMode = true;
             this.selectionModeSet = true;
             this.selectedHashes.push(audioHash);
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         }, 500);
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -305,7 +305,7 @@ export class MusicPage extends LitElementBase {
         this.selectionModeSet = false;
         if (!this.selectionModeTimer) return;
         clearTimeout(this.selectionModeTimer);
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -319,7 +319,7 @@ export class MusicPage extends LitElementBase {
             this.selectionMode = false;
             this.selectionModeUnset = true;
         }
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     jumpToActive() {

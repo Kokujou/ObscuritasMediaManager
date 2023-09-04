@@ -49,7 +49,7 @@ export class MediaPlaylist extends LitElementBase {
 
     loadMoreItems() {
         if (this.items.length > this.maxPlaylistItems) this.maxPlaylistItems += 10;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     async randomizeOrder() {
@@ -58,26 +58,28 @@ export class MediaPlaylist extends LitElementBase {
 
     restoreOrder() {
         this.items = [...this.originalItems];
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     notifyIndexChanged(index) {
         this.dispatchEvent(new CustomEvent('indexChanged', { detail: { index } }));
         this.index = index;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
         this.scrollToActive();
     }
 
     async scrollToActive() {
         this.maxPlaylistItems = this.index + 1;
         while (this.maxPlaylistItems.toString().at(-1) != '0') this.maxPlaylistItems++;
-        await this.requestUpdate(undefined);
-        /** @type {PaginatedScrolling} */ var playlistScrollContainer = this.shadowRoot.querySelector('#playlist-item-container');
-        await playlistScrollContainer.requestUpdate(undefined);
+        await this.requestFullUpdate();
+        /** @type {PaginatedScrolling | null | undefined} */ var playlistScrollContainer =
+            this.shadowRoot?.querySelector('#playlist-item-container');
+        await playlistScrollContainer?.requestFullUpdate();
 
         setTimeout(() => {
-            /** @type {HTMLElement} */ var child = this.shadowRoot.querySelector('.playlist-entry[active]');
-            playlistScrollContainer.scrollToChild(child);
+            /** @type {HTMLElement | null | undefined} */ var child = this.shadowRoot?.querySelector('.playlist-entry[active]');
+            if (!child) return;
+            playlistScrollContainer?.scrollToChild(child);
         }, 100);
     }
 }

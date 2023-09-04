@@ -18,7 +18,8 @@ export function renderMediaDetailPage(detailPage) {
             @toggle="${(e) => (detailPage.editMode = !detailPage.editMode)}"
         >
             <custom-toggle
-                .state="${detailPage.editMode ? CheckboxState.Require : CheckboxState.Forbid}"
+                .state="${detailPage.editMode ? CheckboxState.Ignore : CheckboxState.Forbid}"
+                @toggle="${(e) => (detailPage.editMode = e.detail == CheckboxState.Ignore)}"
                 id="edit-toggle"
             ></custom-toggle>
             <div id="toggle-edit-text">${detailPage.editMode ? 'Bearbeitung deaktivieren' : 'Bearbeitung aktivieren'}</div>
@@ -54,7 +55,6 @@ export function renderMediaDetailPage(detailPage) {
                                 type="text"
                                 id="media-name"
                                 @change="${() => detailPage.changeProperty('name', detailPage.nameInputValue)}"
-                                @keyup="${(e) => detailPage.handleKeyPress(e)}"
                                 class="property-value"
                                 .value="${detailPage.media.name}"
                                 .defaultValue="${detailPage.media.name}"
@@ -69,6 +69,8 @@ export function renderMediaDetailPage(detailPage) {
                                 class="property-value"
                                 .value="${detailPage.media.release.toString()}"
                                 .defaultValue="${detailPage.media.release.toString()}"
+                                @input="${(e) => detailPage.ratingInput(e.currentTarget)}"
+                                @change="${(e) => detailPage.ratingChanged(e.currentTarget)}"
                             />
                         </div>
                         <div class="property-group">
@@ -81,7 +83,6 @@ export function renderMediaDetailPage(detailPage) {
                                 id="description-input"
                                 onclick="this.focus()"
                                 @change="${() => detailPage.changeProperty('description', detailPage.descriptionInputValue)}"
-                                @keyup="${(e) => detailPage.handleKeyPress(e)}"
                                 .value="${detailPage.media.description}"
                                 .defaultValue="${detailPage.media.description}"
                             ></textarea>
@@ -98,7 +99,7 @@ export function renderMediaDetailPage(detailPage) {
                         >
                             ◀
                         </div>
-                        <div id="season-inner" id="season-inner" @scroll="${() => detailPage.requestUpdate(undefined)}">
+                        <div id="season-inner" id="season-inner" @scroll="${() => detailPage.requestFullUpdate()}">
                             ${detailPage.seasons.map(
                                 (season, index) =>
                                     html`<div

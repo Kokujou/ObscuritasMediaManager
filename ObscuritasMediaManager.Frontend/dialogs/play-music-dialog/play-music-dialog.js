@@ -76,7 +76,7 @@ export class PlayMusicDialog extends LitElementBase {
     async reinitialize(track, initialVolume, startPosition) {
         this.currentVolume = initialVolume;
         this.currentTrack = track;
-        await this.requestUpdate(undefined);
+        await this.requestFullUpdate();
 
         this.audio.play();
         this.audio.currentTime = startPosition;
@@ -98,18 +98,18 @@ export class PlayMusicDialog extends LitElementBase {
         } while (!fallbackElement);
 
         this.fallbackElement = fallbackElement;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     changeTrackPosition(value) {
         if (this.audio.duration == Infinity) return;
         this.audio.currentTime = value;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     async close() {
         this.setAttribute('closing', '');
-        await this.requestUpdate(undefined);
+        await this.requestFullUpdate();
         await waitForSeconds(PlayMusicDialog.FadeDuration);
         this.remove();
     }

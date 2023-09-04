@@ -57,7 +57,7 @@ export class MusicFilter extends LitElementBase {
                     if (!this.filter.instruments.states[instrument.name])
                         this.filter.instruments.states[instrument.name] = CheckboxState.Ignore;
                 }
-                this.requestUpdate(undefined);
+                this.requestFullUpdate();
             })
         );
     }
@@ -78,7 +78,7 @@ export class MusicFilter extends LitElementBase {
      */
     setFilterEntryValue(filter, enumKey, state) {
         this.filter[filter].states[enumKey] = state;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
 
@@ -89,7 +89,7 @@ export class MusicFilter extends LitElementBase {
      */
     setfilterEntry(filter, state) {
         this.filter[filter] = state;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
 
@@ -99,7 +99,7 @@ export class MusicFilter extends LitElementBase {
      */
     setArrayFilter(filter, value) {
         for (var key in this.filter[filter].states) this.filter[filter].states[key] = value;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
 
@@ -107,7 +107,7 @@ export class MusicFilter extends LitElementBase {
         this.filter = new MusicFilterOptions();
         this.sortingDirection = 'ascending';
         this.sortingProperty = 'unset';
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
         this.dispatchEvent(
             new CustomEvent('sortingUpdated', {
@@ -162,7 +162,7 @@ export class MusicFilter extends LitElementBase {
                 this.filter.instruments.states[forbidden.name] = CheckboxState.Forbid;
             }
 
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
             this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
             genreDialog.remove();
         });
@@ -186,7 +186,7 @@ export class MusicFilter extends LitElementBase {
     changeSorting(property = null, direction = null) {
         if (property) this.sortingProperty = property;
         if (direction) this.sortingDirection = direction;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
         this.dispatchEvent(
             new CustomEvent('sortingUpdated', {
                 detail: {

@@ -7,7 +7,7 @@ import { PaginatedScrolling } from './paginated-scrolling.js';
 export function renderPaginatedScrolling(scrolling) {
     return html`
         <div class="scroll-container" @scroll="${() => scrolling.onScroll()}">
-            <slot @slotchange="${() => scrolling.requestUpdate(undefined)}"></slot>
+            <slot @slotchange="${() => scrolling.requestFullUpdate()}"></slot>
         </div>
     `;
 }

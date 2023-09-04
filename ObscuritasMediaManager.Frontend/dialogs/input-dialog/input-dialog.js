@@ -22,7 +22,7 @@ export class InputDialog extends LitElementBase {
             dialog.resolve = resolve;
             dialog.message = message;
             PageRouting.container.append(dialog);
-            dialog.requestUpdate(undefined);
+            dialog.requestFullUpdate();
             return dialog;
         });
     }

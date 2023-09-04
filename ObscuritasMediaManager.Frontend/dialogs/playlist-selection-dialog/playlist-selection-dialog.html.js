@@ -33,7 +33,7 @@ export function renderPlaylistSelectionDialog(dialog) {
                             ?selected="${playlist?.id == dialog.selectedPlaylist?.id}"
                             @click="${() => {
                                 dialog.selectedPlaylist = playlist;
-                                dialog.requestUpdate(undefined);
+                                dialog.requestFullUpdate();
                             }}"
                         >
                             <td class="name-column">${playlist.image}</td>

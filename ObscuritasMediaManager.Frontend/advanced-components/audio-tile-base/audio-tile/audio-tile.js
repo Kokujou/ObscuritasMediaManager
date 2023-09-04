@@ -23,7 +23,7 @@ export class AudioTile extends LitElementBase {
     constructor() {
         super();
         /** @type {ExtendedMusicModel} */ this.track = new ExtendedMusicModel();
-        /** @type {string} */ this.image;
+        /** @type {string} */ this.image = '';
         this.paused = true;
     }
 

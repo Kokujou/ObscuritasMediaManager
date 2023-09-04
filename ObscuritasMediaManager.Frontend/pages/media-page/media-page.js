@@ -55,10 +55,10 @@ export class MediaPage extends LitElementBase {
         var localSearchString = localStorage.getItem(`media.search`);
         if (localSearchString) this.filter = MediaFilter.fromJSON(localSearchString);
 
-        this.subscriptions.push(session.mediaList.subscribe(() => this.requestUpdate(undefined)));
+        this.subscriptions.push(session.mediaList.subscribe(() => this.requestFullUpdate()));
 
         this.loading = false;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -93,7 +93,7 @@ export class MediaPage extends LitElementBase {
         try {
             await MediaService.addMediaImage(imageData, media.id);
             media.image = imageData;
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         } catch (err) {
             console.error(err);
         }
@@ -112,7 +112,7 @@ export class MediaPage extends LitElementBase {
             media[property] = value;
             await MediaService.updateMedia(media.id, new UpdateRequestOfMediaModel({ oldModel: null, newModel: media }));
             media[property] = value;
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         } catch (err) {
             console.error(err);
         }

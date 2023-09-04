@@ -34,8 +34,8 @@ export function renderPlayMusicDialog(dialog) {
             .volume="${dialog.currentVolume}"
             .src="${dialog.currentTrackUrl || ''}"
             .fallbackSrc="${dialog.currentTrackUrl + '&highCompatibility=true'}"
-            @loadedmetadata="${() => dialog.requestUpdate(undefined)}"
-            @timeupdate="${() => dialog.requestUpdate(undefined)}"
+            @loadedmetadata="${() => dialog.requestFullUpdate()}"
+            @timeupdate="${() => dialog.requestFullUpdate()}"
         >
         </fallback-audio>
     `;

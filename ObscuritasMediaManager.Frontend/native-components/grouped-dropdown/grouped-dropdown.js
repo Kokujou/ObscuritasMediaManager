@@ -72,7 +72,7 @@ export class GroupedDropdown extends LitElementBase {
         super.updated(_changedProperties);
         if (_changedProperties.has('result')) {
             this.dispatchEvent(new CustomEvent('selectionChange', { detail: this.result }));
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         }
     }
 

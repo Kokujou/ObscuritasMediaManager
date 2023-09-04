@@ -49,11 +49,11 @@ export class SideScroller extends LitElementBase {
     updated(_changedProperties) {
         super.updated(_changedProperties);
         setTimeout(() => {
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
             if (this.currentItemIndex < 0) this.currentItemIndex = Math.floor(this.scrollChildren.length / 2);
             var element = this.scrollChildren[this.currentItemIndex];
             scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
-            this.requestUpdate(undefined);
+            this.requestFullUpdate();
         }, 100);
     }
 
@@ -66,7 +66,7 @@ export class SideScroller extends LitElementBase {
         this.currentItemIndex--;
         var element = this.scrollChildren[this.currentItemIndex];
         scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     scrollToRight() {
@@ -75,6 +75,6 @@ export class SideScroller extends LitElementBase {
         this.currentItemIndex++;
         var element = this.scrollChildren[this.currentItemIndex];
         scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 }

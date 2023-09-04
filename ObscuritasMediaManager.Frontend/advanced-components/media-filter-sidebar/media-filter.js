@@ -10,7 +10,7 @@ import {
 } from '../../obscuritas-media-manager-backend-client.js';
 
 export class MediaFilter {
-    /** @type {{property: keyof MediaModel, translation: string}[]} */
+    /** @type {{property: keyof MediaModel | null, translation: string}[]} */
     static get SortableProperties() {
         return [
             { property: 'name', translation: 'Name' },
@@ -29,9 +29,9 @@ export class MediaFilter {
         return object;
     }
 
-    /** @type {string} */ search;
+    /** @type {string} */ search = '';
     /** @type {'ascending' | 'descending'} */ sortingDirection = 'ascending';
-    /** @type {keyof MediaModel} */ sortingProperty;
+    /** @type {keyof MediaModel | null} */ sortingProperty = null;
     status = new FilterEntry(Object.values(MediaStatus), CheckboxState.Ignore);
     ratings = new FilterEntry([1, 2, 3, 4, 5], CheckboxState.Require);
     /** @type {FilterEntry<string>} */ genres;

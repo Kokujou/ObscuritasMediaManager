@@ -60,7 +60,7 @@ export class PriorityList extends LitElementBase {
 
         selectedElement.classList.add('overlayed');
         this.currentlyDraggedItemIndex = index;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 
     /**
@@ -123,6 +123,6 @@ export class PriorityList extends LitElementBase {
         oldSelectedElement.classList.remove('overlayed');
 
         this.currentlyDraggedItemIndex = index;
-        this.requestUpdate(undefined);
+        this.requestFullUpdate();
     }
 }

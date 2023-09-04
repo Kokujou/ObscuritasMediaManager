@@ -31,7 +31,7 @@ export class ContextMenu extends LitElementBase {
 
         PageRouting.container.append(menu);
         ContextMenu.instance = menu;
-        menu.requestUpdate(undefined);
+        menu.requestFullUpdate();
     }
 
     constructor() {
