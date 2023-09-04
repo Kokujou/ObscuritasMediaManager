@@ -1,7 +1,9 @@
 ﻿using MediaInfoLib;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Diagnostics;
+using System.Text;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
 
@@ -10,7 +12,16 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Route("api/[controller]")]
 public class FileController : ControllerBase
 {
-    public static string Logs = string.Empty;
+    public static FileStream LogFile;
+    private static string Logs = string.Empty;
+
+    static FileController()
+    {
+        var folderPath = "C:\\\\LogFiles\\ObscuritasMediaManager";
+        if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+        LogFile = System.IO.File
+                           .Open($"{folderPath}\\Backend.log", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+    }
 
     [HttpGet("video")]
     public FileStreamResult GetVideo(string videoPath = "")
@@ -20,13 +31,14 @@ public class FileController : ControllerBase
 
         var ffmpeg = new Process();
         var startinfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
-                                             $"-i \"{videoPath}\" -c:v copy -c:a copy -movflags frag_keyframe+empty_moov+delay_moov -f mp4 -");
+        $"-i \"{videoPath}\" -c:v copy -c:a copy -movflags frag_keyframe+empty_moov+delay_moov -f mp4 -");
         startinfo.RedirectStandardError = true;
         startinfo.RedirectStandardOutput = true;
         startinfo.RedirectStandardInput = true;
         startinfo.UseShellExecute = false;
         startinfo.CreateNoWindow = true;
         ffmpeg.StartInfo = startinfo;
+
         ffmpeg.ErrorDataReceived += OnErrorDataReceived;
 
         ffmpeg.Start();
@@ -50,13 +62,18 @@ public class FileController : ControllerBase
         if ((format == "MPEG-4") && (info.Get(StreamKind.General, 0, "IsStreamable") != "Yes"))
             highCompatibility = true;
 
+        var test = new BufferedStream(System.IO.File.Open(audioPath, FileMode.Open, FileAccess.Read, FileShare.Read));
+
         if (!highCompatibility)
-            return File(new BufferedStream(System.IO.File.Open(audioPath, FileMode.Open, FileAccess.Read, FileShare.Read)),
-                        "audio/x-caf");
+        {
+            var stream = new BufferedStream(System.IO.File.Open(audioPath, FileMode.Open, FileAccess.Read, FileShare.Read));
+            stream.DrainAsync(CancellationToken.None).Wait();
+            return File(stream, "audio/x-caf", true);
+        }
 
         var ffmpeg = new Process();
         var startInfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
-                                             $"-i \"{path.FullName}\" -c:a libmp3lame -q:a 2 -filter:a loudnorm -f mp3 pipe:1")
+        $"-i \"{path.FullName}\" -c:a libmp3lame -q:a 2 -filter:a loudnorm -f mp3 pipe:1")
                         {
                             RedirectStandardError = true,
                             RedirectStandardOutput = true,
@@ -87,6 +104,7 @@ public class FileController : ControllerBase
     private void OnErrorDataReceived(object sender, DataReceivedEventArgs args)
     {
         Logs += $"{args.Data}\r\n";
+        LogFile.Write(Encoding.UTF8.GetBytes($"{args.Data}\r\n"));
     }
 
     private void OnFinished(object sender, EventArgs args)

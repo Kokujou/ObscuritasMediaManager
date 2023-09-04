@@ -44,6 +44,7 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     get audioSource() {
+        if (!this.currentTrack?.path) return;
         return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.currentTrack?.path)}`;
     }
 

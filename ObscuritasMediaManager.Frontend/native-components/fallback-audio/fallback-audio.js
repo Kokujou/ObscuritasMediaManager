@@ -11,6 +11,7 @@ export class FallbackAudio extends LitElementBase {
     }
 
     get currentSrc() {
+        if (!this.src) return;
         if (this.fallback) return this.fallbackSrc;
         return this.src;
     }
@@ -45,7 +46,10 @@ export class FallbackAudio extends LitElementBase {
         return renderFallbackAudio(this);
     }
 
-    async initiateFallback() {
+    /**
+     * @param {Event} event
+     */
+    async initiateFallback(event) {
         if (this.fallback) return;
         this.fallback = true;
         await this.requestUpdate(undefined);

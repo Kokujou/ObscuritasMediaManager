@@ -66,7 +66,8 @@ export class MusicPage extends LitElementBase {
     }
 
     get currentTrackUrl() {
-        return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.currentTrack.path)}`;
+        if (!this.currentTrack?.path) return;
+        return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.currentTrack?.path)}`;
     }
 
     /** @type {HTMLAudioElement} */

@@ -11,7 +11,7 @@ export function renderFallbackAudio(audio) {
             preload="auto"
             .src="${audio.currentSrc}"
             .volume="${audio.volume}"
-            @error="${() => audio.initiateFallback()}"
+            @error="${(e) => audio.initiateFallback(e)}"
             @timeupdate="${(e) => audio.redispatchEvent(e)}"
             @ended="${(e) => audio.redispatchEvent(e)}"
             @loadedmetadata="${(e) => audio.redispatchEvent(e)}"

@@ -131,6 +131,8 @@ export function renderMusicPage(musicPage) {
                                                       @soft-delete="${() => musicPage.softDeleteTrack(track)}"
                                                       @hard-delete="${() => musicPage.hardDeleteTrack(track)}"
                                                       @restore="${() => musicPage.undeleteTrack(track)}"
+                                                      @popup="${() =>
+                                                          window.open(musicPage.getTrackPath('global', track), '_blank')}"
                                                   ></audio-tile>
                                               </link-element>
                                           </div>

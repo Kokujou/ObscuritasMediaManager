@@ -2,6 +2,7 @@ import { LitElementBase } from '../../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../../data/music.model.extended.js';
 import { ContextMenu, ContextMenuItem } from '../../../native-components/context-menu/context-menu.js';
 import { trashIcon } from '../../../pages/media-detail-page/images/trash-icon.svg.js';
+import { popupIcon } from '../../../resources/inline-icons/general/popup-icon.svg.js';
 import { revertIcon } from '../../../resources/inline-icons/general/revert-icon.svg.js';
 import { renderAudioTileStyles } from './audio-tile.css.js';
 import { renderAudioTile } from './audio-tile.html.js';
@@ -32,7 +33,13 @@ export class AudioTile extends LitElementBase {
         this.addEventListener('contextmenu', (e) => {
             e.preventDefault();
 
-            /** @type {ContextMenuItem[]} */ var contextMenuItems = [];
+            /** @type {ContextMenuItem[]} */ var contextMenuItems = [
+                {
+                    text: 'In neuem Tab öffnen',
+                    action: () => this.dispatchEvent(new CustomEvent('popup')),
+                    iconString: popupIcon(),
+                },
+            ];
             /** @type {ContextMenuItem} */ var softDeleteItem = {
                 text: 'In Papierkorb verschieben',
                 iconString: trashIcon(),

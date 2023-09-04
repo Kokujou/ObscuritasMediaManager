@@ -21,6 +21,7 @@ export class PlayMusicDialog extends LitElementBase {
     }
 
     get currentTrackUrl() {
+        if (!this.currentTrack?.path) return;
         return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.currentTrack?.path)}`;
     }
 
