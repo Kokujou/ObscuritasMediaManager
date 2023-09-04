@@ -1990,13 +1990,13 @@ export var TargetGroup;
 })(TargetGroup || (TargetGroup = {}));
 export var ContentWarning;
 (function (ContentWarning) {
-    ContentWarning["Violence"] = "Violence";
-    ContentWarning["Nudity"] = "Nudity";
-    ContentWarning["Gore"] = "Gore";
-    ContentWarning["Horror"] = "Horror";
-    ContentWarning["Vulgarity"] = "Vulgarity";
-    ContentWarning["Drugs"] = "Drugs";
     ContentWarning["Depression"] = "Depression";
+    ContentWarning["Drugs"] = "Drugs";
+    ContentWarning["Violence"] = "Violence";
+    ContentWarning["Horror"] = "Horror";
+    ContentWarning["Gore"] = "Gore";
+    ContentWarning["Vulgarity"] = "Vulgarity";
+    ContentWarning["Nudity"] = "Nudity";
 })(ContentWarning || (ContentWarning = {}));
 export class UpdateRequestOfMediaModel {
     oldModel;

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ObscuritasMediaManager.Backend.Models;
 using System.Text.Json;
 
 namespace ObscuritasMediaManager.Backend.Extensions;
@@ -26,7 +25,7 @@ public static class ObjectExtensions
         if (concurrencyProblems.Any())
             throw new DbUpdateConcurrencyException("At least one property has changed since your request.");
 
-        var updatedModel = JsonSerializer.Deserialize<MusicModel>(updated, serializerOptions);
+        var updatedModel = JsonSerializer.Deserialize<T>(updated, serializerOptions);
 
         foreach (var property in updated.EnumerateObject())
             try

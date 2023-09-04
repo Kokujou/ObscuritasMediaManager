@@ -31,6 +31,11 @@ export function renderDropDownStyles() {
             padding: 10px 0;
         }
 
+        :host([disabled]) .dropdown {
+            border: none;
+            pointer-events: none;
+        }
+
         #caption-container {
             flex: auto;
             white-space: nowrap;
@@ -43,6 +48,10 @@ export function renderDropDownStyles() {
         .dropdown-icon-container {
             display: flex;
             justify-content: right;
+        }
+
+        :host([disabled]) .dropdown-icon-container {
+            display: none;
         }
 
         .dropdown.disabled {

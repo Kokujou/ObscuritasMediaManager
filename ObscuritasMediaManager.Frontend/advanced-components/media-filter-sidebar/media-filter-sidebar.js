@@ -25,12 +25,6 @@ export class MediaFilterSidebar extends LitElementBase {
         /** @type {MediaFilter} */ this.filter = new MediaFilter([]);
     }
 
-    async connectedCallback() {
-        var genres = await GenreService.getAll();
-        /** @type {MediaFilter} */ this.filter = new MediaFilter(genres.map((x) => x.id));
-        await super.connectedCallback();
-    }
-
     render() {
         return renderMediaFilterSidebar(this);
     }
@@ -91,6 +85,7 @@ export class MediaFilterSidebar extends LitElementBase {
     notifyFilterUpdated() {
         this.requestFullUpdate();
         this.dispatchEvent(new Event('change', { composed: true }));
+        console.trace();
         localStorage.setItem(`media.search`, JSON.stringify(this.filter));
     }
 

@@ -2,15 +2,16 @@ export class Enum {
     /**
      * @param {{ [s: string]: any; } } enumType
      * @param {string} currentValue
-     * @param {boolean} [excludeFirst]
      */
-    static nextValue(enumType, currentValue, excludeFirst = true) {
+    static nextValue(enumType, currentValue, continueOnEnd = false) {
+        var values = Object.values(enumType);
+        if (!currentValue) return values[0];
         var enumKeys = Object.keys(enumType);
         var currentIndex = enumKeys.findIndex((x) => enumType[x] == currentValue);
 
-        if (currentIndex >= enumKeys.length - 1) return currentValue;
+        if (currentIndex >= enumKeys.length - 1) return continueOnEnd ? values[0] : currentValue;
 
-        return Object.values(enumType)[currentIndex + 1];
+        return values[currentIndex + 1];
     }
 
     /**

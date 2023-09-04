@@ -46,6 +46,7 @@ export function renderWebcomponentTemplateStyles() {
             right: 0;
             overflow-y: auto;
             margin: 10px;
+            margin-top: 30px;
 
             scrollbar-color: #20625599 transparent;
             scrollbar-width: thin;

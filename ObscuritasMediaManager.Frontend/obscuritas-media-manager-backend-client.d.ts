@@ -348,13 +348,13 @@ export declare enum TargetGroup {
     Women = "Women"
 }
 export declare enum ContentWarning {
-    Violence = "Violence",
-    Nudity = "Nudity",
-    Gore = "Gore",
-    Horror = "Horror",
-    Vulgarity = "Vulgarity",
+    Depression = "Depression",
     Drugs = "Drugs",
-    Depression = "Depression"
+    Violence = "Violence",
+    Horror = "Horror",
+    Gore = "Gore",
+    Vulgarity = "Vulgarity",
+    Nudity = "Nudity"
 }
 export declare class UpdateRequestOfMediaModel implements IUpdateRequestOfMediaModel {
     oldModel: MediaModel | null;

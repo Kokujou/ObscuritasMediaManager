@@ -3,11 +3,11 @@ namespace ObscuritasMediaManager.Backend.Data.Media;
 
 public enum ContentWarning
 {
-    Violence,
-    Nudity,
-    Gore,
-    Horror,
-    Vulgarity,
+    Depression,
     Drugs,
-    Depression
+    Violence,
+    Horror,
+    Gore,
+    Vulgarity,
+    Nudity
 }

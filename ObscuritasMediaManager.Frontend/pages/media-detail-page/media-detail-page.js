@@ -1,11 +1,19 @@
+import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter.js';
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
-import { MediaModel, StreamingEntryModel, UpdateRequestOfMediaModel } from '../../obscuritas-media-manager-backend-client.js';
+import {
+    ContentWarning,
+    MediaModel,
+    StreamingEntryModel,
+    UpdateRequestOfMediaModel,
+} from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService, StreamingService } from '../../services/backend.services.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { getQueryValue } from '../../services/extensions/url.extension.js';
+import { MediaFilterService } from '../../services/media-filter.service.js';
 import { VideoPlayerPopup } from '../video-player-popup/video-player-popup.js';
 import { renderMediaDetailPageStyles } from './media-detail-page.css.js';
 import { renderMediaDetailPage } from './media-detail-page.html.js';
@@ -37,35 +45,6 @@ export class MediaDetailPage extends LitElementBase {
         return /** @type {HTMLInputElement} */ (this.shadowRoot.querySelector('#description-input')).value;
     }
 
-    constructor() {
-        super();
-
-        /** @type {MediaModel} */ this.media = null;
-        /** @type {StreamingEntryModel[]} */ this.streamingEntries = [];
-        this.hoveredRating = 0;
-        this.selectedSeason = 0;
-        this.editMode = false;
-    }
-
-    async connectedCallback() {
-        super.connectedCallback();
-
-        await this.getMediaFromRoute();
-
-        setFavicon(this.media.image, 'url');
-    }
-
-    async getMediaFromRoute() {
-        var guid = getQueryValue('guid');
-        var media = await MediaService.get(guid);
-        this.currentTrack = Object.assign(new MediaModel(), media);
-        this.updatedTrack = Object.assign(new MediaModel(), media);
-        this.streamingEntries = await StreamingService.getStreamingEntries(guid);
-
-        this.requestFullUpdate();
-        document.title = this.media.name;
-    }
-
     get seasons() {
         /** @type {string[]} */ var seasons = [];
         this.streamingEntries.forEach((x) => {
@@ -86,8 +65,57 @@ export class MediaDetailPage extends LitElementBase {
         return undefined;
     }
 
+    get nextMediaId() {
+        var currentIndex = this.mediaIds.findIndex((x) => x == this.updatedMedia.id);
+        return this.mediaIds[currentIndex + 1];
+    }
+
+    get prevMediaId() {
+        var currentIndex = this.mediaIds.findIndex((x) => x == this.updatedMedia.id);
+        return this.mediaIds[currentIndex - 1];
+    }
+
+    constructor() {
+        super();
+
+        /** @type {MediaModel} */ this.oldMedia = null;
+        /** @type {MediaModel} */ this.updatedMedia = null;
+        /** @type {StreamingEntryModel[]} */ this.streamingEntries = [];
+        /** @type {string[]} */ this.mediaIds = [];
+        this.hoveredRating = 0;
+        this.selectedSeason = 0;
+        this.editMode = false;
+    }
+
+    async connectedCallback() {
+        super.connectedCallback();
+        this.subscriptions.push(
+            session.mediaList.subscribe((newList) => {
+                var filter = MediaFilter.fromJSON(localStorage.getItem(`media.search`));
+                this.mediaIds = MediaFilterService.filter([...newList], filter).map((x) => x.id);
+            }),
+            session.currentPage.subscribe(() => this.getMediaFromRoute())
+        );
+
+        await this.getMediaFromRoute();
+
+        setFavicon(this.updatedMedia.image, 'url');
+    }
+
+    async getMediaFromRoute() {
+        var guid = getQueryValue('guid');
+        if (!guid) return;
+        var media = await MediaService.get(guid);
+        this.oldMedia = Object.assign(new MediaModel(), media);
+        this.updatedMedia = Object.assign(new MediaModel(), media);
+        this.streamingEntries = await StreamingService.getStreamingEntries(guid);
+
+        this.requestFullUpdate();
+        document.title = this.updatedMedia.name;
+    }
+
     render() {
-        if (!this.media) return;
+        if (!this.updatedMedia) return;
 
         return renderMediaDetailPage(this);
     }
@@ -97,7 +125,7 @@ export class MediaDetailPage extends LitElementBase {
         var genreDialog = GenreDialog.show({
             genres,
             ignoredState: CheckboxState.Forbid,
-            allowedGenres: genres.filter((x) => this.media.genres.includes(x.name)),
+            allowedGenres: genres.filter((x) => this.updatedMedia.genres.includes(x.name)),
             allowAdd: true,
             allowRemove: true,
         });
@@ -120,12 +148,10 @@ export class MediaDetailPage extends LitElementBase {
      */
     async changeProperty(property, value) {
         try {
-            if (typeof this.media[property] != typeof value) return;
-
-            var media = this.media.clone();
+            var media = this.updatedMedia.clone();
             media[property] = value;
-            await MediaService.updateMedia(media.id, new UpdateRequestOfMediaModel({ oldModel: null, newModel: media }));
-            this.media[property] = value;
+            await MediaService.updateMedia(media.id, new UpdateRequestOfMediaModel({ oldModel: this.oldMedia, newModel: media }));
+            await this.getMediaFromRoute();
             this.requestFullUpdate();
         } catch (err) {
             console.error(err);
@@ -135,21 +161,34 @@ export class MediaDetailPage extends LitElementBase {
     /**
      * @param {HTMLInputElement} inputElement
      */
-    async ratingChanged(inputElement) {
+    async releaseChanged(inputElement) {
         var numberValue = Number.parseInt(inputElement.value);
         var maxYears = new Date().getFullYear() + 2;
         if (numberValue < 1900) numberValue = 1900;
         if (numberValue > maxYears) numberValue = maxYears;
         if (`${numberValue}` != inputElement.value) inputElement.value = `${numberValue}`;
-        else this.changeProperty('rating', numberValue);
+        await this.changeProperty('release', numberValue);
     }
 
     /**
      * @param {HTMLInputElement} inputElement
      */
-    async ratingInput(inputElement) {
+    releaseInput(inputElement) {
         var numberValue = Number.parseInt(inputElement.value);
         if (`${numberValue}` != inputElement.value) inputElement.value = `${numberValue}`;
+    }
+
+    /**
+     * @param {ContentWarning} warning
+     */
+    async toggleContentWarning(warning) {
+        if (!this.updatedMedia.contentWarnings.includes(warning))
+            return await this.changeProperty('contentWarnings', this.updatedMedia.contentWarnings.concat(warning));
+
+        return await this.changeProperty(
+            'contentWarnings',
+            this.updatedMedia.contentWarnings.filter((x) => x != warning)
+        );
     }
 
     /**
@@ -157,8 +196,8 @@ export class MediaDetailPage extends LitElementBase {
      */
     async addImage(imageData) {
         try {
-            await MediaService.addMediaImage(imageData, this.media.id);
-            this.media.image = imageData;
+            await MediaService.addMediaImage(imageData, this.updatedMedia.id);
+            this.updatedMedia.image = imageData;
             this.requestFullUpdate();
         } catch (err) {
             console.error(err);
@@ -167,8 +206,8 @@ export class MediaDetailPage extends LitElementBase {
 
     async deleteImage() {
         try {
-            await MediaService.deleteMediaImage(this.media.id);
-            this.media.image = null;
+            await MediaService.deleteMediaImage(this.updatedMedia.id);
+            this.updatedMedia.image = null;
             this.requestFullUpdate();
         } catch (err) {
             console.error(err);

@@ -44,19 +44,49 @@ export function renderMediaDetailPageStyles() {
             margin-left: 60px;
         }
 
+        #next-link,
+        #prev-link {
+            position: absolute;
+            top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        #prev-link {
+            left: 20px;
+        }
+
+        #next-link {
+            right: 20px;
+        }
+
+        #next-link:hover,
+        #prev-link:hover {
+            text-decoration: underline;
+        }
+
         #media-heading {
             font-size: 36px;
+            margin-top: 20px;
             margin-bottom: 20px;
+
             position: relative;
             display: flex;
             flex-direction: row;
             width: 100%;
         }
 
+        #media-name {
+            text-overflow: ellipsis;
+        }
+
         #content-panels {
             display: flex;
             flex-direction: row;
             height: min-content;
+            gap: 30px;
         }
 
         #left-panel,
@@ -64,18 +94,81 @@ export function renderMediaDetailPageStyles() {
         #middle-panel {
             display: flex;
             flex-direction: column;
-            flex: auto;
         }
 
         #left-panel {
-            width: 30%;
-            min-width: 300px;
+            min-width: 350px;
             align-items: center;
-            margin-right: 50px;
+        }
+
+        #content-warning-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        #release-input {
+            max-width: 100px;
+        }
+
+        #content-warnings {
+            max-height: 500px;
+            display: grid;
+            grid-template-columns: auto auto;
+        }
+
+        .content-warning-icon-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+
+            background: var(--accent-color-full);
+            margin: 10px;
+            padding: 10px;
+            width: 110px;
+            border-radius: 20px;
+            cursor: pointer;
+            opacity: 0.6;
+        }
+
+        #middle-panel:not([disabled]) .content-warning-icon-wrapper {
+            box-shadow: 0 0 10px white;
+        }
+
+        .content-warning-icon-wrapper:hover,
+        .content-warning-icon-wrapper[selected] {
+            opacity: 1;
+        }
+
+        .content-warning-icon {
+            width: 60px;
+            height: 60px;
+            background: #c22;
+        }
+
+        .content-warning-label {
+            font-weight: bold;
+            letter-spacing: -2px;
         }
 
         #right-panel {
-            margin: 0 50px;
+            position: relative;
+            background: var(--accent-color);
+            border-radius: 40px;
+            padding: 40px 40px;
+            flex: auto;
+            margin-right: 20px;
+        }
+
+        #right-panel-top {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        #right-panel-left-side {
             flex: auto;
         }
 
@@ -128,6 +221,13 @@ export function renderMediaDetailPageStyles() {
             font-size: 24px;
             align-items: center;
             margin-bottom: 10px;
+            gap: 20px;
+        }
+
+        .property-name {
+            font-weight: bold;
+            text-decoration: underline;
+            width: 130px;
         }
 
         .property-value {
@@ -139,12 +239,8 @@ export function renderMediaDetailPageStyles() {
 
         .genre-entry {
             flex-direction: row;
-            align-items: center;
+            align-items: flex-start;
             gap: 20px;
-        }
-
-        .genre-entry .property-name {
-            margin-bottom: 10px;
         }
 
         .genre-entry .property-value {
@@ -155,6 +251,7 @@ export function renderMediaDetailPageStyles() {
             margin-right: 10px;
             margin-top: 5px;
             margin-bottom: 5px;
+            font-size: 18px;
         }
 
         .edit-icon {
@@ -174,8 +271,7 @@ export function renderMediaDetailPageStyles() {
             color: inherit;
         }
 
-        input[disabled],
-        textarea[disabled] {
+        input[disabled] {
             user-select: none;
             border: none;
         }
@@ -188,10 +284,10 @@ export function renderMediaDetailPageStyles() {
         }
 
         .textarea {
-            width: 600px;
+            width: 100%;
             height: 200px;
             overflow-y: auto;
-            background: var(--accent-color);
+            background: var(--accent-color-full);
             border: 3px dashed;
             border-radius: 15px;
             padding: 10px 20px;
@@ -217,6 +313,24 @@ export function renderMediaDetailPageStyles() {
             color: lightgray;
             font-size: 16px;
             cursor: pointer;
+        }
+
+        #target-group-section {
+            flex-direction: column;
+            gap: 20px;
+            margin-right: 50px;
+        }
+
+        #target-group-icon {
+            width: 100px;
+            height: 100px;
+            background: white;
+            cursor: pointer;
+        }
+
+        #target-group-label {
+            text-transform: uppercase;
+            font-weight: bold;
         }
 
         #media-rating {

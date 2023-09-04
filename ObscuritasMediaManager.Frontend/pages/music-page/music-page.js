@@ -95,6 +95,7 @@ export class MusicPage extends LitElementBase {
     }
     connectedCallback() {
         super.connectedCallback();
+        this.initializeData();
         this.subcriptions.push(
             session.instruments.subscribe(() => {
                 this.initializeData();

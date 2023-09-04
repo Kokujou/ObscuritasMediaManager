@@ -27,8 +27,8 @@ export class LinkElement extends LitElementBase {
     constructor() {
         super();
 
-        this.href = '';
-        this.hash = '';
+        this.href = null;
+        this.hash = null;
         this.search = '';
         this.disabled = false;
     }
@@ -48,13 +48,12 @@ export class LinkElement extends LitElementBase {
             event.preventDefault();
             return;
         }
-        if (!this.hash || this.hash.length <= 0) return;
         event.stopPropagation();
         event.stopImmediatePropagation();
         event.returnValue = false;
         event.preventDefault();
 
-        changePage(this.hash, `?${this.search}`);
+        changePage(this.hash ?? location.hash.slice(1), `?${this.search}`);
 
         return false;
     }

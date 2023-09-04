@@ -12,6 +12,7 @@ import { MediaFilter } from './media-filter.js';
  * @param { MediaFilterSidebar } sidebar
  */
 export function renderMediaFilterSidebar(sidebar) {
+    if (!sidebar.filter) return;
     return html`
         ${registerContentWarnings()}
         <!-- -->

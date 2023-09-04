@@ -26,6 +26,7 @@ export class DropDown extends LitElementBase {
             multiselect: { type: Boolean, reflect: true },
             useSearch: { type: Boolean, reflect: true },
             useToggle: { type: Boolean, reflect: true },
+            disabled: { type: Boolean, reflect: true },
             colors: { type: Object, reflect: true },
             showDropDown: { type: Boolean, reflect: false },
         };

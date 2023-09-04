@@ -5,6 +5,7 @@ using ObscuritasMediaManager.Backend.Authentication;
 using ObscuritasMediaManager.Backend.Controllers;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using Xabe.FFmpeg;
 
@@ -34,7 +35,13 @@ public class Startup
                                        .AllowAnyHeader()
                                        .AllowAnyMethod()));
 
-        services.AddMvc().AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+        services.AddMvc()
+                .AddJsonOptions(options =>
+                    {
+                        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+                        options.JsonSerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+                    });
 
         FFmpeg.SetExecutablesPath("D:\\Programme\\ffmpeg\\bin");
 

@@ -1,5 +1,16 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
+import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
+import {
+    ContentWarning,
+    MediaCategory,
+    MediaStatus,
+    Nation,
+    TargetGroup,
+} from '../../obscuritas-media-manager-backend-client.js';
+import { registerContentWarnings } from '../../resources/icons/content-warnings/register-content-warnings.js';
+import { registerTargetGroups } from '../../resources/icons/target-groups/register-target-groups.js';
+import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MediaDetailPage } from './media-detail-page.js';
 
 /**
@@ -9,9 +20,13 @@ export function renderMediaDetailPage(detailPage) {
     return html`
         <style>
             .media-image {
-                background-image: url(${detailPage.media.image});
+                background-image: url(${detailPage.updatedMedia.image});
             }
         </style>
+        ${registerContentWarnings()};
+        <!-- -->
+        ${registerTargetGroups()};
+
         <div
             id="edit-button"
             onclick="this.dispatchEvent(new CustomEvent('toggle'))"
@@ -27,14 +42,14 @@ export function renderMediaDetailPage(detailPage) {
         <page-layout>
             <div id="media-detail-container">
                 <div id="content-panels">
-                    <div id="left-panel">
+                    <div id="left-panel" ?disabled="${!detailPage.editMode}">
                         <media-tile
                             displayStyle="simple"
                             ?disabled="${!detailPage.editMode}"
-                            .imageSource="${detailPage.media.image}"
+                            .imageSource="${detailPage.updatedMedia.image}"
                             @imageReceived="${(e) => detailPage.addImage(e.detail.imageData)}"
                         >
-                            ${detailPage.media.image
+                            ${detailPage.updatedMedia.image
                                 ? html`<div id="delete-icon-container">
                                       <div id="delete-icon" @click="${() => detailPage.deleteImage()}"></div>
                                   </div>`
@@ -42,13 +57,28 @@ export function renderMediaDetailPage(detailPage) {
                         </media-tile>
                         <div id="media-rating" ?disabled="${!detailPage.editMode}">${renderRating(detailPage)}</div>
                     </div>
-                    <div id="middle-panel">
-                        <div class="property-entry">
+                    <div id="middle-panel" ?disabled="${!detailPage.editMode}">
+                        <div id="content-warning-section" class="property-entry">
                             <div class="property-name">Inhaltswarnungen:</div>
-                            <div id="content-warnings"></div>
+                            <div id="content-warnings">
+                                ${Object.values(ContentWarning).map(
+                                    (warning) =>
+                                        html`<div
+                                            class="content-warning-icon-wrapper"
+                                            ?selected="${detailPage.updatedMedia.contentWarnings.includes(warning)}"
+                                            @click="${() => detailPage.toggleContentWarning(warning)}"
+                                        >
+                                            <div class="content-warning-icon" content-warning="${warning}"></div>
+                                            <div class="content-warning-label">${warning}</div>
+                                        </div>`
+                                )}
+                            </div>
                         </div>
                     </div>
                     <div id="right-panel">
+                        <link-element id="prev-link" search="guid=${detailPage.prevMediaId}">&LeftArrow; Letzer</link-element>
+                        <link-element id="next-link" search="guid=${detailPage.nextMediaId}">Nächster &RightArrow;</link-element>
+
                         <div id="media-heading">
                             <input
                                 ?disabled="${!detailPage.editMode}"
@@ -56,22 +86,79 @@ export function renderMediaDetailPage(detailPage) {
                                 id="media-name"
                                 @change="${() => detailPage.changeProperty('name', detailPage.nameInputValue)}"
                                 class="property-value"
-                                .value="${detailPage.media.name}"
-                                .defaultValue="${detailPage.media.name}"
+                                .value="${detailPage.updatedMedia.name}"
+                                .defaultValue="${detailPage.updatedMedia.name}"
                             />
                         </div>
                         ${renderGenreSection(detailPage)}
-                        <div class="property-entry">
-                            <div class="property-name">Release:</div>
-                            <input
-                                ?disabled="${!detailPage.editMode}"
-                                type="text"
-                                class="property-value"
-                                .value="${detailPage.media.release.toString()}"
-                                .defaultValue="${detailPage.media.release.toString()}"
-                                @input="${(e) => detailPage.ratingInput(e.currentTarget)}"
-                                @change="${(e) => detailPage.ratingChanged(e.currentTarget)}"
-                            />
+                        <div id="right-panel-top">
+                            <div id="right-panel-left-side">
+                                <div class="property-entry">
+                                    <div class="property-name">Release:</div>
+                                    <input
+                                        id="release-input"
+                                        ?disabled="${!detailPage.editMode}"
+                                        type="text"
+                                        class="property-value"
+                                        .value="${detailPage.updatedMedia.release.toString()}"
+                                        .defaultValue="${detailPage.updatedMedia.release.toString()}"
+                                        @input="${(e) => detailPage.releaseInput(e.currentTarget)}"
+                                        @change="${(e) => detailPage.releaseChanged(e.currentTarget)}"
+                                    />
+                                </div>
+                                <div class="property-entry">
+                                    <div class="property-name">Kategorie:</div>
+                                    <drop-down
+                                        class="property-value"
+                                        ?disabled="${!detailPage.editMode}"
+                                        .options="${DropDownOption.createSimpleArray(
+                                            Object.values(MediaCategory),
+                                            detailPage.updatedMedia.type
+                                        )}"
+                                    ></drop-down>
+                                </div>
+                                <div class="property-entry">
+                                    <div class="property-name">Sprache:</div>
+                                    <drop-down
+                                        class="property-value"
+                                        ?disabled="${!detailPage.editMode}"
+                                        .options="${DropDownOption.createSimpleArray(
+                                            Object.values(Nation),
+                                            detailPage.updatedMedia.language
+                                        )}"
+                                        @selectionChange="${(e) => detailPage.changeProperty('language', e.detail.option.value)}"
+                                    ></drop-down>
+                                </div>
+                                <div class="property-entry">
+                                    <div class="property-name">Status:</div>
+                                    <drop-down
+                                        class="property-value"
+                                        ?disabled="${!detailPage.editMode}"
+                                        .options="${DropDownOption.createSimpleArray(
+                                            Object.values(MediaStatus),
+                                            detailPage.updatedMedia.status
+                                        )}"
+                                        @selectionChange="${(e) => detailPage.changeProperty('status', e.detail.option.value)}"
+                                    ></drop-down>
+                                </div>
+                            </div>
+                            <div id="target-group-section" class="property-entry" ?disabled="${!detailPage.editMode}">
+                                <div class="property-name">Zielgruppe:</div>
+                                <div
+                                    id="target-group-icon"
+                                    target-group="${detailPage.updatedMedia.targetGroup}"
+                                    @click="${() =>
+                                        detailPage.changeProperty(
+                                            'targetGroup',
+                                            Enum.nextValue(TargetGroup, detailPage.updatedMedia.targetGroup, true)
+                                        )}"
+                                ></div>
+                                <svg id="target-group-label" viewbox="0 0 100 40">
+                                    <text textLength="100" x="0" y="50%" lengthAdjust="spacingAndGlyphs" fill="white">
+                                        ${detailPage.updatedMedia.targetGroup}
+                                    </text>
+                                </svg>
+                            </div>
                         </div>
                         <div class="property-group">
                             <div class="property-entry">
@@ -83,8 +170,8 @@ export function renderMediaDetailPage(detailPage) {
                                 id="description-input"
                                 onclick="this.focus()"
                                 @change="${() => detailPage.changeProperty('description', detailPage.descriptionInputValue)}"
-                                .value="${detailPage.media.description}"
-                                .defaultValue="${detailPage.media.description}"
+                                .value="${detailPage.updatedMedia.description}"
+                                .defaultValue="${detailPage.updatedMedia.description}"
                             ></textarea>
                         </div>
                     </div>
@@ -125,7 +212,7 @@ export function renderMediaDetailPage(detailPage) {
                         ${detailPage.episodes.map(
                             (entry) =>
                                 html`<div @click="${() => detailPage.openVideoPlayer(entry)}" class="link">
-                                    ${detailPage.media.name} - ${entry.season}: Episode ${entry.episode}
+                                    ${detailPage.updatedMedia.name} - ${entry.season}: Episode ${entry.episode}
                                 </div>`
                         )}
                     </div>
@@ -142,14 +229,14 @@ function renderGenreSection(page) {
     return html`<div class="property-entry genre-entry">
         <div class="property-name">Genres:</div>
         <div class="property-value">
-            ${page.media.genres.map(
+            ${page.updatedMedia.genres.map(
                 (x) =>
                     html`<tag-label
                         ?disabled="${!page.editMode}"
                         @removed="${() =>
                             page.changeProperty(
                                 'genres',
-                                page.media.genres.filter((genre) => genre != x)
+                                page.updatedMedia.genres.filter((genre) => genre != x)
                             )}"
                         .text="${x}"
                     ></tag-label>`
@@ -168,7 +255,7 @@ function renderRating(detailPage) {
         (rating) =>
             html`
                 <div
-                    class="star ${rating < detailPage.media.rating ? 'selected' : ''} ${rating < detailPage.hoveredRating
+                    class="star ${rating < detailPage.updatedMedia.rating ? 'selected' : ''} ${rating < detailPage.hoveredRating
                         ? 'hovered'
                         : ''}"
                     @pointerover="${() => (detailPage.hoveredRating = rating + 1)}"

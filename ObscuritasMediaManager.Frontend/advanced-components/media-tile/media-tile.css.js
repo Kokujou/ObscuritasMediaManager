@@ -24,7 +24,7 @@ export function renderMediaTileStyles() {
             position: relative;
             flex: auto;
 
-            background-size: auto 100%;
+            background-size: 100% 100%;
             background-repeat: no-repeat;
             background-position: center;
 
@@ -75,7 +75,8 @@ export function renderMediaTileStyles() {
             flex-wrap: wrap;
             align-items: center;
             max-height: 35px;
-            //    overflow: hidden;
+            overflow: hidden;
+            gap: 5px;
             transition: max-height 1s ease;
         }
 
