@@ -3,12 +3,14 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { session } from '../../data/session.js';
+import { LyricsDialog } from '../../dialogs/audio-subtitle-dialog/lyrics-dialog.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { InputDialog } from '../../dialogs/input-dialog/input-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
+import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import {
     GenreModel,
     InstrumentType,
@@ -342,5 +344,16 @@ export class MusicPlaylistPage extends LitElementBase {
         this.playlist.tracks = randomizeArray(this.playlist.tracks);
         this.currentTrackIndex = 0;
         this.requestFullUpdate();
+    }
+
+    async showLyrics() {
+        try {
+            var lyrics = await MusicService.getLyrics(this.currentTrack.hash);
+
+            await LyricsDialog.show(lyrics, this.audioElement.duration);
+            await this.audioElement.play();
+        } catch {
+            MessageSnackbar.popup('Es konnten leider keine passenden Lyrics gefunden werden.', 'error');
+        }
     }
 }

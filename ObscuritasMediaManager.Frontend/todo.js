@@ -5,12 +5,35 @@
  */
 
 //TODO: Audio single track creation
-//TODO: Media page finalization + currently edit mode is broken
-//TODO: (optional) create templates for edit
+
+//TODO: Media page finalization
+/**
+ * - Media Genre dialog add/remove
+ * - think about icons for language
+ * - think about shortcut to anisearch db
+ * - think about grouping genres, the dialog-grouping is completely invisible, maybe only display main genres and then details
+ * - (re)-implement watch-functionality, export anime as playlist (local is enough because global is impossible either way)
+ */
+
+//TODO: (optional) create templates for edit - might be a bit late... also mainstream is usually < 3*
+//TODO: implement loading-indiciation for requests - does that really make sense? the API is quite performant
+
 //TODO: improve re-upload algorithm to not overwrite or duplicate data (media-pages)
-//TODO: implement loading-indiciation for requests
-//TODO: music tracks: implement soft delete so files don't get re-added, + hard-delete so files can be erased from disk
-//TODO: cleanup function should be extended with "simple" (only existance check) and extended (music validation)
+/**
+ * - new series should be added
+ * - new seasons + episodes to existing seasons should be added
+ * - be sensitive to change in folder structure e.g. no seasons -> s1 + s2
+ * - maybe display results in table form to emergency-edit if required
+ */
+
+//TODO: Change cleanup functionality for audio
+/**
+ * - introduce modes (simple vs extended)
+ * - cleanup should become a mode toggle
+ * - when toggling, list all "broken" tracks depending on your cleanup mode
+ * - now the user can also "fix" tracks like change the file path or delete
+ */
+
 //TODO: feature: add subtitle functionality - think about a nice desgin!
 //TODO: add a fancy audio visualization
 //TODO: Websockets

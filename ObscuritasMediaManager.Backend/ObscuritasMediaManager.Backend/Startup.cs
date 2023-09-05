@@ -1,3 +1,4 @@
+using Genius;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ public class Startup
         services.AddScoped<UserRepository>();
         services.AddScoped<PlaylistRepository>();
         services.AddScoped<RecipeRepository>();
+        services.AddSingleton(new GeniusClient("_i5cToYg6uB_yorzbeVRYbBtqfLdhU-LtzTxaA5swKJVkDK3W_Yj33IILm1VdL1o"));
 
         services.AddDbContext<DatabaseContext>(
             x => x.UseSqlite(@"Data Source=database.sqlite")

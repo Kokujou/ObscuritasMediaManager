@@ -120,9 +120,26 @@ export function renderMusicPlaylistStyles() {
             flex-direction: column;
         }
 
+        #audio-tile-container {
+            display: flex;
+            flex-direction: column;
+        }
+
         audio-tile-base {
             min-width: 400px;
             height: 400px;
+        }
+
+        #show-lyrics-link {
+            margin-top: 10px;
+            align-self: center;
+            font-weight: bold;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        #show-lyrics-link:hover {
+            text-decoration: underline;
         }
 
         .inline-icon {

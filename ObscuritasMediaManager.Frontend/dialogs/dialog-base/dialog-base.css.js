@@ -56,6 +56,7 @@ export function renderDialogBaseStyles() {
 
         #dialog-title {
             font-size: 36px;
+            margin: 0 40px;
             margin-bottom: 20px;
         }
 

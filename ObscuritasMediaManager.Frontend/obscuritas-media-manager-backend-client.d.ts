@@ -83,6 +83,8 @@ export declare class MusicClient {
     protected processGet(response: Response): Promise<MusicModel>;
     update(hash: string | null, _: UpdateRequestOfMusicModel, signal?: AbortSignal | undefined): Promise<void>;
     protected processUpdate(response: Response): Promise<void>;
+    getLyrics(hash: string | null, signal?: AbortSignal | undefined): Promise<string>;
+    protected processGetLyrics(response: Response): Promise<string>;
     getInstruments(signal?: AbortSignal | undefined): Promise<InstrumentModel[]>;
     protected processGetInstruments(response: Response): Promise<InstrumentModel[]>;
     addInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;

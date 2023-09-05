@@ -66,22 +66,28 @@ export function renderMusicPlaylist(page) {
                         </div>
                     </div>
 
-                    <audio-tile-base
-                        ?disabled="${page.updatedTrack.complete}"
-                        .track="${new ExtendedMusicModel(page.updatedTrack)}"
-                        ?paused="${page.audioElement.paused}"
-                        @imageClicked="${() => page.toggleCurrentTrack()}"
-                        @changeLanguage="${() => page.showLanguageSwitcher()}"
-                        @nextParticipants="${() =>
-                            page.changeProperty('participants', Enum.nextValue(Participants, page.updatedTrack.participants))}"
-                        @nextInstrumentation="${() =>
-                            page.changeProperty(
-                                'instrumentation',
-                                Enum.nextValue(Instrumentation, page.updatedTrack.instrumentation)
-                            )}"
-                        @changeRating="${(e) => page.changeProperty('rating', e.detail.rating)}"
-                        @changeInstruemnts="${() => page.openInstrumentsDialog()}"
-                    ></audio-tile-base>
+                    <div id="audio-tile-container">
+                        <audio-tile-base
+                            ?disabled="${page.updatedTrack.complete}"
+                            .track="${new ExtendedMusicModel(page.updatedTrack)}"
+                            ?paused="${page.audioElement.paused}"
+                            @imageClicked="${() => page.toggleCurrentTrack()}"
+                            @changeLanguage="${() => page.showLanguageSwitcher()}"
+                            @nextParticipants="${() =>
+                                page.changeProperty(
+                                    'participants',
+                                    Enum.nextValue(Participants, page.updatedTrack.participants)
+                                )}"
+                            @nextInstrumentation="${() =>
+                                page.changeProperty(
+                                    'instrumentation',
+                                    Enum.nextValue(Instrumentation, page.updatedTrack.instrumentation)
+                                )}"
+                            @changeRating="${(e) => page.changeProperty('rating', e.detail.rating)}"
+                            @changeInstruemnts="${() => page.openInstrumentsDialog()}"
+                        ></audio-tile-base>
+                        <div id="show-lyrics-link" @click="${() => page.showLyrics()}">Show Lyrics</div>
+                    </div>
                     <div id="audio-control-container">
                         <input
                             type="text"

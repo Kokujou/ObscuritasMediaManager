@@ -790,6 +790,45 @@ export class MusicClient {
         }
         return Promise.resolve(null);
     }
+    getLyrics(hash, signal) {
+        let url_ = this.baseUrl + "/api/Music/{hash}/lyrics";
+        if (hash === undefined || hash === null)
+            throw new Error("The parameter 'hash' must be defined.");
+        url_ = url_.replace("{hash}", encodeURIComponent("" + hash));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetLyrics(_response);
+        });
+    }
+    processGetLyrics(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null;
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
     getInstruments(signal) {
         let url_ = this.baseUrl + "/api/Music/instruments";
         url_ = url_.replace(/[?&]$/, "");
