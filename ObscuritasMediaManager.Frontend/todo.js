@@ -34,7 +34,7 @@
  * - now the user can also "fix" tracks like change the file path or delete
  */
 
-//TODO: feature: add subtitle functionality - think about a nice desgin!
+//TODO: lyrics feature: add media controls + scrolling controls.
 //TODO: add a fancy audio visualization
 //TODO: Websockets
 //TODO: remove all mentionings of renderMaskImage and replace with iconRegistry

@@ -1,4 +1,5 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { waitForSeconds } from '../../services/extensions/animation.extension.js';
 import { renderAudioSubtitleDialogStyles } from './lyrics-dialog.css.js';
 import { renderAudioSubtitleDialog } from './lyrics-dialog.html.js';
@@ -8,15 +9,35 @@ export class LyricsDialog extends LitElementBase {
         return renderAudioSubtitleDialogStyles();
     }
 
-    static async show(lyrics, duration) {
+    static get properties() {
+        return {
+            scrollingPaused: { type: Boolean, reflect: true },
+        };
+    }
+
+    /**
+     *
+     * @param {string} lyrics
+     * @param {FallbackAudio} audio
+     * @param {boolean} canAccept
+     * @returns
+     */
+    static async startShowing(lyrics, audio, canAccept) {
         var dialog = new LyricsDialog();
         dialog.lyrics = lyrics;
+        dialog.audio = audio;
+        dialog.canSave = canAccept;
+        dialog.scrollingPaused = true;
 
         document.body.appendChild(dialog);
         await dialog.requestFullUpdate();
         /** @type {HTMLElement} */ var scrollContainer = dialog.shadowRoot.querySelector('#lyrics-content-wrapper-2');
 
-        scrollContainer.style.animationDuration = duration + 's';
+        scrollContainer.style.animationDuration = audio.audioElement.duration + 's';
+        audio.audioElement.onpause = () => dialog.requestFullUpdate();
+        audio.audioElement.onplay = () => dialog.requestFullUpdate();
+
+        return dialog;
     }
 
     get lyricsLines() {
@@ -27,6 +48,12 @@ export class LyricsDialog extends LitElementBase {
         super();
 
         /** @type {string} */ this.lyrics;
+        /** @type {FallbackAudio} */ this.audio;
+        /** @type {boolean} */ this.canSave = false;
+        /** @type {boolean} */ this.canNext = true;
+        /** @type {boolean} */ this.scrollingPaused = false;
+        /** @type {number} */ this.extendedScrollY = 0;
+        /** @type {NodeJS.Timer} */ this.scrollInterval;
 
         this.onclick = () => this.fadeAndRemove();
 
@@ -37,6 +64,8 @@ export class LyricsDialog extends LitElementBase {
             },
             { signal: this.abortController.signal }
         );
+
+        window.addEventListener('pointerup', () => clearInterval(this.scrollInterval), { signal: this.abortController.signal });
     }
 
     render() {
@@ -47,5 +76,47 @@ export class LyricsDialog extends LitElementBase {
         this.setAttribute('removed', '');
         await waitForSeconds(0.5);
         this.remove();
+    }
+
+    togglePlay() {
+        this.scrollingPaused = !this.scrollingPaused;
+
+        if (this.scrollingPaused) this.audio.audioElement.pause();
+        else this.audio.audioElement.play();
+
+        this.requestFullUpdate();
+    }
+
+    notifyPlaylistSaved() {
+        this.dispatchEvent(new CustomEvent('playlist-saved'));
+    }
+
+    requestNewLyrics() {
+        this.dispatchEvent(new CustomEvent('request-new-lyrics'));
+        this.canSave = true;
+        this.requestFullUpdate();
+    }
+
+    /**
+     * @param {"up" | "down"} direction
+     */
+    startScrolling(direction) {
+        /** @type {HTMLElement} */ var scrollContainer = this.shadowRoot.querySelector('#lyrics-content-wrapper-2');
+        if (!scrollContainer) return;
+
+        this.scrollInterval = setInterval(() => {
+            if (direction == 'down') this.extendedScrollY += 1;
+            if (direction == 'up') this.extendedScrollY -= 1;
+
+            scrollContainer.style.translate = `0 ${this.extendedScrollY}px`;
+        }, 1);
+    }
+
+    updateLyrics(newLyrics) {
+        this.lyrics = newLyrics;
+        /** @type {HTMLElement} */ var scrollContainer = this.shadowRoot.querySelector('#lyrics-content-wrapper-2');
+        scrollContainer.getAnimations()[0].currentTime = 0;
+
+        this.requestFullUpdate();
     }
 }

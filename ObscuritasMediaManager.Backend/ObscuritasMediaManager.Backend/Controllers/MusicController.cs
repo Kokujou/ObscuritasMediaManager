@@ -1,5 +1,4 @@
-﻿using Genius;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
@@ -8,7 +7,6 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
 
@@ -19,13 +17,13 @@ public class MusicController : ControllerBase
 {
     private readonly MusicRepository _musicRepository;
     private readonly JsonSerializerOptions _jsonOptions;
-    private readonly GeniusClient _geniusClient;
+    private readonly LyricsService _lyricsService;
 
-    public MusicController(MusicRepository repository, IOptions<JsonOptions> jsonOptions, GeniusClient geniusClient)
+    public MusicController(MusicRepository repository, IOptions<JsonOptions> jsonOptions, LyricsService lyricsService)
     {
         _musicRepository = repository;
         _jsonOptions = jsonOptions.Value.JsonSerializerOptions;
-        _geniusClient = geniusClient;
+        _lyricsService = lyricsService;
     }
 
     [HttpPost]
@@ -78,36 +76,14 @@ public class MusicController : ControllerBase
     }
 
     [HttpGet("{hash}/lyrics")]
-    public async Task<string> GetLyricsAsync(string hash)
+    public async Task<string> GetLyricsAsync(string hash, int offset = 0)
     {
         var track = await GetAsync(hash);
         var search = track.Name;
         if (!string.IsNullOrEmpty(track.Author) && (track.Author.ToLower() != "unset")) 
             search += $" {track.Author}";
-        search += " Romanized";
 
-        var searchResult = await _geniusClient.SearchClient.Search(search);
-        var relevantHits = searchResult.Response.Hits
-            .Where(x => x.Type == "song")
-            .Select(x => x.Result)
-            .Where(x => x.LyricsState == "complete")
-            .ToList();
-
-        if (relevantHits.Count == 0)
-            throw new Exception("no lyrics found");
-
-        var firstHitId = relevantHits[0].Id;
-        using var client = new HttpClient();
-        var stupidShittyEmbedJsResponse = await client.GetAsync(@$"https://genius.com/songs/{firstHitId}/embed.js");
-        var stupidShittyEmbedJsContent = await stupidShittyEmbedJsResponse.Content.ReadAsStringAsync();
-
-        var shittyStartTag = @"<div class=\\\""rg_embed_body\\\"">";
-        var htmlTagStart = stupidShittyEmbedJsContent.IndexOf(shittyStartTag) + shittyStartTag.Length;
-        var htmlTagEnd = stupidShittyEmbedJsContent.IndexOf(@"<div class=\\\""rg_embed_footer\\\"">");
-        var htmlCode = stupidShittyEmbedJsContent[htmlTagStart..htmlTagEnd].Replace("\\\\n", string.Empty).Replace("<br>", "\n");
-        htmlCode = Regex.Replace(htmlCode, "<.*>", string.Empty);
-
-        return htmlCode;
+        return await _lyricsService.SearchForLyricsAsync(track.Name, search, offset);
     }
 
     [HttpGet("instruments")]

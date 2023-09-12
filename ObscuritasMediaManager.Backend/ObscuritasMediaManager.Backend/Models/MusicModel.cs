@@ -23,6 +23,7 @@ public class MusicModel
     public IEnumerable<string> Instruments { get; set; } = new List<string>();
     public IEnumerable<MusicGenre> Genres { get; set; } = new List<MusicGenre>();
     public string Path { get; set; }
+    public string Lyrics { get; set; }
     public byte Rating { get; set; }
     public bool Complete { get; set; }
     [Key] public string Hash { get; set; }

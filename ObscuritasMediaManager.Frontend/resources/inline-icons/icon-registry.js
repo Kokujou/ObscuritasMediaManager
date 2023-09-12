@@ -4,6 +4,7 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { arrowIcon } from './general/arrow.svg.js';
 import { ascendingIcon } from './general/ascending-icon.svg.js';
 import { cleanIcon } from './general/clean-icon.svg.js';
+import { crossIcon } from './general/cross-icon.svg.js';
 import { descendingIcon } from './general/descending-icon.svg.js';
 import { globusIcon } from './general/globus-icon.svg.js';
 import { importIcon } from './general/import-icon.svg.js';
@@ -43,6 +44,7 @@ class IconRegistryEntry {
 }
 
 export class IconRegistry {
+    static CrossIcon = new IconRegistryEntry('CrossIcon', crossIcon);
     static TrashIcon = new IconRegistryEntry('TrashIcon', trashIcon);
     static ArrowIcon = new IconRegistryEntry('ArrowIcon', arrowIcon);
     static ImportIcon = new IconRegistryEntry('ImportIcon', importIcon);
@@ -83,6 +85,14 @@ export function registerIcons() {
                         ${renderMaskImage(IconRegistry[selector].icon())}
                     }`
             )
-            .join('\n')
+            .join('\n') +
+            Object.keys(IconRegistry)
+                .map(
+                    (selector) =>
+                        `[icon="${selector}"] {
+                        ${renderMaskImage(IconRegistry[selector].icon())}
+                    }`
+                )
+                .join('\n')
     );
 }

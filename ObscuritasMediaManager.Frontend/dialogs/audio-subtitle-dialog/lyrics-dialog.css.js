@@ -1,7 +1,10 @@
 import { css } from '../../exports.js';
+import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
 export function renderAudioSubtitleDialogStyles() {
     return css`
+        ${registerIcons()}
+
         :host {
             position: fixed;
             inset: 0;
@@ -18,6 +21,7 @@ export function renderAudioSubtitleDialogStyles() {
         }
 
         #lyrics-wrapper {
+            position: relative;
             font-size: 21px;
             letter-spacing: 1.2;
             text-shadow: 0 0 3px black;
@@ -38,7 +42,7 @@ export function renderAudioSubtitleDialogStyles() {
             flex-direction: column;
             max-height: 400px;
             padding: 0 50px;
-            overflow-y: auto;
+            overflow: visible;
             scrollbar-width: thin;
 
             mask: linear-gradient(
@@ -55,6 +59,10 @@ export function renderAudioSubtitleDialogStyles() {
             animation-fill-mode: forwards;
         }
 
+        :host([scrollingPaused]) #lyrics-content-wrapper-2 {
+            animation-play-state: paused;
+        }
+
         @keyframes scroll-to-end {
             from {
                 transform: translateY(200px);
@@ -63,6 +71,88 @@ export function renderAudioSubtitleDialogStyles() {
             to {
                 transform: translateY(calc(-100% + 200px));
             }
+        }
+
+        #audio-controls {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        #save-lyrics-button {
+            color: green;
+        }
+
+        #save-lyrics-button > .icon {
+            background: green;
+        }
+
+        #next-lyrics-button {
+            color: red;
+        }
+
+        #next-lyrics-button > .icon {
+            background: red;
+        }
+
+        .link {
+            cursor: pointer;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .link[disabled] {
+            color: darkgray !important;
+            pointer-events: none !important;
+        }
+
+        .link[disabled] .icon {
+            background: darkgray !important;
+        }
+
+        .link .icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        #scroll-controls {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            gap: 40px;
+        }
+
+        #scroll-up-button {
+            rotate: 270deg;
+        }
+
+        #scroll-down-button {
+            rotate: 90deg;
+        }
+
+        .icon {
+            width: 40px;
+            height: 40px;
+
+            background: white;
+
+            cursor: pointer;
         }
 
         .scroll-space {

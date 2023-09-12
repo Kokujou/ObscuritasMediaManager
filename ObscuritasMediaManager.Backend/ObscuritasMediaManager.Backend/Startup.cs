@@ -24,26 +24,27 @@ public class Startup
         services.AddScoped<UserRepository>();
         services.AddScoped<PlaylistRepository>();
         services.AddScoped<RecipeRepository>();
+        services.AddScoped<LyricsService>();
         services.AddSingleton(new GeniusClient("_i5cToYg6uB_yorzbeVRYbBtqfLdhU-LtzTxaA5swKJVkDK3W_Yj33IILm1VdL1o"));
 
         services.AddDbContext<DatabaseContext>(
             x => x.UseSqlite(@"Data Source=database.sqlite")
-                  .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-                  .EnableSensitiveDataLogging());
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .EnableSensitiveDataLogging());
 
         services.AddCors(x =>
                 x.AddPolicy("all", builder =>
                                 builder.WithOrigins("https://localhost", "https://obscuritas.strangled.net")
-                                       .AllowAnyHeader()
-                                       .AllowAnyMethod()));
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()));
 
         services.AddMvc()
-                .AddJsonOptions(options =>
-                    {
-                        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 
-                        options.JsonSerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-                    });
+                    options.JsonSerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+                });
 
         FFmpeg.SetExecutablesPath("D:\\Programme\\ffmpeg\\bin");
 
@@ -71,8 +72,8 @@ public class Startup
                     context.Response.StatusCode = 400;
 
                     await context.Response
-                                 .WriteAsJsonAsync(
-                                     new { Reason = exception?.Message, InnerException = exception?.InnerException?.Message });
+                        .WriteAsJsonAsync(
+                            new { Reason = exception?.Message, InnerException = exception?.InnerException?.Message });
                 }));
 
         app.UseCors("all");

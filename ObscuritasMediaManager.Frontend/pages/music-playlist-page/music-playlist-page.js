@@ -348,10 +348,30 @@ export class MusicPlaylistPage extends LitElementBase {
 
     async showLyrics() {
         try {
-            var lyrics = await MusicService.getLyrics(this.currentTrack.hash);
+            var offset = -1;
+            if (this.currentTrack.lyrics?.length > 0)
+                var dialog = await LyricsDialog.startShowing(this.currentTrack.lyrics, this.fallbackAudio, false);
+            else {
+                offset = 0;
+                var lyrics = await MusicService.getLyrics(this.currentTrack.hash);
+                var dialog = await LyricsDialog.startShowing(lyrics, this.fallbackAudio, true);
+            }
 
-            await LyricsDialog.show(lyrics, this.audioElement.duration);
-            await this.audioElement.play();
+            dialog.addEventListener('playlist-saved', async () => {
+                this.updatedTrack.lyrics = dialog.lyrics;
+                await this.updateTrack();
+            });
+
+            dialog.addEventListener('request-new-lyrics', async () => {
+                offset++;
+                try {
+                    var newLyrics = await MusicService.getLyrics(this.currentTrack.hash, offset);
+                    dialog.updateLyrics(newLyrics);
+                } catch {
+                    dialog.canNext = false;
+                    dialog.requestFullUpdate();
+                }
+            });
         } catch {
             MessageSnackbar.popup('Es konnten leider keine passenden Lyrics gefunden werden.', 'error');
         }

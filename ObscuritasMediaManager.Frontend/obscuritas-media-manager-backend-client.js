@@ -790,11 +790,15 @@ export class MusicClient {
         }
         return Promise.resolve(null);
     }
-    getLyrics(hash, signal) {
-        let url_ = this.baseUrl + "/api/Music/{hash}/lyrics";
+    getLyrics(hash, offset, signal) {
+        let url_ = this.baseUrl + "/api/Music/{hash}/lyrics?";
         if (hash === undefined || hash === null)
             throw new Error("The parameter 'hash' must be defined.");
         url_ = url_.replace("{hash}", encodeURIComponent("" + hash));
+        if (offset === null)
+            throw new Error("The parameter 'offset' cannot be null.");
+        else if (offset !== undefined)
+            url_ += "offset=" + encodeURIComponent("" + offset) + "&";
         url_ = url_.replace(/[?&]$/, "");
         let options_ = {
             method: "GET",
@@ -1681,6 +1685,7 @@ export class MusicModel {
     instruments;
     genres;
     path;
+    lyrics;
     rating;
     complete;
     hash;
@@ -1722,6 +1727,7 @@ export class MusicModel {
                 this.genres = null;
             }
             this.path = _data["path"] !== undefined ? _data["path"] : null;
+            this.lyrics = _data["lyrics"] !== undefined ? _data["lyrics"] : null;
             this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
             this.complete = _data["complete"] !== undefined ? _data["complete"] : null;
             this.hash = _data["hash"] !== undefined ? _data["hash"] : null;
@@ -1755,6 +1761,7 @@ export class MusicModel {
                 data["genres"].push(item);
         }
         data["path"] = this.path !== undefined ? this.path : null;
+        data["lyrics"] = this.lyrics !== undefined ? this.lyrics : null;
         data["rating"] = this.rating !== undefined ? this.rating : null;
         data["complete"] = this.complete !== undefined ? this.complete : null;
         data["hash"] = this.hash !== undefined ? this.hash : null;

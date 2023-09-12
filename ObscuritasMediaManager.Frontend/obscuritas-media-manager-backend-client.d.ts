@@ -83,7 +83,7 @@ export declare class MusicClient {
     protected processGet(response: Response): Promise<MusicModel>;
     update(hash: string | null, _: UpdateRequestOfMusicModel, signal?: AbortSignal | undefined): Promise<void>;
     protected processUpdate(response: Response): Promise<void>;
-    getLyrics(hash: string | null, signal?: AbortSignal | undefined): Promise<string>;
+    getLyrics(hash: string | null, offset?: number | undefined, signal?: AbortSignal | undefined): Promise<string>;
     protected processGetLyrics(response: Response): Promise<string>;
     getInstruments(signal?: AbortSignal | undefined): Promise<InstrumentModel[]>;
     protected processGetInstruments(response: Response): Promise<InstrumentModel[]>;
@@ -166,6 +166,7 @@ export declare class MusicModel implements IMusicModel {
     instruments: string[] | null;
     genres: MusicGenre[] | null;
     path: string | null;
+    lyrics: string | null;
     rating: number;
     complete: boolean;
     hash: string | null;
@@ -190,6 +191,7 @@ export interface IMusicModel {
     instruments: string[] | null;
     genres: MusicGenre[] | null;
     path: string | null;
+    lyrics: string | null;
     rating: number;
     complete: boolean;
     hash: string | null;
