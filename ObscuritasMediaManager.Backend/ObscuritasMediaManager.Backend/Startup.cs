@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Authentication;
 using ObscuritasMediaManager.Backend.Controllers;
 using ObscuritasMediaManager.Backend.DataRepositories;
+using ObscuritasMediaManager.Backend.Services;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;

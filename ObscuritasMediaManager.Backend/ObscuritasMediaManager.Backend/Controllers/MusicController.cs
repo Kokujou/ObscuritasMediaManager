@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
+using ObscuritasMediaManager.Backend.Controllers.Responses;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
+using ObscuritasMediaManager.Backend.Services;
 using System.Text.Json;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
@@ -76,14 +78,11 @@ public class MusicController : ControllerBase
     }
 
     [HttpGet("{hash}/lyrics")]
-    public async Task<string> GetLyricsAsync(string hash, int offset = 0)
+    public async Task<LyricsResponse> GetLyricsAsync(string hash, int offset = 0)
     {
         var track = await GetAsync(hash);
-        var search = track.Name;
-        if (!string.IsNullOrEmpty(track.Author) && (track.Author.ToLower() != "unset")) 
-            search += $" {track.Author}";
 
-        return await _lyricsService.SearchForLyricsAsync(track.Name, search, offset);
+        return await _lyricsService.SearchForLyricsAsync(track, offset);
     }
 
     [HttpGet("instruments")]

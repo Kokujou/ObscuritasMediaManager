@@ -350,11 +350,16 @@ export class MusicPlaylistPage extends LitElementBase {
         try {
             var offset = -1;
             if (this.currentTrack.lyrics?.length > 0)
-                var dialog = await LyricsDialog.startShowing(this.currentTrack.lyrics, this.fallbackAudio, false);
+                var dialog = await LyricsDialog.startShowing(
+                    this.currentTrack.displayName,
+                    this.currentTrack.lyrics,
+                    this.fallbackAudio,
+                    false
+                );
             else {
                 offset = 0;
                 var lyrics = await MusicService.getLyrics(this.currentTrack.hash);
-                var dialog = await LyricsDialog.startShowing(lyrics, this.fallbackAudio, true);
+                var dialog = await LyricsDialog.startShowing(lyrics.title, lyrics.text, this.fallbackAudio, true);
             }
 
             dialog.addEventListener('playlist-saved', async () => {
@@ -366,7 +371,7 @@ export class MusicPlaylistPage extends LitElementBase {
                 offset++;
                 try {
                     var newLyrics = await MusicService.getLyrics(this.currentTrack.hash, offset);
-                    dialog.updateLyrics(newLyrics);
+                    dialog.updateLyrics(newLyrics.title, newLyrics.text);
                 } catch {
                     dialog.canNext = false;
                     dialog.requestFullUpdate();

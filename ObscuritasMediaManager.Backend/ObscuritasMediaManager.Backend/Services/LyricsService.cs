@@ -1,7 +1,10 @@
 ﻿using Genius;
+using ObscuritasMediaManager.Backend.Controllers.Responses;
+using ObscuritasMediaManager.Backend.Data.Music;
+using ObscuritasMediaManager.Backend.Models;
 using System.Text.RegularExpressions;
 
-namespace ObscuritasMediaManager.Backend;
+namespace ObscuritasMediaManager.Backend.Services;
 
 public class LyricsService
 {
@@ -12,14 +15,19 @@ public class LyricsService
         _geniusClient = geniusClient;
     }
 
-    public async Task<string> SearchForLyricsAsync(string trackName, string search, int offset = 0)
+    public async Task<LyricsResponse> SearchForLyricsAsync(MusicModel track, int offset = 0)
     {
-        var searchResult = await _geniusClient.SearchClient.Search($"{search} Romanized");
-        var getRelevantHits = (
-            ) => searchResult.Response.Hits
+        var search = track.Name;
+        if (!string.IsNullOrEmpty(track.Author) && (track.Author.ToLower() != "unset") && (track.Author.ToLower() != "undefined"))
+            search += $" {track.Author}";
+        if (track.Language == Nation.Japanese) search += " Romanized";
+
+        var searchResult = await _geniusClient.SearchClient.Search(search);
+        var getRelevantHits = () =>
+        searchResult.Response.Hits
             .Where(x => x.Type == "song")
             .Select(x => x.Result)
-            .Where(x => (x.LyricsState == "complete") && x.FullTitle.ToLower().Contains(trackName.ToLower()))
+            .Where(x => (x.LyricsState == "complete") && x.FullTitle.ToLower().Contains(track.Name.ToLower()))
             .ToList();
 
         var relevantHits = getRelevantHits();
@@ -37,6 +45,6 @@ public class LyricsService
         var htmlCode = stupidShittyEmbedJsContent[htmlTagStart..htmlTagEnd].Replace("\\\\n", string.Empty).Replace("<br>", "\n");
         htmlCode = Regex.Replace(htmlCode, "<.*>", string.Empty);
 
-        return htmlCode;
+        return new(relevantHits[offset].FullTitle, htmlCode);
     }
 }

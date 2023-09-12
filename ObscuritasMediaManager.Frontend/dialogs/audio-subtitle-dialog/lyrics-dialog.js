@@ -17,14 +17,16 @@ export class LyricsDialog extends LitElementBase {
 
     /**
      *
+     * @param {string} title
      * @param {string} lyrics
      * @param {FallbackAudio} audio
      * @param {boolean} canAccept
      * @returns
      */
-    static async startShowing(lyrics, audio, canAccept) {
+    static async startShowing(title, lyrics, audio, canAccept) {
         var dialog = new LyricsDialog();
         dialog.lyrics = lyrics;
+        dialog.title = title;
         dialog.audio = audio;
         dialog.canSave = canAccept;
         dialog.scrollingPaused = true;
@@ -105,15 +107,16 @@ export class LyricsDialog extends LitElementBase {
         if (!scrollContainer) return;
 
         this.scrollInterval = setInterval(() => {
-            if (direction == 'down') this.extendedScrollY += 1;
-            if (direction == 'up') this.extendedScrollY -= 1;
+            if (direction == 'up') this.extendedScrollY += 1;
+            if (direction == 'down') this.extendedScrollY -= 1;
 
             scrollContainer.style.translate = `0 ${this.extendedScrollY}px`;
         }, 1);
     }
 
-    updateLyrics(newLyrics) {
+    updateLyrics(newTitle, newLyrics) {
         this.lyrics = newLyrics;
+        this.title = newTitle;
         /** @type {HTMLElement} */ var scrollContainer = this.shadowRoot.querySelector('#lyrics-content-wrapper-2');
         scrollContainer.getAnimations()[0].currentTime = 0;
 

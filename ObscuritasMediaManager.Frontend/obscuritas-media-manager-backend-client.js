@@ -818,11 +818,12 @@ export class MusicClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
                 let result200 = null;
                 let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : null;
+                result200 = LyricsResponse.fromJS(resultData200, _mappings);
                 return result200;
             });
         }
@@ -2074,6 +2075,40 @@ export class UpdateRequestOfMediaModel {
     clone() {
         const json = this.toJSON();
         let result = new UpdateRequestOfMediaModel();
+        result.init(json);
+        return result;
+    }
+}
+export class LyricsResponse {
+    title;
+    text;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data, _mappings) {
+        if (_data) {
+            this.title = _data["title"] !== undefined ? _data["title"] : null;
+            this.text = _data["text"] !== undefined ? _data["text"] : null;
+        }
+    }
+    static fromJS(data, _mappings) {
+        data = typeof data === 'object' ? data : {};
+        return createInstance(data, _mappings, LyricsResponse);
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title !== undefined ? this.title : null;
+        data["text"] = this.text !== undefined ? this.text : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new LyricsResponse();
         result.init(json);
         return result;
     }

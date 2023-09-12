@@ -83,8 +83,8 @@ export declare class MusicClient {
     protected processGet(response: Response): Promise<MusicModel>;
     update(hash: string | null, _: UpdateRequestOfMusicModel, signal?: AbortSignal | undefined): Promise<void>;
     protected processUpdate(response: Response): Promise<void>;
-    getLyrics(hash: string | null, offset?: number | undefined, signal?: AbortSignal | undefined): Promise<string>;
-    protected processGetLyrics(response: Response): Promise<string>;
+    getLyrics(hash: string | null, offset?: number | undefined, signal?: AbortSignal | undefined): Promise<LyricsResponse>;
+    protected processGetLyrics(response: Response): Promise<LyricsResponse>;
     getInstruments(signal?: AbortSignal | undefined): Promise<InstrumentModel[]>;
     protected processGetInstruments(response: Response): Promise<InstrumentModel[]>;
     addInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
@@ -372,6 +372,19 @@ export declare class UpdateRequestOfMediaModel implements IUpdateRequestOfMediaM
 export interface IUpdateRequestOfMediaModel {
     oldModel: MediaModel | null;
     newModel: MediaModel | null;
+}
+export declare class LyricsResponse implements ILyricsResponse {
+    title: string | null;
+    text: string | null;
+    constructor(data?: Partial<ILyricsResponse>);
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): LyricsResponse | null;
+    toJSON(data?: any): any;
+    clone(): LyricsResponse;
+}
+export interface ILyricsResponse {
+    title: string | null;
+    text: string | null;
 }
 export declare class InstrumentModel implements IInstrumentModel {
     name: string | null;
