@@ -4,8 +4,10 @@ import { LitElementBase } from '../../data/lit-element-base.js';
 import { session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
+import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import {
     ContentWarning,
+    GenreModel,
     MediaModel,
     StreamingEntryModel,
     UpdateRequestOfMediaModel,
@@ -139,6 +141,34 @@ export class MediaDetailPage extends LitElementBase {
 
             genreDialog.remove();
         });
+        genreDialog.addEventListener(
+            'add-genre',
+            /** @param {CustomEvent<{name, section}>} e */ async (e) => {
+                try {
+                    await GenreService.addGenre(e.detail.section, e.detail.name);
+                    genreDialog.options.genres = await GenreService.getAll();
+                    genreDialog.requestFullUpdate();
+                    MessageSnackbar.popup('Das Genre wurde erfolgreich hinzugefügt.', 'success');
+                } catch (err) {
+                    MessageSnackbar.popup('Ein Fehler ist beim hinzufügen des Genres aufgetreten: ' + err, 'error');
+                    e.preventDefault();
+                }
+            }
+        );
+        genreDialog.addEventListener(
+            'remove-genre',
+            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
+                try {
+                    await GenreService.removeGenre(e.detail.id);
+                    genreDialog.options.genres = await GenreService.getAll();
+                    genreDialog.requestFullUpdate();
+                    MessageSnackbar.popup('Das Genre wurde erfolgreich gelöscht.', 'success');
+                } catch (err) {
+                    MessageSnackbar.popup('Ein Fehler ist beim löschen des Genres aufgetreten: ' + err, 'error');
+                    e.preventDefault();
+                }
+            }
+        );
     }
 
     /**

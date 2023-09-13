@@ -1,3 +1,4 @@
+import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
 import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreDialog } from './genre-dialog.js';
@@ -19,9 +20,9 @@ export function renderGenreDialog(genreDialog) {
             ${genreDialog.options.allowRemove
                 ? html` <div id="remove-toggle">
                       <custom-toggle
-                          @toggle="${(e) => genreDialog.toggleAttribute('editModeEnabled', e.target.toggled)}"
+                          @toggle="${(e) => genreDialog.toggleAttribute('editModeEnabled', e.detail == CheckboxState.Ignore)}"
                       ></custom-toggle>
-                      <div id="toggle-text">Bearbeiten</div>
+                      <div id="toggle-text">Löschen</div>
                   </div>`
                 : ''}
 

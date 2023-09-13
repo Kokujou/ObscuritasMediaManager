@@ -21,6 +21,15 @@ export function renderMediaDetailPageStyles() {
             cursor: pointer;
         }
 
+        #popup-icon {
+            width: 40px;
+            height: 40px;
+
+            background: white;
+
+            cursor: pointer;
+        }
+
         #edit-toggle {
             margin-right: 20px;
 
@@ -75,6 +84,8 @@ export function renderMediaDetailPageStyles() {
             position: relative;
             display: flex;
             flex-direction: row;
+            align-items: center;
+            gap: 20px;
             width: 100%;
         }
 

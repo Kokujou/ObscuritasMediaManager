@@ -10,6 +10,7 @@ import {
 } from '../../obscuritas-media-manager-backend-client.js';
 import { registerContentWarnings } from '../../resources/icons/content-warnings/register-content-warnings.js';
 import { registerTargetGroups } from '../../resources/icons/target-groups/register-target-groups.js';
+import { IconRegistry } from '../../resources/inline-icons/icon-registry.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MediaDetailPage } from './media-detail-page.js';
 
@@ -80,6 +81,14 @@ export function renderMediaDetailPage(detailPage) {
                         <link-element id="next-link" search="guid=${detailPage.nextMediaId}">Nächster &RightArrow;</link-element>
 
                         <div id="media-heading">
+                            <div
+                                id="popup-icon"
+                                icon="${IconRegistry.PopupIcon.name}"
+                                @click="${() =>
+                                    window.open(
+                                        `https://www.anisearch.de/anime/index?text=${detailPage.updatedMedia.name}&char=all&q=true`
+                                    )}"
+                            ></div>
                             <input
                                 ?disabled="${!detailPage.editMode}"
                                 type="text"

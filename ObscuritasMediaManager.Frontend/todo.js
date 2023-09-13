@@ -8,9 +8,7 @@
 
 //TODO: Media page finalization
 /**
- * - Media Genre dialog add/remove
  * - think about icons for language
- * - think about shortcut to anisearch db
  * - think about grouping genres, the dialog-grouping is completely invisible, maybe only display main genres and then details
  * - (re)-implement watch-functionality, export anime as playlist (local is enough because global is impossible either way)
  */
