@@ -20,7 +20,7 @@ public class FileController : ControllerBase
         var folderPath = "C:\\\\LogFiles\\ObscuritasMediaManager";
         if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
         LogFile = System.IO.File
-                           .Open($"{folderPath}\\Backend.log", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+            .Open($"{folderPath}\\Backend.log", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
     }
 
     [HttpGet("video")]
@@ -68,7 +68,7 @@ public class FileController : ControllerBase
         {
             var stream = new BufferedStream(System.IO.File.Open(audioPath, FileMode.Open, FileAccess.Read, FileShare.Read));
             stream.DrainAsync(CancellationToken.None).Wait();
-            return File(stream, "audio/x-caf", true);
+            return File(stream, "audio/ogg", true);
         }
 
         var ffmpeg = new Process();

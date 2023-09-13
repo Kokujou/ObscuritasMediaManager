@@ -71,6 +71,7 @@ export function renderMusicPlaylist(page) {
                             ?disabled="${page.updatedTrack.complete}"
                             .track="${new ExtendedMusicModel(page.updatedTrack)}"
                             ?paused="${page.audioElement.paused}"
+                            .visualizationData="${page.visualizationData}"
                             @imageClicked="${() => page.toggleCurrentTrack()}"
                             @changeLanguage="${() => page.showLanguageSwitcher()}"
                             @nextParticipants="${() =>

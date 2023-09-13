@@ -11,8 +11,7 @@ export function getKeyFor(target, value) {
 /**
  * @template T
  * @param {T} object
- * @param {keyof T} property
- * @returns
+ * @param {keyof T & string} property
  */
 export function nameof(object, property) {
     return property;

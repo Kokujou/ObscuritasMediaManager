@@ -35,7 +35,7 @@ export function renderMediaTileStyles() {
         #rating-container {
             position: absolute;
             top: 20px;
-            right: 30px;
+            right: 10px;
             z-index: 1;
         }
 
@@ -72,6 +72,10 @@ export function renderMediaTileStyles() {
             color: white;
             text-align: center;
             transition: max-height 1s ease;
+        }
+
+        #caption[no-background] {
+            background: none;
         }
 
         #genre-list {

@@ -141,8 +141,21 @@ export function renderAudioTileBaseStyles() {
 
         ${renderInstrumentTypeIcons('#instruments-container ')}
 
+        #audio-visualization {
+            position: absolute;
+            left: 50px;
+            width: calc(100% - 100px);
+            height: 100%;
+            background: transparent;
+            pointer-events: none;
+        }
+
         :host(:not([paused])) #audio-image {
             ${renderMaskImage(pauseIcon())};
+        }
+
+        :host(:not([paused])) #audio-image[invisible] {
+            opacity: 0;
         }
 
         :host([paused]) #audio-image {

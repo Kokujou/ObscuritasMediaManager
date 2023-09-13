@@ -16,8 +16,10 @@ export function renderAudioTileBase(audioTile) {
         >
             <div
                 id="audio-image"
+                ?invisible="${!!audioTile.visualizationData}"
                 @click="${(e) => audioTile.dispatchEvent(new CustomEvent('imageClicked', { composed: true, bubbles: true }))}"
             ></div>
+            <canvas id="audio-visualization"></canvas>
             <div
                 id="language-icon"
                 language="${audioTile.track.language}"

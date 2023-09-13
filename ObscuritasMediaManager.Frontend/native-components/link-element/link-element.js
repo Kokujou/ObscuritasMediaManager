@@ -18,7 +18,7 @@ export class LinkElement extends LitElementBase {
     }
 
     get fullLink() {
-        var link = this.href;
+        var link = this.href ?? '';
         if (this.search) link += `?${this.search}`;
         if (this.hash) link += `#${this.hash}`;
         return link;

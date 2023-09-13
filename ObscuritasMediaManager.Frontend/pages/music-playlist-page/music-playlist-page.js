@@ -19,6 +19,7 @@ import {
     UpdateRequestOfMusicModel,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
+import { AudioVisualizationService } from '../../services/audio-visualization.service.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
 import { randomizeArray } from '../../services/extensions/array.extensions.js';
 import { openFileDialog } from '../../services/extensions/document.extensions.js';
@@ -80,6 +81,21 @@ export class MusicPlaylistPage extends LitElementBase {
         return this.fallbackAudio?.audioElement || document.createElement('audio');
     }
 
+    get visualizationData() {
+        if (!this.fallbackAudio?.audioElement) return;
+        this.audioAnalyzer ??= AudioVisualizationService.getAnalyzerFromAudio(this.fallbackAudio?.audioElement);
+
+        if (this.audioElement.paused) return null;
+
+        var dataArray = new Float32Array(this.audioAnalyzer.frequencyBinCount);
+        this.audioAnalyzer.getFloatTimeDomainData(dataArray);
+
+        if (this.currentVolumne <= 0) return null;
+
+        for (var i = 0; i < dataArray.length; i++) dataArray[i] *= 0.5 / this.currentVolumne;
+        return dataArray;
+    }
+
     constructor() {
         super();
         /** @type {PlaylistModel} */ this.playlist = new PlaylistModel({ tracks: [] });
@@ -91,6 +107,7 @@ export class MusicPlaylistPage extends LitElementBase {
         /** @type {number} */ this.hoveredRating = 0;
         /** @type {keyof ExtendedMusicModel & ('mood1' | 'mood2')} */ this.moodToSwitch = 'mood1';
         /** @type {FallbackAudio} */ this.fallbackAudio;
+        /** @type {AnalyserNode} */ this.audioAnalyzer;
 
         this.initializeData();
     }
@@ -129,6 +146,11 @@ export class MusicPlaylistPage extends LitElementBase {
 
             PlayMusicDialog.show(this.currentTrack, this.currentVolumne, this.audioElement?.currentTime ?? 0);
         });
+
+        setInterval(() => {
+            if (this.audioElement.paused) return;
+            this.requestFullUpdate();
+        }, 100);
     }
 
     firstUpdated(_changedProperties) {

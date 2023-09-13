@@ -13,7 +13,10 @@ export function renderMediaTile(tile) {
 
         <div id="tile-container">
             ${tile.displayStyle == 'simple' ? '' : html`<div id="rating-container">${renderRating(tile)}</div>`} <br />
-            ${renderImageContainer(tile)} ${tile.displayStyle == 'solid' ? html` <div id="caption">${tile.name}</div> ` : ''}
+            ${renderImageContainer(tile)}
+            ${tile.displayStyle == 'solid'
+                ? html` <div ?no-background="${!tile.imageSource}" id="caption">${tile.name}</div> `
+                : ''}
         </div>
         ${tile.displayStyle == 'solid'
             ? html`

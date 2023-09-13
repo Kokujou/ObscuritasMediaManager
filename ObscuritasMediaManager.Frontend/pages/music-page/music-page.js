@@ -16,6 +16,7 @@ import { MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backen
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
 import { pauseIcon } from '../../resources/inline-icons/music-player-icons/pause-icon.svg.js';
 import { playIcon } from '../../resources/inline-icons/music-player-icons/play-icon.svg.js';
+import { AudioVisualizationService } from '../../services/audio-visualization.service.js';
 import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
 import { sortBy } from '../../services/extensions/array.extensions.js';
 import { playAudio } from '../../services/extensions/audio.extension.js';
@@ -75,6 +76,21 @@ export class MusicPage extends LitElementBase {
         return this.fallbackElement?.audioElement ?? document.createElement('audio');
     }
 
+    get visualizationData() {
+        if (!this.fallbackElement?.audioElement) return;
+        this.audioAnalyzer ??= AudioVisualizationService.getAnalyzerFromAudio(this.fallbackElement?.audioElement);
+
+        if (this.audioElement.paused) return null;
+
+        var dataArray = new Float32Array(this.audioAnalyzer.frequencyBinCount);
+        this.audioAnalyzer.getFloatTimeDomainData(dataArray);
+
+        if (this.currentVolumne <= 0) return null;
+
+        for (var i = 0; i < dataArray.length; i++) dataArray[i] *= 0.5 / this.currentVolumne;
+        return dataArray;
+    }
+
     constructor() {
         super();
 
@@ -83,6 +99,7 @@ export class MusicPage extends LitElementBase {
         /** @type {ExtendedMusicModel} */ this.currentTrack = new ExtendedMusicModel();
         /** @type {number} */ this.currentVolumne = 0.1;
         /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
+        /** @type {AnalyserNode} */ this.audioAnalyzer;
         /** @type {Subscription[]} */ this.subcriptions = [];
         /** @type {boolean} */ this.selectionMode = false;
         /** @type {string[]} */ this.selectedHashes = [];
@@ -121,6 +138,11 @@ export class MusicPage extends LitElementBase {
             this.selectedHashes = [];
             this.requestFullUpdate();
         });
+
+        setInterval(() => {
+            if (this.audioElement.paused) return;
+            this.requestFullUpdate();
+        }, 100);
     }
 
     async initializeData() {

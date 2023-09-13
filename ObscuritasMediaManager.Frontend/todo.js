@@ -9,7 +9,6 @@
 //TODO: Media page finalization
 /**
  * - think about icons for language
- * - think about grouping genres, the dialog-grouping is completely invisible, maybe only display main genres and then details
  * - (re)-implement watch-functionality, export anime as playlist (local is enough because global is impossible either way)
  */
 
@@ -32,8 +31,8 @@
  * - now the user can also "fix" tracks like change the file path or delete
  */
 
-//TODO: lyrics feature: add media controls + scrolling controls.
-//TODO: add a fancy audio visualization
+//TODO: add a fancy audio visualization - done for all except play-music-dialog. bug: volume isn't correct, discussion
+//TODO: think a proper concept about when to spawn/close the play-music-dialog, it's getting ridiculous
 //TODO: Websockets
 //TODO: remove all mentionings of renderMaskImage and replace with iconRegistry
 //TODO: add created at/updated at

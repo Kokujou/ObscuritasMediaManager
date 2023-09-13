@@ -125,6 +125,9 @@ export function renderMusicPage(musicPage) {
                                                   <audio-tile
                                                       .track="${track}"
                                                       .image="${musicPage.getTrackIcon(track)}"
+                                                      .visualizationData="${musicPage.currentTrack?.path == track.path
+                                                          ? musicPage.visualizationData
+                                                          : null}"
                                                       ?paused="${musicPage.audioElement.paused ||
                                                       musicPage.currentTrack.path != track.path}"
                                                       @musicToggled="${() => musicPage.toggleMusic(track)}"

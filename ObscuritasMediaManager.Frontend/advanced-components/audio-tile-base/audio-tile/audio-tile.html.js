@@ -24,6 +24,7 @@ export function renderAudioTile(audioTile) {
         <div id="tile-container">
             <audio-tile-base
                 .track="${audioTile.track}"
+                .visualizationData="${audioTile.visualizationData}"
                 ?paused="${audioTile.paused}"
                 @imageClicked="${() => audioTile.notifyMusicToggled()}"
             ></audio-tile-base>
