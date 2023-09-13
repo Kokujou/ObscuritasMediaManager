@@ -185,7 +185,7 @@ export function renderMediaDetailPageStyles() {
 
         media-tile {
             width: 100%;
-            min-height: 400px;
+            min-height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;

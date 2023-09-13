@@ -28,7 +28,6 @@ export function renderMediaTileStyles() {
             background-repeat: no-repeat;
             background-position: center;
 
-            margin: 20px;
             display: flex;
             flex-direction: row;
         }
@@ -57,16 +56,22 @@ export function renderMediaTileStyles() {
         }
 
         #caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+            padding-top: 100%;
+            padding-bottom: 10px;
+            background: linear-gradient(to bottom, transparent, #000c);
+            pointer-events: none;
+
             cursor: pointer;
-            font-size: 30px;
+            font-size: 25px;
             text-shadow: 2px 2px 2px black;
             color: white;
             text-align: center;
-            margin-bottom: 10px;
-            text-overflow: ellipsis;
-            overflow: hidden;
             transition: max-height 1s ease;
-            max-height: 35px;
         }
 
         #genre-list {
@@ -76,7 +81,8 @@ export function renderMediaTileStyles() {
             align-items: center;
             max-height: 35px;
             overflow: hidden;
-            gap: 5px;
+            gap: 10px;
+            margin-top: 10px;
             transition: max-height 1s ease;
         }
 
@@ -84,13 +90,7 @@ export function renderMediaTileStyles() {
             max-height: 150px;
         }
 
-        :host(:hover) #caption {
-            text-overflow: initial;
-            max-height: 105px;
-        }
-
         #genre-list > * {
-            margin-left: 5px;
             margin-bottom: 5px;
         }
 

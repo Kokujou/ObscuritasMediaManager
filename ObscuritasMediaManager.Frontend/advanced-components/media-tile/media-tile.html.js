@@ -13,9 +13,8 @@ export function renderMediaTile(tile) {
 
         <div id="tile-container">
             ${tile.displayStyle == 'simple' ? '' : html`<div id="rating-container">${renderRating(tile)}</div>`} <br />
-            ${renderImageContainer(tile)}
+            ${renderImageContainer(tile)} ${tile.displayStyle == 'solid' ? html` <div id="caption">${tile.name}</div> ` : ''}
         </div>
-        <div id="caption">${tile.name}</div>
         ${tile.displayStyle == 'solid'
             ? html`
                   <div id="genre-list" @click="${(e) => e.preventDefault()}">
@@ -47,7 +46,7 @@ function renderGenreTag(tile, genre = '') {
     return html`<tag-label
         .autocomplete="${tile.autocompleteGenres}"
         @tagCreated="${(e) => tile.addGenre(e.detail.value)}"
-        @removed="${() => tile.removeGenre(genre)}"
+        disabled
         text="${genre}"
     ></tag-label>`;
 }

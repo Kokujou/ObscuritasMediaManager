@@ -1,6 +1,6 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { renderMediaTileStyles } from './media-tile.css.js';
-import { renderMediaTile } from './media.tile.html.js';
+import { renderMediaTile } from './media-tile.html.js';
 
 export class MediaTile extends LitElementBase {
     static get styles() {

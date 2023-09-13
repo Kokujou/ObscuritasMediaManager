@@ -49,7 +49,7 @@ export function renderMediaPageStyles() {
         media-tile {
             cursor: pointer;
             width: 200px;
-            min-height: 300px;
+            min-height: 350px;
         }
 
         #add-button {

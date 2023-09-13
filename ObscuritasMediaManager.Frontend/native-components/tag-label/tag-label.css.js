@@ -10,7 +10,6 @@ export function renderTagLabelStyles() {
 
         #label-container {
             position: relative;
-            margin-left: 15px;
             padding-left: 10px;
             background: var(--label-color);
 
@@ -49,6 +48,7 @@ export function renderTagLabelStyles() {
             color: inherit;
             min-width: 50px;
             padding: 5px;
+            margin-right: 5px;
             font-size: inherit;
         }
 
@@ -61,6 +61,7 @@ export function renderTagLabelStyles() {
         #x-button {
             border-radius: 50%;
             margin: 5px;
+            margin-left: 0;
             width: 15px;
             height: 15px;
             background: linear-gradient(#00000055 0% 100%), linear-gradient(var(--label-color) 0% 100%);
@@ -76,7 +77,7 @@ export function renderTagLabelStyles() {
 
         :host([disabled]) #x-button {
             pointer-events: none;
-            opacity: 0;
+            display: none;
         }
 
         #autocomplete-list {
