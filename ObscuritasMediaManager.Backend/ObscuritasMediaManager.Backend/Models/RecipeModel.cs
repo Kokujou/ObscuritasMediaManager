@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
-[Table("Recipes", Schema = "dbo")]
+[Table("Recipes")]
 public class RecipeModel
 {
     public static void Configure(ModelBuilder builder)

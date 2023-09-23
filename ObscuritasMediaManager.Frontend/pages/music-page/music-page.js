@@ -3,20 +3,16 @@ import { PaginatedScrolling } from '../../advanced-components/paginated-scrollin
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { Subscription } from '../../data/observable.js';
-import { session } from '../../data/session.js';
+import { Session } from '../../data/session.js';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base.js';
 import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { PlaylistSelectionDialog } from '../../dialogs/playlist-selection-dialog/playlist-selection-dialog.js';
 import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
 import { ContextMenu } from '../../native-components/context-menu/context-menu.js';
-import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import { MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
-import { pauseIcon } from '../../resources/inline-icons/music-player-icons/pause-icon.svg.js';
-import { playIcon } from '../../resources/inline-icons/music-player-icons/play-icon.svg.js';
-import { AudioVisualizationService } from '../../services/audio-visualization.service.js';
 import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
 import { sortBy } from '../../services/extensions/array.extensions.js';
 import { playAudio } from '../../services/extensions/audio.extension.js';
@@ -66,69 +62,47 @@ export class MusicPage extends LitElementBase {
         return sorted.reverse();
     }
 
-    get currentTrackUrl() {
-        if (!this.currentTrack?.path) return;
-        return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.currentTrack?.path)}`;
-    }
-
-    /** @type {HTMLAudioElement} */
-    get audioElement() {
-        return this.fallbackElement?.audioElement ?? document.createElement('audio');
-    }
-
-    get visualizationData() {
-        if (!this.fallbackElement?.audioElement) return;
-        this.audioAnalyzer ??= AudioVisualizationService.getAnalyzerFromAudio(this.fallbackElement?.audioElement);
-
-        if (this.audioElement.paused) return null;
-
-        var dataArray = new Float32Array(this.audioAnalyzer.frequencyBinCount);
-        this.audioAnalyzer.getFloatTimeDomainData(dataArray);
-
-        if (this.currentVolumne <= 0) return null;
-
-        for (var i = 0; i < dataArray.length; i++) dataArray[i] *= 0.5 / this.currentVolumne;
-        return dataArray;
-    }
-
     constructor() {
         super();
 
         /** @type {ExtendedMusicModel[]} */ this.musicTracks = [];
         /** @type {PlaylistModel[]} */ this.playlists = [];
         /** @type {ExtendedMusicModel} */ this.currentTrack = new ExtendedMusicModel();
-        /** @type {number} */ this.currentVolumne = 0.1;
         /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
-        /** @type {AnalyserNode} */ this.audioAnalyzer;
         /** @type {Subscription[]} */ this.subcriptions = [];
         /** @type {boolean} */ this.selectionMode = false;
         /** @type {string[]} */ this.selectedHashes = [];
         /** @type {NodeJS.Timeout} */ this.selectionModeTimer = null;
         /** @type {import('../../data/music-sorting-properties.js').SortingProperties} */ this.sortingProperty = 'unset';
         /** @type {import('../../data/sorting-directions.js').Sortings} */ this.sortingDirection = 'ascending';
-        /** @type {FallbackAudio} */ this.fallbackElement;
+
+        Session.Audio.addEventListener('timeupdate', () => this.requestFullUpdate(), { signal: this.abortController.signal });
+        Session.Audio.addEventListener('loadedmetadata', () => this.requestFullUpdate(), { signal: this.abortController.signal });
 
         this.currentPage = 0;
     }
+
     connectedCallback() {
         super.connectedCallback();
+        var localStorageVolume = localStorage.getItem('volume');
+        if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume));
         this.initializeData();
         this.subcriptions.push(
-            session.instruments.subscribe(() => {
+            Session.instruments.subscribe(() => {
                 this.initializeData();
                 this.requestFullUpdate();
             }),
-            session.currentPage.subscribe((nextPage) => {
+            Session.currentPage.subscribe((nextPage) => {
                 if (
-                    !this.audioElement ||
-                    this.audioElement.paused ||
-                    this.audioElement.currentTime > 0 ||
+                    !Session.Audio ||
+                    Session.Audio.paused ||
+                    Session.Audio.currentTime <= 0 ||
                     nextPage == 'music' ||
                     nextPage == 'music-playlist'
                 )
                     return;
 
-                PlayMusicDialog.show(this.currentTrack, this.currentVolumne, this.audioElement?.currentTime ?? 0);
+                PlayMusicDialog.show(this.currentTrack, Session.Audio.volume, Session.Audio.currentTime);
             })
         );
 
@@ -140,7 +114,7 @@ export class MusicPage extends LitElementBase {
         });
 
         setInterval(() => {
-            if (this.audioElement.paused) return;
+            if (Session.Audio.paused) return;
             this.requestFullUpdate();
         }, 100);
     }
@@ -169,22 +143,8 @@ export class MusicPage extends LitElementBase {
         await this.requestFullUpdate();
     }
 
-    firstUpdated(_changedProperties) {
-        super.firstUpdated(_changedProperties);
-        this.fallbackElement = this.shadowRoot.querySelector('fallback-audio');
-    }
-
     render() {
         return renderMusicPage(this);
-    }
-
-    /**
-     * @param {ExtendedMusicModel} track
-     */
-    getTrackIcon(track) {
-        if (this.currentTrack?.path != track?.path) return noteIcon();
-        if (this.audioElement.paused) return playIcon();
-        return pauseIcon();
     }
 
     loadNext() {
@@ -193,7 +153,8 @@ export class MusicPage extends LitElementBase {
     }
 
     changeVolume(newVolume) {
-        this.currentVolumne = newVolume / 100;
+        Session.Audio.volume = newVolume / 100;
+        localStorage.setItem('volume', newVolume.toString());
         this.requestFullUpdate();
     }
 
@@ -202,13 +163,16 @@ export class MusicPage extends LitElementBase {
      */
     async toggleMusic(track) {
         if (this.selectionMode || this.selectionModeUnset) return;
-        PlayMusicDialog.stop();
+        await PlayMusicDialog.instance?.close();
 
-        if (this.currentTrack.hash != track.hash) this.currentTrack = track;
+        if (this.currentTrack.hash != track.hash) {
+            this.currentTrack = track;
+            Session.Audio.changeTrack(track);
+        }
         await this.requestFullUpdate();
 
-        if (!this.audioElement.paused) this.audioElement.pause();
-        else if (this.audioElement.paused) await playAudio(this.audioElement);
+        if (!Session.Audio.paused) Session.Audio.pause();
+        else if (Session.Audio.paused) await playAudio(Session.Audio);
         await this.requestFullUpdate();
     }
 
@@ -489,5 +453,10 @@ export class MusicPage extends LitElementBase {
         } catch (err) {
             MessageSnackbar.popup('Ein Fehler ist beim wiederherstellen der Track(s) aufgetreten: \r\n' + err, 'error');
         }
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        Session.Audio.reset();
     }
 }

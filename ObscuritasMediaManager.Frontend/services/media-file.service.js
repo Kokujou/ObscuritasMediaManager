@@ -1,4 +1,4 @@
-import { session } from '../data/session.js';
+import { Session } from '../data/session.js';
 import { MediaModel, StreamingEntryModel } from '../obscuritas-media-manager-backend-client.js';
 import { MediaService, StreamingService } from './backend.services.js';
 import { newGuid } from './extensions/crypto.extensions.js';
@@ -16,7 +16,7 @@ export class MediaFileservice {
         for (var i = 0; i < files.length; i++) {
             try {
                 var mediaFileInfo = analyzeMediaFile(files[i], basePath);
-                var associatedMedia = session.mediaList.current().find((x) => x.name == mediaFileInfo.name);
+                var associatedMedia = Session.mediaList.current().find((x) => x.name == mediaFileInfo.name);
 
                 if (!associatedMedia) {
                     associatedMedia = new MediaModel(

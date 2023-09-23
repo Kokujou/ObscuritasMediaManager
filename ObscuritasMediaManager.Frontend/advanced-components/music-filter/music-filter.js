@@ -3,7 +3,7 @@ import { FilterEntry } from '../../data/filter-entry.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { MusicSortingProperties } from '../../data/music-sorting-properties.js';
 import { Subscription } from '../../data/observable.js';
-import { session } from '../../data/session.js';
+import { Session } from '../../data/session.js';
 import { SortingDirections } from '../../data/sorting-directions.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
@@ -50,7 +50,7 @@ export class MusicFilter extends LitElementBase {
         super.connectedCallback();
 
         this.subscriptions.push(
-            session.instruments.subscribe((newValue) => {
+            Session.instruments.subscribe((newValue) => {
                 if (!newValue) return;
 
                 for (var instrument of newValue) {
@@ -130,7 +130,7 @@ export class MusicFilter extends LitElementBase {
     }
 
     async showInstrumentFilterPopup() {
-        var instruments = session.instruments
+        var instruments = Session.instruments
             .current()
             .map((item, index) => new GenreModel({ id: `${index}`, name: item.name, section: item.type }));
         /** @type {GenreModel[]} */ var allowedInstruments = [];
@@ -174,7 +174,7 @@ export class MusicFilter extends LitElementBase {
     canFilterInstrumentType(type) {
         var forcedInstruments = Object.keys(this.filter.instruments.states)
             .filter((x) => this.filter.instruments.states[x] == CheckboxState.Require)
-            .map((x) => session.instruments.current().find((instrument) => instrument.name == x));
+            .map((x) => Session.instruments.current().find((instrument) => instrument.name == x));
 
         return !forcedInstruments.some((x) => x && x.type == type);
     }

@@ -1,6 +1,6 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
-import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
+import { Session } from '../../data/session.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { waitForSeconds } from '../../services/extensions/animation.extension.js';
 import { renderPlayMusicDialogStyles } from './play-music-dialog.css.js';
@@ -12,38 +12,6 @@ export class PlayMusicDialog extends LitElementBase {
 
     static get styles() {
         return renderPlayMusicDialogStyles();
-    }
-
-    static get properties() {
-        return {
-            someProperty: { type: String, reflect: false },
-        };
-    }
-
-    get currentTrackUrl() {
-        if (!this.currentTrack?.path) return;
-        return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.currentTrack?.path)}`;
-    }
-
-    /** @type {HTMLAudioElement} */
-    get audio() {
-        return this.fallbackElement?.audioElement ?? document.createElement('audio');
-    }
-
-    constructor() {
-        super();
-        /** @type {number} */ this.currentVolume = 0;
-        /** @type {ExtendedMusicModel} */ this.currentTrack = new ExtendedMusicModel();
-        /** @type {FallbackAudio} */ this.fallbackElement;
-        this.findAudioElement();
-    }
-
-    static stop() {
-        if (!this.instance) return;
-        /** @type {FallbackAudio} */ var fallbackElement = this.instance.shadowRoot.querySelector('fallback-audio');
-        var audio = fallbackElement.audioElement;
-        if (!audio) return;
-        audio.pause();
     }
 
     /**
@@ -74,12 +42,16 @@ export class PlayMusicDialog extends LitElementBase {
      * @param {number} startPosition
      */
     async reinitialize(track, initialVolume, startPosition) {
-        this.currentVolume = initialVolume;
+        Session.Audio.changeTrack(track);
+        Session.Audio.volume = initialVolume;
         this.currentTrack = track;
         await this.requestFullUpdate();
 
-        this.audio.play();
-        this.audio.currentTime = startPosition;
+        Session.Audio.play();
+        Session.Audio.currentTime = startPosition;
+
+        Session.Audio.addEventListener('timeupdate', () => this.requestFullUpdate(), { signal: this.abortController.signal });
+        Session.Audio.addEventListener('loadedmetadata', () => this.requestFullUpdate(), { signal: this.abortController.signal });
     }
 
     render() {
@@ -87,23 +59,13 @@ export class PlayMusicDialog extends LitElementBase {
     }
 
     toggle() {
-        if (this.audio.paused) this.audio.play();
-        else this.audio.pause();
-    }
-
-    async findAudioElement() {
-        do {
-            await Promise.resolve();
-            /** @type {FallbackAudio} */ var fallbackElement = this.shadowRoot.querySelector('fallback-audio');
-        } while (!fallbackElement);
-
-        this.fallbackElement = fallbackElement;
-        this.requestFullUpdate();
+        if (Session.Audio.paused) Session.Audio.play();
+        else Session.Audio.pause();
     }
 
     changeTrackPosition(value) {
-        if (this.audio.duration == Infinity) return;
-        this.audio.currentTime = value;
+        if (Session.Audio.duration == Infinity) return;
+        Session.Audio.currentTime = value;
         this.requestFullUpdate();
     }
 
@@ -115,6 +77,8 @@ export class PlayMusicDialog extends LitElementBase {
     }
 
     disconnectedCallback() {
+        super.disconnectedCallback();
         PlayMusicDialog.instance = null;
+        Session.Audio.reset();
     }
 }

@@ -1,7 +1,6 @@
 import { getMoodFontColor, MoodColors } from '../../../data/enumerations/mood.js';
 import { html } from '../../../exports.js';
 import { Mood } from '../../../obscuritas-media-manager-backend-client.js';
-import { renderMaskImage } from '../../../services/extensions/style.extensions.js';
 import { AudioTile } from './audio-tile.js';
 
 /**
@@ -12,13 +11,9 @@ export function renderAudioTile(audioTile) {
             :host {
                 --primary-color: ${MoodColors[audioTile.track.mood1]};
                 --secondary-color: ${MoodColors[
-                audioTile.track.mood2 == Mood.Unset ? audioTile.track.mood1 : audioTile.track.mood2
-            ]};
+                    audioTile.track.mood2 == Mood.Unset ? audioTile.track.mood1 : audioTile.track.mood2
+                ]};
                 --font-color: ${getMoodFontColor(audioTile.track.mood1)};
-            }
-
-            #tile-image {
-                ${renderMaskImage(audioTile.image)};
             }
         </style>
         <div id="tile-container">

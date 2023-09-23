@@ -1,4 +1,4 @@
-import { session } from '../../data/session.js';
+import { Session } from '../../data/session.js';
 import { pascalToKeabCase } from './convention.extension.js';
 import { setFavicon } from './style.extensions.js';
 
@@ -18,7 +18,7 @@ export function changePage(target, search = '', reflectInHistory = true) {
     var newUrl = '/' + search + `#${target}`;
     if (reflectInHistory) history.pushState(null, null, newUrl);
     else history.replaceState(null, null, newUrl);
-    session.currentPage.next(target);
+    Session.currentPage.next(target);
 }
 
 /** @param  {{isPage: boolean, name: string}} component */

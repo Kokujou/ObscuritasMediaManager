@@ -1,6 +1,6 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
-import { session } from '../../data/session.js';
+import { Session } from '../../data/session.js';
 import { renderAudioTileBaseStyles } from './audio-tile-base.css.js';
 import { renderAudioTileBase } from './audio-tile-base.html.js';
 
@@ -30,7 +30,7 @@ export class AudioTileBase extends LitElementBase {
         /** @type {HTMLCanvasElement} */ this.canvas;
         /** @type {CanvasRenderingContext2D} */ this.canvasContext;
 
-        session.instruments.subscribe(() => this.requestFullUpdate());
+        Session.instruments.subscribe(() => this.requestFullUpdate());
     }
 
     updated(_changedProperties) {

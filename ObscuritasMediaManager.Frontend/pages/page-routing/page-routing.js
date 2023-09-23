@@ -1,7 +1,7 @@
 import { Pages } from '../../custom-elements.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Subscription } from '../../data/observable.js';
-import { session } from '../../data/session.js';
+import { Session } from '../../data/session.js';
 import { LoadingScreen } from '../../native-components/loading-screen/loading-screen.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { changePage, getPageName } from '../../services/extensions/url.extension.js';
@@ -43,7 +43,7 @@ export class PageRouting extends LitElementBase {
         });
 
         window.onpopstate = (e) => {
-            session.currentPage.next(this.currentPage.hash);
+            Session.currentPage.next(this.currentPage.hash);
         };
         window.addEventListener('resize', () => this.requestFullUpdate());
         var self = this;
@@ -56,7 +56,7 @@ export class PageRouting extends LitElementBase {
         super.connectedCallback();
 
         this.subscriptions.push(
-            session.currentPage.subscribe((newValue, oldValue) => {
+            Session.currentPage.subscribe((newValue, oldValue) => {
                 if (newValue) this.switchPage(newValue, oldValue).then(() => this.requestFullUpdate());
             })
         );
@@ -64,7 +64,7 @@ export class PageRouting extends LitElementBase {
 
     firstUpdated(_changedProperties) {
         super.firstUpdated(_changedProperties);
-        session.currentPage.next(this.currentPage.hash);
+        Session.currentPage.next(this.currentPage.hash);
         document.querySelector(LoadingScreen.tag).remove();
     }
 
@@ -90,7 +90,7 @@ export class PageRouting extends LitElementBase {
         if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`))
             this.classList.add(`current-page-${newValue}`);
 
-        if (Pages.some((x) => x.hash == session.currentPage.current())) {
+        if (Pages.some((x) => x.hash == Session.currentPage.current())) {
             this.changeHash(newValue);
             return;
         }
@@ -101,7 +101,7 @@ export class PageRouting extends LitElementBase {
     loadPageFromHash(e) {
         e?.preventDefault();
         var nextPage = this.currentPage;
-        if (session.currentPage.current() != nextPage.hash) changePage(nextPage.hash);
+        if (Session.currentPage.current() != nextPage.hash) changePage(nextPage.hash);
     }
 
     render() {

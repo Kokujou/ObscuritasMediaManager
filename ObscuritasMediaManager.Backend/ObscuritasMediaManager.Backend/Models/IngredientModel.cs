@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
-[Table("Ingredients", Schema = "dbo")]
+[Table("Ingredients")]
 public class IngredientModel
 {
     [Key] public Guid Id { get; set; }

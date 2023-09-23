@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Diagnostics;
-using System.Text;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
 
@@ -12,17 +11,6 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Route("api/[controller]")]
 public class FileController : ControllerBase
 {
-    public static FileStream LogFile;
-    private static string Logs = string.Empty;
-
-    static FileController()
-    {
-        var folderPath = "C:\\\\LogFiles\\ObscuritasMediaManager";
-        if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
-        LogFile = System.IO.File
-            .Open($"{folderPath}\\Backend.log", FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
-    }
-
     [HttpGet("video")]
     public FileStreamResult GetVideo(string videoPath = "")
     {
@@ -84,7 +72,6 @@ public class FileController : ControllerBase
         ffmpeg.EnableRaisingEvents = true;
         ffmpeg.StartInfo = startInfo;
         ffmpeg.ErrorDataReceived += OnErrorDataReceived;
-        ffmpeg.Exited += OnFinished;
 
         ffmpeg.Start();
         ffmpeg.BeginErrorReadLine();
@@ -103,12 +90,6 @@ public class FileController : ControllerBase
 
     private void OnErrorDataReceived(object sender, DataReceivedEventArgs args)
     {
-        Logs += $"{args.Data}\r\n";
-        LogFile.Write(Encoding.UTF8.GetBytes($"{args.Data}\r\n"));
-    }
-
-    private void OnFinished(object sender, EventArgs args)
-    {
-        Logs = string.Empty;
+        Log.Error($"{args.Data}\r\n");
     }
 }

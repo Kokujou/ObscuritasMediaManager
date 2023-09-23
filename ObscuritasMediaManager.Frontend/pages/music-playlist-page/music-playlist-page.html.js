@@ -1,5 +1,6 @@
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
+import { Session } from '../../data/session.js';
 import { html } from '../../exports.js';
 import { Instrumentation, Mood, MusicGenre, Participants } from '../../obscuritas-media-manager-backend-client.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
@@ -70,8 +71,8 @@ export function renderMusicPlaylist(page) {
                         <audio-tile-base
                             ?disabled="${page.updatedTrack.complete}"
                             .track="${new ExtendedMusicModel(page.updatedTrack)}"
-                            ?paused="${page.audioElement.paused}"
-                            .visualizationData="${page.visualizationData}"
+                            ?paused="${Session.Audio.paused}"
+                            .visualizationData="${Session.Audio.visualizationData}"
                             @imageClicked="${() => page.toggleCurrentTrack()}"
                             @changeLanguage="${() => page.showLanguageSwitcher()}"
                             @nextParticipants="${() =>
@@ -155,7 +156,7 @@ export function renderMusicPlaylist(page) {
                             <div
                                 id="toggle-track-button"
                                 @click="${() => page.toggleCurrentTrack()}"
-                                class="audio-icon ${page.audioElement.paused ? 'paused' : 'playing'}"
+                                class="audio-icon ${Session.Audio.paused ? 'paused' : 'playing'}"
                             ></div>
                             <div id="next-track-button" @click="${() => page.changeTrackBy(1)}" class="audio-icon"></div>
 
@@ -167,7 +168,7 @@ export function renderMusicPlaylist(page) {
                                     step="1"
                                     min="0"
                                     max="100"
-                                    .value="${`${page.currentVolumne * 100}`}"
+                                    .value="${`${page.currentVolume * 100}`}"
                                 ></range-slider>
                             </div>
                         </div>
@@ -205,15 +206,6 @@ export function renderMusicPlaylist(page) {
                     ></media-playlist>
                 </div>
             </div>
-            <fallback-audio
-                id="audio-player"
-                .volume="${page.currentVolumne}"
-                .src="${page.audioSource}"
-                .fallbackSrc="${page.audioSource + '&highCompatibility=true'}"
-                @loadedmetadata="${() => page.requestFullUpdate()}"
-                @ended="${() => page.changeTrackBy(1)}"
-                @timeupdate="${() => page.requestFullUpdate()}"
-            ></fallback-audio>
         </page-layout>
     `;
 }

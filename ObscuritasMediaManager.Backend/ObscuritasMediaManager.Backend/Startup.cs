@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Authentication;
-using ObscuritasMediaManager.Backend.Controllers;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Services;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using Xabe.FFmpeg;
@@ -69,7 +67,7 @@ public class Startup
                 {
                     var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
                     var exception = exceptionHandlerPathFeature?.Error;
-                    FileController.LogFile.Write(Encoding.UTF8.GetBytes(exception.ToString()));
+                    Log.Error(exception.ToString());
                     context.Response.StatusCode = 400;
 
                     await context.Response

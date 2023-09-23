@@ -7,12 +7,12 @@ import {
     Nation,
     Participants,
 } from '../obscuritas-media-manager-backend-client.js';
-import { session } from './session.js';
+import { Session } from './session.js';
 
 export class ExtendedMusicModel extends MusicModel {
     get mappedInstruments() {
         return this.instruments
-            .map((name) => session.instruments.current().find((instrument) => instrument.name == name))
+            .map((name) => Session.instruments.current().find((instrument) => instrument.name == name))
             .filter((x) => x);
     }
 

@@ -1,7 +1,7 @@
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter.js';
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { session } from '../../data/session.js';
+import { Session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
@@ -92,11 +92,11 @@ export class MediaDetailPage extends LitElementBase {
     async connectedCallback() {
         super.connectedCallback();
         this.subscriptions.push(
-            session.mediaList.subscribe((newList) => {
+            Session.mediaList.subscribe((newList) => {
                 var filter = MediaFilter.fromJSON(localStorage.getItem(`media.search`));
                 this.mediaIds = MediaFilterService.filter([...newList], filter).map((x) => x.id);
             }),
-            session.currentPage.subscribe(() => this.getMediaFromRoute())
+            Session.currentPage.subscribe(() => this.getMediaFromRoute())
         );
 
         await this.getMediaFromRoute();

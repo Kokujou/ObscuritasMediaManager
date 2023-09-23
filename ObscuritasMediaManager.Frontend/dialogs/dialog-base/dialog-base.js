@@ -1,5 +1,5 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { session } from '../../data/session.js';
+import { Session } from '../../data/session.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { renderDialogBaseStyles } from './dialog-base.css.js';
 import { renderDialogBase } from './dialog-base.html.js';
@@ -86,7 +86,7 @@ export class DialogBase extends LitElementBase {
             { signal: this.abortController.signal }
         );
         this.subscriptions.push(
-            session.currentPage.subscribe((oldValue, newValue) => {
+            Session.currentPage.subscribe((oldValue, newValue) => {
                 if (oldValue != newValue) this.decline();
             })
         );

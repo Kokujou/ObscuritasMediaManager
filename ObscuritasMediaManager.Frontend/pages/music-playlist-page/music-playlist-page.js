@@ -2,14 +2,13 @@ import { LanguageSwitcher } from '../../advanced-components/language-switcher/la
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { ExtendedMusicModel } from '../../data/music.model.extended.js';
-import { session } from '../../data/session.js';
+import { Session } from '../../data/session.js';
 import { LyricsDialog } from '../../dialogs/audio-subtitle-dialog/lyrics-dialog.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { InputDialog } from '../../dialogs/input-dialog/input-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
-import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import {
     GenreModel,
@@ -19,7 +18,6 @@ import {
     UpdateRequestOfMusicModel,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
-import { AudioVisualizationService } from '../../services/audio-visualization.service.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
 import { randomizeArray } from '../../services/extensions/array.extensions.js';
 import { openFileDialog } from '../../services/extensions/document.extensions.js';
@@ -52,13 +50,13 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     get currentTrackPosition() {
-        if (!this.audioElement.currentTime) return 0;
-        return this.audioElement.currentTime;
+        if (!Session.Audio.currentTime) return 0;
+        return Session.Audio.currentTime;
     }
 
     get currentTrackDuration() {
-        if (!this.audioElement.duration) return 100;
-        return Math.floor(this.audioElement.duration);
+        if (!Session.Audio.duration) return 100;
+        return Math.floor(Session.Audio.duration);
     }
 
     get currentTrackPositionText() {
@@ -77,37 +75,16 @@ export class MusicPlaylistPage extends LitElementBase {
         return `${Math.floor(minutes).toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
-    get audioElement() {
-        return this.fallbackAudio?.audioElement || document.createElement('audio');
-    }
-
-    get visualizationData() {
-        if (!this.fallbackAudio?.audioElement) return;
-        this.audioAnalyzer ??= AudioVisualizationService.getAnalyzerFromAudio(this.fallbackAudio?.audioElement);
-
-        if (this.audioElement.paused) return null;
-
-        var dataArray = new Float32Array(this.audioAnalyzer.frequencyBinCount);
-        this.audioAnalyzer.getFloatTimeDomainData(dataArray);
-
-        if (this.currentVolumne <= 0) return null;
-
-        for (var i = 0; i < dataArray.length; i++) dataArray[i] *= 0.5 / this.currentVolumne;
-        return dataArray;
-    }
-
     constructor() {
         super();
         /** @type {PlaylistModel} */ this.playlist = new PlaylistModel({ tracks: [] });
         /** @type {number} */ this.currentTrackIndex = 0;
         /** @type {ExtendedMusicModel} */ this.currentTrack = new ExtendedMusicModel();
         /** @type {ExtendedMusicModel} */ this.updatedTrack = new ExtendedMusicModel();
-        /** @type {number} */ this.currentVolumne = 0.1;
+        /** @type {number} */ this.currentVolume = 0.1;
         /** @type {number} */ this.maxPlaylistItems = 20;
         /** @type {number} */ this.hoveredRating = 0;
         /** @type {keyof ExtendedMusicModel & ('mood1' | 'mood2')} */ this.moodToSwitch = 'mood1';
-        /** @type {FallbackAudio} */ this.fallbackAudio;
-        /** @type {AnalyserNode} */ this.audioAnalyzer;
 
         this.initializeData();
     }
@@ -122,42 +99,28 @@ export class MusicPlaylistPage extends LitElementBase {
         };
 
         this.subscriptions.push(
-            session.currentPage.subscribe((nextPage) => {
-                if (
-                    this.audioElement.paused ||
-                    this.audioElement.currentTime <= 0 ||
-                    nextPage == 'music' ||
-                    nextPage == 'music-playlist'
-                )
+            Session.currentPage.subscribe((nextPage) => {
+                if (Session.Audio.paused || Session.Audio.currentTime <= 0 || nextPage == 'music' || nextPage == 'music-playlist')
                     return;
 
-                PlayMusicDialog.show(this.currentTrack, this.currentVolumne, this.audioElement?.currentTime ?? 0);
+                PlayMusicDialog.show(this.currentTrack, this.currentVolume, Session.Audio.currentTime);
             })
         );
 
         window.addEventListener('hashchange', (e) => {
             if (
-                this.audioElement.paused ||
-                this.audioElement.currentTime <= 0 ||
+                Session.Audio.paused ||
+                Session.Audio.currentTime <= 0 ||
                 location.hash == 'music' ||
                 location.hash == 'music-playlist'
             )
                 return;
 
-            PlayMusicDialog.show(this.currentTrack, this.currentVolumne, this.audioElement?.currentTime ?? 0);
+            PlayMusicDialog.show(this.currentTrack, this.currentVolume, Session.Audio?.currentTime ?? 0);
         });
 
-        setInterval(() => {
-            if (this.audioElement.paused) return;
-            this.requestFullUpdate();
-        }, 100);
-    }
-
-    firstUpdated(_changedProperties) {
-        super.firstUpdated(_changedProperties);
-        /** @type {FallbackAudio} */ var fallbackAudio = this.shadowRoot.querySelector('fallback-audio');
-        this.fallbackAudio = fallbackAudio;
-        this.requestFullUpdate();
+        Session.Audio.addEventListener('timeupdate', () => this.requestFullUpdate(), { signal: this.abortController.signal });
+        Session.Audio.addEventListener('loadedmetadata', () => this.requestFullUpdate(), { signal: this.abortController.signal });
     }
 
     async initializeData() {
@@ -176,12 +139,8 @@ export class MusicPlaylistPage extends LitElementBase {
 
         this.currentTrack = Object.assign(new ExtendedMusicModel(), this.playlist.tracks[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new ExtendedMusicModel(), this.playlist.tracks[this.currentTrackIndex]);
+        Session.Audio.changeTrack(this.currentTrack);
         await this.requestFullUpdate();
-
-        this.audioElement.addEventListener('error', (e) => {
-            if (!this.audioElement.error?.code) return;
-            console.error(`an error occured while playing the audio file: code ${this.audioElement.error.code}`);
-        });
     }
 
     render() {
@@ -193,8 +152,8 @@ export class MusicPlaylistPage extends LitElementBase {
 
     async toggleCurrentTrack() {
         try {
-            if (this.audioElement.paused) await this.audioElement.play();
-            else this.audioElement.pause();
+            if (Session.Audio.paused) await Session.Audio.play();
+            else Session.Audio.pause();
         } catch {
             await this.changeTrackBy(1);
         }
@@ -228,22 +187,24 @@ export class MusicPlaylistPage extends LitElementBase {
     async changeTrack(index) {
         await this.updateTrack();
         if (this.playlist.tracks.length == 1) return;
-        this.audioElement.pause();
+        Session.Audio.pause();
         this.currentTrackIndex = index;
         this.currentTrack = Object.assign(new ExtendedMusicModel(), this.playlist.tracks[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new ExtendedMusicModel(), this.playlist.tracks[this.currentTrackIndex]);
 
-        changePage(session.currentPage.current(), `?guid=${this.id}&track=${this.currentTrackIndex}`, false);
+        changePage(Session.currentPage.current(), `?guid=${this.id}&track=${this.currentTrackIndex}`, false);
 
         await this.requestFullUpdate();
-        this.audioElement.play();
+        Session.Audio.changeTrack(this.currentTrack);
+        Session.Audio.play();
     }
 
     /**
      * @param { number} newVolume
      */
     changeVolume(newVolume) {
-        this.currentVolumne = newVolume / 100;
+        this.currentVolume = newVolume / 100;
+        Session.Audio.volume = this.currentVolume;
         localStorage.setItem('volume', newVolume.toString());
         this.requestFullUpdate();
     }
@@ -271,14 +232,9 @@ export class MusicPlaylistPage extends LitElementBase {
         this.changeProperty('nation', result.nation);
     }
 
-    async disconnectedCallback() {
-        super.disconnectedCallback();
-        await this.updateTrack();
-    }
-
     changeTrackPosition(value) {
-        if (this.audioElement.duration == Infinity) return;
-        this.audioElement.currentTime = value;
+        if (Session.Audio.duration == Infinity) return;
+        Session.Audio.currentTime = value;
     }
 
     /**
@@ -296,7 +252,7 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     openInstrumentsDialog() {
-        var instruments = session.instruments
+        var instruments = Session.instruments
             .current()
             .map((item, index) => new GenreModel({ id: `${index}`, name: item.name, section: item.type }));
         var allowedInstruments = this.updatedTrack.mappedInstruments.map(
@@ -325,7 +281,7 @@ export class MusicPlaylistPage extends LitElementBase {
                 genreDialog.options.genres.push(
                     new GenreModel({ id: e.detail.name, name: e.detail.name, section: e.detail.section })
                 );
-                session.instruments.next(await MusicService.getInstruments());
+                Session.instruments.next(await MusicService.getInstruments());
 
                 genreDialog.requestFullUpdate();
             }
@@ -335,7 +291,7 @@ export class MusicPlaylistPage extends LitElementBase {
             /** @param {CustomEvent<GenreModel>} e */ async (e) => {
                 await MusicService.removeInstrument(/** @type {InstrumentType} */ (e.detail.section), e.detail.name);
                 genreDialog.options.genres = genreDialog.options.genres.filter((x) => x.name != e.detail.name);
-                session.instruments.next(await MusicService.getInstruments());
+                Session.instruments.next(await MusicService.getInstruments());
                 genreDialog.requestFullUpdate();
             }
         );
@@ -375,13 +331,13 @@ export class MusicPlaylistPage extends LitElementBase {
                 var dialog = await LyricsDialog.startShowing(
                     this.currentTrack.displayName,
                     this.currentTrack.lyrics,
-                    this.fallbackAudio,
+                    Session.Audio,
                     false
                 );
             else {
                 offset = 0;
                 var lyrics = await MusicService.getLyrics(this.currentTrack.hash);
-                var dialog = await LyricsDialog.startShowing(lyrics.title, lyrics.text, this.fallbackAudio, true);
+                var dialog = await LyricsDialog.startShowing(lyrics.title, lyrics.text, Session.Audio, true);
             }
 
             dialog.addEventListener('playlist-saved', async () => {
@@ -402,5 +358,11 @@ export class MusicPlaylistPage extends LitElementBase {
         } catch {
             MessageSnackbar.popup('Es konnten leider keine passenden Lyrics gefunden werden.', 'error');
         }
+    }
+
+    async disconnectedCallback() {
+        super.disconnectedCallback();
+        Session.Audio.reset();
+        await this.updateTrack();
     }
 }

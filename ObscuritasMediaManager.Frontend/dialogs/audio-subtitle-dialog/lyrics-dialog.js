@@ -1,5 +1,5 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { FallbackAudio } from '../../native-components/fallback-audio/fallback-audio.js';
+import { Session } from '../../data/session.js';
 import { waitForSeconds } from '../../services/extensions/animation.extension.js';
 import { renderAudioSubtitleDialogStyles } from './lyrics-dialog.css.js';
 import { renderAudioSubtitleDialog } from './lyrics-dialog.html.js';
@@ -19,7 +19,6 @@ export class LyricsDialog extends LitElementBase {
      *
      * @param {string} title
      * @param {string} lyrics
-     * @param {FallbackAudio} audio
      * @param {boolean} canAccept
      * @returns
      */
@@ -27,7 +26,6 @@ export class LyricsDialog extends LitElementBase {
         var dialog = new LyricsDialog();
         dialog.lyrics = lyrics;
         dialog.title = title;
-        dialog.audio = audio;
         dialog.canSave = canAccept;
         dialog.scrollingPaused = true;
 
@@ -35,9 +33,9 @@ export class LyricsDialog extends LitElementBase {
         await dialog.requestFullUpdate();
         /** @type {HTMLElement} */ var scrollContainer = dialog.shadowRoot.querySelector('#lyrics-content-wrapper-2');
 
-        scrollContainer.style.animationDuration = audio.audioElement.duration + 's';
-        audio.audioElement.onpause = () => dialog.requestFullUpdate();
-        audio.audioElement.onplay = () => dialog.requestFullUpdate();
+        scrollContainer.style.animationDuration = audio.duration + 's';
+        audio.onpause = () => dialog.requestFullUpdate();
+        audio.onplay = () => dialog.requestFullUpdate();
 
         return dialog;
     }
@@ -50,7 +48,6 @@ export class LyricsDialog extends LitElementBase {
         super();
 
         /** @type {string} */ this.lyrics;
-        /** @type {FallbackAudio} */ this.audio;
         /** @type {boolean} */ this.canSave = false;
         /** @type {boolean} */ this.canNext = true;
         /** @type {boolean} */ this.scrollingPaused = false;
@@ -83,8 +80,8 @@ export class LyricsDialog extends LitElementBase {
     togglePlay() {
         this.scrollingPaused = !this.scrollingPaused;
 
-        if (this.scrollingPaused) this.audio.audioElement.pause();
-        else this.audio.audioElement.play();
+        if (this.scrollingPaused) Session.Audio.pause();
+        else Session.Audio.play();
 
         this.requestFullUpdate();
     }

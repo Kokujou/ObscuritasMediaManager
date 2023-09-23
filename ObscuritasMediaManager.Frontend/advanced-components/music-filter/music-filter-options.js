@@ -1,6 +1,6 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { FilterEntry } from '../../data/filter-entry.js';
-import { session } from '../../data/session.js';
+import { Session } from '../../data/session.js';
 import {
     Instrumentation,
     InstrumentType,
@@ -21,7 +21,7 @@ export class MusicFilterOptions {
     nations = new FilterEntry(Object.values(Nation), CheckboxState.Require);
     instrumentTypes = new FilterEntry(Object.values(InstrumentType));
     instruments = new FilterEntry(
-        session.instruments.current().map((x) => x.name),
+        Session.instruments.current().map((x) => x.name),
         CheckboxState.Ignore
     );
     moods = new FilterEntry(Object.values(Mood), CheckboxState.Ignore);

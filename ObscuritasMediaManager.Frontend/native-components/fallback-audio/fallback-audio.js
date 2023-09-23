@@ -1,58 +1,55 @@
-import { LitElementBase } from '../../data/lit-element-base.js';
-import { renderFallbackAudio } from './fallback-audio.html.js';
+import { MusicModel } from '../../obscuritas-media-manager-backend-client.js';
+import { AudioVisualizationService } from '../../services/audio-visualization.service.js';
 
-export class FallbackAudio extends LitElementBase {
-    static get properties() {
-        return {
-            volume: { type: Number, reflect: true },
-            src: { type: String, reflect: true },
-            fallbackSrc: { type: String, reflect: true },
-        };
-    }
+export class FallbackAudio extends Audio {
+    get visualizationData() {
+        if (this.paused) return null;
 
-    get currentSrc() {
-        if (!this.src) return;
-        if (this.fallback) return this.fallbackSrc;
-        return this.src;
+        var dataArray = new Float32Array(this.audioAnalyzer.frequencyBinCount);
+        this.audioAnalyzer.getFloatTimeDomainData(dataArray);
+
+        if (this.volume <= 0) return [];
+
+        for (var i = 0; i < dataArray.length; i++) dataArray[i] *= 0.5 / this.volume;
+        return dataArray;
     }
 
     constructor() {
         super();
 
-        /** @type {number} */ this.volume;
-        /** @type {boolean} */ this.fallback;
-        /** @type {string} */ this.src;
-        /** @type {string} */ this.fallbackSrc;
-        /** @type {HTMLAudioElement} */ this.audioElement;
+        /** @type {string} */ this.fallbackSource;
+        this.audioAnalyzer = AudioVisualizationService.getAnalyzerFromAudio(this);
+        super.controls = true;
+        super.preload = 'auto';
+        super.onerror = this.initiateFallback;
     }
 
     /**
-     * @param {Map<keyof FallbackAudio,any>} _changedProperties
+     * @param {MusicModel} track
      */
-    updated(_changedProperties) {
-        super.updated(_changedProperties);
-        if (_changedProperties.has('src')) {
-            this.fallback = false;
-            this.requestFullUpdate();
-        }
-    }
-
-    firstUpdated(_changedProperties) {
-        super.firstUpdated(_changedProperties);
-        if (!this.audioElement) this.audioElement = this.shadowRoot.querySelector('audio');
-    }
-
-    render() {
-        return renderFallbackAudio(this);
+    changeTrack(track) {
+        var newSource = `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
+        this.src = newSource;
+        this.fallbackSource = newSource + '&highCompatibility=true';
     }
 
     /**
-     * @param {Event} event
+     * @param {ErrorEvent} event
      */
     async initiateFallback(event) {
-        if (this.fallback) return;
-        this.fallback = true;
-        await this.requestFullUpdate();
-        await this.audioElement.play();
+        console.error(event.error);
+        console.error(`an error occured while playing the audio file: 
+        code: ${this.error.code}
+        message: ${this.error.message}`);
+
+        if (!this.fallbackSource || super.src == this.fallbackSource) return;
+
+        this.src = this.fallbackSource;
+        await this.play();
+    }
+
+    reset() {
+        this.pause();
+        this.currentTime = 0;
     }
 }

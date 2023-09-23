@@ -1,3 +1,4 @@
+import { Session } from '../../data/session.js';
 import { html } from '../../exports.js';
 import { getPageName } from '../../services/extensions/url.extension.js';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
@@ -60,14 +61,14 @@ export function renderMusicPage(musicPage) {
                                 step="1"
                                 min="0"
                                 max="100"
-                                .value="${`${musicPage.currentVolumne * 100}`}"
+                                .value="${`${Session.Audio.volume * 100}`}"
                             >
                             </range-slider>
                         </div>
 
                         <div
                             id="active-track-warning"
-                            ?invisible="${musicPage.audioElement.paused}"
+                            ?invisible="${Session.Audio.paused}"
                             @click="${() => musicPage.jumpToActive()}"
                         >
                             Ein Track wird gerade abgespielt.&nbsp; <u> Klicken Sie hier </u> &nbsp;um zum aktiven Track zu
@@ -124,11 +125,10 @@ export function renderMusicPage(musicPage) {
                                               >
                                                   <audio-tile
                                                       .track="${track}"
-                                                      .image="${musicPage.getTrackIcon(track)}"
                                                       .visualizationData="${musicPage.currentTrack?.path == track.path
-                                                          ? musicPage.visualizationData
+                                                          ? Session.Audio.visualizationData
                                                           : null}"
-                                                      ?paused="${musicPage.audioElement.paused ||
+                                                      ?paused="${Session.Audio.paused ||
                                                       musicPage.currentTrack.path != track.path}"
                                                       @musicToggled="${() => musicPage.toggleMusic(track)}"
                                                       @soft-delete="${() => musicPage.softDeleteTrack(track)}"
@@ -144,14 +144,6 @@ export function renderMusicPage(musicPage) {
                           </div>`}
                 </paginated-scrolling>
             </div>
-            <fallback-audio
-                id="current-track"
-                .volume="${musicPage.currentVolumne}"
-                .src="${musicPage.currentTrackUrl}"
-                .fallbackSrc="${musicPage.currentTrackUrl + '&highCompatibility=true'}"
-                @timeupdate="${() => musicPage.requestFullUpdate()}"
-                @loadedmetadata="${() => musicPage.requestFullUpdate()}"
-            ></fallback-audio>
         </page-layout>
     `;
 }

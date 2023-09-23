@@ -1,7 +1,7 @@
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Subscription } from '../../data/observable.js';
-import { session } from '../../data/session.js';
+import { Session } from '../../data/session.js';
 import { MediaModel, UpdateRequestOfMediaModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService } from '../../services/backend.services.js';
 import { importFiles } from '../../services/extensions/file.extension.js';
@@ -33,9 +33,9 @@ export class MediaPage extends LitElementBase {
     }
 
     get filteredMedia() {
-        if (!this.filter) return session.mediaList.current();
+        if (!this.filter) return Session.mediaList.current();
 
-        return MediaFilterService.filter([...session.mediaList.current()], this.filter);
+        return MediaFilterService.filter([...Session.mediaList.current()], this.filter);
     }
 
     constructor() {
@@ -55,7 +55,7 @@ export class MediaPage extends LitElementBase {
         var localSearchString = localStorage.getItem(`media.search`);
         if (localSearchString) this.filter = MediaFilter.fromJSON(localSearchString);
 
-        this.subscriptions.push(session.mediaList.subscribe(() => this.requestFullUpdate()));
+        this.subscriptions.push(Session.mediaList.subscribe(() => this.requestFullUpdate()));
 
         this.loading = false;
         this.requestFullUpdate();
@@ -69,7 +69,7 @@ export class MediaPage extends LitElementBase {
     }
 
     get paginatedMedia() {
-        return session.mediaList;
+        return Session.mediaList;
     }
 
     render() {
