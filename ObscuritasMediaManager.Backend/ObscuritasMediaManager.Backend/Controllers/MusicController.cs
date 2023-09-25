@@ -88,7 +88,7 @@ public class MusicController : ControllerBase
     [HttpGet("instruments")]
     public async Task<IEnumerable<InstrumentModel>> GetInstruments()
     {
-        return await _musicRepository.GetInstruments();
+        return await _musicRepository.GetInstrumentsAsync();
     }
 
     [HttpPut("instrument/{name}/type/{type}")]

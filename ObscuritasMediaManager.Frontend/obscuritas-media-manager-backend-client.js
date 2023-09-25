@@ -1684,6 +1684,8 @@ export class MusicModel {
     instrumentation;
     participants;
     instruments;
+    instrumentTypes;
+    instrumentNames;
     genres;
     path;
     lyrics;
@@ -1714,10 +1716,26 @@ export class MusicModel {
             if (Array.isArray(_data["instruments"])) {
                 this.instruments = [];
                 for (let item of _data["instruments"])
-                    this.instruments.push(item);
+                    this.instruments.push(InstrumentModel.fromJS(item, _mappings));
             }
             else {
                 this.instruments = null;
+            }
+            if (Array.isArray(_data["instrumentTypes"])) {
+                this.instrumentTypes = [];
+                for (let item of _data["instrumentTypes"])
+                    this.instrumentTypes.push(item);
+            }
+            else {
+                this.instrumentTypes = null;
+            }
+            if (Array.isArray(_data["instrumentNames"])) {
+                this.instrumentNames = [];
+                for (let item of _data["instrumentNames"])
+                    this.instrumentNames.push(item);
+            }
+            else {
+                this.instrumentNames = null;
             }
             if (Array.isArray(_data["genres"])) {
                 this.genres = [];
@@ -1754,7 +1772,17 @@ export class MusicModel {
         if (Array.isArray(this.instruments)) {
             data["instruments"] = [];
             for (let item of this.instruments)
-                data["instruments"].push(item);
+                data["instruments"].push(item.toJSON());
+        }
+        if (Array.isArray(this.instrumentTypes)) {
+            data["instrumentTypes"] = [];
+            for (let item of this.instrumentTypes)
+                data["instrumentTypes"].push(item);
+        }
+        if (Array.isArray(this.instrumentNames)) {
+            data["instrumentNames"] = [];
+            for (let item of this.instrumentNames)
+                data["instrumentNames"].push(item);
         }
         if (Array.isArray(this.genres)) {
             data["genres"] = [];
@@ -1820,6 +1848,53 @@ export var Participants;
     Participants["SmallOrchestra"] = "SmallOrchestra";
     Participants["LargeOrchestra"] = "LargeOrchestra";
 })(Participants || (Participants = {}));
+export class InstrumentModel {
+    name;
+    type;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data, _mappings) {
+        if (_data) {
+            this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.type = _data["type"] !== undefined ? _data["type"] : null;
+        }
+    }
+    static fromJS(data, _mappings) {
+        data = typeof data === 'object' ? data : {};
+        return createInstance(data, _mappings, InstrumentModel);
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : null;
+        data["type"] = this.type !== undefined ? this.type : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new InstrumentModel();
+        result.init(json);
+        return result;
+    }
+}
+export var InstrumentType;
+(function (InstrumentType) {
+    InstrumentType["Unset"] = "Unset";
+    InstrumentType["Vocal"] = "Vocal";
+    InstrumentType["WoodWind"] = "WoodWind";
+    InstrumentType["Brass"] = "Brass";
+    InstrumentType["Percussion"] = "Percussion";
+    InstrumentType["Stringed"] = "Stringed";
+    InstrumentType["Keyboard"] = "Keyboard";
+    InstrumentType["Electronic"] = "Electronic";
+    InstrumentType["HumanBody"] = "HumanBody";
+    InstrumentType["Miscellaneous"] = "Miscellaneous";
+})(InstrumentType || (InstrumentType = {}));
 export var MusicGenre;
 (function (MusicGenre) {
     MusicGenre["Unset"] = "Unset";
@@ -1923,19 +1998,19 @@ export class CredentialsRequest {
     }
 }
 export class MediaModel {
-    id;
-    name;
-    type;
-    rating;
-    release;
-    language;
-    status;
-    genres;
-    targetGroup;
     contentWarnings;
     description;
-    image;
+    genres;
     hash;
+    id;
+    image;
+    language;
+    name;
+    rating;
+    release;
+    status;
+    targetGroup;
+    type;
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -1946,22 +2021,6 @@ export class MediaModel {
     }
     init(_data, _mappings) {
         if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : null;
-            this.name = _data["name"] !== undefined ? _data["name"] : null;
-            this.type = _data["type"] !== undefined ? _data["type"] : null;
-            this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
-            this.release = _data["release"] !== undefined ? _data["release"] : null;
-            this.language = _data["language"] !== undefined ? _data["language"] : null;
-            this.status = _data["status"] !== undefined ? _data["status"] : null;
-            if (Array.isArray(_data["genres"])) {
-                this.genres = [];
-                for (let item of _data["genres"])
-                    this.genres.push(item);
-            }
-            else {
-                this.genres = null;
-            }
-            this.targetGroup = _data["targetGroup"] !== undefined ? _data["targetGroup"] : null;
             if (Array.isArray(_data["contentWarnings"])) {
                 this.contentWarnings = [];
                 for (let item of _data["contentWarnings"])
@@ -1971,8 +2030,24 @@ export class MediaModel {
                 this.contentWarnings = null;
             }
             this.description = _data["description"] !== undefined ? _data["description"] : null;
-            this.image = _data["image"] !== undefined ? _data["image"] : null;
+            if (Array.isArray(_data["genres"])) {
+                this.genres = [];
+                for (let item of _data["genres"])
+                    this.genres.push(item);
+            }
+            else {
+                this.genres = null;
+            }
             this.hash = _data["hash"] !== undefined ? _data["hash"] : null;
+            this.id = _data["id"] !== undefined ? _data["id"] : null;
+            this.image = _data["image"] !== undefined ? _data["image"] : null;
+            this.language = _data["language"] !== undefined ? _data["language"] : null;
+            this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
+            this.release = _data["release"] !== undefined ? _data["release"] : null;
+            this.status = _data["status"] !== undefined ? _data["status"] : null;
+            this.targetGroup = _data["targetGroup"] !== undefined ? _data["targetGroup"] : null;
+            this.type = _data["type"] !== undefined ? _data["type"] : null;
         }
     }
     static fromJS(data, _mappings) {
@@ -1981,27 +2056,27 @@ export class MediaModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : null;
-        data["name"] = this.name !== undefined ? this.name : null;
-        data["type"] = this.type !== undefined ? this.type : null;
-        data["rating"] = this.rating !== undefined ? this.rating : null;
-        data["release"] = this.release !== undefined ? this.release : null;
-        data["language"] = this.language !== undefined ? this.language : null;
-        data["status"] = this.status !== undefined ? this.status : null;
-        if (Array.isArray(this.genres)) {
-            data["genres"] = [];
-            for (let item of this.genres)
-                data["genres"].push(item);
-        }
-        data["targetGroup"] = this.targetGroup !== undefined ? this.targetGroup : null;
         if (Array.isArray(this.contentWarnings)) {
             data["contentWarnings"] = [];
             for (let item of this.contentWarnings)
                 data["contentWarnings"].push(item);
         }
         data["description"] = this.description !== undefined ? this.description : null;
-        data["image"] = this.image !== undefined ? this.image : null;
+        if (Array.isArray(this.genres)) {
+            data["genres"] = [];
+            for (let item of this.genres)
+                data["genres"].push(item);
+        }
         data["hash"] = this.hash !== undefined ? this.hash : null;
+        data["id"] = this.id !== undefined ? this.id : null;
+        data["image"] = this.image !== undefined ? this.image : null;
+        data["language"] = this.language !== undefined ? this.language : null;
+        data["name"] = this.name !== undefined ? this.name : null;
+        data["rating"] = this.rating !== undefined ? this.rating : null;
+        data["release"] = this.release !== undefined ? this.release : null;
+        data["status"] = this.status !== undefined ? this.status : null;
+        data["targetGroup"] = this.targetGroup !== undefined ? this.targetGroup : null;
+        data["type"] = this.type !== undefined ? this.type : null;
         return data;
     }
     clone() {
@@ -2011,14 +2086,16 @@ export class MediaModel {
         return result;
     }
 }
-export var MediaCategory;
-(function (MediaCategory) {
-    MediaCategory["AnimeSeries"] = "AnimeSeries";
-    MediaCategory["AnimeMovies"] = "AnimeMovies";
-    MediaCategory["RealMovies"] = "RealMovies";
-    MediaCategory["RealSeries"] = "RealSeries";
-    MediaCategory["JDrama"] = "JDrama";
-})(MediaCategory || (MediaCategory = {}));
+export var ContentWarning;
+(function (ContentWarning) {
+    ContentWarning["Depression"] = "Depression";
+    ContentWarning["Drugs"] = "Drugs";
+    ContentWarning["Violence"] = "Violence";
+    ContentWarning["Horror"] = "Horror";
+    ContentWarning["Gore"] = "Gore";
+    ContentWarning["Vulgarity"] = "Vulgarity";
+    ContentWarning["Nudity"] = "Nudity";
+})(ContentWarning || (ContentWarning = {}));
 export var MediaStatus;
 (function (MediaStatus) {
     MediaStatus["Completed"] = "Completed";
@@ -2035,16 +2112,14 @@ export var TargetGroup;
     TargetGroup["Men"] = "Men";
     TargetGroup["Women"] = "Women";
 })(TargetGroup || (TargetGroup = {}));
-export var ContentWarning;
-(function (ContentWarning) {
-    ContentWarning["Depression"] = "Depression";
-    ContentWarning["Drugs"] = "Drugs";
-    ContentWarning["Violence"] = "Violence";
-    ContentWarning["Horror"] = "Horror";
-    ContentWarning["Gore"] = "Gore";
-    ContentWarning["Vulgarity"] = "Vulgarity";
-    ContentWarning["Nudity"] = "Nudity";
-})(ContentWarning || (ContentWarning = {}));
+export var MediaCategory;
+(function (MediaCategory) {
+    MediaCategory["AnimeSeries"] = "AnimeSeries";
+    MediaCategory["AnimeMovies"] = "AnimeMovies";
+    MediaCategory["RealMovies"] = "RealMovies";
+    MediaCategory["RealSeries"] = "RealSeries";
+    MediaCategory["JDrama"] = "JDrama";
+})(MediaCategory || (MediaCategory = {}));
 export class UpdateRequestOfMediaModel {
     oldModel;
     newModel;
@@ -2113,53 +2188,6 @@ export class LyricsResponse {
         return result;
     }
 }
-export class InstrumentModel {
-    name;
-    type;
-    constructor(data) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
-                    this[property] = data[property];
-            }
-        }
-    }
-    init(_data, _mappings) {
-        if (_data) {
-            this.name = _data["name"] !== undefined ? _data["name"] : null;
-            this.type = _data["type"] !== undefined ? _data["type"] : null;
-        }
-    }
-    static fromJS(data, _mappings) {
-        data = typeof data === 'object' ? data : {};
-        return createInstance(data, _mappings, InstrumentModel);
-    }
-    toJSON(data) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name !== undefined ? this.name : null;
-        data["type"] = this.type !== undefined ? this.type : null;
-        return data;
-    }
-    clone() {
-        const json = this.toJSON();
-        let result = new InstrumentModel();
-        result.init(json);
-        return result;
-    }
-}
-export var InstrumentType;
-(function (InstrumentType) {
-    InstrumentType["Unset"] = "Unset";
-    InstrumentType["Vocal"] = "Vocal";
-    InstrumentType["WoodWind"] = "WoodWind";
-    InstrumentType["Brass"] = "Brass";
-    InstrumentType["Percussion"] = "Percussion";
-    InstrumentType["Stringed"] = "Stringed";
-    InstrumentType["Keyboard"] = "Keyboard";
-    InstrumentType["Electronic"] = "Electronic";
-    InstrumentType["HumanBody"] = "HumanBody";
-    InstrumentType["Miscellaneous"] = "Miscellaneous";
-})(InstrumentType || (InstrumentType = {}));
 export class UpdateRequestOfMusicModel {
     oldModel;
     newModel;

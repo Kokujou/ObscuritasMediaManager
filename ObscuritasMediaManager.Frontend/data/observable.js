@@ -1,7 +1,6 @@
 /** @template T */
 export class Observable {
     currentValue;
-    promise;
 
     /** @type {Subscription[]} */ subscriptions = [];
 

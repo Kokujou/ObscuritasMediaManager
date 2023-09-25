@@ -16,6 +16,7 @@ public class DatabaseContext : DbContext
     public DbSet<PlaylistTrackMappingModel> PlaylistEntries { get; set; }
     public DbSet<PlaylistModel> Playlists { get; set; }
     public DbSet<RecipeModel> Recipes { get; set; }
+    public DbSet<UserSettingsModel> UserSettings { get; set; }
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
@@ -24,23 +25,21 @@ public class DatabaseContext : DbContext
         MediaModel.Configure(modelBuilder);
 
         modelBuilder.Entity<MusicModel>()
-                    .Property(x => x.Genres)
-                    .HasConversion(x => string.Join(",", x),
-                                   x => x.Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                         .Select(y => y.ParseEnumOrDefault<MusicGenre>())
-                                         .ToList());
+            .Property(x => x.Genres)
+            .HasConversion(x => string.Join(",", x),
+            x => x.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(y => y.ParseEnumOrDefault<MusicGenre>()).ToList());
 
         PlaylistModel.Configure(modelBuilder);
 
-        modelBuilder.Entity<MusicModel>()
-                    .Property(x => x.Instruments)
-                    .HasConversion(x => string.Join(",", x), x => x.Split(",", StringSplitOptions.RemoveEmptyEntries));
+        modelBuilder.Entity<MusicModel>().HasMany(x => x.Instruments).WithMany();
 
         modelBuilder.Entity<StreamingEntryModel>().HasKey(x => new { x.Id, x.Season, x.Episode });
 
         modelBuilder.Entity<GenreModel>();
 
         modelBuilder.Entity<InstrumentModel>();
+
+        modelBuilder.Entity<UserSettingsModel>();
 
         RecipeModel.Configure(modelBuilder);
 

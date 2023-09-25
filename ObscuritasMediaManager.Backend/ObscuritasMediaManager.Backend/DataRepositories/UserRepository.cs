@@ -27,4 +27,22 @@ public class UserRepository
         await _dbContext.Users.AddAsync(new UserModel { Password = encryptedPassword, Name = username, Id = Guid.NewGuid() });
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task<UserSettingsModel> GetSettingsAsync(Guid userId)
+    {
+        var settings = await _dbContext.UserSettings.FirstOrDefaultAsync(x => x.Id == userId);
+        if (settings is not null) return settings;
+
+        settings = new UserSettingsModel { Id = userId };
+        await _dbContext.UserSettings.AddAsync(settings);
+        await _dbContext.SaveChangesAsync();
+
+        return settings;
+    }
+
+    public async Task UpdateUserSettingsAsync(UserSettingsModel updated)
+    {
+        _dbContext.UserSettings.Update(updated);
+        await _dbContext.SaveChangesAsync();
+    }
 }

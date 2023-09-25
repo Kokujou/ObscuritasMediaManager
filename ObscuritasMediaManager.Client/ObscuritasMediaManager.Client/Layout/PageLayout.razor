@@ -1,0 +1,37 @@
+﻿@using ObscuritasMediaManager.Client.Data;
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<div id="viewport" style="width: 100%; height: 100%">
+    <div id="page-container" style="width: @(1920 * ScaleFactorX)px; height: @(1080 * ScaleFactorY)px ;">
+        <div id="current-page" style="transform: scale(@(ScaleFactorX.ToString(System.Globalization.CultureInfo.InvariantCulture)), @(ScaleFactorY.ToString(System.Globalization.CultureInfo.InvariantCulture)))">
+            <div id="header">
+                <div id="logo-container">
+                    <a id="logo" href="#welcome">
+                        <div id="title">Obscuritas Media Management</div>
+                        <div id="subtitle">オブスキュリタス メディア マネジメント</div>
+                    </a>
+                </div>
+            </div>
+
+            <div id="navigation-container">
+                <div id="navigation">
+                    <div id="link-area">
+                        <div id="nav-section">
+                            <div id="nav-section-heading">Inhalt</div>
+                            <div id="nav-section-links">
+                                @foreach (Page route in Enum.GetValues(typeof(Page)))
+                                {
+                                    <div onclick="@(()=>NavigationManager.NavigateTo(@route.ToString()))" class="nav-link">@(route)</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="layout-content">@Body</div>
+
+        </div>
+    </div>
+</div>

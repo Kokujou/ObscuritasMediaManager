@@ -1,6 +1,7 @@
 ﻿using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Extensions;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -20,7 +21,11 @@ public class MusicModel
     public Nation Nation { get; set; }
     public Instrumentation Instrumentation { get; set; }
     public Participants Participants { get; set; }
-    public IEnumerable<string> Instruments { get; set; } = new List<string>();
+    public IEnumerable<InstrumentModel> Instruments { get; set; }
+    [NotMapped] public IEnumerable<InstrumentType> InstrumentTypes => Instruments.Select((x) => x.Type).Distinct();
+
+    [NotMapped] public IEnumerable<string> InstrumentNames => Instruments.Select(x => x.Name);
+
     public IEnumerable<MusicGenre> Genres { get; set; } = new List<MusicGenre>();
     public string Path { get; set; }
     public string Lyrics { get; set; }

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root Type="DevExpress.CodeRush.Foundation.Refactoring.RefactoringCatalogOptions">
+  <Options Language="C#">
+    <Refactorings>
+      <Item Id="{6af92b82-9666-45bd-9f78-57133b26869d}" />
+      <Item Id="{95d16e86-9283-44e0-acfd-9b96281d64c5}" />
+      <Item Id="{ecf818a4-01b2-4821-b664-1939e01f8fcb}" />
+      <Item Id="{280cddf1-bdbc-49f8-b726-946443ca04fa}" />
+      <Item Id="{3953ab66-24d0-431e-a3c7-009433a3a88d}" />
+      <Item Id="{5a7c0caf-b10c-43ea-a182-3fa655ef3516}" />
+      <Item Id="{a26b12f2-0d1b-44f4-85e8-31bf5753ddda}">
+        <RefactoringName>Organize Members</RefactoringName>
+        <RefactoringState>Disabled</RefactoringState>
+      </Item>
+    </Refactorings>
+  </Options>
+  <Options Language="Visual Basic" />
+</Root>

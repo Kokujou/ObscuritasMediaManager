@@ -163,7 +163,9 @@ export declare class MusicModel implements IMusicModel {
     nation: Nation;
     instrumentation: Instrumentation;
     participants: Participants;
-    instruments: string[] | null;
+    instruments: InstrumentModel[] | null;
+    instrumentTypes: InstrumentType[] | null;
+    instrumentNames: string[] | null;
     genres: MusicGenre[] | null;
     path: string | null;
     lyrics: string | null;
@@ -188,7 +190,9 @@ export interface IMusicModel {
     nation: Nation;
     instrumentation: Instrumentation;
     participants: Participants;
-    instruments: string[] | null;
+    instruments: InstrumentModel[] | null;
+    instrumentTypes: InstrumentType[] | null;
+    instrumentNames: string[] | null;
     genres: MusicGenre[] | null;
     path: string | null;
     lyrics: string | null;
@@ -236,6 +240,31 @@ export declare enum Participants {
     LargeGroup = "LargeGroup",
     SmallOrchestra = "SmallOrchestra",
     LargeOrchestra = "LargeOrchestra"
+}
+export declare class InstrumentModel implements IInstrumentModel {
+    name: string | null;
+    type: InstrumentType;
+    constructor(data?: Partial<IInstrumentModel>);
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): InstrumentModel | null;
+    toJSON(data?: any): any;
+    clone(): InstrumentModel;
+}
+export interface IInstrumentModel {
+    name: string | null;
+    type: InstrumentType;
+}
+export declare enum InstrumentType {
+    Unset = "Unset",
+    Vocal = "Vocal",
+    WoodWind = "WoodWind",
+    Brass = "Brass",
+    Percussion = "Percussion",
+    Stringed = "Stringed",
+    Keyboard = "Keyboard",
+    Electronic = "Electronic",
+    HumanBody = "HumanBody",
+    Miscellaneous = "Miscellaneous"
 }
 export declare enum MusicGenre {
     Unset = "Unset",
@@ -296,19 +325,19 @@ export interface ICredentialsRequest {
     password: string | null;
 }
 export declare class MediaModel implements IMediaModel {
-    id: string;
-    name: string | null;
-    type: MediaCategory | null;
-    rating: number | null;
-    release: number | null;
-    language: Nation | null;
-    status: MediaStatus | null;
-    genres: string[] | null;
-    targetGroup: TargetGroup | null;
     contentWarnings: ContentWarning[] | null;
     description: string | null;
-    image: string | null;
+    genres: string[] | null;
     hash: string | null;
+    id: string;
+    image: string | null;
+    language: Nation;
+    name: string | null;
+    rating: number;
+    release: number;
+    status: MediaStatus;
+    targetGroup: TargetGroup;
+    type: MediaCategory;
     constructor(data?: Partial<IMediaModel>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): MediaModel | null;
@@ -316,26 +345,28 @@ export declare class MediaModel implements IMediaModel {
     clone(): MediaModel;
 }
 export interface IMediaModel {
-    id: string;
-    name: string | null;
-    type: MediaCategory | null;
-    rating: number | null;
-    release: number | null;
-    language: Nation | null;
-    status: MediaStatus | null;
-    genres: string[] | null;
-    targetGroup: TargetGroup | null;
     contentWarnings: ContentWarning[] | null;
     description: string | null;
-    image: string | null;
+    genres: string[] | null;
     hash: string | null;
+    id: string;
+    image: string | null;
+    language: Nation;
+    name: string | null;
+    rating: number;
+    release: number;
+    status: MediaStatus;
+    targetGroup: TargetGroup;
+    type: MediaCategory;
 }
-export declare enum MediaCategory {
-    AnimeSeries = "AnimeSeries",
-    AnimeMovies = "AnimeMovies",
-    RealMovies = "RealMovies",
-    RealSeries = "RealSeries",
-    JDrama = "JDrama"
+export declare enum ContentWarning {
+    Depression = "Depression",
+    Drugs = "Drugs",
+    Violence = "Violence",
+    Horror = "Horror",
+    Gore = "Gore",
+    Vulgarity = "Vulgarity",
+    Nudity = "Nudity"
 }
 export declare enum MediaStatus {
     Completed = "Completed",
@@ -351,14 +382,12 @@ export declare enum TargetGroup {
     Men = "Men",
     Women = "Women"
 }
-export declare enum ContentWarning {
-    Depression = "Depression",
-    Drugs = "Drugs",
-    Violence = "Violence",
-    Horror = "Horror",
-    Gore = "Gore",
-    Vulgarity = "Vulgarity",
-    Nudity = "Nudity"
+export declare enum MediaCategory {
+    AnimeSeries = "AnimeSeries",
+    AnimeMovies = "AnimeMovies",
+    RealMovies = "RealMovies",
+    RealSeries = "RealSeries",
+    JDrama = "JDrama"
 }
 export declare class UpdateRequestOfMediaModel implements IUpdateRequestOfMediaModel {
     oldModel: MediaModel | null;
@@ -385,31 +414,6 @@ export declare class LyricsResponse implements ILyricsResponse {
 export interface ILyricsResponse {
     title: string | null;
     text: string | null;
-}
-export declare class InstrumentModel implements IInstrumentModel {
-    name: string | null;
-    type: InstrumentType;
-    constructor(data?: Partial<IInstrumentModel>);
-    init(_data?: any, _mappings?: any): void;
-    static fromJS(data: any, _mappings?: any): InstrumentModel | null;
-    toJSON(data?: any): any;
-    clone(): InstrumentModel;
-}
-export interface IInstrumentModel {
-    name: string | null;
-    type: InstrumentType;
-}
-export declare enum InstrumentType {
-    Unset = "Unset",
-    Vocal = "Vocal",
-    WoodWind = "WoodWind",
-    Brass = "Brass",
-    Percussion = "Percussion",
-    Stringed = "Stringed",
-    Keyboard = "Keyboard",
-    Electronic = "Electronic",
-    HumanBody = "HumanBody",
-    Miscellaneous = "Miscellaneous"
 }
 export declare class UpdateRequestOfMusicModel implements IUpdateRequestOfMusicModel {
     oldModel: MusicModel | null;

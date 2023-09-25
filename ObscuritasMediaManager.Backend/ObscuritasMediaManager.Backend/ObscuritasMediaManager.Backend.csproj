@@ -3,12 +3,13 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<NoWin32Manifest>true</NoWin32Manifest>
-		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+		<RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
 		<EnableNETAnalyzers>false</EnableNETAnalyzers>
 		<LangVersion>latest</LangVersion>
 		<DisableImplicitNamespaceImports>True</DisableImplicitNamespaceImports>
 		<Platforms>x64</Platforms>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
 	</PropertyGroup>
 
 	<ItemGroup>

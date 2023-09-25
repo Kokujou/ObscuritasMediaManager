@@ -94,7 +94,7 @@ public class MusicRepository
         if (errors.Count > 0) throw new ModelCreationFailedException<MusicModel>(errors);
     }
 
-    public async Task<IEnumerable<InstrumentModel>> GetInstruments()
+    public async Task<IEnumerable<InstrumentModel>> GetInstrumentsAsync()
     {
         return await _context.Instruments.ToListAsync();
     }
@@ -108,15 +108,15 @@ public class MusicRepository
     public async Task SoftDeleteTracksAsync(IEnumerable<string> trackHashes)
     {
         await _context.Music
-                      .Where(x => trackHashes.Contains(x.Hash))
-                      .ExecuteUpdateAsync(builder => builder.SetProperty(x => x.Deleted, x => true));
+            .Where(x => trackHashes.Contains(x.Hash))
+            .ExecuteUpdateAsync(builder => builder.SetProperty(x => x.Deleted, x => true));
     }
 
     public async Task UndeleteTracksAsync(IEnumerable<string> trackHashes)
     {
         await _context.Music
-                      .Where(x => trackHashes.Contains(x.Hash))
-                      .ExecuteUpdateAsync(builder => builder.SetProperty(x => x.Deleted, x => false));
+            .Where(x => trackHashes.Contains(x.Hash))
+            .ExecuteUpdateAsync(builder => builder.SetProperty(x => x.Deleted, x => false));
     }
 
     public async Task HardDeleteTracksAsync(IEnumerable<string> trackHashes)
