@@ -6,7 +6,7 @@ namespace ObscuritasMediaManager.Client.BusinessComponents.MusicFilter;
 
 public partial class MusicFilter
 {
-    [Parameter] public MusicFilterOptions filter { get; set; } = new();
+    [Parameter] public MusicFilterOptions filter { get; set; } = new(new List<string>());
     [Parameter] public Func<MusicModel, object>? sortingProperty { get; set; }
     [Parameter] public SortDirection? sortingDirection { get; set; }
     [Parameter] public EventCallback<MusicFilterOptions> filterChanged { get; set; }

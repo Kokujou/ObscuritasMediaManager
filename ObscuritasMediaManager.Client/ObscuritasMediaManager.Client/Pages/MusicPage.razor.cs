@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using ObscuritasMediaManager.Client.Extensions;
+using System;
 using System.Text.Json;
 
 namespace ObscuritasMediaManager.Client.Pages;
@@ -41,15 +44,15 @@ public partial class MusicPage
     }
 
     private MusicModel? currentTrack { get; set; }
-    private MusicFilterOptions filter { get; set; } = new();
+    private MusicFilterOptions filter { get; set; }
     private List<MusicModel> musicTracks { get; set; } = new();
     private List<PlaylistModel> playlists { get; set; } = new();
     private List<string> selectedHashes { get; set; } = new();
-    private int currentPage { get; set; } = 0;
+    private int currentPage { get; set; } = 10;
     private SortDirection? sortingDirection { get; set; } = SortDirection.Ascending;
     private Func<object, object>? sortingProperty { get; set; }
     private bool loading { get; set; } = true;
-    private bool selectionMode { get; set; } = true;
+    private bool selectionMode { get; set; } = false;
     private CancellationTokenSource selectionCancellation { get; set; } = new();
 
     public async Task UpdateFilterAsync(MusicFilterOptions filter)
@@ -112,5 +115,41 @@ public partial class MusicPage
             selectedHashes.Remove(hash);
 
         if (selectedHashes.Count == 0) selectionMode = false;
+    }
+
+    public async Task initializeData()
+    {
+        loading = true;
+
+        try
+        {
+            playlists = await PlaylistRepository.GetAll().ToListAsync();
+            musicTracks = await MusicRepository.GetAll().ToListAsync();
+        }
+        catch (Exception err)
+        {
+            Log.Error(err.ToString());
+        }
+
+        loading = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        filter = new(Session.instruments.current()?.Select(x => x.Name) ?? new List<string>());
+
+        Subscriptions.AddRange(Session.userSettings
+                .subscribe((data) =>
+                        {
+                            if (data.newValue is null) return;
+                            changeVolume(data.newValue.Volume);
+                            filter = JsonSerializer.Deserialize<MusicFilterOptions>(
+                                            data.newValue.MusicFilter ?? string.Empty) ??
+                                new(new List<string>());
+                        }));
+
+        await initializeData();
     }
 }

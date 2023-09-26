@@ -5,6 +5,7 @@ namespace ObscuritasMediaManager.Backend.Models;
 
 public class InstrumentModel
 {
-    [Key] public string Name { get; set; }
+    [Key] public int Id { get; set; }
+    public string Name { get; set; }
     public InstrumentType Type { get; set; }
 }

@@ -1,6 +1,13 @@
 ﻿@using ObscuritasMediaManager.Client.Data;
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
+@inject Session Session
+
+<style>
+     *[icon]{
+        background:black;
+    }
+</style>
 
 <div id="viewport" style="width: 100%; height: 100%">
     <div id="page-container" style="width: @(1920 * ScaleFactorX)px; height: @(1080 * ScaleFactorY)px ;">
@@ -35,3 +42,8 @@
         </div>
     </div>
 </div>
+
+@foreach (var child in Children)
+{
+    @child.Value
+}

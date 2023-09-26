@@ -1,0 +1,38 @@
+﻿@foreach (var icon in Enum.GetValues<Icons>())
+{
+    <style>
+        *[icon='@(icon)'] {
+            -webkit-mask: url('@((icon.GetIconUrl()))') no-repeat center center / 100% 100%
+        }
+    </style>
+}
+
+@foreach (var participants in Enum.GetValues<Participants>())
+{
+    <style>
+        *[Participants='@(participants)'] {
+            -webkit-mask: url('@((participants.GetIconUrl()))') no-repeat center center / 100% 100%
+        }
+    </style>
+}
+
+@foreach (var type in Enum.GetValues<InstrumentType>())
+{
+    <style>
+        *[InstrumentType='@(type)'] {
+            -webkit-mask: url('@((type.GetIconUrl()))') no-repeat center center / 100% 100%
+        }
+    </style>
+}
+
+@foreach (var flag in Enum.GetValues<Nation>())
+{
+    <style>
+        *[Nation='@(flag)'], *[Language='@(flag)'] {
+            -webkit-mask: url('@((flag.GetIconUrl()))') no-repeat center center / 100% 100%
+        }
+    </style>
+}
+
+
+

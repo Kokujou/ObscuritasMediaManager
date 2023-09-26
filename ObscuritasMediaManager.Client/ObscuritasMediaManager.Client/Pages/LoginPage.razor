@@ -1,0 +1,36 @@
+﻿@page "/login"
+
+@inherits ElementBase
+
+@using Microsoft.JSInterop;
+@using ObscuritasMediaManager.Backend.DataRepositories;
+
+@inject UserRepository UserRepository
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JS
+
+<div id="page-container">
+    <form id="login-form" onsubmit="@(() => login())">
+        <div id="username-container" class="floating-container">
+            <label for="username" float="@(username.Length > 0)">Benutzername</label>
+            <input required
+                   id="username"
+                   type="text"
+                   autocomplete="username"
+                   oninput="javascript:this.dispatchEvent(new Event('change'))"
+                   onchange="@((ChangeEventArgs e) => (username = (string?)e.Value ?? string.Empty))" />
+        </div>
+
+        <div id="password-container" class="floating-container">
+            <label for="password" float="@(password.Length > 0)">Passwort</label>
+            <input required
+                   id="password"
+                   type="password"
+                   autocomplete="current-password"
+                   oninput="javascript:this.dispatchEvent(new Event('change'))"
+                    onchange="@((ChangeEventArgs e) => (password = (string?)e.Value ?? string.Empty))" />
+        </div>
+
+        <input id="submit-button" type="submit" value="Login" />
+    </form>
+</div>

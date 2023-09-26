@@ -6,17 +6,28 @@ namespace ObscuritasMediaManager.Client.BusinessComponents.MusicFilter;
 
 public class MusicFilterOptions
 {
-    public FilterEntry<MusicGenre> genres = new(Enum.GetValues<MusicGenre>(), CheckboxState.Ignore);
-    public FilterEntry<Instrumentation> instrumentations = new(Enum.GetValues<Instrumentation>(), CheckboxState.Ignore);
-    public FilterEntry<string> instruments = new(Session.instruments.current()?.Select((x) => x.Name)!, CheckboxState.Ignore);
-    public FilterEntry<InstrumentType> instrumentTypes = new(Enum.GetValues<InstrumentType>());
-    public FilterEntry<Nation> languages = new(Enum.GetValues<Nation>(), CheckboxState.Require);
-    public FilterEntry<Mood> moods = new(Enum.GetValues<Mood>(), CheckboxState.Ignore);
-    public FilterEntry<Nation> nations = new(Enum.GetValues<Nation>(), CheckboxState.Require);
-    public FilterEntry<Participants> participants = new(Enum.GetValues<Participants>(), CheckboxState.Require);
-    public FilterEntry<int> ratings = new(new [] { 1, 2, 3, 4, 5 }, CheckboxState.Require);
-    public string search = string.Empty;
-    public CheckboxState showComplete = CheckboxState.Ignore;
-    public CheckboxState showDeleted = CheckboxState.Forbid;
-    public CheckboxState showPlaylists = CheckboxState.Ignore;
+    public FilterEntry<MusicGenre> genres { get; set; } = new(Enum.GetValues<MusicGenre>(), CheckboxState.Ignore);
+    public FilterEntry<Instrumentation> instrumentations
+    {
+        get;
+        set;
+    } 
+        = 
+        new(Enum.GetValues<Instrumentation>(), CheckboxState.Ignore);
+    public FilterEntry<string> instruments;
+    public FilterEntry<InstrumentType> instrumentTypes { get; set; } = new(Enum.GetValues<InstrumentType>());
+    public FilterEntry<Nation> languages { get; set; } = new(Enum.GetValues<Nation>(), CheckboxState.Require);
+    public FilterEntry<Mood> moods { get; set; } = new(Enum.GetValues<Mood>(), CheckboxState.Ignore);
+    public FilterEntry<Nation> nations { get; set; } = new(Enum.GetValues<Nation>(), CheckboxState.Require);
+    public FilterEntry<Participants> participants { get; set; } = new(Enum.GetValues<Participants>(), CheckboxState.Require);
+    public FilterEntry<int> ratings { get; set; } = new(new [] { 1, 2, 3, 4, 5 }, CheckboxState.Require);
+    public string search { get; set; } = string.Empty;
+    public CheckboxState showComplete { get; set; } = CheckboxState.Ignore;
+    public CheckboxState showDeleted { get; set; } = CheckboxState.Forbid;
+    public CheckboxState showPlaylists { get; set; } = CheckboxState.Ignore;
+
+    public MusicFilterOptions(IEnumerable<string> instrumentNames)
+    {
+        instruments = new(instrumentNames, CheckboxState.Ignore);
+    }
 }

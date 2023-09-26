@@ -1849,6 +1849,7 @@ export var Participants;
     Participants["LargeOrchestra"] = "LargeOrchestra";
 })(Participants || (Participants = {}));
 export class InstrumentModel {
+    id;
     name;
     type;
     constructor(data) {
@@ -1861,6 +1862,7 @@ export class InstrumentModel {
     }
     init(_data, _mappings) {
         if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.name = _data["name"] !== undefined ? _data["name"] : null;
             this.type = _data["type"] !== undefined ? _data["type"] : null;
         }
@@ -1871,6 +1873,7 @@ export class InstrumentModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : null;
         data["name"] = this.name !== undefined ? this.name : null;
         data["type"] = this.type !== undefined ? this.type : null;
         return data;
@@ -2111,6 +2114,7 @@ export var TargetGroup;
     TargetGroup["Families"] = "Families";
     TargetGroup["Men"] = "Men";
     TargetGroup["Women"] = "Women";
+    TargetGroup["None"] = "None";
 })(TargetGroup || (TargetGroup = {}));
 export var MediaCategory;
 (function (MediaCategory) {

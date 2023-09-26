@@ -31,7 +31,9 @@ public class DatabaseContext : DbContext
 
         PlaylistModel.Configure(modelBuilder);
 
-        modelBuilder.Entity<MusicModel>().HasMany(x => x.Instruments).WithMany();
+        modelBuilder.Entity<MusicInstrumentMappingModel>();
+
+        MusicModel.Configure(modelBuilder);
 
         modelBuilder.Entity<StreamingEntryModel>().HasKey(x => new { x.Id, x.Season, x.Episode });
 

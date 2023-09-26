@@ -242,6 +242,7 @@ export declare enum Participants {
     LargeOrchestra = "LargeOrchestra"
 }
 export declare class InstrumentModel implements IInstrumentModel {
+    id: number;
     name: string | null;
     type: InstrumentType;
     constructor(data?: Partial<IInstrumentModel>);
@@ -251,6 +252,7 @@ export declare class InstrumentModel implements IInstrumentModel {
     clone(): InstrumentModel;
 }
 export interface IInstrumentModel {
+    id: number;
     name: string | null;
     type: InstrumentType;
 }
@@ -380,7 +382,8 @@ export declare enum TargetGroup {
     Adults = "Adults",
     Families = "Families",
     Men = "Men",
-    Women = "Women"
+    Women = "Women",
+    None = "None"
 }
 export declare enum MediaCategory {
     AnimeSeries = "AnimeSeries",

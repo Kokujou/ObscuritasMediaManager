@@ -135,9 +135,9 @@ csharp_using_directive_placement = outside_namespace:error
 
 # Einstellungen für neue Zeilen
 csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true
-csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true
+csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true:silent
 csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true
-csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true
+csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true:silent
 csharp_style_allow_embedded_statements_on_same_line_experimental = true
 
 #### C#-Formatierungsregeln ####
@@ -228,6 +228,25 @@ dotnet_naming_style.begins_with_i.required_prefix = I
 dotnet_naming_style.begins_with_i.required_suffix = 
 dotnet_naming_style.begins_with_i.word_separator = 
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
+dotnet_diagnostic.SYSLIB1090.severity = warning
+dotnet_diagnostic.ASP0024.severity = warning
+dotnet_diagnostic.ASP0021.severity = warning
+dotnet_diagnostic.ASP0020.severity = warning
+dotnet_diagnostic.ASP0010.severity = warning
+dotnet_diagnostic.ASP0009.severity = warning
+dotnet_diagnostic.ASP0008.severity = warning
+dotnet_diagnostic.CA2252.severity = warning
+dotnet_diagnostic.SYSLIB1061.severity = warning
+dotnet_diagnostic.SYSLIB1060.severity = warning
+dotnet_diagnostic.SYSLIB1058.severity = warning
+dotnet_diagnostic.SYSLIB1057.severity = warning
+dotnet_diagnostic.SYSLIB1056.severity = warning
+dotnet_diagnostic.SYSLIB1055.severity = warning
+dotnet_diagnostic.CA1856.severity = warning
+dotnet_diagnostic.BL0004.severity = warning
+dotnet_diagnostic.BL0001.severity = warning
+dotnet_diagnostic.IDE0060.severity = warning
+dotnet_diagnostic.IDE0047.severity = silent
 
 [*.{cs,vb}]
 dotnet_style_coalesce_expression = true:suggestion
@@ -247,3 +266,6 @@ dotnet_style_namespace_match_folder = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
 dotnet_style_predefined_type_for_locals_parameters_members = true:silent
 dotnet_style_predefined_type_for_member_access = true:silent
+dotnet_style_readonly_field = true:suggestion
+dotnet_style_qualification_for_field = false:silent
+dotnet_code_quality_unused_parameters = all:warning

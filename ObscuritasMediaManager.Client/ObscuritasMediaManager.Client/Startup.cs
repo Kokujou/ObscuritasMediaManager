@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ObscuritasMediaManager.Backend.DataRepositories;
+using Serilog.Events;
 
 namespace ObscuritasMediaManager.Client;
 
@@ -12,7 +13,15 @@ public static class Startup
 
     public static void Init()
     {
-        IHost host = Host.CreateDefaultBuilder().ConfigureServices(WireupServices).Build();
+        AppDomain.CurrentDomain.UnhandledException += (sender,
+            args) => Log.Error(args.ExceptionObject?.ToString() ?? string.Empty);
+        IHost host = Host.CreateDefaultBuilder()
+            .UseSerilog((hostContext, services, configuration)
+        => configuration.WriteTo
+                    .File(@"C:\LogFiles\ObscuritasMediaManager\Backend.log", LogEventLevel.Warning, retainedFileCountLimit: 2,
+                    rollingInterval: RollingInterval.Day))
+            .ConfigureServices(WireupServices)
+            .Build();
         Services = host.Services;
     }
 
@@ -34,9 +43,11 @@ public static class Startup
         services.AddSingleton(new GeniusClient("_i5cToYg6uB_yorzbeVRYbBtqfLdhU-LtzTxaA5swKJVkDK3W_Yj33IILm1VdL1o"));
         services.AddSingleton<MusicFilterService>();
         services.AddSingleton<MediaFilterService>();
+        services.AddSingleton<Session>();
 
         services.AddDbContext<DatabaseContext>(
-            x => x.UseSqlite(@"Data Source=database.sqlite")
+            x => x.UseSqlite(
+                @"Data Source=J:\Dokumente\Web-Projekte\Obscuritas Media Manager\ObscuritasMediaManager.Backend\ObscuritasMediaManager.Backend/database.sqlite")
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .EnableSensitiveDataLogging());
     }

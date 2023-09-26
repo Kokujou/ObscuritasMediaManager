@@ -13,12 +13,19 @@ public class Observable<T>
         currentValue = initialValue;
     }
 
-    public Subscription subscribe(Action<T?, T?> observer)
+    public Subscription subscribe(Action<(T? oldValue, T? newValue)> observer)
     {
-        var subscription = new Subscription((oldValue, newValue) => observer((T?)oldValue, (T?)newValue),
+        var subscription = new Subscription((oldValue, newValue) => observer(((T?)oldValue, (T?)newValue)),
         (s) => subscriptions.Remove(s));
         subscriptions.Add(subscription);
-        observer(currentValue, currentValue);
+        try
+        {
+            observer((currentValue, currentValue));
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex.ToString());
+        }
         return subscription;
     }
 

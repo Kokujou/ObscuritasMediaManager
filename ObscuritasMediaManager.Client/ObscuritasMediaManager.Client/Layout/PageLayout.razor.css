@@ -1,11 +1,5 @@
 #viewport {
     user-select: none;
-    --header-height: 100px;
-    --navigation-width: 350px;
-    --accent-color: #222a;
-    --accent-color-full: #222;
-    --background-color: #444444ff;
-    --font-color: #ddd;
     display: inline-flex;
     font-family: Arial, Helvetica, sans-serif;
     position: relative;

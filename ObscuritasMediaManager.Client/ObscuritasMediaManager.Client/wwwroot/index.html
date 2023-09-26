@@ -5,6 +5,8 @@
     <base href="/" />
     <title>Blazor WPF App</title>
     <link rel="stylesheet" href="ObscuritasMediaManager.Client.styles.css" />
+    <script src="interop.js"></script>
+    <script src="paginated-scrolling.js"></script>
 
     <style>
         html,
@@ -13,6 +15,24 @@
             margin: 0;
             overflow: hidden;
             font-family: Arial, Helvetica, sans-serif;
+            --header-height: 100px;
+            --navigation-width: 350px;
+            --accent-color: #222a;
+            --accent-color-full: #222;
+            --background-color: #444444ff;
+            --font-color: #ddd;
+        }
+
+        * ::-webkit-scrollbar {
+            background: var(--accent-color)
+        }
+
+        * ::-webkit-scrollbar-thumb {
+            background: #20625599
+        }
+
+        *[icon] {
+            -webkit-mask: url(attr('icon')) no-repeat center center / 100% 100%
         }
     </style>
 </head>

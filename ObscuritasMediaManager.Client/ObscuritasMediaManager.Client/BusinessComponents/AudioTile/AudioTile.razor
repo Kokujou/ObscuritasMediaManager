@@ -1,0 +1,29 @@
+﻿@inherits AudioTileBase
+
+
+<div class="audio-tile" style="
+--primary-color: @Track.Mood1.GetColorCode();
+--secondary-color: @Track.Mood2.GetColorCode(Track.Mood1);
+--font-color: @Track.Mood1.GetFontColorCode();
+">
+    <div id="tile-container">
+            @{
+                base.BuildRenderTree(__builder);
+            }
+        <div id="tile-description">
+            <div id="instrument-icons">
+                @foreach (var type in Track.InstrumentTypes)
+                {
+                    <div class="inline-icon instrument-type" InstrumentType="@type"></div>
+                }
+            </div>
+            <div id="audio-title">@(Track.DisplayName)</div>
+            <div id="audio-genre-section">
+                @foreach (var genre in Track.Genres)
+                {
+                    <TagLabel Text="@genre}"></TagLabel>
+                }
+            </div>
+        </div>
+    </div>
+</div>

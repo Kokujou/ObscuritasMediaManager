@@ -8,5 +8,6 @@ public enum TargetGroup
     Adults,
     Families,
     Men,
-    Women
+    Women,
+    None
 }

@@ -6,9 +6,8 @@ namespace ObscuritasMediaManager.Client.GenericComponents;
 
 public class ElementBase : ComponentBase, IDisposable
 {
-    [Parameter] public string Id { get; set; } = string.Empty;
-    [Parameter] public string Class { get; set; } = string.Empty;
     public List<Subscription> Subscriptions { get; set; } = new();
+    [Inject] public required Session Session { get; set; }
 
     public void Dispose()
     {

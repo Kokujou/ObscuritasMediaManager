@@ -1,5 +1,7 @@
 ﻿@inherits ElementBase
-<h3>PaginatedScrolling</h3>
 
+@inject IJSRuntime JS
 
-@ChildContent
+<div class="scroll-container" @ref="ScrollContainer" onscroll="@(() => CheckIfScrolledToBottom())">
+    @ChildContent  
+</div>
