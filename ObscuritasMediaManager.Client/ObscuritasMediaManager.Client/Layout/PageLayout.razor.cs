@@ -7,7 +7,7 @@ public partial class PageLayout
 {
     public static float ScaleFactorX => ((float)MainWindow.Instance!.ActualWidth) / 1920;
 
-    public static float ScaleFactorY => ((float)MainWindow.Instance!.ActualHeight) / 1080;
+    public static float ScaleFactorY => (((float)MainWindow.Instance!.ActualHeight) - 20) / 1080;
 
     public static Dictionary<object, RenderFragment> Children { get; set; } = new();
     public static EventHandler ChildrenChanged { get; set; }

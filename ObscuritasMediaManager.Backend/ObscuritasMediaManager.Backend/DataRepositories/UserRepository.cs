@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
+using System.Linq.Expressions;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -44,5 +46,11 @@ public class UserRepository
     {
         _dbContext.UserSettings.Update(updated);
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task UpdateUserSettingsAsync(
+        Expression<Func<SetPropertyCalls<UserSettingsModel>, SetPropertyCalls<UserSettingsModel>>> setCalls)
+    {
+        await _dbContext.UserSettings.ExecuteUpdateAsync(setCalls);
     }
 }

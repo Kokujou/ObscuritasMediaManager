@@ -11,7 +11,7 @@ public class Session(MediaRepository MediaRepository, MusicRepository MusicRepos
     public  Observable<string> currentPage { get; set; } = new(string.Empty);
     public  Observable<List<MediaModel>>  mediaList { get; set; } = new(new());
     public  Observable<List<InstrumentModel>> instruments { get; set; } = new(new());
-    public  Observable<UserSettingsModel> userSettings { get; set; } = new(new());
+    public  Observable<UserSettingsModel> UserSettings { get; set; } = new(new());
     public  WaveOutEvent Audio { get; set; } = new();
     public  bool initialized { get; set; } = false;
 
@@ -21,7 +21,7 @@ public class Session(MediaRepository MediaRepository, MusicRepository MusicRepos
 
         try
         {
-            mediaList.next(await MediaRepository.GetAll().ToListAsync());
+            mediaList.Next(await MediaRepository.GetAll().ToListAsync());
         }
         catch (Exception err)
         {
@@ -30,7 +30,7 @@ public class Session(MediaRepository MediaRepository, MusicRepository MusicRepos
 
         try
         {
-            instruments.next((await MusicRepository.GetInstrumentsAsync()).ToList());
+            instruments.Next((await MusicRepository.GetInstrumentsAsync()).ToList());
         }
         catch (Exception err)
         {
@@ -41,7 +41,7 @@ public class Session(MediaRepository MediaRepository, MusicRepository MusicRepos
         {
             var credentials = await Credentials.FromLocalFileAsync();
             var user = await UserRepository.LogonAsync(credentials.Username, credentials.Password);
-            userSettings.next(await UserRepository.GetSettingsAsync(user.Id));
+            UserSettings.Next(await UserRepository.GetSettingsAsync(user.Id));
         }
         catch (UnauthorizedAccessException)
         {

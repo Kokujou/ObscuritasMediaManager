@@ -2,32 +2,34 @@
 
 <div class="audio-tile-base">
     <div id="audio-tile-container"
-         onclick="@(() => Toggled.InvokeAsync())">
+         @onclick="@(() => Toggled.InvokeAsync())">
         <div id="audio-image"
              invisible="@(Visualize)"
-             icon="@(Session.Audio.PlaybackState != NAudio.Wave.PlaybackState.Playing ? Icons.Pause : Icons.Play )"
-             onclick="@(()=>ImageClicked.InvokeAsync())"></div>
+             icon="@(Paused ? Icons.Play : Icons.Pause )"
+             @onclick="@(()=>ImageClicked.InvokeAsync())"
+        @onclick:preventDefault
+        @onclick:stopPropagation></div>
         <img id="audio-visualization"
-             invisible="@(Session.Audio.PlaybackState != NAudio.Wave.PlaybackState.Playing)" 
+             invisible="@(Paused || !Visualize)" 
              src="@VisualizationData" />
         <div id="language-icon"
-             language="@(Track.Language)"
+             Language="@(Track.Language)"
              disabled="@(Disabled)"
-             onclick="@(() => ChangeLanguage.InvokeAsync())"></div>
+             @onclick="@(() => ChangeLanguage.InvokeAsync())"></div>
         <div id="nation-icon"
-             nation="@(Track.Nation)"
+             Nation="@(Track.Nation)"
              disabled="@(Disabled)"
-             onclick="@(() => ChangeLanguage.InvokeAsync())"></div>
+             @onclick="@(() => ChangeLanguage.InvokeAsync())"></div>
         <div disabled="@(Disabled)"
-             onclick="@(() => NextParticipants.InvokeAsync())"
+             @onclick="@(() => NextParticipants.InvokeAsync())"
              id="participant-count-button"
-             class="inline-icon @(Track.Participants)"></div>
+             class="inline-icon" Participants="@(Track.Participants)"></div>
 
         <svg id="instrumentation-button"
              class="inline-icon"
              viewBox="0 0 70 18"
              disabled="@(Disabled)"
-             onclick="@(() => NextInstrumentation.InvokeAsync())">
+             @onclick="@(() => NextInstrumentation.InvokeAsync())">
             <text y="80%" text-anchor="start">@(Track.Instrumentation)</text>
         </svg>
 
@@ -51,7 +53,7 @@
 
         <div id="instruments-container"
              disabled="@(Disabled)"
-             onclick="@(() => ChangeInstruments.InvokeAsync())">
+             @onclick="@(() => ChangeInstruments.InvokeAsync())">
             @if (Track.InstrumentTypes.Count() == 0)
             {
                 <a id="add-instruments-link">Add Instruments</a>
@@ -59,7 +61,7 @@
 
             @foreach (var instrument in Track.InstrumentTypes)
             {
-                <div class="instrument-icon inline-icon @(instrument)"></div>
+                <div class="instrument-icon inline-icon" InstrumentType="@(instrument)"></div>
             }
         </div>
     </div>

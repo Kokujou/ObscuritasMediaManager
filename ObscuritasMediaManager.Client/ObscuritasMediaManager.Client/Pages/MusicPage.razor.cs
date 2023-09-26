@@ -59,12 +59,12 @@ public partial class MusicPage
     {
         this.filter = filter;
 
-        var currentSettings = Session.userSettings.current();
+        var currentSettings = Session.UserSettings.Current;
         if (currentSettings is null) return;
 
-        currentSettings.MusicFilter = JsonSerializer.Serialize(filter);
-        await UserRepository.UpdateUserSettingsAsync(currentSettings);
-        Session.userSettings.next(await UserRepository.GetSettingsAsync(currentSettings.Id));
+        var filterString = JsonSerializer.Serialize(filter);
+        await UserRepository.UpdateUserSettingsAsync(x => x.SetProperty(x => x.MusicFilter, filterString));
+        Session.UserSettings.Next(await UserRepository.GetSettingsAsync(currentSettings.Id));
     }
 
     public async Task importFolder() { }
@@ -75,7 +75,14 @@ public partial class MusicPage
 
     public async Task showCreatePlaylistDialog() { }
 
-    public void changeVolume(int value) { }
+    public async Task changeVolume(int value, bool onDb)
+    {
+        Session.Audio.Volume = value / 100f;
+
+        if (!onDb) return;
+        await UserRepository.UpdateUserSettingsAsync(x => x.SetProperty(x => x.Volume, value));
+        Session.UserSettings.Next(await UserRepository.GetSettingsAsync(Session.UserSettings.Current.Id));
+    }
 
     public void jumpToActive() { }
 
@@ -93,7 +100,19 @@ public partial class MusicPage
 
     public async Task undeleteTrack(MusicModel track) { }
 
-    public async Task toggleMusic(MusicModel track) { }
+    public async Task toggleMusic(MusicModel track)
+    {
+        if (selectionMode) return;
+        if (currentTrack?.Hash != track.Hash)
+        {
+            currentTrack = track;
+            await Session.Audio.ChangeTrack(track);
+        }
+
+        if (!Session.Audio.Paused())
+            Session.Audio.Pause();
+        else if (Session.Audio.Paused()) Session.Audio.Play();
+    }
 
     public async Task startSelectionModeTimer(string trackHash)
     {
@@ -138,18 +157,20 @@ public partial class MusicPage
     {
         await base.OnInitializedAsync();
 
-        filter = new(Session.instruments.current()?.Select(x => x.Name) ?? new List<string>());
+        filter = new(Session.instruments.Current?.Select(x => x.Name) ?? new List<string>());
 
-        Subscriptions.AddRange(Session.userSettings
-                .subscribe((data) =>
+        Subscriptions.AddRange(Session.UserSettings
+                .Subscribe(async (data) =>
                         {
                             if (data.newValue is null) return;
-                            changeVolume(data.newValue.Volume);
-                            filter = JsonSerializer.Deserialize<MusicFilterOptions>(
-                                            data.newValue.MusicFilter ?? string.Empty) ??
-                                new(new List<string>());
+                            await changeVolume(data.newValue.Volume, false);
+                            try
+                            {
+                                filter = JsonSerializer.Deserialize<MusicFilterOptions>(data.newValue.MusicFilter)!;
+                            }
+                            catch { }
+                            filter ??= new(new List<string>());
                         }));
-
         await initializeData();
     }
 }

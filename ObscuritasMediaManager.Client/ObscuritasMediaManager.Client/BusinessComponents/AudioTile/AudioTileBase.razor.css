@@ -1,3 +1,7 @@
+.audio-tile-base {
+    position:relative;
+}
+
 #audio-tile-container {
     position: absolute;
     inset: 0;
@@ -35,11 +39,13 @@
 }
 
 #nation-icon {
-    mask: linear-gradient(295deg, white 0 50%, transparent 50% 100%);
+    mask: linear-gradient(115deg, white 0 50%, transparent 50% 100%);
+    -webkit-mask: linear-gradient(295deg, white 0 51%, transparent 51% 100%);
 }
 
 #language-icon {
     mask: linear-gradient(115deg, white 0 50%, transparent 50% 100%);
+    -webkit-mask: linear-gradient(115deg, white 0 51%, transparent 51% 100%);
 }
 
 

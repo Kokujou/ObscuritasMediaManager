@@ -14,11 +14,6 @@ export function renderPageRouting(routing) {
     var scaleX = getScaleFactorX();
     var scaleY = getScaleFactorY();
     return html`<style>
-            #current-page {
-                transform: scale(${scaleX}, ${scaleY});
-                transform-origin: 0 0;
-            }
-
             #viewport {
                 width: ${innerWidth}px;
                 height: ${innerHeight}px;
@@ -28,6 +23,11 @@ export function renderPageRouting(routing) {
                 overflow: hidden;
                 width: ${viewportWidth * scaleX}px;
                 height: ${viewportHeight * scaleY}px;
+            }
+
+            #current-page {
+                transform: scale(${scaleX}, ${scaleY});
+                transform-origin: 0 0;
             }
         </style>
         <div id="viewport">

@@ -1,4 +1,10 @@
 ﻿@inherits ElementBase
-<h3>RangeSlider</h3>
 
-
+<input id="slider"
+       type="range"
+@onchange="@((e) => ValueChanged.InvokeAsync(Convert.ToInt32(e.Value ?? "0")))"
+@oninput="@((e) => ValueFinalized.InvokeAsync(Convert.ToInt32(e.Value ?? "0")))"
+       step="@(Step)"
+       min="@(Min)"
+       max="@(Max)"
+       value="@(Value)" />

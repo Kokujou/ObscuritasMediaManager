@@ -46,7 +46,8 @@
             </div>
 
             <div class="option-section">
-                <RangeSlider ValueChanged="@((value) => changeVolume(value))"
+                <RangeSlider ValueChanged="@((value) => changeVolume(value, false))"
+                             ValueFinalized="@((value) => changeVolume(value, true))"
                              Step="1"
                              Min="0"
                              Max="100"
@@ -55,7 +56,7 @@
             </div>
 
             <div id="active-track-warning"
-                 invisible="@(Session.Audio.PlaybackState != NAudio.Wave.PlaybackState.Playing)"
+                 invisible="@(Session.Audio.Paused())"
                  @onclick="@(() => jumpToActive())">
                 Ein Track wird gerade abgespielt.&nbsp; <u> Klicken Sie hier </u> &nbsp;um zum aktiven Track zu
                 springen.
@@ -76,7 +77,7 @@
                     {
                         <div class="audio-link-container">
                             <a class="audio-tile-link"
-                               onclick="@(()=>NavigationManager.NavigateTo($"music-playlist-page?guid={playlist.Id}"))">
+                            @onclick="@(()=>NavigationManager.NavigateTo($"music-playlist-page?guid={playlist.Id}"))">
                                 <PlaylistTile Playlist="@(playlist)"
                                               LocalExport="@(() => exportPlaylist("local", playlist))"
                                               GlobalExport="@(() => exportPlaylist("global", playlist))"
@@ -101,8 +102,8 @@
                             @onpointerup="@(() => stopSelectionModeTimer(track.Hash))">
                                 <AudioTile Track="@(track)"
                                            Visualize="@(currentTrack?.Path == track.Path)"
-                                           Paused="@(Session.Audio.PlaybackState != NAudio.Wave.PlaybackState.Playing || currentTrack?.Path != track.Path)"
-                                           MusicToggled="@(() => toggleMusic(track))"
+                                           Paused="@(Session.Audio.Paused() || currentTrack?.Path != track.Path)"
+                                           ImageClicked="@(() => toggleMusic(track))"
                                            SoftDelete="@(() => softDeleteTrack(track))"
                                            HardDelete="@(() => hardDeleteTrack(track))"
                                            Restore="@(() => undeleteTrack(track))"></AudioTile>

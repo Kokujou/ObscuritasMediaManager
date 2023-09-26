@@ -6,11 +6,11 @@ import { ContentWarning } from '../../../obscuritas-media-manager-backend-client
  */
 export function registerContentWarnings() {
     return html`<style>
-        ${Object.values(ContentWarning)
+        @(Object.values(ContentWarning)
             .map(
                 (warning) => `
-            *[content-warning='${warning}'] {
-                mask: url("${getContentWarningIconPath(warning)}") 100% 100% / 100% 100%;
+            *[content-warning='@(warning}'] {
+                mask: url("@(getContentWarningIconPath(warning))") 100% 100% / 100% 100%;
             }
         `
             )

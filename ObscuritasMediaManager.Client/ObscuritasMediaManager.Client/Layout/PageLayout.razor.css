@@ -28,8 +28,8 @@
 #layout-content {
     animation: fade-in 1s normal ease-in;
     mask-size: 100% 500%;
-    mask-image: linear-gradient(to top, #0000 25%, #000 75%);
     -webkit-mask-size: 100% 500%;
+    mask-image: linear-gradient(to top, #0000 25%, #000 75%);
     -webkit-mask-image: linear-gradient(to top, #0000 25%, #000 75%);
 }
 

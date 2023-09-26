@@ -3,17 +3,20 @@ using System.Linq;
 
 namespace ObscuritasMediaManager.Client.Data;
 
-public class Observable<T>
+public class Observable<T> where T : notnull
 {
-    public T? currentValue { get; set; }
     public List<Subscription> subscriptions = new();
+
+    public T Current => currentValue;
+
+    private T currentValue { get; set; }
 
     public Observable(T initialValue)
     {
         currentValue = initialValue;
     }
 
-    public Subscription subscribe(Action<(T? oldValue, T? newValue)> observer)
+    public Subscription Subscribe(Action<(T? oldValue, T? newValue)> observer)
     {
         var subscription = new Subscription((oldValue, newValue) => observer(((T?)oldValue, (T?)newValue)),
         (s) => subscriptions.Remove(s));
@@ -29,7 +32,7 @@ public class Observable<T>
         return subscription;
     }
 
-    public void next(T value)
+    public void Next(T value)
     {
         var oldValue = currentValue;
         currentValue = value;
@@ -40,10 +43,5 @@ public class Observable<T>
                 subscription.observer(currentValue, oldValue);
             }
             catch { }
-    }
-
-    public T? current()
-    {
-        return currentValue;
     }
 }

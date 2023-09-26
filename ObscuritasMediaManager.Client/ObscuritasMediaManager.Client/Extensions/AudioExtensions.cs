@@ -10,4 +10,16 @@ public static class AudioExtensions
     {
         return null;
     }
+
+    public static async Task ChangeTrack(this WaveOutEvent audio, MusicModel track)
+    {
+        var mainOutputStream = new MediaFoundationReader(track.Path);
+        var volumeStream = new WaveChannel32(mainOutputStream);
+        audio.Init(volumeStream);
+    }
+
+    public static bool Paused(this WaveOutEvent audio)
+    {
+        return audio.PlaybackState != PlaybackState.Playing;
+    }
 }

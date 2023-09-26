@@ -6,6 +6,7 @@ namespace ObscuritasMediaManager.Client.BusinessComponents.AudioTile;
 
 public partial class AudioTileBase
 {
+    [Parameter] public bool Paused { get; set; }
     [Parameter] public bool Visualize { get; set; }
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public required MusicModel Track { get; set; }
@@ -56,7 +57,7 @@ public partial class AudioTileBase
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Session.instruments.subscribe((_) => StateHasChanged());
+        Session.instruments.Subscribe((_) => StateHasChanged());
     }
 
     protected override bool ShouldRender()

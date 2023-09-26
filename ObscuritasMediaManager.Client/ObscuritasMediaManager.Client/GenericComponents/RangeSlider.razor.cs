@@ -9,4 +9,5 @@ public partial class RangeSlider
     [Parameter] public int Step { get; set; } = 1;
     [Parameter] public int Value { get; set; } = 0;
     [Parameter] public EventCallback<int> ValueChanged { get; set; }
+    [Parameter] public EventCallback<int> ValueFinalized { get; set; }
 }

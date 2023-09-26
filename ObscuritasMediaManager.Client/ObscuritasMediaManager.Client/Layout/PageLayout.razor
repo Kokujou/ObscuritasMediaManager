@@ -9,8 +9,8 @@
     }
 </style>
 
-<div id="viewport" style="width: 100%; height: 100%">
-    <div id="page-container" style="width: @(1920 * ScaleFactorX)px; height: @(1080 * ScaleFactorY)px ;">
+<div id="viewport" style="width: @(MainWindow.Instance!.ActualWidth)px; height: @(MainWindow.Instance!.ActualHeight)px">
+    <div id="page-container" style="width: @(1920)px; height: @(1080)px ;">
         <div id="current-page" style="transform: scale(@(ScaleFactorX.ToString(System.Globalization.CultureInfo.InvariantCulture)), @(ScaleFactorY.ToString(System.Globalization.CultureInfo.InvariantCulture)))">
             <div id="header">
                 <div id="logo-container">
@@ -29,7 +29,7 @@
                             <div id="nav-section-links">
                                 @foreach (Page route in Enum.GetValues(typeof(Page)))
                                 {
-                                    <div onclick="@(()=>NavigationManager.NavigateTo(@route.ToString()))" class="nav-link">@(route)</div>
+                                    <div @onclick="@(()=>NavigationManager.NavigateTo(@route.ToString()))" class="nav-link">@(route)</div>
                                 }
                             </div>
                         </div>

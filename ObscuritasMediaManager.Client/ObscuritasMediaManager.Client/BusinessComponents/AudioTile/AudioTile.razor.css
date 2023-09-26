@@ -53,14 +53,18 @@
     margin-top: 10px;
     overflow: hidden;
     mask: linear-gradient(to bottom, black 0% 50%, transparent 100%);
+    -webkit-mask: linear-gradient(to bottom, black 0% 50%, transparent 100%);
     mask-size: 100% 100%;
+    -wekit-mask-size: 100% 100%;
     mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
     transition: all 1s ease-out;
 }
 
 :host(:hover) #audio-genre-section {
     max-height: 150px;
     mask-size: 100% 300%;
+    -webkit-mask-size: 100% 300%;
 }
 
 #audio-genre-section * {
