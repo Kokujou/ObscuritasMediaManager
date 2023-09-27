@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Components;
+using ObscuritasMediaManager.Client.GenericComponents;
 
 namespace ObscuritasMediaManager.Client.Layout;
 
@@ -9,8 +10,15 @@ public partial class PageLayout
 
     public static float ScaleFactorY => (((float)MainWindow.Instance!.ActualHeight) - 20) / 1080;
 
-    public static Dictionary<object, RenderFragment> Children { get; set; } = new();
+    public static List<DynamicallyRenderedComponent> Children { get; set; } = new();
     public static EventHandler ChildrenChanged { get; set; }
+
+    public static List<T> GetComponents<T>()
+    {
+        return Children.Where(x => (x.ComponentType == typeof(T)) && (x.Instance?.Instance is T))
+            .Select(x => (T)x.Instance!.Instance!)
+            .ToList();
+    }
 
     public PageLayout()
     {

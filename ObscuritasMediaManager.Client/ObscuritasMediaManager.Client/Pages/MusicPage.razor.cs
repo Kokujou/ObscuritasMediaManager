@@ -121,7 +121,7 @@ public partial class MusicPage
         selectedHashes.Add(trackHash);
     }
 
-    public void stopSelectionModeTimer(string trackHash)
+    public void stopSelectionModeTimer()
     {
         selectionCancellation.Cancel();
     }

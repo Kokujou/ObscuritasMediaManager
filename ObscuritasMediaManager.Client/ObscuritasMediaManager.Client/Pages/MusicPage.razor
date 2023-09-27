@@ -99,7 +99,7 @@
                                disabled="@selectionMode"
                             @onclick="@(()=>NavigationManager.NavigateTo($"music-playlist-page?track={track.Hash}"))"
                             @onpointerdown="@(() => startSelectionModeTimer(track.Hash))"
-                            @onpointerup="@(() => stopSelectionModeTimer(track.Hash))">
+                            @onpointerup="@(() => stopSelectionModeTimer())">
                                 <AudioTile Track="@(track)"
                                            Visualize="@(currentTrack?.Path == track.Path)"
                                            Paused="@(Session.Audio.Paused() || currentTrack?.Path != track.Path)"

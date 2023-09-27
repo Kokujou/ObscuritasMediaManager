@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace ObscuritasMediaManager.Client.Extensions;
 
-public static class  IconExtensions
+public static class IconExtensions
 {
     public static string GetIconUrl<T>(this T enumValue) where T : Enum
     {

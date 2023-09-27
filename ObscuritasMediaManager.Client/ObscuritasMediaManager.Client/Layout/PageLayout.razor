@@ -4,8 +4,8 @@
 @inject Session Session
 
 <style>
-     *[icon]{
-        background:black;
+    *[icon] {
+        background: black;
     }
 </style>
 
@@ -37,7 +37,9 @@
                 </div>
             </div>
 
-            <div id="layout-content">@Body</div>
+            <div id="layout-content">
+                @Body
+            </div>
 
         </div>
     </div>
@@ -45,5 +47,5 @@
 
 @foreach (var child in Children)
 {
-    @child.Value
+    <DynamicComponent @key="@child.Id" Parameters="@child.Parameters" Type="@child.ComponentType" @ref="@child.Instance"></DynamicComponent>
 }

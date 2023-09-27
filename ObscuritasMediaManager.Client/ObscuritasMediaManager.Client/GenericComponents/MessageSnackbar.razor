@@ -1,0 +1,9 @@
+﻿@inherits ElementBase
+
+@inject IJSRuntime JS
+
+<div @ref="HostReference" id="message-snackbar" Deleted="@Deleted"
+     style="transition-duration: @(FadeAnimationDuration.Milliseconds); background-color: @BackgroundColor; top: @(Top)px; z-index: @(Top)">
+    <div id="message-text">@Message</div>
+    <div id="x-button" @onclick="@(() => Dismiss())">&times;</div>
+</div>

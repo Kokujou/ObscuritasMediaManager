@@ -1,4 +1,7 @@
-function spawnElement(element) {
-    document.body.appendChild(element);
-    return true;
+/**
+ * 
+ * @param {HTMLElement} element
+ */
+function getElementHeight(element) {
+    return element.getBoundingClientRect().height;
 }
