@@ -10,7 +10,7 @@ function scrollToTop(scrollContainer) {
  * @param {HTMLElement} child
  */
 function scrollToChild(scrollContainer, child) {
-    scrollContainer.scrollTo({top: child.offsetTop + child.offsetHeight - scrollContainer.offsetHeight});
+    scrollContainer.scrollTo({ top: child.offsetTop + child.offsetHeight - scrollContainer.offsetHeight });
 }
 
 /**

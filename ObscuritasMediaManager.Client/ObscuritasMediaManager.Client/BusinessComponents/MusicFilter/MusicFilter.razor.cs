@@ -6,19 +6,38 @@ namespace ObscuritasMediaManager.Client.BusinessComponents.MusicFilter;
 
 public partial class MusicFilter
 {
-    [Parameter] public MusicFilterOptions filter { get; set; } = new(new List<string>());
-    [Parameter] public Func<MusicModel, object>? sortingProperty { get; set; }
-    [Parameter] public SortDirection? sortingDirection { get; set; }
-    [Parameter] public EventCallback<MusicFilterOptions> filterChanged { get; set; }
-
-    public void changeSorting(Func<MusicModel, object>? property = null, SortDirection? direction = null)
+    public static readonly List<Func<MusicModel, object>> SortableProperties = new()
     {
-        if (property is not null) sortingProperty = property;
-        if (direction is not null) sortingDirection = direction;
-    }
+        x => x.Name,
+        x => x.Author,
+        x => x.Source,
+        x => x.Nation,
+        x => x.Language,
+        x => x.Rating,
+        x => x.Mood1,
+        x => x.Instrumentation,
+        x => x.Participants
+    };
+
+    [Parameter] public MusicFilterOptions filter { get; set; } = new(new List<string>());
+    [Parameter] public EventCallback<MusicFilterOptions> filterChanged { get; set; }
 
     public bool canFilterInstrumentType(InstrumentType type)
     {
         return !filter.instrumentTypes.required.Any((x) => x == type);
+    }
+
+    public void changeFilter(Action<MusicFilterOptions> action)
+    {
+        action(filter);
+        filterChanged.InvokeAsync(filter);
+    }
+
+    public void showInstrumentFilterPopup() { }
+
+    public void resetAllFilters()
+    {
+        filter = new MusicFilterOptions(Session.instruments.Current.Select(x => x.Name));
+        filterChanged.InvokeAsync(filter);
     }
 }

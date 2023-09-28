@@ -24,10 +24,10 @@ public partial class MusicPage
         get
         {
             var result = MusicFilterService.filterPlaylists(playlists, filter);
-            if (sortingProperty is null) return result;
-            if ((sortingDirection is null) || (sortingDirection == SortDirection.Ascending))
-                return result.OrderBy(x => sortingProperty(x));
-            return result.OrderByDescending(x => sortingProperty(x));
+            if (filter?.MusicSortProperty is null) return result;
+            if ((filter?.SortDirection is null) || (filter.SortDirection == SortDirection.Ascending))
+                return result.OrderBy(x => filter.MusicSortProperty(x.ToMusicForDisplay()));
+            return result.OrderByDescending(x => filter.MusicSortProperty(x.ToMusicForDisplay()));
         }
     }
 
@@ -36,10 +36,10 @@ public partial class MusicPage
         get
         {
             var result = MusicFilterService.filterTracks(musicTracks, filter);
-            if (sortingProperty is null) return result;
-            if ((sortingDirection is null) || (sortingDirection == SortDirection.Ascending)) 
-                return result.OrderBy(x => sortingProperty(x));
-            return result.OrderByDescending(x => sortingProperty(x));
+            if (filter?.MusicSortProperty is null) return result;
+            if ((filter?.SortDirection is null) || (filter.SortDirection == SortDirection.Ascending)) 
+                return result.OrderBy(x => filter.MusicSortProperty(x));
+            return result.OrderByDescending(x => filter.MusicSortProperty(x));
         }
     }
 
@@ -49,8 +49,6 @@ public partial class MusicPage
     private List<PlaylistModel> playlists { get; set; } = new();
     private List<string> selectedHashes { get; set; } = new();
     private int currentPage { get; set; } = 10;
-    private SortDirection? sortingDirection { get; set; } = SortDirection.Ascending;
-    private Func<object, object>? sortingProperty { get; set; }
     private bool loading { get; set; } = true;
     private bool selectionMode { get; set; } = false;
     private CancellationTokenSource selectionCancellation { get; set; } = new();

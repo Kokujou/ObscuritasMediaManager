@@ -17,7 +17,7 @@
                    id="username"
                    type="text"
                    autocomplete="username"
-                   oninput="javascript:this.dispatchEvent(new Event('change'))"
+                   oninput="javascript:this.dispatchEvent(new Event("change"))"
                    onchange="@((ChangeEventArgs e) => (username = (string?)e.Value ?? string.Empty))" />
         </div>
 
@@ -27,8 +27,8 @@
                    id="password"
                    type="password"
                    autocomplete="current-password"
-                   oninput="javascript:this.dispatchEvent(new Event('change'))"
-                    onchange="@((ChangeEventArgs e) => (password = (string?)e.Value ?? string.Empty))" />
+                   @oninput="@((e) => password = (string?)e.Value ?? string.Empty)" 
+                   @onchange="@((e) => password = (string?)e.Value ?? string.Empty)" />
         </div>
 
         <input id="submit-button" type="submit" value="Login" />

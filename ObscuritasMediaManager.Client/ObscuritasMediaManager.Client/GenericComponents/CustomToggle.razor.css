@@ -1,0 +1,51 @@
+#custom-toggle {
+    position: relative;
+    display: block;
+    background-color: var(--untoggled-color, #0007);
+    border-radius: 7px;
+    --width: 60px;
+    --height: 30px;
+    height: var(--height);
+    min-width: var(--width);
+    cursor: pointer;
+    transition: background-color 1s ease;
+    filter: saturate(1.5);
+    box-shadow: 0 0 5px black;
+}
+
+
+
+#slider {
+    position: absolute;
+    display: inline-block;
+    background-color: var(--slider-color, #333);
+    width: calc(var(--height) - 10px);
+    height: calc(var(--height) - 10px);
+    margin: 5px;
+    border-radius: 5px;
+    transition: all 1s ease;
+}
+
+#custom-toggle[threeValues] {
+    --width: 90px;
+}
+
+#custom-toggle[state="Ignore"] {
+    background-color: var(--toggled-color, var(--background-color));
+}
+
+    #custom-toggle[state="Ignore"] #slider {
+        margin-left: calc(var(--width) / 2 - var(--height) / 2 + 5px);
+        rotate: 90deg;
+    }
+
+#custom-toggle[state="Require"],
+#custom-toggle:not([threeValues])[toggled] {
+    background-color: var(--toggled-color, var(--background-color));
+}
+
+    #custom-toggle[state="Require"] #slider,
+    #custom-toggle:not([threeValues])[state="Ignore"] #slider {
+        margin-left: calc(var(--width) - var(--height) + 5px);
+        rotate: 180deg;
+    }

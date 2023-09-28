@@ -7,7 +7,7 @@
     top: 0;
     overflow-y: auto;
     overflow-x: auto;
-    background: linear-gradient(var(--background-color), var(--background-color)), url('resources/images/background.jpg');
+    background: linear-gradient(var(--background-color), var(--background-color)), url("resources/images/background.jpg");
     background-position: 0 0;
     background-blend-mode: overlay;
     background-size: 100% 100%;

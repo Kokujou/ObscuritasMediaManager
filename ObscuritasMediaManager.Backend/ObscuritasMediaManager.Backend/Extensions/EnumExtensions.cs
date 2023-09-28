@@ -9,4 +9,13 @@ public static class EnumExtensions
             return (T)result;
         return (T)(object)0;
     }
+
+    public static T NextValue<T>(this T value) where T : struct, Enum
+    {
+        var values = Enum.GetValues<T>().ToList();
+        var currentIndex = values.IndexOf(value);
+        currentIndex++;
+        if (currentIndex >= values.Count) currentIndex = 0;
+        return values[currentIndex];
+    }
 }

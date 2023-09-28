@@ -26,7 +26,7 @@ public class MusicFilterOptions
     public CheckboxState showDeleted { get; set; } = CheckboxState.Forbid;
     public CheckboxState showPlaylists { get; set; } = CheckboxState.Ignore;
     public SortDirection? SortDirection { get; set; }
-    public Func<object, object>? SortProperty { get; set; }
+    public Func<MusicModel, object>? MusicSortProperty { get; set; }
 
     public MusicFilterOptions(IEnumerable<string> instrumentNames)
     {

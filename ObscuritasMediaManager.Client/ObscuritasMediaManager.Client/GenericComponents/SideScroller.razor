@@ -1,0 +1,21 @@
+﻿@inherits ElementBase
+
+<div id="scroll-container" style="position:relative; display:inline-block;">
+    <a class="arrow-link @(canScrollLeft ? "" : "disabled")"
+       id="left-arrow"
+       @onclick="@(() => scrollToLeft())">
+        ◀
+    </a>
+    <div id="content-container" @onmousedown:preventDefault>
+        <div id="item-container">
+            <div class="inner-space" id="left-space"></div>
+            @ChildContent
+            <div class="inner-space" id="right-space"></div>
+        </div>
+    </div>
+    <a class="arrow-link @(canScrollRight ? "" : "disabled")"
+       id="right-arrow"
+       @onclick="@(() => scrollToRight())">
+        ▶
+    </a>
+</div>

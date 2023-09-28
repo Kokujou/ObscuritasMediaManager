@@ -61,7 +61,7 @@
     transition: all 1s ease-out;
 }
 
-:host(:hover) #audio-genre-section {
+#audio-tile:hover #audio-genre-section {
     max-height: 150px;
     mask-size: 100% 300%;
     -webkit-mask-size: 100% 300%;

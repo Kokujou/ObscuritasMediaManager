@@ -12,7 +12,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
     private readonly UserRepository _userRepository;
 
     public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger,
-                                      UrlEncoder encoder, ISystemClock clock, UserRepository userRepository)
+        UrlEncoder encoder, ISystemClock clock, UserRepository userRepository)
         : base(options, logger, encoder, clock)
     {
         _userRepository = userRepository;

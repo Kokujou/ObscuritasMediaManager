@@ -40,7 +40,7 @@ public class PlaylistModel
     public string Name { get; set; }
     public string Author { get; set; }
     public string Image { get; set; }
-    public int Rating { get; set; }
+    public byte Rating { get; set; }
     public Nation Language { get; set; }
     public Nation Nation { get; set; }
     public IEnumerable<MusicGenre> Genres { get; set; } = new List<MusicGenre>();
@@ -53,6 +53,22 @@ public class PlaylistModel
     {
         get => TrackMappings?.OrderBy(x => x.Order)?.Select(x => x.Track) ?? Enumerable.Empty<MusicModel>();
         set => CreateMappingsFromTracks(value);
+    }
+
+    public MusicModel ToMusicForDisplay()
+    {
+        return new MusicModel
+               {
+                   Name = Name,
+                   Author = Author,
+                   Source = null,
+                   Nation = Nation,
+                   Language = Language,
+                   Rating = Rating,
+                   Mood1 = Mood.Unset,
+                   Instrumentation = Instrumentation.Unset,
+                   Participants = Participants.Unset
+               };
     }
 
     private void CreateMappingsFromTracks(IEnumerable<MusicModel> tracks)

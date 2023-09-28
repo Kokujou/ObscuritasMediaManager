@@ -12,12 +12,8 @@
 
 <div id="music-page">
     <div id="search-panel-container">
-        <div id="music-filter">
             <MusicFilter filter="@(filter)"
-                         sortingProperty="@(sortingProperty)"
-                         sortingDirection="@(sortingDirection)"
                          filterChanged="UpdateFilterAsync"></MusicFilter>
-        </div>
         <div id="result-count-label">
             @(filteredTracks.Count()) von @(musicTracks.Count) Musik-Tracks
         </div>
@@ -30,19 +26,19 @@
             </div>
             <div class="option-section" id="import-section">
                 <a id="cleanup-tracks"
-                   @onclick="@(() => cleanupTracks())"
+                @onclick="@(() => cleanupTracks())"
                    tooltip="Defekte Tracks bereinigen"></a>
             </div>
             <div class="option-section" id="playlist-section">
                 <a id="add-to-playlist"
                    tooltip="Zu einer Playlist hinzufügen"
-                   @onclick="@(() => showPlaylistSelectionDialog())"></a>
+                @onclick="@(() => showPlaylistSelectionDialog())"></a>
                 <a id="create-playlist"
                    tooltip="Playlist erstellen"
-                   @onclick="@(() => showCreatePlaylistDialog())"></a>
+                @onclick="@(() => showCreatePlaylistDialog())"></a>
                 <a id="play-playlist"
                    tooltip="Ausgewählte Tracks abspielen"
-                   @onclick="@(() => PlaySelected())"></a>
+                @onclick="@(() => PlaySelected())"></a>
             </div>
 
             <div class="option-section">
@@ -57,7 +53,7 @@
 
             <div id="active-track-warning"
                  invisible="@(Session.Audio.Paused())"
-                 @onclick="@(() => jumpToActive())">
+            @onclick="@(() => jumpToActive())">
                 Ein Track wird gerade abgespielt.&nbsp; <u> Klicken Sie hier </u> &nbsp;um zum aktiven Track zu
                 springen.
             </div>
@@ -93,7 +89,7 @@
                                 <input type="checkbox"
                                        class="audio-select"
                                        ?checked="@(selectedHashes.Contains(track.Hash))"
-                                       @change="@(() => selectTrack(track.Hash))" />
+                                       @onchange="@(() => selectTrack(track.Hash))" />
                             }
                             <a class="audio-tile-link"
                                disabled="@selectionMode"

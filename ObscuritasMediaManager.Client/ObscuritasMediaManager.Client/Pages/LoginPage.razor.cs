@@ -1,6 +1,6 @@
 
 using Microsoft.AspNetCore.Components;
-using System.Windows;
+using ObscuritasMediaManager.Client.GenericComponents;
 
 namespace ObscuritasMediaManager.Client.Pages;
 
@@ -21,7 +21,7 @@ public partial class LoginPage
         }
         catch
         {
-            MessageBox.Show("Benutzername oder Password sind falsch", "Fehler", MessageBoxButton.OK);
+            MessageSnackbar.Popup("Benutzername oder Password sind falsch", MessageSnackbar.Type.Error);
         }
     }
 }

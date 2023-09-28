@@ -1,0 +1,7 @@
+﻿@inherits ElementBase
+
+<div id="tri-value-checkbox" value="@value" disabled="@disabled">
+    <div class="checkbox" @onclick="@(() => NextState())">
+        @ChildContent
+    </div>
+</div>

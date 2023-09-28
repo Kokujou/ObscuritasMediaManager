@@ -1,0 +1,23 @@
+﻿@inherits ElementBase
+
+@if (vertical)
+{
+    <style>
+        #star-container {
+            flex-direction: column !important;
+        }
+    </style>
+}
+<div id="star-container" sword="@swords">
+    @foreach (var x in Enumerable.Range(0, max))
+    {
+        <div class="star"
+             hovered="@(singleSelect && hoveredRating > x)"
+             selected="@(values.Contains(x + 1))"
+        @onclick="@(() => toggleRating(x + 1))"
+        @onpointerover="@(() => hoveredRating = x + 1)"
+        @onpointerout="@(() => hoveredRating = -1)">
+            @(swords ? "⚔" : "★")
+        </div>
+    }
+</div>

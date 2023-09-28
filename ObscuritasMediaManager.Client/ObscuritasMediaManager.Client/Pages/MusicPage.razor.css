@@ -25,7 +25,7 @@
     border-radius: 20px;
 }
 
-#music-filter {
+#music-filter::deep #music-filter {
     flex: auto;
 }
 
