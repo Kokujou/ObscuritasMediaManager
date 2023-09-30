@@ -9,7 +9,7 @@ public class ElementBase : ComponentBase, IDisposable
     public List<Subscription> Subscriptions { get; set; } = new();
     [Inject] public required Session Session { get; set; }
 
-    public void Dispose()
+    public virtual void Dispose()
     {
         foreach (var subscription in Subscriptions) subscription.unsubscribe();
     }

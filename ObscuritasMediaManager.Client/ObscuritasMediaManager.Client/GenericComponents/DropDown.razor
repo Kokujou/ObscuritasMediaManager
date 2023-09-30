@@ -12,7 +12,7 @@
         })">
         <div id="caption-container">
             @(caption)
-            @if (!string.IsNullOrEmpty(caption))
+            @if (string.IsNullOrEmpty(caption))
             {
                 <div id="empty-text-placeholder">empty</div>
             }
@@ -53,6 +53,6 @@
             </div>
         }
         </div>
+        <div class="dropdown-icon-container @(showDropdown ? "dropped-down" : "")">></div>
     </div>
-    <div class="dropdown-icon-container @(showDropdown ? "dropped-down" : "")">></div>
 </div>

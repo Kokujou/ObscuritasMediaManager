@@ -22,7 +22,7 @@
     color: var(--font-color);
 }
 
-::deep .audio-tile-base {
+::deep #audio-tile-base {
     min-height: var(--audio-tile-min-height);
     margin-bottom: 10px;
 }

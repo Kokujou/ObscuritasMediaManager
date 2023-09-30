@@ -1,0 +1,164 @@
+﻿@page "/music-playlist-page"
+@using NAudio.Utils;
+@using ObscuritasMediaManager.Backend.DataRepositories;
+@using ObscuritasMediaManager.Backend.Extensions;
+@using System.Linq;
+@inherits ElementBase
+
+@inject NavigationManager NavigationManager
+@inject MusicRepository MusicRepository
+@inject PlaylistRepository PlaylistRepository
+@inject UserRepository UserRepository
+
+<div id="music-player-container" switch-second-mood="@SwitchSecondMood"  style="
+ --primary-color: @((updatedTrack.Mood1).GetColorCode());
+--secondary-color: @((SecondaryMood).GetColorCode());
+--font-color: @((updatedTrack.Mood1).GetFontColorCode());
+--secondary-font-color: @((SecondaryMood).GetFontColorCode());">
+    <div id="Complete-checkbox">
+        <label for="Complete-check" class="label">Complete:</label>
+        <input type="checkbox"
+               id="Complete-check"
+               checked="@(updatedTrack.Complete)"
+               oninput="this.dispatchEvent(new Event('change'))"
+        @onchange="@(() => changeProperty(x=>x.Complete, !updatedTrack.Complete))" />
+    </div>
+    <div id="current-track-container">
+        <div id="mood-switcher-container" disabled="@(updatedTrack.Complete)">
+            <div id="mood-tabs">
+                <div id="first-mood" class="mood-tab" @onclick="@(() => SwitchSecondMood = false)"></div>
+                <div id="second-mood" class="mood-tab" @onclick="@(() => SwitchSecondMood = true)"></div>
+            </div>
+            <div id="mood-switcher" disabled="@(updatedTrack.Complete)">
+                <div id="mood-container">
+                    <ScrollSelect Options="@(Enum.GetValues<Mood>())"
+                                  Value="@(SwitchSecondMood ? updatedTrack.Mood2 : updatedTrack.Mood1)"
+                                  ValueChanged="@((e) => changeProperty(SwitchSecondMood ? x=>x.Mood2 : x=>x.Mood2, e))"
+                                  T="Mood">
+                    </ScrollSelect>
+                </div>
+            </div>
+        </div>
+
+        <div id="audio-tile-container">
+            <AudioTileBase Disabled="@(updatedTrack.Complete)"
+                           Track="@((updatedTrack))"
+                           Paused="@(Session.Audio.Paused())"
+                                          Visualize
+                            ImageClicked="@(() => toggleCurrentTrack())"
+                            ChangeLanguage="@(() => showLanguageSwitcher())"
+                            NextParticipants="@(() =>
+                                changeProperty(
+                                    x=>x.Participants,
+                                    updatedTrack.Participants.NextValue()
+                                ))"
+                            NextInstrumentation="@(() =>
+                                changeProperty(
+                                    x=>x.Instrumentation,
+                                    updatedTrack.Instrumentation.NextValue()
+                                ))"
+                            ChangeRating="@((e) => changeProperty(x=>x.Rating, e))"
+                            ChangeInstruments="@(() => openInstrumentsDialog())"></AudioTileBase>
+             <div id="show-lyrics-link" @onclick="@(() => showLyrics())">Show Lyrics</div>
+         </div>
+         <div id="audio-control-container">
+             <input type="text"
+                    id="audio-title"
+                    class="editable-label"
+                    disabled="@(updatedTrack.Complete)"
+                    value=" @(updatedTrack.Name)"
+             @onchange="@((e) => changeProperty(x => x.Name, e.Value))" />
+
+             <div id="audio-subtitle">
+                 <input type="text"
+                        id="audio-author"
+                        class="editable-label"
+                        disabled="@(updatedTrack.Complete)"
+                        value="@(updatedTrack.Author)"
+                        oninput="this.dispatchEvent(new Event('change')"
+                 @onchange="@((e) => changeProperty(x=>x.Author, e.Value))" />
+                 <div id="subtitle-separator">-</div>
+                 <input type="text"
+                        id="audio-source"
+                        class="editable-label"
+                        value="@(updatedTrack.Source ?? "---")"
+                        disabled="@(updatedTrack.Complete)"
+                        oninput="this.dispatchEvent(new Event('change')"
+                 @onchange="@((e) => changeProperty(x=>x.Source, e.Value))" />
+             </div>
+             <div id="genre-section">
+                 @foreach (var genre in updatedTrack.Genres)
+                {
+                    <TagLabel Text="@(genre.ToString())"
+                              Disabled="@(updatedTrack.Complete)"
+                              Removed="@(() => changeProperty(x=>x.Genres, updatedTrack.Genres.Where(y=>y != genre)))"></TagLabel>
+                }
+                @if (!updatedTrack.Complete)
+                {
+                    <TagLabel CreateNew
+                               Autocomplete="@(autocompleteGenres.Select(x=>x.ToString()))"
+                               TagCreated="@((genre) => changeProperty(x=>x.Genres, updatedTrack.Genres.Append(Enum.Parse<MusicGenre>(genre))))"></TagLabel>
+                }
+            </div>
+            <div id="track-position-container">
+                <div id="track-position-label">@(Session.GetCurrentTrackPosition().ToString())</div>
+                <div id="track-position">
+                    <RangeSlider ValueChanged="@((e) => Session.AudioReader!.CurrentTime = TimeSpan.FromMilliseconds(e))"
+                                 Value="@((int)Session.Audio.GetPositionTimeSpan().TotalMilliseconds)"
+                                 Min="0"
+                                 Max="@((int)(Session.GetCurrentTrackDuration().TotalMilliseconds))"
+                                 Step="1000 "></RangeSlider>
+                </div>
+                <div id="track-position-label">@(Session.GetCurrentTrackDuration().ToString())</div>
+            </div>
+            <div id="audio-controls">
+                <div id="previous-track-button" @onclick="@(() => changeTrackBy(-1))" class="audio-icon"></div>
+                <div id="toggle-track-button"
+                @onclick="@(() => toggleCurrentTrack())"
+                     class="audio-icon @(Session.Audio.Paused() ? "paused" : "playing")"></div>
+                <div id="next-track-button" @onclick="@(() => changeTrackBy(1))" class="audio-icon"></div>
+
+                <div id="change-volume-container">
+                    <div id="change-volume-button" class="audio-icon"></div>
+                    <div id="change-volume">
+                        <RangeSlider ValueFinalized="@((e) => changeVolume(e,true))"
+                                     ValueChanged="@((e) => changeVolume(e,false))"
+                                     Step="1"
+                                     Min="0"
+                                     Max="100"
+                                     Value="@((int)(Session.Audio.Volume * 100))"></RangeSlider>
+                    </div>
+                </div>
+            </div>
+            <div id="change-path-container">
+                <input disabled id="path-input" value="@("file:\\\\\\" + updatedTrack.Path)" />
+                @if (!updatedTrack.Complete)
+                {
+                    <div id="change-path-button"
+                         class="inline-icon"
+                    @onclick="@(()=>changeCurrentTrackPath())"></div>
+                }
+            </div>
+        </div>
+    </div>
+    @if (playlist.IsTemporary)
+    {
+        <div id="edit-playlist-link" @onclick="@(() => openEditPlaylistDialog())">
+            <div id="edit-playlist-icon"></div>
+            <div id="edit-playlist-text">Zu Playlist befördern</div>
+        </div>
+    }
+    else
+    {
+        <div id="edit-playlist-link" @onclick="@(() => openEditPlaylistDialog())">
+            <div id="edit-playlist-icon"></div>
+            <div id="edit-playlist-text">Playlist bearbeiten</div>
+        </div>
+    }
+    <div id="media-playlist-container">
+        <MediaPlaylist Items="@(playlist.Tracks)"
+                       Index="@(currentTrackIndex)"
+                       IndexChanged="@((index) => changeTrack(index))"
+                       Randomize="@(() => randomize())"></MediaPlaylist>
+    </div>
+</div>

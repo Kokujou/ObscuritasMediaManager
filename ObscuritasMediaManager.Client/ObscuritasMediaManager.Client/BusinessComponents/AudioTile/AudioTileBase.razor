@@ -1,17 +1,20 @@
 ﻿@inherits ElementBase
 
-<div class="audio-tile-base">
+@inject IJSRuntime JS
+
+<div id="audio-tile-base">
     <div id="audio-tile-container"
          @onclick="@(() => Toggled.InvokeAsync())">
         <div id="audio-image"
-             invisible="@(Visualize)"
+             invisible="@(Visualize && !Paused)"
              icon="@(Paused ? Icons.Play : Icons.Pause )"
              @onclick="@(()=>ImageClicked.InvokeAsync())"
         @onclick:preventDefault
         @onclick:stopPropagation></div>
-        <img id="audio-visualization"
+        <canvas id="audio-visualization"
              invisible="@(Paused || !Visualize)" 
-             src="@VisualizationData" />
+             @ref="Canvas"
+             ></canvas>
         <div id="language-icon"
              Language="@(Track.Language)"
              disabled="@(Disabled)"

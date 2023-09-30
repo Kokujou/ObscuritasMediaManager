@@ -13,8 +13,6 @@
     box-shadow: 0 0 5px black;
 }
 
-
-
 #slider {
     position: absolute;
     display: inline-block;
@@ -26,7 +24,7 @@
     transition: all 1s ease;
 }
 
-#custom-toggle[threeValues] {
+#custom-toggle[three-values] {
     --width: 90px;
 }
 
@@ -40,12 +38,12 @@
     }
 
 #custom-toggle[state="Require"],
-#custom-toggle:not([threeValues])[toggled] {
+#custom-toggle:not([three-values])[toggled] {
     background-color: var(--toggled-color, var(--background-color));
 }
 
     #custom-toggle[state="Require"] #slider,
-    #custom-toggle:not([threeValues])[state="Ignore"] #slider {
+    #custom-toggle:not([three-values])[state="Ignore"] #slider {
         margin-left: calc(var(--width) - var(--height) + 5px);
         rotate: 180deg;
     }

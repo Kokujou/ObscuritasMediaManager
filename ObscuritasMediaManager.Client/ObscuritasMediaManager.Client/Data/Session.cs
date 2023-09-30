@@ -13,6 +13,7 @@ public class Session(MediaRepository MediaRepository, MusicRepository MusicRepos
     public  Observable<List<InstrumentModel>> instruments { get; set; } = new(new());
     public  Observable<UserSettingsModel> UserSettings { get; set; } = new(new());
     public  WaveOutEvent Audio { get; set; } = new();
+    public MediaFoundationReader? AudioReader { get; set; }
     public  bool initialized { get; set; } = false;
 
     public async Task InitializeAsync()

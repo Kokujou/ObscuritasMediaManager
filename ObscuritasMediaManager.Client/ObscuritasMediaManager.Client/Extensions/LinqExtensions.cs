@@ -9,4 +9,14 @@ public static class LinqExtensions
     {
         list.AddRange(values.ToList());
     }
+
+    public static IEnumerable<T> Randomize<T>(this IEnumerable<T> list)
+    {
+        var result = new List<T>();
+        var input = list.ToList();
+        var random = new Random();
+        while (input.Count != result.Count)
+            result.Add(input[random.Next(0, result.Count)]);
+        return result;
+    }
 }

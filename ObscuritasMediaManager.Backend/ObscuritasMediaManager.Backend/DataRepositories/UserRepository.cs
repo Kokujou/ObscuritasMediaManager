@@ -48,9 +48,9 @@ public class UserRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateUserSettingsAsync(
+    public async Task UpdateUserSettingsAsync(Guid userId,
         Expression<Func<SetPropertyCalls<UserSettingsModel>, SetPropertyCalls<UserSettingsModel>>> setCalls)
     {
-        await _dbContext.UserSettings.ExecuteUpdateAsync(setCalls);
+        await _dbContext.UserSettings.Where(x => x.Id == userId).ExecuteUpdateAsync(setCalls);
     }
 }

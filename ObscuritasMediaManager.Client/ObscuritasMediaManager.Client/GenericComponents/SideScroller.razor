@@ -1,9 +1,10 @@
 ﻿@inherits ElementBase
 
-<div id="scroll-container" style="position:relative; display:inline-block;">
-    <a class="arrow-link @(canScrollLeft ? "" : "disabled")"
+<div class="side-scroller">
+<div id="scroll-container">
+    <a class="arrow-link @(CanScrollLeft ? "" : "disabled")"
        id="left-arrow"
-       @onclick="@(() => scrollToLeft())">
+        @onclick="@(() => Scroll.InvokeAsync(Direction.Left))">
         ◀
     </a>
     <div id="content-container" @onmousedown:preventDefault>
@@ -13,9 +14,10 @@
             <div class="inner-space" id="right-space"></div>
         </div>
     </div>
-    <a class="arrow-link @(canScrollRight ? "" : "disabled")"
+    <a class="arrow-link @(CanScrollRight ? "" : "disabled")"
        id="right-arrow"
-       @onclick="@(() => scrollToRight())">
+       @onclick="@(() => Scroll.InvokeAsync(Direction.Right))">
         ▶
     </a>
+</div>
 </div>

@@ -145,7 +145,7 @@ side-scroller {
     margin: 0 10px;
 }
 
-drop-down {
+#music-filter ::deep #drop-down {
     font: inherit;
     font-size: 20px;
     width: 90%;

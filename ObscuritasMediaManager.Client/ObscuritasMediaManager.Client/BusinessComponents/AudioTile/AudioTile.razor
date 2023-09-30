@@ -21,7 +21,7 @@
             <div id="audio-genre-section">
                 @foreach (var genre in Track.Genres)
                 {
-                    <TagLabel Text="@genre}"></TagLabel>
+                    <TagLabel Text="@(genre.ToString())"></TagLabel>
                 }
             </div>
         </div>

@@ -61,7 +61,8 @@ public partial class MusicPage
         if (currentSettings is null) return;
 
         var filterString = JsonSerializer.Serialize(filter);
-        await UserRepository.UpdateUserSettingsAsync(x => x.SetProperty(x => x.MusicFilter, filterString));
+        await UserRepository.UpdateUserSettingsAsync(Session.UserSettings.Current.Id,
+        x => x.SetProperty(x => x.MusicFilter, filterString));
         Session.UserSettings.Next(await UserRepository.GetSettingsAsync(currentSettings.Id));
     }
 
@@ -78,7 +79,7 @@ public partial class MusicPage
         Session.Audio.Volume = value / 100f;
 
         if (!onDb) return;
-        await UserRepository.UpdateUserSettingsAsync(x => x.SetProperty(x => x.Volume, value));
+        await UserRepository.UpdateUserSettingsAsync(Session.UserSettings.Current.Id, x => x.SetProperty(x => x.Volume, value));
         Session.UserSettings.Next(await UserRepository.GetSettingsAsync(Session.UserSettings.Current.Id));
     }
 
@@ -104,7 +105,7 @@ public partial class MusicPage
         if (currentTrack?.Hash != track.Hash)
         {
             currentTrack = track;
-            await Session.Audio.ChangeTrack(track);
+            await Session.ChangeTrackAsync(track);
         }
 
         if (!Session.Audio.Paused())
@@ -149,6 +150,12 @@ public partial class MusicPage
         }
 
         loading = false;
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        Session.Audio.Stop();
     }
 
     protected override async Task OnInitializedAsync()

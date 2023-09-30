@@ -15,7 +15,10 @@ public partial class CustomToggle
         if (threeValues)
             state = state.NextValue();
         else
-            state = (state == CheckboxState.Ignore) ? CheckboxState.Forbid : CheckboxState.Ignore;
+        {
+            state = state.NextValue();
+            if (state == CheckboxState.Require) state = state.NextValue();
+        }
         Toggled.InvokeAsync(state);
     }
 }
