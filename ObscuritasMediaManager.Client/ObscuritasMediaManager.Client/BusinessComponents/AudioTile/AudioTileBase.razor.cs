@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using NAudio.CoreAudioApi;
-using NAudio.Wave;
 using ObscuritasMediaManager.Client.Extensions;
 
 namespace ObscuritasMediaManager.Client.BusinessComponents.AudioTile;
@@ -18,38 +16,32 @@ public partial class AudioTileBase
     [Parameter] public EventCallback NextInstrumentation { get; set; }
     [Parameter] public EventCallback<int> ChangeRating { get; set; }
     [Parameter] public EventCallback ChangeInstruments { get; set; }
-    public required ElementReference Canvas { get; set; }
-    public List<float> VisualizationData = new List<float>();
+    private CancellationTokenSource DrawCancellation { get; set; } = new();
     private int hoveredRating = 0;
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        var pausedBefore = Paused;
+        await base.SetParametersAsync(parameters);
+        if (pausedBefore == Paused) return;
+        if (Paused)
+            DrawCancellation.Cancel();
+        else
+        {
+            DrawCancellation = new();
+            _ = Task.Run(async () =>
+                {
+                    while (true)
+                      await RefreshCanvas(Audio.VisualizationData).ConfigureAwait(false);
+                }, DrawCancellation.Token)
+                .ConfigureAwait(false);
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        var devEnum = new MMDeviceEnumerator();
-        var defaultDevice = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-
-        Subscriptions.AddRange(
-            Session.instruments.Subscribe((_) => StateHasChanged()));
-        var capture = new WasapiLoopbackCapture();
-        const int endSize = 256;
-        var step = (int)(capture.WaveFormat.AverageBytesPerSecond / ((float)endSize));
-        capture.DataAvailable += (s, e) =>
-        {
-            if (Session.Audio.Paused() || (Session.Audio.Volume == 0)) return;
-            VisualizationData = CreateTimeDomainData(e.Buffer, e.BytesRecorded, endSize);
-        };
-
-        capture.StartRecording();
-
-        while (true)
-        {
-            await Task.Delay(100);
-            try
-            {
-                await JS.InvokeVoidAsync("renderVisualization", Canvas, VisualizationData);
-            }
-            catch { }
-        }
+        Subscriptions.AddRange(Session.instruments.Subscribe((_) => StateHasChanged()));
     }
 
     protected override bool ShouldRender()
@@ -57,6 +49,11 @@ public partial class AudioTileBase
         if (Track is null) return false;
 
         return true;
+    }
+
+    private async Task RefreshCanvas(float[] visualizationData)
+    {
+        await JS.InvokeVoidAsync("renderVisualization", visualizationData).ConfigureAwait(false);
     }
 
     private List<float> CreateTimeDomainData(byte[] buffer, int actualLength, int endSize)
@@ -81,10 +78,5 @@ public partial class AudioTileBase
             .ToList();
 
         return result;
-    }
-
-    private void AudioTileBase_WaveFormatChanged(object? sender, EventArgs e)
-    {
-        throw new NotImplementedException();
     }
 }

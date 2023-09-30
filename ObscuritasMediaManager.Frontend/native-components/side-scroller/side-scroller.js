@@ -61,7 +61,7 @@ export class SideScroller extends LitElementBase {
         return renderSideScroller(this);
     }
 
-    async scrollToLeft() {
+    scrollToLeft() {
         if (this.currentItemIndex <= 0) return;
         this.currentItemIndex--;
         var element = this.scrollChildren[this.currentItemIndex];

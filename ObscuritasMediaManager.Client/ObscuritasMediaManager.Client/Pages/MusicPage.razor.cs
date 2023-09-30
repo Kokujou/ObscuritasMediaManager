@@ -7,6 +7,8 @@ namespace ObscuritasMediaManager.Client.Pages;
 
 public partial class MusicPage
 {
+    private static TimeSpan maxElapsed;
+
     private IEnumerable<PlaylistModel> paginatedPlaylists => filteredPlaylists.Take(6 + (3 * currentPage));
 
     private IEnumerable<MusicModel> paginatedTracks
@@ -44,7 +46,7 @@ public partial class MusicPage
     }
 
     private MusicModel? currentTrack { get; set; }
-    private MusicFilterOptions filter { get; set; }
+    private MusicFilterOptions? filter { get; set; }
     private List<MusicModel> musicTracks { get; set; } = new();
     private List<PlaylistModel> playlists { get; set; } = new();
     private List<string> selectedHashes { get; set; } = new();
@@ -63,7 +65,6 @@ public partial class MusicPage
         var filterString = JsonSerializer.Serialize(filter);
         await UserRepository.UpdateUserSettingsAsync(Session.UserSettings.Current.Id,
         x => x.SetProperty(x => x.MusicFilter, filterString));
-        Session.UserSettings.Next(await UserRepository.GetSettingsAsync(currentSettings.Id));
     }
 
     public async Task importFolder() { }
@@ -76,7 +77,7 @@ public partial class MusicPage
 
     public async Task changeVolume(int value, bool onDb)
     {
-        Session.Audio.Volume = value / 100f;
+        Audio.Volume = value / 100f;
 
         if (!onDb) return;
         await UserRepository.UpdateUserSettingsAsync(Session.UserSettings.Current.Id, x => x.SetProperty(x => x.Volume, value));
@@ -105,12 +106,12 @@ public partial class MusicPage
         if (currentTrack?.Hash != track.Hash)
         {
             currentTrack = track;
-            await Session.ChangeTrackAsync(track);
+            await Audio.ChangeTrackAsync(track);
         }
 
-        if (!Session.Audio.Paused())
-            Session.Audio.Pause();
-        else if (Session.Audio.Paused()) Session.Audio.Play();
+        if (!Audio.Paused())
+            Audio.Pause();
+        else if (Audio.Paused()) Audio.Play();
     }
 
     public async Task startSelectionModeTimer(string trackHash)
@@ -155,7 +156,7 @@ public partial class MusicPage
     public override void Dispose()
     {
         base.Dispose();
-        Session.Audio.Stop();
+        Audio.Stop();
     }
 
     protected override async Task OnInitializedAsync()

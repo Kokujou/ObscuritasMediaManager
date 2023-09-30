@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using NAudio.Utils;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Client.Extensions;
@@ -17,15 +16,6 @@ public partial class MusicPlaylistPage
                                         => Enum.GetValues<MusicGenre>()
                                             .Where((genre) => !updatedTrack.Genres.Any((x) => x == genre));
 
-    private string currentTrackPositionText
-    {
-        get
-        {
-            var position = Session.Audio.GetPositionTimeSpan();
-            return $"{position.Minutes.ToString().PadLeft(2, '0')}:${ position.Seconds.ToString().PadLeft(2, '0')}";
-        }
-    }
-
     private PlaylistModel playlist { get; set; } = new() { Tracks = new List<MusicModel>() };
     private int currentTrackIndex { get; set; } = -1;
     private MusicModel currentTrack { get; set; } = new MusicModel();
@@ -37,7 +27,7 @@ public partial class MusicPlaylistPage
     public override void Dispose()
     {
         base.Dispose();
-        Session.Audio.Stop();
+        Audio.Stop();
     }
 
     public async Task changeTrackBy(int offset)
@@ -85,7 +75,7 @@ public partial class MusicPlaylistPage
         }
 
         updatedTrack = playlist.Tracks.ElementAt(currentTrackIndex);
-        await Session.ChangeTrackAsync(currentTrack);
+        await Audio.ChangeTrackAsync(currentTrack);
         StateHasChanged();
     }
 
@@ -93,10 +83,10 @@ public partial class MusicPlaylistPage
     {
         try
         {
-            if (Session.Audio.Paused())
-                Session.Audio.Play();
+            if (Audio.Paused())
+                Audio.Play();
             else
-                Session.Audio.Pause();
+                Audio.Pause();
         }
         catch
         {
@@ -109,7 +99,7 @@ public partial class MusicPlaylistPage
     private async Task changeTrack(int index)
     {
         if (playlist.Tracks.Count() == 1) return;
-        Session.Audio.Pause();
+        Audio.Pause();
         currentTrackIndex = index;
         updatedTrack = playlist.Tracks.ElementAt(currentTrackIndex);
 
@@ -117,14 +107,14 @@ public partial class MusicPlaylistPage
         var absoluteUri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
         NavigationManager.NavigateTo(absoluteUri.GetLeftPart(UriPartial.Path));
 
-        await Session.ChangeTrackAsync(currentTrack);
-        Session.Audio.Play();
+        await Audio.ChangeTrackAsync(currentTrack);
+        Audio.Play();
         StateHasChanged();
     }
 
     private async Task changeVolume(int volume, bool saveSettings)
     {
-        Session.Audio.Volume = volume / 100f;
+        Audio.Volume = volume / 100f;
         if (!saveSettings) return;
         await UserRepository.UpdateUserSettingsAsync(Session.UserSettings.Current.Id, x => x.SetProperty(y => y.Volume, volume));
     }

@@ -24,10 +24,4 @@ public partial class PaginatedScrolling
     {
         await JS.InvokeVoidAsync("scrollToChild", ScrollContainer, child);
     }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-        await CheckIfScrolledToBottom();
-    }
 }

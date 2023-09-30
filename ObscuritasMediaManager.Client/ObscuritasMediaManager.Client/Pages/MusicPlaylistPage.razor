@@ -9,6 +9,7 @@
 @inject MusicRepository MusicRepository
 @inject PlaylistRepository PlaylistRepository
 @inject UserRepository UserRepository
+@inject AudioService Audio
 
 <div id="music-player-container" switch-second-mood="@SwitchSecondMood"  style="
  --primary-color: @((updatedTrack.Mood1).GetColorCode());
@@ -43,7 +44,7 @@
         <div id="audio-tile-container">
             <AudioTileBase Disabled="@(updatedTrack.Complete)"
                            Track="@((updatedTrack))"
-                           Paused="@(Session.Audio.Paused())"
+                           Paused="@(Audio.Paused())"
                                           Visualize
                             ImageClicked="@(() => toggleCurrentTrack())"
                             ChangeLanguage="@(() => showLanguageSwitcher())"
@@ -101,21 +102,21 @@
                 }
             </div>
             <div id="track-position-container">
-                <div id="track-position-label">@(Session.GetCurrentTrackPosition().ToString())</div>
+                <div id="track-position-label">@(Audio.GetCurrentTrackPosition().ToString())</div>
                 <div id="track-position">
-                    <RangeSlider ValueChanged="@((e) => Session.AudioReader!.CurrentTime = TimeSpan.FromMilliseconds(e))"
-                                 Value="@((int)Session.Audio.GetPositionTimeSpan().TotalMilliseconds)"
+                    <RangeSlider ValueChanged="@((e) => Audio.SetPosition(TimeSpan.FromMilliseconds(e)))"
+                                 Value="@((int)Audio.Position.TotalMilliseconds)"
                                  Min="0"
-                                 Max="@((int)(Session.GetCurrentTrackDuration().TotalMilliseconds))"
+                                 Max="@((int)(Audio.GetCurrentTrackDuration().TotalMilliseconds))"
                                  Step="1000 "></RangeSlider>
                 </div>
-                <div id="track-position-label">@(Session.GetCurrentTrackDuration().ToString())</div>
+                <div id="track-position-label">@(Audio.GetCurrentTrackDuration().ToString())</div>
             </div>
             <div id="audio-controls">
                 <div id="previous-track-button" @onclick="@(() => changeTrackBy(-1))" class="audio-icon"></div>
                 <div id="toggle-track-button"
                 @onclick="@(() => toggleCurrentTrack())"
-                     class="audio-icon @(Session.Audio.Paused() ? "paused" : "playing")"></div>
+                     class="audio-icon @(Audio.Paused() ? "paused" : "playing")"></div>
                 <div id="next-track-button" @onclick="@(() => changeTrackBy(1))" class="audio-icon"></div>
 
                 <div id="change-volume-container">
@@ -126,7 +127,7 @@
                                      Step="1"
                                      Min="0"
                                      Max="100"
-                                     Value="@((int)(Session.Audio.Volume * 100))"></RangeSlider>
+                                     Value="@((int)(Audio.Volume * 100))"></RangeSlider>
                     </div>
                 </div>
             </div>

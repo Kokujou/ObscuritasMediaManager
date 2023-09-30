@@ -9,11 +9,12 @@
 @inject NavigationManager NavigationManager
 @inject PlaylistRepository PlaylistRepository
 @inject MusicRepository MusicRepository
+@inject AudioService Audio
 
 <div id="music-page">
     <div id="search-panel-container">
             <MusicFilter filter="@(filter)"
-                         filterChanged="UpdateFilterAsync"></MusicFilter>
+                         filterChanged="(filter)=>UpdateFilterAsync(filter)"></MusicFilter>
         <div id="result-count-label">
             @(filteredTracks.Count()) von @(musicTracks.Count) Musik-Tracks
         </div>
@@ -47,12 +48,12 @@
                              Step="1"
                              Min="0"
                              Max="100"
-                             Value="@((int)(Session.Audio.Volume * 100))">
+                             Value="@((int)(Audio.Volume * 100))">
                 </RangeSlider>
             </div>
 
             <div id="active-track-warning"
-                 invisible="@(Session.Audio.Paused())"
+                 invisible="@(Audio.Paused())"
             @onclick="@(() => jumpToActive())">
                 Ein Track wird gerade abgespielt.&nbsp; <u> Klicken Sie hier </u> &nbsp;um zum aktiven Track zu
                 springen.
@@ -88,7 +89,7 @@
                             {
                                 <input type="checkbox"
                                        class="audio-select"
-                                       ?checked="@(selectedHashes.Contains(track.Hash))"
+                                       checked="@(selectedHashes.Contains(track.Hash))"
                                        @onchange="@(() => selectTrack(track.Hash))" />
                             }
                             <a class="audio-tile-link"
@@ -98,7 +99,7 @@
                             @onpointerup="@(() => stopSelectionModeTimer())">
                                 <AudioTile Track="@(track)"
                                            Visualize="@(currentTrack?.Path == track.Path)"
-                                           Paused="@(Session.Audio.Paused() || currentTrack?.Path != track.Path)"
+                                           Paused="@(Audio.Paused() || currentTrack?.Path != track.Path)"
                                            ImageClicked="@(() => toggleMusic(track))"
                                            SoftDelete="@(() => softDeleteTrack(track))"
                                            HardDelete="@(() => hardDeleteTrack(track))"

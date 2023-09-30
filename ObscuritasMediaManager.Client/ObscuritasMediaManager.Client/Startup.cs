@@ -44,6 +44,7 @@ public static class Startup
         services.AddSingleton<MusicFilterService>();
         services.AddSingleton<MediaFilterService>();
         services.AddSingleton<Session>();
+        services.AddSingleton<AudioService>();
 
         services.AddDbContext<DatabaseContext>(
             x => x.UseSqlite(
