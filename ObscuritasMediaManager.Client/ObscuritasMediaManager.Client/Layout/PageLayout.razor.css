@@ -2,16 +2,18 @@
     user-select: none;
     display: inline-flex;
     font-family: Arial, Helvetica, sans-serif;
-    position: relative;
-    left: 0;
-    top: 0;
-    overflow-y: auto;
-    overflow-x: auto;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
     background: linear-gradient(var(--background-color), var(--background-color)), url("resources/images/background.jpg");
     background-position: 0 0;
     background-blend-mode: overlay;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+}
+
+#page-container{
+    transform-origin: top left;
 }
 
 #current-page {

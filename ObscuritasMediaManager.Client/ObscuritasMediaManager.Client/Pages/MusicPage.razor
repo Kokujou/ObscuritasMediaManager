@@ -22,23 +22,26 @@
     <div id="result-options-container">
         <div id="result-options">
             <div class="option-section" id="import-section">
-                <a id="import-files" @onclick="@(()=>importFolder())" tooltip="Tracks importieren"></a>
-                <a id="create-song"></a>
+                <a id="import-files" @onclick="@(()=>importFolder())" tooltip="Tracks importieren" Icon="@(Icons.Import)"></a>
+                <a id="create-song" Icon="@(Icons.Plus)"></a>
             </div>
             <div class="option-section" id="import-section">
                 <a id="cleanup-tracks"
+                Icon="@(Icons.Clean)"
                 @onclick="@(() => cleanupTracks())"
                    tooltip="Defekte Tracks bereinigen"></a>
             </div>
             <div class="option-section" id="playlist-section">
-                <a id="add-to-playlist"
+                <a id="add-to-playlist" Icon="@Icons.SavePlaylist"
                    tooltip="Zu einer Playlist hinzufügen"
                 @onclick="@(() => showPlaylistSelectionDialog())"></a>
                 <a id="create-playlist"
                    tooltip="Playlist erstellen"
+                   Icon="@(Icons.AddPlaylist)"
                 @onclick="@(() => showCreatePlaylistDialog())"></a>
                 <a id="play-playlist"
                    tooltip="Ausgewählte Tracks abspielen"
+                   Icon="@(Icons.PlayPlaylist)"
                 @onclick="@(() => PlaySelected())"></a>
             </div>
 

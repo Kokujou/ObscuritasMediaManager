@@ -41,6 +41,13 @@ public partial class DropDown<T>
         option.state = state;
 
         SelectionChanged.InvokeAsync(option);
+        if (!multiselect && !useToggle) ToggleDropdown();
+    }
+
+    private void ToggleDropdown()
+    {
+        showDropdown = !showDropdown;
+        if (useSearch) searchFilter = string.Empty;
     }
 
     public class Option

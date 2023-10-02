@@ -158,7 +158,7 @@
     }
     <div id="media-playlist-container">
         <MediaPlaylist Items="@(playlist.Tracks)"
-                       Index="@(currentTrackIndex)"
+                       ActiveIndex="@(currentTrackIndex)"
                        IndexChanged="@((index) => changeTrack(index))"
                        Randomize="@(() => randomize())"></MediaPlaylist>
     </div>

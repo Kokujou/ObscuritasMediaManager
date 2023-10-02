@@ -1,12 +1,13 @@
 
 using Microsoft.AspNetCore.Components;
 using ObscuritasMediaManager.Backend.Data.Music;
+using System.Linq.Expressions;
 
 namespace ObscuritasMediaManager.Client.BusinessComponents.MusicFilter;
 
 public partial class MusicFilter
 {
-    public static readonly List<Func<MusicModel, object>> SortableProperties = new()
+    public static readonly List<Expression<Func<MusicModel, object>>> SortableProperties = new()
     {
         x => x.Name,
         x => x.Author,

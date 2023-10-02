@@ -1,3 +1,41 @@
-﻿<h3>MediaPlaylist</h3>
+﻿@inherits ElementBase
 
 
+<div id="media-playlist">
+    <div id="playlist-container">
+        <div id="playlist-options">
+            <div class="playlist-button" Icon="@(Icons.ShufflePlaylist)"
+                 id="random-order-button"
+            @onclick="@(() => randomizeOrder())"></div>
+            <div class="playlist-button" Icon="@(Icons.Revert)"
+                 id="reset-order-button"
+            @onclick="@(() => restoreOrder())"></div>
+            <div class="playlist-button" id="remove-track-button"></div>
+        </div>
+        <PaginatedScrolling @ref="ScrollContainer"
+                            ScrollTopThreshold="20"
+                            ScrollBottom="@(() => loadMoreItems())">
+            <div id="playlist-item-container">
+                @for (var index = 0; index < PaginatedItems.Count; index++)
+                {
+                    @if (ActiveIndex == index)
+                    {
+                        <div class="playlist-entry"
+                             active
+                        @ref="@activeElement"
+                        @ondblclick="@(() => notifyIndexChanged(index))">
+                            @(PaginatedItems[index])
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="playlist-entry"
+                        @ondblclick="@(() => notifyIndexChanged(index))">
+                            @(PaginatedItems[index])
+                        </div>
+                    }
+                }
+            </div>
+            </PaginatedScrolling>
+    </div>
+</div>

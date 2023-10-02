@@ -4,12 +4,9 @@
 @typeparam T
 
 
-<div id="drop-down" disabled="@disabled" style="display:inline-block">
+<div id="drop-down" disabled="@disabled" style="display:inline-block;" tabindex="-1" @onfocusout="@(()=>ToggleDropdown())">
     <div class="dropdown"
-    @onclick="@(() => {
-            showDropdown = !showDropdown;
-            if (useSearch) searchFilter = string.Empty;
-        })">
+    @onclick="@(() => ToggleDropdown())">
         <div id="caption-container">
             @(caption)
             @if (string.IsNullOrEmpty(caption))

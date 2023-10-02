@@ -3,7 +3,7 @@
 <div id="custom-toggle"
      three-values="@threeValues"
      state="@state"
-     style="--toggled-color: @(Color ?? "unset")"
+     style="@(!string.IsNullOrEmpty(Color) ? $"--toggled-color: {Color}" : "")"
 @onclick="@(()=>Toggle())"
 @onclick:preventDefault
 @onclick:stopPropagation>

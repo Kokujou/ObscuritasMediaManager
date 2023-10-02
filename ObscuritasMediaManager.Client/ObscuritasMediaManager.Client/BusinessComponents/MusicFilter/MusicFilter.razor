@@ -42,8 +42,11 @@
              </div>
              <div id="sorting-container">
                  <DropDown T="Func<MusicModel,object>"
-                           options="@(DropDown<Func<MusicModel, object>>.Option.createSimpleArray(
-                            SortableProperties,x=> filter.MusicSortProperty == x ? CheckboxState.Ignore : CheckboxState.Forbid))"
+                           options="@(SortableProperties.Select(prop=>new DropDown<Func<MusicModel, object>>.Option(){
+                                    value = prop.Compile(),
+                                    text=prop.GetPropertyName(),
+                                    state = prop.Compile() == filter.MusicSortProperty ? CheckboxState.Ignore : CheckboxState.Forbid
+                                }))"
                            unsetText="Keine Sortierung"
                            maxDisplayDepth="5"
                            SelectionChanged="@((e) => changeFilter(x=>x.MusicSortProperty = e.value))">

@@ -3,15 +3,9 @@
 @inject NavigationManager NavigationManager
 @inject Session Session
 
-<style>
-    *[icon] {
-        background: black;
-    }
-</style>
-
-<div id="viewport" style="width: @(MainWindow.Instance!.ActualWidth)px; height: @(MainWindow.Instance!.ActualHeight)px">
-    <div id="page-container" style="width: @(1920)px; height: @(1080)px ;">
-        <div id="current-page" style="transform: scale(@(ScaleFactorX.ToString(System.Globalization.CultureInfo.InvariantCulture)), @(ScaleFactorY.ToString(System.Globalization.CultureInfo.InvariantCulture)))">
+<div id="viewport">
+    <div id="page-container" style="transform: scale(@(ScaleFactorX.ToString(System.Globalization.CultureInfo.InvariantCulture)), @(ScaleFactorY.ToString(System.Globalization.CultureInfo.InvariantCulture)))">
+        <div id="current-page" style="width: @(1920)px; height: @(1080)px ;">
             <div id="header">
                 <div id="logo-container">
                     <a id="logo" href="#welcome">
