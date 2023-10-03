@@ -10,7 +10,6 @@ export function renderTooltipStyles() {
 
             display: flex;
             z-index: 5000;
-            font: normal bold normal 12px Gotham;
             white-space: pre;
             pointer-events: none;
             /* white-space: nowrap; */

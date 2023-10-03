@@ -1,0 +1,44 @@
+svg {
+    filter: drop-shadow(0 0 5px purple) drop-shadow(0 0 5px purple);
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+g {
+    stroke-dasharray: 21.402;
+    stroke-dashoffset: 21.402;
+    stroke: purple;
+    stroke-width: 10;
+}
+
+path {
+    animation: dash 3s linear alternate infinite;
+}
+
+#inner-circle {
+    --svg-initial-offset: 3000;
+    stroke-dasharray: var(--svg-initial-offset);
+    stroke-dashoffset: var(--svg-initial-offset);
+}
+
+#outer-circle {
+    --svg-initial-offset: 3400;
+    stroke-dasharray: var(--svg-initial-offset);
+    stroke-dashoffset: var(--svg-initial-offset);
+}
+
+#septagram {
+    --svg-initial-offset: 3000;
+    stroke-dasharray: var(--svg-initial-offset);
+    stroke-dashoffset: var(--svg-initial-offset);
+}
+
+@keyframes dash {
+    from {
+        stroke-dashoffset: var(--svg-initial-offset);
+    }
+    to {
+        stroke-dashoffset: 200;
+    }
+}

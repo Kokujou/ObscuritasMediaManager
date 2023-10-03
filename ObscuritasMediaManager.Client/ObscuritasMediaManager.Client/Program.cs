@@ -7,7 +7,7 @@ using Serilog.Events;
 
 namespace ObscuritasMediaManager.Client;
 
-public static class Startup
+public static class Program
 {
     public static IServiceProvider? Services { get; private set; }
 
@@ -28,7 +28,6 @@ public static class Startup
     private static void WireupServices(IServiceCollection services)
     {
         services.AddWpfBlazorWebView();
-
 #if DEBUG
         services.AddBlazorWebViewDeveloperTools();
 #endif

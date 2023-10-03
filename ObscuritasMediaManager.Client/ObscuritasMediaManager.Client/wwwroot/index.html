@@ -9,6 +9,7 @@
     <script src="paginated-scrolling.js"></script>
     <script src="visualization.js"></script>
     <script src="tooltip.js"></script>
+    <script src="loading-screen/loading-screen.js"></script>
 
     <style>
         html,
@@ -38,7 +39,9 @@
     <div id="app">
         <!-- Ihre Blazor-Komponenten werden hier gerendert -->
     </div>
+    <loading-screen style="z-index: -1; position: relative"></loading-screen>
 
     <script src="_framework/blazor.webview.js"></script>
+    
 </body>
 </html>

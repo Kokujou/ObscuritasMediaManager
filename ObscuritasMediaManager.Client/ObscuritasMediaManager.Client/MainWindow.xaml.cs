@@ -12,7 +12,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         Instance = this;
-        Resources.Add("services", Startup.Services);
+        Resources.Add("services", Program.Services);
         InitializeComponent();
     }
 }

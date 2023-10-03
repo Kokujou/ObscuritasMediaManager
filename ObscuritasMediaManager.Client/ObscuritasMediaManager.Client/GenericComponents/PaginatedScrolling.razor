@@ -3,7 +3,7 @@
 @inject IJSRuntime JS
 
 <div id="paginated-scrolling">
-    <div class="scroll-container" @ref="ScrollContainer" onscroll="@(() => CheckIfScrolledToBottom())">
+    <div class="scroll-container" @ref="ScrollContainer" @onscroll="@(() => CheckIfScrolledToBottom())">
         @ChildContent
     </div>
 </div>
