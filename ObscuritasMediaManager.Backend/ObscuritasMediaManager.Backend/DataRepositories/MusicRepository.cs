@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.VisualBasic.FileIO;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Exceptions;
@@ -20,10 +19,13 @@ public class MusicRepository
         _context = context;
     }
 
-    public async Task UpdateAsync(string hash,
-        Expression<Func<SetPropertyCalls<MusicModel>, SetPropertyCalls<MusicModel>>> setCalls)
+    public async Task UpdatePropertyAsync<T>(string hash,
+        Expression<Func<MusicModel, T>> property, T value)
     {
-        await _context.Music.Where(x => x.Hash == hash).ExecuteUpdateAsync(setCalls);
+        await _context.Music
+            .IgnoreAutoIncludes()
+            .Where(x => x.Hash == hash)
+            .ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
     }
 
     public async Task UpdateAsync(string hash, JsonElement old, JsonElement updated, JsonSerializerOptions serializerOptions)

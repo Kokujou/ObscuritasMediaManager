@@ -55,18 +55,6 @@ export class MediaTile extends LitElementBase {
     }
 
     /**
-     * @param {string} genre
-     */
-    removeGenre(genre) {
-        if (genre) this.genres = this.genres.filter((x) => x);
-
-        this.notifyGenresChanged(
-            this.genres.filter((x) => x !== genre),
-            null
-        );
-    }
-
-    /**
      * @param {number} newRating
      * @param {Event} e
      */

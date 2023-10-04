@@ -1,6 +1,5 @@
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { Subscription } from '../../data/observable.js';
 import { Session } from '../../data/session.js';
 import { MediaModel, UpdateRequestOfMediaModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService } from '../../services/backend.services.js';
@@ -41,7 +40,6 @@ export class MediaPage extends LitElementBase {
     constructor() {
         super();
 
-        /** @type {Subscription[]} */ this.subscriptions = [];
         /** @type {string[]} */ this.genreList = [];
         this.loading = true;
     }

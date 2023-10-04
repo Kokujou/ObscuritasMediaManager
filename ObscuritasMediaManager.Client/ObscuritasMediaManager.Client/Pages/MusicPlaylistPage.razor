@@ -16,12 +16,11 @@
 --secondary-color: @((SecondaryMood).GetColorCode());
 --font-color: @((updatedTrack.Mood1).GetFontColorCode());
 --secondary-font-color: @((SecondaryMood).GetFontColorCode());">
-    <div id="Complete-checkbox">
-        <label for="Complete-check" class="label">Complete:</label>
+    <div id="complete-checkbox">
+        <label for="complete-check" class="label">Complete:</label>
         <input type="checkbox"
-               id="Complete-check"
+               id="complete-check"
                checked="@(updatedTrack.Complete)"
-               oninput="this.dispatchEvent(new Event('change'))"
         @onchange="@(() => changeProperty(x=>x.Complete, !updatedTrack.Complete))" />
     </div>
     <div id="current-track-container">
@@ -97,7 +96,7 @@
                 @if (!updatedTrack.Complete)
                 {
                     <TagLabel CreateNew
-                               Autocomplete="@(autocompleteGenres.Select(x=>x.ToString()))"
+                               Autocomplete="@(autocompleteGenres.Select(x=>x.ToString()).ToList())"
                                TagCreated="@((genre) => changeProperty(x=>x.Genres, updatedTrack.Genres.Append(Enum.Parse<MusicGenre>(genre))))"></TagLabel>
                 }
             </div>
@@ -113,14 +112,14 @@
                 <div id="track-position-label">@(Audio.GetCurrentTrackDuration().ToString())</div>
             </div>
             <div id="audio-controls">
-                <div id="previous-track-button" @onclick="@(() => changeTrackBy(-1))" class="audio-icon"></div>
+                <div id="previous-track-button" @onclick="@(() => changeTrackBy(-1))" class="audio-icon" Icon="@Icons.FastForward"></div>
                 <div id="toggle-track-button"
                 @onclick="@(() => toggleCurrentTrack())"
                      class="audio-icon @(Audio.Paused() ? "paused" : "playing")"></div>
-                <div id="next-track-button" @onclick="@(() => changeTrackBy(1))" class="audio-icon"></div>
+                <div id="next-track-button" @onclick="@(() => changeTrackBy(1))" class="audio-icon" Icon="@Icons.FastForward"></div>
 
                 <div id="change-volume-container">
-                    <div id="change-volume-button" class="audio-icon"></div>
+                    <div id="change-volume-button" class="audio-icon" Icon="@Icons.ChangeVolume"></div>
                     <div id="change-volume">
                         <RangeSlider ValueFinalized="@((e) => changeVolume(e,true))"
                                      ValueChanged="@((e) => changeVolume(e,false))"
@@ -137,6 +136,7 @@
                 {
                     <div id="change-path-button"
                          class="inline-icon"
+                         Icon="@Icons.Edit"
                     @onclick="@(()=>changeCurrentTrackPath())"></div>
                 }
             </div>
@@ -145,14 +145,14 @@
     @if (playlist.IsTemporary)
     {
         <div id="edit-playlist-link" @onclick="@(() => openEditPlaylistDialog())">
-            <div id="edit-playlist-icon"></div>
+            <div id="edit-playlist-icon" Icon="@Icons.Edit"></div>
             <div id="edit-playlist-text">Zu Playlist befördern</div>
         </div>
     }
     else
     {
         <div id="edit-playlist-link" @onclick="@(() => openEditPlaylistDialog())">
-            <div id="edit-playlist-icon"></div>
+            <div id="edit-playlist-icon" Icon="@Icons.Edit"></div>
             <div id="edit-playlist-text">Playlist bearbeiten</div>
         </div>
     }

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ObscuritasMediaManager.Client.Extensions;
+using ObscuritasMediaManager.Client.GenericComponents;
 using System;
 using System.Text.Json;
 
@@ -8,6 +8,8 @@ namespace ObscuritasMediaManager.Client.Pages;
 public partial class MusicPage
 {
     private static TimeSpan maxElapsed;
+
+    public required PaginatedScrolling PaginatedScrolling { get; set; }
 
     private IEnumerable<PlaylistModel> paginatedPlaylists => filteredPlaylists.Take(6 + (3 * currentPage));
 
@@ -178,5 +180,12 @@ public partial class MusicPage
                             filter ??= new(new List<string>());
                         }));
         await initializeData();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (!firstRender) return;
+        while (await PaginatedScrolling.CheckIfScrolledToBottomAsync()) ;
     }
 }

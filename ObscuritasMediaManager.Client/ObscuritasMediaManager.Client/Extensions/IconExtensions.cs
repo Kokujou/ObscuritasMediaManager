@@ -26,7 +26,7 @@ public static class IconExtensions
             Nation.Russian => "resources/inline-icons/language-icons/russia-flag.svg",
             Nation.SouthAmerican => "resources/inline-icons/language-icons/south-america-flag.svg",
             Nation.African => "resources/inline-icons/language-icons/africa-flag.svg",
-            _ => "resources/inline-icons/language-icons/no-flag.svg",
+            _ => "resources/inline-icons/language-icons/no-language.svg",
         };
     }
 

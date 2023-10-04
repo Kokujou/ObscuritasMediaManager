@@ -1,0 +1,46 @@
+﻿<div id="media-tile">
+    <div id="tile-container">
+        @if (displayStyle != DisplayStyle.Simple)
+        {
+            <div id="rating-container">
+                @foreach (var rating in Enumerable.Range(0, 5))
+                {
+                    <div class="star @(rating < Media.Rating ? "selected" : "") @(rating < hoveredRating ? "hovered" : "")"
+                    @onpointerover="@(() => hoveredRating = rating + 1)"
+                    @onpointerout="@(() => hoveredRating = 0)"
+                    @onclick="@((e) => RatingChanged.InvokeAsync(rating + 1))"
+                    @onclick:preventDefault
+                    @onclick:stopPropagation>
+                        ★
+                    </div>
+                }
+            </div>
+        }
+        <br />
+        @if (Media.Image is not null)
+        {
+            <div id="tile-image" style="background-image: url('data: iamge/jpeg;base64, @(Media.Image)');">
+                <div class="status-icon @(Media.Status)"></div>
+            </div>
+        }
+        else
+        {
+            <UploadArea ImageReceived="@ImageReceived"></UploadArea>
+        }
+
+        @if (displayStyle == DisplayStyle.Solid)
+        {
+            <div no-background="@(string.IsNullOrEmpty(Media.Image))" id="caption">@(Media.Name)</div>
+        }
+    </div>
+    @if (displayStyle == DisplayStyle.Solid)
+    {
+        <div id="genre-list" @onclick:preventDefault>
+            @foreach (var genre in Media.Genres.Where(x => x.Section == "Hauptgenre").Take(4))
+            {
+                <TagLabel Disabled Text="@(genre.Name)"></TagLabel>
+            }
+            <br />
+        </div>
+    }
+</div>

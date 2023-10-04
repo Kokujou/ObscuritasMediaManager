@@ -11,7 +11,7 @@ public static class Program
 {
     public static IServiceProvider? Services { get; private set; }
 
-    public static void Init()
+    public static async void Init()
     {
         AppDomain.CurrentDomain.UnhandledException += (sender,
             args) => Log.Error(args.ExceptionObject?.ToString() ?? string.Empty);

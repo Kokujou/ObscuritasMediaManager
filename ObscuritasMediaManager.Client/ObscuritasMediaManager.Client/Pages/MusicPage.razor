@@ -4,7 +4,7 @@
 
 @inherits ElementBase
 
-@inject MusicFilterService MusicFilterService
+@inject MusicFilterService MusicFilterService 
 @inject UserRepository UserRepository
 @inject NavigationManager NavigationManager
 @inject PlaylistRepository PlaylistRepository
@@ -12,7 +12,7 @@
 @inject AudioService Audio
 
 <div id="music-page">
-    <div id="search-panel-container">
+    <div id="search-panel-container"> 
             <MusicFilter filter="@(filter)"
                          filterChanged="(filter)=>UpdateFilterAsync(filter)"></MusicFilter> 
         <div id="result-count-label">
@@ -65,7 +65,8 @@
     </div>
     <div id="search-results-container">
         <PaginatedScrolling ScrollTopThreshold="50"
-                            ScrollBottom="@(() => currentPage++)">
+                            ScrollBottom="@(() => currentPage++)"
+        @ref="PaginatedScrolling">
             @if (loading)
             {
                 <PartialLoading></PartialLoading>

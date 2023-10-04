@@ -13,20 +13,20 @@ public class MediaModel
     public static void Configure(ModelBuilder builder)
     {
         var entity = builder.Entity<MediaModel>();
-        entity.Property(x => x.Genres).HasConversion(x => string.Join(",", x), x => x.Split(",", StringSplitOptions.RemoveEmptyEntries));
+        entity.HasMany(x => x.Genres)
+            .WithMany()
+            .UsingEntity("MediaGenreMapping",
+            x => x.HasOne(typeof(GenreModel)).WithMany().HasForeignKey("GenreId").HasPrincipalKey(nameof(GenreModel.Id)),
+            x => x.HasOne(typeof(MediaModel)).WithMany().HasForeignKey("MediaId").HasPrincipalKey(nameof(MediaModel.Id)));
+        entity.Navigation(x => x.Genres).AutoInclude();
         entity.Property(x => x.ContentWarnings)
             .HasConversion(x => string.Join(",", x.Select(x => x.ToString())),
             x => x.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => x.ParseEnumOrDefault<ContentWarning>()));
     }
 
-    public override string ToString()
-    {
-        return $"{Name} - {Type}";
-    }
-
     public IEnumerable<ContentWarning> ContentWarnings { get; set; }
     public string Description { get; set; }
-    public IEnumerable<string> Genres { get; set; } = new List<string>();
+    public List<GenreModel> Genres { get; set; } = new List<GenreModel>();
     [NotMapped]
     [NotHashable]
     public string Hash => this.GetHash();
@@ -40,4 +40,9 @@ public class MediaModel
     public MediaStatus Status { get; set; }
     public TargetGroup TargetGroup { get; set; }
     public MediaCategory Type { get; set; }
+
+    public override string ToString()
+    {
+        return $"{Name} - {Type}";
+    }
 }

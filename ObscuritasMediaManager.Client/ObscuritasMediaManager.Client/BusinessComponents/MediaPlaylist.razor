@@ -10,10 +10,11 @@
             <div class="playlist-button" Icon="@(Icons.Revert)"
                  id="reset-order-button"
             @onclick="@(() => restoreOrder())"></div>
-            <div class="playlist-button" id="remove-track-button"></div>
+            <div class="playlist-button" id="remove-track-button" Icon="@Icons.Trash"></div>
         </div>
         <PaginatedScrolling @ref="ScrollContainer"
                             ScrollTopThreshold="20"
+                            NoFade
                             ScrollBottom="@(() => loadMoreItems())">
             <div id="playlist-item-container">
                 @for (var index = 0; index < PaginatedItems.Count; index++)

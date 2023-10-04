@@ -9,7 +9,7 @@ public class MediaFilter
 {
     public FilterEntry<MediaCategory> category = new(Enum.GetValues<MediaCategory>(), CheckboxState.Ignore);
     public FilterEntry<ContentWarning> contentWarnings = new(Enum.GetValues<ContentWarning>(), CheckboxState.Ignore);
-    public FilterEntry<Guid> genres;
+    public FilterEntry<GenreModel> genres;
     public FilterEntry<Nation> languages = new(Enum.GetValues<Nation>(), CheckboxState.Require);
     public FilterEntry<int> ratings = new(new[] { 1, 2, 3, 4, 5 }, CheckboxState.Require);
     public (int? min, int? max) release = ( min: null, max: null );
@@ -19,7 +19,7 @@ public class MediaFilter
     public FilterEntry<MediaStatus> status = new(Enum.GetValues<MediaStatus>(), CheckboxState.Ignore);
     public FilterEntry<TargetGroup> targetGroups = new(Enum.GetValues<TargetGroup>(), CheckboxState.Ignore);
 
-    public MediaFilter(IEnumerable<Guid> genreIds)
+    public MediaFilter(IEnumerable<GenreModel> genreIds)
     {
         genres = new(genreIds, CheckboxState.Ignore);
     }

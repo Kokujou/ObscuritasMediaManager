@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using ObscuritasMediaManager.Client.Extensions;
 
 namespace ObscuritasMediaManager.Client.BusinessComponents.AudioTile;
 

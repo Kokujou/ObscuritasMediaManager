@@ -3,6 +3,7 @@ using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 
 using ObscuritasMediaManager.Backend.Models;
+using System.Linq.Expressions;
 using System.Text.Json;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
@@ -23,6 +24,11 @@ public class MediaRepository
 
         actual.UpdateFromJson(old, updated, serializerOptions);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdatePropertyAsync<T>(Guid id, Expression<Func<MediaModel, T>> property, T value)
+    {
+        await _context.Media.IgnoreAutoIncludes().Where(x => x.Id == id).ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
     }
 
     public async Task AddMediaImageAsync(Guid guid, string mediaImage)

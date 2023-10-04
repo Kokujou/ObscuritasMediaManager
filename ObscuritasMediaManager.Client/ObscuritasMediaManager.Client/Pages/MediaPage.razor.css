@@ -1,0 +1,62 @@
+#media-page-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+}
+
+::deep #media-filter-sidebar {
+    position: absolute;
+    right: 0px;
+    top: 10px;
+    width: 450px;
+    height: 700px;
+}
+
+::deep #paginated-scrolling{
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 500px;
+    margin-left: 60px;
+}
+
+#result-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 60px;
+    padding: 80px 0;
+}
+
+#tile-button {
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+}
+
+::deep #media-tile {
+    cursor: pointer;
+    width: 200px;
+    min-height: 350px;
+}
+
+#add-button {
+    background-color: #bbbbbb77;
+
+}
+
+#import-button {
+    background-color: #bbbbbb77;
+}
+
+video:not([src=]) {
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}

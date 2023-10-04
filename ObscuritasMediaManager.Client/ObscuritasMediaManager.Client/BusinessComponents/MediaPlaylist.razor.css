@@ -3,16 +3,17 @@
     position: relative;
     width: 100%;
     height: 100%;
+    background: var(--primary-color);
+    border-radius: 20px;
 }
 
 #playlist-container {
     display: flex;
     flex-direction: row;
-    border-radius: 20px;
-    box-sizing: border-box;
-    border: 20px solid var(--primary-color);
+    box-sizing: border-bcox;
     position: absolute;
     inset: 0;
+    padding: 20px;
 }
 
     #playlist-container #playlist-options {
@@ -22,7 +23,6 @@
         height: 100%;
         padding-left: 10px;
         padding-right: 30px;
-        background: var(--primary-color);
     }
 
 .playlist-button {
@@ -35,6 +35,7 @@
 ::deep #paginated-scrolling {
     position:relative;
     flex: auto;
+    background: var(--secondary-color);
 }
 
 #playlist-item-container {
@@ -64,6 +65,3 @@
         background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
     }
 
-#remove-track-button {
-    mask: linear-gradient(transparent, transparent);
-}

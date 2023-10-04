@@ -1,0 +1,37 @@
+﻿@inherits ElementBase
+
+<div id="upload-area">
+  
+    <div id="image-container"
+         focused="@Focused"
+         tabindex="0"
+    @onclick="@(() => UploadDescription.FocusAsync())"
+    @onclick:stopPropagation>
+        <div id="file-input-wrapper"
+        @onclick:preventDefault
+        @ondrop="@(() => Focused = false)"
+        @ondragover="@(() => Focused = true)"
+        @ondragover:preventDefault
+        @ondragleave="@(() => Focused = false)"
+        @ondragleave:preventDefault>
+            <Microsoft.AspNetCore.Components.Forms.InputFile @ref="FileInput" OnChange="@FileInputChanged"></Microsoft.AspNetCore.Components.Forms.InputFile>
+        </div>
+        <div id="add-icon" class="icon" Icon="@Icons.Plus"></div>
+        <div id="upload-description"
+             contenteditable="true"
+        @ref="UploadDescription"
+        @onpaste="@((e) => receivePastedImage(e))"
+        @onpaste:preventDefault
+        @onclick="@(() => openImageBrowser())"
+        @onclick:stopPropagation>
+
+            <div id="icon-section">
+                <div id="clipboard-icon" class="icon" Icon="@Icons.Clipboard"></div>
+                <div id="drop-icon" class="icon" Icon="@Icons.DropItem"></div>
+            </div>
+            <div id="drop-paste-order">drop/paste image</div>
+            or
+            <div id="brose-files-link">Browse files</div>
+        </div>
+    </div>
+</div>

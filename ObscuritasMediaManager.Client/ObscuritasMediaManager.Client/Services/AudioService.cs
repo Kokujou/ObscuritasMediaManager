@@ -1,4 +1,3 @@
-using NAudio.Utils;
 using NAudio.Wave;
 using ObscuritasMediaManager.Client.Services;
 
@@ -6,7 +5,7 @@ public class AudioService
 {
     public float Volume { get => player.Volume; set => player.Volume = value; }
 
-    public TimeSpan Position { get => player.GetPositionTimeSpan(); set => SetPosition(value); }
+    public TimeSpan Position { get => reader?.CurrentTime ?? TimeSpan.Zero; set => SetPosition(value); }
 
     public float[] VisualizationData = new float[0];
     private WaveOutEvent player = new WaveOutEvent();

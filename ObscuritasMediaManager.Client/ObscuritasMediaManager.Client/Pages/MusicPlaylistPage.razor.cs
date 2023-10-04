@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.DataRepositories;
-using ObscuritasMediaManager.Client.Extensions;
 using ObscuritasMediaManager.Client.GenericComponents;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace ObscuritasMediaManager.Client.Pages;
 
@@ -119,11 +119,11 @@ public partial class MusicPlaylistPage
         await UserRepository.UpdateUserSettingsAsync(Session.UserSettings.Current.Id, x => x.SetProperty(y => y.Volume, volume));
     }
 
-    private async Task changeProperty<T>(Func<MusicModel, T> property, T value)
+    private async Task changeProperty<T>(Expression<Func<MusicModel, T>> property, T value)
     {
         try
         {
-            await MusicRepository.UpdateAsync(updatedTrack.Hash, x => x.SetProperty(property, value));
+            await MusicRepository.UpdatePropertyAsync(updatedTrack.Hash, property, value);
             updatedTrack = await MusicRepository.GetAsync(updatedTrack.Hash);
         }
         catch (Exception ex)

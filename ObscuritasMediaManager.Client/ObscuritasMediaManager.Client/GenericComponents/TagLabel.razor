@@ -1,3 +1,39 @@
 ﻿@inherits ElementBase
 
-<PageTitle>Page Title</PageTitle>
+<div id="tag-label">
+<div id="label-container" @onclick:stopPropagation>
+    @if (CreateNew)
+    {
+        <form id="new-label-form" action="javascript:void(0)">
+            <input id="new-tag-input"
+            @onkeyup="@((e) => handleInput(e))"
+            @oninput="@((e) => searchText = (string?) e.Value ?? string.Empty)"
+            @onfocus="@(() => showAutocomplete = true)"
+            @onfocusout="@(() => showAutocomplete = false)"
+                   type="text"
+                   autocomplete="off" />
+
+            <div id="autocomplete-list" class="@(showAutocomplete ? "" : "hidden")">
+                @for (var index = 0; index < AutocompleteItems.Count; index++)
+                {
+                    <div class="autocomplete-item @(autofillIndex == index ? "active" : "")"
+                    @onpointerover="@(() => {
+                        autofillIndex = index;
+                    })"
+                    @onpointerdown="@(() => TagCreated.InvokeAsync(Autocomplete[index]))">
+                        @(Autocomplete[index])
+                    </div>
+                }
+            </div>
+            <div id="invisible-text">
+                @(searchText.Replace(" ", "\xA0"))
+            </div>
+        </form>
+    }
+    else
+    {
+        <div id="label-text">@(Text)</div>
+    }
+    <div id="x-button" @onclick="@(() => Removed.InvokeAsync())">&times;</div>
+    </div>
+</div>

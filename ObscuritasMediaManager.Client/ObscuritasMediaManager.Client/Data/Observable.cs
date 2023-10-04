@@ -5,10 +5,9 @@ namespace ObscuritasMediaManager.Client.Data;
 
 public class Observable<T> where T : notnull
 {
-    public List<Subscription> subscriptions = new();
-
     public T Current => currentValue;
 
+    private List<Subscription> subscriptions { get; set; } = new();
     private T currentValue { get; set; }
 
     public Observable(T initialValue)

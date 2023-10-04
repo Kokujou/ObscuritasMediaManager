@@ -60,6 +60,14 @@ public enum Icons
     Clean,
     [IconUrl("resources/inline-icons/general/ascending-icon.svg")]
     Ascending,
+    [IconUrl("resources/inline-icons/general/clipboard-icon.svg")]
+    Clipboard,
+    [IconUrl("resources/inline-icons/general/drop-icon.svg")]
+    DropItem,
+    [IconUrl("resources/inline-icons/general/edit-icon.svg")]
+    Edit,
+    [IconUrl("resources/inline-icons/general/trash-icon.svg")]
+    Trash,
     [IconUrl("resources/inline-icons/general/arrow-icon.svg")]
     Arrow
 }
