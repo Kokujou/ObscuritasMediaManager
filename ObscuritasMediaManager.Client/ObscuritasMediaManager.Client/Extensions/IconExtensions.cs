@@ -1,4 +1,5 @@
-﻿using ObscuritasMediaManager.Backend.Data.Music;
+﻿using ObscuritasMediaManager.Backend.Data.Media;
+using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Client.Attributes;
 using System;
 using System.Linq;
@@ -56,6 +57,35 @@ public static class IconExtensions
             Participants.LargeGroup => "resources/inline-icons/participants-icons/large-group.svg",
             Participants.SmallOrchestra => "resources/inline-icons/participants-icons/small-orchestra.svg",
             Participants.LargeOrchestra => "resources/inline-icons/participants-icons/large-orchestra.svg",
+            _ => "resources/inline-icons/general/unset-icon.svg"
+        };
+    }
+
+    public static string GetIconUrl(this ContentWarning enumValue)
+    {
+        return enumValue switch
+        {
+            ContentWarning.Depression => "resources/icons/content-warnings/depression.png",
+            ContentWarning.Drugs => "resources/icons/content-warnings/drugs.png",
+            ContentWarning.Violence => "resources/icons/content-warnings/conflict.png",
+            ContentWarning.Horror => "resources/icons/content-warnings/horror.png",
+            ContentWarning.Gore => "resources/icons/content-warnings/gore.png",
+            ContentWarning.Vulgarity => "resources/icons/content-warnings/swearing.png",
+            ContentWarning.Nudity => "resources/icons/content-warnings/sex.png",
+            _ => "resources/inline-icons/general/unset-icon.svg"
+        };
+    }
+
+    public static string GetIconUrl(this TargetGroup enumValue)
+    {
+        return enumValue switch
+        {
+            TargetGroup.Children => "resources/icons/target-groups/children.png",
+            TargetGroup.Adolescents => "resources/icons/target-groups/adolescents.png",
+            TargetGroup.Adults => "resources/icons/target-groups/adults.png",
+            TargetGroup.Families => "resources/icons/target-groups/family.png",
+            TargetGroup.Men => "resources/icons/target-groups/male.png",
+            TargetGroup.Women => "resources/icons/target-groups/female.png",
             _ => "resources/inline-icons/general/unset-icon.svg"
         };
     }

@@ -14,12 +14,12 @@
     height: 700px;
 }
 
-::deep #paginated-scrolling{
+::deep #paginated-scrolling {
     position: absolute;
     bottom: 0;
     top: 0;
     left: 0;
-    right: 500px;
+    right: 460px;
     margin-left: 60px;
 }
 
@@ -38,15 +38,28 @@
     cursor: pointer;
 }
 
-::deep #media-tile {
+::deep #media-tile, .media-tile-button {
     cursor: pointer;
     width: 200px;
     min-height: 350px;
 }
 
+.media-tile-icon{
+    background: white;
+    width: 150px;
+    height: 150px;
+}
+
+.media-tile-button {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content:center;
+    font-size: 36px;
+}
+
 #add-button {
     background-color: #bbbbbb77;
-
 }
 
 #import-button {

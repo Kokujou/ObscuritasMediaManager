@@ -16,7 +16,7 @@ public partial class MediaPage
     private bool loading { get; set; }
     private List<GenreModel> genreList { get; set; } = new();
 
-    private List<MediaModel> paginatedMedia => filteredMedia.Take(6 + (3 * currentPage)).ToList();
+    private List<MediaModel> paginatedMedia => filteredMedia.Take(10 + (4 * currentPage)).ToList();
 
     private List<MediaModel> filteredMedia => MediaFilterService.filter(Session.mediaList.Current, filter);
 

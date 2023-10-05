@@ -4,15 +4,17 @@ public class MediaFilterService
 {
     public List<MediaModel> filter(List<MediaModel> result, MediaFilter filter)
     {
-        ObjectFilterExtensions.applyPropertyFilter(result, filter.ratings, x => x.Rating);
         /* TODO ObjectFilterExtensions.applyArrayFilter(result, filter.genres, x => x.Genres); */
-        ObjectFilterExtensions.applyMultiPropertySearch(result, filter.search ?? string.Empty, x => x.Name, x => x.Description);
-        ObjectFilterExtensions.applyPropertyFilter(result, filter.status, x => x.Status);
-        ObjectFilterExtensions.applyRangeFilter(result, filter.release, x => x.Release);
-        ObjectFilterExtensions.applyPropertyFilter(result, filter.languages, x => x.Language);
-        ObjectFilterExtensions.applyPropertyFilter(result, filter.category, x => x.Type);
-        ObjectFilterExtensions.applyArrayFilter(result, filter.contentWarnings, x => x.ContentWarnings);
-        ObjectFilterExtensions.applyPropertyFilter(result, filter.targetGroups, x => x.TargetGroup, CheckboxState.Ignore);
+
+        result = result.applyPropertyFilter(filter.ratings, x => x.Rating)
+            .applyMultiPropertySearch(filter.search ?? string.Empty, x => x.Name, x => x.Description)
+            .applyPropertyFilter(filter.status, x => x.Status)
+            .applyRangeFilter(filter.release, x => x.Release)
+            .applyPropertyFilter(filter.languages, x => x.Language)
+            .applyPropertyFilter(filter.category, x => x.Type)
+            .applyArrayFilter(filter.contentWarnings, x => x.ContentWarnings)
+            .applyPropertyFilter(filter.targetGroups, x => x.TargetGroup, CheckboxState.Ignore)
+            .ToList();
 
         if (filter.sortingPropertyExpression is null) return result;
         if ((filter.sortingDirection is null) || (filter.sortingDirection == SortDirection.Ascending))

@@ -1,35 +1,56 @@
-﻿@foreach (var icon in Enum.GetValues<Icons>())
-{
-    <style>
-        *[icon="@(icon)"] {
-            -webkit-mask: url("@((icon.GetIconUrl()))") no-repeat center center / 100% 100%
-        }
-    </style>
-}
+﻿<div id="styles">
+    @foreach (var icon in Enum.GetValues<Icons>())
+    {
+        <style>
+            *[icon="@(icon)"] {
+                -webkit-mask: url("@((icon.GetIconUrl()))") no-repeat center center / 100% 100%
+            }
+        </style>
+    }
 
-@foreach (var participants in Enum.GetValues<Participants>())
-{
-    <style>
-        *[Participants="@(participants)"] {
-            -webkit-mask: url("@((participants.GetIconUrl()))") no-repeat center center / 100% 100%
-        }
-    </style>
-}
+    @foreach (var participants in Enum.GetValues<Participants>())
+    {
+        <style>
+            *[Participants="@(participants)"] {
+                -webkit-mask: url("@((participants.GetIconUrl()))") no-repeat center center / 100% 100%
+            }
+        </style>
+    }
 
-@foreach (var type in Enum.GetValues<InstrumentType>())
-{
-    <style>
-        *[InstrumentType="@(type)"] {
-            -webkit-mask: url("@((type.GetIconUrl()))") no-repeat center center / 100% 100%
-        }
-    </style>
-}
+    @foreach (var type in Enum.GetValues<InstrumentType>())
+    {
+        <style>
+            *[InstrumentType="@(type)"] {
+                -webkit-mask: url("@((type.GetIconUrl()))") no-repeat center center / 100% 100%
+            }
+        </style>
+    }
 
-@foreach (var flag in Enum.GetValues<Nation>())
-{
-    <style>
-        *[Nation="@(flag)"], *[Language="@(flag)"] {
-            background: url("@((flag.GetIconUrl()))") no-repeat center center / 100% 100%
-        }
-    </style>
-}
+    @foreach (var flag in Enum.GetValues<Nation>())
+    {
+        <style>
+            *[Nation="@(flag)"], *[Language="@(flag)"] {
+                background: url("@((flag.GetIconUrl()))") no-repeat center center / 100% 100%
+            }
+        </style>
+    }
+
+    @foreach (var warning in Enum.GetValues<ContentWarning>())
+    {
+        <style>
+            *[ContentWarning="@(warning)"] {
+                -webkit-mask: url("@((warning.GetIconUrl()))") 100% 100% / 100% 100%;
+            }
+        </style>
+    }
+
+    @foreach (var group in Enum.GetValues<TargetGroup>())
+    {
+        <style>
+            *[TargetGroup="@(group)"] {
+                -webkit-mask: url("@((group.GetIconUrl()))") 100% 100% / 100% 100%;
+            }
+        </style>
+    }
+
+</div>

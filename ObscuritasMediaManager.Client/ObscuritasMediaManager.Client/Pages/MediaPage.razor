@@ -10,8 +10,8 @@
 
 
 <div id="media-page-container">
-    <MediaFilterSidebar Filter="@(filter)">
-        <div slot="footer" id="result-overview">@(filteredMedia.Count) Ergebnisse gefunden</div>
+    <MediaFilterSidebar Filter="@(filter)" FilterChanged="x=>filter = x ">
+        <Footer>@(filteredMedia.Count) Ergebnisse gefunden</Footer>
     </MediaFilterSidebar>
     <PaginatedScrolling ScrollTopThreshold="50" ScrollBottom="()=>currentPage++" @ref="PaginatedScrolling">
         @if (loading)
