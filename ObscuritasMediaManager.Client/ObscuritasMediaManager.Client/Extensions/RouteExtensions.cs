@@ -15,4 +15,10 @@ public static class RouteExtensions
         if (string.IsNullOrEmpty(desiredQuery)) return null;
         return HttpUtility.UrlDecode(desiredQuery.Split('=')[1]);
     }
+
+    public static void NavigateToQuery(this NavigationManager navigationManager, string query)
+    {
+        var currentUri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
+        navigationManager.NavigateTo($"{currentUri.GetLeftPart(UriPartial.Path)}{query}");
+    }
 }

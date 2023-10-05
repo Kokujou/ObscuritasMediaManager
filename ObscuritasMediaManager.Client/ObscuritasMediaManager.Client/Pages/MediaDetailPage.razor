@@ -1,0 +1,182 @@
+﻿@page "/media-detail"
+@inherits ElementBase
+
+@inject MediaFilterService MediaFilterService
+@inject NavigationManager NavigationManager
+@inject MediaRepository MediaRepository
+@inject StreamingRepository StreamingRepository
+
+<PageTitle>@(updatedMedia.Name)</PageTitle>
+
+    <div id="media-detail-page">
+        <div id="edit-button"
+        @onclick="@(() => editMode = !editMode)">
+            <CustomToggle state="@(editMode ? CheckboxState.Ignore : CheckboxState.Forbid)"
+                          Toggled="@((state) => editMode = (state == CheckboxState.Ignore))"></CustomToggle>
+            <div id="toggle-edit-text">@(editMode ? "Bearbeitung deaktivieren" : "Bearbeitung aktivieren")</div>
+    </div>
+    <div id="media-detail-container">
+        <div id="content-panels">
+            <div id="left-panel" disabled="@(!editMode)">
+                <MediaTile displayStyle="MediaTile.DisplayStyle.Simple"
+                           Disabled="@(!editMode)"
+                           Media="@updatedMedia"
+                           ImageReceived="@((image) => ChangeProperty(x=>x.Image, image))">
+                    @if (!string.IsNullOrEmpty(updatedMedia.Image))
+                    {
+                        <div id="delete-icon-container">
+                            <div id="delete-icon" Icon="@Icons.Trash" @onclick="@(() => ChangeProperty(x=>x.Image, null))"></div>
+                        </div>
+
+                    }
+                </MediaTile>
+                <div id="media-rating" disabled="@(!editMode)">
+                    <StarRating></StarRating>
+                </div>
+            </div>
+            <div id="middle-panel" disabled="@(!editMode)">
+                <div id="content-warning-section" class="property-entry">
+                    <div class="property-name">Inhaltswarnungen:</div>
+                    <div id="content-warnings">
+                        @foreach (var warning in Enum.GetValues<ContentWarning>())
+                        {
+                            <div class="content-warning-icon-wrapper"
+                                 selected="@(updatedMedia.ContentWarnings.Contains(warning))"
+                            @onclick="@(() => toggleContentWarning(warning))">
+                                <div class="content-warning-icon" content-warning="@(warning)"></div>
+                                <div class="content-warning-label">@(warning)</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div id="right-panel">
+                <div id="prev-link" disabled="@(prevMediaId == default)" @onclick="@(()=>NavigationManager.NavigateToQuery($"?guid={prevMediaId}"))">&LeftArrow; Letzer</div>
+                <div id="next-link" disabled="@(nextMediaId == default)" @onclick="@(()=>NavigationManager.NavigateToQuery($"?guid={nextMediaId}"))">Nächster &RightArrow;</div>
+
+                <div id="media-heading">
+                    <div id="popup-icon"
+                         Icon="@(Icons.Popup)">
+                    </div>
+                    <input disabled="@(!editMode)"
+                           type="text"
+                           id="media-name"
+                           class="property-value"
+                           value="@(updatedMedia.Name)"
+                           defaultValue="@(updatedMedia.Name)"
+                    @onchange="@((e) => ChangeProperty(x=>x.Name, e.Value))" />
+                </div>
+                <div class="property-entry genre-entry">
+                    <div class="property-name">Genres:</div>
+                    <div class="property-value">
+                        @foreach (var x in updatedMedia.Genres)
+                        {
+                            <TagLabel Disabled="@(!editMode)"
+                                      Removed="@(() => ChangeProperty(x=>x.Genres, updatedMedia.Genres.Where((genre) => genre != x)))"
+                                      Text="@(x.Name)">
+                            </TagLabel>
+                        }
+                        @if (editMode)
+                        {
+                            <div id="add-genre-button" @onclick="@(() => showGenreSelectionDialog())"> +</div>
+                        }
+                    </div>
+                </div>
+                <div id="right-panel-top">
+                    <div id="right-panel-left-side">
+                        <div class="property-entry">
+                            <div class="property-name"> Release:</div>
+                            <input id="release-input"
+                                   disabled="@(!editMode)"
+                                   type="text"
+                                   class="property-value"
+                                   defaultValue="@(updatedMedia.Release)"
+                            @bind-value="@releaseString"
+                            @oninput="e=>releaseInput((string?) e.Value ?? string.Empty)" />
+                        </div>
+                        <div class="property-entry">
+                            <div class="property-name"> Kategorie:</div>
+                            <div class="property-value">
+                                <DropDown disabled="@(!editMode)"
+                                          options="@(DropDown<MediaCategory>.Option.createSimpleArray(
+                            Enum.GetValues<MediaCategory>(),updatedMedia.Type))"></DropDown>
+                            </div>
+                        </div>
+                        <div class="property-entry">
+                            <div class="property-name">Sprache:</div>
+                            <div class="property-value">
+                                <DropDown disabled="@(!editMode)"
+                                          options="@(DropDown<Nation>.Option.createSimpleArray(
+                                            Enum.GetValues<Nation>(),
+                                            updatedMedia.Language
+                                        ))"
+                                          SelectionChanged="@((e) => ChangeProperty(x=>x.Language, e.value))"
+                                          T="Nation"></DropDown>
+                            </div>
+                        </div>
+                        <div class="property-entry">
+                            <div class="property-name">Status:</div>
+                            <div id="property-value">
+                                <DropDown disabled="@(!editMode)"
+                                          options="@(DropDown<MediaStatus>.Option.createSimpleArray(
+                                            Enum.GetValues<MediaStatus>(),
+                                            updatedMedia.Status
+                                        ))"
+                                          SelectionChanged="@((e) => ChangeProperty(x=>x.Status, e.value))"
+                                          T="MediaStatus"></DropDown>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="target-group-section" class="property-entry" disabled="@(!editMode)">
+                        <div class="property-name">Zielgruppe:</div>
+                        <div id="target-group-icon"
+                             target-group="@(updatedMedia.TargetGroup)"
+                        @onclick="@(() =>
+                                        ChangeProperty(
+                                         x=>x.TargetGroup,
+                                            updatedMedia.TargetGroup.NextValue()
+                                        ))"></div>
+                        <svg id="target-group-label" viewbox="0 0 100 40">
+                            <text textLength="100" x="0" y="50%" lengthAdjust="spacingAndGlyphs" fill="white">
+                                @(updatedMedia.TargetGroup)
+                            </text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="property-group">
+                    <div class="property-entry">
+                        <div class="property-name"> Beschreibung:</div>
+                    </div>
+                    <textarea disabled="@(!editMode)"
+                              class="textarea property-value"
+                              id="description-input"
+                              onclick="this.focus()"
+                              value="@(updatedMedia.Description)"
+                              defaultValue="@(updatedMedia.Description)"
+                    @onchange="@((e) => ChangeProperty(x=>x.Description, (string?)e.Value??string.Empty))"></textarea>
+                </div>
+            </div>
+        </div>
+        <div id="streaming-panel">
+            <SideScroller>
+                <div id="season-inner" @onscroll="@(() => StateHasChanged())">
+                    @for (var index = 0; index < seasons.Count; index++)
+                    {
+                        <div @onclick="@(() =>selectedSeason = index)"
+                             class="link @(selectedSeason == index ? "active" : "")">
+                            @(seasons[index])
+                        </div>
+                    }
+                </div>
+            </SideScroller>
+            <div id="season-content">
+                @foreach (var entry in episodes)
+                {
+                    <div @onclick="@(() => openVideoPlayer(entry))" class="link">
+                        @(updatedMedia.Name) - @(entry.Season): Episode @(entry.Episode)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

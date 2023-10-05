@@ -33,7 +33,7 @@
                 @foreach (var media in paginatedMedia)
                 {
                     <a class="media-tile-link"
-                    @onclick="@(()=>NavigationManager.NavigateTo($"media-detail-page?guid={media.Id}"))">
+                    @onclick="@(()=>NavigationManager.NavigateTo($"media-detail?guid={media.Id}"))">
                         <MediaTile Media="@media"
                                    ImageReceived="@((imageData) => changePropertyOf(media,x=>x.Image, imageData))"
                                    RatingChanged="@((rating) => changePropertyOf(media, x=>x.Rating, rating))"
