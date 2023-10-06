@@ -1,16 +1,16 @@
 ﻿@inherits ElementBase
 <IconRegistry></IconRegistry>
-		<LayoutView Layout="@typeof(PageLayout)">
-<Router AppAssembly="@GetType().Assembly" >
-	<Found Context="routeData">
-		<RouteView RouteData="@routeData" />
-	</Found>
-	<NotFound>
-			<p>Sorry, there"s nothing at this address.</p>
-	</NotFound>
-	<Navigating >
-		<PartialLoading></PartialLoading>
-	</Navigating>
-</Router>
+<LayoutView Layout="@typeof(PageLayout)">
+    <Router AppAssembly="@GetType().Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" />
+        </Found>
+        <NotFound>
+            <p>Sorry, there"s nothing at this address.</p>
+        </NotFound>
+        <Navigating>
+            <PartialLoading></PartialLoading>
+        </Navigating>
+    </Router>
 
 </LayoutView>

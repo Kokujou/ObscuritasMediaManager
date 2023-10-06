@@ -1,7 +1,27 @@
 ﻿@page "/home"
 @page "/"
+@using System.Reflection;
 @inherits ElementBase
 
-<h3>WelcomePage</h3>
+@inject NavigationManager NavigationManager
 
+<PageTitle>Willkommen</PageTitle>
+
+<div id="welcome-page">
+    <div id="tile-link-area">
+        <div id="tile-link-section">
+            <div @onclick="()=> NavigationManager.NavigateToComponent<MediaPage>()">
+                <ImageTile Caption="Serien & Filme" Image="resources/images/real-series.png"></ImageTile>
+            </div>
+        </div>
+        <div id="tile-link-section">
+            <div @onclick="()=> NavigationManager.NavigateToComponent<MusicPage>()">
+                <ImageTile Caption="Musik" Image="resources/images/music.png"></ImageTile>
+            </div>
+            <div @onclick="()=> NavigationManager.NavigateToComponent<RecipesPage>()">
+                <ImageTile Caption="Rezepte" Image="resources/images/food.png"></ImageTile>
+            </div>
+        </div>
+    </div>
+</div>
 

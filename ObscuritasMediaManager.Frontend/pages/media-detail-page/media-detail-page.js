@@ -89,6 +89,8 @@ export class MediaDetailPage extends LitElementBase {
         this.editMode = false;
     }
 
+ 
+
     async connectedCallback() {
         super.connectedCallback();
         this.subscriptions.push(

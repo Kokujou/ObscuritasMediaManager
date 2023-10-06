@@ -1,3 +1,5 @@
+
 namespace ObscuritasMediaManager.Client.Pages;
 
-public partial class WelcomePage { }
+public partial class WelcomePage
+{ }
