@@ -17,7 +17,7 @@ public partial class StarRating
         var include = true;
 
         if (singleSelect)
-            values = Enumerable.Range(1, rating + 1).ToList();
+            values = Enumerable.Range(1, rating).ToList();
         else if (values.Contains(rating))
         {
             values = values.Where((x) => x != rating).ToList();

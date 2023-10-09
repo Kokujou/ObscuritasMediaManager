@@ -7,13 +7,15 @@ namespace ObscuritasMediaManager.Client.BusinessComponents.MediaFilter;
 public partial class MediaFilterSidebar
 {
     [Parameter]
-    public MediaFilter Filter { get; set; } = new(new List<GenreModel>());
+    public MediaFilter Filter { get; set; } = new();
     [Parameter] public EventCallback<MediaFilter> FilterChanged { get; set; }
     [Parameter] public RenderFragment? Footer { get; set; }
 
     private void resetFilter()
     {
-        Filter = new(Filter.genres.states.Keys);
+        var oldGenreIds = Filter.Genres.states.Keys.ToList();
+        Filter = new();
+        Filter.UpdateGenres(oldGenreIds ?? new List<Guid>());
 
         FilterChanged.InvokeAsync(Filter);
     }

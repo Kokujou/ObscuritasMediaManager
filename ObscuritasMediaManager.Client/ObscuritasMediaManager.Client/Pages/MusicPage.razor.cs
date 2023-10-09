@@ -186,6 +186,5 @@ public partial class MusicPage
     {
         await base.OnAfterRenderAsync(firstRender);
         if (!firstRender) return;
-        while (await PaginatedScrolling.CheckIfScrolledToBottomAsync()) ;
     }
 }

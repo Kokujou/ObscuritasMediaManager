@@ -10,9 +10,9 @@
             <input id="search-input"
                    type="text"
                    placeholder="Bitte Suchbegriff eingeben..."
-                   value="@(Filter.search ?? "")"
-            @oninput="@((e) => ChangeFilter(x=>x.search = (string?)e.Value ?? string.Empty))"
-            @onchange="@((e) => ChangeFilter(x => x.search = (string?)e.Value ?? string.Empty))" />
+                   value="@(Filter.Search ?? "")"
+            @oninput="@((e) => ChangeFilter(x=>x.Search = (string?)e.Value ?? string.Empty))"
+            @onchange="@((e) => ChangeFilter(x => x.Search = (string?)e.Value ?? string.Empty))" />
         </div>
         <div id="sorting" class="filter-entry" complex>
             <div class="filter-heading">
@@ -20,25 +20,25 @@
             </div>
             <div id="sort-input">
                 <DropDown options="@(MediaFilter.SortableProperties.Select((x) =>
-                            new DropDown<Func<MediaModel, object>>.Option() {
+                            new DropDown<Expression<Func<MediaModel, object>>>.Option() {
                                 value= x.Property,
                                 text= x.Translation,
-                                state= x.Property == Filter.sortingPropertyExpression ? CheckboxState.Ignore : CheckboxState.Forbid,
+                                state= x.Property.ValueEquals(Filter.SortingPropertyExpression) ? CheckboxState.Ignore : CheckboxState.Forbid,
                             }
                         ))"
                           unsetText="Keine Sortierung"
                           maxDisplayDepth="5"
-                          SelectionChanged="@((e) => ChangeFilter(x=>x.sortingPropertyExpression = e.value))"
-                          T="Func<MediaModel, object>">
+                          SelectionChanged="@((e) => ChangeFilter(x=>x.SortingPropertyExpression = e.value))"
+                          T="Expression<Func<MediaModel, object>>">
                 </DropDown>
                 <div id="ascending-icon"
-                     active="@(Filter.sortingDirection == SortDirection.Ascending)"
+                     active="@(Filter.SortingDirection == SortDirection.Ascending)"
                      class="icon-button" Icon="@(Icons.Ascending)"
-                @onclick="@(() => ChangeFilter(x=>x.sortingDirection= SortDirection.Ascending))"></div>
+                @onclick="@(() => ChangeFilter(x=>x.SortingDirection= SortDirection.Ascending))"></div>
                 <div id="descending-icon"
-                     active="@(Filter.sortingDirection == SortDirection.Descending)"
+                     active="@(Filter.SortingDirection == SortDirection.Descending)"
                      class="icon-button" Icon="@(Icons.Descending)"
-                @onclick="@(() => ChangeFilter(x=>x.sortingDirection= SortDirection.Descending))"></div>
+                @onclick="@(() => ChangeFilter(x=>x.SortingDirection= SortDirection.Descending))"></div>
             </div>
         </div>
         <div id="language-filter" class="filter-entry" simple>
@@ -46,12 +46,12 @@
                 <div class="filter-label">Sprache:</div>
             </div>
             <div id="language-switcher-mini">
-                <TriValueCheckbox valueChanged="@((e) => ChangeFilter(x=>x.languages.states[Nation.German]= e))"
-                                  value="@(Filter.languages.states[Nation.German])">
+                <TriValueCheckbox valueChanged="@((e) => ChangeFilter(x=>x.Languages.states[Nation.German]= e))"
+                                  value="@(Filter.Languages.states[Nation.German])">
                     <div class="icon-button" Language="@(Nation.German)"></div>
                 </TriValueCheckbox>
-                <TriValueCheckbox valueChanged="@((e) => ChangeFilter(x=>x.languages.states[Nation.Japanese] = e))"
-                                  value="@(Filter.languages.states[Nation.Japanese])">
+                <TriValueCheckbox valueChanged="@((e) => ChangeFilter(x=>x.Languages.states[Nation.Japanese] = e))"
+                                  value="@(Filter.Languages.states[Nation.Japanese])">
                     <div class="icon-button" Language="@(Nation.Japanese)"></div>
                 </TriValueCheckbox>
             </div>
@@ -60,16 +60,16 @@
             <div class="filter-heading">
                 <div class="filter-label">Kategorie:</div>
                 <div class="icon-button" Icon="@(Icons.SelectAll)"
-                @onclick="@(() => ChangeFilter(x=>x.category.ChangeAll( CheckboxState.Ignore)))"></div>
+                @onclick="@(() => ChangeFilter(x=>x.Category.ChangeAll( CheckboxState.Ignore)))"></div>
                 <div class="icon-button" Icon="@(Icons.UnselectAll)"
-                @onclick="@(() => ChangeFilter(x=>x.category.ChangeAll(CheckboxState.Forbid)))"></div>
+                @onclick="@(() => ChangeFilter(x=>x.Category.ChangeAll(CheckboxState.Forbid)))"></div>
             </div>
             <DropDown options="@(DropDown<MediaCategory>.Option
-                                .createSimpleArray(Enum.GetValues<MediaCategory>(), x=> Filter.category.states[x]))"
+                                .createSimpleArray(Enum.GetValues<MediaCategory>(), x=> Filter.Category.states[x]))"
                                 useToggle
                                 multiselect
                        maxDisplayDepth="5"
-                       SelectionChanged="@((e) => ChangeFilter(x=>x.category.states[e.value] = e.state))"
+                       SelectionChanged="@((e) => ChangeFilter(x=>x.Category.states[e.value] = e.state))"
                        T="MediaCategory"></DropDown>
          </div>
          <div id="rating-filter" class="filter-entry" complex>
@@ -77,8 +77,8 @@
                  <div class="filter-label">Bewertung:</div>
              </div>
              <StarRating max="5"
-                         values="@(Filter.ratings.required.ToList())"
-                         ratingChanged="@((e) => ChangeFilter(x=>x.ratings.states[e.rating] = e.include ? CheckboxState.Require : CheckboxState.Forbid
+                         values="@(Filter.Ratings.required.ToList())"
+                         ratingChanged="@((e) => ChangeFilter(x=>x.Ratings.states[e.rating] = e.include ? CheckboxState.Require : CheckboxState.Forbid
             ))">
              </StarRating>
          </div>
@@ -89,9 +89,9 @@
                      <div class="icon-button" Icon="@(Icons.Popup)" @onclick="@(() => openGenreDialog())"></div>
                  </div>
                  <div class="icon-button" Icon="@(Icons.SelectAll)"
-                 @onclick="@(() => ChangeFilter(x=>x.genres.ChangeAll(CheckboxState.Ignore)))"></div>
+                 @onclick="@(() => ChangeFilter(x=>x.Genres.ChangeAll(CheckboxState.Ignore)))"></div>
                  <div class="icon-button" Icon="@(Icons.UnselectAll)"
-                 @onclick="@(() => ChangeFilter(x=>x.genres.ChangeAll(CheckboxState.Forbid)))"></div>
+                 @onclick="@(() => ChangeFilter(x=>x.Genres.ChangeAll(CheckboxState.Forbid)))"></div>
              </div>
          </div>
          <div id="release-filter" class="filter-entry" complex>
@@ -100,23 +100,23 @@
              </div>
              <RangeSelector Min="1900"
                             Max="@(DateTime.Now.Year)"
-                            Left="@(Filter.release.min ?? 1900)"
-                            Right="@(Filter.release.max ?? DateTime.Now.Year)"
+                            Left="@(Filter.Release.min ?? 1900)"
+                            Right="@(Filter.Release.max ?? DateTime.Now.Year)"
                             RangeChanged="@((e) =>
-                       ChangeFilter(x=>x.release = ( min: e.left, max: e.right )))"></RangeSelector>
+                       ChangeFilter(x=>x.Release = ( min: e.left, max: e.right )))"></RangeSelector>
          </div>
          <div id="content-warning-filter" class="filter-entry" complex>
              <div class="filter-heading">
                  <div class="filter-label">Inhaltswarnungen:</div>
                  <div class="icon-button reset-button" Icon="@Icons.Revert"
-                 @onclick="@(() => ChangeFilter(x=>x.contentWarnings.ChangeAll(CheckboxState.Ignore)))"></div>
+                 @onclick="@(() => ChangeFilter(x=>x.ContentWarnings.ChangeAll(CheckboxState.Ignore)))"></div>
              </div>
              <SideScroller>
                  @foreach (var warning in Enum.GetValues<ContentWarning>())
                 {
                     <TriValueCheckbox allowThreeValues
-                                       value="@(Filter.contentWarnings.states[warning])"
-                                       valueChanged="@((e) => ChangeFilter(x=>x.contentWarnings.states[warning]=e))">
+                                       value="@(Filter.ContentWarnings.states[warning])"
+                                       valueChanged="@((e) => ChangeFilter(x=>x.ContentWarnings.states[warning]=e))">
                          <div class="icon-button" ContentWarning="@(warning)"></div>
                      </TriValueCheckbox>
                 }
@@ -126,14 +126,14 @@
             <div class="filter-heading">
                 <div class="filter-label">Zielgruppe:</div>
                 <div class="icon-button reset-button" Icon="@Icons.Revert"
-                @onclick="@(() => ChangeFilter(x=>x.targetGroups.ChangeAll(CheckboxState.Ignore)))"></div>
+                @onclick="@(() => ChangeFilter(x=>x.TargetGroups.ChangeAll(CheckboxState.Ignore)))"></div>
             </div>
             <SideScroller>
                 @foreach (var group in Enum.GetValues<TargetGroup>())
                 {
                     <TriValueCheckbox allowThreeValues
-                                       value="@(Filter.targetGroups.states[group])"
-                                       valueChanged="@((e) => ChangeFilter(x=>x.targetGroups.states[group] = e))">
+                                       value="@(Filter.TargetGroups.states[group])"
+                                       valueChanged="@((e) => ChangeFilter(x=>x.TargetGroups.states[group] = e))">
                          <div class="icon-button" TargetGroup="@(group)"></div>
                      </TriValueCheckbox>
                 }

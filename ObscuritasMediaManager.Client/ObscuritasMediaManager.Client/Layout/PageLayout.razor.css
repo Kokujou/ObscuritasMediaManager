@@ -27,26 +27,6 @@
     transform-origin: 0 0;
 }
 
-#layout-content {
-    animation: fade-in 1s normal ease-in;
-    mask-size: 100% 500%;
-    -webkit-mask-size: 100% 500%;
-    mask-image: linear-gradient(to top, #0000 25%, #000 75%);
-    -webkit-mask-image: linear-gradient(to top, #0000 25%, #000 75%);
-}
-
-@keyframes fade-in {
-    0% {
-        mask-position: bottom;
-        -webkit-mask-position: bottom;
-    }
-
-    100% {
-        mask-position: top;
-        -webkit-mask-position: top;
-    }
-}
-
 #header,
 #navigation,
 #layout-content {

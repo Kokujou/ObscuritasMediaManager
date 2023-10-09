@@ -50,6 +50,12 @@ public partial class DropDown<T>
         if (useSearch) searchFilter = string.Empty;
     }
 
+    private void CloseDropdown()
+    {
+        showDropdown = false;
+        if (useSearch) searchFilter = string.Empty;
+    }
+
     public class Option
     {
         public static List<Option> createSimpleArray(IEnumerable<T> values, T defaultValue)

@@ -3,14 +3,16 @@
 
 @inject GenreRepository GenreRepository
 @inject MediaRepository MediaRepository
+@inject UserRepository UserRepository
 @inject MediaFilterService MediaFilterService
 @inject NavigationManager NavigationManager
+
 
 <PageTitle>Page Title</PageTitle>
 
 
 <div id="media-page-container">
-    <MediaFilterSidebar Filter="@(filter)" FilterChanged="x=>filter = x ">
+    <MediaFilterSidebar Filter="@(filter)" FilterChanged="UpdateFilter">
         <Footer>@(filteredMedia.Count) Ergebnisse gefunden</Footer>
     </MediaFilterSidebar>
     <PaginatedScrolling ScrollTopThreshold="50" ScrollBottom="()=>currentPage++" @ref="PaginatedScrolling">

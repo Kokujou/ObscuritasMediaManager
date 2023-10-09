@@ -7,7 +7,7 @@ namespace ObscuritasMediaManager.Backend.Extensions;
 
 public static class ExpressionExtensions
 {
-    public static string GetPropertyName<T, U>(this Expression<Func<T, U>> propertyExpression)
+    public static string GetPropertyName(this LambdaExpression propertyExpression)
     {
         if (propertyExpression.Body is MemberExpression memberExpression) return memberExpression.Member.Name;
         if ((propertyExpression.Body is UnaryExpression unaryExpression)
@@ -31,5 +31,10 @@ public static class ExpressionExtensions
         var lambda = Expression.Lambda<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>>(
             call, setParameter);
         return lambda;
+    }
+
+    public static bool ValueEquals(this LambdaExpression target, LambdaExpression other)
+    {
+        return target.GetPropertyName() == other.GetPropertyName();
     }
 }

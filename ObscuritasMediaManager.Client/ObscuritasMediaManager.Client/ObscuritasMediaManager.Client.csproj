@@ -18,6 +18,7 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="8.0.0-rc.1.*" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-rc.1.*" />
         <PackageReference Include="NAudio" Version="2.2.1" />
+        <PackageReference Include="Serialize.Linq" Version="3.0.134" />
     </ItemGroup>
 
     <ItemGroup>

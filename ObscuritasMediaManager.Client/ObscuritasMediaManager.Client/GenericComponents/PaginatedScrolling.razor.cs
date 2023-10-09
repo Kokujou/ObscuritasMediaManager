@@ -10,20 +10,26 @@ public partial class PaginatedScrolling
     [Parameter] public bool NoFade { get; set; }
     public required ElementReference ScrollContainer { get; set; }
 
+    [JSInvokable]
+    public async Task NotifyScrolledToBottomAsync()
+    {
+        await ScrollBottom.InvokeAsync();
+    }
+
     public async Task ScrollToTopAsync()
     {
         await JS.InvokeVoidAsync("scrollToTop", ScrollContainer);
     }
 
-    public async Task<bool> CheckIfScrolledToBottomAsync()
-    {
-        var isBottom = await JS.InvokeAsync<bool>("isScrolledToBottom", ScrollContainer, ScrollTopThreshold);
-        if (isBottom) await ScrollBottom.InvokeAsync();
-        return isBottom;
-    }
-
     public async Task ScrollToChildAsync(ElementReference child)
     {
         await JS.InvokeVoidAsync("scrollToChild", ScrollContainer, child);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (!firstRender) return;
+        await JS.InvokeVoidAsync("attachScrollListener", DotNetObjectReference.Create(this), ScrollContainer, ScrollTopThreshold);
     }
 }

@@ -17,9 +17,14 @@ function scrollToChild(scrollContainer, child) {
  * @param {HTMLElement} scrollContainer
  * @param {number} scrollTopThreshold
  */
-function isScrolledToBottom(scrollContainer, scrollTopThreshold) {
-    var scrollMax = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
-    if (scrollContainer.scrollHeight <= scrollContainer.clientHeight) return true;
-    if (scrollContainer.scrollTop >= scrollMax - scrollTopThreshold) return true;
-    return false;
+function attachScrollListener(component, scrollContainer, scrollTopThreshold) {
+    scrollContainer.onscroll = (e) => {
+        var scrollMax = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
+        var notScrollable = scrollContainer.scrollHeight <= scrollContainer.clientHeight;
+        var scrolledToBottom = scrollContainer.scrollTop >= scrollMax - scrollTopThreshold
+
+        if (notScrollable || scrolledToBottom)
+            component.invokeMethodAsync('NotifyScrolledToBottomAsync');
+
+    }
 }

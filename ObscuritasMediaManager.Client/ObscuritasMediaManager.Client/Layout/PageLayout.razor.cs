@@ -20,6 +20,8 @@ public partial class PageLayout
             .ToList();
     }
 
+    [Parameter] public RenderFragment? HeaderContent { get; set; }
+
     public PageLayout()
     {
         MainWindow.Instance.SizeChanged += (_, _) => StateHasChanged();

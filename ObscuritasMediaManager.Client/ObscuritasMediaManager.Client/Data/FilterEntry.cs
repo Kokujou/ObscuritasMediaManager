@@ -5,13 +5,18 @@ namespace ObscuritasMediaManager.Client.Data;
 
 public class FilterEntry<T> where T : notnull
 {
-    public Dictionary<T, CheckboxState>   states = new();
+    public Dictionary<T, CheckboxState> states { get; set; } = new();
 
     public IEnumerable<T> forbidden => states.Where((x) => x.Value == CheckboxState.Forbid).Select((x) => x.Key);
 
     public IEnumerable<T> ignored => states.Where((x) => x.Value == CheckboxState.Ignore).Select((x) => x.Key);
 
     public IEnumerable<T> required => states.Where((x) => x.Value == CheckboxState.Require).Select((x) => x.Key);
+
+    public FilterEntry()
+    {
+        states = new Dictionary<T, CheckboxState>();
+    }
 
     public FilterEntry(IEnumerable<T> values, CheckboxState defaultValue = CheckboxState.Ignore)
     {

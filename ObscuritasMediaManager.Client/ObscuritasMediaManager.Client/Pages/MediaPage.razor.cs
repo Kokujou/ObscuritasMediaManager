@@ -12,7 +12,7 @@ namespace ObscuritasMediaManager.Client.Pages;
 public partial class MediaPage
 {
     public required PaginatedScrolling PaginatedScrolling { get; set; }
-    private MediaFilter filter { get; set; } = new(new List<GenreModel>());
+    private MediaFilter filter { get; set; }
     private bool loading { get; set; }
     private List<GenreModel> genreList { get; set; } = new();
 
@@ -44,13 +44,13 @@ public partial class MediaPage
     {
         await base.OnAfterRenderAsync(firstRender);
         if (!firstRender) return;
-        while (await PaginatedScrolling.CheckIfScrolledToBottomAsync()) ;
     }
 
     private async Task InitializeAsync()
     {
         var genres = await GenreRepository.GetAll().ToListAsync();
-        filter = new MediaFilter(genres);
+        filter = new MediaFilter();
+        filter.UpdateGenres(genres.Select(x => x.Id));
         loading = false;
     }
 
@@ -58,5 +58,18 @@ public partial class MediaPage
     {
         await MediaRepository.UpdatePropertyAsync(mediaModel.Id, expression, value);
         ((PropertyInfo)((MemberExpression)expression.Body).Member).SetValue(mediaModel, value);
+    }
+
+    private async Task UpdateFilter(MediaFilter filter)
+    {
+        try
+        {
+            var serialized = JsonSerializer.Serialize(filter);
+            await UserRepository.UpdateUserSettingsAsync(Session.UserSettings.Current.Id,
+            x => x.SetProperty(y => y.MediaFilter, serialized));
+            Session.UserSettings.Current.MediaFilter = serialized;
+            Session.UserSettings.Next(Session.UserSettings.Current);
+        }
+        catch (Exception ex) { }
     }
 }

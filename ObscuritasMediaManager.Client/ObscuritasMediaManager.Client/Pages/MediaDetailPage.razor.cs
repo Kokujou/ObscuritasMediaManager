@@ -58,7 +58,11 @@ public partial class MediaDetailPage
         StreamingEntries = (await StreamingRepository.GetAsync(guid)).ToList();
     }
 
-    private async Task ChangeProperty<T>(Expression<Func<MediaModel, T>> expression, T value) { }
+    private async Task ChangeProperty<T>(Expression<Func<MediaModel, T>> expression, T value)
+    {
+        await MediaRepository.UpdatePropertyAsync(updatedMedia.Id, expression, value);
+        updatedMedia = await MediaRepository.GetAsync(updatedMedia.Id);
+    }
 
     private void releaseInput(string value)
     {
