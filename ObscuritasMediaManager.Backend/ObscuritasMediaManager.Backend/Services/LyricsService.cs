@@ -2,12 +2,16 @@
 using ObscuritasMediaManager.Backend.Controllers.Responses;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Models;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace ObscuritasMediaManager.Backend.Services;
 
 public class LyricsService
 {
+    [DllImport("user32.dll")]
+    public static extern short GetAsyncKeyState(int vKey);
+
     private readonly GeniusClient _geniusClient;
 
     public LyricsService(GeniusClient geniusClient)

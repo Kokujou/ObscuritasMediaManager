@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Client.GenericComponents;
 using System;
-using System.Text.Json;
 
 namespace ObscuritasMediaManager.Client.Pages;
 
@@ -64,7 +63,7 @@ public partial class MusicPage
         var currentSettings = Session.UserSettings.Current;
         if (currentSettings is null) return;
 
-        var serialized = JsonSerializer.Serialize(filter);
+        var serialized = filter.JsonSerialize();
         await UserRepository.UpdateUserSettingsAsync(Session.UserSettings.Current.Id,
         x => x.SetProperty(x => x.MusicFilter, serialized));
         Session.UserSettings.Current.MusicFilter = serialized;
@@ -177,7 +176,7 @@ public partial class MusicPage
                             await changeVolume(data.newValue.Volume, false);
                             try
                             {
-                                filter = JsonSerializer.Deserialize<MusicFilter>(data.newValue.MusicFilter)!;
+                                filter = data.newValue.MusicFilter.JsonDeserialize<MusicFilter>();
                             }
                             catch { }
                             filter ??= new();

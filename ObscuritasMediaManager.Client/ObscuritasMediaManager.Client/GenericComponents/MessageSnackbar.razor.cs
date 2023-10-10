@@ -54,7 +54,7 @@ public partial class MessageSnackbar
         StateHasChanged();
         await Task.Delay(FadeAnimationDuration);
 
-        PageLayout.Children.Remove(PageLayout.Children.First(x => x.Instance?.Instance == this));
+        PageLayout.Children.Remove(PageLayout.Children.FirstOrDefault(x => x.Instance?.Instance == this));
         PageLayout.ChildrenChanged.Invoke(null, null);
         var otherSnackbars = PageLayout.GetComponents<MessageSnackbar>();
         await Task.Yield();

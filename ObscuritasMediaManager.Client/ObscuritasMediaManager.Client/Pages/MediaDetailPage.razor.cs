@@ -2,7 +2,6 @@
 using ObscuritasMediaManager.Client.BusinessComponents.MediaFilter;
 using System;
 using System.Linq;
-using System.Text.Json;
 
 namespace ObscuritasMediaManager.Client.Pages;
 
@@ -40,7 +39,7 @@ public partial class MediaDetailPage
                             if (x.newValue is null) return;
                             var currentMedia = x.newValue.FirstOrDefault(x => x.Id == updatedMedia.Id);
                             if (currentMedia is null) return;
-                            var filter = JsonSerializer.Deserialize<MediaFilter>(Session.UserSettings.Current.MediaFilter);
+                            var filter = Session.UserSettings.Current.MediaFilter.JsonDeserialize<MediaFilter>();
                             if (filter is null) return;
                             mediaIds = MediaFilterService.filter(x.newValue, filter).Select((x) => x.Id).ToList();
                         }),

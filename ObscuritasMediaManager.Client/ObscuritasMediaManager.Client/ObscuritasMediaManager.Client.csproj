@@ -15,10 +15,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="8.0.0-rc.1.*" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-rc.1.*" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="8.0.0-rc.2.9373" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-rc.2.23479.6" />
         <PackageReference Include="NAudio" Version="2.2.1" />
         <PackageReference Include="Serialize.Linq" Version="3.0.134" />
+        <PackageReference Include="System.Runtime.InteropServices.PInvoke" Version="4.0.0-rc2-24027" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,1 +1,21 @@
 ﻿@inherits ElementBase
+
+@inject IJSRuntime JS
+
+<div id="range-selector">
+<div id="container" @ref="Container">
+    <div id="range-graph">
+        <div id="range-hover" style="left: @(leftPercent)%; right: @(100 - rightPercent)%">
+            <div id="range-tooltip">@(Left) - @(Right)</div>
+        </div>
+        <div id="left-slider"
+             class="slider"
+             style="left: @(leftPercent)%"
+             @onpointerdown="@(() => StartDragging(false))"></div>
+        <div id="right-slider"
+             class="slider"
+             style="left: @(rightPercent)%"
+             @onpointerdown="@(() => StartDragging(true))"></div>
+    </div>
+    </div>
+</div>

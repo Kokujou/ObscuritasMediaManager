@@ -12,6 +12,7 @@
     Width="800"
     mc:Ignorable="d">
     <Grid>
+        <Label Name="test"></Label>
         <b:BlazorWebView
             HostPage="wwwroot/index.html"
             Services="{StaticResource services}"

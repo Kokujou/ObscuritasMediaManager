@@ -7,11 +7,11 @@ namespace ObscuritasMediaManager.Client.Data;
 
 public class Session(MediaRepository MediaRepository, MusicRepository MusicRepository, UserRepository UserRepository)
 {
-    public  Observable<string> currentPage { get; set; } = new(string.Empty);
-    public  Observable<List<MediaModel>>  mediaList { get; set; } = new(new());
-    public  Observable<List<InstrumentModel>> instruments { get; set; } = new(new());
-    public  Observable<UserSettingsModel> UserSettings { get; set; } = new(new());
-    public  bool initialized { get; set; } = false;
+    public Observable<string> currentPage { get; set; } = new(string.Empty);
+    public Observable<List<MediaModel>>  mediaList { get; set; } = new(new());
+    public Observable<List<InstrumentModel>> instruments { get; set; } = new(new());
+    public Observable<UserSettingsModel> UserSettings { get; set; } = new(new());
+    public bool initialized { get; set; } = false;
 
     public async Task InitializeAsync()
     {

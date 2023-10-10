@@ -5,7 +5,6 @@ using ObscuritasMediaManager.Client.GenericComponents;
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Text.Json;
 
 namespace ObscuritasMediaManager.Client.Pages;
 
@@ -32,7 +31,7 @@ public partial class MediaPage
                         {
                             try
                             {
-                                var newFilter = JsonSerializer.Deserialize<MediaFilter>(x.newValue?.MediaFilter ?? string.Empty);
+                                var newFilter = x.newValue?.MediaFilter.JsonDeserialize<MediaFilter>();
                                 if (newFilter is not null) filter = newFilter;
                             }
                             catch { }
@@ -64,7 +63,7 @@ public partial class MediaPage
     {
         try
         {
-            var serialized = JsonSerializer.Serialize(filter);
+            var serialized = filter.JsonSerialize();
             await UserRepository.UpdateUserSettingsAsync(Session.UserSettings.Current.Id,
             x => x.SetProperty(y => y.MediaFilter, serialized));
             Session.UserSettings.Current.MediaFilter = serialized;
