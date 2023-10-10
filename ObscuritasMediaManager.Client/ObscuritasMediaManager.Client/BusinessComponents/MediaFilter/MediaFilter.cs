@@ -28,7 +28,7 @@ public class MediaFilter
     public (int? min, int? max) Release { get; set; } = (min: null, max: null);
     public string Search { get; set; } = string.Empty;
     public SortDirection? SortingDirection { get; set; } = SortDirection.Ascending;
-    [JsonConverter(typeof(ExpressionJsonConverter))]
+    [JsonConverter(typeof(MemberExpressionJsonConverter))]
     public Expression<Func<MediaModel, object>>? SortingPropertyExpression { get; set; } = null;
     public FilterEntry<MediaStatus> Status { get; set; } = new(Enum.GetValues<MediaStatus>(), CheckboxState.Ignore);
     public FilterEntry<TargetGroup> TargetGroups { get; set; } = new(Enum.GetValues<TargetGroup>(), CheckboxState.Ignore);

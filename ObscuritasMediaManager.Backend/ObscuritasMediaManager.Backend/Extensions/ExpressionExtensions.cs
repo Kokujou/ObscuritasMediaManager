@@ -9,6 +9,7 @@ public static class ExpressionExtensions
 {
     public static string GetPropertyName(this LambdaExpression propertyExpression)
     {
+        if (propertyExpression is null) return null;
         if (propertyExpression.Body is MemberExpression memberExpression) return memberExpression.Member.Name;
         if ((propertyExpression.Body is UnaryExpression unaryExpression)
             && (unaryExpression.Operand is MemberExpression unaryMemberExpression))
