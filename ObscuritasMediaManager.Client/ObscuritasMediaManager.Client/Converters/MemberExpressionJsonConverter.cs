@@ -20,8 +20,9 @@ class MemberExpressionJsonConverter : JsonConverter<Expression>
 
         var type = typeToConvert.GenericTypeArguments[0].GenericTypeArguments[0];
         var parameter = Expression.Parameter(type, "p");
-        var member = Expression.Convert(Expression.PropertyOrField(parameter, memberName), typeof(object));
-        return Expression.Lambda(member, parameter);
+        var valueType = typeToConvert.GenericTypeArguments[0].GenericTypeArguments[1];
+        var member = Expression.Convert(Expression.PropertyOrField(parameter, memberName), valueType);
+        return Expression.Lambda(typeToConvert.GenericTypeArguments[0], member, parameter);
     }
 
     public override void Write(Utf8JsonWriter writer, Expression value, JsonSerializerOptions options)
@@ -32,9 +33,13 @@ class MemberExpressionJsonConverter : JsonConverter<Expression>
             return;
         }
 
-        if (((LambdaExpression)value).Body is not MemberExpression ex) 
+        if (value is not LambdaExpression ex) 
             throw new NotSupportedException("Die Expression muss eine einfache MemberExpression sein!");
 
-        writer.WriteStringValue(ex.Member.Name);
+        var memberName = ex.GetPropertyName();
+        if (memberName == "Unset")
+            throw new NotSupportedException("Die Expression muss eine einfache MemberExpression sein!");
+
+        writer.WriteStringValue(memberName);
     }
 }

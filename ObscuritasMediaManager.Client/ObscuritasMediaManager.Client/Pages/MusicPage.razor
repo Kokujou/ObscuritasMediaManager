@@ -13,8 +13,8 @@
 
 <div id="music-page">
     <div id="search-panel-container"> 
-            <MusicFilter filter="@(filter)"
-                         filterChanged="(filter)=>UpdateFilterAsync(filter)"></MusicFilter> 
+            <MusicFilterSidebar filter="@(filter)"
+                         filterChanged="(filter)=>UpdateFilterAsync(filter)"></MusicFilterSidebar> 
         <div id="result-count-label">
             @(filteredTracks.Count()) von @(musicTracks.Count) Musik-Tracks
         </div>

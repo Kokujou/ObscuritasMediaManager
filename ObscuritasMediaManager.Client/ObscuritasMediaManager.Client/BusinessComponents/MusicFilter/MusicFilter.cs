@@ -1,10 +1,12 @@
 ﻿using ObscuritasMediaManager.Backend.Data.Music;
+using ObscuritasMediaManager.Client.Converters;
 using System;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace ObscuritasMediaManager.Client.BusinessComponents.MusicFilter;
 
-public class MusicFilterOptions
+public class MusicFilter
 {
     public FilterEntry<MusicGenre> genres { get; set; } = new(Enum.GetValues<MusicGenre>(), CheckboxState.Ignore);
     public FilterEntry<Instrumentation> instrumentations
@@ -14,7 +16,7 @@ public class MusicFilterOptions
     } 
         = 
         new(Enum.GetValues<Instrumentation>(), CheckboxState.Ignore);
-    public FilterEntry<string> instruments;
+    public FilterEntry<string> instruments { get; set; } = new();
     public FilterEntry<InstrumentType> instrumentTypes { get; set; } = new(Enum.GetValues<InstrumentType>());
     public FilterEntry<Nation> languages { get; set; } = new(Enum.GetValues<Nation>(), CheckboxState.Require);
     public FilterEntry<Mood> moods { get; set; } = new(Enum.GetValues<Mood>(), CheckboxState.Ignore);
@@ -26,10 +28,15 @@ public class MusicFilterOptions
     public CheckboxState showDeleted { get; set; } = CheckboxState.Forbid;
     public CheckboxState showPlaylists { get; set; } = CheckboxState.Ignore;
     public SortDirection? SortDirection { get; set; }
-    public Func<MusicModel, object>? MusicSortProperty { get; set; }
+    [JsonConverter(typeof(MemberExpressionJsonConverter))]
+    public Expression<Func<MusicModel, object>>? MusicSortProperty { get; set; }
 
-    public MusicFilterOptions(IEnumerable<string> instrumentNames)
+    public void UpdateInstrumentNames(IEnumerable<string> instrumentNames)
     {
-        instruments = new(instrumentNames, CheckboxState.Ignore);
+        instruments.states = instrumentNames.ToDictionary(x => x, id =>
+            {
+                if (instruments.states.ContainsKey(id)) return instruments.states[id];
+                return CheckboxState.Ignore;
+            });
     }
 }

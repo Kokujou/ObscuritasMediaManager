@@ -89,6 +89,7 @@
     background-color: var(--accent-color-full);
     overflow-y: auto;
     z-index: 10;
+    overscroll-behavior: contain;
 }
 
 .option {

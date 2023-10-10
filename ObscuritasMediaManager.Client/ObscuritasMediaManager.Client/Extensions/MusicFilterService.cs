@@ -2,7 +2,7 @@ using ObscuritasMediaManager.Backend.Data.Music;
 
 public class MusicFilterService
 {
-    public static List<PlaylistModel> filterPlaylists(IEnumerable<PlaylistModel> playlists, MusicFilterOptions filter)
+    public static List<PlaylistModel> filterPlaylists(IEnumerable<PlaylistModel> playlists, MusicFilter filter)
     {
         if ((filter.showPlaylists == CheckboxState.Forbid) || (filter.showDeleted == CheckboxState.Require)) return new();
 
@@ -28,7 +28,7 @@ public class MusicFilterService
         return filteredPlaylists;
     }
 
-    public static List<MusicModel> filterTracks(List<MusicModel> tracks, MusicFilterOptions filter)
+    public static List<MusicModel> filterTracks(List<MusicModel> tracks, MusicFilter filter)
     {
         if (filter.showPlaylists == CheckboxState.Require) return new();
         var filteredTracks = tracks.ToList();

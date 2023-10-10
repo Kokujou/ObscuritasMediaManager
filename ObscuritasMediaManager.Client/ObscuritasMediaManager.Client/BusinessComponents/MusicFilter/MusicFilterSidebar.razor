@@ -41,11 +41,11 @@
                  @onclick="@(() => changeFilter(x=>x.MusicSortProperty = null))"></div>
              </div>
              <div id="sorting-container">
-                 <DropDown T="Func<MusicModel,object>"
-                           options="@(SortableProperties.Select(prop=>new DropDown<Func<MusicModel, object>>.Option(){
-                                    value = prop.Compile(),
+                 <DropDown T="Expression<Func<MusicModel,object>>"
+                           options="@(SortableProperties.Select(prop=>new DropDown<Expression<Func<MusicModel, object>>>.Option(){
+                                    value = prop,
                                     text=prop.GetPropertyName(),
-                                    state = prop.Compile() == filter.MusicSortProperty ? CheckboxState.Ignore : CheckboxState.Forbid
+                                    state = prop.ValueEquals(filter.MusicSortProperty) ? CheckboxState.Ignore : CheckboxState.Forbid
                                 }))"
                            unsetText="Keine Sortierung"
                            maxDisplayDepth="5"

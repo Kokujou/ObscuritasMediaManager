@@ -1,11 +1,10 @@
 
 using Microsoft.AspNetCore.Components;
 using ObscuritasMediaManager.Backend.Data.Music;
-using System.Linq.Expressions;
 
 namespace ObscuritasMediaManager.Client.BusinessComponents.MusicFilter;
 
-public partial class MusicFilter
+public partial class MusicFilterSidebar
 {
     public static readonly List<Expression<Func<MusicModel, object>>> SortableProperties = new()
     {
@@ -20,15 +19,15 @@ public partial class MusicFilter
         x => x.Participants
     };
 
-    [Parameter] public MusicFilterOptions filter { get; set; } = new(new List<string>());
-    [Parameter] public EventCallback<MusicFilterOptions> filterChanged { get; set; }
+    [Parameter] public MusicFilter filter { get; set; } = new();
+    [Parameter] public EventCallback<MusicFilter> filterChanged { get; set; }
 
     public bool canFilterInstrumentType(InstrumentType type)
     {
         return !filter.instrumentTypes.required.Any((x) => x == type);
     }
 
-    public void changeFilter(Action<MusicFilterOptions> action)
+    public void changeFilter(Action<MusicFilter> action)
     {
         action(filter);
         filterChanged.InvokeAsync(filter);
@@ -38,7 +37,8 @@ public partial class MusicFilter
 
     public void resetAllFilters()
     {
-        filter = new MusicFilterOptions(Session.instruments.Current.Select(x => x.Name));
+        filter = new();
+        filter.UpdateInstrumentNames(Session.instruments.Current.Select(x => x.Name));
         filterChanged.InvokeAsync(filter);
     }
 }
