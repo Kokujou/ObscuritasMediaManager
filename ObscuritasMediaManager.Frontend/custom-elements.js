@@ -37,7 +37,7 @@ import { PartialLoading } from './native-components/partial-loading/partial-load
 import { PriorityList } from './native-components/priority-list/priority-list.js';
 import { RangeSelector } from './native-components/range-selector/range-selector.js';
 import { RangeSlider } from './native-components/range-slider/range-slider.js';
-import { ScrollSelect } from './native-components/scroll-seelect/scroll-select.js';
+import { ScrollSelect } from './native-components/scroll-select/scroll-select.js';
 import { SideScroller } from './native-components/side-scroller/side-scroller.js';
 import { TagLabel } from './native-components/tag-label/tag-label.js';
 import { TriValueCheckbox } from './native-components/tri-value-checkbox/tri-value-checkbox.js';

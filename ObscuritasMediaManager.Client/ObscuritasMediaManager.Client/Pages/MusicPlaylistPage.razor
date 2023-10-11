@@ -33,7 +33,7 @@
                 <div id="mood-container">
                     <ScrollSelect Options="@(Enum.GetValues<Mood>())"
                                   Value="@(SwitchSecondMood ? updatedTrack.Mood2 : updatedTrack.Mood1)"
-                                  ValueChanged="@((e) => changeProperty(SwitchSecondMood ? x=>x.Mood2 : x=>x.Mood2, e))"
+                                  ValueChanged="@((e) => changeProperty(SwitchSecondMood ? x=>x.Mood2 : x=>x.Mood1, e))"
                                   T="Mood">
                     </ScrollSelect>
                 </div>

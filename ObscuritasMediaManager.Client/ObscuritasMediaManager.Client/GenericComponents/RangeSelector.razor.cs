@@ -50,24 +50,18 @@ public partial class RangeSelector
         else
             draggingLeft = true;
 
-        await MouseMoveLoop();
+        await this.StartMouseMoveInputLoopAsync(async () =>
+            {
+                var rect = await JS.InvokeAsync<JsonElement>("getElementRect", Container);
+                OnMouseMove(rect);
+            });
+        await RangeChanged.InvokeAsync((Left ?? 0, Right ?? 0));
     }
 
     private async Task MouseMoveLoop()
     {
         while (true)
-        {
             await Task.Delay(100);
-            var rect = await JS.InvokeAsync<JsonElement>("getElementRect", Container);
-            OnMouseMove(rect);
-
-            var result = LyricsService.GetAsyncKeyState(0x01);
-            if (result == 0)
-            {
-                await RangeChanged.InvokeAsync((Left ?? 0, Right ?? 0));
-                return;
-            }
-        }
     }
 
     private void OnMouseMove(dynamic rect)

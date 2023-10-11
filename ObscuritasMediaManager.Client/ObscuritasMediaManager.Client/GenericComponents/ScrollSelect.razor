@@ -2,6 +2,28 @@
 @typeparam T
 
 
-<h3>ScrollSelect</h3>
+<div id="scroll-container" @onpointerdown="@(() => StartDragScrollingAsync())">
+    <div id="scroll-items">
+        <div id="item-container" user-interaction="@mouseDown" style="transform: translateY(@(scrollPosY)px)">
+            @foreach (var x in Options)
+            {
+                @if (Value.Equals(x))
+                {
 
+                    <div class="scroll-item" active @ref="ActiveElement">
+                        @(x)
+                    </div>
+                }
+                else
+                {
+                    <div class="scroll-item"
+                         @onclick="@(() => ScrollToItem(x))">
+                        @(x)
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div id="border-overlay"></div>
+</div>
 
