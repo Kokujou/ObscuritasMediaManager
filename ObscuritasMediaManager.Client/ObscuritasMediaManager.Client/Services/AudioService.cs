@@ -29,20 +29,24 @@ public class AudioService
 
     public async Task ChangeTrackAsync(MusicModel track)
     {
-        player.Stop();
-        reader?.Dispose();
-        player.Dispose();
-        player = new WaveOutEvent();
-        reader = new MediaFoundationReader(track.Path);
-        if (visualizer is null)
+        try
         {
-            visualizer = new AudioVisualizer(reader.ToSampleProvider());
-            visualizer.Samples.Subscribe(x => VisualizationData = x.newValue ?? new float[0]);
+            player.Stop();
+            reader?.Dispose();
+            player.Dispose();
+            player = new WaveOutEvent();
+            reader = new MediaFoundationReader(track.Path);
+            if (visualizer is null)
+            {
+                visualizer = new AudioVisualizer(reader.ToSampleProvider());
+                visualizer.Samples.Subscribe(x => VisualizationData = x.newValue ?? new float[0]);
+            }
+            else
+                visualizer.Initialize(reader.ToSampleProvider());
+            visualizer.Reset();
+            player.Init(visualizer);
         }
-        else
-            visualizer.Initialize(reader.ToSampleProvider());
-        visualizer.Reset();
-        player.Init(visualizer);
+        catch { }
     }
 
     public bool Paused()

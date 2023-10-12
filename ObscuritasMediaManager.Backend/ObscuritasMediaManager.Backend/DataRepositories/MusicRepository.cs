@@ -28,6 +28,12 @@ public class MusicRepository
             .ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
     }
 
+    public async Task CreateTrackAsync(MusicModel track)
+    {
+        track.CalculateHash();
+        await _context.Music.AddAsync(track);
+    }
+
     public async Task UpdateAsync(string hash, JsonElement old, JsonElement updated, JsonSerializerOptions serializerOptions)
     {
         var actual = await _context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);

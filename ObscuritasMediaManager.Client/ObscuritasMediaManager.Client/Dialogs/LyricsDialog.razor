@@ -1,0 +1,53 @@
+﻿@inherits ElementBase
+
+@inject AudioService Audio
+@inject IJSRuntime JS
+
+<div id="lyrics-dialog" scrolling-paused="@ScrollingPaused">
+    <div id="lyrics-wrapper" @onclick:stopPropagation>
+        <div id="lyrics-content-wrapper">
+            <div id="lyrics-content-wrapper-2" animating="@(Animating)" style="translate: 0 @(ExtendedScrollY)px; animation-duration: @(Audio.GetCurrentTrackDuration().TotalMilliseconds)ms">
+                <h3>@(Title)</h3>
+                @foreach (var x in LyricsLines)
+                {
+                    <div class="line">@(x)</div>
+                }
+            </div>
+        </div>
+        <div id="audio-controls">
+            <div id="save-lyrics-button"
+                 class="link"
+            @onclick="@(() => OnSave.InvokeAsync())"
+                 disabled="@(!CanSave)">
+                <div class="icon" Icon="@(Icons.Save)"></div>
+                Lyrics Speichern
+            </div>
+            <div id="next-lyrics-button"
+                 class="link"
+            @onclick="@(() => RequestLyricsAsync())"
+                 disabled="@(!CanNext)">
+                <div class="icon" Icon="@(Icons.Cross)"></div>
+                Neue Lyrics Laden
+            </div>
+            <div id="volume-input"></div>
+        </div>
+        <div id="scroll-controls">
+            <div id="scroll-up-button"
+                 class="icon"
+                 Icon="@(Icons.FastForward)"
+            @onpointerdown="@((e) => StartScrollingAsync(ScrollDirection.Up))"></div>
+            @if (ScrollingPaused || Audio.Paused())
+            {
+                <div class="icon" Icon="@(Icons.Play)" @onclick="@(TogglePlay)"></div>
+            }
+            else
+            {
+                <div class="icon" Icon="@(Icons.Pause)" @onclick="@(TogglePlay)"></div>
+            }
+            <div class="icon"
+                 id="scroll-down-button"
+                 Icon="@(Icons.FastForward)"
+            @onpointerdown="@((e) => StartScrollingAsync(ScrollDirection.Down))"></div>
+        </div>
+    </div>
+</div>

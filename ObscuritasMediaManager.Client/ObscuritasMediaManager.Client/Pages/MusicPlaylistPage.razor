@@ -1,4 +1,5 @@
 ﻿@page "/music-playlist-page"
+
 @using NAudio.Utils;
 @using ObscuritasMediaManager.Backend.DataRepositories;
 @using ObscuritasMediaManager.Backend.Extensions;
@@ -10,8 +11,9 @@
 @inject PlaylistRepository PlaylistRepository
 @inject UserRepository UserRepository
 @inject AudioService Audio
+@inject LyricsService LyricsService
 
-<div id="music-player-container" switch-second-mood="@SwitchSecondMood"  style="
+<div id="music-player-container" switch-second-mood="@SwitchSecondMood" style="
  --primary-color: @((updatedTrack.Mood1).GetColorCode());
 --secondary-color: @((SecondaryMood).GetColorCode());
 --font-color: @((updatedTrack.Mood1).GetFontColorCode());
@@ -21,7 +23,7 @@
         <input type="checkbox"
                id="complete-check"
                checked="@(updatedTrack.Complete)"
-        @onchange="@(() => changeProperty(x=>x.Complete, !updatedTrack.Complete))" />
+        @onchange="@(() => ChangePropertyAsync(x=>x.Complete, !updatedTrack.Complete))" />
     </div>
     <div id="current-track-container">
         <div id="mood-switcher-container" disabled="@(updatedTrack.Complete)">
@@ -33,7 +35,7 @@
                 <div id="mood-container">
                     <ScrollSelect Options="@(Enum.GetValues<Mood>())"
                                   Value="@(SwitchSecondMood ? updatedTrack.Mood2 : updatedTrack.Mood1)"
-                                  ValueChanged="@((e) => changeProperty(SwitchSecondMood ? x=>x.Mood2 : x=>x.Mood1, e))"
+                                  ValueChanged="@((e) => ChangePropertyAsync(SwitchSecondMood ? x=>x.Mood2 : x=>x.Mood1, e))"
                                   T="Mood">
                     </ScrollSelect>
                 </div>
@@ -48,18 +50,18 @@
                             ImageClicked="@(() => toggleCurrentTrack())"
                             ChangeLanguage="@(() => showLanguageSwitcher())"
                             NextParticipants="@(() =>
-                                changeProperty(
+                                ChangePropertyAsync(
                                     x=>x.Participants,
                                     updatedTrack.Participants.NextValue()
                                 ))"
                             NextInstrumentation="@(() =>
-                                changeProperty(
+                                ChangePropertyAsync(
                                     x=>x.Instrumentation,
                                     updatedTrack.Instrumentation.NextValue()
                                 ))"
-                            ChangeRating="@((e) => changeProperty(x=>x.Rating, e))"
+                            ChangeRating="@((e) => ChangePropertyAsync(x=>x.Rating, e))"
                             ChangeInstruments="@(() => openInstrumentsDialog())"></AudioTileBase>
-             <div id="show-lyrics-link" @onclick="@(() => showLyrics())">Show Lyrics</div>
+             <div id="show-lyrics-link" @onclick="@(() => StartShowingLyricsAsync())">Show Lyrics</div>
          </div>
          <div id="audio-control-container">
              <input type="text"
@@ -67,7 +69,7 @@
                     class="editable-label"
                     disabled="@(updatedTrack.Complete)"
                     value=" @(updatedTrack.Name)"
-             @onchange="@((e) => changeProperty(x => x.Name, e.Value))" />
+             @onchange="@((e) => ChangePropertyAsync(x => x.Name, e.Value))" />
 
              <div id="audio-subtitle">
                  <input type="text"
@@ -76,7 +78,7 @@
                         disabled="@(updatedTrack.Complete)"
                         value="@(updatedTrack.Author)"
                         oninput="this.dispatchEvent(new Event('change')"
-                 @onchange="@((e) => changeProperty(x=>x.Author, e.Value))" />
+                 @onchange="@((e) => ChangePropertyAsync(x=>x.Author, e.Value))" />
                  <div id="subtitle-separator">-</div>
                  <input type="text"
                         id="audio-source"
@@ -84,20 +86,20 @@
                         value="@(updatedTrack.Source ?? "---")"
                         disabled="@(updatedTrack.Complete)"
                         oninput="this.dispatchEvent(new Event('change')"
-                 @onchange="@((e) => changeProperty(x=>x.Source, e.Value))" />
+                 @onchange="@((e) => ChangePropertyAsync(x=>x.Source, e.Value))" />
              </div>
              <div id="genre-section">
                  @foreach (var genre in updatedTrack.Genres)
                 {
                     <TagLabel Text="@(genre.ToString())"
                               Disabled="@(updatedTrack.Complete)"
-                              Removed="@(() => changeProperty(x=>x.Genres, updatedTrack.Genres.Where(y=>y != genre)))"></TagLabel>
+                              Removed="@(() => ChangePropertyAsync(x=>x.Genres, updatedTrack.Genres.Where(y=>y != genre)))"></TagLabel>
                 }
                 @if (!updatedTrack.Complete)
                 {
                     <TagLabel CreateNew
                                Autocomplete="@(autocompleteGenres.Select(x=>x.ToString()).ToList())"
-                               TagCreated="@((genre) => changeProperty(x=>x.Genres, updatedTrack.Genres.Append(Enum.Parse<MusicGenre>(genre))))"></TagLabel>
+                               TagCreated="@((genre) => ChangePropertyAsync(x=>x.Genres, updatedTrack.Genres.Append(Enum.Parse<MusicGenre>(genre))))"></TagLabel>
                 }
             </div>
             <div id="track-position-container">
@@ -115,7 +117,7 @@
                 <div id="previous-track-button" @onclick="@(() => changeTrackBy(-1))" class="audio-icon" Icon="@Icons.FastForward"></div>
                 <div id="toggle-track-button"
                 @onclick="@(() => toggleCurrentTrack())"
-                     class="audio-icon @(Audio.Paused() ? "paused" : "playing")"></div>
+                     class="audio-icon" Icon="@(Audio.Paused() ? Icons.Play : Icons.Pause)"></div>
                 <div id="next-track-button" @onclick="@(() => changeTrackBy(1))" class="audio-icon" Icon="@Icons.FastForward"></div>
 
                 <div id="change-volume-container">
@@ -142,7 +144,14 @@
             </div>
         </div>
     </div>
-    @if (playlist.IsTemporary)
+    @if (CreateNew)
+    {
+        <div id="create-track-link" @onclick="@(()=> CreateTrackAsync())">
+            <div id="create-track-icon" Icon="@Icons.Save"></div>
+            <div id="create-track-text">Track erstellen</div>
+        </div>
+    }
+    else if (playlist.IsTemporary)
     {
         <div id="edit-playlist-link" @onclick="@(() => openEditPlaylistDialog())">
             <div id="edit-playlist-icon" Icon="@Icons.Edit"></div>

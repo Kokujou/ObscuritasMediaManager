@@ -72,6 +72,11 @@ public partial class MusicPage
 
     public async Task importFolder() { }
 
+    public void GoToCreateMusic()
+    {
+        NavigationManager.NavigateToComponent<MusicPlaylistPage>(new() { { nameof(MusicPlaylistPage.CreateNew), true } });
+    }
+
     public async Task cleanupTracks() { }
 
     public async Task showPlaylistSelectionDialog() { }

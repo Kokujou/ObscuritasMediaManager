@@ -1,8 +1,6 @@
 import { AudioTileBase } from './advanced-components/audio-tile-base/audio-tile-base.js';
 import { AudioTile } from './advanced-components/audio-tile-base/audio-tile/audio-tile.js';
-import { DualSlider } from './advanced-components/dual-slider/dual-slider.js';
 import { DurationInput } from './advanced-components/duration-input/duration-input.js';
-import { ExpandableDropdown } from './advanced-components/expandible-dropdown/expandable-dropdown.js';
 import { ImageTile } from './advanced-components/image-tile/image-tile.js';
 import { LanguageSwitcher } from './advanced-components/language-switcher/language-switcher.js';
 import { MediaFilterSidebar } from './advanced-components/media-filter-sidebar/media-filter-sidebar.js';
@@ -85,8 +83,6 @@ window.customElements.define('page-routing', PageRouting);
 window.customElements.define('welcome-page', WelcomePage);
 window.customElements.define('page-layout', PageLayout);
 window.customElements.define('image-tile', ImageTile);
-window.customElements.define('dual-slider', DualSlider);
-window.customElements.define('expandable-dropdown', ExpandableDropdown);
 window.customElements.define('dialog-base', DialogBase);
 window.customElements.define('border-button', BorderButton);
 window.customElements.define('genre-dialog', GenreDialog);

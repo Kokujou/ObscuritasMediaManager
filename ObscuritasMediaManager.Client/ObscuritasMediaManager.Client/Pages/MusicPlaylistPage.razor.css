@@ -181,7 +181,7 @@
     flex-wrap: wrap;
 }
 
-tag-label {
+::deep #tag-label {
     font-size: 18px;
     color: var(--font-color);
     --label-color: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
@@ -223,15 +223,12 @@ tag-label {
 
 #change-volume {
     margin: 0 10px;
+    display: flex;
 }
 
-range-slider {
+::deep #range-slider {
     --background-color: #00000033;
     --slider-color: var(--secondary-color);
-}
-
-audio {
-    display: none;
 }
 
 #change-path-container {

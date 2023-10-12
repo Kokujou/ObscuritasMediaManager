@@ -4,7 +4,7 @@
 
 @inherits ElementBase
 
-@inject MusicFilterService MusicFilterService 
+@inject MusicFilterService MusicFilterService
 @inject UserRepository UserRepository
 @inject NavigationManager NavigationManager
 @inject PlaylistRepository PlaylistRepository
@@ -12,9 +12,9 @@
 @inject AudioService Audio
 
 <div id="music-page">
-    <div id="search-panel-container"> 
-            <MusicFilterSidebar filter="@(filter)"
-                         filterChanged="(filter)=>UpdateFilterAsync(filter)"></MusicFilterSidebar> 
+    <div id="search-panel-container">
+        <MusicFilterSidebar filter="@(filter)"
+                            filterChanged="(filter)=>UpdateFilterAsync(filter)"></MusicFilterSidebar>
         <div id="result-count-label">
             @(filteredTracks.Count()) von @(musicTracks.Count) Musik-Tracks
         </div>
@@ -22,12 +22,12 @@
     <div id="result-options-container">
         <div id="result-options">
             <div class="option-section" id="import-section">
-                <a id="import-files" @onclick="@(()=>importFolder())" tooltip="Tracks importieren" Icon="@(Icons.Import)"></a>
-                <a id="create-song" Icon="@(Icons.Plus)"></a>
+                <a id="import-files" tooltip="Tracks importieren" Icon="@(Icons.Import)" @onclick="@(()=>importFolder())"></a>
+                <a id="create-song" tooltip="Neuer Song" Icon="@(Icons.Plus)" @onclick="@(()=>GoToCreateMusic())"></a>
             </div>
             <div class="option-section" id="import-section">
                 <a id="cleanup-tracks"
-                Icon="@(Icons.Clean)"
+                   Icon="@(Icons.Clean)"
                 @onclick="@(() => cleanupTracks())"
                    tooltip="Defekte Tracks bereinigen"></a>
             </div>
@@ -78,7 +78,7 @@
                     {
                         <div class="audio-link-container">
                             <a class="audio-tile-link"
-                            @onclick="@(()=>NavigationManager.NavigateTo($"music-playlist-page?guid={playlist.Id}"))">
+                            @onclick="@(()=>NavigationManager.NavigateToComponent<MusicPlaylistPage>(new (){ {nameof(MusicPlaylistPage.PlaylistId), playlist.Id }}))">
                                 <PlaylistTile Playlist="@(playlist)"
                                               LocalExport="@(() => exportPlaylist("local", playlist))"
                                               GlobalExport="@(() => exportPlaylist("global", playlist))"
@@ -94,11 +94,11 @@
                                 <input type="checkbox"
                                        class="audio-select"
                                        checked="@(selectedHashes.Contains(track.Hash))"
-                                       @onchange="@(() => selectTrack(track.Hash))" />
+                                @onchange="@(() => selectTrack(track.Hash))" />
                             }
                             <a class="audio-tile-link"
                                disabled="@selectionMode"
-                            @onclick="@(()=>NavigationManager.NavigateTo($"music-playlist-page?track={track.Hash}"))"
+                            @onclick="@(()=>NavigationManager.NavigateToComponent<MusicPlaylistPage>(new(){ { nameof(MusicPlaylistPage.TrackHash), track.Hash} } ))"
                             @onpointerdown="@(() => startSelectionModeTimer(track.Hash))"
                             @onpointerup="@(() => stopSelectionModeTimer())">
                                 <AudioTile Track="@(track)"

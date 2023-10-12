@@ -4,7 +4,7 @@ using ObscuritasMediaManager.Client.GenericComponents;
 
 namespace ObscuritasMediaManager.Client.Layout;
 
-public partial class PageLayout
+public partial class PageLayout : IDisposable
 {
     public static float ScaleFactorX => ((float)MainWindow.Instance!.ActualWidth) / 1920;
 
@@ -27,6 +27,11 @@ public partial class PageLayout
         MainWindow.Instance.SizeChanged += (_, _) => StateHasChanged();
         MainWindow.Instance.StateChanged += (_, _) => StateHasChanged();
         ChildrenChanged += (_, _) => StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        PageLayout.Children.Clear();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

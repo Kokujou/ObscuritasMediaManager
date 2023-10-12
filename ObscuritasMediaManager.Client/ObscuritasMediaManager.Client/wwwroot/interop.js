@@ -14,3 +14,8 @@ function getElementRect(element) {
     return element.getBoundingClientRect();
 }
 
+async function requestAnimationFrameAsync() {
+    await new Promise((resolve) => {
+        requestAnimationFrame(resolve)
+    });
+}

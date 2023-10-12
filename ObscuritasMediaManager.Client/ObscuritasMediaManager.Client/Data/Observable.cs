@@ -15,11 +15,12 @@ public class Observable<T> where T : notnull
         currentValue = initialValue;
     }
 
-    public Subscription Subscribe(Action<(T? oldValue, T? newValue)> observer)
+    public Subscription Subscribe(Action<(T? oldValue, T? newValue)> observer, bool skipInitial = false)
     {
         var subscription = new Subscription((oldValue, newValue) => observer(((T?)oldValue, (T?)newValue)),
         (s) => subscriptions.Remove(s));
         subscriptions.Add(subscription);
+        if (skipInitial) return subscription;
         try
         {
             observer((currentValue, currentValue));

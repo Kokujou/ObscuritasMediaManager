@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ObscuritasMediaManager.Client.Data;
 
-public class Subscription
+public class Subscription : IDisposable
 {
     public Action<object?, object?>  observer { get; set; }
     public Action unsubscribe { get; set; }
@@ -12,5 +12,10 @@ public class Subscription
     {
         observer = observer2;
         unsubscribe = () => unsubscribeAction(this);
+    }
+
+    public void Dispose()
+    {
+        unsubscribe();
     }
 }

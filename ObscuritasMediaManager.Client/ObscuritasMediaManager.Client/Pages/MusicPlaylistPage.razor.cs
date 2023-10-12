@@ -1,15 +1,32 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.DataRepositories;
+using ObscuritasMediaManager.Client.Dialogs;
 using ObscuritasMediaManager.Client.GenericComponents;
 using System;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Windows.Forms;
 
 namespace ObscuritasMediaManager.Client.Pages;
 
 public partial class MusicPlaylistPage
 {
+    private const string AudioFilter = "Audio-Dateien|*.3gp;*.aa;*.aac;*.aax;*.act;*.aiff;*.alac;*.amr;*.ape;*.au;*.awb;*.dss;*.dvf;*.flac;*.gsm;*.iklax;*.ivs;*.m4a;*.m4b;*.m4p;*.mmf;*.movpkg;*.mp3;*.mpc;*.msv;*.nmf;*.ogg,;*.opus;*.ra,;*.raw;*.rf64;*.sln;*.tta;*.voc;*.vox;*.wav;*.wma;*.wv;*.webm;*.8svx;*.cda";
+
+    private static OpenFileDialog AudioBrowser = new() { Filter = AudioFilter };
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public Guid? PlaylistId { get; set; }
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? TrackHash { get; set; }
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public int? TrackIndex { get; set; }
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public bool CreateNew { get; set; }
     public bool SwitchSecondMood { get; set; }
 
     private IEnumerable<MusicGenre> autocompleteGenres
@@ -54,13 +71,21 @@ public partial class MusicPlaylistPage
 
     private async Task initializeData()
     {
-        var playlistIdString = NavigationManager.GetQueryParameter("guid");
-        var trackId = NavigationManager.GetQueryParameter("track");
-
-        if (!Guid.TryParse(playlistIdString, out var playlistId))
+        if (CreateNew)
         {
             currentTrackIndex = 0;
-            currentTrack = await MusicRepository.GetAsync(trackId);
+            currentTrack = new MusicModel();
+            playlist = new PlaylistModel
+                       {
+                           Tracks = new List<MusicModel> { currentTrack },
+                           IsTemporary = true,
+                           Genres = new List<MusicGenre>()
+                       };
+        }
+        else if ((PlaylistId is null) || (PlaylistId == Guid.Empty))
+        {
+            currentTrackIndex = 0;
+            currentTrack = await MusicRepository.GetAsync(TrackHash);
             playlist = new PlaylistModel
                        {
                            Tracks = new List<MusicModel> { currentTrack },
@@ -70,8 +95,8 @@ public partial class MusicPlaylistPage
         }
         else
         {
-            playlist = await PlaylistRepository.GetPlaylistAsync(playlistId);
-            if (int.TryParse(trackId ?? "0", out var trackIndex)) currentTrackIndex = trackIndex;
+            playlist = await PlaylistRepository.GetPlaylistAsync(PlaylistId.Value);
+            currentTrackIndex = TrackIndex ?? 0;
         }
 
         updatedTrack = playlist.Tracks.ElementAt(currentTrackIndex);
@@ -119,16 +144,31 @@ public partial class MusicPlaylistPage
         await UserRepository.UpdateUserSettingsAsync(Session.UserSettings.Current.Id, x => x.SetProperty(y => y.Volume, volume));
     }
 
-    private async Task changeProperty<T>(Expression<Func<MusicModel, T>> property, T value)
+    private async Task ChangePropertyAsync<T>(Expression<Func<MusicModel, T>> property, T value)
     {
         try
         {
+            property.SetPropertyValue(updatedTrack, value);
+            if (CreateNew) return;
             await MusicRepository.UpdatePropertyAsync(updatedTrack.Hash, property, value);
+        }
+        catch (Exception ex)
+        {
+            MessageSnackbar.Popup($"Ein Fehler ist beim Update des Tracks aufgetreten: {ex}", MessageSnackbar.Type.Error);
+        }
+    }
+
+    private async Task CreateTrackAsync()
+    {
+        try
+        {
+            await MusicRepository.CreateTrackAsync(updatedTrack);
+            MessageSnackbar.Popup($"Der Track wurde erfolgreich erstellt", MessageSnackbar.Type.Success);
             updatedTrack = await MusicRepository.GetAsync(updatedTrack.Hash);
         }
         catch (Exception ex)
         {
-            MessageSnackbar.Popup($"Ein Fehler ist beim update des Nutzers aufgetreten: {ex}", MessageSnackbar.Type.Error);
+            MessageSnackbar.Popup($"Ein Fehler ist beim Erstellen des Tracks aufgetreten: {ex}", MessageSnackbar.Type.Error);
         }
     }
 
@@ -139,13 +179,58 @@ public partial class MusicPlaylistPage
         StateHasChanged();
     }
 
-    private async Task showLyrics() { }
+    private async Task StartShowingLyricsAsync()
+    {
+        try
+        {
+            var offset = -1;
+            LyricsDialog? dialog = null;
+            if (updatedTrack.Lyrics?.Length > 0)
+                dialog = await LyricsDialog.StartShowingAsync(updatedTrack.DisplayName, updatedTrack.Lyrics, false);
+            else
+            {
+                offset = 0;
+                var lyrics = await LyricsService.SearchForLyricsAsync(updatedTrack);
+                dialog = await LyricsDialog.StartShowingAsync(lyrics.Title, lyrics.Text, true);
+            }
+
+            if (dialog is null) return;
+
+            dialog.OnSave = EventCallback.Factory
+                .Create(this, async () => await ChangePropertyAsync(x => x.Lyrics, dialog.Lyrics));
+
+            dialog.RequestLyrics = EventCallback.Factory
+                .Create(this, async () =>
+                    {
+                        offset++;
+                        try
+                        {
+                            var newLyrics = await LyricsService.SearchForLyricsAsync(updatedTrack, offset);
+                            await dialog.UpdateLyricsAsync(newLyrics.Title, newLyrics.Text);
+                        }
+                        catch
+                        {
+                            dialog.CanNext = false;
+                        }
+                    });
+        }
+        catch
+        {
+            MessageSnackbar.Popup("Es konnten leider keine passenden Lyrics gefunden werden.", MessageSnackbar.Type.Error);
+        }
+    }
 
     private async Task showLanguageSwitcher() { }
 
     private async Task openInstrumentsDialog() { }
 
-    private async Task changeCurrentTrackPath() { }
+    private async Task changeCurrentTrackPath()
+    {
+        var result = AudioBrowser.ShowDialog();
+        if (result != DialogResult.OK) return;
+        await ChangePropertyAsync(x => x.Path, AudioBrowser.FileName);
+        await Audio.ChangeTrackAsync(updatedTrack);
+    }
 
     private async Task openEditPlaylistDialog() { }
 }
