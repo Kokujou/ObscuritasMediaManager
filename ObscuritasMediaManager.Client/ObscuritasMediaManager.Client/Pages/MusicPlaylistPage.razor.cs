@@ -226,10 +226,20 @@ public partial class MusicPlaylistPage
 
     private async Task changeCurrentTrackPath()
     {
-        var result = AudioBrowser.ShowDialog();
-        if (result != DialogResult.OK) return;
-        await ChangePropertyAsync(x => x.Path, AudioBrowser.FileName);
-        await Audio.ChangeTrackAsync(updatedTrack);
+        try
+        {
+            var result = await AudioBrowser.ShowDialogAsync();
+            if (result != DialogResult.OK) return;
+            await ChangePropertyAsync(x => x.Path, AudioBrowser.FileName);
+            await Audio.ChangeTrackAsync(updatedTrack);
+        }
+        catch (OperationCanceledException) { }
+        catch (AggregateException agg) when (agg.InnerException is OperationCanceledException) { }
+        catch (Exception ex)
+        {
+            MessageSnackbar.Popup($"Ein Fehler ist beim ändern des Track-Pfades aufgetreten: {ex.Message}",
+            MessageSnackbar.Type.Error);
+        }
     }
 
     private async Task openEditPlaylistDialog() { }
