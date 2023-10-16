@@ -21,7 +21,14 @@ public partial class TagLabel
     private bool showAutocomplete { get; set; }
     private string searchText { get; set; } = string.Empty;
 
-    private void handleInput(KeyboardEventArgs args)
+    private async Task NotifyTagCreated(string tag)
+    {
+        searchText = string.Empty;
+        autofillIndex = -1;
+        await TagCreated.InvokeAsync(tag);
+    }
+
+    private async Task handleInput(KeyboardEventArgs args)
     {
         if (args.Key == "ArrowDown")
         {
@@ -32,9 +39,8 @@ public partial class TagLabel
         {
             if (autofillIndex <= 0) autofillIndex = AutocompleteItems.Count;
             autofillIndex--;
-            ;
         }
         else if (args.Key == "Enter")
-            TagCreated.InvokeAsync(AutocompleteItems[(autofillIndex > 0) ? autofillIndex : 0]);
+            await NotifyTagCreated(AutocompleteItems[(autofillIndex > 0) ? autofillIndex : 0]);
     }
 }

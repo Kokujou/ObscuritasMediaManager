@@ -1,12 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Client.GenericComponents;
 using System;
+using System.Windows.Forms;
 
 namespace ObscuritasMediaManager.Client.Pages;
 
 public partial class MusicPage
 {
-    private static TimeSpan maxElapsed;
+    private static FolderBrowserDialog FolderImportDialog = new();
 
     public required PaginatedScrolling PaginatedScrolling { get; set; }
 
@@ -70,7 +71,31 @@ public partial class MusicPage
         Session.UserSettings.Next(Session.UserSettings.Current);
     }
 
-    public async Task importFolder() { }
+    public async Task importFolder()
+    {
+        var result = await FolderImportDialog.ShowDialogAsync();
+        if (result != DialogResult.OK) return;
+
+        var tracks = AudioFileImportService.ProcessFolder(FolderImportDialog.SelectedPath);
+        var validTracks = await AudioFileImportService.ValidateTracksAsync(tracks);
+
+        if (validTracks.Count <= 0)
+        {
+            MessageSnackbar.Popup("Der ausgewählte Ordner enthält keine validen Audio-Dateien", MessageSnackbar.Type.Error);
+            return;
+        }
+
+        await MusicRepository.BatchCreateMusicTracksAsync(validTracks);
+        var tempPlaylistId = PlaylistRepository.CreateTemporaryPlaylist(tracks.Select(x => x.Hash).ToList());
+
+        if (validTracks.Count < tracks.Count())
+            MessageSnackbar.Popup("Einige Dateien im Ordner waren keine validen Audio-Tracks.", MessageSnackbar.Type.Warning);
+
+        NavigationManager.NavigateToComponent<MusicPlaylistPage>(new()
+            {
+            { nameof(MusicPlaylistPage.PlaylistId), tempPlaylistId }
+            });
+    }
 
     public void GoToCreateMusic()
     {

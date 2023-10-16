@@ -11,11 +11,9 @@ using File = System.IO.File;
 
 namespace ObscuritasMediaManager.Client.GenericComponents;
 
-public partial class UploadArea
+public partial class ImageUploadArea
 {
-    private const string ImageFilter = "Image Files (*.bmp;*.jpg;*.jpeg;*.png, *.webp)|*.bmp;*.jpg;*.jpeg;*.png;*.webp";
-
-    private static OpenFileDialog ImageBrowser = new() { Filter = ImageFilter };
+    private static OpenFileDialog ImageBrowser = new() { Filter = FileDialogConstants.ImageFilter };
 
     public required ElementReference UploadDescription { get; set; }
     [Parameter] public EventCallback<string> ImageReceived { get; set; }

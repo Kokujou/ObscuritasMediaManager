@@ -273,7 +273,7 @@ input.editable-label {
         border: none;
     }
 
-#edit-playlist-link {
+.action-link {
     font-size: 30px;
     font-weight: bold;
     align-self: center;
@@ -290,15 +290,17 @@ input.editable-label {
     border-color: transparent;
 }
 
-    #edit-playlist-link:hover {
+    .action-link:hover {
         border-color: inherit;
     }
 
-#edit-playlist-icon {
+#edit-playlist-icon, #create-track-icon {
     width: 30px;
     height: 30px;
     background: var(--font-color);
 }
+
+
 
 #media-playlist-container {
     display: inline-flex;

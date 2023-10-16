@@ -11,8 +11,6 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Route("api/[controller]")]
 public class PlaylistController : ControllerBase
 {
-    private static readonly Dictionary<Guid, List<string>> TemporaryPlaylistRepository = new();
-
     private readonly MusicRepository _musicRepository;
     private readonly PlaylistRepository _playlistRepository;
 
@@ -31,26 +29,14 @@ public class PlaylistController : ControllerBase
     [HttpPost("temp")]
     public Guid CreateTemporaryPlaylist([FromBody] List<string> hashes)
     {
-        var playlistId = Guid.NewGuid();
-        TemporaryPlaylistRepository.Add(playlistId, hashes);
+        var playlistId = _playlistRepository.CreateTemporaryPlaylist(hashes);
         return playlistId;
     }
 
     [HttpGet("{playlistId}")]
     public async Task<PlaylistModel> GetPlaylist(Guid playlistId)
     {
-        if (!TemporaryPlaylistRepository.TryGetValue(playlistId, out var trackHashes))
-            return await _playlistRepository.GetPlaylistAsync(playlistId);
-
-        return new PlaylistModel
-               {
-                   TrackMappings =
-                       await Task.WhenAll(trackHashes.Select(async (trackId, index) =>
-                               PlaylistTrackMappingModel.Create(playlistId, string.Empty,
-                                                                await _musicRepository.GetAsync(trackId), index))),
-                   IsTemporary = true,
-                   Id = playlistId
-               };
+        return await _playlistRepository.GetPlaylistAsync(playlistId);
     }
 
     [HttpGet("list")]
@@ -79,7 +65,7 @@ public class PlaylistController : ControllerBase
             return;
         }
 
-        TemporaryPlaylistRepository.Remove(playlistId);
+        _playlistRepository.DeleteTemporaryPlaylist(playlistId);
 
         foreach (var track in updateRequest.NewModel.Tracks.Where(x => x.Hash is null))
             track.CalculateHash();
@@ -87,7 +73,7 @@ public class PlaylistController : ControllerBase
         await _playlistRepository.UpdateDataAsync(actual, updateRequest.OldModel, updateRequest.NewModel);
         await _playlistRepository.UpdateTracksAsync(updateRequest.NewModel);
         await _playlistRepository.UpdatePlaylistTrackMappingAsync(updateRequest.NewModel.Id, updateRequest.NewModel.Name,
-                                                                  updateRequest.NewModel.Tracks);
+        updateRequest.NewModel.Tracks);
     }
 
     [HttpPut("{playlistId}/tracks")]

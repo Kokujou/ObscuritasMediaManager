@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Models;
+using System.Collections.Concurrent;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
 public class PlaylistRepository
 {
+    private static readonly ConcurrentDictionary<Guid, List<string>> TemporaryPlaylistRepository = new();
+
     private readonly DatabaseContext _context;
 
     public PlaylistRepository(DatabaseContext context)
@@ -19,7 +22,25 @@ public class PlaylistRepository
 
     public async Task<PlaylistModel> GetPlaylistAsync(Guid playlistId)
     {
+        if (TemporaryPlaylistRepository.TryGetValue(playlistId, out var trackHashes))
+            return new PlaylistModel
+                   {
+                       TrackMappings =
+                           await Task.WhenAll(trackHashes.Select(async (trackHash, index) =>
+                                           PlaylistTrackMappingModel.Create(playlistId, string.Empty,
+                                   await _context.Music.SingleAsync(x => x.Hash == trackHash), index))),
+                       IsTemporary = true,
+                       Id = playlistId
+                   };
+
         return await _context.Playlists.SingleOrDefaultAsync(x => x.Id == playlistId);
+    }
+
+    public Guid CreateTemporaryPlaylist(List<string> hashs)
+    {
+        var playlistId = Guid.NewGuid();
+        TemporaryPlaylistRepository.TryAdd(playlistId, hashs);
+        return playlistId;
     }
 
     public async Task CreatePlaylistAsync(PlaylistModel playlist)
@@ -77,7 +98,7 @@ public class PlaylistRepository
         var updatedTrackMappings = updatedTracks
                                           .Select((track, index) =>
                                               PlaylistTrackMappingModel.Create(playlistId, playlistName, track, index))
-                                          .ToList();
+            .ToList();
 
         var newTracks = updatedTrackMappings
             .Where(x => !actualMapping.Contains(x))
@@ -100,6 +121,11 @@ public class PlaylistRepository
         if (!trackHashes.Any()) return;
         var selectedTracks = await _context.Music.Where(x => trackHashes.Contains(x.Hash)).ToListAsync();
         await UpdatePlaylistTrackMappingAsync(playlistId, playlist.Name, selectedTracks);
+    }
+
+    public void DeleteTemporaryPlaylist(Guid playlistId)
+    {
+        TemporaryPlaylistRepository.Remove(playlistId, out _);
     }
 
     public async Task DeletePlaylistAsync(Guid playlistId)

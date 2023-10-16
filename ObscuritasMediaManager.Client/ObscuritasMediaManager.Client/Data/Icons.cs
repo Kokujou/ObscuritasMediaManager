@@ -38,8 +38,8 @@ public enum Icons
     Speech,
     [IconUrl("resources/inline-icons/general/select-all-icon.svg")]
     SelectAll,
-    [IconUrl("resources/inline-icons/general/save-icon.svg")]
-    Save,
+    [IconUrl("resources/inline-icons/general/save-tick-icon.svg")]
+    SaveTick,
     [IconUrl("resources/inline-icons/general/revert-icon.svg")]
     Revert,
     [IconUrl("resources/inline-icons/general/popup-icon.svg")]

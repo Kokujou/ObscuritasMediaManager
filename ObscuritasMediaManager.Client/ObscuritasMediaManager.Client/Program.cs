@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ObscuritasMediaManager.Backend.DataRepositories;
+using ObscuritasMediaManager.Client.Services;
 using Serilog.Events;
+using Xabe.FFmpeg;
 
 namespace ObscuritasMediaManager.Client;
 
@@ -15,6 +17,8 @@ public static class Program
     {
         AppDomain.CurrentDomain.UnhandledException += (sender,
             args) => Log.Error(args.ExceptionObject?.ToString() ?? string.Empty);
+        FFmpeg.SetExecutablesPath("D:\\Programme\\ffmpeg\\bin");
+
         IHost host = Host.CreateDefaultBuilder()
             .UseSerilog((hostContext, services, configuration)
         => configuration.WriteTo
@@ -44,6 +48,7 @@ public static class Program
         services.AddSingleton<MediaFilterService>();
         services.AddSingleton<Session>();
         services.AddSingleton<AudioService>();
+        services.AddSingleton<AudioFileImportService>();
 
         services.AddDbContext<DatabaseContext>(
             x => x.UseSqlite(

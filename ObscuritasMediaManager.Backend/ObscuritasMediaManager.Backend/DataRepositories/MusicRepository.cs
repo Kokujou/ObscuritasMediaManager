@@ -4,6 +4,7 @@ using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.Json;
@@ -81,6 +82,11 @@ public class MusicRepository
         return await _context.Music.ToDictionaryAsync(x => x.Hash, x => x.Path);
     }
 
+    public async Task<List<string>> GetDuplicateHashsAsync(List<string> hashsToCheck)
+    {
+        return await _context.Music.Where(x => hashsToCheck.Contains(x.Hash)).Select(x => x.Hash).ToListAsync();
+    }
+
     public IQueryable<MusicModel> GetAll()
     {
         return _context.Music;
@@ -94,19 +100,19 @@ public class MusicRepository
 
     public async Task BatchCreateMusicTracksAsync(IEnumerable<MusicModel> media)
     {
-        var errors = new Dictionary<MusicModel, string>();
-        await Task.WhenAll(media.Select(track => Task.Run(() =>
-                    {
-                        try
-                        {
-                            _context.Music.Add(track);
-                            _context.SaveChanges();
-                        }
-                        catch (Exception ex)
-                        {
-                            errors.Add(track, ex.ToString());
-                        }
-                    })));
+        var errors = new ConcurrentDictionary<MusicModel, string>();
+
+        foreach (var track in media)
+            try
+            {
+                await _context.Music.AddAsync(track);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                errors.TryAdd(track, ex.ToString());
+            }
+
         if (errors.Count > 0) throw new ModelCreationFailedException<MusicModel>(errors);
     }
 

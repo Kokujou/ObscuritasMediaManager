@@ -37,21 +37,12 @@
         </svg>
 
         <div id="rating-container" disabled="@(Disabled)">
-            @for (var rating = 1; rating <= 5; rating++)
-            {
-                <svg viewBox="0 0 15 18"
-                     class="star @(rating <= Track.Rating ? "selected" : "") @(rating <= hoveredRating
-            ? "hovered"
-            : "")">
-                    <text x="0"
-                          y="15"
-                    @onpointerover="@((_) => hoveredRating = rating)"
-                    @onpointerout="@((_) => hoveredRating = 0)"
-                    @onclick="@(() =>ChangeRating.InvokeAsync(rating))">
-                        ★
-                    </text>
-                </svg>
-            }
+            <StarRating 
+                vertical
+                values="Enumerable.Range(1, Track.Rating).ToList()"
+                ratingChanged="(e) => ChangeRating.InvokeAsync(e.rating)"
+                singleSelect
+            ></StarRating>
         </div>
 
         <div id="instruments-container"

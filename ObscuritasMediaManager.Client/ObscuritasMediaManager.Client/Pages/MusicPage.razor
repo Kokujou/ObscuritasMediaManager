@@ -1,6 +1,7 @@
 ﻿@page "/music"
 @using ObscuritasMediaManager.Backend.DataRepositories;
 @using ObscuritasMediaManager.Client.Extensions;
+@using ObscuritasMediaManager.Client.Services;
 
 @inherits ElementBase
 
@@ -10,6 +11,7 @@
 @inject PlaylistRepository PlaylistRepository
 @inject MusicRepository MusicRepository
 @inject AudioService Audio
+@inject AudioFileImportService AudioFileImportService
 
 <div id="music-page">
     <div id="search-panel-container">

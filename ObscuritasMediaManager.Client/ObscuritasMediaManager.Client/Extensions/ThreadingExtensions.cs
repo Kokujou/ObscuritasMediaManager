@@ -9,7 +9,7 @@ public static class ThreadingExtensions
     private static TaskCompletionSource<DialogResult>? _taskCompletionSource;
     private static Form? _dialogForm;
 
-    public static async Task<DialogResult> ShowDialogAsync(this OpenFileDialog dialog)
+    public static async Task<DialogResult> ShowDialogAsync(this CommonDialog dialog)
     {
         if (_dialogForm is not null)
         {

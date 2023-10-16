@@ -10,6 +10,7 @@
             @oninput="@((e) => searchText = (string?) e.Value ?? string.Empty)"
             @onfocus="@(() => showAutocomplete = true)"
             @onfocusout="@(() => showAutocomplete = false)"
+            value="@searchText"
                    type="text"
                    autocomplete="off" />
 
@@ -20,8 +21,8 @@
                     @onpointerover="@(() => {
                         autofillIndex = index;
                     })"
-                    @onpointerdown="@(() => TagCreated.InvokeAsync(Autocomplete[index]))">
-                        @(Autocomplete[index])
+                        @onpointerdown="@(() => NotifyTagCreated(AutocompleteItems[index]))">
+                            @(AutocompleteItems[index])
                     </div>
                 }
             </div>

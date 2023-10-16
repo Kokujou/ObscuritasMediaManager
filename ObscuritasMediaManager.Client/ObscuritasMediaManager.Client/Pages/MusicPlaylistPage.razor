@@ -59,7 +59,7 @@
                                     x=>x.Instrumentation,
                                     updatedTrack.Instrumentation.NextValue()
                                 ))"
-                            ChangeRating="@((e) => ChangePropertyAsync(x=>x.Rating, e))"
+                            ChangeRating="@((e) => ChangePropertyAsync(x=>x.Rating, (byte) e))"
                             ChangeInstruments="@(() => openInstrumentsDialog())"></AudioTileBase>
              <div id="show-lyrics-link" @onclick="@(() => StartShowingLyricsAsync())">Show Lyrics</div>
          </div>
@@ -146,21 +146,21 @@
     </div>
     @if (CreateNew)
     {
-        <div id="create-track-link" @onclick="@(()=> CreateTrackAsync())">
-            <div id="create-track-icon" Icon="@Icons.Save"></div>
+        <div id="create-track-link" class="action-link" @onclick="@(()=> CreateTrackAsync())">
+            <div id="create-track-icon" Icon="@Icons.SaveTick"></div>
             <div id="create-track-text">Track erstellen</div>
         </div>
     }
     else if (playlist.IsTemporary)
     {
-        <div id="edit-playlist-link" @onclick="@(() => openEditPlaylistDialog())">
+        <div id="edit-playlist-link" class="action-link" @onclick="@(() => openEditPlaylistDialog())">
             <div id="edit-playlist-icon" Icon="@Icons.Edit"></div>
             <div id="edit-playlist-text">Zu Playlist befördern</div>
         </div>
     }
     else
     {
-        <div id="edit-playlist-link" @onclick="@(() => openEditPlaylistDialog())">
+        <div id="edit-playlist-link" class="action-link" @onclick="@(() => openEditPlaylistDialog())">
             <div id="edit-playlist-icon" Icon="@Icons.Edit"></div>
             <div id="edit-playlist-text">Playlist bearbeiten</div>
         </div>

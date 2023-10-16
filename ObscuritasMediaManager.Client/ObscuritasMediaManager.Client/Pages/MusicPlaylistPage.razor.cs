@@ -4,16 +4,16 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Client.Dialogs;
 using ObscuritasMediaManager.Client.GenericComponents;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Xabe.FFmpeg;
 
 namespace ObscuritasMediaManager.Client.Pages;
 
 public partial class MusicPlaylistPage
 {
-    private const string AudioFilter = "Audio-Dateien|*.3gp;*.aa;*.aac;*.aax;*.act;*.aiff;*.alac;*.amr;*.ape;*.au;*.awb;*.dss;*.dvf;*.flac;*.gsm;*.iklax;*.ivs;*.m4a;*.m4b;*.m4p;*.mmf;*.movpkg;*.mp3;*.mpc;*.msv;*.nmf;*.ogg,;*.opus;*.ra,;*.raw;*.rf64;*.sln;*.tta;*.voc;*.vox;*.wav;*.wma;*.wv;*.webm;*.8svx;*.cda";
-
-    private static OpenFileDialog AudioBrowser = new() { Filter = AudioFilter };
+    private static OpenFileDialog AudioBrowser = new() { Filter = FileDialogConstants.AudioFilter };
 
     [Parameter]
     [SupplyParameterFromQuery]
@@ -35,7 +35,6 @@ public partial class MusicPlaylistPage
 
     private PlaylistModel playlist { get; set; } = new() { Tracks = new List<MusicModel>() };
     private int currentTrackIndex { get; set; } = -1;
-    private MusicModel currentTrack { get; set; } = new MusicModel();
     private MusicModel updatedTrack { get; set; } = new MusicModel();
     private int hoveredRating { get; set; } = -1;
 
@@ -74,10 +73,9 @@ public partial class MusicPlaylistPage
         if (CreateNew)
         {
             currentTrackIndex = 0;
-            currentTrack = new MusicModel();
             playlist = new PlaylistModel
                        {
-                           Tracks = new List<MusicModel> { currentTrack },
+                           Tracks = new List<MusicModel> { new() },
                            IsTemporary = true,
                            Genres = new List<MusicGenre>()
                        };
@@ -85,10 +83,9 @@ public partial class MusicPlaylistPage
         else if ((PlaylistId is null) || (PlaylistId == Guid.Empty))
         {
             currentTrackIndex = 0;
-            currentTrack = await MusicRepository.GetAsync(TrackHash);
             playlist = new PlaylistModel
                        {
-                           Tracks = new List<MusicModel> { currentTrack },
+                           Tracks = new List<MusicModel> { await MusicRepository.GetAsync(TrackHash) },
                            IsTemporary = true,
                            Genres = new List<MusicGenre>()
                        };
@@ -100,7 +97,7 @@ public partial class MusicPlaylistPage
         }
 
         updatedTrack = playlist.Tracks.ElementAt(currentTrackIndex);
-        await Audio.ChangeTrackAsync(currentTrack);
+        await Audio.ChangeTrackAsync(updatedTrack);
         StateHasChanged();
     }
 
@@ -132,7 +129,7 @@ public partial class MusicPlaylistPage
         var absoluteUri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
         NavigationManager.NavigateTo(absoluteUri.GetLeftPart(UriPartial.Path));
 
-        await Audio.ChangeTrackAsync(currentTrack);
+        await Audio.ChangeTrackAsync(updatedTrack);
         Audio.Play();
         StateHasChanged();
     }
@@ -162,13 +159,18 @@ public partial class MusicPlaylistPage
     {
         try
         {
+            if (!File.Exists(updatedTrack.Path)) 
+                throw new FileNotFoundException("Der Track-Pfad existiert nicht.", updatedTrack.Path);
+            if (!FFmpeg.GetMediaInfo(updatedTrack.Path).Result.AudioStreams.Any())
+                throw new ArgumentException("Der angegebene Track-Pfad ist keine valide Audio-Datei");
             await MusicRepository.CreateTrackAsync(updatedTrack);
             MessageSnackbar.Popup($"Der Track wurde erfolgreich erstellt", MessageSnackbar.Type.Success);
             updatedTrack = await MusicRepository.GetAsync(updatedTrack.Hash);
         }
         catch (Exception ex)
         {
-            MessageSnackbar.Popup($"Ein Fehler ist beim Erstellen des Tracks aufgetreten: {ex}", MessageSnackbar.Type.Error);
+            MessageSnackbar.Popup($"Ein Fehler ist beim Erstellen des Tracks aufgetreten: {ex.Message}",
+            MessageSnackbar.Type.Error);
         }
     }
 
