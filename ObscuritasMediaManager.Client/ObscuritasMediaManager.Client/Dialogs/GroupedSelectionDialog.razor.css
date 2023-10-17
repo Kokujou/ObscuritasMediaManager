@@ -1,0 +1,42 @@
+
+
+#groups-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 50px;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    margin-right: 60px;
+    margin-bottom: 30px;
+    flex: auto;
+}
+
+.group-name {
+    text-decoration:underline; 
+}
+
+.group-container {
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 150px;
+}
+
+.item {
+    cursor: pointer;
+    margin-right: 40px;
+}
+
+.item:hover {
+    -webkit-text-stroke-width: 1px;
+}
+
+.item[selected]{
+    color: green;
+}

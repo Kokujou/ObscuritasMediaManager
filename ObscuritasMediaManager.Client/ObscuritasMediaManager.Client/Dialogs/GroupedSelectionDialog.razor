@@ -1,0 +1,22 @@
+﻿@inherits DialogBase
+
+<DialogBase Heading="@Heading" Actions="@Actions">
+    <div id="groups-wrapper">
+        @foreach (var group in Groups)
+        {
+            <div class="group">
+                <div class="group-name">@group.Key</div>
+                <div class="group-container">
+                    @foreach (var item in group.Value)
+                    {
+                        <div class="item"
+                             selected="@(SelectedGroups.Any(x=>x.Key == group.Key && x.Value.Contains(item)))"
+                        @onclick="()=> ToggleItem(group.Key,item)">
+                            @item
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</DialogBase>

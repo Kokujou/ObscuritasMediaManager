@@ -19,4 +19,10 @@ public static class LinqExtensions
             result.Add(input[random.Next(0, result.Count)]);
         return result;
     }
+
+    public static Dictionary<TKey, List<TValue>> ToDictionary<TKey, TValue>(
+        this IEnumerable<IGrouping<TKey, TValue>> groups) where TKey : notnull
+    {
+        return groups.ToDictionary(x => x.Key, x => x.ToList());
+    }
 }

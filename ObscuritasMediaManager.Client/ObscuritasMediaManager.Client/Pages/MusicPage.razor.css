@@ -1,6 +1,3 @@
-* {
-    scrollbar-width: thin;
-}
 
 #music-page {
     position: absolute;
@@ -47,8 +44,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-color) #20625599;
     border-radius: 20px;
 }
 

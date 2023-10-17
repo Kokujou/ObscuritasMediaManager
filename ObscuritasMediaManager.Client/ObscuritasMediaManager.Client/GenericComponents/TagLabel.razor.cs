@@ -14,7 +14,7 @@ public partial class TagLabel
     [Parameter] public EventCallback<string> TagCreated { get; set; }
     [Parameter] public EventCallback Removed { get; set; }
 
-    private List<string> AutocompleteItems
+    private List<string> FilteredAutocomplete
                              => Autocomplete.Where((x) => x.ToLower().Contains(searchText.ToLower())).ToList();
 
     private int autofillIndex { get; set; } = -1;
@@ -33,14 +33,21 @@ public partial class TagLabel
         if (args.Key == "ArrowDown")
         {
             autofillIndex++;
-            if (autofillIndex >= AutocompleteItems.Count) autofillIndex = 0;
+            if (autofillIndex >= FilteredAutocomplete.Count) autofillIndex = 0;
         }
         else if (args.Key == "ArrowUp")
         {
-            if (autofillIndex <= 0) autofillIndex = AutocompleteItems.Count;
+            if (autofillIndex <= 0) autofillIndex = FilteredAutocomplete.Count;
             autofillIndex--;
         }
-        else if (args.Key == "Enter")
-            await NotifyTagCreated(AutocompleteItems[(autofillIndex > 0) ? autofillIndex : 0]);
+        else if ((args.Key == "Enter") && (GetSelectedItem() is string selected))
+            await NotifyTagCreated(selected);
+    }
+
+    private string? GetSelectedItem()
+    {
+        if (FilteredAutocomplete.Count <= 0) return null;
+        if (FilteredAutocomplete.ElementAtOrDefault(autofillIndex) is string hovered) return hovered;
+        return FilteredAutocomplete.First();
     }
 }

@@ -23,7 +23,7 @@ public partial class MessageSnackbar
                             Parameters = new() { { nameof(Message), text }, { nameof(MessageType), type } }
                         };
         PageLayout.Children.Add(component);
-        PageLayout.ChildrenChanged(null, null);
+        PageLayout.ChildrenChanged(null, new());
     }
 
     [Parameter] public required string Message { get; set; }
@@ -54,8 +54,9 @@ public partial class MessageSnackbar
         StateHasChanged();
         await Task.Delay(FadeAnimationDuration);
 
-        PageLayout.Children.Remove(PageLayout.Children.FirstOrDefault(x => x.Instance?.Instance == this));
-        PageLayout.ChildrenChanged.Invoke(null, null);
+        var component = PageLayout.Children.FirstOrDefault(x => x.Instance?.Instance == this);
+        if (component is not null) PageLayout.Children.Remove(component);
+        PageLayout.ChildrenChanged.Invoke(null, new());
         var otherSnackbars = PageLayout.GetComponents<MessageSnackbar>();
         await Task.Yield();
 
@@ -71,7 +72,7 @@ public partial class MessageSnackbar
             }
             snackbar.StateHasChanged();
         }
-        PageLayout.ChildrenChanged.Invoke(null, null);
+        PageLayout.ChildrenChanged.Invoke(null, new());
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

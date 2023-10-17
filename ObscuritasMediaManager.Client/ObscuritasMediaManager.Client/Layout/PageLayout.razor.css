@@ -161,12 +161,6 @@ br {
 }
 
 .nav-link {
-    text-shadow: 2px 2px 2px black;
-    letter-spacing: 2px;
-    font-size: 21px;
-    white-space: nowrap;
-    margin-left: 20px;
-    min-height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;

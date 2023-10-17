@@ -371,7 +371,6 @@ input {
     overflow-x: auto;
     overflow-y: hidden;
     -ms-overflow-style: none;
-    scrollbar-width: none;
     flex-wrap: nowrap;
 }
 

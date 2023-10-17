@@ -33,6 +33,7 @@ public class MusicRepository
     {
         track.CalculateHash();
         await _context.Music.AddAsync(track);
+        await _context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(string hash, JsonElement old, JsonElement updated, JsonSerializerOptions serializerOptions)

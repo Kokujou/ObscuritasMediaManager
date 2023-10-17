@@ -6,6 +6,11 @@
 <div id="viewport">
     <div id="page-container" style="transform: scale(@(ScaleFactorX.ToString(System.Globalization.CultureInfo.InvariantCulture)), @(ScaleFactorY.ToString(System.Globalization.CultureInfo.InvariantCulture)))">
         <div id="current-page" style="width: @(1920)px; height: @(1080)px ;">
+            @foreach (var child in Children)
+            {
+                <DynamicComponent @key="@child.Id" Parameters="@child.Parameters" Type="@child.ComponentType" @ref="@child.Instance"></DynamicComponent>
+            }
+
             <div id="header">
                 <div id="logo-container">
                     <a id="logo" href="#welcome">
@@ -40,7 +45,4 @@
     </div>
 </div>
 
-@foreach (var child in Children)
-{
-    <DynamicComponent @key="@child.Id" Parameters="@child.Parameters" Type="@child.ComponentType" @ref="@child.Instance"></DynamicComponent>
-}
+

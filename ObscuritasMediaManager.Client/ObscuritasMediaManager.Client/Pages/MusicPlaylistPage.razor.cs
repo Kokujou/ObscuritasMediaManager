@@ -58,12 +58,14 @@ public partial class MusicPlaylistPage
     {
         await base.OnInitializedAsync();
 
-        Subscriptions.AddRange(Session.UserSettings
-                .Subscribe(async (data) =>
-                        {
-                            if (data.newValue is null) return;
-                            await changeVolume(data.newValue.Volume, false);
-                        }));
+        Subscriptions.AddRange(
+            Session.UserSettings
+                .Subscribe(
+                    async (data) =>
+                    {
+                        if (data.newValue is null) return;
+                        await changeVolume(data.newValue.Volume, false);
+                    }));
 
         await initializeData();
     }
@@ -125,7 +127,7 @@ public partial class MusicPlaylistPage
         currentTrackIndex = index;
         updatedTrack = playlist.Tracks.ElementAt(currentTrackIndex);
 
-        var query = $"?guid={playlist.Id}&track ={currentTrackIndex}";
+        var query = $"?guid={playlist.Id}&track={currentTrackIndex}";
         var absoluteUri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
         NavigationManager.NavigateTo(absoluteUri.GetLeftPart(UriPartial.Path));
 
@@ -159,18 +161,20 @@ public partial class MusicPlaylistPage
     {
         try
         {
-            if (!File.Exists(updatedTrack.Path)) 
+            if (!File.Exists(updatedTrack.Path))
                 throw new FileNotFoundException("Der Track-Pfad existiert nicht.", updatedTrack.Path);
-            if (!FFmpeg.GetMediaInfo(updatedTrack.Path).Result.AudioStreams.Any())
+            if (!(await FFmpeg.GetMediaInfo(updatedTrack.Path)).AudioStreams.Any())
                 throw new ArgumentException("Der angegebene Track-Pfad ist keine valide Audio-Datei");
+            updatedTrack.CalculateHash();
             await MusicRepository.CreateTrackAsync(updatedTrack);
             MessageSnackbar.Popup($"Der Track wurde erfolgreich erstellt", MessageSnackbar.Type.Success);
-            updatedTrack = await MusicRepository.GetAsync(updatedTrack.Hash);
+            NavigationManager.NavigateToComponent<MusicPlaylistPage>(
+                new() { { nameof(MusicPlaylistPage.TrackHash), updatedTrack.Hash } });
         }
         catch (Exception ex)
         {
-            MessageSnackbar.Popup($"Ein Fehler ist beim Erstellen des Tracks aufgetreten: {ex.Message}",
-            MessageSnackbar.Type.Error);
+            MessageSnackbar.Popup(
+                $"Ein Fehler ist beim Erstellen des Tracks aufgetreten: {ex.Message}", MessageSnackbar.Type.Error);
         }
     }
 
@@ -202,7 +206,8 @@ public partial class MusicPlaylistPage
                 .Create(this, async () => await ChangePropertyAsync(x => x.Lyrics, dialog.Lyrics));
 
             dialog.RequestLyrics = EventCallback.Factory
-                .Create(this, async () =>
+                .Create(
+                    this, async () =>
                     {
                         offset++;
                         try
@@ -224,7 +229,14 @@ public partial class MusicPlaylistPage
 
     private async Task showLanguageSwitcher() { }
 
-    private async Task openInstrumentsDialog() { }
+    private async Task openInstrumentsDialog()
+    {
+        var GroupInstruments = (IEnumerable<InstrumentModel> x) => x.GroupBy(x => x.Type.ToString(), x => x.Name).ToDictionary();
+
+        await GroupedSelectionDialog.ShowAsync(
+            "Instrumente auswählen", GroupInstruments(Session.instruments.Current), GroupInstruments(updatedTrack.Instruments),
+            true, true);
+    }
 
     private async Task changeCurrentTrackPath()
     {
@@ -239,8 +251,8 @@ public partial class MusicPlaylistPage
         catch (AggregateException agg) when (agg.InnerException is OperationCanceledException) { }
         catch (Exception ex)
         {
-            MessageSnackbar.Popup($"Ein Fehler ist beim ändern des Track-Pfades aufgetreten: {ex.Message}",
-            MessageSnackbar.Type.Error);
+            MessageSnackbar.Popup(
+                $"Ein Fehler ist beim ändern des Track-Pfades aufgetreten: {ex.Message}", MessageSnackbar.Type.Error);
         }
     }
 

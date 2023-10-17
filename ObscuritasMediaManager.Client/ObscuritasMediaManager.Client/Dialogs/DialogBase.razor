@@ -1,0 +1,18 @@
+﻿@inherits ElementBase
+
+<div id="dialog-base" @onkeypress="@HandleKeyPress">
+    <div id="dialog-border">
+        <div id="dialog">
+            <div id="header">@Heading</div>
+            <div id="content">
+                @ChildContent
+            </div>
+            <div id="footer">
+                @foreach (var action in Actions)
+                {
+                    <div id="close-action" class="action-link" @onclick="()=>action.Invoke()">@action.Text</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

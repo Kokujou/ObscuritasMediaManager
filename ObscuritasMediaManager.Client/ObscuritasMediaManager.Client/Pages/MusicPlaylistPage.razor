@@ -69,6 +69,7 @@
                     class="editable-label"
                     disabled="@(updatedTrack.Complete)"
                     value=" @(updatedTrack.Name)"
+                    autocomplete="off"
              @onchange="@((e) => ChangePropertyAsync(x => x.Name, e.Value))" />
 
              <div id="audio-subtitle">
@@ -77,6 +78,7 @@
                         class="editable-label"
                         disabled="@(updatedTrack.Complete)"
                         value="@(updatedTrack.Author)"
+                        autocomplete="off"
                         oninput="this.dispatchEvent(new Event('change')"
                  @onchange="@((e) => ChangePropertyAsync(x=>x.Author, e.Value))" />
                  <div id="subtitle-separator">-</div>
@@ -85,6 +87,7 @@
                         class="editable-label"
                         value="@(updatedTrack.Source ?? "---")"
                         disabled="@(updatedTrack.Complete)"
+                        autocomplete="off"
                         oninput="this.dispatchEvent(new Event('change')"
                  @onchange="@((e) => ChangePropertyAsync(x=>x.Source, e.Value))" />
              </div>
@@ -151,14 +154,14 @@
             <div id="create-track-text">Track erstellen</div>
         </div>
     }
-    else if (playlist.IsTemporary)
-    {
+    else if (PlaylistId is not null && PlaylistId != Guid.Empty && playlist.IsTemporary)
+        {
         <div id="edit-playlist-link" class="action-link" @onclick="@(() => openEditPlaylistDialog())">
             <div id="edit-playlist-icon" Icon="@Icons.Edit"></div>
             <div id="edit-playlist-text">Zu Playlist befördern</div>
         </div>
     }
-    else
+    else if(PlaylistId is not null && PlaylistId != Guid.Empty && !playlist.IsTemporary)
     {
         <div id="edit-playlist-link" class="action-link" @onclick="@(() => openEditPlaylistDialog())">
             <div id="edit-playlist-icon" Icon="@Icons.Edit"></div>

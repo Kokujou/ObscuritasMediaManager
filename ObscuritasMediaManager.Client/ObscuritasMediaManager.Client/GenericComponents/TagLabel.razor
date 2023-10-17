@@ -15,18 +15,18 @@
                    autocomplete="off" />
 
             <div id="autocomplete-list" class="@(showAutocomplete ? "" : "hidden")">
-                @for (var index = 0; index < AutocompleteItems.Count; index++)
+                @for (var index = 0; index < FilteredAutocomplete.Count; index++)
                 {
                     <div class="autocomplete-item @(autofillIndex == index ? "active" : "")"
                     @onpointerover="@(() => {
                         autofillIndex = index;
                     })"
-                        @onpointerdown="@(() => NotifyTagCreated(AutocompleteItems[index]))">
-                            @(AutocompleteItems[index])
+                        @onpointerdown="@(() => NotifyTagCreated(FilteredAutocomplete[index]))">
+                            @(FilteredAutocomplete[index])
                     </div>
                 }
-            </div>
-            <div id="invisible-text">
+                </div>
+                <div id="invisible-text">
                 @(searchText.Replace(" ", "\xA0"))
             </div>
         </form>

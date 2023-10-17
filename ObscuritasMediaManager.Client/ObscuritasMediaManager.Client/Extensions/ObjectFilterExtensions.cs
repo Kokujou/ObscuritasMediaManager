@@ -31,11 +31,11 @@ public static class ObjectFilterExtensions
     }
 
     public static IEnumerable<T> applyMultiPropertySearch<T, U>(this IEnumerable<T> list, string search,
-        params Func<T, U>[] propertyExpressions)
+        params Func<T, U?>[] propertyExpressions)
         where U : notnull
     {
         return list.Where((item) =>
-            propertyExpressions.Any((expr) => (expr(item).ToString() ?? string.Empty).ToLower().Contains(search.ToLower())));
+            propertyExpressions.Any((expr) => (expr(item)?.ToString() ?? string.Empty).ToLower().Contains(search.ToLower())));
     }
 
     public static IEnumerable<T> applyPropertyFilter<T, U>(this IEnumerable<T> list, FilterEntry<U> filter,

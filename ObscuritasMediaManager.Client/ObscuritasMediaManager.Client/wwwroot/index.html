@@ -26,12 +26,21 @@
             --font-color: #ddd;
         }
 
-        * ::-webkit-scrollbar {
+        ::-webkit-scrollbar {
+            width: 9px;
             background: var(--accent-color)
         }
 
         * ::-webkit-scrollbar-thumb {
-            background: #20625599
+            background: #20625599;
+            border-radius: 20px;
+            border: transparent;
+            width: 9px;
+        }
+
+        * ::-webkit-scrollbar-track {
+            background: transparent;
+            width: 9px;
         }
     </style>
 </head>

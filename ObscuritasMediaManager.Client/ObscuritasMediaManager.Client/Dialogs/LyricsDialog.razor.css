@@ -29,7 +29,6 @@
     max-height: 400px;
     padding: 0 50px;
     overflow: visible;
-    scrollbar-width: thin;
     -webkit-mask: linear-gradient( to bottom, transparent, black var(--fade-padding) calc(100% - var(--fade-padding)), transparent );
 }
 
