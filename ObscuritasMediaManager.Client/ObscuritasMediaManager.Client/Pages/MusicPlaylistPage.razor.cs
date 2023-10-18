@@ -147,9 +147,10 @@ public partial class MusicPlaylistPage
     {
         try
         {
+            if (!CreateNew) 
+                await MusicRepository.UpdatePropertyAsync(updatedTrack.Hash, property, value);
+
             property.SetPropertyValue(updatedTrack, value);
-            if (CreateNew) return;
-            await MusicRepository.UpdatePropertyAsync(updatedTrack.Hash, property, value);
         }
         catch (Exception ex)
         {
@@ -231,11 +232,65 @@ public partial class MusicPlaylistPage
 
     private async Task openInstrumentsDialog()
     {
-        var GroupInstruments = (IEnumerable<InstrumentModel> x) => x.GroupBy(x => x.Type.ToString(), x => x.Name).ToDictionary();
-
         await GroupedSelectionDialog.ShowAsync(
-            "Instrumente auswählen", GroupInstruments(Session.instruments.Current), GroupInstruments(updatedTrack.Instruments),
-            true, true);
+            "Instrumente auswählen", Session.instruments.Current, dialog =>
+            {
+                dialog.GetGroupName = x => x.Type.ToString();
+                dialog.GetName = x => x.Name;
+                dialog.IsSelected = x => updatedTrack.Instruments.Any(selected => x.Id == selected.Id);
+                dialog.CanRemove = true;
+                dialog.CanAdd = true;
+                dialog.ItemAddedAsync = async x => await CreateInstrumentAsync(x.Group, x.Name);
+                dialog.ItemDeletedAsync = async x => await RemoveInstrumentAsync(x);
+                dialog.ItemToggledAsync = async x => await ToggleInstrumentAsync(x);
+            });
+    }
+
+    private async Task ToggleInstrumentAsync(InstrumentModel instrument)
+    {
+        var included = updatedTrack.Instruments.Any(x => x.Id == instrument.Id);
+        await MusicRepository.UpdateAsync(
+            updatedTrack.Hash, x =>
+            {
+                if (included)
+                    x.Instruments.RemoveAll(x => x.Id == instrument.Id);
+                else
+                    x.Instruments.Add(instrument);
+            });
+
+        if (included)
+            updatedTrack.Instruments.RemoveAll(x => x.Id == instrument.Id);
+        else
+            updatedTrack.Instruments.Add(instrument);
+    }
+
+    private async Task CreateInstrumentAsync(string group, string name)
+    {
+        try
+        {
+            var model = new InstrumentModel { Name = name, Type = Enum.Parse<InstrumentType>(group) };
+            await MusicRepository.AddInstrumentAsync(model);
+            Session.instruments.Current.Add(model);
+            MessageSnackbar.Popup("Instrument erfolgreich hinzugefügt.", MessageSnackbar.Type.Success);
+        }
+        catch (Exception ex)
+        {
+            MessageSnackbar.Popup($"Fehler beim hinzufügen des Instruments: {ex.Message}", MessageSnackbar.Type.Error);
+        }
+    }
+
+    private async Task RemoveInstrumentAsync(InstrumentModel model)
+    {
+        try
+        {
+            await MusicRepository.RemoveInstrumentAsync(model.Type, model.Name);
+            Session.instruments.Current.Remove(model);
+            MessageSnackbar.Popup("Instrument erfolgreich hinzugefügt.", MessageSnackbar.Type.Success);
+        }
+        catch (Exception ex)
+        {
+            MessageSnackbar.Popup($"Fehler beim hinzufügen des Instruments: {ex.Message}", MessageSnackbar.Type.Error);
+        }
     }
 
     private async Task changeCurrentTrackPath()

@@ -1,4 +1,14 @@
 ﻿@inherits ElementBase
+<script>
+    Blazor.registerCustomEventType('input2', {
+        browserEventName: 'keypress',
+        createEventArgs: (event) => { 
+            if(event.key == 'Enter') event.preventDefault()
+            return { key: event.key, value: event.srcElement.value ?? event.srcElement.innerText }
+        }
+    });
+</script>
+
 <IconRegistry></IconRegistry>
 <LayoutView Layout="@typeof(PageLayout)">
     <Router AppAssembly="@GetType().Assembly">

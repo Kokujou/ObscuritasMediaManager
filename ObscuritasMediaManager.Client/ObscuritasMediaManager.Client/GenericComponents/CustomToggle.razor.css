@@ -30,6 +30,7 @@
 
 #custom-toggle[state="Ignore"] {
     background-color: var(--toggled-color, var(--background-color));
+    box-shadow: 0 0 5px var(--toggled-color, var(--background-color));
 }
 
     #custom-toggle[state="Ignore"] #slider {
@@ -40,6 +41,7 @@
 #custom-toggle[state="Require"],
 #custom-toggle:not([three-values])[toggled] {
     background-color: var(--toggled-color, var(--background-color));
+    box-shadow: 0 0 5px var(--toggled-color, var(--background-color));
 }
 
     #custom-toggle[state="Require"] #slider,

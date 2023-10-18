@@ -18,7 +18,7 @@ public class MusicModel
             .WithMany()
             .UsingEntity<MusicInstrumentMappingModel>(
                 x => x.HasOne<InstrumentModel>().WithMany().HasForeignKey(x => x.InstrumentId).HasPrincipalKey(x => x.Id),
-            x => x.HasOne<MusicModel>().WithMany().HasForeignKey(x => x.TrackHash).HasPrincipalKey(x => x.Hash));
+                x => x.HasOne<MusicModel>().WithMany().HasForeignKey(x => x.TrackHash).HasPrincipalKey(x => x.Hash));
 
         entity.Navigation(x => x.Instruments).AutoInclude();
     }
@@ -35,7 +35,7 @@ public class MusicModel
     public Nation Nation { get; set; }
     public Instrumentation Instrumentation { get; set; }
     public Participants Participants { get; set; }
-    public IEnumerable<InstrumentModel> Instruments { get; set; } = new List<InstrumentModel>();
+    public List<InstrumentModel> Instruments { get; set; } = new List<InstrumentModel>();
     [NotMapped] public IEnumerable<InstrumentType> InstrumentTypes => Instruments.Select((x) => x.Type).Distinct();
 
     [NotMapped] public IEnumerable<string> InstrumentNames => Instruments.Select(x => x.Name);

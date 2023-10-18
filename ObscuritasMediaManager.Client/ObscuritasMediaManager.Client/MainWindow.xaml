@@ -10,6 +10,7 @@
     Title="MainWindow"
     Height="600"
     Width="800"
+    WindowState="Maximized"
     mc:Ignorable="d">
     <Grid>
         <Label Name="test"></Label>

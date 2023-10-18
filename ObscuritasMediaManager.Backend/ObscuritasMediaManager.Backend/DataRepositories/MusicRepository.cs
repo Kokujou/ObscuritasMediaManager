@@ -20,8 +20,7 @@ public class MusicRepository
         _context = context;
     }
 
-    public async Task UpdatePropertyAsync<T>(string hash,
-        Expression<Func<MusicModel, T>> property, T value)
+    public async Task UpdatePropertyAsync<T>(string hash, Expression<Func<MusicModel, T>> property, T value)
     {
         await _context.Music
             .IgnoreAutoIncludes()
@@ -43,6 +42,17 @@ public class MusicRepository
 
         actual.UpdateFromJson(old, updated, serializerOptions);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(string hash, Action<MusicModel> update)
+    {
+        var actual = await _context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);
+        if (actual == default) throw new ModelNotFoundException(hash);
+
+        update(actual);
+
+        await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
     }
 
     public async Task ChangeFilePathAsync(string hash, string newPath)
@@ -171,7 +181,7 @@ public class MusicRepository
 
     public async Task RemoveInstrumentAsync(InstrumentType type, string name)
     {
-        _context.Instruments.Remove(new() { Name = name, Type = type });
+        _context.Instruments.Where(x => (x.Type == type) && (x.Name == name)).ExecuteDelete();
         await _context.SaveChangesAsync();
     }
 }

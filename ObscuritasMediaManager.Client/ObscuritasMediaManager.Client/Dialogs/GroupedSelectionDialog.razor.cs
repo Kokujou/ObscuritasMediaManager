@@ -1,21 +1,29 @@
-﻿using ObscuritasMediaManager.Client.Layout;
+﻿using Microsoft.AspNetCore.Components;
+using ObscuritasMediaManager.Client.Layout;
 using System;
 using System.Linq;
 
 namespace ObscuritasMediaManager.Client.Dialogs;
 
-public partial class GroupedSelectionDialog
+public static class GroupedSelectionDialog
 {
-    public static async Task ShowAsync(string heading, Dictionary<string, List<string>> groups,
-        Dictionary<string, List<string>> selected, bool canRemove, bool canAdd)
+    public static async Task ShowAsync<T>(string heading, List<T> items, Action<GroupedSelectionDialog<T>> configure)
+        where T : class
+
+    {
+        await GroupedSelectionDialog<T>.ShowAsync(heading, items, configure);
+    }
+}
+
+public partial class GroupedSelectionDialog<T> where T : class
+{
+    public static async Task ShowAsync(string heading, List<T> items, Action<GroupedSelectionDialog<T>> configure)
     {
         var tcs = new TaskCompletionSource();
-        var dialog = await PageLayout.SpawnComponentAsync<GroupedSelectionDialog>();
+        var dialog = await PageLayout.SpawnComponentAsync<GroupedSelectionDialog<T>>();
         dialog.Heading = heading;
-        dialog.Groups = groups;
-        dialog.SelectedGroups = selected;
-        dialog.CanRemove = canRemove;
-        dialog.CanAdd = canAdd;
+        dialog.Items = items;
+        configure(dialog);
         dialog.Actions = new()
         {
             new()
@@ -32,15 +40,24 @@ public partial class GroupedSelectionDialog
         PageLayout.RemoveComponent(dialog);
     }
 
-    public Dictionary<string, List<string>> Groups { get; set; } = new();
-    public Dictionary<string, List<string>> SelectedGroups { get; set; } = new();
+    public List<T> Items { get; set; } = new();
+    public Func<T, bool> IsSelected { get; set; } = _ => false;
+    public Func<T, string> GetGroupName { get; set; } = _ => string.Empty;
+    public Func<T, string> GetName { get; set; } = _ => string.Empty;
     public bool CanRemove { get; set; }
     public bool CanAdd { get; set; }
+    public Func<T, Task> ItemDeletedAsync { get; set; } = (_) => Task.CompletedTask;
+    public Func<(string Group, string Name), Task> ItemAddedAsync { get; set; } = (_) => Task.CompletedTask;
+    public Func<T, Task> ItemToggledAsync { get; set; } = (_) => Task.CompletedTask;
+    private bool DeleteMode { get; set; }
+    private bool AddMode { get; set; }
+}
 
-    private void ToggleItem(string group, string item)
-    {
-        if (!SelectedGroups.ContainsKey(group)) SelectedGroups.Add(group, new());
-        if (SelectedGroups[group].Remove(item)) return;
-        SelectedGroups[group].Add(item);
-    }
+[EventHandler("oninput2", typeof(Input2EventArgs), enableStopPropagation: true, enablePreventDefault: true)]
+public static class EventHandlers { }
+
+public class Input2EventArgs : EventArgs
+{
+    public string? Key { get; set; }
+    public string? Value { get; set; }
 }

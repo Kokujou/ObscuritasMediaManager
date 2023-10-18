@@ -1,6 +1,5 @@
 
 using Microsoft.AspNetCore.Components;
-using ObscuritasMediaManager.Client.Dialogs;
 using ObscuritasMediaManager.Client.GenericComponents;
 
 namespace ObscuritasMediaManager.Client.Layout;
@@ -14,9 +13,10 @@ public partial class PageLayout : IDisposable
     public static List<DynamicallyRenderedComponent> Children { get; set; } = new();
     public static EventHandler ChildrenChanged { get; set; }
 
-    public static async Task<TComponent> SpawnComponentAsync<TComponent>() where TComponent : class
+    public static async Task<TComponent> SpawnComponentAsync<TComponent>(Dictionary<string, object>? parameters = null)
+        where TComponent : class
     {
-        var component = new DynamicallyRenderedComponent { ComponentType = typeof(GroupedSelectionDialog) };
+        var component = new DynamicallyRenderedComponent { ComponentType = typeof(TComponent), Parameters = parameters ?? new() };
         Children.Add(component);
         ChildrenChanged(null, new());
 

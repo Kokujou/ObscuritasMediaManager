@@ -29,7 +29,7 @@ function renderNavigation() {
             <div id="link-area">
                 <div id="nav-section">
                     <div id="nav-section-links">
-                        <link-element .hash="${getPageName(WelcomePage)}" id="home-link" class="nav-item"> Start </link-element>
+                        <link-element .hash="${getPageName(WelcomePage)}" id="home-link" class="nav-item">Start</link-element>
                     </div>
                 </div>
                 <div id="nav-section">
