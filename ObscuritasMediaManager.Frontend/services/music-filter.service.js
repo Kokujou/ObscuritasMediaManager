@@ -1,7 +1,6 @@
 import { MusicFilterOptions } from '../advanced-components/music-filter/music-filter-options.js';
 import { CheckboxState } from '../data/enumerations/checkbox-state.js';
-import { ExtendedMusicModel } from '../data/music.model.extended.js';
-import { Mood, PlaylistModel } from '../obscuritas-media-manager-backend-client.js';
+import { Mood, MusicModel, PlaylistModel } from '../obscuritas-media-manager-backend-client.js';
 import { ObjectFilterService } from './object-filter.service.js';
 
 export class MusicFilterService {
@@ -33,7 +32,7 @@ export class MusicFilterService {
     }
 
     /**
-     * @param {ExtendedMusicModel[]} tracks
+     * @param {MusicModel[]} tracks
      * @param {MusicFilterOptions} filter
      */
     static filterTracks(tracks, filter) {

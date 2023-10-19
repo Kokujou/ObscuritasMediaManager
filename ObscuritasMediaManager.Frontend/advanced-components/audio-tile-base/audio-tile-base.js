@@ -1,6 +1,6 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { Session } from '../../data/session.js';
+import { MusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { renderAudioTileBaseStyles } from './audio-tile-base.css.js';
 import { renderAudioTileBase } from './audio-tile-base.html.js';
 
@@ -23,7 +23,7 @@ export class AudioTileBase extends LitElementBase {
         super();
 
         /** @type {boolean} */ this.disabled = false;
-        /** @type {ExtendedMusicModel} */ this.track = new ExtendedMusicModel();
+        /** @type {MusicModel} */ this.track = new MusicModel();
         /** @type {Float32Array} */ this.visualizationData;
         /** @type {Number} */ this.hoveredRating = 0;
 

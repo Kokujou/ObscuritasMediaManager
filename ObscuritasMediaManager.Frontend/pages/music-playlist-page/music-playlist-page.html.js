@@ -1,8 +1,7 @@
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood.js';
-import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { Session } from '../../data/session.js';
 import { html } from '../../exports.js';
-import { Instrumentation, Mood, MusicGenre, Participants } from '../../obscuritas-media-manager-backend-client.js';
+import { Instrumentation, Mood, MusicGenre, MusicModel, Participants } from '../../obscuritas-media-manager-backend-client.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MusicPlaylistPage } from './music-playlist-page.js';
 
@@ -70,7 +69,7 @@ export function renderMusicPlaylist(page) {
                     <div id="audio-tile-container">
                         <audio-tile-base
                             ?disabled="${page.updatedTrack.complete}"
-                            .track="${new ExtendedMusicModel(page.updatedTrack)}"
+                            .track="${new MusicModel(page.updatedTrack)}"
                             ?paused="${Session.Audio.paused}"
                             .visualizationData="${Session.Audio.visualizationData}"
                             @imageClicked="${() => page.toggleCurrentTrack()}"

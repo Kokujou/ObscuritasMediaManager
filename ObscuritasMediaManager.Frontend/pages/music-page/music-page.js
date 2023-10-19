@@ -1,7 +1,6 @@
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options.js';
 import { PaginatedScrolling } from '../../advanced-components/paginated-scrolling/paginated-scrolling.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { Subscription } from '../../data/observable.js';
 import { Session } from '../../data/session.js';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base.js';
@@ -65,9 +64,9 @@ export class MusicPage extends LitElementBase {
     constructor() {
         super();
 
-        /** @type {ExtendedMusicModel[]} */ this.musicTracks = [];
+        /** @type {MusicModel[]} */ this.musicTracks = [];
         /** @type {PlaylistModel[]} */ this.playlists = [];
-        /** @type {ExtendedMusicModel} */ this.currentTrack = new ExtendedMusicModel();
+        /** @type {MusicModel} */ this.currentTrack = new MusicModel();
         /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
         /** @type {Subscription[]} */ this.subcriptions = [];
         /** @type {boolean} */ this.selectionMode = false;
@@ -125,7 +124,7 @@ export class MusicPage extends LitElementBase {
 
         try {
             this.playlists = await PlaylistService.listPlaylists();
-            this.musicTracks = (await MusicService.getAll()).map((x) => new ExtendedMusicModel(x));
+            this.musicTracks = (await MusicService.getAll()).map((x) => new MusicModel(x));
         } catch (err) {
             console.error(err);
         }
@@ -159,7 +158,7 @@ export class MusicPage extends LitElementBase {
     }
 
     /**
-     * @param {ExtendedMusicModel} track
+     * @param {MusicModel} track
      */
     async toggleMusic(track) {
         if (this.selectionMode || this.selectionModeUnset) return;
@@ -200,7 +199,7 @@ export class MusicPage extends LitElementBase {
      */
     static async processFiles(files, basePath) {
         try {
-            var musicTracks = ExtendedMusicModel.createFromFiles(files, basePath);
+            var musicTracks = MusicModel.createFromFiles(files, basePath);
             await MusicService.batchCreateMusicTracks(musicTracks);
         } catch (err) {
             console.error(err);
@@ -227,7 +226,7 @@ export class MusicPage extends LitElementBase {
     }
 
     async cleanupTracks() {
-        var brokenTracks = (await CleanupService.getBrokenAudioTracks()).map((x) => new ExtendedMusicModel(x));
+        var brokenTracks = (await CleanupService.getBrokenAudioTracks()).map((x) => new MusicModel(x));
 
         if (brokenTracks.length <= 0)
             return await DialogBase.show('Alles Ok!', {

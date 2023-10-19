@@ -1,6 +1,6 @@
 import { LitElementBase } from '../../../data/lit-element-base.js';
-import { ExtendedMusicModel } from '../../../data/music.model.extended.js';
 import { ContextMenu, ContextMenuItem } from '../../../native-components/context-menu/context-menu.js';
+import { MusicModel } from '../../../obscuritas-media-manager-backend-client.js';
 import { trashIcon } from '../../../pages/media-detail-page/images/trash-icon.svg.js';
 import { popupIcon } from '../../../resources/inline-icons/general/popup-icon.svg.js';
 import { revertIcon } from '../../../resources/inline-icons/general/revert-icon.svg.js';
@@ -23,7 +23,7 @@ export class AudioTile extends LitElementBase {
     constructor() {
         super();
         /** @type {Float32Array} */ this.visualizationData;
-        /** @type {ExtendedMusicModel} */ this.track = new ExtendedMusicModel();
+        /** @type {MusicModel} */ this.track = new MusicModel();
         this.paused = true;
     }
 

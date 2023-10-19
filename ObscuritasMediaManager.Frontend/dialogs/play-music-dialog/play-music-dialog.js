@@ -1,6 +1,6 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { Session } from '../../data/session.js';
+import { MusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { waitForSeconds } from '../../services/extensions/animation.extension.js';
 import { renderPlayMusicDialogStyles } from './play-music-dialog.css.js';
@@ -16,7 +16,7 @@ export class PlayMusicDialog extends LitElementBase {
 
     /**
      * @returns { PlayMusicDialog }
-     * @param { ExtendedMusicModel } track
+     * @param { MusicModel } track
      * @param {number} initialVolume
      * @param {number} startPosition
      */
@@ -37,7 +37,7 @@ export class PlayMusicDialog extends LitElementBase {
     }
 
     /**
-     * @param { ExtendedMusicModel } track
+     * @param { MusicModel } track
      * @param {number} initialVolume
      * @param {number} startPosition
      */

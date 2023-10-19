@@ -1,7 +1,11 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { ExtendedMusicModel } from '../../data/music.model.extended.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
-import { MusicGenre, PlaylistModel, UpdateRequestOfPlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
+import {
+    MusicGenre,
+    MusicModel,
+    PlaylistModel,
+    UpdateRequestOfPlaylistModel,
+} from '../../obscuritas-media-manager-backend-client.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { PlaylistService } from '../../services/backend.services.js';
 import { importDroppedFiles, importFiles } from '../../services/extensions/file.extension.js';
@@ -119,7 +123,7 @@ export class EditPlaylistDialog extends LitElementBase {
     async openImportDialog() {
         try {
             var fileImportResult = await importFiles();
-            this.newPlaylist.tracks = await ExtendedMusicModel.createFromFiles(fileImportResult.files, fileImportResult.basePath);
+            this.newPlaylist.tracks = await MusicModel.createFromFiles(fileImportResult.files, fileImportResult.basePath);
             this.requestFullUpdate();
         } catch (err) {}
     }
@@ -140,9 +144,7 @@ export class EditPlaylistDialog extends LitElementBase {
     async dropFiles(event) {
         event.preventDefault();
         var result = await importDroppedFiles(Array.from(event.dataTransfer.items).map((x) => x.getAsFile()));
-        this.newPlaylist.tracks = this.newPlaylist.tracks.concat(
-            ...ExtendedMusicModel.createFromFiles(result.files, result.basePath)
-        );
+        this.newPlaylist.tracks = this.newPlaylist.tracks.concat(...MusicModel.createFromFiles(result.files, result.basePath));
         this.requestFullUpdate();
         this.requestUpdate('newPlaylist');
 
