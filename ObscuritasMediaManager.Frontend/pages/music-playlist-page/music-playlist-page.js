@@ -18,6 +18,7 @@ import {
     UpdateRequestOfMusicModel,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
+import { AudioService } from '../../services/audio-service.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
 import { randomizeArray } from '../../services/extensions/array.extensions.js';
 import { openFileDialog } from '../../services/extensions/document.extensions.js';
@@ -50,13 +51,11 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     get currentTrackPosition() {
-        if (!Session.Audio.currentTime) return 0;
-        return Session.Audio.currentTime;
+        return AudioService.trackPosition.current();
     }
 
     get currentTrackDuration() {
-        if (!Session.Audio.duration) return 100;
-        return Math.floor(Session.Audio.duration);
+        return AudioService.duration;
     }
 
     get currentTrackPositionText() {
@@ -100,27 +99,31 @@ export class MusicPlaylistPage extends LitElementBase {
 
         this.subscriptions.push(
             Session.currentPage.subscribe((nextPage) => {
-                if (Session.Audio.paused || Session.Audio.currentTime <= 0 || nextPage == 'music' || nextPage == 'music-playlist')
+                if (
+                    AudioService.paused ||
+                    AudioService.trackPosition.current() <= 0 ||
+                    nextPage == 'music' ||
+                    nextPage == 'music-playlist'
+                )
                     return;
 
-                PlayMusicDialog.show(this.currentTrack, this.currentVolume, Session.Audio.currentTime);
+                PlayMusicDialog.show(this.currentTrack, this.currentVolume, AudioService.trackPosition.current());
             })
         );
 
         window.addEventListener('hashchange', (e) => {
             if (
-                Session.Audio.paused ||
-                Session.Audio.currentTime <= 0 ||
+                AudioService.paused ||
+                AudioService.trackPosition.current() <= 0 ||
                 location.hash == 'music' ||
                 location.hash == 'music-playlist'
             )
                 return;
 
-            PlayMusicDialog.show(this.currentTrack, this.currentVolume, Session.Audio?.currentTime ?? 0);
+            PlayMusicDialog.show(this.currentTrack, this.currentVolume, AudioService.trackPosition.current() ?? 0);
         });
 
-        Session.Audio.addEventListener('timeupdate', () => this.requestFullUpdate(), { signal: this.abortController.signal });
-        Session.Audio.addEventListener('loadedmetadata', () => this.requestFullUpdate(), { signal: this.abortController.signal });
+        this.subscriptions.push(AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
     }
 
     async initializeData() {
@@ -139,7 +142,7 @@ export class MusicPlaylistPage extends LitElementBase {
 
         this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
-        Session.Audio.changeTrack(this.currentTrack);
+        await AudioService.changeTrack(this.currentTrack);
         await this.requestFullUpdate();
     }
 
@@ -152,8 +155,8 @@ export class MusicPlaylistPage extends LitElementBase {
 
     async toggleCurrentTrack() {
         try {
-            if (Session.Audio.paused) await Session.Audio.play();
-            else Session.Audio.pause();
+            if (AudioService.paused) await AudioService.play();
+            else await AudioService.pause();
         } catch {
             await this.changeTrackBy(1);
         }
@@ -187,7 +190,7 @@ export class MusicPlaylistPage extends LitElementBase {
     async changeTrack(index) {
         await this.updateTrack();
         if (this.playlist.tracks.length == 1) return;
-        Session.Audio.pause();
+        await AudioService.pause();
         this.currentTrackIndex = index;
         this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
@@ -195,18 +198,18 @@ export class MusicPlaylistPage extends LitElementBase {
         changePage(Session.currentPage.current(), `?guid=${this.id}&track=${this.currentTrackIndex}`, false);
 
         await this.requestFullUpdate();
-        Session.Audio.changeTrack(this.currentTrack);
-        Session.Audio.play();
+        await AudioService.changeTrack(this.currentTrack);
+        await AudioService.play();
     }
 
     /**
      * @param { number} newVolume
      */
-    changeVolume(newVolume) {
+    async changeVolume(newVolume) {
         this.currentVolume = newVolume / 100;
-        Session.Audio.volume = this.currentVolume;
+        await AudioService.changeVolume(this.currentVolume);
         localStorage.setItem('volume', newVolume.toString());
-        this.requestFullUpdate();
+        await this.requestFullUpdate();
     }
 
     /**
@@ -233,8 +236,8 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     changeTrackPosition(value) {
-        if (Session.Audio.duration == Infinity) return;
-        Session.Audio.currentTime = value;
+        if (AudioService.duration == Infinity) return;
+        AudioService.trackPosition = value;
     }
 
     /**
@@ -331,13 +334,13 @@ export class MusicPlaylistPage extends LitElementBase {
                 var dialog = await LyricsDialog.startShowing(
                     this.currentTrack.displayName,
                     this.currentTrack.lyrics,
-                    Session.Audio,
+                    AudioService,
                     false
                 );
             else {
                 offset = 0;
                 var lyrics = await MusicService.getLyrics(this.currentTrack.hash);
-                var dialog = await LyricsDialog.startShowing(lyrics.title, lyrics.text, Session.Audio, true);
+                var dialog = await LyricsDialog.startShowing(lyrics.title, lyrics.text, AudioService, true);
             }
 
             dialog.addEventListener('playlist-saved', async () => {
@@ -361,8 +364,8 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     async disconnectedCallback() {
-        super.disconnectedCallback();
-        Session.Audio.reset();
+        await super.disconnectedCallback();
+        await AudioService.reset();
         await this.updateTrack();
     }
 }

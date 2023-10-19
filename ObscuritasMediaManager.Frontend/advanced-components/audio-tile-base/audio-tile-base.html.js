@@ -81,7 +81,7 @@ export function renderAudioTileBase(audioTile) {
                     audioTile.dispatchEvent(new CustomEvent('changeInstruemnts', { bubbles: true, composed: true }))}"
             >
                 ${audioTile.track.instrumentTypes?.length == 0 ? html`<a id="add-instruments-link">Add Instruments</a>` : ''}
-                ${audioTile.track.instrumentTypes.map(
+                ${audioTile.track.instrumentTypes?.map(
                     (instrument) => html` <div class="instrument-icon inline-icon ${instrument}"></div> `
                 )}
             </div>

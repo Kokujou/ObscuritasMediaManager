@@ -1,5 +1,5 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { Session } from '../../data/session.js';
+import { AudioService } from '../../services/audio-service.js';
 import { waitForSeconds } from '../../services/extensions/animation.extension.js';
 import { renderAudioSubtitleDialogStyles } from './lyrics-dialog.css.js';
 import { renderAudioSubtitleDialog } from './lyrics-dialog.html.js';
@@ -77,13 +77,13 @@ export class LyricsDialog extends LitElementBase {
         this.remove();
     }
 
-    togglePlay() {
+    async togglePlay() {
         this.scrollingPaused = !this.scrollingPaused;
 
-        if (this.scrollingPaused) Session.Audio.pause();
-        else Session.Audio.play();
+        if (this.scrollingPaused) await AudioService.pause();
+        else await AudioService.play();
 
-        this.requestFullUpdate();
+        await this.requestFullUpdate();
     }
 
     notifyPlaylistSaved() {

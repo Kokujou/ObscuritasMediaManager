@@ -12,10 +12,9 @@ import { ContextMenu } from '../../native-components/context-menu/context-menu.j
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import { MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
+import { AudioService } from '../../services/audio-service.js';
 import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
 import { sortBy } from '../../services/extensions/array.extensions.js';
-import { playAudio } from '../../services/extensions/audio.extension.js';
-import { importFiles } from '../../services/extensions/file.extension.js';
 import { changePage, getPageName } from '../../services/extensions/url.extension.js';
 import { MusicFilterService } from '../../services/music-filter.service.js';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
@@ -75,8 +74,7 @@ export class MusicPage extends LitElementBase {
         /** @type {import('../../data/music-sorting-properties.js').SortingProperties} */ this.sortingProperty = 'unset';
         /** @type {import('../../data/sorting-directions.js').Sortings} */ this.sortingDirection = 'ascending';
 
-        Session.Audio.addEventListener('timeupdate', () => this.requestFullUpdate(), { signal: this.abortController.signal });
-        Session.Audio.addEventListener('loadedmetadata', () => this.requestFullUpdate(), { signal: this.abortController.signal });
+        this.subscriptions.push(AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
 
         this.currentPage = 0;
     }
@@ -93,15 +91,15 @@ export class MusicPage extends LitElementBase {
             }),
             Session.currentPage.subscribe((nextPage) => {
                 if (
-                    !Session.Audio ||
-                    Session.Audio.paused ||
-                    Session.Audio.currentTime <= 0 ||
+                    !AudioService ||
+                    AudioService.paused ||
+                    AudioService.trackPosition.current() <= 0 ||
                     nextPage == 'music' ||
                     nextPage == 'music-playlist'
                 )
                     return;
 
-                PlayMusicDialog.show(this.currentTrack, Session.Audio.volume, Session.Audio.currentTime);
+                PlayMusicDialog.show(this.currentTrack, AudioService.volume, AudioService.trackPosition.current());
             })
         );
 
@@ -113,7 +111,7 @@ export class MusicPage extends LitElementBase {
         });
 
         setInterval(() => {
-            if (Session.Audio.paused) return;
+            if (AudioService.paused) return;
             this.requestFullUpdate();
         }, 100);
     }
@@ -151,10 +149,10 @@ export class MusicPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    changeVolume(newVolume) {
-        Session.Audio.volume = newVolume / 100;
+    async changeVolume(newVolume) {
+        await AudioService.changeVolume(newVolume / 100);
         localStorage.setItem('volume', newVolume.toString());
-        this.requestFullUpdate();
+        await this.requestFullUpdate();
     }
 
     /**
@@ -166,12 +164,12 @@ export class MusicPage extends LitElementBase {
 
         if (this.currentTrack.hash != track.hash) {
             this.currentTrack = track;
-            Session.Audio.changeTrack(track);
+            await AudioService.changeTrack(track);
         }
         await this.requestFullUpdate();
 
-        if (!Session.Audio.paused) Session.Audio.pause();
-        else if (Session.Audio.paused) await playAudio(Session.Audio);
+        if (!AudioService.paused) await AudioService.pause();
+        else if (AudioService.paused) await AudioService.play();
         await this.requestFullUpdate();
     }
 
@@ -182,29 +180,13 @@ export class MusicPage extends LitElementBase {
         changePage(getPageName(MusicPlaylistPage), `?guid=${playlistId}&track=0`);
     }
 
-    async importFolder() {
-        try {
-            var fileImportResult = await importFiles();
-            await MusicPage.processFiles(fileImportResult.files, fileImportResult.basePath);
-            DialogBase.show('Upload successful', {
-                content: 'The requested folder was successfully uploaded',
-                declineActionText: 'Ok',
-            });
-        } catch (err) {}
-    }
+    async importFolder() {}
 
     /**
      * @param {File[]} files
      * @param {string} basePath
      */
-    static async processFiles(files, basePath) {
-        try {
-            var musicTracks = MusicModel.createFromFiles(files, basePath);
-            await MusicService.batchCreateMusicTracks(musicTracks);
-        } catch (err) {
-            console.error(err);
-        }
-    }
+    static async processFiles(files, basePath) {}
 
     /**
      * @param {MusicFilterOptions} filter
@@ -454,8 +436,8 @@ export class MusicPage extends LitElementBase {
         }
     }
 
-    disconnectedCallback() {
-        super.disconnectedCallback();
-        Session.Audio.reset();
+    async disconnectedCallback() {
+        await super.disconnectedCallback();
+        await AudioService.reset();
     }
 }

@@ -8,11 +8,9 @@ namespace ObscuritasMediaManager.ClientInterop.Commands;
 public enum InteropCommand
 {
     CopyAudioToClipboard,
-    RequestFiles,
-    RequestFolder,
-    LoadTrack,
     ResumeTrack,
     PauseTrack,
     StopTrack,
-    ChangeTrackPosition
+    ChangeTrackPosition,
+    ChangeTrackVolume
 }

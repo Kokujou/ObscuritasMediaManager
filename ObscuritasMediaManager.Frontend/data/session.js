@@ -1,17 +1,14 @@
-import { FallbackAudio } from '../native-components/fallback-audio/fallback-audio.js';
 import { InstrumentModel, MediaModel } from '../obscuritas-media-manager-backend-client.js';
 import { MediaService, MusicService } from '../services/backend.services.js';
 import { Observable } from './observable.js';
 
-export const Session = {
-    /** @type {Observable<string>} */ currentPage: new Observable(''),
-    /** @type {Observable<MediaModel[]>} */ mediaList: new Observable([]),
-    /** @type {Observable<InstrumentModel[]>} */ instruments: new Observable([]),
+export class Session {
+    /** @type {Observable<string>} */ static currentPage = new Observable('');
+    /** @type {Observable<MediaModel[]>} */ static mediaList = new Observable([]);
+    /** @type {Observable<InstrumentModel[]>} */ static instruments = new Observable([]);
 
-    /** @type {FallbackAudio} */ Audio: new FallbackAudio(),
-
-    initialized: false,
-    initialize: async () => {
+    static initialized = false;
+    static async initialize() {
         Session.initialized = false;
 
         try {
@@ -27,7 +24,7 @@ export const Session = {
         }
 
         Session.initialized = true;
-    },
-};
+    }
+}
 
 await Session.initialize();

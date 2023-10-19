@@ -4,11 +4,9 @@
  */
 export declare enum InteropCommand {
     CopyAudioToClipboard = 0,
-    RequestFiles = 1,
-    RequestFolder = 2,
-    LoadTrack = 3,
-    ResumeTrack = 4,
-    PauseTrack = 5,
-    StopTrack = 6,
-    ChangeTrackPosition = 7
+    ResumeTrack = 1,
+    PauseTrack = 2,
+    StopTrack = 3,
+    ChangeTrackPosition = 4,
+    ChangeTrackVolume = 5
 }

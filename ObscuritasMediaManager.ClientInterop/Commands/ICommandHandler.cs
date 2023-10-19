@@ -7,5 +7,5 @@ interface ICommandHandler
 {
     InteropCommand Command { get; }
 
-    Task ExecuteAsync(object? payload);
+    Task ExecuteAsync(JsonElement? payload);
 }

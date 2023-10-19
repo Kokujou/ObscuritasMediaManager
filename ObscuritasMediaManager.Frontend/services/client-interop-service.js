@@ -1,24 +1,59 @@
-import { InteropCommand } from '../client-interop/interop-command.js';
-import { InteropMessage } from '../client-interop/interop-message.js';
+import { InteropCommandRequest } from '../client-interop/interop-command-request.js';
+import { InteropCommandResponse } from '../client-interop/interop-command-response.js';
+import { InteropEventResponse } from '../client-interop/interop-event-response.js';
+import { InteropQueryRequest } from '../client-interop/interop-query-request.js';
+import { InteropQueryResponse } from '../client-interop/interop-query-response.js';
 import { Observable } from '../data/observable.js';
+import { waitForSeconds } from './extensions/animation.extension.js';
 
 export class ClientInteropService {
     /** @type {WebSocket} */ static socket;
+    /** @type {Observable<InteropCommandResponse>} */ static commandResponse = new Observable(null);
+    /** @type {Observable<InteropQueryResponse} */ static queryResponse = new Observable(null);
+    /** @type {Observable<InteropEventResponse>} */ static eventResponse = new Observable(null);
+    /** @type {Observable<number>} */ static failCounter = new Observable(0);
 
     /**
-     * @param {InteropMessage} message
+     * @param {Omit<InteropCommandRequest, 'ticks'>} command
      */
-    static sendMessage(message) {
-        return new Promise((resolve) => {
-            this.socket.send(JSON.stringify(message));
-            setTimeout(() => {
+    static sendCommand(command) {
+        return new Promise(async (resolve) => {
+            /** @type {InteropCommandRequest} */ var request = {
+                ...command,
+                ticks: Date.now(),
+            };
+
+            while (this.socket.readyState != 1 /** open */) await waitForSeconds(0.1);
+            this.socket.send(JSON.stringify(request));
+            var subscription = this.commandResponse.subscribe((x) => {
+                if (x?.ticks != request.ticks || x?.command != request.command) return;
+                subscription.unsubscribe();
                 resolve();
-            }, 1000);
+            });
         });
     }
 
     /**
-     * @typedef {Object} AudioTrack
+     * @param {Omit<InteropQueryRequest, 'ticks'>} query
+     */
+    static executeQuery(query) {
+        return new Promise(async (resolve) => {
+            /** @type {InteropQueryRequest} */ var request = {
+                ...query,
+                ticks: Date.now(),
+            };
+
+            while (this.socket.readyState != 1 /** open */) await waitForSeconds(0.1);
+            this.socket.send(JSON.stringify(request));
+            var subscription = this.queryResponse.subscribe((x) => {
+                if (x?.ticks != request.ticks || x?.query != request.query) return;
+                subscription.unsubscribe();
+                resolve(x.result);
+            });
+        });
+    }
+
+    /**
      * @prop {number} duration
      * @prop {Observable<number>} position
      */
@@ -29,36 +64,20 @@ export class ClientInteropService {
             this.socket.onopen = () => {
                 resolve();
             };
+
+            this.socket.onmessage = (e) => {
+                var deserialized = JSON.parse(e.data);
+                if (/** @type {InteropCommandResponse} */ (deserialized).command) this.commandResponse.next(deserialized);
+                if (/** @type {InteropQueryRequest} */ (deserialized).query) this.queryResponse.next(deserialized);
+                if (/** @type {InteropEventResponse} */ (deserialized).event) this.eventResponse.next(deserialized);
+            };
+
+            this.socket.onclose = async (e) => {
+                resolve();
+                console.error('websocket conection closed, trying reconnect.');
+                this.failCounter.next(this.failCounter.current() + 1);
+                await this.startConnection();
+            };
         });
     }
-
-    static async copyAudioToClipboard(filePath) {}
-
-    /**
-     * @param {string[]} supportedFileTypes
-     * @returns {Promise<string[]>}
-     */
-    static async requestFiles(supportedFileTypes) {}
-
-    /**
-     * @returns {Promise<string>}
-     */
-    static async requestFolder() {}
-
-    /**
-     * @param {string} trackPath
-     * @returns {Promise<Observable<AudioTrack>>}
-     */
-    static async loadTrack(trackPath) {
-        this.sendMessage({ command: InteropCommand.LoadTrack });
-    }
-
-    static async resumeTrack() {}
-
-    static async pauseTrack() {}
-
-    /**
-     * @param {number} position
-     */
-    static async changeTrackPosition(position) {}
 }

@@ -1,5 +1,5 @@
-import { Session } from '../../data/session.js';
 import { html } from '../../exports.js';
+import { AudioService } from '../../services/audio-service.js';
 import { getPageName } from '../../services/extensions/url.extension.js';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
 import { MusicPage } from './music-page.js';
@@ -61,14 +61,14 @@ export function renderMusicPage(musicPage) {
                                 step="1"
                                 min="0"
                                 max="100"
-                                .value="${`${Session.Audio.volume * 100}`}"
+                                .value="${`${AudioService.volume * 100}`}"
                             >
                             </range-slider>
                         </div>
 
                         <div
                             id="active-track-warning"
-                            ?invisible="${Session.Audio.paused}"
+                            ?invisible="${AudioService.paused}"
                             @click="${() => musicPage.jumpToActive()}"
                         >
                             Ein Track wird gerade abgespielt.&nbsp; <u> Klicken Sie hier </u> &nbsp;um zum aktiven Track zu
@@ -126,9 +126,9 @@ export function renderMusicPage(musicPage) {
                                                   <audio-tile
                                                       .track="${track}"
                                                       .visualizationData="${musicPage.currentTrack?.path == track.path
-                                                          ? Session.Audio.visualizationData
+                                                          ? AudioService.visualizationData.current()
                                                           : null}"
-                                                      ?paused="${Session.Audio.paused ||
+                                                      ?paused="${AudioService.paused ||
                                                       musicPage.currentTrack.path != track.path}"
                                                       @musicToggled="${() => musicPage.toggleMusic(track)}"
                                                       @soft-delete="${() => musicPage.softDeleteTrack(track)}"

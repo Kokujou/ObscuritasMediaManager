@@ -4,8 +4,9 @@ export class Observable {
 
     /** @type {Subscription[]} */ subscriptions = [];
 
+    /** @type {T} */
     constructor(initialValue) {
-        if (initialValue) this.currentValue = initialValue;
+        if (initialValue != null && initialValue != undefined) this.currentValue = initialValue;
     }
 
     /**

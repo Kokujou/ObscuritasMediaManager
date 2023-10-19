@@ -1,6 +1,6 @@
-import { Session } from '../../data/session.js';
 import { html } from '../../exports.js';
 import { IconRegistry } from '../../resources/inline-icons/icon-registry.js';
+import { AudioService } from '../../services/audio-service.js';
 import { LyricsDialog } from './lyrics-dialog.js';
 
 /**
@@ -43,7 +43,7 @@ export function renderAudioSubtitleDialog(dialog) {
                     icon="${IconRegistry.FastForwardIcon.name}"
                     @pointerdown="${(e) => dialog.startScrolling('up')}"
                 ></div>
-                ${dialog.scrollingPaused || Session.Audio.paused
+                ${dialog.scrollingPaused || AudioService.paused
                     ? html`<div class="icon" icon="${IconRegistry.PlayIcon.name}" @click="${dialog.togglePlay}"></div>`
                     : html` <div class="icon" icon="${IconRegistry.PauseIcon.name}" @click="${dialog.togglePlay}"></div>`}
                 <div

@@ -24,11 +24,11 @@ export class AudioTileBase extends LitElementBase {
 
         /** @type {boolean} */ this.disabled = false;
         /** @type {MusicModel} */ this.track = new MusicModel();
-        /** @type {Float32Array} */ this.visualizationData;
+        /** @type {Float32Array} */ this.visualizationData = new Float32Array();
         /** @type {Number} */ this.hoveredRating = 0;
 
-        /** @type {HTMLCanvasElement} */ this.canvas;
-        /** @type {CanvasRenderingContext2D} */ this.canvasContext;
+        /** @type {HTMLCanvasElement} */ this.canvas = null;
+        /** @type {CanvasRenderingContext2D} */ this.canvasContext = null;
 
         Session.instruments.subscribe(() => this.requestFullUpdate());
     }

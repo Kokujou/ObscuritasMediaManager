@@ -1,7 +1,7 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { Session } from '../../data/session.js';
 import { MusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
+import { AudioService } from '../../services/audio-service.js';
 import { waitForSeconds } from '../../services/extensions/animation.extension.js';
 import { renderPlayMusicDialogStyles } from './play-music-dialog.css.js';
 import { renderPlayMusicDialog } from './play-music-dialog.html.js';
@@ -42,30 +42,29 @@ export class PlayMusicDialog extends LitElementBase {
      * @param {number} startPosition
      */
     async reinitialize(track, initialVolume, startPosition) {
-        Session.Audio.changeTrack(track);
-        Session.Audio.volume = initialVolume;
+        await AudioService.changeTrack(track);
+        await AudioService.changeVolume(initialVolume);
         this.currentTrack = track;
         await this.requestFullUpdate();
 
-        Session.Audio.play();
-        Session.Audio.currentTime = startPosition;
+        await AudioService.play();
+        await AudioService.changePosition(startPosition);
 
-        Session.Audio.addEventListener('timeupdate', () => this.requestFullUpdate(), { signal: this.abortController.signal });
-        Session.Audio.addEventListener('loadedmetadata', () => this.requestFullUpdate(), { signal: this.abortController.signal });
+        this.subscriptions.push(AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
     }
 
     render() {
         return renderPlayMusicDialog(this);
     }
 
-    toggle() {
-        if (Session.Audio.paused) Session.Audio.play();
-        else Session.Audio.pause();
+    async toggle() {
+        if (AudioService.paused) await AudioService.play();
+        else await AudioService.pause();
     }
 
     changeTrackPosition(value) {
-        if (Session.Audio.duration == Infinity) return;
-        Session.Audio.currentTime = value;
+        if (AudioService.duration == Infinity) return;
+        AudioService.trackPosition = value;
         this.requestFullUpdate();
     }
 
@@ -76,9 +75,9 @@ export class PlayMusicDialog extends LitElementBase {
         this.remove();
     }
 
-    disconnectedCallback() {
-        super.disconnectedCallback();
+    async disconnectedCallback() {
+        await super.disconnectedCallback();
         PlayMusicDialog.instance = null;
-        Session.Audio.reset();
+        await AudioService.reset();
     }
 }

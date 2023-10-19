@@ -1,5 +1,6 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { html } from '../../exports.js';
+import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import { ClientInteropService } from '../../services/client-interop-service.js';
 import { renderObscuritasMediaManagerStyles } from './obscuritas-media-manager.css.js';
 import { renderObscuritasMediaManager } from './obscuritas-media-manager.html.js';
@@ -49,8 +50,16 @@ export class ObscuritasMediaManager extends LitElementBase {
     }
 
     async connectedCallback() {
-        super.connectedCallback();
+        await super.connectedCallback();
+
         await ClientInteropService.startConnection();
+
+        ClientInteropService.failCounter.subscribe((x) => {
+            MessageSnackbar.popup(
+                'Die WebSocket Verbindung konnte wiederholt nicht hergestellt werden. Bitte führe die Client-Anwendung aus, für optimale Performance.',
+                'warning'
+            );
+        });
     }
 
     render() {

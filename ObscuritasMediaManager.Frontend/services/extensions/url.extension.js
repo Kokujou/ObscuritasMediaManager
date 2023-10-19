@@ -14,10 +14,10 @@ import { setFavicon } from './style.extensions.js';
  * @param {string} target
  */
 export function changePage(target, search = '', reflectInHistory = true) {
-    setFavicon(null);
+    setFavicon('');
     var newUrl = '/' + search + `#${target}`;
-    if (reflectInHistory) history.pushState(null, null, newUrl);
-    else history.replaceState(null, null, newUrl);
+    if (reflectInHistory) history.pushState(null, '', newUrl);
+    else history.replaceState(null, '', newUrl);
     Session.currentPage.next(target);
 }
 

@@ -7,5 +7,5 @@ public class ChangeTrackPositionHandler : ICommandHandler
 {
     public InteropCommand Command => InteropCommand.ChangeTrackPosition;
 
-    public async Task ExecuteAsync(object? payload) { }
+    public async Task ExecuteAsync(JsonElement? payload) { }
 }

@@ -1,7 +1,7 @@
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood.js';
-import { Session } from '../../data/session.js';
 import { html } from '../../exports.js';
 import { Instrumentation, Mood, MusicGenre, MusicModel, Participants } from '../../obscuritas-media-manager-backend-client.js';
+import { AudioService } from '../../services/audio-service.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MusicPlaylistPage } from './music-playlist-page.js';
 
@@ -70,8 +70,8 @@ export function renderMusicPlaylist(page) {
                         <audio-tile-base
                             ?disabled="${page.updatedTrack.complete}"
                             .track="${new MusicModel(page.updatedTrack)}"
-                            ?paused="${Session.Audio.paused}"
-                            .visualizationData="${Session.Audio.visualizationData}"
+                            ?paused="${AudioService.paused}"
+                            .visualizationData="${AudioService.visualizationData.current()}"
                             @imageClicked="${() => page.toggleCurrentTrack()}"
                             @changeLanguage="${() => page.showLanguageSwitcher()}"
                             @nextParticipants="${() =>
@@ -155,7 +155,7 @@ export function renderMusicPlaylist(page) {
                             <div
                                 id="toggle-track-button"
                                 @click="${() => page.toggleCurrentTrack()}"
-                                class="audio-icon ${Session.Audio.paused ? 'paused' : 'playing'}"
+                                class="audio-icon ${AudioService.paused ? 'paused' : 'playing'}"
                             ></div>
                             <div id="next-track-button" @click="${() => page.changeTrackBy(1)}" class="audio-icon"></div>
 

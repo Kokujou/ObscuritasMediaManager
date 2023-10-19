@@ -11,8 +11,12 @@
 
 	<ItemGroup>
 		<PackageReference Include="TypeGen" Version="4.5.0" />
-		<PackageReference Include="WebSocketSharp" Version="1.0.3-rc11" />
 		<PackageReference Include="NAudio" Version="2.2.1" />
+		<PackageReference Include="websocketsharp.core" Version="1.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Requests\" />
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">

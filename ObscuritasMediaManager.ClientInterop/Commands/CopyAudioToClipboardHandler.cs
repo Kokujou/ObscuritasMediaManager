@@ -7,5 +7,5 @@ public class CopyAudioToClipboardHandler : ICommandHandler
 {
     public InteropCommand Command => InteropCommand.CopyAudioToClipboard;
 
-    public async Task ExecuteAsync(object? payload) { }
+    public async Task ExecuteAsync(JsonElement? payload) { }
 }

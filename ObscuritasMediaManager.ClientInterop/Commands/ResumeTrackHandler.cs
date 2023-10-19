@@ -7,9 +7,10 @@ public class ResumeTrackHandler : ICommandHandler
 {
     public InteropCommand Command => InteropCommand.ResumeTrack;
 
-    public async Task ExecuteAsync(object? payload)
+    public async Task ExecuteAsync(JsonElement? payload)
     {
         await Task.Yield();
         AudioService.Play();
+        AudioTrackReportingService.StartReporting();
     }
 }
