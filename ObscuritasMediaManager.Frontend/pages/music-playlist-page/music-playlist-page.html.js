@@ -122,7 +122,7 @@ export function renderMusicPlaylist(page) {
                             />
                         </div>
                         <div id="genre-section">
-                            ${page.updatedTrack.genres.map(
+                            ${page.updatedTrack.genres?.map(
                                 (genreKey) =>
                                     html`<tag-label
                                         .text="${MusicGenre[genreKey]}"

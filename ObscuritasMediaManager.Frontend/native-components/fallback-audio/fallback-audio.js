@@ -27,7 +27,7 @@ export class FallbackAudio extends Audio {
     /**
      * @param {MusicModel} track
      */
-    changeTrack(track) {
+    async changeTrack(track) {
         var newSource = `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
         this.src = newSource;
         this.fallbackSource = newSource + '&highCompatibility=true';

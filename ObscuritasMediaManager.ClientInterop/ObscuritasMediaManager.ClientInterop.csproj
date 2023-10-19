@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="TypeGen" Version="4.5.0" />
+		<PackageReference Include="WebSocketSharp" Version="1.0.3-rc11" />
+		<PackageReference Include="NAudio" Version="2.2.1" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="dotnet-typegen generate -p ./" ContinueOnError="true" />
+		<Exec Command="tsc --project ../ObscuritasMediaManager.Frontend/client-interop.tsconfig.json --declaration --allowJs" ContinueOnError="true" />
+	</Target>
+</Project>

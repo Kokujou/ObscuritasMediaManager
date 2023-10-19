@@ -1,0 +1,9 @@
+/**
+ * This is a TypeGen auto-generated file.
+ * Any changes made to this file can be lost when this file is regenerated.
+ */
+import { InteropCommand } from "./interop-command";
+export declare class InteropMessage {
+    command: InteropCommand;
+    payload: Object;
+}

@@ -10,13 +10,8 @@
         "watch": true,
         "pretty": true,
         "skipLibCheck": true
-        // "plugins": [
-        //     {
-        //         "name": "typescript-lit-events-and-attributes"
-        //     }
-        // ]
     },
-    "include": ["**/*.js"],
+    "include": ["**/*.ts"],
     "exclude": [
         "**/*.bundled.js",
         "**/exports.js",
