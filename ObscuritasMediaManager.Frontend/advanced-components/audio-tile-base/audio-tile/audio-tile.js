@@ -2,8 +2,8 @@ import { LitElementBase } from '../../../data/lit-element-base.js';
 import { ContextMenu, ContextMenuItem } from '../../../native-components/context-menu/context-menu.js';
 import { MusicModel } from '../../../obscuritas-media-manager-backend-client.js';
 import { trashIcon } from '../../../pages/media-detail-page/images/trash-icon.svg.js';
-import { popupIcon } from '../../../resources/inline-icons/general/popup-icon.svg.js';
 import { revertIcon } from '../../../resources/inline-icons/general/revert-icon.svg.js';
+import { clipboardIcon } from '../../upload-area/images/clipboard-icon.svg.js';
 import { renderAudioTileStyles } from './audio-tile.css.js';
 import { renderAudioTile } from './audio-tile.html.js';
 
@@ -35,9 +35,9 @@ export class AudioTile extends LitElementBase {
 
             /** @type {ContextMenuItem[]} */ var contextMenuItems = [
                 {
-                    text: 'In neuem Tab öffnen',
-                    action: () => this.dispatchEvent(new CustomEvent('popup')),
-                    iconString: popupIcon(),
+                    text: 'Kopieren',
+                    action: () => this.dispatchEvent(new CustomEvent('clipboard')),
+                    iconString: clipboardIcon(),
                 },
             ];
             /** @type {ContextMenuItem} */ var softDeleteItem = {

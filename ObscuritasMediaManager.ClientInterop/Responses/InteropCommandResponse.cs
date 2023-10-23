@@ -11,6 +11,7 @@ public class InteropCommandResponse
     public required long Ticks { get; set; }
     public required InteropCommand Command { get; set; }
     public required ResponseStatus Status { get; set; }
+    public required object? Request { get; set; }
     public string? Message { get; set; }
 }
 

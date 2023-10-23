@@ -1,5 +1,6 @@
 import { html } from '../../exports.js';
 import { AudioService } from '../../services/audio-service.js';
+import { ClipboardService } from '../../services/clipboard.service.js';
 import { getPageName } from '../../services/extensions/url.extension.js';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
 import { MusicPage } from './music-page.js';
@@ -125,17 +126,16 @@ export function renderMusicPage(musicPage) {
                                               >
                                                   <audio-tile
                                                       .track="${track}"
-                                                      .visualizationData="${musicPage.currentTrack?.path == track.path
+                                                      .visualizationData="${AudioService.currentTrackPath == track.path
                                                           ? AudioService.visualizationData.current()
                                                           : null}"
                                                       ?paused="${AudioService.paused ||
-                                                      musicPage.currentTrack.path != track.path}"
+                                                      AudioService.currentTrackPath != track.path}"
                                                       @musicToggled="${() => musicPage.toggleMusic(track)}"
                                                       @soft-delete="${() => musicPage.softDeleteTrack(track)}"
                                                       @hard-delete="${() => musicPage.hardDeleteTrack(track)}"
                                                       @restore="${() => musicPage.undeleteTrack(track)}"
-                                                      @popup="${() =>
-                                                          window.open(musicPage.getTrackPath('global', track), '_blank')}"
+                                                      @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
                                                   ></audio-tile>
                                               </link-element>
                                           </div>

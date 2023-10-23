@@ -3,6 +3,8 @@ namespace ObscuritasMediaManager.ClientInterop.Services;
 
 public static class AudioService
 {
+    public static string TrackPath { get; private set; }
+
     public static float Volume { get => player.Volume; set => player.Volume = value; }
 
     public static TimeSpan Position { get => reader?.CurrentTime ?? TimeSpan.Zero; set => SetPosition(value); }
@@ -45,6 +47,7 @@ public static class AudioService
                 visualizer.Initialize(reader.ToSampleProvider());
             visualizer.Reset();
             player.Init(visualizer);
+            TrackPath = trackPath;
         }
         catch { }
     }

@@ -4,6 +4,5 @@
  */
 
 export enum InteropEvent {
-    TrackPositionChanged = 0,
-    VisualizationDataChanged = 1,
+    TrackChanged = 0,
 }

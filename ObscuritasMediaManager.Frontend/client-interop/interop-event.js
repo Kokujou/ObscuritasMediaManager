@@ -4,6 +4,5 @@
  */
 export var InteropEvent;
 (function (InteropEvent) {
-    InteropEvent[InteropEvent["TrackPositionChanged"] = 0] = "TrackPositionChanged";
-    InteropEvent[InteropEvent["VisualizationDataChanged"] = 1] = "VisualizationDataChanged";
+    InteropEvent[InteropEvent["TrackChanged"] = 0] = "TrackChanged";
 })(InteropEvent || (InteropEvent = {}));

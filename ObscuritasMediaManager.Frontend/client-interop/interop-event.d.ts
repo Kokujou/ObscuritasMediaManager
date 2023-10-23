@@ -3,6 +3,5 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 export declare enum InteropEvent {
-    TrackPositionChanged = 0,
-    VisualizationDataChanged = 1
+    TrackChanged = 0
 }

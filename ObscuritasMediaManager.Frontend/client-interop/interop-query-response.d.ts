@@ -9,5 +9,6 @@ export declare class InteropQueryResponse {
     query: InteropQuery;
     status: ResponseStatus;
     result: Object;
+    request: Object;
     message: string;
 }

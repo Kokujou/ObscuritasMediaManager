@@ -9,7 +9,7 @@ import { waitForSeconds } from './extensions/animation.extension.js';
 export class ClientInteropService {
     /** @type {WebSocket} */ static socket;
     /** @type {Observable<InteropCommandResponse>} */ static commandResponse = new Observable(null);
-    /** @type {Observable<InteropQueryResponse} */ static queryResponse = new Observable(null);
+    /** @type {Observable<InteropQueryResponse>} */ static queryResponse = new Observable(null);
     /** @type {Observable<InteropEventResponse>} */ static eventResponse = new Observable(null);
     /** @type {Observable<number>} */ static failCounter = new Observable(0);
 
@@ -62,14 +62,16 @@ export class ClientInteropService {
         return new Promise((resolve) => {
             this.socket = new WebSocket('ws://localhost:8005/Interop');
             this.socket.onopen = () => {
+                this.failCounter.next(0);
                 resolve();
             };
 
             this.socket.onmessage = (e) => {
                 var deserialized = JSON.parse(e.data);
-                if (/** @type {InteropCommandResponse} */ (deserialized).command) this.commandResponse.next(deserialized);
-                if (/** @type {InteropQueryRequest} */ (deserialized).query) this.queryResponse.next(deserialized);
-                if (/** @type {InteropEventResponse} */ (deserialized).event) this.eventResponse.next(deserialized);
+                if (/** @type {InteropCommandResponse} */ (deserialized).command != undefined)
+                    this.commandResponse.next(deserialized);
+                if (/** @type {InteropQueryRequest} */ (deserialized).query != undefined) this.queryResponse.next(deserialized);
+                if (/** @type {InteropEventResponse} */ (deserialized).event != undefined) this.eventResponse.next(deserialized);
             };
 
             this.socket.onclose = async (e) => {

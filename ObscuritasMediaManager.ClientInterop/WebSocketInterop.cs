@@ -10,14 +10,14 @@ namespace ObscuritasMediaManager.ClientInterop;
 
 public class WebSocketInterop : WebSocketBehavior
 {
-    public static WebSocketInterop? Instance { get; private set; }
+    public static Dictionary<Guid, WebSocketInterop> Clients { get; private set; } = new();
+    public static JsonSerializerOptions DefaultJsonOptions = new()
+                                                             {
+                                                                 PropertyNameCaseInsensitive = true,
+                                                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                                                             };
     private static Dictionary<InteropCommand, ICommandHandler> CommandHandlers { get; set; }
     private static Dictionary<InteropQuery, IQueryHandler> QueryHandlers { get; set; }
-    private static JsonSerializerOptions defaultJsonOptions = new()
-                                                              {
-                                                                  PropertyNameCaseInsensitive = true,
-                                                                  PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                                                              };
 
     static WebSocketInterop()
     {
@@ -34,15 +34,19 @@ public class WebSocketInterop : WebSocketBehavior
             .ToDictionary(x => ((IQueryHandler)x!).Query, x => (IQueryHandler)x!);
     }
 
-    public WebSocketInterop()
-    {
-        Instance = this;
-    }
+    public Guid Id { get; set; }
 
     public void InvokeEvent(InteropEventResponse response)
     {
-        var serialized = JsonSerializer.Serialize(response, defaultJsonOptions);
+        var serialized = JsonSerializer.Serialize(response, DefaultJsonOptions);
         Send(serialized);
+    }
+
+    protected override void OnOpen()
+    {
+        base.OnOpen();
+        Id = Guid.NewGuid();
+        Clients.Add(Id, this);
     }
 
     protected override async void OnMessage(MessageEventArgs e)
@@ -56,9 +60,17 @@ public class WebSocketInterop : WebSocketBehavior
             await HandleInteropQuery(e.Data);
     }
 
+    protected override async void OnClose(CloseEventArgs e)
+    {
+        base.OnClose(e);
+        Clients.Remove(Id);
+        if (Clients.Any()) return;
+        await CommandHandlers[InteropCommand.StopTrack].ExecuteAsync(null);
+    }
+
     private async Task HandleInteropCommand(string serialized)
     {
-        var deserialized = JsonSerializer.Deserialize<InteropCommandRequest>(serialized, defaultJsonOptions)!;
+        var deserialized = JsonSerializer.Deserialize<InteropCommandRequest>(serialized, DefaultJsonOptions)!;
         var commandHandler = CommandHandlers[deserialized.Command];
         await commandHandler.ExecuteAsync(deserialized.Payload);
         RespondOnCommand(deserialized, ResponseStatus.Success);
@@ -71,22 +83,23 @@ public class WebSocketInterop : WebSocketBehavior
                            Command = request.Command,
                            Status = status,
                            Ticks = request.Ticks,
-                           Message = message
+                           Message = message,
+                           Request = request.Payload
                        };
 
-        var serialized = JsonSerializer.Serialize(response, defaultJsonOptions);
+        var serialized = JsonSerializer.Serialize(response, DefaultJsonOptions);
         Send(serialized);
     }
 
     private async Task HandleInteropQuery(string serialized)
     {
-        var deserialized = JsonSerializer.Deserialize<InteropQueryRequest>(serialized, defaultJsonOptions)!;
+        var deserialized = JsonSerializer.Deserialize<InteropQueryRequest>(serialized, DefaultJsonOptions)!;
         var queryHandler = QueryHandlers[deserialized.Query];
         var result = await queryHandler.ExecuteAsync(deserialized.Payload);
         RespondOnQuery(deserialized, result, ResponseStatus.Success);
     }
 
-    private void RespondOnQuery(InteropQueryRequest request, object result, ResponseStatus status, string? message = null)
+    private void RespondOnQuery(InteropQueryRequest request, object? result, ResponseStatus status, string? message = null)
     {
         var response = new InteropQueryResponse
                        {
@@ -94,10 +107,11 @@ public class WebSocketInterop : WebSocketBehavior
                            Status = status,
                            Ticks = request.Ticks,
                            Message = message,
-                           Result = result
+                           Result = result,
+                           Request = request.Payload
                        };
 
-        var serialized = JsonSerializer.Serialize(response, defaultJsonOptions);
+        var serialized = JsonSerializer.Serialize(response, DefaultJsonOptions);
         Send(serialized);
     }
 }

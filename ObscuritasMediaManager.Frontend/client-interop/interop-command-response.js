@@ -6,5 +6,6 @@ export class InteropCommandResponse {
     ticks;
     command;
     status;
+    request;
     message;
 }

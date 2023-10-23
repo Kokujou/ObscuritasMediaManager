@@ -7,6 +7,5 @@ namespace ObscuritasMediaManager.ClientInterop.Evemts;
 [ExportTsEnum]
 public enum InteropEvent
 {
-    TrackPositionChanged,
-    VisualizationDataChanged,
+    TrackChanged,
 }

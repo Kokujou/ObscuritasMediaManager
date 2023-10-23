@@ -7,7 +7,6 @@
         "sourceMap": false,
         "alwaysStrict": true,
         "forceConsistentCasingInFileNames": true,
-        "watch": true,
         "pretty": true,
         "skipLibCheck": true
     },

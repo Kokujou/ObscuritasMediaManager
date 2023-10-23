@@ -7,13 +7,15 @@ import { RecipesPage } from '../recipes-page/recipes-page.js';
 import { WelcomePage } from '../welcome-page/welcome-page.js';
 
 export function renderPageLayout() {
-    return html`${renderHeader()}<br />
+    return html` <div id="page-layout">
+        ${renderHeader()}<br />
         ${renderNavigation()}<br />
-        <div id="layout-content"><slot></slot></div>`;
+        <div id="layout-content"><slot></slot></div>
+    </div>`;
 }
 
 function renderHeader() {
-    return html`<div id="header">
+    return html` <div id="header">
         <div id="logo-container">
             <a id="logo" href="#welcome">
                 <div id="title">Obscuritas Media Management</div>

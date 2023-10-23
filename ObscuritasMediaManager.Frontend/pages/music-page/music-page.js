@@ -165,8 +165,9 @@ export class MusicPage extends LitElementBase {
         if (this.currentTrack.hash != track.hash) {
             this.currentTrack = track;
             await AudioService.changeTrack(track);
+            await this.requestFullUpdate();
+            return;
         }
-        await this.requestFullUpdate();
 
         if (!AudioService.paused) await AudioService.pause();
         else if (AudioService.paused) await AudioService.play();
@@ -437,7 +438,7 @@ export class MusicPage extends LitElementBase {
     }
 
     async disconnectedCallback() {
-        await super.disconnectedCallback();
         await AudioService.reset();
+        await super.disconnectedCallback();
     }
 }

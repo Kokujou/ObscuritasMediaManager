@@ -44,11 +44,9 @@ export class PlayMusicDialog extends LitElementBase {
     async reinitialize(track, initialVolume, startPosition) {
         await AudioService.changeTrack(track);
         await AudioService.changeVolume(initialVolume);
+        await AudioService.changePosition(startPosition);
         this.currentTrack = track;
         await this.requestFullUpdate();
-
-        await AudioService.play();
-        await AudioService.changePosition(startPosition);
 
         this.subscriptions.push(AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
     }

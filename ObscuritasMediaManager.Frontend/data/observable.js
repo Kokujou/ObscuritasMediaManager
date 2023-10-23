@@ -4,7 +4,7 @@ export class Observable {
 
     /** @type {Subscription[]} */ subscriptions = [];
 
-    /** @type {T} */
+    /** @param {T} initialValue */
     constructor(initialValue) {
         if (initialValue != null && initialValue != undefined) this.currentValue = initialValue;
     }
@@ -43,7 +43,7 @@ export class Observable {
      * @return {T}
      */
     current() {
-        if (this.currentValue) return this.currentValue;
+        if (this.currentValue != null && this.currentValue != undefined) return this.currentValue;
 
         /** @type {any} */
         const empty = {};

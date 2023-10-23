@@ -190,7 +190,6 @@ export class MusicPlaylistPage extends LitElementBase {
     async changeTrack(index) {
         await this.updateTrack();
         if (this.playlist.tracks.length == 1) return;
-        await AudioService.pause();
         this.currentTrackIndex = index;
         this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
@@ -199,7 +198,6 @@ export class MusicPlaylistPage extends LitElementBase {
 
         await this.requestFullUpdate();
         await AudioService.changeTrack(this.currentTrack);
-        await AudioService.play();
     }
 
     /**

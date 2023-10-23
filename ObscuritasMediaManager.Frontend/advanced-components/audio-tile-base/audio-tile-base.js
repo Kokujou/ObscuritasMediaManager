@@ -23,6 +23,7 @@ export class AudioTileBase extends LitElementBase {
         super();
 
         /** @type {boolean} */ this.disabled = false;
+        /** @type {boolean} */ this.paused = false;
         /** @type {MusicModel} */ this.track = new MusicModel();
         /** @type {Float32Array} */ this.visualizationData = new Float32Array();
         /** @type {Number} */ this.hoveredRating = 0;

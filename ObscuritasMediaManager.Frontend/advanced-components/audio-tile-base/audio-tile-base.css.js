@@ -150,6 +150,10 @@ export function renderAudioTileBaseStyles() {
             pointer-events: none;
         }
 
+        :host([paused]) #audio-visualization {
+            display: none;
+        }
+
         :host(:not([paused])) #audio-image {
             ${renderMaskImage(pauseIcon())};
         }

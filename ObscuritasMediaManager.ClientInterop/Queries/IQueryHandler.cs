@@ -7,5 +7,5 @@ interface IQueryHandler
 {
     InteropQuery Query { get; }
 
-    Task<object> ExecuteAsync(JsonElement? payload);
+    Task<object?> ExecuteAsync(JsonElement? payload);
 }

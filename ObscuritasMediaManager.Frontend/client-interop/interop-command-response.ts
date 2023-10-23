@@ -10,5 +10,6 @@ export class InteropCommandResponse {
     ticks: number;
     command: InteropCommand;
     status: ResponseStatus;
+    request: Object;
     message: string;
 }
