@@ -14,6 +14,7 @@ import { setFavicon } from './style.extensions.js';
  * @param {string} target
  */
 export function changePage(target, search = '', reflectInHistory = true) {
+    console.trace();
     setFavicon('');
     var newUrl = '/' + search + `#${target}`;
     if (reflectInHistory) history.pushState(null, '', newUrl);

@@ -50,6 +50,11 @@ public class MusicModel
     [IgnoreDataMember] public long FileBytes { get; set; }
     public bool Deleted { get; set; }
 
+    public string GetNormalizedPath()
+    {
+        return new FileInfo(Path).FullName;
+    }
+
     public MusicModel CalculateHash()
     {
         var fileInfo = new FileInfo(Path);

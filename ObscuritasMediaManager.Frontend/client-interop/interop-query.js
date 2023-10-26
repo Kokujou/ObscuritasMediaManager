@@ -5,6 +5,7 @@
 export var InteropQuery;
 (function (InteropQuery) {
     InteropQuery[InteropQuery["RequestFiles"] = 0] = "RequestFiles";
-    InteropQuery[InteropQuery["RequestFolder"] = 1] = "RequestFolder";
-    InteropQuery[InteropQuery["LoadTrack"] = 2] = "LoadTrack";
+    InteropQuery[InteropQuery["RequestFolderContent"] = 1] = "RequestFolderContent";
+    InteropQuery[InteropQuery["RequestFolderPath"] = 2] = "RequestFolderPath";
+    InteropQuery[InteropQuery["LoadTrack"] = 3] = "LoadTrack";
 })(InteropQuery || (InteropQuery = {}));

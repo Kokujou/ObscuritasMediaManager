@@ -23,12 +23,6 @@ public class StreamingController : ControllerBase
         await _repository.BatchCreateStreamingEntriesAsync(streamingEntries);
     }
 
-    [HttpGet("{guid:Guid}")]
-    public async Task<IEnumerable<StreamingEntryModel>> GetStreamingEntries(Guid guid)
-    {
-        return await _repository.GetAsync(guid);
-    }
-
     [HttpGet("{guid:Guid}/season/{season}/episode/{episode}")]
     public async Task<StreamingEntryModel> GetStream(Guid guid, string season, int episode)
     {

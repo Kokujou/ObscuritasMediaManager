@@ -145,7 +145,8 @@ export function renderAudioTileBaseStyles() {
             position: absolute;
             left: 50px;
             width: calc(100% - 100px);
-            height: 100%;
+            height: 80%;
+            margin: 0 10%;
             background: transparent;
             pointer-events: none;
         }

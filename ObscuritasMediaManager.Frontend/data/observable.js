@@ -13,13 +13,13 @@ export class Observable {
      * @returns {Subscription}
      * @param {( newValue: T,oldValue: T)=> void} observer
      */
-    subscribe(observer) {
+    subscribe(observer, suppressInitial = false) {
         var subscription = new Subscription(
             observer,
             () => (this.subscriptions = this.subscriptions.filter((x) => x != subscription))
         );
         this.subscriptions.push(subscription);
-        observer(this.currentValue, this.currentValue);
+        if (!suppressInitial) observer(this.currentValue, this.currentValue);
         return subscription;
     }
 

@@ -3,5 +3,6 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 export declare enum InteropEvent {
-    TrackChanged = 0
+    TrackChanged = 0,
+    TrackEnded = 1
 }

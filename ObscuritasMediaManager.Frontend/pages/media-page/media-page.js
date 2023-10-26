@@ -3,9 +3,8 @@ import { LitElementBase } from '../../data/lit-element-base.js';
 import { Session } from '../../data/session.js';
 import { MediaModel, UpdateRequestOfMediaModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService } from '../../services/backend.services.js';
-import { importFiles } from '../../services/extensions/file.extension.js';
-import { MediaFileservice } from '../../services/media-file.service.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
+import { MediaImportService } from '../../services/media-import.service.js';
 import { renderMediaPageStyles } from './media-page.css.js';
 import { renderMediaPageTemplate } from './media-page.html.js';
 
@@ -76,8 +75,7 @@ export class MediaPage extends LitElementBase {
 
     async importFolder() {
         try {
-            var fileImportResult = await importFiles();
-            await MediaFileservice.process(fileImportResult.files, fileImportResult.basePath);
+            await MediaImportService.importMediaCollections();
         } catch (err) {
             console.error('the import of files was aborted', err);
         }

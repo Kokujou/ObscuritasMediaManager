@@ -5,6 +5,7 @@ using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
+using ObscuritasMediaManager.Backend.Services;
 using System.Text.Json;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
@@ -12,18 +13,10 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class MediaController : ControllerBase
+public class MediaController(MediaRepository _mediaRepository, MediaImportService _mediaImportService,
+    IOptions<JsonOptions> jsonOptions) : ControllerBase
 {
-    private readonly GenreRepository _genreRepository;
-    private readonly MediaRepository _mediaRepository;
-    private readonly JsonSerializerOptions _serializerOptions;
-
-    public MediaController(MediaRepository repository, GenreRepository genreRepository, IOptions<JsonOptions> jsonOptions)
-    {
-        _mediaRepository = repository;
-        _genreRepository = genreRepository;
-        _serializerOptions = jsonOptions.Value.JsonSerializerOptions;
-    }
+    private JsonSerializerOptions _serializerOptions => jsonOptions?.Value.JsonSerializerOptions;
 
     [HttpGet("{guid:Guid}")]
     public async Task<MediaModel> Get([FromRoute] Guid guid)
@@ -60,5 +53,16 @@ public class MediaController : ControllerBase
     public async Task DeleteMediaImage(Guid guid)
     {
         await _mediaRepository.RemoveMediaImageAsync(guid);
+    }
+
+    [HttpPost("import")]
+    public async IAsyncEnumerable<MediaModel> ImportRootFolderAsync([FromBody] string rootFolderPath)
+    {
+        await foreach (var media in _mediaImportService.ImportRootFolderAsync(rootFolderPath))
+        {
+            yield return media;
+            await Response.Body.FlushAsync();
+        }
+        ;
     }
 }

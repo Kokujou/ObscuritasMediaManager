@@ -5,7 +5,7 @@
 		<NoWin32Manifest>true</NoWin32Manifest>
 		<RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
 		<EnableNETAnalyzers>false</EnableNETAnalyzers>
-		<LangVersion>latest</LangVersion>
+		<LangVersion>preview</LangVersion>
 		<DisableImplicitNamespaceImports>True</DisableImplicitNamespaceImports>
 		<Platforms>x64</Platforms>
 		<ImplicitUsings>enable</ImplicitUsings>

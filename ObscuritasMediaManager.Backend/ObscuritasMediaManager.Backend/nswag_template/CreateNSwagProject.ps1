@@ -5,7 +5,7 @@ Param(
 
     [string] $configuration = "Debug",
 
-    $sourceFramework = "net6.0",
+    $sourceFramework = "net8.0",
     $clientTargetRuntime = "Net60"
 )
 cd $PSScriptRoot

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.Controllers.Responses;
+using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
@@ -29,34 +30,28 @@ public class MusicController : ControllerBase
     }
 
     [HttpPost]
-    public async Task BatchCreateMusicTracks(IEnumerable<MusicModel> tracks)
+    public async Task<KeyValuePair<string, ModelCreationState>> CreateMusicTrackFromPathAsync([FromBody] string trackPath)
     {
-        var existingTracks = await _musicRepository.GetHashValuesAsync();
-        var invalidTracks = new List<MusicModel>();
-        var validTracks = new List<MusicModel>();
-        foreach (var track in tracks)
-        {
-            if (!System.IO.File.Exists(track.Path))
-            {
-                invalidTracks.Add(track);
-                continue;
-            }
+        if (!System.IO.File.Exists(trackPath))
+                 return new(null, ModelCreationState.Invalid);
 
-            track.CalculateHash();
+        var track = new MusicModel
+                    {
+                        Name = trackPath.Split('\\').Last(),
+                        Path = trackPath,
+                        Nation = Nation.Japanese,
+                        Language = Nation.Japanese,
+                        Instrumentation = Instrumentation.Mixed,
+                        Participants = Participants.SmallGroup,
+                    };
 
-            if (existingTracks.ContainsKey(track.Hash) && (existingTracks[track.Hash] == track.Path))
-                continue;
+        if (!(await FFMPEGExtensions.HasAudioStreamAsync(track.GetNormalizedPath())))
+            return new(track.Hash, ModelCreationState.Invalid);
 
-            if (existingTracks.ContainsKey(track.Hash) && System.IO.File.Exists(existingTracks[track.Hash]))
-                invalidTracks.Add(track);
-            else if (existingTracks.ContainsKey(track.Hash))
-                await _musicRepository.ChangeFilePathAsync(track.Hash, track.Path);
-            else
-                validTracks.Add(track.CalculateHash());
-        }
+        track.CalculateHash();
 
-        if (validTracks.Count > 0)
-                await _musicRepository.BatchCreateMusicTracksAsync(validTracks);
+        var result = await _musicRepository.CreateTrackAsync(track);
+        return new(track.Hash, result);
     }
 
     [HttpPost("recalculate-hashes")]

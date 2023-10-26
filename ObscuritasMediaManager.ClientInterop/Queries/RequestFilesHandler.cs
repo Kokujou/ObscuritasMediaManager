@@ -12,13 +12,11 @@ public class RequestFilesHandler : IQueryHandler
 
     public async Task<object?> ExecuteAsync(JsonElement? payload)
     {
-        await Task.Yield();
         var request = payload?.Deserialize<FilesQueryRequest>(WebSocketInterop.DefaultJsonOptions)!;
-
         OpenFileDialog.Multiselect = request.Multiselect;
         OpenFileDialog.Filter = request.GetDialogFilter();
 
-        var result = OpenFileDialog.ShowDialog();
+        var result = await MainWindow.Instance.Icon.Dispatcher.InvokeAsync(() => OpenFileDialog.ShowDialog());
         if (result != DialogResult.OK) return null;
         return OpenFileDialog.FileNames;
     }

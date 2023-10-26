@@ -13,4 +13,9 @@ public class StreamingEntryModel
     {
         return JsonConvert.SerializeObject(this);
     }
+
+    public string GetNormalizedPath()
+    {
+        return new FileInfo(Src).FullName;
+    }
 }

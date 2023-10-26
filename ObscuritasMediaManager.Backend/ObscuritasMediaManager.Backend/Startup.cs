@@ -1,6 +1,7 @@
 using Genius;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Authentication;
 using ObscuritasMediaManager.Backend.DataRepositories;
@@ -23,8 +24,9 @@ public class Startup
         services.AddScoped<UserRepository>();
         services.AddScoped<PlaylistRepository>();
         services.AddScoped<RecipeRepository>();
-        services.AddScoped<LyricsService>();
         services.AddSingleton(new GeniusClient("_i5cToYg6uB_yorzbeVRYbBtqfLdhU-LtzTxaA5swKJVkDK3W_Yj33IILm1VdL1o"));
+        services.AddSingleton<LyricsService>();
+        services.AddSingleton<MediaImportService>();
 
         services.AddDbContext<DatabaseContext>(
             x => x.UseSqlite(
@@ -32,14 +34,17 @@ public class Startup
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .EnableSensitiveDataLogging());
 
-        services.AddCors(x =>
-                x.AddPolicy("all", builder =>
+        services.AddCors(
+            x =>
+                x.AddPolicy(
+                "all", builder =>
                                 builder.WithOrigins("https://localhost", "https://obscuritas.strangled.net")
                     .AllowAnyHeader()
                     .AllowAnyMethod()));
 
         services.AddMvc()
-            .AddJsonOptions(options =>
+            .AddJsonOptions(
+                options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 
@@ -56,15 +61,19 @@ public class Startup
 
     public void Configure(IApplicationBuilder app)
     {
-        app.Use(async (context, next) =>
+        app.Use(
+            async (context, next) =>
             {
                 context.Request.EnableBuffering();
+                context.Features.Get<IHttpResponseBodyFeature>().DisableBuffering();
                 await next();
             });
         app.UseRouting();
         app.UseHttpsRedirection();
-        app.UseExceptionHandler(a =>
-                a.Run(async context =>
+        app.UseExceptionHandler(
+            a =>
+                a.Run(
+                async context =>
                 {
                     var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
                     var exception = exceptionHandlerPathFeature?.Error;

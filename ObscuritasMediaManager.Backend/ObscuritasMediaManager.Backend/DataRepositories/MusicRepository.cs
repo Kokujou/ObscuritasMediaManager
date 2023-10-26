@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.FileIO;
+using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
@@ -28,13 +30,6 @@ public class MusicRepository
             .ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
     }
 
-    public async Task CreateTrackAsync(MusicModel track)
-    {
-        track.CalculateHash();
-        await _context.Music.AddAsync(track);
-        await _context.SaveChangesAsync();
-    }
-
     public async Task UpdateAsync(string hash, JsonElement old, JsonElement updated, JsonSerializerOptions serializerOptions)
     {
         var actual = await _context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);
@@ -53,13 +48,6 @@ public class MusicRepository
 
         await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
-    }
-
-    public async Task ChangeFilePathAsync(string hash, string newPath)
-    {
-        var actual = await _context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);
-        actual.Path = newPath;
-        await _context.SaveChangesAsync();
     }
 
     public async Task RecalculateHashesAsync()
@@ -125,6 +113,36 @@ public class MusicRepository
             }
 
         if (errors.Count > 0) throw new ModelCreationFailedException<MusicModel>(errors);
+    }
+
+    public async Task<ModelCreationState> CreateTrackAsync(MusicModel track)
+    {
+        try
+        {
+            var existing = await _context.Music.FirstOrDefaultAsync(x => x.Hash == track.Hash);
+
+            if ((existing is not null) && (existing.GetNormalizedPath() == track.GetNormalizedPath()))
+                return ModelCreationState.Ignored;
+
+            if (existing is not null)
+            {
+                await UpdatePropertyAsync(track.Hash, x => x.Path, track.GetNormalizedPath());
+                return ModelCreationState.Updated;
+            }
+
+            await _context.Music.AddAsync(track);
+            await _context.SaveChangesAsync();
+            return ModelCreationState.Success;
+        }
+        catch (Exception ex) when (ex.InnerException is SqliteException inner and { SqliteExtendedErrorCode : 2067 })
+        {
+            return ModelCreationState.Ignored;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex.ToString());
+            return ModelCreationState.Error;
+        }
     }
 
     public async Task<IEnumerable<InstrumentModel>> GetInstrumentsAsync()

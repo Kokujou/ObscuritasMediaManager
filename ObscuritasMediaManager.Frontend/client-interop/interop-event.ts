@@ -5,4 +5,5 @@
 
 export enum InteropEvent {
     TrackChanged = 0,
+    TrackEnded = 1,
 }

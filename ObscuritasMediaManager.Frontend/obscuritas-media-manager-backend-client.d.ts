@@ -65,6 +65,8 @@ export declare class MediaClient {
     protected processAddMediaImage(response: Response): Promise<void>;
     deleteMediaImage(guid: string, signal?: AbortSignal | undefined): Promise<void>;
     protected processDeleteMediaImage(response: Response): Promise<void>;
+    importRootFolder(rootFolderPath: string, signal?: AbortSignal | undefined): Promise<MediaModel[]>;
+    protected processImportRootFolder(response: Response): Promise<MediaModel[]>;
 }
 export declare class MusicClient {
     private http;
@@ -73,8 +75,8 @@ export declare class MusicClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
-    batchCreateMusicTracks(tracks: MusicModel[], signal?: AbortSignal | undefined): Promise<void>;
-    protected processBatchCreateMusicTracks(response: Response): Promise<void>;
+    createMusicTrackFromPath(trackPath: string, signal?: AbortSignal | undefined): Promise<KeyValuePairOfStringAndModelCreationState>;
+    protected processCreateMusicTrackFromPath(response: Response): Promise<KeyValuePairOfStringAndModelCreationState>;
     getAll(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
     protected processGetAll(response: Response): Promise<MusicModel[]>;
     recalculateHashes(signal?: AbortSignal | undefined): Promise<void>;
@@ -87,9 +89,9 @@ export declare class MusicClient {
     protected processGetLyrics(response: Response): Promise<LyricsResponse>;
     getInstruments(signal?: AbortSignal | undefined): Promise<InstrumentModel[]>;
     protected processGetInstruments(response: Response): Promise<InstrumentModel[]>;
-    addInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
+    addInstrument(type: string | null, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
     protected processAddInstrument(response: Response): Promise<void>;
-    removeInstrument(type: InstrumentType, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
+    removeInstrument(type: string | null, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
     protected processRemoveInstrument(response: Response): Promise<void>;
     softDeleteTracks(trackHashes: string[], signal?: AbortSignal | undefined): Promise<void>;
     protected processSoftDeleteTracks(response: Response): Promise<void>;
@@ -147,8 +149,6 @@ export declare class StreamingClient {
     });
     batchPostStreamingEntries(streamingEntries: StreamingEntryModel[], signal?: AbortSignal | undefined): Promise<void>;
     protected processBatchPostStreamingEntries(response: Response): Promise<void>;
-    getStreamingEntries(guid: string, signal?: AbortSignal | undefined): Promise<StreamingEntryModel[]>;
-    protected processGetStreamingEntries(response: Response): Promise<StreamingEntryModel[]>;
     getStream(guid: string, season: string | null, episode: number, signal?: AbortSignal | undefined): Promise<StreamingEntryModel>;
     protected processGetStream(response: Response): Promise<StreamingEntryModel>;
 }
@@ -329,7 +329,8 @@ export interface ICredentialsRequest {
 export declare class MediaModel implements IMediaModel {
     contentWarnings: ContentWarning[] | null;
     description: string | null;
-    genres: string[] | null;
+    genres: GenreModel[] | null;
+    streamingEntries: StreamingEntryModel[] | null;
     hash: string | null;
     id: string;
     image: string | null;
@@ -349,7 +350,8 @@ export declare class MediaModel implements IMediaModel {
 export interface IMediaModel {
     contentWarnings: ContentWarning[] | null;
     description: string | null;
-    genres: string[] | null;
+    genres: GenreModel[] | null;
+    streamingEntries: StreamingEntryModel[] | null;
     hash: string | null;
     id: string;
     image: string | null;
@@ -369,6 +371,23 @@ export declare enum ContentWarning {
     Gore = "Gore",
     Vulgarity = "Vulgarity",
     Nudity = "Nudity"
+}
+export declare class StreamingEntryModel implements IStreamingEntryModel {
+    id: string;
+    season: string | null;
+    episode: number;
+    src: string | null;
+    constructor(data?: Partial<IStreamingEntryModel>);
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): StreamingEntryModel | null;
+    toJSON(data?: any): any;
+    clone(): StreamingEntryModel;
+}
+export interface IStreamingEntryModel {
+    id: string;
+    season: string | null;
+    episode: number;
+    src: string | null;
 }
 export declare enum MediaStatus {
     Completed = "Completed",
@@ -404,6 +423,27 @@ export declare class UpdateRequestOfMediaModel implements IUpdateRequestOfMediaM
 export interface IUpdateRequestOfMediaModel {
     oldModel: MediaModel | null;
     newModel: MediaModel | null;
+}
+export declare class KeyValuePairOfStringAndModelCreationState implements IKeyValuePairOfStringAndModelCreationState {
+    key: string;
+    value: ModelCreationState;
+    constructor(data?: Partial<IKeyValuePairOfStringAndModelCreationState>);
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): KeyValuePairOfStringAndModelCreationState | null;
+    toJSON(data?: any): any;
+    clone(): KeyValuePairOfStringAndModelCreationState;
+}
+export interface IKeyValuePairOfStringAndModelCreationState {
+    key: string;
+    value: ModelCreationState;
+}
+export declare enum ModelCreationState {
+    Loading = "Loading",
+    Success = "Success",
+    Updated = "Updated",
+    Ignored = "Ignored",
+    Invalid = "Invalid",
+    Error = "Error"
 }
 export declare class LyricsResponse implements ILyricsResponse {
     title: string | null;
@@ -576,23 +616,6 @@ export declare enum Measurement {
     Pinch = "Pinch",
     Piece = "Piece",
     Unitless = "Unitless"
-}
-export declare class StreamingEntryModel implements IStreamingEntryModel {
-    id: string;
-    season: string | null;
-    episode: number;
-    src: string | null;
-    constructor(data?: Partial<IStreamingEntryModel>);
-    init(_data?: any, _mappings?: any): void;
-    static fromJS(data: any, _mappings?: any): StreamingEntryModel | null;
-    toJSON(data?: any): any;
-    clone(): StreamingEntryModel;
-}
-export interface IStreamingEntryModel {
-    id: string;
-    season: string | null;
-    episode: number;
-    src: string | null;
 }
 export interface FileResponse {
     data: Blob;

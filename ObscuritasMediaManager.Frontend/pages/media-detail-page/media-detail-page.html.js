@@ -247,7 +247,7 @@ function renderGenreSection(page) {
                                 'genres',
                                 page.updatedMedia.genres.filter((genre) => genre != x)
                             )}"
-                        .text="${x}"
+                        .text="${x.name}"
                     ></tag-label>`
             )}
             ${page.editMode ? html` <div id="add-genre-button" @click="${() => page.showGenreSelectionDialog()}">+</div> ` : ''}

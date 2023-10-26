@@ -1,7 +1,6 @@
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base.js';
 import { InputDialog } from '../../dialogs/input-dialog/input-dialog.js';
 import { FileService } from '../backend.services.js';
-import { openFileDialog } from './document.extensions.js';
 
 /**
  * @param {File} file
@@ -30,26 +29,6 @@ export async function importDroppedFiles(files) {
     if (!basePath) throw new Error();
 
     var fileSources = files.map((file) => `${basePath}\\${file.name}`.replaceAll('/', '\\'));
-
-    if (!(await FileService.validate(fileSources)))
-        await DialogBase.show('Ungültiger Basispfad!', {
-            content: 'Die Dateien konnten mit dem eingegebenen Basispfad nicht zurückverfolgt werden!',
-            declineActionText: 'Ok',
-        });
-    else return { files, basePath };
-}
-
-/**
- * @param {File[]} files
- * @returns {Promise<{files:File[], basePath:string}>}
- */
-export async function importFiles(files = null) {
-    files ??= await openFileDialog(true);
-    var basePath = await InputDialog.show('Bitte den Basispfad des ausgewählten Ordners eingeben:');
-    if (!basePath) throw new Error();
-
-    basePath = basePath.substring(0, basePath.lastIndexOf('\\'));
-    var fileSources = files.map((file) => `${basePath}\\${file.webkitRelativePath}`.replaceAll('/', '\\'));
 
     if (!(await FileService.validate(fileSources)))
         await DialogBase.show('Ungültiger Basispfad!', {

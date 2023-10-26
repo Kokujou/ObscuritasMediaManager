@@ -29,7 +29,7 @@ public static class AudioTrackUpdatedEventService
                                     new TrackChangedEventResponse
                                     {
                                         TrackPath = AudioService.TrackPath,
-                                        TrackPosition = AudioService.GetCurrentTrackPosition().Milliseconds,
+                                        TrackPosition = (long)AudioService.GetCurrentTrackPosition().TotalMilliseconds,
                                         VisualizationData = AudioService.VisualizationData
                                     }
                             });
@@ -40,6 +40,12 @@ public static class AudioTrackUpdatedEventService
     public static void StartReporting()
     {
         Started = true;
+        AudioService.player.PlaybackStopped += (_, _) =>
+        {
+            AudioService.Stop();
+            foreach (var client in WebSocketInterop.Clients.Values.ToList())
+                client.InvokeEvent(new() { Event = InteropEvent.TrackEnded, Payload = null });
+        };
     }
 
     public static void StopReporting()

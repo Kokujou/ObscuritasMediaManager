@@ -5,6 +5,7 @@
 
 export enum InteropQuery {
     RequestFiles = 0,
-    RequestFolder = 1,
-    LoadTrack = 2,
+    RequestFolderContent = 1,
+    RequestFolderPath = 2,
+    LoadTrack = 3,
 }

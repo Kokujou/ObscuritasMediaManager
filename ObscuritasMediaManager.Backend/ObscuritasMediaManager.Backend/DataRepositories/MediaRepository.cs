@@ -51,7 +51,7 @@ public class MediaRepository
 
     public async Task<MediaModel> GetAsync(Guid guid)
     {
-        var response = await _context.Media.SingleOrDefaultAsync(x => x.Id == guid);
+        var response = await _context.Media.Include(x => x.StreamingEntries).SingleOrDefaultAsync(x => x.Id == guid);
         if (response == default)
             throw new ModelNotFoundException(guid);
         return response;

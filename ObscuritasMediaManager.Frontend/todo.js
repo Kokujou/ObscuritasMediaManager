@@ -4,6 +4,8 @@
  * - Add Message Snackbar for all Update/Delete/Create actions
  */
 
+//TODO: track should pause after playing till end
+
 //TODO: Audio single track creation
 
 //TODO: Media page finalization
@@ -31,7 +33,6 @@
  * - now the user can also "fix" tracks like change the file path or delete
  */
 
-//TODO: add a fancy audio visualization - done for all except play-music-dialog. bug: volume isn't correct, discussion
 //TODO: think a proper concept about when to spawn/close the play-music-dialog, it's getting ridiculous
 //TODO: Websockets
 //TODO: remove all mentionings of renderMaskImage and replace with iconRegistry

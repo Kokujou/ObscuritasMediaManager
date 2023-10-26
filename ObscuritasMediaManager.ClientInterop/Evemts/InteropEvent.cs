@@ -8,4 +8,5 @@ namespace ObscuritasMediaManager.ClientInterop.Evemts;
 public enum InteropEvent
 {
     TrackChanged,
+    TrackEnded
 }

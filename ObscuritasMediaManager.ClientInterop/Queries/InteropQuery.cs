@@ -8,6 +8,7 @@ namespace ObscuritasMediaManager.ClientInterop.Queries;
 public enum InteropQuery
 {
     RequestFiles,
-    RequestFolder,
+    RequestFolderContent,
+    RequestFolderPath,
     LoadTrack,
 }

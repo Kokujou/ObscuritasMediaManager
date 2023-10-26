@@ -13,6 +13,6 @@ public class LoadTrackHandler : IQueryHandler
         var json = payload!;
         var filePath = json?.GetString()!;
         AudioService.ChangeTrack(filePath);
-        return AudioService.GetCurrentTrackPosition().TotalMilliseconds;
+        return AudioService.GetCurrentTrackDuration().TotalMilliseconds;
     }
 }

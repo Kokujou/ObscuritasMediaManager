@@ -18,15 +18,19 @@ export class AudioService {
     static visualizationData = new Observable(new Float32Array());
     static trackPosition = new Observable(0);
     static duration = 0;
+    /** @type {Observable} */ static ended = new Observable(null);
 
     /** @type {Subscription} */ static #eventSubscription = ClientInteropService.eventResponse.subscribe((x) => {
         this.paused = false;
         if (x?.event == InteropEvent.TrackChanged) {
             this.paused = false;
             var response = /** @type {TrackChangedEventResponse} */ (x.payload);
+            this.currentTrackPath = response.trackPath;
             this.trackPosition.next(response.trackPosition);
             this.visualizationData.next(new Float32Array(response.visualizationData));
-            this.currentTrackPath = response.trackPath;
+        } else if (x?.event == InteropEvent.TrackEnded) {
+            this.reset();
+            this.ended.next();
         }
     });
 
@@ -40,6 +44,8 @@ export class AudioService {
                 break;
             case InteropCommand.StopTrack:
                 this.paused = true;
+                this.trackPosition.next(0);
+                this.visualizationData.next(new Float32Array());
                 break;
             case InteropCommand.ChangeTrackPosition:
                 break;
@@ -52,13 +58,10 @@ export class AudioService {
     });
     /** @type {Subscription} */ static #querySubscription = ClientInteropService.queryResponse.subscribe((x) => {
         switch (x?.query) {
-            case InteropQuery.RequestFiles:
-                break;
-            case InteropQuery.RequestFolder:
-                break;
             case InteropQuery.LoadTrack:
-                console.warn('track got updated', x.request);
+                this.duration = /** @type {number} */ (x.result);
                 this.currentTrackPath = /** @type {string} */ (x.request);
+                this.paused = true;
                 break;
             default:
                 break;
@@ -69,8 +72,8 @@ export class AudioService {
      * @param {MusicModel} track
      */
     static async changeTrack(track) {
+        if (!track?.path) return;
         await ClientInteropService.executeQuery({ query: InteropQuery.LoadTrack, payload: track.path });
-        await this.play();
         await this.changeVolume(this.volume);
     }
 

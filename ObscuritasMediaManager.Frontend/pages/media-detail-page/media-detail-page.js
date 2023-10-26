@@ -12,7 +12,7 @@ import {
     StreamingEntryModel,
     UpdateRequestOfMediaModel,
 } from '../../obscuritas-media-manager-backend-client.js';
-import { GenreService, MediaService, StreamingService } from '../../services/backend.services.js';
+import { GenreService, MediaService } from '../../services/backend.services.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { getQueryValue } from '../../services/extensions/url.extension.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
@@ -49,14 +49,14 @@ export class MediaDetailPage extends LitElementBase {
 
     get seasons() {
         /** @type {string[]} */ var seasons = [];
-        this.streamingEntries.forEach((x) => {
+        this.updatedMedia.streamingEntries.forEach((x) => {
             if (!seasons.includes(x.season)) seasons.push(x.season);
         });
         return seasons.sort((a, b) => a.localeCompare(b));
     }
 
     get episodes() {
-        return this.streamingEntries.filter((x) => x.season == this.seasons[this.selectedSeason]);
+        return this.updatedMedia.streamingEntries.filter((x) => x.season == this.seasons[this.selectedSeason]);
     }
 
     /** @returns {HTMLElement} */
@@ -82,14 +82,11 @@ export class MediaDetailPage extends LitElementBase {
 
         /** @type {MediaModel} */ this.oldMedia = null;
         /** @type {MediaModel} */ this.updatedMedia = null;
-        /** @type {StreamingEntryModel[]} */ this.streamingEntries = [];
         /** @type {string[]} */ this.mediaIds = [];
         this.hoveredRating = 0;
         this.selectedSeason = 0;
         this.editMode = false;
     }
-
- 
 
     async connectedCallback() {
         super.connectedCallback();
@@ -112,7 +109,6 @@ export class MediaDetailPage extends LitElementBase {
         var media = await MediaService.get(guid);
         this.oldMedia = Object.assign(new MediaModel(), media);
         this.updatedMedia = Object.assign(new MediaModel(), media);
-        this.streamingEntries = await StreamingService.getStreamingEntries(guid);
 
         this.requestFullUpdate();
         document.title = this.updatedMedia.name;
@@ -129,17 +125,14 @@ export class MediaDetailPage extends LitElementBase {
         var genreDialog = GenreDialog.show({
             genres,
             ignoredState: CheckboxState.Forbid,
-            allowedGenres: genres.filter((x) => this.updatedMedia.genres.includes(x.name)),
+            allowedGenres: genres.filter((x) => this.updatedMedia.genres.some((genre) => genre.name == x.name)),
             allowAdd: true,
             allowRemove: true,
         });
 
         genreDialog.addEventListener('decline', () => genreDialog.remove());
         genreDialog.addEventListener('accept', async (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
-            await this.changeProperty(
-                'genres',
-                e.detail.acceptedGenres.map((x) => x.name)
-            );
+            await this.changeProperty('genres', e.detail.acceptedGenres);
 
             genreDialog.remove();
         });

@@ -18,7 +18,8 @@ export function renderDialogBaseStyles() {
             justify-content: center;
         }
 
-        #dialog-border:not([invisible]) {
+        #dialog-border:not([invisible]),
+        :host([showBorder]) #dialog-border {
             padding: 5px;
             border: 3px solid #333;
             border-radius: 20px;

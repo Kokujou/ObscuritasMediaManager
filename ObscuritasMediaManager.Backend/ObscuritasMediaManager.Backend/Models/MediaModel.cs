@@ -15,18 +15,23 @@ public class MediaModel
         var entity = builder.Entity<MediaModel>();
         entity.HasMany(x => x.Genres)
             .WithMany()
-            .UsingEntity("MediaGenreMapping",
-            x => x.HasOne(typeof(GenreModel)).WithMany().HasForeignKey("GenreId").HasPrincipalKey(nameof(GenreModel.Id)),
-            x => x.HasOne(typeof(MediaModel)).WithMany().HasForeignKey("MediaId").HasPrincipalKey(nameof(MediaModel.Id)));
+            .UsingEntity(
+                "MediaGenreMapping",
+                x => x.HasOne(typeof(GenreModel)).WithMany().HasForeignKey("GenreId").HasPrincipalKey(nameof(GenreModel.Id)),
+                x => x.HasOne(typeof(MediaModel)).WithMany().HasForeignKey("MediaId").HasPrincipalKey(nameof(MediaModel.Id)));
         entity.Navigation(x => x.Genres).AutoInclude();
         entity.Property(x => x.ContentWarnings)
-            .HasConversion(x => string.Join(",", x.Select(x => x.ToString())),
-            x => x.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => x.ParseEnumOrDefault<ContentWarning>()));
+            .HasConversion(
+                x => string.Join(",", x.Select(x => x.ToString())),
+                x => x.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => x.ParseEnumOrDefault<ContentWarning>()));
+        entity.HasMany(x => x.StreamingEntries).WithOne().HasPrincipalKey(x => x.Id).HasForeignKey(x => x.Id);
     }
 
     public IEnumerable<ContentWarning> ContentWarnings { get; set; }
     public string Description { get; set; }
     public List<GenreModel> Genres { get; set; } = new List<GenreModel>();
+    public List<StreamingEntryModel> StreamingEntries { get; set; }
+
     [NotMapped]
     [NotHashable]
     public string Hash => this.GetHash();

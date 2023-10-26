@@ -45,6 +45,7 @@ export class PlayMusicDialog extends LitElementBase {
         await AudioService.changeTrack(track);
         await AudioService.changeVolume(initialVolume);
         await AudioService.changePosition(startPosition);
+        await AudioService.play();
         this.currentTrack = track;
         await this.requestFullUpdate();
 

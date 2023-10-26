@@ -42,7 +42,7 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     get autocompleteGenres() {
-        return Object.values(MusicGenre).filter((genre) => !this.updatedTrack.genres.some((x) => MusicGenre[x] == genre));
+        return Object.values(MusicGenre).filter((genre) => !this.updatedTrack.genres?.some((x) => MusicGenre[x] == genre));
     }
 
     get audioSource() {
@@ -59,7 +59,7 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     get currentTrackPositionText() {
-        var position = this.currentTrackPosition;
+        var position = this.currentTrackPosition / 1000;
         var minutes = Math.floor(position / 60);
         var seconds = Math.floor(position - minutes * 60);
 
@@ -67,7 +67,7 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     get currentTrackDurationText() {
-        var duration = this.currentTrackDuration;
+        var duration = this.currentTrackDuration / 1000;
         var minutes = Math.floor(duration / 60);
         var seconds = Math.floor(duration - minutes * 60);
 
@@ -84,6 +84,7 @@ export class MusicPlaylistPage extends LitElementBase {
         /** @type {number} */ this.maxPlaylistItems = 20;
         /** @type {number} */ this.hoveredRating = 0;
         /** @type {keyof MusicModel & ('mood1' | 'mood2')} */ this.moodToSwitch = 'mood1';
+        /** @type {boolean} */ this.loop = false;
 
         this.initializeData();
     }
@@ -108,7 +109,11 @@ export class MusicPlaylistPage extends LitElementBase {
                     return;
 
                 PlayMusicDialog.show(this.currentTrack, this.currentVolume, AudioService.trackPosition.current());
-            })
+            }),
+            AudioService.ended.subscribe(() => {
+                if (this.currentTrackIndex + 1 >= this.playlist.tracks.length && !this.loop) return;
+                this.changeTrackBy(1);
+            }, true)
         );
 
         window.addEventListener('hashchange', (e) => {
@@ -194,10 +199,11 @@ export class MusicPlaylistPage extends LitElementBase {
         this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
 
-        changePage(Session.currentPage.current(), `?guid=${this.id}&track=${this.currentTrackIndex}`, false);
+        changePage(Session.currentPage.current(), `?guid=${this.playlist.id}&track=${this.currentTrackIndex}`, false);
 
         await this.requestFullUpdate();
         await AudioService.changeTrack(this.currentTrack);
+        await AudioService.play();
     }
 
     /**
@@ -235,7 +241,7 @@ export class MusicPlaylistPage extends LitElementBase {
 
     changeTrackPosition(value) {
         if (AudioService.duration == Infinity) return;
-        AudioService.trackPosition = value;
+        AudioService.changePosition(Number.parseInt(value));
     }
 
     /**

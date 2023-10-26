@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ObscuritasMediaManager.Backend.DataRepositories;
+using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
-using Xabe.FFmpeg;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
 
@@ -13,16 +13,7 @@ public class CleanupController : ControllerBase
 {
     private static bool ValidateAudio(string path)
     {
-        try
-        {
-            var fileInfo = FFmpeg.GetMediaInfo(path).Result;
-
-            return fileInfo.AudioStreams.Any();
-        }
-        catch (Exception)
-        {
-            return false;
-        }
+        return FFMPEGExtensions.HasAudioStreamAsync(path).Result;
     }
 
     private readonly MusicRepository _musicRepository;

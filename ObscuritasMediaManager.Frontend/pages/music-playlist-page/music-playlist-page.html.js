@@ -146,7 +146,7 @@ export function renderMusicPlaylist(page) {
                                 .value="${page.currentTrackPosition.toString()}"
                                 min="0"
                                 .max="${page.currentTrackDuration.toString()}"
-                                steps="1000 "
+                                steps="1000"
                             ></range-slider>
                             <div id="track-position-label">${page.currentTrackDurationText}</div>
                         </div>

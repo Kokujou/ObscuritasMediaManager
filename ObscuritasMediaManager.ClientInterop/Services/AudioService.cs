@@ -10,29 +10,43 @@ public static class AudioService
     public static TimeSpan Position { get => reader?.CurrentTime ?? TimeSpan.Zero; set => SetPosition(value); }
 
     public static float[] VisualizationData = new float[0];
-    private static WaveOutEvent player = new WaveOutEvent();
+    public static WaveOutEvent player = new WaveOutEvent();
     private static MediaFoundationReader? reader;
     private static AudioVisualizer? visualizer;
 
     public static void Pause()
     {
-        player.Pause();
+        try
+        {
+            player.Pause();
+        }
+        catch { }
     }
 
     public static void Play()
     {
-        player.Play();
+        try
+        {
+            player.Play();
+        }
+        catch { }
     }
 
     public static void Stop()
     {
-        player.Stop();
+        try
+        {
+            player.Stop();
+            SetPosition(TimeSpan.Zero);
+        }
+        catch { }
     }
 
     public static void ChangeTrack(string trackPath)
     {
         try
         {
+            if (trackPath is null) return;
             player.Stop();
             reader?.Dispose();
             player.Dispose();

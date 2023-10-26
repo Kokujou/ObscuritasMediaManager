@@ -16,6 +16,7 @@ import { AudioService } from '../../services/audio-service.js';
 import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
 import { sortBy } from '../../services/extensions/array.extensions.js';
 import { changePage, getPageName } from '../../services/extensions/url.extension.js';
+import { MediaImportService } from '../../services/media-import.service.js';
 import { MusicFilterService } from '../../services/music-filter.service.js';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
 import { renderMusicPageStyles } from './music-page.css.js';
@@ -165,6 +166,7 @@ export class MusicPage extends LitElementBase {
         if (this.currentTrack.hash != track.hash) {
             this.currentTrack = track;
             await AudioService.changeTrack(track);
+            await AudioService.play();
             await this.requestFullUpdate();
             return;
         }
@@ -181,7 +183,9 @@ export class MusicPage extends LitElementBase {
         changePage(getPageName(MusicPlaylistPage), `?guid=${playlistId}&track=0`);
     }
 
-    async importFolder() {}
+    async importFolder() {
+        await MediaImportService.importAudioFiles();
+    }
 
     /**
      * @param {File[]} files
