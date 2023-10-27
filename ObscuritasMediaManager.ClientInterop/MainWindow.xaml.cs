@@ -31,5 +31,7 @@ public partial class MainWindow : Window
         var server = new WebSocketServer("ws://localhost:8005");
         server.AddWebSocketService<WebSocketInterop>("/Interop");
         server.Start();
+
+        ProtocolRegistrationService.RegisterProtocol();
     }
 }

@@ -1,6 +1,5 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { html } from '../../exports.js';
-import { ClientInteropService } from '../../services/client-interop-service.js';
 import { renderObscuritasMediaManagerStyles } from './obscuritas-media-manager.css.js';
 import { renderObscuritasMediaManager } from './obscuritas-media-manager.html.js';
 
@@ -48,10 +47,8 @@ export class ObscuritasMediaManager extends LitElementBase {
         this.loadedResourceIndex = 0;
     }
 
-    async connectedCallback() {
-        await super.connectedCallback();
-
-        await ClientInteropService.startConnection();
+    connectedCallback() {
+        super.connectedCallback();
     }
 
     render() {

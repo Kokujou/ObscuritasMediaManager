@@ -16,11 +16,6 @@ export class PageLayout extends LitElementBase {
         };
     }
 
-    constructor() {
-        super();
-        this.clientInteropSocketFailed = false;
-    }
-
     render() {
         return renderPageLayout();
     }
@@ -30,17 +25,15 @@ export class PageLayout extends LitElementBase {
 
         this.subscriptions.push(
             ClientInteropService.failCounter.subscribe((x) => {
-                if (this.clientInteropSocketFailed == false && x >= 1) {
+                if (x >= 1) {
                     WarningBanner.spawn(html`
                         Die Socket-Verbindung zum Client ist fehlgeschlagen. Bitte starte das&nbsp;
-                        <a class="banner-link">Client-Programm</a>.
+                        <a class="banner-link" @click="${() => location.assign('ommci://')}">Client-Programm</a>.
                     `);
-                    this.clientInteropSocketFailed = true;
                 }
 
                 if (x < 1) {
                     WarningBanner.remove();
-                    this.clientInteropSocketFailed = false;
                 }
             })
         );

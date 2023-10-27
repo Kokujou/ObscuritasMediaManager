@@ -29,7 +29,10 @@ public static class AudioService
         {
             player.Play();
         }
-        catch { }
+        catch
+        {
+            Stop();
+        }
     }
 
     public static void Stop()

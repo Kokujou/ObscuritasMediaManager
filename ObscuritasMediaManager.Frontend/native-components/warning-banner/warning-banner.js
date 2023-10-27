@@ -21,6 +21,7 @@ export class WarningBanner extends LitElementBase {
      * @param {TemplateResult} inner
      */
     static spawn(inner) {
+        if (this.instance) return;
         var banner = new WarningBanner();
         banner.inner = inner;
         banner.requestFullUpdate();
@@ -42,5 +43,10 @@ export class WarningBanner extends LitElementBase {
 
     render() {
         return renderWarningBanner(this);
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        WarningBanner.instance = null;
     }
 }

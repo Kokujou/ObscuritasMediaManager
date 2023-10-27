@@ -4,7 +4,9 @@
  * - Add Message Snackbar for all Update/Delete/Create actions
  */
 
-//TODO: track should pause after playing till end
+//TODO: implement link to start client interop
+
+//TODO: add copy-functionality also in detail page
 
 //TODO: Audio single track creation
 
