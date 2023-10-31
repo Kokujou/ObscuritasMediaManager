@@ -1,3 +1,4 @@
+import { LoginPage } from '../pages/login-page/login-page.js';
 import { changePage } from './extensions/url.extension.js';
 
 export class AuthenticatedRequestService {
@@ -15,12 +16,12 @@ export class AuthenticatedRequestService {
             var response = await fetch(url, requestInit);
 
             if (response.status == 401) {
-                changePage('login');
+                changePage(LoginPage);
             }
 
             return response;
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
 }

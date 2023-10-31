@@ -1,7 +1,11 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
+import { FilterEntry } from '../../data/filter-entry.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
+import { Session } from '../../data/session.js';
+import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
+import { GenreModel, InstrumentModel, InstrumentType } from '../../obscuritas-media-manager-backend-client.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
+import { GenreService, MusicService } from '../../services/backend.services.js';
 import { GenreDialogResult } from '../dialog-result/genre-dialog.result.js';
 import { InputDialog } from '../input-dialog/input-dialog.js';
 import { renderGenreDialogStyles } from './genre-dialog.css.js';
@@ -24,9 +28,101 @@ export class GenreDialog extends LitElementBase {
     }
 
     /**
+     *
+     * @param {GenreModel[] | FilterEntry<string>} genresOrFilter
+     */
+    static async startShowingWithGenres(genresOrFilter) {
+        var genres = await GenreService.getAll();
+
+        /** @type {Partial<GenreDialogOptions>} */ var options = { genres, allowAdd: true, allowRemove: true };
+        if (genresOrFilter instanceof FilterEntry) {
+            options.allowedGenres = genres.filter((x) => genresOrFilter.required.includes(x.id));
+            options.forbiddenGenres = genres.filter((x) => genresOrFilter.forbidden.includes(x.id));
+            options.allowThreeValues = true;
+        } else {
+            options.allowedGenres = genresOrFilter;
+        }
+
+        var genreDialog = GenreDialog.#show(options);
+
+        genreDialog.addEventListener(
+            'add-genre',
+            /** @param {CustomEvent<{name, section}>} e */ async (e) => {
+                try {
+                    await GenreService.addGenre(e.detail.section, e.detail.name);
+                    genreDialog.options.genres = await GenreService.getAll();
+                    genreDialog.requestFullUpdate();
+                    MessageSnackbar.popup('Das Genre wurde erfolgreich hinzugefügt.', 'success');
+                } catch (err) {
+                    MessageSnackbar.popup('Ein Fehler ist beim hinzufügen des Genres aufgetreten: ' + err, 'error');
+                    e.preventDefault();
+                }
+            }
+        );
+        genreDialog.addEventListener(
+            'remove-genre',
+            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
+                try {
+                    await GenreService.removeGenre(e.detail.id);
+                    genreDialog.options.genres = await GenreService.getAll();
+                    genreDialog.requestFullUpdate();
+                    MessageSnackbar.popup('Das Genre wurde erfolgreich gelöscht.', 'success');
+                } catch (err) {
+                    MessageSnackbar.popup('Ein Fehler ist beim löschen des Genres aufgetreten: ' + err, 'error');
+                    e.preventDefault();
+                }
+            }
+        );
+
+        return genreDialog;
+    }
+
+    /**
+     * @param {InstrumentModel[] | FilterEntry<string>} instrumentsOrFilter
+     */
+    static async startShowingWithInstruments(instrumentsOrFilter) {
+        /** @param {InstrumentModel} item */
+        var instrumentToGenre = (item, index) => new GenreModel({ id: `${index}`, name: item.name, section: item.type });
+        var genres = Session.instruments.current().map(instrumentToGenre);
+
+        /** @type {Partial<GenreDialogOptions>} */ var options = { genres, allowAdd: true, allowRemove: true };
+
+        if (instrumentsOrFilter instanceof FilterEntry) {
+            options.allowedGenres = genres.filter((x) => instrumentsOrFilter.required.includes(x.name));
+            options.forbiddenGenres = genres.filter((x) => instrumentsOrFilter.forbidden.includes(x.name));
+            options.allowThreeValues = true;
+        } else {
+            options.allowedGenres = instrumentsOrFilter.map(instrumentToGenre);
+        }
+
+        var dialog = GenreDialog.#show(options);
+
+        dialog.addEventListener(
+            'add-genre',
+            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
+                await MusicService.addInstrument(/** @type {InstrumentType} */ (e.detail.section), e.detail.name);
+                dialog.options.genres.push(new GenreModel({ id: e.detail.name, name: e.detail.name, section: e.detail.section }));
+                Session.instruments.next(await MusicService.getInstruments());
+                await dialog.requestFullUpdate();
+            }
+        );
+        dialog.addEventListener(
+            'remove-genre',
+            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
+                await MusicService.removeInstrument(/** @type {InstrumentType} */ (e.detail.section), e.detail.name);
+                dialog.options.genres = dialog.options.genres.filter((x) => x.name != e.detail.name);
+                Session.instruments.next(await MusicService.getInstruments());
+                await dialog.requestFullUpdate();
+            }
+        );
+
+        return dialog;
+    }
+
+    /**
      * @param {Partial<GenreDialogOptions>} options
      */
-    static show(options) {
+    static #show(options) {
         var dialog = new GenreDialog();
 
         Object.assign(dialog.options, options);

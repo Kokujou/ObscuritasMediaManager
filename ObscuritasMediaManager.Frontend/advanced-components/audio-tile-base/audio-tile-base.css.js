@@ -146,7 +146,7 @@ export function renderAudioTileBaseStyles() {
             left: 50px;
             width: calc(100% - 100px);
             height: 80%;
-            margin: 0 10%;
+            margin: 10% 0;
             background: transparent;
             pointer-events: none;
         }

@@ -1,6 +1,6 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { html } from '../../exports.js';
-import { getPageName } from '../../services/extensions/url.extension.js';
+import { LinkElement } from '../../native-components/link-element/link-element.js';
 import { MediaPage } from '../media-page/media-page.js';
 import { MusicPage } from '../music-page/music-page.js';
 import { RecipesPage } from '../recipes-page/recipes-page.js';
@@ -30,12 +30,10 @@ function renderNavigation() {
         <div id="navigation">
             <div id="link-area">
                 <div id="nav-section">
-                    <div id="nav-section-links">
-                        <link-element .hash="${getPageName(WelcomePage)}" id="home-link" class="nav-item">Start</link-element>
-                    </div>
+                    <div class="nav-section-links">${LinkElement.forPage(WelcomePage, null, html`Start`)}</div>
                 </div>
                 <div id="nav-section">
-                    <div id="nav-section-heading">Zeugs</div>
+                    <div class="nav-section-heading">Zeugs</div>
 
                     <div id="nav-section-links">
                         ${renderNavItem(MediaPage)}<br />
@@ -53,5 +51,5 @@ function renderNavigation() {
  * @param {T} element
  */
 function renderNavItem(element) {
-    return html`<link-element .hash="${getPageName(element)}" class="nav-item"> ${element.pageName} </link-element>`;
+    return LinkElement.forPage(element, null, html`${element.pageName}`);
 }

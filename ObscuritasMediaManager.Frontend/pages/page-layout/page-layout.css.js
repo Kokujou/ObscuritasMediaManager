@@ -167,13 +167,13 @@ function renderNavigationStyles() {
             border-top: none;
         }
 
-        #nav-section-links {
+        .nav-section-links {
             display: flex;
             flex-direction: column;
             margin: 10px 0;
         }
 
-        #nav-section-heading {
+        .nav-section-heading {
             font-size: 30px;
             padding: 20px;
             writing-mode: vertical-rl;
@@ -187,7 +187,7 @@ function renderNavigationStyles() {
             border-bottom: none !important;
         }
 
-        .nav-item {
+        link-element {
             text-shadow: 2px 2px 2px black;
             letter-spacing: 2px;
             font-size: 21px;
@@ -203,7 +203,7 @@ function renderNavigationStyles() {
             border-bottom: 2px solid transparent;
         }
 
-        .nav-item:hover {
+        link-element:hover {
             border-bottom: 2px solid var(--font-color);
         }
     `;

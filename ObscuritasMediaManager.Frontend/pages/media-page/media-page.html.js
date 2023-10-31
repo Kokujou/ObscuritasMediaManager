@@ -1,7 +1,7 @@
 import { html } from '../../exports.js';
+import { LinkElement } from '../../native-components/link-element/link-element.js';
 import { importIcon } from '../../resources/inline-icons/general/import-icon.svg.js';
 import { plusIcon } from '../../resources/inline-icons/general/plus-icon.svg.js';
-import { getPageName } from '../../services/extensions/url.extension.js';
 import { MediaDetailPage } from '../media-detail-page/media-detail-page.js';
 import { MediaPage } from './media-page.js';
 
@@ -30,25 +30,25 @@ export function renderMediaPageTemplate(page) {
                                   displayStyle="simple"
                                   @click="${() => page.importFolder()}"
                               ></media-tile>
-                              ${page.filteredMedia.map(
-                                  (media) =>
+                              ${page.filteredMedia.map((media) =>
+                                  LinkElement.forPage(
+                                      MediaDetailPage,
+                                      {},
                                       html`
-                                          <link-element .hash="${getPageName(MediaDetailPage)}" .search="guid=${media.id}">
-                                              <media-tile
-                                                  .genres="${media.genres || []}"
-                                                  .name="${media.name}"
-                                                  .rating="${media.rating}"
-                                                  .status="${media.status}"
-                                                  .imageSource="${media.image}"
-                                                  .autocompleteGenres="${page.genreList}"
-                                                  @imageReceived="${(e) => page.addImageFor(media, e.detail.imageData)}"
-                                                  @ratingChanged="${(e) =>
-                                                      page.changePropertyOf(media, 'rating', e.detail.newRating)}"
-                                                  @genresChanged="${(e) =>
-                                                      page.changePropertyOf(media, 'genres', e.detail.genres)}"
-                                              ></media-tile>
-                                          </link-element>
+                                          <media-tile
+                                              .genres="${media.genres || []}"
+                                              .name="${media.name}"
+                                              .rating="${media.rating}"
+                                              .status="${media.status}"
+                                              .imageSource="${media.image}"
+                                              .autocompleteGenres="${page.genreList}"
+                                              @imageReceived="${(e) => page.addImageFor(media, e.detail.imageData)}"
+                                              @ratingChanged="${(e) =>
+                                                  page.changePropertyOf(media, 'rating', e.detail.newRating)}"
+                                              @genresChanged="${(e) => page.changePropertyOf(media, 'genres', e.detail.genres)}"
+                                          ></media-tile>
                                       `
+                                  )
                               )}
                           </div>`}
                 </paginated-scrolling>

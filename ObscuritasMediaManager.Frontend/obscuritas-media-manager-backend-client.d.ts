@@ -75,15 +75,19 @@ export declare class MusicClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
+    getDefault(signal?: AbortSignal | undefined): Promise<MusicModel>;
+    protected processGetDefault(response: Response): Promise<MusicModel>;
+    createMusicTrack(track: MusicModel, signal?: AbortSignal | undefined): Promise<string>;
+    protected processCreateMusicTrack(response: Response): Promise<string>;
     createMusicTrackFromPath(trackPath: string, signal?: AbortSignal | undefined): Promise<KeyValuePairOfStringAndModelCreationState>;
     protected processCreateMusicTrackFromPath(response: Response): Promise<KeyValuePairOfStringAndModelCreationState>;
-    getAll(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
-    protected processGetAll(response: Response): Promise<MusicModel[]>;
     recalculateHashes(signal?: AbortSignal | undefined): Promise<void>;
     protected processRecalculateHashes(response: Response): Promise<void>;
+    getAll(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
+    protected processGetAll(response: Response): Promise<MusicModel[]>;
     get(hash: string | null, signal?: AbortSignal | undefined): Promise<MusicModel>;
     protected processGet(response: Response): Promise<MusicModel>;
-    update(hash: string | null, _: UpdateRequestOfMusicModel, signal?: AbortSignal | undefined): Promise<void>;
+    update(hash: string | null, request: UpdateRequestOfJsonElement, signal?: AbortSignal | undefined): Promise<void>;
     protected processUpdate(response: Response): Promise<void>;
     getLyrics(hash: string | null, offset?: number | undefined, signal?: AbortSignal | undefined): Promise<LyricsResponse>;
     protected processGetLyrics(response: Response): Promise<LyricsResponse>;
@@ -458,18 +462,18 @@ export interface ILyricsResponse {
     title: string | null;
     text: string | null;
 }
-export declare class UpdateRequestOfMusicModel implements IUpdateRequestOfMusicModel {
-    oldModel: MusicModel | null;
-    newModel: MusicModel | null;
-    constructor(data?: Partial<IUpdateRequestOfMusicModel>);
+export declare class UpdateRequestOfJsonElement implements IUpdateRequestOfJsonElement {
+    oldModel: any;
+    newModel: any;
+    constructor(data?: Partial<IUpdateRequestOfJsonElement>);
     init(_data?: any, _mappings?: any): void;
-    static fromJS(data: any, _mappings?: any): UpdateRequestOfMusicModel | null;
+    static fromJS(data: any, _mappings?: any): UpdateRequestOfJsonElement | null;
     toJSON(data?: any): any;
-    clone(): UpdateRequestOfMusicModel;
+    clone(): UpdateRequestOfJsonElement;
 }
-export interface IUpdateRequestOfMusicModel {
-    oldModel: MusicModel | null;
-    newModel: MusicModel | null;
+export interface IUpdateRequestOfJsonElement {
+    oldModel: any;
+    newModel: any;
 }
 export declare class PlaylistModel implements IPlaylistModel {
     id: string;

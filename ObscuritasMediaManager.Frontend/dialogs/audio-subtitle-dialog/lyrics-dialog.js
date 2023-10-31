@@ -1,5 +1,7 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { MusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { AudioService } from '../../services/audio-service.js';
+import { MusicService } from '../../services/backend.services.js';
 import { waitForSeconds } from '../../services/extensions/animation.extension.js';
 import { renderAudioSubtitleDialogStyles } from './lyrics-dialog.css.js';
 import { renderAudioSubtitleDialog } from './lyrics-dialog.html.js';
@@ -17,23 +19,32 @@ export class LyricsDialog extends LitElementBase {
 
     /**
      *
-     * @param {string} title
-     * @param {string} lyrics
+     * @param {MusicModel} track
      * @param {boolean} canAccept
      * @returns
      */
-    static async startShowing(title, lyrics, audio, canAccept) {
+    static async startShowing(track, audio, canAccept) {
         var dialog = new LyricsDialog();
-        dialog.lyrics = lyrics;
-        dialog.title = title;
+
+        if (track.lyrics?.length > 0) {
+            dialog.title = track.displayName;
+            dialog.lyrics = track.lyrics;
+            dialog.lyricsOffset = -1;
+        } else {
+            var lyrics = await MusicService.getLyrics(track.hash);
+            dialog.lyrics = lyrics.text;
+            dialog.title = lyrics.title;
+            dialog.lyricsOffset = -0;
+        }
+        dialog.track = track;
         dialog.canSave = canAccept;
-        dialog.scrollingPaused = true;
+        dialog.scrollingPaused = AudioService.paused;
 
         document.body.appendChild(dialog);
         await dialog.requestFullUpdate();
         /** @type {HTMLElement} */ var scrollContainer = dialog.shadowRoot.querySelector('#lyrics-content-wrapper-2');
 
-        scrollContainer.style.animationDuration = audio.duration + 's';
+        scrollContainer.style.animationDuration = audio.duration + 'ms';
         audio.onpause = () => dialog.requestFullUpdate();
         audio.onplay = () => dialog.requestFullUpdate();
 
@@ -51,8 +62,10 @@ export class LyricsDialog extends LitElementBase {
         /** @type {boolean} */ this.canSave = false;
         /** @type {boolean} */ this.canNext = true;
         /** @type {boolean} */ this.scrollingPaused = false;
+        /** @type {number} */ this.lyricsOffset = -1;
         /** @type {number} */ this.extendedScrollY = 0;
         /** @type {NodeJS.Timer} */ this.scrollInterval;
+        /** @type {MusicModel} */ this.track = new MusicModel();
 
         this.onclick = () => this.fadeAndRemove();
 
@@ -90,8 +103,15 @@ export class LyricsDialog extends LitElementBase {
         this.dispatchEvent(new CustomEvent('playlist-saved'));
     }
 
-    requestNewLyrics() {
-        this.dispatchEvent(new CustomEvent('request-new-lyrics'));
+    async requestNewLyrics() {
+        try {
+            this.lyricsOffset++;
+            var newLyrics = await MusicService.getLyrics(this.track.hash, this.lyricsOffset);
+            this.updateLyrics(newLyrics.title, newLyrics.text);
+        } catch {
+            this.canNext = false;
+            await this.requestFullUpdate();
+        }
         this.canSave = true;
         this.requestFullUpdate();
     }

@@ -26,6 +26,7 @@ public partial class MainWindow : Window
         NotifyIcon.ContextMenuStrip = new();
         NotifyIcon.ContextMenuStrip.Items.Add("Beenden", null, new EventHandler((_, _) => Close()));
         Icon = BitmapFrame.Create(new Uri(Path.Combine(GetProjectPath(), "magic-circle.ico")));
+        Topmost = true;
         Hide();
 
         var server = new WebSocketServer("ws://localhost:8005");

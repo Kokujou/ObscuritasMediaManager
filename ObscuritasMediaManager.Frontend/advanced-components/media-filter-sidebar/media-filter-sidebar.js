@@ -3,8 +3,6 @@ import { FilterEntry } from '../../data/filter-entry.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
-import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
-import { GenreService } from '../../services/backend.services.js';
 import { renderMediaFilterSidebarStyles } from './media-filter-sidebar.css.js';
 import { renderMediaFilterSidebar } from './media-filter-sidebar.html.js';
 import { MediaFilter } from './media-filter.js';
@@ -85,23 +83,11 @@ export class MediaFilterSidebar extends LitElementBase {
     notifyFilterUpdated() {
         this.requestFullUpdate();
         this.dispatchEvent(new Event('change', { composed: true }));
-        console.trace();
         localStorage.setItem(`media.search`, JSON.stringify(this.filter));
     }
 
     async openGenreDialog() {
-        var genres = await GenreService.getAll();
-        var allowedGenres = genres.filter((x) => this.filter.genres.required.includes(x.id));
-        var forbiddenGenres = genres.filter((x) => this.filter.genres.forbidden.includes(x.id));
-        var dialog = GenreDialog.show({
-            genres,
-            allowedGenres,
-            forbiddenGenres,
-            allowAdd: true,
-            allowRemove: true,
-            allowThreeValues: true,
-        });
-
+        var dialog = await GenreDialog.startShowingWithGenres(this.filter.genres);
         dialog.addEventListener(
             'accept',
             /** @param {CustomEvent<GenreDialogResult>} e */ (e) => {
@@ -113,25 +99,5 @@ export class MediaFilterSidebar extends LitElementBase {
                 dialog.remove();
             }
         );
-
-        dialog.addEventListener(
-            'add-genre',
-            /** @param {CustomEvent<{section, name}>} e */ async (e) => {
-                await GenreService.addGenre(e.detail.section, e.detail.name);
-                dialog.options.genres = await GenreService.getAll();
-                dialog.requestFullUpdate();
-            }
-        );
-
-        dialog.addEventListener(
-            'remove-genre',
-            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
-                await GenreService.removeGenre(e.detail.id);
-                dialog.options.genres = await GenreService.getAll();
-                dialog.requestFullUpdate();
-            }
-        );
-
-        dialog.addEventListener('decline', () => dialog.remove());
     }
 }

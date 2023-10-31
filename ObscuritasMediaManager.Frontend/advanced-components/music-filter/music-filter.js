@@ -7,7 +7,7 @@ import { Session } from '../../data/session.js';
 import { SortingDirections } from '../../data/sorting-directions.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
-import { GenreModel, MusicModel } from '../../obscuritas-media-manager-backend-client.js';
+import { MusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { MusicFilterOptions } from './music-filter-options.js';
 import { renderMusicFilterStyles } from './music-filter.css.js';
 import { renderMusicFilter } from './music-filter.html.js';
@@ -130,25 +130,7 @@ export class MusicFilter extends LitElementBase {
     }
 
     async showInstrumentFilterPopup() {
-        var instruments = Session.instruments
-            .current()
-            .map((item, index) => new GenreModel({ id: `${index}`, name: item.name, section: item.type }));
-        /** @type {GenreModel[]} */ var allowedInstruments = [];
-        /** @type {GenreModel[]} */ var forbiddenInstruments = [];
-
-        for (var key of Object.keys(this.filter.instruments.states)) {
-            if (this.filter.instruments.states[key] == CheckboxState.Require)
-                allowedInstruments.push(instruments.find((x) => x.name == key));
-            else if (this.filter.instruments.states[key] == CheckboxState.Forbid)
-                forbiddenInstruments.push(instruments.find((x) => x.name == key));
-        }
-
-        var genreDialog = GenreDialog.show({
-            genres: instruments,
-            allowedGenres: allowedInstruments,
-            forbiddenGenres: forbiddenInstruments,
-            allowThreeValues: true,
-        });
+        var genreDialog = await GenreDialog.startShowingWithInstruments(this.filter.instruments);
 
         genreDialog.addEventListener('accept', (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
             for (var key of Object.keys(this.filter.instruments.states)) {

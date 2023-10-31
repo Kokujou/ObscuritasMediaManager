@@ -649,8 +649,84 @@ export class MusicClient {
         this.http = http ? http : window;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
+    getDefault(signal) {
+        let url_ = this.baseUrl + "/api/Music/default";
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetDefault(_response);
+        });
+    }
+    processGetDefault(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        let _mappings = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = MusicModel.fromJS(resultData200, _mappings);
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    createMusicTrack(track, signal) {
+        let url_ = this.baseUrl + "/api/Music/track";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(track);
+        let options_ = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processCreateMusicTrack(_response);
+        });
+    }
+    processCreateMusicTrack(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null;
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
     createMusicTrackFromPath(trackPath, signal) {
-        let url_ = this.baseUrl + "/api/Music";
+        let url_ = this.baseUrl + "/api/Music/tracks";
         url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(trackPath);
         let options_ = {
@@ -680,6 +756,37 @@ export class MusicClient {
                 let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 result200 = KeyValuePairOfStringAndModelCreationState.fromJS(resultData200, _mappings);
                 return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    recalculateHashes(signal) {
+        let url_ = this.baseUrl + "/api/Music/recalculate-hashes";
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "POST",
+            signal,
+            headers: {}
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processRecalculateHashes(_response);
+        });
+    }
+    processRecalculateHashes(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
             });
         }
         else if (status !== 200 && status !== 204) {
@@ -733,37 +840,6 @@ export class MusicClient {
         }
         return Promise.resolve(null);
     }
-    recalculateHashes(signal) {
-        let url_ = this.baseUrl + "/api/Music/recalculate-hashes";
-        url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "POST",
-            signal,
-            headers: {}
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processRecalculateHashes(_response);
-        });
-    }
-    processRecalculateHashes(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                return;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
     get(hash, signal) {
         let url_ = this.baseUrl + "/api/Music/{hash}";
         if (hash === undefined || hash === null)
@@ -804,13 +880,13 @@ export class MusicClient {
         }
         return Promise.resolve(null);
     }
-    update(hash, _, signal) {
+    update(hash, request, signal) {
         let url_ = this.baseUrl + "/api/Music/{hash}";
         if (hash === undefined || hash === null)
             throw new Error("The parameter 'hash' must be defined.");
         url_ = url_.replace("{hash}", encodeURIComponent("" + hash));
         url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(_);
+        const content_ = JSON.stringify(request);
         let options_ = {
             body: content_,
             method: "PUT",
@@ -2294,7 +2370,7 @@ export class LyricsResponse {
         return result;
     }
 }
-export class UpdateRequestOfMusicModel {
+export class UpdateRequestOfJsonElement {
     oldModel;
     newModel;
     constructor(data) {
@@ -2307,23 +2383,23 @@ export class UpdateRequestOfMusicModel {
     }
     init(_data, _mappings) {
         if (_data) {
-            this.oldModel = _data["oldModel"] ? MusicModel.fromJS(_data["oldModel"], _mappings) : null;
-            this.newModel = _data["newModel"] ? MusicModel.fromJS(_data["newModel"], _mappings) : null;
+            this.oldModel = _data["oldModel"] !== undefined ? _data["oldModel"] : null;
+            this.newModel = _data["newModel"] !== undefined ? _data["newModel"] : null;
         }
     }
     static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        return createInstance(data, _mappings, UpdateRequestOfMusicModel);
+        return createInstance(data, _mappings, UpdateRequestOfJsonElement);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data["oldModel"] = this.oldModel ? this.oldModel.toJSON() : null;
-        data["newModel"] = this.newModel ? this.newModel.toJSON() : null;
+        data["oldModel"] = this.oldModel !== undefined ? this.oldModel : null;
+        data["newModel"] = this.newModel !== undefined ? this.newModel : null;
         return data;
     }
     clone() {
         const json = this.toJSON();
-        let result = new UpdateRequestOfMusicModel();
+        let result = new UpdateRequestOfJsonElement();
         result.init(json);
         return result;
     }

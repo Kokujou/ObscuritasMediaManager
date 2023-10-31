@@ -14,7 +14,7 @@ export function renderGenreDialog(genreDialog) {
             caption="Tags auswählen"
             acceptActionText="Speichern"
             declineActionText="Abbrechen"
-            @decline="${() => genreDialog.dispatchEvent(new CustomEvent('decline'))}"
+            @decline="${() => genreDialog.remove()}"
             @accept="${() => genreDialog.accept()}"
         >
             ${genreDialog.options.allowRemove

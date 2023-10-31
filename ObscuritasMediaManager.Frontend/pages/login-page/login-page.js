@@ -3,6 +3,7 @@ import { MessageSnackbar } from '../../native-components/message-snackbar/messag
 import { CredentialsRequest } from '../../obscuritas-media-manager-backend-client.js';
 import { LoginService } from '../../services/backend.services.js';
 import { changePage } from '../../services/extensions/url.extension.js';
+import { WelcomePage } from '../welcome-page/welcome-page.js';
 import { renderLoginPageStyles } from './login-page.css.js';
 import { renderLoginPage } from './login-page.html.js';
 
@@ -29,7 +30,7 @@ export class LoginPage extends LitElementBase {
         try {
             var token = await LoginService.login(new CredentialsRequest({ username: this.username, password: this.password }));
             if (!token) throw Error('bad token');
-            changePage('welcome');
+            changePage(WelcomePage);
         } catch {
             MessageSnackbar.popup('Benutzername oder Passwort sind falsch.', 'error');
         }

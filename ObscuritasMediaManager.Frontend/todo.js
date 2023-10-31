@@ -4,8 +4,6 @@
  * - Add Message Snackbar for all Update/Delete/Create actions
  */
 
-//TODO: implement link to start client interop
-
 //TODO: add copy-functionality also in detail page
 
 //TODO: Audio single track creation

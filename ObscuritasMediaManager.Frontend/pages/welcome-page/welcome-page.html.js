@@ -1,5 +1,5 @@
 import { html } from '../../exports.js';
-import { getPageName } from '../../services/extensions/url.extension.js';
+import { LinkElement } from '../../native-components/link-element/link-element.js';
 import { MediaPage } from '../media-page/media-page.js';
 import { MusicPage } from '../music-page/music-page.js';
 import { RecipesPage } from '../recipes-page/recipes-page.js';
@@ -10,17 +10,32 @@ export function renderWelcomePage() {
             <div id="welcome-page">
                 <div id="tile-link-area">
                     <div id="tile-link-section">
-                        <link-element .hash="${getPageName(MediaPage)}"
-                            ><image-tile caption="${MediaPage.pageName}" src="../../resources/images/real-series.png"></image-tile
-                        ></link-element>
+                        ${LinkElement.forPage(
+                            MediaPage,
+                            null,
+                            html`<image-tile
+                                caption="${MediaPage.pageName}"
+                                src="../../resources/images/real-series.png"
+                            ></image-tile>`
+                        )}
                     </div>
                     <div id="tile-link-section">
-                        <link-element .hash="${getPageName(MusicPage)}">
-                            <image-tile caption="${MusicPage.pageName}" src="../../resources/images/music.png"></image-tile
-                        ></link-element>
-                        <link-element .hash="${getPageName(RecipesPage)}">
-                            <image-tile caption="${RecipesPage.pageName}" src="../../resources/images/food.png"></image-tile
-                        ></link-element>
+                        ${LinkElement.forPage(
+                            MusicPage,
+                            null,
+                            html` <image-tile
+                                caption="${MusicPage.pageName}"
+                                src="../../resources/images/music.png"
+                            ></image-tile>`
+                        )}
+                        ${LinkElement.forPage(
+                            RecipesPage,
+                            null,
+                            html` <image-tile
+                                caption="${RecipesPage.pageName}"
+                                src="../../resources/images/food.png"
+                            ></image-tile>`
+                        )}
                     </div>
                 </div>
             </div>

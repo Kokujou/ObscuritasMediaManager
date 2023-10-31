@@ -22,7 +22,6 @@ import { InputDialog } from './dialogs/input-dialog/input-dialog.js';
 import { PlayMusicDialog } from './dialogs/play-music-dialog/play-music-dialog.js';
 import { PlaylistSelectionDialog } from './dialogs/playlist-selection-dialog/playlist-selection-dialog.js';
 import { SelectOptionsDialog } from './dialogs/select-options-dialog/select-options-dialog.js';
-import { html, TemplateResult } from './exports.js';
 import { BorderButton } from './native-components/border-button/border-button.js';
 import { ContextMenu } from './native-components/context-menu/context-menu.js';
 import { CustomToggle } from './native-components/custom-toggle/custom-toggle.js';
@@ -54,16 +53,8 @@ import { PageRouting } from './pages/page-routing/page-routing.js';
 import { RecipesPage } from './pages/recipes-page/recipes-page.js';
 import { VideoPlayerPopup } from './pages/video-player-popup/video-player-popup.js';
 import { WelcomePage } from './pages/welcome-page/welcome-page.js';
-import { getPageName } from './services/extensions/url.extension.js';
 
-/**
- * @typedef {Object} Page
- * @property {typeof LitElementBase & {isPage: boolean, pageName: string, icon: string}} element
- * @property {string} hash
- * @property {string} title
- * @property {TemplateResult} template
- * @property {string} tagName
- */
+/** @typedef {(typeof LitElementBase & {isPage: boolean})} Page */
 
 /** @type {Page[]} */ export const Pages = [];
 
@@ -72,13 +63,7 @@ window.customElements.define = (name, element) => {
     define(name, element);
     if (!element.isPage) return;
 
-    Pages.push({
-        element: element,
-        hash: getPageName(element),
-        tagName: element.name,
-        template: html([`<${name}></${name}>`]),
-        title: element.pageName,
-    });
+    Pages.push(element);
 };
 
 window.customElements.define('obscuritas-media-manager', ObscuritasMediaManager);

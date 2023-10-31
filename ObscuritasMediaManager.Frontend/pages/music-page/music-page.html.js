@@ -1,7 +1,8 @@
 import { html } from '../../exports.js';
+import { LinkElement } from '../../native-components/link-element/link-element.js';
 import { AudioService } from '../../services/audio-service.js';
 import { ClipboardService } from '../../services/clipboard.service.js';
-import { getPageName } from '../../services/extensions/url.extension.js';
+import { changePage } from '../../services/extensions/url.extension.js';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
 import { MusicPage } from './music-page.js';
 
@@ -29,7 +30,7 @@ export function renderMusicPage(musicPage) {
                     <div id="result-options">
                         <div class="option-section" id="import-section">
                             <a id="import-files" @click="${() => musicPage.importFolder()}" tooltip="Tracks importieren"></a>
-                            <a id="create-song"></a>
+                            <a id="create-song" @click="${() => changePage(MusicPlaylistPage, { createNew: true })}"></a>
                         </div>
                         <div class="option-section" id="import-section">
                             <a
@@ -89,25 +90,29 @@ export function renderMusicPage(musicPage) {
                                   (playlist) =>
                                       html`
                                           <div class="audio-link-container">
-                                              <link-element
-                                                  class="audio-tile-link"
-                                                  .hash="${getPageName(MusicPlaylistPage)}"
-                                                  .search="guid=${playlist.id}"
-                                              >
-                                                  <playlist-tile
-                                                      .playlist="${playlist}"
-                                                      @local-export="${() => musicPage.exportPlaylist('local', playlist)}"
-                                                      @global-export="${() => musicPage.exportPlaylist('global', playlist)}"
-                                                      @remove="${() => musicPage.removePlaylist(playlist)}"
-                                                  ></playlist-tile>
-                                              </link-element>
+                                              ${LinkElement.forPage(
+                                                  MusicPlaylistPage,
+                                                  { playlistId: playlist.id },
+                                                  html`
+                                                      <playlist-tile
+                                                          .playlist="${playlist}"
+                                                          @local-export="${() => musicPage.exportPlaylist('local', playlist)}"
+                                                          @global-export="${() => musicPage.exportPlaylist('global', playlist)}"
+                                                          @remove="${() => musicPage.removePlaylist(playlist)}"
+                                                      ></playlist-tile>
+                                                  `
+                                              )}
                                           </div>
                                       `
                               )}
                               ${musicPage.paginatedTracks.map(
                                   (track) =>
                                       html`
-                                          <div class="audio-link-container">
+                                          <div
+                                              class="audio-link-container"
+                                              @pointerdown="${(e) => musicPage.startSelectionModeTimer(track.hash, e)}"
+                                              @pointerup="${(e) => musicPage.stopSelectionModeTimer(track.hash, e)}"
+                                          >
                                               ${musicPage.selectionMode
                                                   ? html`<input
                                                         type="checkbox"
@@ -116,15 +121,10 @@ export function renderMusicPage(musicPage) {
                                                         @change="${(e) => musicPage.toggleTrackSelection(e.target, track.hash)}"
                                                     />`
                                                   : ''}
-                                              <link-element
-                                                  class="audio-tile-link"
-                                                  .hash="${getPageName(MusicPlaylistPage)}"
-                                                  .search="track=${track.hash}"
-                                                  ?disabled="${musicPage.selectionModeTimer == null || musicPage.selectionMode}"
-                                                  @pointerdown="${(e) => musicPage.startSelectionModeTimer(track.hash, e)}"
-                                                  @pointerup="${(e) => musicPage.stopSelectionModeTimer(track.hash, e)}"
-                                              >
-                                                  <audio-tile
+                                              ${LinkElement.forPage(
+                                                  MusicPlaylistPage,
+                                                  { trackHash: track.hash },
+                                                  html` <audio-tile
                                                       .track="${track}"
                                                       .visualizationData="${AudioService.currentTrackPath == track.path
                                                           ? AudioService.visualizationData.current()
@@ -136,8 +136,9 @@ export function renderMusicPage(musicPage) {
                                                       @hard-delete="${() => musicPage.hardDeleteTrack(track)}"
                                                       @restore="${() => musicPage.undeleteTrack(track)}"
                                                       @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
-                                                  ></audio-tile>
-                                              </link-element>
+                                                  ></audio-tile>`,
+                                                  musicPage.selectionModeTimer == null || musicPage.selectionMode
+                                              )}
                                           </div>
                                       `
                               )}

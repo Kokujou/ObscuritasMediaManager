@@ -1,210 +1,217 @@
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood.js';
+import { LitElementBase } from '../../data/lit-element-base.js';
 import { html } from '../../exports.js';
 import { Instrumentation, Mood, MusicGenre, MusicModel, Participants } from '../../obscuritas-media-manager-backend-client.js';
 import { AudioService } from '../../services/audio-service.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MusicPlaylistPage } from './music-playlist-page.js';
 
-/**
- * @param {MusicPlaylistPage} page
- */
-export function renderMusicPlaylist(page) {
-    var mood2 = page.updatedTrack.mood2 == Mood.Unset ? page.updatedTrack.mood1 : page.updatedTrack.mood2;
-    return html`
-        <style>
-            :host {
-                --primary-color: ${MoodColors[page.updatedTrack.mood1 ?? Mood.Unset]};
-                --secondary-color: ${MoodColors[mood2 ?? Mood.Unset]};
-                --font-color: ${getMoodFontColor(page.updatedTrack.mood1 ?? Mood.Unset)};
-                --secondary-font-color: ${getMoodFontColor(mood2 ?? Mood.Unset)};
-            }
-        </style>
-        ${page.moodToSwitch == 'mood1'
-            ? html`
-                  <style>
+export class MusicPlaylistPageTemplate extends LitElementBase {
+    /**
+     * @this MusicPlaylistPage
+     */
+    render() {
+        var mood2 = this.updatedTrack.mood2 == Mood.Unset ? this.updatedTrack.mood1 : this.updatedTrack.mood2;
+        return html`
+            <style>
+                :host {
+                    --primary-color: ${MoodColors[this.updatedTrack.mood1 ?? Mood.Unset]};
+                    --secondary-color: ${MoodColors[mood2 ?? Mood.Unset]};
+                    --font-color: ${getMoodFontColor(this.updatedTrack.mood1 ?? Mood.Unset)};
+                    --secondary-font-color: ${getMoodFontColor(mood2 ?? Mood.Unset)};
+                }
+            </style>
+            ${this.moodToSwitch == 'mood1'
+                ? html`
+                      <style>
+                          #mood-switcher {
+                              background: linear-gradient(var(--primary-color) 0% 100%);
+                              border: 2px solid var(--primary-color);
+                          }
+                      </style>
+                  `
+                : this.moodToSwitch == 'mood2'
+                ? html`<style>
                       #mood-switcher {
-                          background: linear-gradient(var(--primary-color) 0% 100%);
-                          border: 2px solid var(--primary-color);
+                          background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
+                          border: 2px solid var(--secondary-color);
                       }
-                  </style>
-              `
-            : page.moodToSwitch == 'mood2'
-            ? html`<style>
-                  #mood-switcher {
-                      background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
-                      border: 2px solid var(--secondary-color);
-                  }
-              </style>`
-            : ''};
+                  </style>`
+                : ''};
 
-        <page-layout>
-            <div id="music-player-container">
-                <div id="complete-checkbox">
-                    <label for="complete-check" class="label">Complete:</label>
-                    <input
-                        type="checkbox"
-                        id="complete-check"
-                        ?checked="${page.updatedTrack.complete}"
-                        oninput="this.dispatchEvent(new Event('change'))"
-                        @change="${() => page.toggleComplete()}"
-                    />
-                </div>
-                <div id="current-track-container">
-                    <div id="mood-switcher-container" ?disabled="${page.updatedTrack.complete}">
-                        <div id="mood-tabs">
-                            <div id="first-mood" class="mood-tab" @click="${() => (page.moodToSwitch = 'mood1')}"></div>
-                            <div id="second-mood" class="mood-tab" @click="${() => (page.moodToSwitch = 'mood2')}"></div>
-                        </div>
-                        <div id="mood-switcher" ?disabled="${page.updatedTrack.complete}">
-                            <scroll-select
-                                id="mood-container"
-                                .options="${Object.values(Mood)}"
-                                .value="${page.updatedTrack[page.moodToSwitch]}"
-                                @valueChanged="${(e) => page.changeProperty(page.moodToSwitch, e.detail.value)}"
-                            >
-                            </scroll-select>
-                        </div>
-                    </div>
-
-                    <div id="audio-tile-container">
-                        <audio-tile-base
-                            ?disabled="${page.updatedTrack.complete}"
-                            .track="${new MusicModel(page.updatedTrack)}"
-                            ?paused="${AudioService.paused}"
-                            .visualizationData="${AudioService.visualizationData.current()}"
-                            @imageClicked="${() => page.toggleCurrentTrack()}"
-                            @changeLanguage="${() => page.showLanguageSwitcher()}"
-                            @nextParticipants="${() =>
-                                page.changeProperty(
-                                    'participants',
-                                    Enum.nextValue(Participants, page.updatedTrack.participants)
-                                )}"
-                            @nextInstrumentation="${() =>
-                                page.changeProperty(
-                                    'instrumentation',
-                                    Enum.nextValue(Instrumentation, page.updatedTrack.instrumentation)
-                                )}"
-                            @changeRating="${(e) => page.changeProperty('rating', e.detail.rating)}"
-                            @changeInstruemnts="${() => page.openInstrumentsDialog()}"
-                        ></audio-tile-base>
-                        <div id="show-lyrics-link" @click="${() => page.showLyrics()}">Show Lyrics</div>
-                    </div>
-                    <div id="audio-control-container">
+            <page-layout>
+                <div id="music-player-container">
+                    <div id="complete-checkbox">
+                        <label for="complete-check" class="label">Complete:</label>
                         <input
-                            type="text"
-                            id="audio-title"
-                            class="editable-label"
-                            ?disabled="${page.updatedTrack.complete}"
-                            .value=" ${page.updatedTrack.name}"
-                            oninput="this.dispatchEvent(new Event('change')"
-                            @change="${(e) => page.changeProperty('name', e.currentTarget.value)}"
+                            type="checkbox"
+                            id="complete-check"
+                            ?checked="${this.updatedTrack.complete}"
+                            @change="${() => this.toggleComplete()}"
                         />
-
-                        <div id="audio-subtitle">
-                            <input
-                                type="text"
-                                id="audio-author"
-                                class="editable-label"
-                                ?disabled="${page.updatedTrack.complete}"
-                                .value="${page.updatedTrack.author}"
-                                oninput="this.dispatchEvent(new Event('change')"
-                                @change="${(e) => page.changeProperty('author', e.currentTarget.value)}"
-                            />
-                            <div id="subtitle-separator">-</div>
-                            <input
-                                type="text"
-                                id="audio-source"
-                                class="editable-label"
-                                .value="${page.updatedTrack.source || '---'}"
-                                ?disabled="${page.updatedTrack.complete}"
-                                oninput="this.dispatchEvent(new Event('change')"
-                                @change="${(e) => page.changeProperty('source', e.currentTarget.value)}"
-                            />
-                        </div>
-                        <div id="genre-section">
-                            ${page.updatedTrack.genres?.map(
-                                (genreKey) =>
-                                    html`<tag-label
-                                        .text="${MusicGenre[genreKey]}"
-                                        ?disabled="${page.updatedTrack.complete}"
-                                        @removed="${() => page.removeGenreKey(genreKey)}"
-                                    ></tag-label>`
-                            )}
-                            ${page.updatedTrack.complete
-                                ? ''
-                                : html` <tag-label
-                                      createNew
-                                      .autocomplete="${page.autocompleteGenres}"
-                                      @tagCreated="${(e) => page.addGenre(e.detail.value)}"
-                                  ></tag-label>`}
-                        </div>
-                        <div id="track-position-container">
-                            <div id="track-position-label">${page.currentTrackPositionText}</div>
-                            <range-slider
-                                id="track-position"
-                                @valueChanged="${(e) => page.changeTrackPosition(e.detail.value)}"
-                                .value="${page.currentTrackPosition.toString()}"
-                                min="0"
-                                .max="${page.currentTrackDuration.toString()}"
-                                steps="1000"
-                            ></range-slider>
-                            <div id="track-position-label">${page.currentTrackDurationText}</div>
-                        </div>
-                        <div id="audio-controls">
-                            <div id="previous-track-button" @click="${() => page.changeTrackBy(-1)}" class="audio-icon"></div>
-                            <div
-                                id="toggle-track-button"
-                                @click="${() => page.toggleCurrentTrack()}"
-                                class="audio-icon ${AudioService.paused ? 'paused' : 'playing'}"
-                            ></div>
-                            <div id="next-track-button" @click="${() => page.changeTrackBy(1)}" class="audio-icon"></div>
-
-                            <div id="change-volume-container">
-                                <div id="change-volume-button" class="audio-icon"></div>
-                                <range-slider
-                                    id="change-volume"
-                                    @valueChanged="${(e) => page.changeVolume(e.detail.value)}"
-                                    step="1"
-                                    min="0"
-                                    max="100"
-                                    .value="${`${page.currentVolume * 100}`}"
-                                ></range-slider>
+                    </div>
+                    <div id="current-track-container">
+                        <div id="mood-switcher-container" ?disabled="${this.updatedTrack.complete}">
+                            <div id="mood-tabs">
+                                <div id="first-mood" class="mood-tab" @click="${() => (this.moodToSwitch = 'mood1')}"></div>
+                                <div id="second-mood" class="mood-tab" @click="${() => (this.moodToSwitch = 'mood2')}"></div>
+                            </div>
+                            <div id="mood-switcher" ?disabled="${this.updatedTrack.complete}">
+                                <scroll-select
+                                    id="mood-container"
+                                    .options="${Object.values(Mood)}"
+                                    .value="${this.updatedTrack[this.moodToSwitch]}"
+                                    @valueChanged="${(e) => this.changeProperty(this.moodToSwitch, e.detail.value)}"
+                                >
+                                </scroll-select>
                             </div>
                         </div>
-                        <div id="change-path-container">
-                            <input disabled id="path-input" .value="${'file:\\\\\\' + page.updatedTrack.path}" />
-                            ${page.updatedTrack.complete
-                                ? ''
-                                : html`<div
-                                      id="change-path-button"
-                                      class="inline-icon"
-                                      @click="${page.changeCurrentTrackPath}"
-                                  ></div>`}
+
+                        <div id="audio-tile-container">
+                            <audio-tile-base
+                                ?disabled="${this.updatedTrack.complete}"
+                                .track="${new MusicModel(this.updatedTrack)}"
+                                ?paused="${AudioService.paused}"
+                                .visualizationData="${AudioService.visualizationData.current()}"
+                                @imageClicked="${() => this.toggleCurrentTrack()}"
+                                @changeLanguage="${() => this.showLanguageSwitcher()}"
+                                @nextParticipants="${() =>
+                                    this.changeProperty(
+                                        'participants',
+                                        Enum.nextValue(Participants, this.updatedTrack.participants)
+                                    )}"
+                                @nextInstrumentation="${() =>
+                                    this.changeProperty(
+                                        'instrumentation',
+                                        Enum.nextValue(Instrumentation, this.updatedTrack.instrumentation)
+                                    )}"
+                                @changeRating="${(e) => this.changeProperty('rating', e.detail.rating)}"
+                                @changeInstruemnts="${() => this.openInstrumentsDialog()}"
+                            ></audio-tile-base>
+                            <div id="show-lyrics-link" @click="${() => this.showLyrics()}">Show Lyrics</div>
+                        </div>
+                        <div id="audio-control-container">
+                            <input
+                                type="text"
+                                id="audio-title"
+                                class="editable-label"
+                                ?disabled="${this.updatedTrack.complete}"
+                                .value=" ${this.updatedTrack.name}"
+                                oninput="this.dispatchEvent(new Event('change'))"
+                                @change="${(e) => this.changeProperty('name', e.currentTarget.value)}"
+                            />
+
+                            <div id="audio-subtitle">
+                                <input
+                                    type="text"
+                                    id="audio-author"
+                                    class="editable-label"
+                                    ?disabled="${this.updatedTrack.complete}"
+                                    .value="${this.updatedTrack.author}"
+                                    oninput="this.dispatchEvent(new Event('change'))"
+                                    @change="${(e) => this.changeProperty('author', e.currentTarget.value)}"
+                                />
+                                <div id="subtitle-separator">-</div>
+                                <input
+                                    type="text"
+                                    id="audio-source"
+                                    class="editable-label"
+                                    .value="${this.updatedTrack.source || '---'}"
+                                    ?disabled="${this.updatedTrack.complete}"
+                                    oninput="this.dispatchEvent(new Event('change'))"
+                                    @change="${(e) => this.changeProperty('source', e.currentTarget.value)}"
+                                />
+                            </div>
+                            <div id="genre-section">
+                                ${this.updatedTrack.genres?.map(
+                                    (genreKey) =>
+                                        html`<tag-label
+                                            .text="${MusicGenre[genreKey]}"
+                                            ?disabled="${this.updatedTrack.complete}"
+                                            @removed="${() => this.removeGenreKey(genreKey)}"
+                                        ></tag-label>`
+                                )}
+                                ${this.updatedTrack.complete
+                                    ? ''
+                                    : html` <tag-label
+                                          createNew
+                                          .autocomplete="${this.autocompleteGenres}"
+                                          @tagCreated="${(e) => this.addGenre(e.detail.value)}"
+                                      ></tag-label>`}
+                            </div>
+                            <div id="track-position-container">
+                                <div id="track-position-label">${this.currentTrackPositionText}</div>
+                                <range-slider
+                                    id="track-position"
+                                    @valueChanged="${(e) => this.changeTrackPosition(e.detail.value)}"
+                                    .value="${this.currentTrackPosition.toString()}"
+                                    min="0"
+                                    .max="${this.currentTrackDuration.toString()}"
+                                    steps="1000"
+                                ></range-slider>
+                                <div id="track-position-label">${this.currentTrackDurationText}</div>
+                            </div>
+                            <div id="audio-controls">
+                                <div id="previous-track-button" @click="${() => this.changeTrackBy(-1)}" class="audio-icon"></div>
+                                <div
+                                    id="toggle-track-button"
+                                    @click="${() => this.toggleCurrentTrack()}"
+                                    class="audio-icon ${AudioService.paused ? 'paused' : 'playing'}"
+                                ></div>
+                                <div id="next-track-button" @click="${() => this.changeTrackBy(1)}" class="audio-icon"></div>
+
+                                <div id="change-volume-container">
+                                    <div id="change-volume-button" class="audio-icon"></div>
+                                    <range-slider
+                                        id="change-volume"
+                                        @valueChanged="${(e) => this.changeVolume(e.detail.value)}"
+                                        step="1"
+                                        min="0"
+                                        max="100"
+                                        .value="${`${this.currentVolume * 100}`}"
+                                    ></range-slider>
+                                </div>
+                            </div>
+                            <div id="change-path-container">
+                                <input disabled id="path-input" .value="${'file:\\\\\\' + this.updatedTrack.path}" />
+                                ${this.updatedTrack.complete
+                                    ? ''
+                                    : html`<div
+                                          id="change-path-button"
+                                          class="inline-icon"
+                                          @click="${this.changeCurrentTrackPath}"
+                                      ></div>`}
+                            </div>
                         </div>
                     </div>
+                    ${this.createNew
+                        ? html` <div id="edit-playlist-link" @click="${() => this.createTrack()}">
+                              <div id="create-track-icon"></div>
+                              <div id="edit-playlist-text">Track erstellen</div>
+                          </div>`
+                        : this.playlist.isTemporary
+                        ? html`
+                              <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
+                                  <div id="edit-playlist-icon"></div>
+                                  <div id="edit-playlist-text">Zu Playlist befördern</div>
+                              </div>
+                          `
+                        : html`
+                              <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
+                                  <div id="edit-playlist-icon"></div>
+                                  <div id="edit-playlist-text">Playlist bearbeiten</div>
+                              </div>
+                          `}
+                    <div id="media-playlist-container">
+                        <media-playlist
+                            .items="${this.playlist.tracks.map((x) => x.displayName)}"
+                            .index="${this.currentTrackIndex}"
+                            @indexChanged="${(e) => this.changeTrack(e.detail.index)}"
+                            @randomize="${() => this.randomize()}"
+                        ></media-playlist>
+                    </div>
                 </div>
-                ${page.playlist.isTemporary
-                    ? html`
-                          <div id="edit-playlist-link" @click="${() => page.openEditPlaylistDialog()}">
-                              <div id="edit-playlist-icon"></div>
-                              <div id="edit-playlist-text">Zu Playlist befördern</div>
-                          </div>
-                      `
-                    : html`
-                          <div id="edit-playlist-link" @click="${() => page.openEditPlaylistDialog()}">
-                              <div id="edit-playlist-icon"></div>
-                              <div id="edit-playlist-text">Playlist bearbeiten</div>
-                          </div>
-                      `}
-                <div id="media-playlist-container">
-                    <media-playlist
-                        .items="${page.playlist.tracks.map((x) => x.displayName)}"
-                        .index="${page.currentTrackIndex}"
-                        @indexChanged="${(e) => page.changeTrack(e.detail.index)}"
-                        @randomize="${() => page.randomize()}"
-                    ></media-playlist>
-                </div>
-            </div>
-        </page-layout>
-    `;
+            </page-layout>
+        `;
+    }
 }

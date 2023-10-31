@@ -2,7 +2,7 @@ import { LitElementBase } from '../../data/lit-element-base.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import { IngredientModel, Measurement, Nation, RecipeModel } from '../../obscuritas-media-manager-backend-client.js';
 import { RecipeService } from '../../services/backend.services.js';
-import { changePage, getPageName, getQueryValue } from '../../services/extensions/url.extension.js';
+import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
 import { RecipesPage } from '../recipes-page/recipes-page.js';
 import { renderCreateRecipePageStyles } from './create-recipe-page.css.js';
 import { renderCreateRecipePage } from './create-recipe-page.html.js';
@@ -41,6 +41,7 @@ export class CreateRecipePage extends LitElementBase {
     constructor() {
         super();
 
+        /** @type {string} */ this.recipeId = null;
         /** @type {RecipeModel} */ this.recipe = new RecipeModel();
         this.recipe.id = crypto.randomUUID();
         this.recipe.title = 'Rezepttitel';
@@ -150,7 +151,7 @@ export class CreateRecipePage extends LitElementBase {
         if (getQueryValue('recipe')) await RecipeService.updateRecipe(this.recipe);
         else await RecipeService.createRecipe(this.recipe);
 
-        changePage(getPageName(RecipesPage));
+        changePage(RecipesPage);
     }
 
     abort() {

@@ -4,7 +4,7 @@ import { Subscription } from '../../data/observable.js';
 import { Session } from '../../data/session.js';
 import { LoadingScreen } from '../../native-components/loading-screen/loading-screen.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
-import { changePage, getPageName } from '../../services/extensions/url.extension.js';
+import { changePage, getPageName, queryToObject } from '../../services/extensions/url.extension.js';
 import { WelcomePage } from '../welcome-page/welcome-page.js';
 import { renderPageRoutingStyles } from './page-routing.css.js';
 import { renderPageRouting } from './page-routing.html.js';
@@ -20,7 +20,7 @@ export class PageRouting extends LitElementBase {
         };
     }
 
-    static defaultFragment = getPageName(WelcomePage);
+    static defaultPage = WelcomePage;
 
     static get container() {
         if (!PageRouting.instance?.shadowRoot) return null;
@@ -28,8 +28,13 @@ export class PageRouting extends LitElementBase {
     }
 
     get currentPage() {
-        return Pages.find((x) => x.hash == location.hash.substr(1)) ?? Pages.find((x) => x.hash == getPageName(WelcomePage));
+        return (
+            Pages.find((x) => getPageName(x) == location.hash.substr(1)) ??
+            Pages.find((x) => getPageName(x) == getPageName(WelcomePage))
+        );
     }
+
+    /** @type {LitElementBase} */ static currentPageInstance = null;
 
     constructor() {
         super();
@@ -43,7 +48,7 @@ export class PageRouting extends LitElementBase {
         });
 
         window.onpopstate = (e) => {
-            Session.currentPage.next(this.currentPage.hash);
+            Session.currentPage.next(getPageName(this.currentPage));
         };
         window.addEventListener('resize', () => this.requestFullUpdate());
         var self = this;
@@ -64,20 +69,15 @@ export class PageRouting extends LitElementBase {
 
     firstUpdated(_changedProperties) {
         super.firstUpdated(_changedProperties);
-        Session.currentPage.next(this.currentPage.hash);
+        Session.currentPage.next(getPageName(this.currentPage));
         document.querySelector(LoadingScreen.tag).remove();
     }
 
     /** @type {PageRouting} */ static instance;
 
     changeHash(newHash) {
-        var searchString = location.search.substring(1);
-        var searchQueries = searchString.split('&');
-        if (searchQueries.length > 0) searchString = `?${searchQueries.join('&')}`;
-        else searchString = '';
-
         var newurl =
-            window.location.protocol + '//' + window.location.host + window.location.pathname + searchString + `#${newHash}`;
+            window.location.protocol + '//' + window.location.host + window.location.pathname + location.search + `#${newHash}`;
         window.history.replaceState({ path: newurl }, '', newurl);
     }
 
@@ -90,23 +90,30 @@ export class PageRouting extends LitElementBase {
         if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`))
             this.classList.add(`current-page-${newValue}`);
 
-        if (Pages.some((x) => x.hash == Session.currentPage.current())) {
+        if (Pages.some((x) => getPageName(x) == newValue)) {
+            PageRouting.currentPageInstance?.remove();
             this.changeHash(newValue);
+            var newPage = Pages.find((x) => newValue == getPageName(x));
+            PageRouting.currentPageInstance = new newPage();
+            var params = queryToObject();
+            for (var pair of Object.entries(params)) PageRouting.currentPageInstance[pair[0]] = pair[1];
+            PageRouting.container.appendChild(PageRouting.currentPageInstance);
+            await PageRouting.currentPageInstance.requestFullUpdate();
             return;
         }
 
-        changePage(PageRouting.defaultFragment);
+        changePage(PageRouting.defaultPage);
     }
 
     loadPageFromHash(e) {
         e?.preventDefault();
         var nextPage = this.currentPage;
-        if (Session.currentPage.current() != nextPage.hash) changePage(nextPage.hash);
+        var params = queryToObject();
+        if (Session.currentPage.current() != getPageName(nextPage)) changePage(nextPage, params);
     }
 
     render() {
-        if (this.currentPage.element.pageName) document.title = this.currentPage.element.pageName;
-        if (this.currentPage.element.icon) setFavicon(this.currentPage.element.icon);
+        if (this.currentPage['icon']) setFavicon(this.currentPage['icon']);
         return renderPageRouting(this);
     }
 

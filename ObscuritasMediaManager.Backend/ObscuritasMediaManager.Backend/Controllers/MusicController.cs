@@ -29,21 +29,30 @@ public class MusicController : ControllerBase
         _lyricsService = lyricsService;
     }
 
-    [HttpPost]
+    [HttpGet("default")]
+    public MusicModel GetDefault()
+    {
+        return MusicModel.CreateDefault("Neuer Track");
+    }
+
+    [HttpPost("track")]
+    public async Task<string> CreateMusicTrackAsync(MusicModel track)
+    {
+        track.CalculateHash();
+        var state = await _musicRepository.CreateTrackAsync(track);
+        if (state != ModelCreationState.Success) throw new Exception($"An error occured while creationg tag. Status: {state}");
+
+        return track.Hash;
+    }
+
+    [HttpPost("tracks")]
     public async Task<KeyValuePair<string, ModelCreationState>> CreateMusicTrackFromPathAsync([FromBody] string trackPath)
     {
         if (!System.IO.File.Exists(trackPath))
                  return new(null, ModelCreationState.Invalid);
 
-        var track = new MusicModel
-                    {
-                        Name = trackPath.Split('\\').Last(),
-                        Path = trackPath,
-                        Nation = Nation.Japanese,
-                        Language = Nation.Japanese,
-                        Instrumentation = Instrumentation.Mixed,
-                        Participants = Participants.SmallGroup,
-                    };
+        var track = MusicModel.CreateDefault(trackPath.Split('\\').Last());
+        track.Path = trackPath;
 
         if (!(await FFMPEGExtensions.HasAudioStreamAsync(track.GetNormalizedPath())))
             return new(track.Hash, ModelCreationState.Invalid);
@@ -100,10 +109,9 @@ public class MusicController : ControllerBase
     }
 
     [HttpPut("{hash}")]
-    public async Task UpdateAsync(string hash, [FromBody] UpdateRequest<MusicModel> _)
+    public async Task UpdateAsync(string hash, [FromBody] UpdateRequest<JsonElement> request)
     {
-        var deserialized = await HttpContext.ReadRequestBodyAsync<UpdateRequest<JsonElement>>(_jsonOptions);
-        await _musicRepository.UpdateAsync(hash, deserialized.OldModel, deserialized.NewModel, _jsonOptions);
+        await _musicRepository.UpdateAsync(hash, request.OldModel, request.NewModel, _jsonOptions);
     }
 
     [HttpDelete("music/soft")]

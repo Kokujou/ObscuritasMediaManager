@@ -1,6 +1,7 @@
 ﻿using ObscuritasMediaManager.ClientInterop.Requests;
 using System;
 using System.Linq;
+using System.Windows;
 
 namespace ObscuritasMediaManager.ClientInterop.Queries;
 
@@ -12,12 +13,21 @@ public class RequestFilesHandler : IQueryHandler
 
     public async Task<object?> ExecuteAsync(JsonElement? payload)
     {
-        var request = payload?.Deserialize<FilesQueryRequest>(WebSocketInterop.DefaultJsonOptions)!;
-        OpenFileDialog.Multiselect = request.Multiselect;
-        OpenFileDialog.Filter = request.GetDialogFilter();
-
-        var result = await MainWindow.Instance.Icon.Dispatcher.InvokeAsync(() => OpenFileDialog.ShowDialog());
-        if (result != DialogResult.OK) return null;
-        return OpenFileDialog.FileNames;
+        string[]? files = null;
+        App.Current.Dispatcher
+            .Invoke(
+                () =>
+                {
+                    MainWindow.Instance.Show();
+                    MainWindow.Instance.Visibility = Visibility.Hidden;
+                    var request = payload?.Deserialize<FilesQueryRequest>(WebSocketInterop.DefaultJsonOptions)!;
+                    OpenFileDialog.Multiselect = request.Multiselect;
+                    OpenFileDialog.Filter = request.GetDialogFilter();
+                    var result = OpenFileDialog.ShowDialog();
+                    MainWindow.Instance.Hide();
+                    if (result != DialogResult.OK) return;
+                    files = OpenFileDialog.FileNames;
+                });
+        return files;
     }
 }

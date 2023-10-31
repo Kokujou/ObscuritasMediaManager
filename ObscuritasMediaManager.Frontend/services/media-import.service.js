@@ -4,7 +4,7 @@ import { MediaModel, ModelCreationState } from '../obscuritas-media-manager-back
 import { MusicPlaylistPage } from '../pages/music-playlist-page/music-playlist-page.js';
 import { MediaService, MusicService, PlaylistService } from './backend.services.js';
 import { ClientInteropService } from './client-interop-service.js';
-import { changePage, getPageName } from './extensions/url.extension.js';
+import { changePage } from './extensions/url.extension.js';
 
 export class MediaImportService {
     static async importAudioFiles() {
@@ -29,7 +29,7 @@ export class MediaImportService {
             dialog.remove();
             if (affectedTrackHashs.length <= 0) return;
             var playlistId = await PlaylistService.createTemporaryPlaylist(affectedTrackHashs);
-            changePage(getPageName(MusicPlaylistPage), `?guid=${playlistId}`);
+            changePage(MusicPlaylistPage, { playlistId });
         });
     }
 

@@ -10,6 +10,18 @@ namespace ObscuritasMediaManager.Backend.Models;
 
 public class MusicModel
 {
+    public static MusicModel CreateDefault(string name)
+    {
+        return new MusicModel
+               {
+                   Name = name,
+                   Nation = Nation.Japanese,
+                   Language = Nation.Japanese,
+                   Instrumentation = Instrumentation.Mixed,
+                   Participants = Participants.SmallGroup,
+               };
+    }
+
     public static void Configure(ModelBuilder builder)
     {
         var entity = builder.Entity<MusicModel>();

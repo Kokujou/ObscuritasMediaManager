@@ -23,7 +23,7 @@ export class ClientInteropService {
                 ticks: Date.now(),
             };
 
-            while (this.socket.readyState != 1 /** open */) await waitForSeconds(0.1);
+            while (this?.socket?.readyState != 1 /** open */) await waitForSeconds(0.1);
             this.socket.send(JSON.stringify(request));
             var subscription = this.commandResponse.subscribe((x) => {
                 if (x?.ticks != request.ticks || x?.command != request.command) return;
@@ -43,7 +43,7 @@ export class ClientInteropService {
                 ticks: Date.now(),
             };
 
-            while (this.socket.readyState != 1 /** open */) await waitForSeconds(0.1);
+            while (this?.socket?.readyState != 1 /** open */) await waitForSeconds(0.1);
             this.socket.send(JSON.stringify(request));
             var subscription = this.queryResponse.subscribe((x) => {
                 if (x?.ticks != request.ticks || x?.query != request.query) return;

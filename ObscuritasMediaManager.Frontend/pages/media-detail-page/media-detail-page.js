@@ -1,20 +1,16 @@
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter.js';
-import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
-import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import {
     ContentWarning,
-    GenreModel,
     MediaModel,
     StreamingEntryModel,
     UpdateRequestOfMediaModel,
 } from '../../obscuritas-media-manager-backend-client.js';
-import { GenreService, MediaService } from '../../services/backend.services.js';
+import { MediaService } from '../../services/backend.services.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
-import { getQueryValue } from '../../services/extensions/url.extension.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
 import { VideoPlayerPopup } from '../video-player-popup/video-player-popup.js';
 import { renderMediaDetailPageStyles } from './media-detail-page.css.js';
@@ -80,6 +76,8 @@ export class MediaDetailPage extends LitElementBase {
     constructor() {
         super();
 
+        /** @type {string} */ this.mediaId = null;
+
         /** @type {MediaModel} */ this.oldMedia = null;
         /** @type {MediaModel} */ this.updatedMedia = null;
         /** @type {string[]} */ this.mediaIds = [];
@@ -94,24 +92,10 @@ export class MediaDetailPage extends LitElementBase {
             Session.mediaList.subscribe((newList) => {
                 var filter = MediaFilter.fromJSON(localStorage.getItem(`media.search`));
                 this.mediaIds = MediaFilterService.filter([...newList], filter).map((x) => x.id);
-            }),
-            Session.currentPage.subscribe(() => this.getMediaFromRoute())
+            })
         );
 
-        await this.getMediaFromRoute();
-
         setFavicon(this.updatedMedia.image, 'url');
-    }
-
-    async getMediaFromRoute() {
-        var guid = getQueryValue('guid');
-        if (!guid) return;
-        var media = await MediaService.get(guid);
-        this.oldMedia = Object.assign(new MediaModel(), media);
-        this.updatedMedia = Object.assign(new MediaModel(), media);
-
-        this.requestFullUpdate();
-        document.title = this.updatedMedia.name;
     }
 
     render() {
@@ -120,50 +104,27 @@ export class MediaDetailPage extends LitElementBase {
         return renderMediaDetailPage(this);
     }
 
-    async showGenreSelectionDialog() {
-        var genres = await GenreService.getAll();
-        var genreDialog = GenreDialog.show({
-            genres,
-            ignoredState: CheckboxState.Forbid,
-            allowedGenres: genres.filter((x) => this.updatedMedia.genres.some((genre) => genre.name == x.name)),
-            allowAdd: true,
-            allowRemove: true,
-        });
+    /**
+     * @param {Map<keyof MediaDetailPage, any>} _changedProperties
+     */
+    async updated(_changedProperties) {
+        super.updated(_changedProperties);
+        if (_changedProperties.has('mediaId')) {
+            var media = await MediaService.get(this.mediaId);
+            this.oldMedia = Object.assign(new MediaModel(), media);
+            this.updatedMedia = Object.assign(new MediaModel(), media);
 
-        genreDialog.addEventListener('decline', () => genreDialog.remove());
+            this.requestFullUpdate();
+            document.title = this.updatedMedia.name;
+        }
+    }
+
+    async showGenreSelectionDialog() {
+        var genreDialog = await GenreDialog.startShowingWithGenres(this.updatedMedia.genres);
         genreDialog.addEventListener('accept', async (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
             await this.changeProperty('genres', e.detail.acceptedGenres);
-
             genreDialog.remove();
         });
-        genreDialog.addEventListener(
-            'add-genre',
-            /** @param {CustomEvent<{name, section}>} e */ async (e) => {
-                try {
-                    await GenreService.addGenre(e.detail.section, e.detail.name);
-                    genreDialog.options.genres = await GenreService.getAll();
-                    genreDialog.requestFullUpdate();
-                    MessageSnackbar.popup('Das Genre wurde erfolgreich hinzugefügt.', 'success');
-                } catch (err) {
-                    MessageSnackbar.popup('Ein Fehler ist beim hinzufügen des Genres aufgetreten: ' + err, 'error');
-                    e.preventDefault();
-                }
-            }
-        );
-        genreDialog.addEventListener(
-            'remove-genre',
-            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
-                try {
-                    await GenreService.removeGenre(e.detail.id);
-                    genreDialog.options.genres = await GenreService.getAll();
-                    genreDialog.requestFullUpdate();
-                    MessageSnackbar.popup('Das Genre wurde erfolgreich gelöscht.', 'success');
-                } catch (err) {
-                    MessageSnackbar.popup('Ein Fehler ist beim löschen des Genres aufgetreten: ' + err, 'error');
-                    e.preventDefault();
-                }
-            }
-        );
     }
 
     /**
@@ -176,7 +137,8 @@ export class MediaDetailPage extends LitElementBase {
             var media = this.updatedMedia.clone();
             media[property] = value;
             await MediaService.updateMedia(media.id, new UpdateRequestOfMediaModel({ oldModel: this.oldMedia, newModel: media }));
-            await this.getMediaFromRoute();
+            this.updatedMedia[property] = value;
+            this.oldMedia[property] = value;
             this.requestFullUpdate();
         } catch (err) {
             console.error(err);

@@ -15,7 +15,7 @@ import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js'
 import { AudioService } from '../../services/audio-service.js';
 import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
 import { sortBy } from '../../services/extensions/array.extensions.js';
-import { changePage, getPageName } from '../../services/extensions/url.extension.js';
+import { changePage } from '../../services/extensions/url.extension.js';
 import { MediaImportService } from '../../services/media-import.service.js';
 import { MusicFilterService } from '../../services/music-filter.service.js';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
@@ -180,7 +180,7 @@ export class MusicPage extends LitElementBase {
         var playlistId = '';
         if (this.selectedHashes.length > 0) playlistId = await PlaylistService.createTemporaryPlaylist(this.selectedHashes);
         else playlistId = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash));
-        changePage(getPageName(MusicPlaylistPage), `?guid=${playlistId}&track=0`);
+        changePage(MusicPlaylistPage, { playlistId: playlistId });
     }
 
     async importFolder() {

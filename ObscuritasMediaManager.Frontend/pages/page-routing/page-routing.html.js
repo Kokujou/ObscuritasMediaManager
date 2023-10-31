@@ -32,7 +32,7 @@ export function renderPageRouting(routing) {
         </style>
         <div id="viewport">
             <div id="page-container">
-                <div id="current-page">${routing.currentPage.template ?? html`<slot></slot>`}</div>
+                <div id="current-page"><slot></slot></div>
             </div>
         </div>`;
 }

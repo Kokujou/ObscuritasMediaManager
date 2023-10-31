@@ -1,4 +1,5 @@
 import { css } from '../../exports.js';
+import { saveTickIcon } from '../../resources/inline-icons/general/save-tick-icon.svg.js';
 import { changeVolumeIcon } from '../../resources/inline-icons/music-player-icons/change-volume-icon.svg.js';
 import { fastForwardIcon } from '../../resources/inline-icons/music-player-icons/fast-forward-icon.svg.js';
 import { pauseIcon } from '../../resources/inline-icons/music-player-icons/pause-icon.svg.js';
@@ -325,6 +326,14 @@ export function renderMusicPlaylistStyles() {
             background: var(--font-color);
 
             ${renderMaskImage(editIcon())};
+        }
+
+        #create-track-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--font-color);
+
+            ${renderMaskImage(saveTickIcon())};
         }
 
         #media-playlist-container {

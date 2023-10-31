@@ -1,32 +1,32 @@
 import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher.js';
-import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
-import { LitElementBase } from '../../data/lit-element-base.js';
+import { FilesQueryRequest } from '../../client-interop/files-query-request.js';
+import { InteropQuery } from '../../client-interop/interop-query.js';
 import { Session } from '../../data/session.js';
 import { LyricsDialog } from '../../dialogs/audio-subtitle-dialog/lyrics-dialog.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
-import { InputDialog } from '../../dialogs/input-dialog/input-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
+import { property } from '../../exports.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import {
-    GenreModel,
-    InstrumentType,
     MusicGenre,
     MusicModel,
     PlaylistModel,
-    UpdateRequestOfMusicModel,
+    UpdateRequestOfJsonElement,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
 import { AudioService } from '../../services/audio-service.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
+import { ClientInteropService } from '../../services/client-interop-service.js';
 import { randomizeArray } from '../../services/extensions/array.extensions.js';
-import { openFileDialog } from '../../services/extensions/document.extensions.js';
-import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
+import { changePage } from '../../services/extensions/url.extension.js';
+import { AudioFileExtensions } from './audio-file-extensions.js';
 import { renderMusicPlaylistStyles } from './music-playlist-page.css.js';
-import { renderMusicPlaylist } from './music-playlist-page.html.js';
+import { MusicPlaylistPageTemplate } from './music-playlist-page.html.js';
 
-export class MusicPlaylistPage extends LitElementBase {
+export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
+    static pageName = 'music-playlist-page';
     static isPage = true;
     static icon = noteIcon();
 
@@ -76,6 +76,11 @@ export class MusicPlaylistPage extends LitElementBase {
 
     constructor() {
         super();
+        /** @type {string} */ this.playlistId = null;
+        /** @type {string} */ this.trackHash = null;
+        /** @type {number} */ this.trackIndex = 0;
+        /** @type {boolean} */ this.createNew = false;
+
         /** @type {PlaylistModel} */ this.playlist = new PlaylistModel({ tracks: [] });
         /** @type {number} */ this.currentTrackIndex = 0;
         /** @type {MusicModel} */ this.currentTrack = new MusicModel();
@@ -85,8 +90,6 @@ export class MusicPlaylistPage extends LitElementBase {
         /** @type {number} */ this.hoveredRating = 0;
         /** @type {keyof MusicModel & ('mood1' | 'mood2')} */ this.moodToSwitch = 'mood1';
         /** @type {boolean} */ this.loop = false;
-
-        this.initializeData();
     }
 
     connectedCallback() {
@@ -94,20 +97,8 @@ export class MusicPlaylistPage extends LitElementBase {
         var localStorageVolume = localStorage.getItem('volume');
         if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume));
 
-        document.onvisibilitychange = async () => {
-            await this.updateTrack();
-        };
-
         this.subscriptions.push(
             Session.currentPage.subscribe((nextPage) => {
-                if (
-                    AudioService.paused ||
-                    AudioService.trackPosition.current() <= 0 ||
-                    nextPage == 'music' ||
-                    nextPage == 'music-playlist'
-                )
-                    return;
-
                 PlayMusicDialog.show(this.currentTrack, this.currentVolume, AudioService.trackPosition.current());
             }),
             AudioService.ended.subscribe(() => {
@@ -117,32 +108,28 @@ export class MusicPlaylistPage extends LitElementBase {
         );
 
         window.addEventListener('hashchange', (e) => {
-            if (
-                AudioService.paused ||
-                AudioService.trackPosition.current() <= 0 ||
-                location.hash == 'music' ||
-                location.hash == 'music-playlist'
-            )
-                return;
-
             PlayMusicDialog.show(this.currentTrack, this.currentVolume, AudioService.trackPosition.current() ?? 0);
         });
 
         this.subscriptions.push(AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
+        this.initializeData();
     }
 
     async initializeData() {
-        var playlistId = getQueryValue('guid');
-        var trackId = getQueryValue('track');
-
-        if (!playlistId) {
-            var currentTrack = await MusicService.get(trackId);
+        if (this.createNew) {
+            this.playlist = new PlaylistModel({
+                tracks: [await MusicService.getDefault()],
+                isTemporary: true,
+                genres: [],
+            });
+        } else if (!this.playlistId) {
+            var currentTrack = await MusicService.get(this.trackHash);
             this.playlist = new PlaylistModel({ tracks: [new MusicModel(currentTrack)], isTemporary: true, genres: [] });
             this.currentTrackIndex = 0;
         } else {
-            this.playlist = await PlaylistService.getPlaylist(playlistId);
+            this.playlist = await PlaylistService.getPlaylist(this.playlistId);
             this.playlist.tracks = this.playlist.tracks.map((x) => new MusicModel(x));
-            this.currentTrackIndex = Number.parseInt(trackId ?? '0');
+            this.currentTrackIndex = this.trackIndex;
         }
 
         this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
@@ -152,13 +139,14 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     render() {
-        if (this.playlist?.isTemporary || !this.playlist?.name) document.title = this.currentTrack.displayName;
-        else document.title = this.playlist.name + ' - ' + this.currentTrack.name;
-        if (this.currentTrackIndex) document.title = this.currentTrack.displayName;
-        return renderMusicPlaylist(this);
+        if (this.createNew) document.title = 'Neuer Track' + (this.updatedTrack.name ? ` - ${this.updatedTrack.name}` : '');
+        else if (this.playlist?.isTemporary || !this.playlist?.name) document.title = this.updatedTrack.displayName;
+        else document.title = this.playlist.name + ' - ' + this.updatedTrack.name;
+        return super.render();
     }
 
     async toggleCurrentTrack() {
+        if (!this.updatedTrack.path) return await MessageSnackbar.popup('Kein Pfad ausgewählt', 'error');
         try {
             if (AudioService.paused) await AudioService.play();
             else await AudioService.pause();
@@ -167,17 +155,6 @@ export class MusicPlaylistPage extends LitElementBase {
         }
 
         this.requestFullUpdate();
-    }
-
-    async updateTrack() {
-        if (JSON.stringify(this.currentTrack) == JSON.stringify(this.updatedTrack)) return;
-
-        await MusicService.update(
-            this.currentTrack.hash,
-            new UpdateRequestOfMusicModel({ newModel: this.updatedTrack, oldModel: this.currentTrack })
-        );
-        Object.assign(this.currentTrack, this.updatedTrack);
-        this.playlist.tracks[this.currentTrackIndex] = this.updatedTrack;
     }
 
     async changeTrackBy(offset) {
@@ -193,13 +170,12 @@ export class MusicPlaylistPage extends LitElementBase {
      * @returns
      */
     async changeTrack(index) {
-        await this.updateTrack();
         if (this.playlist.tracks.length == 1) return;
         this.currentTrackIndex = index;
         this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
 
-        changePage(Session.currentPage.current(), `?guid=${this.playlist.id}&track=${this.currentTrackIndex}`, false);
+        changePage(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.currentTrackIndex }, false);
 
         await this.requestFullUpdate();
         await AudioService.changeTrack(this.currentTrack);
@@ -217,17 +193,24 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     /**
-     * @param {keyof  MusicModel} property
-     * @param {any} value
+     * @template {keyof MusicModel} T
+     * @param {T} property
+     * @param {MusicModel[T]} value
      */
     async changeProperty(property, value) {
-        if (property == 'displayName' || property == 'instruments' || property == 'instrumentTypes') return;
-        if (property == 'rating') this.updatedTrack[property] = value;
-        else if (property == 'complete') this.updatedTrack[property] = value;
-        else {
-            /** @type {any} */ (this.updatedTrack[property]) = value;
+        if (!this.currentTrack.hash) {
+            this.updatedTrack[property] = value;
+            await this.requestFullUpdate();
+            return;
         }
 
+        /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
+
+        oldModel[property] = this.updatedTrack[property];
+        newModel[property] = value;
+        await MusicService.update(this.updatedTrack.hash, new UpdateRequestOfJsonElement({ oldModel, newModel }));
+
+        this.updatedTrack[property] = value;
         await this.requestFullUpdate();
     }
 
@@ -258,50 +241,16 @@ export class MusicPlaylistPage extends LitElementBase {
         this.changeProperty('genres', newGenres);
     }
 
-    openInstrumentsDialog() {
-        var instruments = Session.instruments
-            .current()
-            .map((item, index) => new GenreModel({ id: `${index}`, name: item.name, section: item.type }));
-        var allowedInstruments = this.updatedTrack.instruments.map(
-            (instrument, index) => new GenreModel({ id: `${index}`, name: instrument.name, section: instrument.type })
-        );
-        var genreDialog = GenreDialog.show({
-            genres: instruments,
-            allowedGenres: allowedInstruments,
-            ignoredState: CheckboxState.Forbid,
-            allowAdd: true,
-            allowRemove: true,
-        });
+    async openInstrumentsDialog() {
+        var genreDialog = await GenreDialog.startShowingWithInstruments(this.updatedTrack.instruments);
         genreDialog.addEventListener('accept', (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
             var instruments = e.detail.acceptedGenres.map((x) => x.name);
-            this.requestFullUpdate();
-            this.changeProperty('instruments', instruments);
+            this.changeProperty(
+                'instruments',
+                Session.instruments.current().filter((i) => instruments.includes(i.name))
+            );
             genreDialog.remove();
         });
-        genreDialog.addEventListener('decline', () => {
-            genreDialog.remove();
-        });
-        genreDialog.addEventListener(
-            'add-genre',
-            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
-                await MusicService.addInstrument(/** @type {InstrumentType} */ (e.detail.section), e.detail.name);
-                genreDialog.options.genres.push(
-                    new GenreModel({ id: e.detail.name, name: e.detail.name, section: e.detail.section })
-                );
-                Session.instruments.next(await MusicService.getInstruments());
-
-                genreDialog.requestFullUpdate();
-            }
-        );
-        genreDialog.addEventListener(
-            'remove-genre',
-            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
-                await MusicService.removeInstrument(/** @type {InstrumentType} */ (e.detail.section), e.detail.name);
-                genreDialog.options.genres = genreDialog.options.genres.filter((x) => x.name != e.detail.name);
-                Session.instruments.next(await MusicService.getInstruments());
-                genreDialog.requestFullUpdate();
-            }
-        );
     }
 
     async openEditPlaylistDialog() {
@@ -315,14 +264,16 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     async changeCurrentTrackPath() {
-        var files = await openFileDialog();
-        if (!files || files.length <= 0 || !files[0].name) return;
-        var basePath = await InputDialog.show('Bitte den Basispfad des ausgewählten Ordners eingeben:');
-        if (!basePath) return;
+        var extensions = { 'Audio-Files': AudioFileExtensions };
+        /** @type {string[]} */ var filePaths = await ClientInteropService.executeQuery({
+            query: InteropQuery.RequestFiles,
+            payload: /** @type {FilesQueryRequest} */ ({ multiselect: false, nameExtensionMap: extensions }),
+        });
+        if (!filePaths || filePaths.length != 1) return;
 
-        if (!basePath.endsWith('\\')) basePath += '\\';
-        this.updatedTrack.path = basePath + files[0].name;
+        this.updatedTrack.path = filePaths[0];
         this.requestFullUpdate();
+        AudioService.changeTrack(this.updatedTrack);
     }
 
     randomize() {
@@ -333,43 +284,20 @@ export class MusicPlaylistPage extends LitElementBase {
 
     async showLyrics() {
         try {
-            var offset = -1;
-            if (this.currentTrack.lyrics?.length > 0)
-                var dialog = await LyricsDialog.startShowing(
-                    this.currentTrack.displayName,
-                    this.currentTrack.lyrics,
-                    AudioService,
-                    false
-                );
-            else {
-                offset = 0;
-                var lyrics = await MusicService.getLyrics(this.currentTrack.hash);
-                var dialog = await LyricsDialog.startShowing(lyrics.title, lyrics.text, AudioService, true);
-            }
-
-            dialog.addEventListener('playlist-saved', async () => {
-                this.updatedTrack.lyrics = dialog.lyrics;
-                await this.updateTrack();
-            });
-
-            dialog.addEventListener('request-new-lyrics', async () => {
-                offset++;
-                try {
-                    var newLyrics = await MusicService.getLyrics(this.currentTrack.hash, offset);
-                    dialog.updateLyrics(newLyrics.title, newLyrics.text);
-                } catch {
-                    dialog.canNext = false;
-                    dialog.requestFullUpdate();
-                }
-            });
+            var dialog = await LyricsDialog.startShowing(this.currentTrack, AudioService, true);
+            dialog.addEventListener('playlist-saved', async () => await this.changeProperty('lyrics', dialog.lyrics));
         } catch {
             MessageSnackbar.popup('Es konnten leider keine passenden Lyrics gefunden werden.', 'error');
         }
     }
 
+    async createTrack() {
+        var trackHash = await MusicService.createMusicTrack(this.updatedTrack);
+        changePage(MusicPlaylistPage, { trackHash });
+    }
+
     async disconnectedCallback() {
         await super.disconnectedCallback();
         await AudioService.reset();
-        await this.updateTrack();
     }
 }

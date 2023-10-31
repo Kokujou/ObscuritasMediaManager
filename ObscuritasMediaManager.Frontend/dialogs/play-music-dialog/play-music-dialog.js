@@ -21,7 +21,14 @@ export class PlayMusicDialog extends LitElementBase {
      * @param {number} startPosition
      */
     static show(track, initialVolume, startPosition) {
-        if (!track?.path) return;
+        if (
+            AudioService.paused ||
+            AudioService.trackPosition.current() <= 0 ||
+            location.hash == 'music' ||
+            location.hash == 'music-playlist' ||
+            !track?.path
+        )
+            return;
 
         if (this.instance) {
             this.instance.reinitialize(track, initialVolume, startPosition);

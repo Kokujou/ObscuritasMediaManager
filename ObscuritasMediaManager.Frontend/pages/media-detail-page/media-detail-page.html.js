@@ -1,6 +1,7 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
+import { LinkElement } from '../../native-components/link-element/link-element.js';
 import {
     ContentWarning,
     MediaCategory,
@@ -77,8 +78,10 @@ export function renderMediaDetailPage(detailPage) {
                         </div>
                     </div>
                     <div id="right-panel">
-                        <link-element id="prev-link" search="guid=${detailPage.prevMediaId}">&LeftArrow; Letzer</link-element>
-                        <link-element id="next-link" search="guid=${detailPage.nextMediaId}">Nächster &RightArrow;</link-element>
+                        ${LinkElement.forPage(this, {}, html`&LeftArrow; Letzer`)}
+                        ${LinkElement.forPage(this, {}, html`Nächster &RightArrow;`)}
+                        <link-element id="prev-link" search="guid=${detailPage.prevMediaId}"></link-element>
+                        <link-element id="next-link" search="guid=${detailPage.nextMediaId}"></link-element>
 
                         <div id="media-heading">
                             <div

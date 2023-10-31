@@ -12,7 +12,6 @@ public class FilesQueryRequest
 
     public string GetDialogFilter()
     {
-        return string.Join(
-            "|", NameExtensionMap.Select(filter => $"{filter.Key}|{filter.Value.Select(ext => string.Join(";", ext))}"));
+        return string.Join("|", NameExtensionMap.Select(filter => $"{filter.Key}|{string.Join(";", filter.Value)}"));
     }
 }
