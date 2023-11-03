@@ -1,4 +1,3 @@
-import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { css } from '../../exports.js';
 import { importIcon } from '../../resources/inline-icons/general/import-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
@@ -194,8 +193,6 @@ export function renderCreateRecipePageStyles() {
 
             cursor: pointer;
         }
-
-        ${renderLanguageFlags()}
 
         #description-area {
             display: flex;

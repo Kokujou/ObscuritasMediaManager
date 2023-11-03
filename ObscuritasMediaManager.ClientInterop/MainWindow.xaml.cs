@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using Serilog;
+using Serilog.Events;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -34,5 +36,15 @@ public partial class MainWindow : Window
         server.Start();
 
         ProtocolRegistrationService.RegisterProtocol();
+
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo
+            .File(
+                @"C:\LogFiles\ObscuritasMediaManager\Backend.log", LogEventLevel.Warning, retainedFileCountLimit: 2,
+                rollingInterval: RollingInterval.Day)
+            .CreateLogger();
+
+        AppDomain.CurrentDomain.UnhandledException += (_, e) => Log.Error(e.ExceptionObject.ToString() ?? string.Empty);
+        System.Windows.Forms.Application.ThreadException += (_, e) => Log.Error(e.Exception.ToString() ?? string.Empty);
     }
 }

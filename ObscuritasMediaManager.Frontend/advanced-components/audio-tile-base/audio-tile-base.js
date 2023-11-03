@@ -62,7 +62,7 @@ export class AudioTileBase extends LitElementBase {
         this.canvasContext.lineTo(x, this.canvas.height / 2);
 
         for (let i = 0; i < this.visualizationData.length; i++) {
-            const y = this.canvas.height / 2 + this.visualizationData[i] * this.canvas.height;
+            const y = this.canvas.height / 2 + this.visualizationData[i] * (this.canvas.height / 2);
             this.canvasContext.lineTo(x, y);
             x += sliceWidth;
         }

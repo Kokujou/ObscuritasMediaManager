@@ -1912,6 +1912,7 @@ export var Nation;
     Nation["Russian"] = "Russian";
     Nation["SouthAmerican"] = "SouthAmerican";
     Nation["African"] = "African";
+    Nation["Korean"] = "Korean";
 })(Nation || (Nation = {}));
 export var Instrumentation;
 (function (Instrumentation) {

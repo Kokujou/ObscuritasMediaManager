@@ -3,6 +3,7 @@ import { InteropCommandResponse } from '../client-interop/interop-command-respon
 import { InteropEventResponse } from '../client-interop/interop-event-response.js';
 import { InteropQueryRequest } from '../client-interop/interop-query-request.js';
 import { InteropQueryResponse } from '../client-interop/interop-query-response.js';
+import { ResponseStatus } from '../client-interop/response-status.js';
 import { Observable } from '../data/observable.js';
 import { waitForSeconds } from './extensions/animation.extension.js';
 
@@ -17,7 +18,7 @@ export class ClientInteropService {
      * @param {Omit<InteropCommandRequest, 'ticks'>} command
      */
     static sendCommand(command) {
-        return new Promise(async (resolve) => {
+        return new Promise(async (resolve, reject) => {
             /** @type {InteropCommandRequest} */ var request = {
                 ...command,
                 ticks: Date.now(),
@@ -28,7 +29,8 @@ export class ClientInteropService {
             var subscription = this.commandResponse.subscribe((x) => {
                 if (x?.ticks != request.ticks || x?.command != request.command) return;
                 subscription.unsubscribe();
-                resolve();
+                if (x.status == ResponseStatus.Success) resolve();
+                else reject(x.message);
             });
         });
     }
@@ -37,7 +39,7 @@ export class ClientInteropService {
      * @param {Omit<InteropQueryRequest, 'ticks'>} query
      */
     static executeQuery(query) {
-        return new Promise(async (resolve) => {
+        return new Promise(async (resolve, reject) => {
             /** @type {InteropQueryRequest} */ var request = {
                 ...query,
                 ticks: Date.now(),
@@ -48,7 +50,8 @@ export class ClientInteropService {
             var subscription = this.queryResponse.subscribe((x) => {
                 if (x?.ticks != request.ticks || x?.query != request.query) return;
                 subscription.unsubscribe();
-                resolve(x.result);
+                if (x.status == ResponseStatus.Success) resolve(x.result);
+                else reject(x.message);
             });
         });
     }

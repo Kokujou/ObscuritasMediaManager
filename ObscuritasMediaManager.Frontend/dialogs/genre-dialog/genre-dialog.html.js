@@ -15,7 +15,7 @@ export function renderGenreDialog(genreDialog) {
             acceptActionText="Speichern"
             declineActionText="Abbrechen"
             @decline="${() => genreDialog.remove()}"
-            @accept="${() => genreDialog.accept()}"
+            @accept="${(e) => genreDialog.accept(e)}"
         >
             ${genreDialog.options.allowRemove
                 ? html` <div id="remove-toggle">

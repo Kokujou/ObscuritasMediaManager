@@ -1,20 +1,22 @@
-import { html } from '../../../exports.js';
+import { unsafeCSS } from '../../../exports.js';
 import { TargetGroup } from '../../../obscuritas-media-manager-backend-client.js';
 import { renderMaskImage } from '../../../services/extensions/style.extensions.js';
 import { crossIcon } from '../../inline-icons/general/cross-icon.svg.js';
 
 export function registerTargetGroups() {
-    return html` <style>
-        *[target-group]{
-         ${renderMaskImage(crossIcon())};
+    return unsafeCSS(`
+        *[target-group] {
+            ${renderMaskImage(crossIcon())};
         }
 
         ${Object.values(TargetGroup).map(
-            (group) => `*[target-group="${group}"] {
-                mask: url("${getTargetGroupIconPath(group)}") 100% 100% / 100% 100%;
-            }`
+            (group) => `
+                *[target-group='${group}'] {
+                    mask: url('${getTargetGroupIconPath(group)}') 100% 100% / 100% 100%;
+                }
+            `
         )}
-    </style>`;
+    `);
 }
 
 /**

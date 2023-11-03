@@ -93,6 +93,7 @@ export class GenreDialog extends LitElementBase {
             options.allowThreeValues = true;
         } else {
             options.allowedGenres = instrumentsOrFilter.map(instrumentToGenre);
+            options.ignoredState = CheckboxState.Forbid;
         }
 
         var dialog = GenreDialog.#show(options);
@@ -184,7 +185,11 @@ export class GenreDialog extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    accept() {
+    /**
+     * @param {Event} e
+     */
+    accept(e) {
+        e.stopPropagation();
         var result = new GenreDialogResult();
         result.acceptedGenres = this.options.allowedGenres;
         result.forbiddenGenres = this.options.forbiddenGenres;

@@ -28,8 +28,9 @@ export function changePage(target, params = {}, reflectInHistory = true) {
     var paramEntries = Object.entries(params ?? {});
     if (paramEntries.length > 0) search = '?' + paramEntries.map((x) => `${x[0]}=${x[1]}`).join('&');
     var newUrl = '/' + search + `#${target}`;
-    if (reflectInHistory) history.pushState(null, '', newUrl);
-    else history.replaceState(null, '', newUrl);
+    if (reflectInHistory) {
+        history.pushState(null, '', newUrl);
+    } else history.replaceState(null, '', newUrl);
     Session.currentPage.next(getPageName(target));
 }
 

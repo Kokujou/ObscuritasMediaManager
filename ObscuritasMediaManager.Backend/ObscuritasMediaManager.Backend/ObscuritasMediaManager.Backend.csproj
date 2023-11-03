@@ -24,20 +24,20 @@
 		<PackageReference Include="MediaInfo.Core.Native" Version="21.9.1" />
 		<PackageReference Include="MediaInfoDotNet" Version="0.7.79.40925" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" /> <!--if you remove this, you will die--> 
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-rc.2.23480.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-rc.2.23480.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.9" />
-		<PackageReference Include="Serialize.Linq" Version="3.0.134" />
-		<PackageReference Include="Serilog" Version="3.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0-rc.2.23480.1" />
+		<PackageReference Include="Serialize.Linq" Version="3.0.148" />
+		<PackageReference Include="Serilog" Version="3.1.0-dev-02086" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
-		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00968" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
 		<PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
-		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="7.0.1" />
+		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0-rc.2.23479.6" />
 		<PackageReference Include="Xabe.FFmpeg" Version="5.2.6" />
 	</ItemGroup>
 

@@ -9,8 +9,6 @@ import {
     Nation,
     TargetGroup,
 } from '../../obscuritas-media-manager-backend-client.js';
-import { registerContentWarnings } from '../../resources/icons/content-warnings/register-content-warnings.js';
-import { registerTargetGroups } from '../../resources/icons/target-groups/register-target-groups.js';
 import { IconRegistry } from '../../resources/inline-icons/icon-registry.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MediaDetailPage } from './media-detail-page.js';
@@ -25,9 +23,6 @@ export function renderMediaDetailPage(detailPage) {
                 background-image: url(${detailPage.updatedMedia.image});
             }
         </style>
-        ${registerContentWarnings()};
-        <!-- -->
-        ${registerTargetGroups()};
 
         <div
             id="edit-button"
@@ -78,10 +73,20 @@ export function renderMediaDetailPage(detailPage) {
                         </div>
                     </div>
                     <div id="right-panel">
-                        ${LinkElement.forPage(this, {}, html`&LeftArrow; Letzer`)}
-                        ${LinkElement.forPage(this, {}, html`Nächster &RightArrow;`)}
-                        <link-element id="prev-link" search="guid=${detailPage.prevMediaId}"></link-element>
-                        <link-element id="next-link" search="guid=${detailPage.nextMediaId}"></link-element>
+                        ${LinkElement.forPage(
+                            MediaDetailPage,
+                            { mediaId: detailPage.prevMediaId },
+                            html`&LeftArrow; Letzer`,
+                            false,
+                            'prev-link'
+                        )}
+                        ${LinkElement.forPage(
+                            MediaDetailPage,
+                            { mediaId: detailPage.nextMediaId },
+                            html`Nächster &RightArrow;`,
+                            false,
+                            'next-link'
+                        )}
 
                         <div id="media-heading">
                             <div

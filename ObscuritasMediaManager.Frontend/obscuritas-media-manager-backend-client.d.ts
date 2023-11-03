@@ -229,7 +229,8 @@ export declare enum Nation {
     Italian = "Italian",
     Russian = "Russian",
     SouthAmerican = "SouthAmerican",
-    African = "African"
+    African = "African",
+    Korean = "Korean"
 }
 export declare enum Instrumentation {
     Unset = "Unset",

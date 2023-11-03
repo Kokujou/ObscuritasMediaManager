@@ -14,43 +14,43 @@ import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderInstrumentTypeIcons(parentSelector) {
     return css`
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Unset)} {
+        *[instrument-type='${unsafeCSS(InstrumentType.Unset)}'] {
             ${renderMaskImage(unsetIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Vocal)} {
+        *[instrument-type='${unsafeCSS(InstrumentType.Vocal)}'] {
             ${renderMaskImage(microphoneIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Brass)} {
+        *[instrument-type='${unsafeCSS(InstrumentType.Brass)}'] {
             ${renderMaskImage(brassIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.WoodWind)} {
+        *[instrument-type='${unsafeCSS(InstrumentType.WoodWind)}'] {
             ${renderMaskImage(woodWindIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Keyboard)} {
+        *[instrument-type='${unsafeCSS(InstrumentType.Keyboard)}'] {
             ${renderMaskImage(keyboardIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Electronic)} {
+        *[instrument-type='${unsafeCSS(InstrumentType.Electronic)}'] {
             ${renderMaskImage(electronicIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Percussion)} {
+        *[instrument-type='${unsafeCSS(InstrumentType.Percussion)}'] {
             ${renderMaskImage(percussionIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Stringed)} {
+        *[instrument-type='${unsafeCSS(InstrumentType.Stringed)}'] {
             ${renderMaskImage(stringsIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.HumanBody)} {
+        *[instrument-type='${unsafeCSS(InstrumentType.HumanBody)}'] {
             ${renderMaskImage(humanBodyIcon())};
         }
 
-        ${unsafeCSS(parentSelector)}.${unsafeCSS(InstrumentType.Miscellaneous)} {
+        *[instrument-type='${unsafeCSS(InstrumentType.Miscellaneous)}'] {
             ${renderMaskImage(miscIcon())};
         }
     `;

@@ -24,8 +24,8 @@ export class PlayMusicDialog extends LitElementBase {
         if (
             AudioService.paused ||
             AudioService.trackPosition.current() <= 0 ||
-            location.hash == 'music' ||
-            location.hash == 'music-playlist' ||
+            location.hash == '#music' ||
+            location.hash == '#music-playlist' ||
             !track?.path
         )
             return;

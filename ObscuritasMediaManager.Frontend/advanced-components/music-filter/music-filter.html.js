@@ -319,13 +319,14 @@ export function renderMusicFilter(musicFilter) {
                 </div>
                 <side-scroller>
                     ${Object.values(Participants).map(
-                        (type) =>
+                        (participants) =>
                             html` <tri-value-checkbox
                                 class="icon-container"
-                                @valueChanged="${(e) => musicFilter.setFilterEntryValue('participants', type, e.detail.value)}"
-                                .value="${musicFilter.filter.participants.states[type]}"
+                                @valueChanged="${(e) =>
+                                    musicFilter.setFilterEntryValue('participants', participants, e.detail.value)}"
+                                .value="${musicFilter.filter.participants.states[participants]}"
                             >
-                                <div class="inline-icon ${type}"></div>
+                                <div class="inline-icon" participants="${participants}"></div>
                             </tri-value-checkbox>`
                     )}
                 </side-scroller>

@@ -4,10 +4,6 @@
  * - Add Message Snackbar for all Update/Delete/Create actions
  */
 
-//TODO: add copy-functionality also in detail page
-
-//TODO: Audio single track creation
-
 //TODO: Media page finalization
 /**
  * - think about icons for language
@@ -40,7 +36,6 @@
 //TODO: fix next track playing if not finished loading
 //TODO: add text to language switcher to indicate whether you're changing nation/language
 //TODO: fix broken language icon in music page
-//TODO: refactor the route-system
 //TODO: refactor the update-system
 //TODO: think about removing nations. probably doesn't make sense and/or is already reflected in the genre-list
 
@@ -56,5 +51,4 @@
  *      main ingredient: noodles, meat, fish, rice, bread, ...
  * - important properties: time (to prepare, to cook, total), difficulty, rating, genres?, tags?
  *      - tagging system to create new tags
- *
  */

@@ -1,6 +1,3 @@
-import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-types.js';
-import { renderLanguageFlags } from '../../data/enumerations/nation.js';
-import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
 import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 import { pauseIcon } from '../../resources/inline-icons/music-player-icons/pause-icon.svg.js';
@@ -61,8 +58,6 @@ export function renderAudioTileBaseStyles() {
             mask: linear-gradient(115deg, white 0 50%, transparent 50% 100%);
         }
 
-        ${renderLanguageFlags()}
-
         #instrumentation-button {
             position: absolute;
             left: 7.5%;
@@ -113,8 +108,6 @@ export function renderAudioTileBaseStyles() {
             bottom: 20%;
         }
 
-        ${renderParticipantCountIcon('#participant-count-button')}
-
         #instruments-container {
             position: absolute;
             bottom: 5%;
@@ -138,8 +131,6 @@ export function renderAudioTileBaseStyles() {
             font-size: 24px;
             text-decoration: underline;
         }
-
-        ${renderInstrumentTypeIcons('#instruments-container ')}
 
         #audio-visualization {
             position: absolute;

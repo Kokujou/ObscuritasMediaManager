@@ -72,8 +72,15 @@ public class WebSocketInterop : WebSocketBehavior
     {
         var deserialized = JsonSerializer.Deserialize<InteropCommandRequest>(serialized, DefaultJsonOptions)!;
         var commandHandler = CommandHandlers[deserialized.Command];
-        await commandHandler.ExecuteAsync(deserialized.Payload);
-        RespondOnCommand(deserialized, ResponseStatus.Success);
+        try
+        {
+            await commandHandler.ExecuteAsync(deserialized.Payload);
+            RespondOnCommand(deserialized, ResponseStatus.Success);
+        }
+        catch (Exception ex)
+        {
+            RespondOnCommand(deserialized, ResponseStatus.Error, ex.ToString());
+        }
     }
 
     private void RespondOnCommand(InteropCommandRequest request, ResponseStatus status, string? message = null)
@@ -95,8 +102,15 @@ public class WebSocketInterop : WebSocketBehavior
     {
         var deserialized = JsonSerializer.Deserialize<InteropQueryRequest>(serialized, DefaultJsonOptions)!;
         var queryHandler = QueryHandlers[deserialized.Query];
-        var result = await queryHandler.ExecuteAsync(deserialized.Payload);
-        RespondOnQuery(deserialized, result, ResponseStatus.Success);
+        try
+        {
+            var result = await queryHandler.ExecuteAsync(deserialized.Payload);
+            RespondOnQuery(deserialized, result, ResponseStatus.Success);
+        }
+        catch (Exception ex)
+        {
+            RespondOnQuery(deserialized, null, ResponseStatus.Error, ex.Message);
+        }
     }
 
     private void RespondOnQuery(InteropQueryRequest request, object? result, ResponseStatus status, string? message = null)

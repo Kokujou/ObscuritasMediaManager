@@ -1,4 +1,9 @@
-import { LitElement } from '../exports.js';
+import { css, LitElement } from '../exports.js';
+import { registerContentWarnings } from '../resources/icons/content-warnings/register-content-warnings.js';
+import { registerTargetGroups } from '../resources/icons/target-groups/register-target-groups.js';
+import { renderInstrumentTypeIcons } from './enumerations/instrument-types.js';
+import { renderLanguageFlags } from './enumerations/nation.js';
+import { renderParticipantCountIcon } from './enumerations/participants.js';
 import { Subscription } from './observable.js';
 
 export class LitElementBase extends LitElement {
@@ -7,6 +12,15 @@ export class LitElementBase extends LitElement {
         /** @type {Subscription[]} */ this.subscriptions = [];
         this.abortController = new AbortController();
         /** @type {Element[]} */ this.elementsWithTooltips = [];
+        this.shadowRoot.adoptedStyleSheets.push(
+            css`
+                ${renderLanguageFlags()}
+                ${renderParticipantCountIcon()}
+                ${registerContentWarnings()}
+                ${registerTargetGroups()}
+                ${renderInstrumentTypeIcons()}
+            `.styleSheet
+        );
     }
 
     async requestFullUpdate() {

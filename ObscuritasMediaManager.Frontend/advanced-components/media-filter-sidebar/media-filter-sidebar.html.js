@@ -2,8 +2,6 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
 import { ContentWarning, MediaCategory, Nation, TargetGroup } from '../../obscuritas-media-manager-backend-client.js';
-import { registerContentWarnings } from '../../resources/icons/content-warnings/register-content-warnings.js';
-import { registerTargetGroups } from '../../resources/icons/target-groups/register-target-groups.js';
 import { IconRegistry } from '../../resources/inline-icons/icon-registry.js';
 import { MediaFilterSidebar } from './media-filter-sidebar.js';
 import { MediaFilter } from './media-filter.js';
@@ -14,9 +12,6 @@ import { MediaFilter } from './media-filter.js';
 export function renderMediaFilterSidebar(sidebar) {
     if (!sidebar.filter) return;
     return html`
-        ${registerContentWarnings()}
-        <!-- -->
-        ${registerTargetGroups()}
         <div id="heading">
             <div id="heading-text">Suche</div>
             <div class="icon-button reset-button" @click="${() => sidebar.resetFilter()}"></div>

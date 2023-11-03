@@ -1,0 +1,20 @@
+export function koreaFlag() {
+    return `
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-30 -30 60 60" style="background-color: white">
+    <g transform="rotate(-56.31)">
+      <g id="b">
+        <path id="a" d="M-6-26H6v2H-6zm0 3H6v2H-6zm0 3H6v2H-6z"/>
+        <use xlink:href="#a" y="44"/>
+      </g>
+      <path stroke="#fff" d="M0 17v10"/>
+      <path fill="#cd2e3a" d="M0-12a12 12 0 0 1 0 24z"/>
+      <path fill="#0047a0" d="M0-12a12 12 0 0 0 0 24A6 6 0 0 0 0 0z"/>
+      <circle cy="-6" r="6" fill="#cd2e3a"/>
+    </g>
+    <g transform="rotate(-123.69)">
+      <use xlink:href="#b"/>
+      <path stroke="#fff" d="M0-23.5v3M0 17v3.5m0 3v3"/>
+    </g>
+  </svg>
+  `;
+}

@@ -33,7 +33,7 @@ export function renderMediaPageTemplate(page) {
                               ${page.filteredMedia.map((media) =>
                                   LinkElement.forPage(
                                       MediaDetailPage,
-                                      {},
+                                      { mediaId: media.id },
                                       html`
                                           <media-tile
                                               .genres="${media.genres || []}"

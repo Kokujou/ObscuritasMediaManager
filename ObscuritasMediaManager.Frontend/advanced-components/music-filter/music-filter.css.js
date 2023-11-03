@@ -1,6 +1,3 @@
-import { renderInstrumentTypeIcons } from '../../data/enumerations/instrument-types.js';
-import { renderLanguageFlags } from '../../data/enumerations/nation.js';
-import { renderParticipantCountIcon } from '../../data/enumerations/participants.js';
 import { css } from '../../exports.js';
 import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
@@ -136,10 +133,6 @@ export function renderMusicFilterStyles() {
             margin-left: 20px;
         }
 
-        ${renderInstrumentTypeIcons('#instrument-type-filter ')}
-        ${renderLanguageFlags()}
-        ${renderParticipantCountIcon('#participant-count-filter ')}
-        
         #sorting-container {
             display: inline-flex;
             flex-direction: row;

@@ -1,3 +1,4 @@
+import { clipboardIcon } from '../../advanced-components/upload-area/images/clipboard-icon.svg.js';
 import { css } from '../../exports.js';
 import { saveTickIcon } from '../../resources/inline-icons/general/save-tick-icon.svg.js';
 import { changeVolumeIcon } from '../../resources/inline-icons/music-player-icons/change-volume-icon.svg.js';
@@ -23,8 +24,8 @@ export function renderMusicPlaylistStyles() {
             position: absolute;
             left: 50px;
             right: 50px;
-            top: 50px;
-            bottom: 50px;
+            top: 20px;
+            bottom: 20px;
             display: flex;
             flex-direction: column;
 
@@ -196,6 +197,7 @@ export function renderMusicPlaylistStyles() {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+            gap: 10px;
         }
 
         tag-label {
@@ -352,6 +354,10 @@ function renderAudioPlayerIcons() {
             width: 50px;
             height: 50px;
             cursor: pointer;
+        }
+
+        #copy-track-button {
+            ${renderMaskImage(clipboardIcon())};
         }
 
         #previous-track-button {

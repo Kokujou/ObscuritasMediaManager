@@ -58,3 +58,11 @@ export function union(...params) {
     if (params.length == 1) return params[0];
     return Array.from(new Set(params.flatMap((x) => x)));
 }
+
+/**
+ * @template T
+ * @param {T[]} array
+ */
+export function distinct(array) {
+    return array.filter((value, index) => array.indexOf(value) === index);
+}

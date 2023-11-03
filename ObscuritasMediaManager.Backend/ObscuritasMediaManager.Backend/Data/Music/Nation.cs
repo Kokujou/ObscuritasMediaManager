@@ -12,5 +12,6 @@ public enum Nation
     Italian,
     Russian,
     SouthAmerican,
-    African
+    African,
+    Korean
 }

@@ -26,8 +26,8 @@ export class LinkElement extends LitElementBase {
      * @param {TemplateResult} inner
      * @param {boolean} [disabled]
      */
-    static forPage(page, params, inner, disabled) {
-        return html`<link-element .page="${page}" .params="${params}" ?disabled="${disabled}">${inner}</link-element>`;
+    static forPage(page, params, inner, disabled, id = '') {
+        return html`<link-element id="${id}" .page="${page}" .params="${params}" ?disabled="${disabled}">${inner}</link-element>`;
     }
 
     get fullLink() {

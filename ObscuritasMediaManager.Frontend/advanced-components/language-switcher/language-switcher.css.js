@@ -1,4 +1,3 @@
-import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { css } from '../../exports.js';
 import { saveTickIcon } from '../../resources/inline-icons/general/save-tick-icon.svg.js';
 import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
@@ -56,8 +55,6 @@ export function renderLanguageSwitcherStyles() {
             transition: all 0.5s ease-out;
             pointer-events: none;
         }
-
-        ${renderLanguageFlags()}
 
         #confirm-button {
             position: absolute;

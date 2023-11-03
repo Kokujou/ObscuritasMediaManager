@@ -37,6 +37,7 @@ public class MusicRepository
 
         actual.UpdateFromJson(old, updated, serializerOptions);
         await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
     }
 
     public async Task UpdateAsync(string hash, Action<MusicModel> update)
@@ -159,6 +160,7 @@ public class MusicRepository
     public async Task SoftDeleteTracksAsync(IEnumerable<string> trackHashes)
     {
         await _context.Music
+            .IgnoreAutoIncludes()
             .Where(x => trackHashes.Contains(x.Hash))
             .ExecuteUpdateAsync(builder => builder.SetProperty(x => x.Deleted, x => true));
     }

@@ -1,12 +1,30 @@
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { html } from '../../exports.js';
-import { Instrumentation, Mood, MusicGenre, MusicModel, Participants } from '../../obscuritas-media-manager-backend-client.js';
+import {
+    Instrumentation,
+    Mood,
+    MusicGenre,
+    MusicModel,
+    Participants,
+    PlaylistModel,
+} from '../../obscuritas-media-manager-backend-client.js';
 import { AudioService } from '../../services/audio-service.js';
+import { ClipboardService } from '../../services/clipboard.service.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MusicPlaylistPage } from './music-playlist-page.js';
 
 export class MusicPlaylistPageTemplate extends LitElementBase {
+    /** @protected @type {PlaylistModel} */ playlist = new PlaylistModel({ tracks: [] });
+    /** @protected @type {number} */ trackIndex = 0;
+    /** @protected @type {MusicModel} */ currentTrack = new MusicModel();
+    /** @protected @type {MusicModel} */ updatedTrack = new MusicModel();
+    /** @protected @type {number} */ currentVolume = 0.1;
+    /** @protected @type {number} */ maxPlaylistItems = 20;
+    /** @protected @type {number} */ hoveredRating = 0;
+    /** @protected @type {keyof MusicModel & ('mood1' | 'mood2')} */ moodToSwitch = 'mood1';
+    /** @type {boolean} */ loop = false;
+
     /**
      * @this MusicPlaylistPage
      */
@@ -85,7 +103,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                         'instrumentation',
                                         Enum.nextValue(Instrumentation, this.updatedTrack.instrumentation)
                                     )}"
-                                @changeRating="${(e) => this.changeProperty('rating', e.detail.rating)}"
+                                @changeRating="${(e) => this.changeProperty('rating', e.detail)}"
                                 @changeInstruemnts="${() => this.openInstrumentsDialog()}"
                             ></audio-tile-base>
                             <div id="show-lyrics-link" @click="${() => this.showLyrics()}">Show Lyrics</div>
@@ -95,8 +113,9 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                 type="text"
                                 id="audio-title"
                                 class="editable-label"
+                                tooltip="Name"
                                 ?disabled="${this.updatedTrack.complete}"
-                                .value=" ${this.updatedTrack.name}"
+                                .value="${this.updatedTrack.name}"
                                 oninput="this.dispatchEvent(new Event('change'))"
                                 @change="${(e) => this.changeProperty('name', e.currentTarget.value)}"
                             />
@@ -109,6 +128,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                     ?disabled="${this.updatedTrack.complete}"
                                     .value="${this.updatedTrack.author}"
                                     oninput="this.dispatchEvent(new Event('change'))"
+                                    tooltip="Autor"
                                     @change="${(e) => this.changeProperty('author', e.currentTarget.value)}"
                                 />
                                 <div id="subtitle-separator">-</div>
@@ -116,6 +136,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                     type="text"
                                     id="audio-source"
                                     class="editable-label"
+                                    tooltip="Quelle"
                                     .value="${this.updatedTrack.source || '---'}"
                                     ?disabled="${this.updatedTrack.complete}"
                                     oninput="this.dispatchEvent(new Event('change'))"
@@ -152,6 +173,12 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                 <div id="track-position-label">${this.currentTrackDurationText}</div>
                             </div>
                             <div id="audio-controls">
+                                <div
+                                    id="copy-track-button"
+                                    class="audio-icon"
+                                    tooltip="In Zwischenablage kopieren"
+                                    @click="${() => ClipboardService.copyAudioToClipboard(this.currentTrack)}"
+                                ></div>
                                 <div id="previous-track-button" @click="${() => this.changeTrackBy(-1)}" class="audio-icon"></div>
                                 <div
                                     id="toggle-track-button"
@@ -205,7 +232,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                     <div id="media-playlist-container">
                         <media-playlist
                             .items="${this.playlist.tracks.map((x) => x.displayName)}"
-                            .index="${this.currentTrackIndex}"
+                            .index="${this.trackIndex}"
                             @indexChanged="${(e) => this.changeTrack(e.detail.index)}"
                             @randomize="${() => this.randomize()}"
                         ></media-playlist>

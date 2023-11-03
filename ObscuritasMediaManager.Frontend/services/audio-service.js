@@ -68,38 +68,76 @@ export class AudioService {
         }
     }, true);
 
+    static async reinitialize() {
+        try {
+            await ClientInteropService.executeQuery({ query: InteropQuery.LoadTrack, payload: this.currentTrackPath });
+            await ClientInteropService.sendCommand({
+                command: InteropCommand.ChangeTrackPosition,
+                payload: this.trackPosition.current(),
+            });
+        } catch (err) {
+            console.error('reinitializing track failed:', err);
+        }
+    }
+
     /**
      * @param {MusicModel} track
      */
     static async changeTrack(track) {
         if (!track?.path) return;
-        await ClientInteropService.executeQuery({ query: InteropQuery.LoadTrack, payload: track.path });
-        await this.changeVolume(this.volume);
+
+        try {
+            await ClientInteropService.executeQuery({ query: InteropQuery.LoadTrack, payload: track.path });
+            await this.changeVolume(this.volume);
+        } catch (err) {
+            console.error('initializing track failed:', err);
+        }
     }
 
     static async play() {
-        await ClientInteropService.sendCommand({ command: InteropCommand.ResumeTrack, payload: null });
+        try {
+            await ClientInteropService.sendCommand({ command: InteropCommand.ResumeTrack, payload: null });
+        } catch (err) {
+            console.error('playing audio failed, trying to reinitialize:', err);
+            await this.reinitialize();
+        }
     }
 
     static async pause() {
-        await ClientInteropService.sendCommand({ command: InteropCommand.PauseTrack, payload: null });
+        try {
+            await ClientInteropService.sendCommand({ command: InteropCommand.PauseTrack, payload: null });
+        } catch (err) {
+            console.error('pausing audio failed:', err);
+        }
     }
 
     static async reset() {
-        await ClientInteropService.sendCommand({ command: InteropCommand.StopTrack, payload: null });
+        try {
+            await ClientInteropService.sendCommand({ command: InteropCommand.StopTrack, payload: null });
+        } catch (err) {
+            console.error('resetting audio failed:', err);
+        }
     }
 
     /**
      * @param {number} value
      */
     static async changeVolume(value) {
-        await ClientInteropService.sendCommand({ command: InteropCommand.ChangeTrackVolume, payload: value });
+        try {
+            await ClientInteropService.sendCommand({ command: InteropCommand.ChangeTrackVolume, payload: value });
+        } catch (err) {
+            console.error('changing volume failed:', err);
+        }
     }
 
     /**
      * @param {number} value
      */
     static async changePosition(value) {
-        await ClientInteropService.sendCommand({ command: InteropCommand.ChangeTrackPosition, payload: value });
+        try {
+            await ClientInteropService.sendCommand({ command: InteropCommand.ChangeTrackPosition, payload: value });
+        } catch (err) {
+            console.error('changing track position failed:', err);
+        }
     }
 }

@@ -36,7 +36,8 @@ export function renderAudioTileBase(audioTile) {
                 ?disabled="${audioTile.disabled}"
                 @click="${(e) => audioTile.dispatchEvent(new CustomEvent('nextParticipants', { bubbles: true, composed: true }))}"
                 id="participant-count-button"
-                class="inline-icon ${audioTile.track.participants}"
+                class="inline-icon"
+                participants="${audioTile.track.participants}"
             ></div>
             <svg
                 id="instrumentation-button"
@@ -82,7 +83,7 @@ export function renderAudioTileBase(audioTile) {
             >
                 ${audioTile.track.instrumentTypes?.length == 0 ? html`<a id="add-instruments-link">Add Instruments</a>` : ''}
                 ${audioTile.track.instrumentTypes?.map(
-                    (instrument) => html` <div class="instrument-icon inline-icon ${instrument}"></div> `
+                    (instrument) => html` <div class="instrument-icon inline-icon" instrument-type="${instrument}"></div> `
                 )}
             </div>
         </div>

@@ -30,5 +30,6 @@ public enum MusicGenre
     Ballad,
     FilmMusic,
     Western,
-    Christmas
+    Christmas,
+    Enka
 }

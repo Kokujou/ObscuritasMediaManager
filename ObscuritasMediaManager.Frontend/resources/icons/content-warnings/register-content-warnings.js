@@ -1,21 +1,22 @@
-import { html } from '../../../exports.js';
+import { unsafeCSS } from '../../../exports.js';
 import { ContentWarning } from '../../../obscuritas-media-manager-backend-client.js';
 
 /**
  * @description Will load the specified resource as background-image (no-mask), uses the attribute "content-warning"
  */
 export function registerContentWarnings() {
-    return html`<style>
-        ${Object.values(ContentWarning)
+    return unsafeCSS(
+        Object.values(ContentWarning)
             .map(
                 (warning) => `
-            *[content-warning='${warning}'] {
-                mask: url("${getContentWarningIconPath(warning)}") 100% 100% / 100% 100%;
-            }
-        `
+                        *[content-warning='${warning}'] {
+                            mask: url('${getContentWarningIconPath(warning)}') 100% 100% / 100% 100%;
+                            -webkit-mask: url('${getContentWarningIconPath(warning)}') 100% 100% / 100% 100%;
+                        }
+                    `
             )
-            .join('')}
-    </style>`;
+            .join('')
+    );
 }
 
 /**

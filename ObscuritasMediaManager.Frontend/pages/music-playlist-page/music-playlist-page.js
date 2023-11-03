@@ -7,7 +7,6 @@ import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.resu
 import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
-import { property } from '../../exports.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import {
     MusicGenre,
@@ -19,7 +18,7 @@ import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js'
 import { AudioService } from '../../services/audio-service.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
 import { ClientInteropService } from '../../services/client-interop-service.js';
-import { randomizeArray } from '../../services/extensions/array.extensions.js';
+import { distinct, randomizeArray } from '../../services/extensions/array.extensions.js';
 import { changePage } from '../../services/extensions/url.extension.js';
 import { AudioFileExtensions } from './audio-file-extensions.js';
 import { renderMusicPlaylistStyles } from './music-playlist-page.css.js';
@@ -55,7 +54,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     }
 
     get currentTrackDuration() {
-        return AudioService.duration;
+        return AudioService.duration ?? 0;
     }
 
     get currentTrackPositionText() {
@@ -80,16 +79,6 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         /** @type {string} */ this.trackHash = null;
         /** @type {number} */ this.trackIndex = 0;
         /** @type {boolean} */ this.createNew = false;
-
-        /** @type {PlaylistModel} */ this.playlist = new PlaylistModel({ tracks: [] });
-        /** @type {number} */ this.currentTrackIndex = 0;
-        /** @type {MusicModel} */ this.currentTrack = new MusicModel();
-        /** @type {MusicModel} */ this.updatedTrack = new MusicModel();
-        /** @type {number} */ this.currentVolume = 0.1;
-        /** @type {number} */ this.maxPlaylistItems = 20;
-        /** @type {number} */ this.hoveredRating = 0;
-        /** @type {keyof MusicModel & ('mood1' | 'mood2')} */ this.moodToSwitch = 'mood1';
-        /** @type {boolean} */ this.loop = false;
     }
 
     connectedCallback() {
@@ -102,7 +91,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
                 PlayMusicDialog.show(this.currentTrack, this.currentVolume, AudioService.trackPosition.current());
             }),
             AudioService.ended.subscribe(() => {
-                if (this.currentTrackIndex + 1 >= this.playlist.tracks.length && !this.loop) return;
+                if (this.trackIndex + 1 >= this.playlist.tracks.length && !this.loop) return;
                 this.changeTrackBy(1);
             }, true)
         );
@@ -125,16 +114,16 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         } else if (!this.playlistId) {
             var currentTrack = await MusicService.get(this.trackHash);
             this.playlist = new PlaylistModel({ tracks: [new MusicModel(currentTrack)], isTemporary: true, genres: [] });
-            this.currentTrackIndex = 0;
+            this.trackIndex = 0;
         } else {
             this.playlist = await PlaylistService.getPlaylist(this.playlistId);
             this.playlist.tracks = this.playlist.tracks.map((x) => new MusicModel(x));
-            this.currentTrackIndex = this.trackIndex;
+            this.trackIndex = this.trackIndex;
         }
 
-        this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
-        this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
-        await AudioService.changeTrack(this.currentTrack);
+        this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
+        this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
+        AudioService.changeTrack(this.currentTrack);
         await this.requestFullUpdate();
     }
 
@@ -157,8 +146,11 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         this.requestFullUpdate();
     }
 
+    /**
+     * @param {number} offset
+     */
     async changeTrackBy(offset) {
-        var index = this.currentTrackIndex + offset;
+        var index = this.trackIndex + offset;
         if (index < 0) index = this.playlist.tracks.length - 1;
         if (index >= this.playlist.tracks.length) index = 0;
         await this.changeTrack(index);
@@ -170,12 +162,13 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
      * @returns
      */
     async changeTrack(index) {
+        console.trace('test');
         if (this.playlist.tracks.length == 1) return;
-        this.currentTrackIndex = index;
-        this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
-        this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.currentTrackIndex]);
+        this.trackIndex = index;
+        this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
+        this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
 
-        changePage(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.currentTrackIndex }, false);
+        changePage(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.trackIndex }, false);
 
         await this.requestFullUpdate();
         await AudioService.changeTrack(this.currentTrack);
@@ -198,19 +191,17 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
      * @param {MusicModel[T]} value
      */
     async changeProperty(property, value) {
-        if (!this.currentTrack.hash) {
-            this.updatedTrack[property] = value;
-            await this.requestFullUpdate();
-            return;
+        if (this.updatedTrack.hash) {
+            /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
+            oldModel[property] = this.updatedTrack[property];
+            newModel[property] = value;
+            await MusicService.update(this.updatedTrack.hash, new UpdateRequestOfJsonElement({ oldModel, newModel }));
         }
-
-        /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
-
-        oldModel[property] = this.updatedTrack[property];
-        newModel[property] = value;
-        await MusicService.update(this.updatedTrack.hash, new UpdateRequestOfJsonElement({ oldModel, newModel }));
-
         this.updatedTrack[property] = value;
+        if (property == 'instruments') {
+            this.updatedTrack.instrumentNames = this.updatedTrack.instruments.map((x) => x.name);
+            this.updatedTrack.instrumentTypes = distinct(this.updatedTrack.instruments.map((x) => x.type));
+        }
         await this.requestFullUpdate();
     }
 
@@ -278,7 +269,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
     randomize() {
         this.playlist.tracks = randomizeArray(this.playlist.tracks);
-        this.currentTrackIndex = 0;
+        this.trackIndex = 0;
         this.requestFullUpdate();
     }
 

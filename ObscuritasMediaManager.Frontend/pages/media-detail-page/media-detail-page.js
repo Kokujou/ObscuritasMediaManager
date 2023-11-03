@@ -94,8 +94,6 @@ export class MediaDetailPage extends LitElementBase {
                 this.mediaIds = MediaFilterService.filter([...newList], filter).map((x) => x.id);
             })
         );
-
-        setFavicon(this.updatedMedia.image, 'url');
     }
 
     render() {
@@ -109,13 +107,14 @@ export class MediaDetailPage extends LitElementBase {
      */
     async updated(_changedProperties) {
         super.updated(_changedProperties);
-        if (_changedProperties.has('mediaId')) {
+        if (this.mediaId != this.updatedMedia?.id) {
             var media = await MediaService.get(this.mediaId);
             this.oldMedia = Object.assign(new MediaModel(), media);
             this.updatedMedia = Object.assign(new MediaModel(), media);
 
             this.requestFullUpdate();
             document.title = this.updatedMedia.name;
+            setFavicon(this.updatedMedia.image, 'url');
         }
     }
 

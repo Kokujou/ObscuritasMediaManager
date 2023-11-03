@@ -53,8 +53,7 @@ export function renderMediaDetailPageStyles() {
             margin-left: 60px;
         }
 
-        #next-link,
-        #prev-link {
+        link-element {
             position: absolute;
             top: 20px;
             font-weight: bold;
@@ -71,8 +70,7 @@ export function renderMediaDetailPageStyles() {
             right: 20px;
         }
 
-        #next-link:hover,
-        #prev-link:hover {
+        link-element {
             text-decoration: underline;
         }
 

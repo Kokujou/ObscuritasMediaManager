@@ -1,4 +1,3 @@
-import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { css } from '../../exports.js';
 import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
@@ -75,8 +74,6 @@ export function renderPlaylistTileStyles() {
         #language-icon {
             mask: linear-gradient(115deg, white 0 50%, transparent 50% 100%);
         }
-
-        ${renderLanguageFlags()}
 
         #rating-container {
             position: absolute;

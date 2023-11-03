@@ -1,4 +1,5 @@
 {
+    "buildOptions": {},
     "compilerOptions": {
         "module": "esnext",
         "target": "esnext",

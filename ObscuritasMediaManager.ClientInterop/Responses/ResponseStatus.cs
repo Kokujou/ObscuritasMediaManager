@@ -8,4 +8,5 @@ namespace ObscuritasMediaManager.ClientInterop.Responses;
 public enum ResponseStatus
 {
     Success = 200,
+    Error = 400,
 }

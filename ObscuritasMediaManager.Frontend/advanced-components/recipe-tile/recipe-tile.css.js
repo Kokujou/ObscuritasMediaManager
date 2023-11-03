@@ -1,4 +1,3 @@
-import { renderLanguageFlags } from '../../data/enumerations/nation.js';
 import { css } from '../../exports.js';
 
 export function renderRecipeTileStyles() {
@@ -72,7 +71,5 @@ export function renderRecipeTileStyles() {
             font-weight: bold;
             font-size: 24px;
         }
-
-        ${renderLanguageFlags()};
     `;
 }

@@ -142,6 +142,8 @@ export class MusicPage extends LitElementBase {
     }
 
     render() {
+        document.title = 'Musik';
+        if (this.currentTrack?.path && !AudioService.paused) document.title += ` - ${this.currentTrack.displayName}`;
         return renderMusicPage(this);
     }
 

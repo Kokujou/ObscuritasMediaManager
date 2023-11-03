@@ -1,4 +1,8 @@
 
+using Concentus.Oggfile;
+using Concentus.Structs;
+using System.IO;
+
 namespace ObscuritasMediaManager.ClientInterop.Services;
 
 public static class AudioService
@@ -11,16 +15,12 @@ public static class AudioService
 
     public static float[] VisualizationData = new float[0];
     public static WaveOutEvent player = new WaveOutEvent();
-    private static MediaFoundationReader? reader;
+    private static WaveStream? reader;
     private static AudioVisualizer? visualizer;
 
     public static void Pause()
     {
-        try
-        {
-            player.Pause();
-        }
-        catch { }
+        player.Pause();
     }
 
     public static void Play()
@@ -32,41 +32,53 @@ public static class AudioService
         catch
         {
             Stop();
+            throw;
         }
     }
 
     public static void Stop()
     {
-        try
-        {
-            player.Stop();
-            SetPosition(TimeSpan.Zero);
-        }
-        catch { }
+        player.Stop();
+        SetPosition(TimeSpan.Zero);
     }
 
     public static void ChangeTrack(string trackPath)
     {
+        if (trackPath is null) throw new ArgumentNullException(nameof(trackPath));
+        Stop();
+        player = new WaveOutEvent();
+        reader?.Dispose();
+
         try
         {
-            if (trackPath is null) return;
-            player.Stop();
-            reader?.Dispose();
-            player.Dispose();
-            player = new WaveOutEvent();
             reader = new MediaFoundationReader(trackPath);
-            if (visualizer is null)
-            {
-                visualizer = new AudioVisualizer(reader.ToSampleProvider());
-                visualizer.Samples.Subscribe(x => VisualizationData = x.newValue ?? new float[0]);
-            }
-            else
-                visualizer.Initialize(reader.ToSampleProvider());
-            visualizer.Reset();
-            player.Init(visualizer);
-            TrackPath = trackPath;
         }
-        catch { }
+        catch
+        {
+            var fileIn = File.OpenRead(trackPath);
+            var pcmStream = new MemoryStream();
+
+            var decoder = OpusDecoder.Create(48000, 1);
+            var oggIn = new OpusOggReadStream(decoder, fileIn);
+            while (oggIn.HasNextPacket)
+            {
+                var packet = oggIn.DecodeNextPacket();
+                if (packet != null)
+                    for (var i = 0; i < packet.Length; i++)
+                    {
+                        var bytes = BitConverter.GetBytes(packet[i]);
+                        pcmStream.Write(bytes, 0, bytes.Length);
+                    }
+            }
+            pcmStream.Position = 0;
+            reader = new RawSourceWaveStream(pcmStream, new WaveFormat(48000, 1));
+        }
+
+        visualizer = new AudioVisualizer(reader.ToSampleProvider());
+        visualizer.Samples.Subscribe(x => VisualizationData = x.newValue ?? new float[0]);
+        visualizer.Reset();
+        player.Init(visualizer);
+        TrackPath = trackPath;
     }
 
     public static bool Paused()
