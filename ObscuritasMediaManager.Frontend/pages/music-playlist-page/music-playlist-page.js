@@ -128,9 +128,11 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     }
 
     render() {
-        if (this.createNew) document.title = 'Neuer Track' + (this.updatedTrack.name ? ` - ${this.updatedTrack.name}` : '');
-        else if (this.playlist?.isTemporary || !this.playlist?.name) document.title = this.updatedTrack.displayName;
-        else document.title = this.playlist.name + ' - ' + this.updatedTrack.name;
+        var title = '';
+        if (this.createNew) title = 'Neuer Track' + (this.updatedTrack.name ? ` - ${this.updatedTrack.name}` : '');
+        else if (this.playlist?.isTemporary || !this.playlist?.name) title = this.updatedTrack.displayName;
+        else title = this.playlist.name + ' - ' + this.updatedTrack.name;
+        if (document.title != title) document.title = title;
         return super.render();
     }
 
@@ -162,7 +164,6 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
      * @returns
      */
     async changeTrack(index) {
-        console.trace('test');
         if (this.playlist.tracks.length == 1) return;
         this.trackIndex = index;
         this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);

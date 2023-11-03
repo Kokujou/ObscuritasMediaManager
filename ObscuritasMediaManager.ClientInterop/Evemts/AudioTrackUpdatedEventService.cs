@@ -42,9 +42,10 @@ public static class AudioTrackUpdatedEventService
         Started = true;
         AudioService.player.PlaybackStopped += (_, _) =>
         {
+            if (AudioService.GetCurrentTrackDuration() <= AudioService.GetCurrentTrackPosition())
+                foreach (var client in WebSocketInterop.Clients.Values.ToList())
+                    client.InvokeEvent(new() { Event = InteropEvent.TrackEnded, Payload = null });
             AudioService.Stop();
-            foreach (var client in WebSocketInterop.Clients.Values.ToList())
-                client.InvokeEvent(new() { Event = InteropEvent.TrackEnded, Payload = null });
         };
     }
 
