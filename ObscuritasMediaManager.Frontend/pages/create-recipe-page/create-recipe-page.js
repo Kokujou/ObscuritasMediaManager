@@ -1,6 +1,6 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
-import { IngredientModel, Measurement, Nation, RecipeModel } from '../../obscuritas-media-manager-backend-client.js';
+import { IngredientModel, Language, Measurement, RecipeModel } from '../../obscuritas-media-manager-backend-client.js';
 import { RecipeService } from '../../services/backend.services.js';
 import { changePage, getQueryValue } from '../../services/extensions/url.extension.js';
 import { RecipesPage } from '../recipes-page/recipes-page.js';
@@ -46,7 +46,7 @@ export class CreateRecipePage extends LitElementBase {
         this.recipe.id = crypto.randomUUID();
         this.recipe.title = 'Rezepttitel';
         this.recipe.ingredients = [];
-        this.recipe.nation = Nation.Unset;
+        this.recipe.nation = Language.Unset;
         this.recipe.difficulty = 0;
         this.recipe.rating = 0;
         this.recipe.formattedText = 'Dein Rezept-Text';

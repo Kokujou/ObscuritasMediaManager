@@ -6,9 +6,9 @@ import { DropDownOption } from '../../native-components/drop-down/drop-down-opti
 import {
     Instrumentation,
     InstrumentType,
+    Language,
     Mood,
     MusicGenre,
-    Nation,
     Participants,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
@@ -111,7 +111,7 @@ export function renderMusicFilter(musicFilter) {
                     ></div>
                 </div>
                 <side-scroller>
-                    ${Object.values(Nation).map(
+                    ${Object.values(Language).map(
                         (type) =>
                             html` <tri-value-checkbox
                                 @valueChanged="${(e) => musicFilter.setFilterEntryValue('languages', type, e.detail.value)}"
@@ -119,33 +119,6 @@ export function renderMusicFilter(musicFilter) {
                                 .value="${musicFilter.filter.languages.states[type]}"
                             >
                                 <div class="inline-icon " language="${type}"></div>
-                            </tri-value-checkbox>`
-                    )}
-                </side-scroller>
-            </div>
-            <div id="nation-filter" class="filter">
-                <div class="filter-heading">
-                    <div class="heading-label">Herkunftsland:</div>
-                    <div
-                        class="icon-button"
-                        icon="${Icons.SelectAll}"
-                        @click="${() => musicFilter.setArrayFilter('nations', CheckboxState.Require)}"
-                    ></div>
-                    <div
-                        class="icon-button"
-                        icon="${Icons.UnselectAll}"
-                        @click="${() => musicFilter.setArrayFilter('nations', CheckboxState.Forbid)}"
-                    ></div>
-                </div>
-                <side-scroller>
-                    ${Object.values(Nation).map(
-                        (type) =>
-                            html` <tri-value-checkbox
-                                class="icon-container"
-                                @valueChanged="${(e) => musicFilter.setFilterEntryValue('nations', type, e.detail.value)}"
-                                .value="${musicFilter.filter.nations.states[type]}"
-                            >
-                                <div class="inline-icon" nation="${type}"></div>
                             </tri-value-checkbox>`
                     )}
                 </side-scroller>

@@ -1,10 +1,7 @@
 import { css } from '../../exports.js';
-import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
 export function renderMediaPlaylistStyles() {
     return css`
-        ${registerIcons()}
-
         :host {
             position: relative;
             width: 100%;

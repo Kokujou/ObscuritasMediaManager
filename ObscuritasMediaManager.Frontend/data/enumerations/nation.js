@@ -1,5 +1,5 @@
 import { css, unsafeCSS } from '../../exports.js';
-import { Nation } from '../../obscuritas-media-manager-backend-client.js';
+import { Language } from '../../obscuritas-media-manager-backend-client.js';
 import { africaFlag } from '../../resources/inline-icons/language-icons/africa-flag.svg.js';
 import { chinaFlag } from '../../resources/inline-icons/language-icons/china-flag.svg.js';
 import { englishFlag } from '../../resources/inline-icons/language-icons/english-flag.svg.js';
@@ -15,47 +15,47 @@ import { renderBackgroundImage } from '../../services/extensions/style.extension
 
 export function renderLanguageFlags() {
     return css`
-        [language=${unsafeCSS(Nation.Japanese)}],[nation=${unsafeCSS(Nation.Japanese)}] {
+        [language=${unsafeCSS(Language.Japanese)}],[nation=${unsafeCSS(Language.Japanese)}] {
             ${renderBackgroundImage(japanFlag())};
         }
 
-        [language=${unsafeCSS(Nation.German)}] ,[nation=${unsafeCSS(Nation.German)}] {
+        [language=${unsafeCSS(Language.German)}] ,[nation=${unsafeCSS(Language.German)}] {
             ${renderBackgroundImage(germanFlag())};
         }
 
-        [language=${unsafeCSS(Nation.English)}],[nation=${unsafeCSS(Nation.English)}] {
+        [language=${unsafeCSS(Language.English)}],[nation=${unsafeCSS(Language.English)}] {
             ${renderBackgroundImage(englishFlag())};
         }
 
-        [language=${unsafeCSS(Nation.Spain)}],[nation=${unsafeCSS(Nation.Spain)}] {
+        [language=${unsafeCSS(Language.Spain)}],[nation=${unsafeCSS(Language.Spain)}] {
             ${renderBackgroundImage(spainFlag())};
         }
 
-        [language=${unsafeCSS(Nation.Italian)}] ,[nation=${unsafeCSS(Nation.Italian)}] {
+        [language=${unsafeCSS(Language.Italian)}] ,[nation=${unsafeCSS(Language.Italian)}] {
             ${renderBackgroundImage(italyFlag())};
         }
 
-        [language=${unsafeCSS(Nation.Chinese)}] ,[nation=${unsafeCSS(Nation.Chinese)}] {
+        [language=${unsafeCSS(Language.Chinese)}] ,[nation=${unsafeCSS(Language.Chinese)}] {
             ${renderBackgroundImage(chinaFlag())};
         }
 
-        [language=${unsafeCSS(Nation.SouthAmerican)}],[nation=${unsafeCSS(Nation.SouthAmerican)}] {
+        [language=${unsafeCSS(Language.SouthAmerican)}],[nation=${unsafeCSS(Language.SouthAmerican)}] {
             ${renderBackgroundImage(southAmericaFlag())};
         }
 
-        [language=${unsafeCSS(Nation.African)}] ,[nation=${unsafeCSS(Nation.African)}] {
+        [language=${unsafeCSS(Language.African)}] ,[nation=${unsafeCSS(Language.African)}] {
             ${renderBackgroundImage(africaFlag())};
         }
 
-        [language=${unsafeCSS(Nation.Russian)}] ,[nation=${unsafeCSS(Nation.Russian)}] {
+        [language=${unsafeCSS(Language.Russian)}] ,[nation=${unsafeCSS(Language.Russian)}] {
             ${renderBackgroundImage(russiaFlag())};
         }
 
-        [language=${unsafeCSS(Nation.Unset)}] ,[nation=${unsafeCSS(Nation.Unset)}] {
+        [language=${unsafeCSS(Language.Unset)}] ,[nation=${unsafeCSS(Language.Unset)}] {
             ${renderBackgroundImage(noLanguageIcon())};
         }
 
-        [language=${unsafeCSS(Nation.Korean)}] ,[nation=${unsafeCSS(Nation.Korean)}] {
+        [language=${unsafeCSS(Language.Korean)}] ,[nation=${unsafeCSS(Language.Korean)}] {
             ${renderBackgroundImage(koreaFlag())};
         }
     `;

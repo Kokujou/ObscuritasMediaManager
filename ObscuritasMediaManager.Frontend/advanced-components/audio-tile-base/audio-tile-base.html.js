@@ -29,12 +29,6 @@ export function renderAudioTileBase(audioTile) {
                 @click="${(e) => audioTile.dispatchEvent(new CustomEvent('changeLanguage', { bubbles: true, composed: true }))}"
             ></div>
             <div
-                id="nation-icon"
-                nation="${audioTile.track.nation}"
-                ?disabled="${audioTile.disabled}"
-                @click="${(e) => audioTile.dispatchEvent(new CustomEvent('changeLanguage', { bubbles: true, composed: true }))}"
-            ></div>
-            <div
                 ?disabled="${audioTile.disabled}"
                 @click="${(e) => audioTile.dispatchEvent(new CustomEvent('nextParticipants', { bubbles: true, composed: true }))}"
                 id="participant-count-button"

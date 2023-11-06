@@ -163,8 +163,7 @@ export declare class MusicModel implements IMusicModel {
     source: string | null;
     mood1: Mood;
     mood2: Mood;
-    language: Nation;
-    nation: Nation;
+    language: Language;
     instrumentation: Instrumentation;
     participants: Participants;
     instruments: InstrumentModel[] | null;
@@ -190,8 +189,7 @@ export interface IMusicModel {
     source: string | null;
     mood1: Mood;
     mood2: Mood;
-    language: Nation;
-    nation: Nation;
+    language: Language;
     instrumentation: Instrumentation;
     participants: Participants;
     instruments: InstrumentModel[] | null;
@@ -219,7 +217,7 @@ export declare enum Mood {
     Passionate = "Passionate",
     Monotonuous = "Monotonuous"
 }
-export declare enum Nation {
+export declare enum Language {
     Unset = "Unset",
     Japanese = "Japanese",
     English = "English",
@@ -301,7 +299,8 @@ export declare enum MusicGenre {
     Ballad = "Ballad",
     FilmMusic = "FilmMusic",
     Western = "Western",
-    Christmas = "Christmas"
+    Christmas = "Christmas",
+    Enka = "Enka"
 }
 export declare class GenreModel implements IGenreModel {
     id: string;
@@ -339,7 +338,7 @@ export declare class MediaModel implements IMediaModel {
     hash: string | null;
     id: string;
     image: string | null;
-    language: Nation;
+    language: Language;
     name: string | null;
     rating: number;
     release: number;
@@ -360,7 +359,7 @@ export interface IMediaModel {
     hash: string | null;
     id: string;
     image: string | null;
-    language: Nation;
+    language: Language;
     name: string | null;
     rating: number;
     release: number;
@@ -482,8 +481,8 @@ export declare class PlaylistModel implements IPlaylistModel {
     author: string | null;
     image: string | null;
     rating: number;
-    language: Nation;
-    nation: Nation;
+    language: Language;
+    nation: Language;
     genres: MusicGenre[] | null;
     complete: boolean;
     isTemporary: boolean;
@@ -500,8 +499,8 @@ export interface IPlaylistModel {
     author: string | null;
     image: string | null;
     rating: number;
-    language: Nation;
-    nation: Nation;
+    language: Language;
+    nation: Language;
     genres: MusicGenre[] | null;
     complete: boolean;
     isTemporary: boolean;
@@ -523,7 +522,7 @@ export interface IUpdateRequestOfPlaylistModel {
 export declare class RecipeModel implements IRecipeModel {
     id: string;
     title: string | null;
-    nation: Nation;
+    nation: Language;
     imageUrl: string | null;
     difficulty: number;
     rating: number;
@@ -544,7 +543,7 @@ export declare class RecipeModel implements IRecipeModel {
 export interface IRecipeModel {
     id: string;
     title: string | null;
-    nation: Nation;
+    nation: Language;
     imageUrl: string | null;
     difficulty: number;
     rating: number;

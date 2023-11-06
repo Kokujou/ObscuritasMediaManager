@@ -1,7 +1,7 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
-import { ContentWarning, MediaCategory, Nation, TargetGroup } from '../../obscuritas-media-manager-backend-client.js';
+import { ContentWarning, Language, MediaCategory, TargetGroup } from '../../obscuritas-media-manager-backend-client.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { MediaFilterSidebar } from './media-filter-sidebar.js';
 import { MediaFilter } from './media-filter.js';
@@ -69,18 +69,18 @@ export function renderMediaFilterSidebar(sidebar) {
                 </div>
                 <div id="language-switcher-mini">
                     <tri-value-checkbox
-                        @valueChanged="${(e) => sidebar.setFilterProperty('languages', Nation.German, e.detail.value)}"
+                        @valueChanged="${(e) => sidebar.setFilterProperty('languages', Language.German, e.detail.value)}"
                         class="icon-container"
-                        .value="${sidebar.filter.languages.states[Nation.German]}"
+                        .value="${sidebar.filter.languages.states[Language.German]}"
                     >
-                        <div class="icon-button" language="${Nation.German}"></div>
+                        <div class="icon-button" language="${Language.German}"></div>
                     </tri-value-checkbox>
                     <tri-value-checkbox
-                        @valueChanged="${(e) => sidebar.setFilterProperty('languages', Nation.Japanese, e.detail.value)}"
+                        @valueChanged="${(e) => sidebar.setFilterProperty('languages', Language.Japanese, e.detail.value)}"
                         class="icon-container"
-                        .value="${sidebar.filter.languages.states[Nation.Japanese]}"
+                        .value="${sidebar.filter.languages.states[Language.Japanese]}"
                     >
-                        <div class="icon-button" language="${Nation.Japanese}"></div>
+                        <div class="icon-button" language="${Language.Japanese}"></div>
                     </tri-value-checkbox>
                 </div>
             </div>

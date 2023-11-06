@@ -31,13 +31,7 @@
 
 //TODO: think a proper concept about when to spawn/close the play-music-dialog, it's getting ridiculous
 //TODO: Websockets
-//TODO: remove all mentionings of renderMaskImage and replace with iconRegistry
-//TODO: add created at/updated at
-//TODO: fix next track playing if not finished loading
-//TODO: add text to language switcher to indicate whether you're changing nation/language
-//TODO: fix broken language icon in music page
-//TODO: refactor the update-system
-//TODO: think about removing nations. probably doesn't make sense and/or is already reflected in the genre-list
+//TODO: add created at/updated at ?
 
 /**
  * TODO: RECIPE DATABASE

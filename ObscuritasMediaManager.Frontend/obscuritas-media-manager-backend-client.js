@@ -1761,7 +1761,6 @@ export class MusicModel {
     mood1;
     mood2;
     language;
-    nation;
     instrumentation;
     participants;
     instruments;
@@ -1791,7 +1790,6 @@ export class MusicModel {
             this.mood1 = _data["mood1"] !== undefined ? _data["mood1"] : null;
             this.mood2 = _data["mood2"] !== undefined ? _data["mood2"] : null;
             this.language = _data["language"] !== undefined ? _data["language"] : null;
-            this.nation = _data["nation"] !== undefined ? _data["nation"] : null;
             this.instrumentation = _data["instrumentation"] !== undefined ? _data["instrumentation"] : null;
             this.participants = _data["participants"] !== undefined ? _data["participants"] : null;
             if (Array.isArray(_data["instruments"])) {
@@ -1847,7 +1845,6 @@ export class MusicModel {
         data["mood1"] = this.mood1 !== undefined ? this.mood1 : null;
         data["mood2"] = this.mood2 !== undefined ? this.mood2 : null;
         data["language"] = this.language !== undefined ? this.language : null;
-        data["nation"] = this.nation !== undefined ? this.nation : null;
         data["instrumentation"] = this.instrumentation !== undefined ? this.instrumentation : null;
         data["participants"] = this.participants !== undefined ? this.participants : null;
         if (Array.isArray(this.instruments)) {
@@ -1900,20 +1897,20 @@ export var Mood;
     Mood["Passionate"] = "Passionate";
     Mood["Monotonuous"] = "Monotonuous";
 })(Mood || (Mood = {}));
-export var Nation;
-(function (Nation) {
-    Nation["Unset"] = "Unset";
-    Nation["Japanese"] = "Japanese";
-    Nation["English"] = "English";
-    Nation["German"] = "German";
-    Nation["Spain"] = "Spain";
-    Nation["Chinese"] = "Chinese";
-    Nation["Italian"] = "Italian";
-    Nation["Russian"] = "Russian";
-    Nation["SouthAmerican"] = "SouthAmerican";
-    Nation["African"] = "African";
-    Nation["Korean"] = "Korean";
-})(Nation || (Nation = {}));
+export var Language;
+(function (Language) {
+    Language["Unset"] = "Unset";
+    Language["Japanese"] = "Japanese";
+    Language["English"] = "English";
+    Language["German"] = "German";
+    Language["Spain"] = "Spain";
+    Language["Chinese"] = "Chinese";
+    Language["Italian"] = "Italian";
+    Language["Russian"] = "Russian";
+    Language["SouthAmerican"] = "SouthAmerican";
+    Language["African"] = "African";
+    Language["Korean"] = "Korean";
+})(Language || (Language = {}));
 export var Instrumentation;
 (function (Instrumentation) {
     Instrumentation["Unset"] = "Unset";
@@ -2010,6 +2007,7 @@ export var MusicGenre;
     MusicGenre["FilmMusic"] = "FilmMusic";
     MusicGenre["Western"] = "Western";
     MusicGenre["Christmas"] = "Christmas";
+    MusicGenre["Enka"] = "Enka";
 })(MusicGenre || (MusicGenre = {}));
 export class GenreModel {
     id;

@@ -1,7 +1,7 @@
 ﻿
 namespace ObscuritasMediaManager.Backend.Data.Music;
 
-public enum Nation
+public enum Language
 {
     Unset,
     Japanese,

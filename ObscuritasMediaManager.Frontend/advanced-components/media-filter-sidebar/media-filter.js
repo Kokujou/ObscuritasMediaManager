@@ -2,10 +2,10 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { FilterEntry } from '../../data/filter-entry.js';
 import {
     ContentWarning,
+    Language,
     MediaCategory,
     MediaModel,
     MediaStatus,
-    Nation,
     TargetGroup,
 } from '../../obscuritas-media-manager-backend-client.js';
 
@@ -36,7 +36,7 @@ export class MediaFilter {
     ratings = new FilterEntry([1, 2, 3, 4, 5], CheckboxState.Require);
     /** @type {FilterEntry<string>} */ genres;
     release = { min: null, max: null };
-    languages = new FilterEntry(Object.values(Nation), CheckboxState.Require);
+    languages = new FilterEntry(Object.values(Language), CheckboxState.Require);
     category = new FilterEntry(Object.values(MediaCategory), CheckboxState.Ignore);
     contentWarnings = new FilterEntry(Object.values(ContentWarning), CheckboxState.Ignore);
     targetGroups = new FilterEntry(Object.values(TargetGroup), CheckboxState.Ignore);

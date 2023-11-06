@@ -6,7 +6,6 @@ export const MusicSortingProperties = {
     name: 'Name',
     author: 'Autor',
     source: 'Quelle',
-    nation: 'Herkunftsland',
     language: 'Sprache',
     rating: 'Bewertung',
     mood1: 'Stimmung',

@@ -1,10 +1,7 @@
 import { css } from '../../exports.js';
-import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
 export function renderMediaFilterSidebarStyles() {
     return css`
-        ${registerIcons()}
-
         :host {
             border-radius: 50px;
 

@@ -208,10 +208,9 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
     async showLanguageSwitcher() {
         var parent = this.shadowRoot.querySelector('#music-player-container');
-        var result = await LanguageSwitcher.spawnAt(parent, this.updatedTrack.language, this.updatedTrack.nation);
+        var result = await LanguageSwitcher.spawnAt(parent, this.updatedTrack.language);
         if (!result) return;
-        this.changeProperty('language', result.language);
-        this.changeProperty('nation', result.nation);
+        this.changeProperty('language', result);
     }
 
     changeTrackPosition(value) {

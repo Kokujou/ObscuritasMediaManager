@@ -1,14 +1,13 @@
 import { css } from '../../exports.js';
-import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
 export function renderLanguageSwitcherStyles() {
     return css`
-        ${registerIcons()}
-
         :host {
-            background: #000c;
+            background: #000c !important;
             inset: 0;
             position: absolute;
+            mask: none !important;
+            z-index: 5;
 
             display: flex;
             align-items: center;
@@ -29,19 +28,10 @@ export function renderLanguageSwitcherStyles() {
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .part {
-            position: relative;
-            width: 50%;
-            height: 100%;
-
             transform-origin: center center;
-            mask: linear-gradient(to right, transparent 0 30%, black 70% 100%, transparent 100%);
-        }
-
-        .part:nth-of-type(2) {
-            transform: scaleX(-1);
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+            pointer-events: none;
         }
 
         .icon {
@@ -52,18 +42,21 @@ export function renderLanguageSwitcherStyles() {
             border-radius: 50%;
             transition: all 0.5s ease-out;
             pointer-events: none;
+            transform-origin: center center;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
         }
 
         #confirm-button {
             position: absolute;
-            inset: 0;
-            margin: 33%;
-            z-index: 1;
+            inset: 43%;
+            z-index: 60;
             cursor: pointer;
+            pointer-events: all;
+            transform: translateZ(500px);
         }
 
         #confirm-icon {
-            margin: 30%;
             position: absolute;
             inset: 0;
             display: flex;
@@ -75,7 +68,7 @@ export function renderLanguageSwitcherStyles() {
 
         #close-button {
             position: absolute;
-            z-index: 1;
+            z-index: 60;
             right: 0;
             top: 50px;
             font-size: 40px;

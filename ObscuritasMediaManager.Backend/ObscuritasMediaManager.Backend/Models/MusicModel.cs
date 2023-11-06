@@ -15,8 +15,7 @@ public class MusicModel
         return new MusicModel
                {
                    Name = name,
-                   Nation = Nation.Japanese,
-                   Language = Nation.Japanese,
+                   Language = Language.Japanese,
                    Instrumentation = Instrumentation.Mixed,
                    Participants = Participants.SmallGroup,
                };
@@ -43,8 +42,7 @@ public class MusicModel
     public string Source { get; set; }
     public Mood Mood1 { get; set; }
     public Mood Mood2 { get; set; }
-    public Nation Language { get; set; }
-    public Nation Nation { get; set; }
+    public Language Language { get; set; }
     public Instrumentation Instrumentation { get; set; }
     public Participants Participants { get; set; }
     public List<InstrumentModel> Instruments { get; set; } = new List<InstrumentModel>();

@@ -1,10 +1,7 @@
 import { css } from '../../exports.js';
-import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
 export function renderMediaDetailPageStyles() {
     return css`
-        ${registerIcons()}
-
         #edit-button {
             position: fixed;
             right: 0;

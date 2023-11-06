@@ -1,10 +1,7 @@
 import { css } from '../../exports.js';
-import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
 export function renderMusicFilterStyles() {
     return css`
-        ${registerIcons()}
-
         :host {
             display: flex;
             flex-direction: column;

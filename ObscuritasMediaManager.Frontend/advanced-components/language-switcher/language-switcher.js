@@ -1,9 +1,7 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
-import { Nation } from '../../obscuritas-media-manager-backend-client.js';
+import { Language } from '../../obscuritas-media-manager-backend-client.js';
 import { renderLanguageSwitcherStyles } from './language-switcher.css.js';
 import { renderLanguageSwitcher } from './language-switcher.html.js';
-
-/** @typedef {'nation' | 'language'} SwitcherProperty */
 
 export class LanguageSwitcher extends LitElementBase {
     static get styles() {
@@ -13,26 +11,22 @@ export class LanguageSwitcher extends LitElementBase {
     static get properties() {
         return {
             language: { type: String, reflect: true },
-            nation: { type: String, reflect: true },
         };
     }
 
-    static AllLanguages = Object.values(Nation);
+    static AllLanguages = Object.values(Language);
 
     /**
      * @param {Element} parent
-     * @param {Nation} language
-     * @param {Nation} nation
-     * @return {Promise<{language:Nation, nation:Nation}>}
+     * @param {Language} language
+     * @return {Promise<Language>}
      */
-    static spawnAt(parent, language, nation) {
+    static spawnAt(parent, language) {
         var languageSwitcher = new LanguageSwitcher();
         languageSwitcher.language = language;
-        languageSwitcher.nation = nation;
         var steps = 360 / this.AllLanguages.length;
         var missingDegrees = 90 % steps;
         languageSwitcher.languageRotationOffset = steps * this.AllLanguages.indexOf(language) + missingDegrees / 2;
-        languageSwitcher.nationRotationOffset = steps * this.AllLanguages.indexOf(nation) + missingDegrees / 2;
 
         parent.append(languageSwitcher);
         return new Promise((resolve) => {
@@ -42,10 +36,8 @@ export class LanguageSwitcher extends LitElementBase {
 
     constructor() {
         super();
-        /** @type {Nation} */ this.language = Nation.Unset;
-        /** @type {Nation} */ this.nation = Nation.Unset;
+        /** @type {Language} */ this.language = Language.Unset;
         /** @type {number} */ this.languageRotationOffset = 0;
-        /** @type {number} */ this.nationRotationOffset = 0;
 
         /** @type {(Nation)=>void} */ this.resolve = () => {};
     }
@@ -55,6 +47,8 @@ export class LanguageSwitcher extends LitElementBase {
         document.addEventListener('keyup', (e) => {
             if (e.key == 'Escape') this.destroy();
         });
+
+        document.addEventListener('wheel', (e) => this.scrollWheel(e));
     }
 
     render() {
@@ -62,11 +56,10 @@ export class LanguageSwitcher extends LitElementBase {
     }
 
     /**
-     * @param {SwitcherProperty} property
      * @param {'up' | 'down'} direction
      */
-    moveProperty(property, direction) {
-        var currentIndex = LanguageSwitcher.AllLanguages.indexOf(this[property]);
+    move(direction) {
+        var currentIndex = LanguageSwitcher.AllLanguages.indexOf(this.language);
         var offset = 0;
         if (direction == 'up') currentIndex++;
         if (direction == 'up') offset += 360 / LanguageSwitcher.AllLanguages.length;
@@ -74,9 +67,8 @@ export class LanguageSwitcher extends LitElementBase {
         if (direction == 'down') offset -= 360 / LanguageSwitcher.AllLanguages.length;
         if (currentIndex < 0) currentIndex = LanguageSwitcher.AllLanguages.length - 1;
         if (currentIndex >= LanguageSwitcher.AllLanguages.length) currentIndex = 0;
-        if (property == 'nation') this.nationRotationOffset += offset;
-        if (property == 'language') this.languageRotationOffset += offset;
-        this[property] = LanguageSwitcher.AllLanguages[currentIndex];
+        this.languageRotationOffset += offset;
+        this.language = LanguageSwitcher.AllLanguages[currentIndex];
         this.requestFullUpdate();
     }
 
@@ -88,13 +80,11 @@ export class LanguageSwitcher extends LitElementBase {
         var parentRect = this.shadowRoot?.querySelector('#language-switcher-overlay')?.getBoundingClientRect();
         if (!parentRect) return;
         var left = event.clientX - parentRect.left;
-        var parentCenterX = parentRect.width / 2;
-        if (left < parentCenterX) return this.moveProperty('language', direction);
-        if (left >= parentCenterX) return this.moveProperty('nation', direction);
+        return this.move(direction);
     }
 
     confirm() {
-        this.resolve({ language: this.language, nation: this.nation });
+        this.resolve(this.language);
         this.destroy();
     }
 

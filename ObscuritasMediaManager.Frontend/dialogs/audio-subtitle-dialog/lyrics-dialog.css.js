@@ -1,10 +1,7 @@
 import { css } from '../../exports.js';
-import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
 export function renderAudioSubtitleDialogStyles() {
     return css`
-        ${registerIcons()}
-
         :host {
             position: fixed;
             inset: 0;

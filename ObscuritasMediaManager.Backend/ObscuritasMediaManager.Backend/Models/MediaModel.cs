@@ -38,7 +38,7 @@ public class MediaModel
 
     [Key] public Guid Id { get; set; } = Guid.NewGuid();
     public string Image { get; set; }
-    public Nation Language { get; set; }
+    public Language Language { get; set; }
     public string Name { get; set; }
     public int Rating { get; set; }
     public int Release { get; set; }

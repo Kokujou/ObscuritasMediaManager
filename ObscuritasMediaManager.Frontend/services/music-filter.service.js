@@ -44,7 +44,6 @@ export class MusicFilterService {
         ObjectFilterService.applyArrayFilter(filteredTracks, filter.genres, 'genres');
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.instrumentations, 'instrumentation');
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.languages, 'language');
-        ObjectFilterService.applyPropertyFilter(filteredTracks, filter.nations, 'nation');
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.participants, 'participants');
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.ratings, 'rating');
         ObjectFilterService.applyMultiPropertySearch(filteredTracks, filter.search, 'name', 'author', 'source', 'path');

@@ -43,8 +43,8 @@ export function renderPlaylistTile(playlist) {
                         y="50%"
                         dominant-baseline="middle"
                         text-anchor="middle"
-                        textLength="${playlist.playlist.author.length > 20 ? '200' : 'None'}"
-                        lengthAdjust="${playlist.playlist.author.length > 20 ? 'spacingAndGlyphs' : 'None'}"
+                        textLength="${playlist.playlist.author.length > 20 ? '200' : 'none'}"
+                        lengthAdjust="${playlist.playlist.author.length > 20 ? 'spacingAndGlyphs' : 'none'}"
                     >
                         ${playlist.playlist.author}
                     </text>

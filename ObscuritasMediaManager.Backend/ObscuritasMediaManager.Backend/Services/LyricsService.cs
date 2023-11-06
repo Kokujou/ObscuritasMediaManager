@@ -20,7 +20,7 @@ public class LyricsService
         var search = track.Name;
         if (!string.IsNullOrEmpty(track.Author) && (track.Author.ToLower() != "unset") && (track.Author.ToLower() != "undefined"))
             search += $" {track.Author}";
-        if (track.Language == Nation.Japanese) search += " Romanized";
+        if (track.Language == Language.Japanese) search += " Romanized";
 
         var searchResult = await _geniusClient.SearchClient.Search(search);
         var getRelevantHits = () =>

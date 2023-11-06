@@ -1,10 +1,7 @@
 import { css } from '../../exports.js';
-import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
 
 export function renderAudioTileBaseStyles() {
     return css`
-        ${registerIcons()}
-
         :host {
             position: relative;
             transform: rotate(0deg);
@@ -35,24 +32,15 @@ export function renderAudioTileBaseStyles() {
             filter: drop-shadow(0 0 5px black);
         }
 
-        #nation-icon,
         #language-icon {
             position: absolute;
             right: 5%;
             top: 5%;
             width: 20%;
-            height: 20%;
-            border-radius: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
             cursor: pointer;
             filter: drop-shadow(0 0 5px black);
-        }
-
-        #nation-icon {
-            mask: linear-gradient(295deg, white 0 50%, transparent 50% 100%);
-        }
-
-        #language-icon {
-            mask: linear-gradient(115deg, white 0 50%, transparent 50% 100%);
         }
 
         #instrumentation-button {

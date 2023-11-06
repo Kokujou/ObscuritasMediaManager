@@ -4,9 +4,9 @@ import { DropDownOption } from '../../native-components/drop-down/drop-down-opti
 import { LinkElement } from '../../native-components/link-element/link-element.js';
 import {
     ContentWarning,
+    Language,
     MediaCategory,
     MediaStatus,
-    Nation,
     TargetGroup,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
@@ -144,7 +144,7 @@ export function renderMediaDetailPage(detailPage) {
                                         class="property-value"
                                         ?disabled="${!detailPage.editMode}"
                                         .options="${DropDownOption.createSimpleArray(
-                                            Object.values(Nation),
+                                            Object.values(Language),
                                             detailPage.updatedMedia.language
                                         )}"
                                         @selectionChange="${(e) => detailPage.changeProperty('language', e.detail.option.value)}"

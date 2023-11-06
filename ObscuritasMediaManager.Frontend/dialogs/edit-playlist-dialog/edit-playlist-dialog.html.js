@@ -1,6 +1,6 @@
 import { html } from '../../exports.js';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
-import { Nation } from '../../obscuritas-media-manager-backend-client.js';
+import { Language } from '../../obscuritas-media-manager-backend-client.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { EditPlaylistDialog } from './edit-playlist-dialog.js';
 
@@ -71,7 +71,7 @@ export function renderEditPlaylistDialog(dialog) {
                             <div class="property-value">
                                 <drop-down
                                     .options="${DropDownOption.createSimpleArray(
-                                        Object.values(Nation),
+                                        Object.values(Language),
                                         dialog.newPlaylist.language
                                     )}"
                                     @selectionChange="${(e) => dialog.changeProperty('language', e.detail.option.value)}"
@@ -83,7 +83,7 @@ export function renderEditPlaylistDialog(dialog) {
                             <div class="property-value">
                                 <drop-down
                                     .options="${DropDownOption.createSimpleArray(
-                                        Object.values(Nation),
+                                        Object.values(Language),
                                         dialog.newPlaylist.nation
                                     )}"
                                     @selectionChange="${(e) => dialog.changeProperty('nation', e.detail.option.value)}"

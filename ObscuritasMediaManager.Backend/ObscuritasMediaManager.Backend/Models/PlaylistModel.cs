@@ -16,8 +16,10 @@ public class PlaylistModel
         var entity = builder.Entity<PlaylistModel>();
 
         entity.Property(x => x.Genres)
-            .HasConversion(x => string.Join(",", x),
-            x => x.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(y => y.ParseEnumOrDefault<MusicGenre>()).ToList());
+            .HasConversion(
+                x => string.Join(",", x),
+                x => x.Split(",",
+                             StringSplitOptions.RemoveEmptyEntries).Select(y => y.ParseEnumOrDefault<MusicGenre>()).ToList());
 
         var mappingEntity = builder.Entity<PlaylistTrackMappingModel>();
         mappingEntity
@@ -41,8 +43,8 @@ public class PlaylistModel
     public string Author { get; set; }
     public string Image { get; set; }
     public byte Rating { get; set; }
-    public Nation Language { get; set; }
-    public Nation Nation { get; set; }
+    public Language Language { get; set; }
+    public Language Nation { get; set; }
     public IEnumerable<MusicGenre> Genres { get; set; } = new List<MusicGenre>();
     public bool Complete { get; set; }
     [NotMapped] public bool IsTemporary { get; set; }
@@ -62,7 +64,6 @@ public class PlaylistModel
                    Name = Name,
                    Author = Author,
                    Source = null,
-                   Nation = Nation,
                    Language = Language,
                    Rating = Rating,
                    Mood1 = Mood.Unset,
