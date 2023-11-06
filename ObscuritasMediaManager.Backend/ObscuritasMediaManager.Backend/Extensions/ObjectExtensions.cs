@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.Extensions;
 
@@ -15,22 +16,22 @@ public static class ObjectExtensions
         typeof(T).GetProperty(name).SetValue(target, value);
     }
 
-    public static void UpdateFromJson<T>(this T actual, JsonElement old, JsonElement updated,
-        JsonSerializerOptions serializerOptions)
+    public static void UpdateFromJson<T>(this T actual, JsonNode old, JsonNode updated, JsonSerializerOptions serializerOptions)
     {
-        var actualJson = JsonDocument.Parse(JsonSerializer.Serialize(actual, serializerOptions)).RootElement;
-        var concurrencyProblems = old.EnumerateObject()
-                                     .Where(property => actualJson.GetProperty(property.Name).ToString() 
-                                         != old.GetProperty(property.Name).ToString());
+        var actualJson = JsonNode.Parse(JsonSerializer.Serialize(actual, serializerOptions));
+        var concurrencyProblems = old.AsObject()
+            .Where(
+                property => actualJson[property.Key]?.ToString() 
+                                         != old[property.Key]?.ToString());
         if (concurrencyProblems.Any())
             throw new DbUpdateConcurrencyException("At least one property has changed since your request.");
 
         var updatedModel = JsonSerializer.Deserialize<T>(updated, serializerOptions);
 
-        foreach (var property in updated.EnumerateObject())
+        foreach (var property in updated.AsObject())
             try
             {
-                var propertyName = $"{property.Name[..1].ToUpper()}{property.Name[1..]}";
+                var propertyName = $"{property.Key[..1].ToUpper()}{property.Key[1..]}";
                 actual.SetPropertyValue(propertyName, updatedModel.GetPropertyValue(propertyName));
             }
             catch { }

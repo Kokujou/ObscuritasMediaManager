@@ -48,7 +48,7 @@ export class LanguageSwitcher extends LitElementBase {
             if (e.key == 'Escape') this.destroy();
         });
 
-        document.addEventListener('wheel', (e) => this.scrollWheel(e));
+        document.addEventListener('wheel', (e) => this.scrollWheel(/** @type {any} */ (e)));
     }
 
     render() {

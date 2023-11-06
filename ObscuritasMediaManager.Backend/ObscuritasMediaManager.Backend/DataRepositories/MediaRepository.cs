@@ -5,6 +5,7 @@ using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 using System.Linq.Expressions;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -17,7 +18,7 @@ public class MediaRepository
         _context = context;
     }
 
-    public async Task UpdateAsync(Guid id, JsonElement old, JsonElement updated, JsonSerializerOptions serializerOptions)
+    public async Task UpdateAsync(Guid id, JsonNode old, JsonNode updated, JsonSerializerOptions serializerOptions)
     {
         var actual = await _context.Media.AsTracking().SingleOrDefaultAsync(x => x.Id == id);
         if (actual == default) throw new ModelNotFoundException(id);

@@ -65,7 +65,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                         <input
                             type="checkbox"
                             id="complete-check"
-                            ?checked="${this.updatedTrack.complete}"
+                            .checked="${this.updatedTrack.complete}"
                             @change="${() => this.toggleComplete()}"
                         />
                     </div>
@@ -97,12 +97,12 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                 @nextParticipants="${() =>
                                     this.changeProperty(
                                         'participants',
-                                        Enum.nextValue(Participants, this.updatedTrack.participants)
+                                        Enum.nextValue(Participants, this.updatedTrack.participants, 'Unset')
                                     )}"
                                 @nextInstrumentation="${() =>
                                     this.changeProperty(
                                         'instrumentation',
-                                        Enum.nextValue(Instrumentation, this.updatedTrack.instrumentation)
+                                        Enum.nextValue(Instrumentation, this.updatedTrack.instrumentation, 'Unset')
                                     )}"
                                 @changeRating="${(e) => this.changeProperty('rating', e.detail)}"
                                 @changeInstruemnts="${() => this.openInstrumentsDialog()}"
@@ -208,7 +208,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                         step="1"
                                         min="0"
                                         max="100"
-                                        .value="${`${this.currentVolume * 100}`}"
+                                        .value="${`${AudioService.volume * 100}`}"
                                     ></range-slider>
                                 </div>
                             </div>

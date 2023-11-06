@@ -19,6 +19,7 @@ export class AudioService {
     static trackPosition = new Observable(0);
     static duration = 0;
     /** @type {Observable} */ static ended = new Observable(null);
+    /** @type {Observable} */ static changed = new Observable(null);
 
     /** @type {Subscription} */ static #eventSubscription = ClientInteropService.eventResponse.subscribe((x) => {
         this.paused = false;
@@ -28,6 +29,7 @@ export class AudioService {
             this.currentTrackPath = response.trackPath;
             this.trackPosition.next(response.trackPosition);
             this.visualizationData.next(new Float32Array(response.visualizationData));
+            this.changed.next();
         } else if (x?.event == InteropEvent.TrackEnded) {
             this.reset();
             this.ended.next();
@@ -53,8 +55,9 @@ export class AudioService {
                 this.#volume = /** @type {number} */ (x.request);
                 break;
             default:
-                break;
+                return;
         }
+        this.changed.next();
     }, true);
     /** @type {Subscription} */ static #querySubscription = ClientInteropService.queryResponse.subscribe((x) => {
         switch (x?.query) {
@@ -64,8 +67,9 @@ export class AudioService {
                 this.paused = true;
                 break;
             default:
-                break;
+                return;
         }
+        this.changed.next();
     }, true);
 
     static async reinitialize() {
@@ -141,3 +145,8 @@ export class AudioService {
         }
     }
 }
+
+ClientInteropService.onConnected.subscribe(async () => {
+    var localStorageVolume = localStorage.getItem('volume');
+    await AudioService.changeVolume(Number.parseInt(localStorageVolume) / 100);
+});

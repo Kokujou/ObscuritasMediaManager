@@ -10,6 +10,7 @@ using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 using ObscuritasMediaManager.Backend.Services;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
 
@@ -109,9 +110,11 @@ public class MusicController : ControllerBase
     }
 
     [HttpPut("{hash}")]
-    public async Task UpdateAsync(string hash, [FromBody] UpdateRequest<JsonElement> request)
+    public async Task UpdateAsync(string hash, [FromBody] UpdateRequest<JsonElement> _)
     {
-        await _musicRepository.UpdateAsync(hash, request.OldModel, request.NewModel, _jsonOptions);
+        var deserialized = await HttpContext.ReadRequestBodyAsync<UpdateRequest<JsonNode>>(_jsonOptions);
+
+        await _musicRepository.UpdateAsync(hash, deserialized.OldModel, deserialized.NewModel, _jsonOptions);
     }
 
     [HttpDelete("music/soft")]

@@ -83,21 +83,22 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
     connectedCallback() {
         super.connectedCallback();
-        var localStorageVolume = localStorage.getItem('volume');
-        if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume));
 
         this.subscriptions.push(
             Session.currentPage.subscribe((nextPage) => {
-                PlayMusicDialog.show(this.currentTrack, this.currentVolume, AudioService.trackPosition.current());
+                PlayMusicDialog.show(this.currentTrack, AudioService.volume, AudioService.trackPosition.current());
             }),
             AudioService.ended.subscribe(() => {
                 if (this.trackIndex + 1 >= this.playlist.tracks.length && !this.loop) return;
                 this.changeTrackBy(1);
-            }, true)
+            }, true),
+            AudioService.changed.subscribe(() => {
+                this.requestFullUpdate();
+            })
         );
 
         window.addEventListener('hashchange', (e) => {
-            PlayMusicDialog.show(this.currentTrack, this.currentVolume, AudioService.trackPosition.current() ?? 0);
+            PlayMusicDialog.show(this.currentTrack, AudioService.volume, AudioService.trackPosition.current() ?? 0);
         });
 
         this.subscriptions.push(AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
@@ -180,8 +181,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
      * @param { number} newVolume
      */
     async changeVolume(newVolume) {
-        this.currentVolume = newVolume / 100;
-        await AudioService.changeVolume(this.currentVolume);
+        await AudioService.changeVolume(newVolume / 100);
         localStorage.setItem('volume', newVolume.toString());
         await this.requestFullUpdate();
     }
@@ -192,18 +192,22 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
      * @param {MusicModel[T]} value
      */
     async changeProperty(property, value) {
-        if (this.updatedTrack.hash) {
-            /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
-            oldModel[property] = this.updatedTrack[property];
-            newModel[property] = value;
-            await MusicService.update(this.updatedTrack.hash, new UpdateRequestOfJsonElement({ oldModel, newModel }));
-        }
-        this.updatedTrack[property] = value;
-        if (property == 'instruments') {
-            this.updatedTrack.instrumentNames = this.updatedTrack.instruments.map((x) => x.name);
-            this.updatedTrack.instrumentTypes = distinct(this.updatedTrack.instruments.map((x) => x.type));
-        }
-        await this.requestFullUpdate();
+        try {
+            if (this.updatedTrack.hash) {
+                /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
+                oldModel[property] = this.updatedTrack[property];
+                newModel[property] = value;
+                await MusicService.update(this.updatedTrack.hash, new UpdateRequestOfJsonElement({ oldModel, newModel }));
+            }
+            this.updatedTrack[property] = value;
+            this.currentTrack[property] = value;
+            this.playlist.tracks[this.trackIndex][property] = value;
+            if (property == 'instruments') {
+                this.updatedTrack.instrumentNames = this.updatedTrack.instruments.map((x) => x.name);
+                this.updatedTrack.instrumentTypes = distinct(this.updatedTrack.instruments.map((x) => x.type));
+            }
+            await this.requestFullUpdate();
+        } catch (err) {}
     }
 
     async showLanguageSwitcher() {

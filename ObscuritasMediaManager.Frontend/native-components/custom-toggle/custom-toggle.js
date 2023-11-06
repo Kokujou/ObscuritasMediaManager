@@ -50,8 +50,7 @@ export class CustomToggle extends LitElementBase {
 
     toggleState() {
         var prevState = this.state;
-        if (this.toggleForward) this.state = Enum.nextValue(CheckboxState, this.state, false);
-        else this.state = Enum.previousValue(CheckboxState, this.state, false);
+        this.state = Enum.nextValue(CheckboxState, this.state);
         if (this.state != prevState) return;
         this.toggleForward = !this.toggleForward;
         return this.toggleState();

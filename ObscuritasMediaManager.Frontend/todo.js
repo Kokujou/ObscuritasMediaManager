@@ -4,6 +4,7 @@
  * - Add Message Snackbar for all Update/Delete/Create actions
  */
 
+// TODO: Fix concurrency exception happening when not retrieving live-model the first time
 //TODO: Media page finalization
 /**
  * - think about icons for language
@@ -29,8 +30,7 @@
  * - now the user can also "fix" tracks like change the file path or delete
  */
 
-//TODO: think a proper concept about when to spawn/close the play-music-dialog, it's getting ridiculous
-//TODO: Websockets
+//TODO: Websockets (probably low priority as it's only one user, so a simultanous UI-Update is enough)
 //TODO: add created at/updated at ?
 
 /**

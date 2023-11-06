@@ -10,6 +10,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -30,25 +31,24 @@ public class MusicRepository
             .ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
     }
 
-    public async Task UpdateAsync(string hash, JsonElement old, JsonElement updated, JsonSerializerOptions serializerOptions)
+    public async Task UpdateAsync(string hash, JsonNode old, JsonNode updated, JsonSerializerOptions serializerOptions)
     {
         var actual = await _context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);
         if (actual == default) throw new ModelNotFoundException(hash);
+
+        if (updated[nameof(MusicModel.Instruments)] is not null)
+        {
+            var updatedInstruments = updated[nameof(MusicModel.Instruments)].Deserialize<List<InstrumentModel>>(serializerOptions);
+            var newInstruments = updatedInstruments.Except(actual.Instruments, (a, b) => a.Id == b.Id).ToList();
+            var removedInstruments = actual.Instruments.Except(updatedInstruments, (a, b) => a.Id == b.Id).ToList();
+            foreach (var added in newInstruments) actual.Instruments.Add(added);
+            foreach (var removed in removedInstruments) actual.Instruments.Remove(removed);
+            old.AsObject().Remove(nameof(MusicModel.Instruments));
+            updated.AsObject().Remove(nameof(MusicModel.Instruments));
+        }
 
         actual.UpdateFromJson(old, updated, serializerOptions);
         await _context.SaveChangesAsync();
-        _context.ChangeTracker.Clear();
-    }
-
-    public async Task UpdateAsync(string hash, Action<MusicModel> update)
-    {
-        var actual = await _context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);
-        if (actual == default) throw new ModelNotFoundException(hash);
-
-        update(actual);
-
-        await _context.SaveChangesAsync();
-        _context.ChangeTracker.Clear();
     }
 
     public async Task RecalculateHashesAsync()

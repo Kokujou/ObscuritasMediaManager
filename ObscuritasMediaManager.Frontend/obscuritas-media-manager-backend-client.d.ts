@@ -87,7 +87,7 @@ export declare class MusicClient {
     protected processGetAll(response: Response): Promise<MusicModel[]>;
     get(hash: string | null, signal?: AbortSignal | undefined): Promise<MusicModel>;
     protected processGet(response: Response): Promise<MusicModel>;
-    update(hash: string | null, request: UpdateRequestOfJsonElement, signal?: AbortSignal | undefined): Promise<void>;
+    update(hash: string | null, _: UpdateRequestOfJsonElement, signal?: AbortSignal | undefined): Promise<void>;
     protected processUpdate(response: Response): Promise<void>;
     getLyrics(hash: string | null, offset?: number | undefined, signal?: AbortSignal | undefined): Promise<LyricsResponse>;
     protected processGetLyrics(response: Response): Promise<LyricsResponse>;

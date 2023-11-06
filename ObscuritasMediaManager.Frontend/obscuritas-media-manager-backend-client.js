@@ -880,13 +880,13 @@ export class MusicClient {
         }
         return Promise.resolve(null);
     }
-    update(hash, request, signal) {
+    update(hash, _, signal) {
         let url_ = this.baseUrl + "/api/Music/{hash}";
         if (hash === undefined || hash === null)
             throw new Error("The parameter 'hash' must be defined.");
         url_ = url_.replace("{hash}", encodeURIComponent("" + hash));
         url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(request);
+        const content_ = JSON.stringify(_);
         let options_ = {
             body: content_,
             method: "PUT",

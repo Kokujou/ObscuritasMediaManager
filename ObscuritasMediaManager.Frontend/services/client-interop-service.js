@@ -14,6 +14,7 @@ export class ClientInteropService {
     /** @type {Observable<InteropQueryResponse>} */ static queryResponse = new Observable(null);
     /** @type {Observable<InteropEventResponse>} */ static eventResponse = new Observable(null);
     /** @type {Observable<number>} */ static failCounter = new Observable(0);
+    static onConnected = new Observable(null);
 
     /**
      * @param {Omit<InteropCommandRequest, 'ticks'>} command
@@ -76,6 +77,9 @@ export class ClientInteropService {
             try {
                 await fetch('http://localhost:8005/Interop', { mode: 'no-cors', redirect: 'follow' });
                 this.socket = await this.#tryConnect();
+                console.log('websocket connection successfull');
+                this.onConnected.next(null);
+                MessageSnackbar.popup('Websocket Verbindung zum Client Interop erfolgreich', 'success');
                 this.failCounter.next(0);
                 break;
             } catch {
@@ -103,11 +107,7 @@ export class ClientInteropService {
     static #tryConnect() {
         return new Promise((resolve, reject) => {
             var socket = new WebSocket('ws://localhost:8005/Interop');
-            socket.onopen = () => {
-                console.log('websocket connection successfull');
-                resolve(socket);
-            };
-
+            socket.onopen = () => resolve(socket);
             socket.onclose = reject;
         });
     }

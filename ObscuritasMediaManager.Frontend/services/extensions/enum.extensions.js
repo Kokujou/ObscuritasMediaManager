@@ -1,31 +1,15 @@
 export class Enum {
     /**
-     * @param {{ [s: string]: any; } } enumType
-     * @param {string} currentValue
+     * @template {Object.<string, any>} TEnum
+     * @param {TEnum} enumType
+     * @param {(keyof TEnum)[]} excludes
      */
-    static nextValue(enumType, currentValue, continueOnEnd = false) {
-        var values = Object.values(enumType);
-        if (!currentValue) return values[0];
-        var enumKeys = Object.keys(enumType);
-        var currentIndex = enumKeys.findIndex((x) => enumType[x] == currentValue);
+    static nextValue(enumType, currentValue, ...excludes) {
+        var entries = Object.entries(enumType).filter((x) => !excludes.includes(x[0]));
+        if (!currentValue) return entries[0][1];
+        var currentIndex = entries.findIndex((entry) => entry[1] == currentValue);
 
-        if (currentIndex >= enumKeys.length - 1) return continueOnEnd ? values[0] : currentValue;
-
-        return values[currentIndex + 1];
-    }
-
-    /**
-     * @param {{ [s: string]: any; } } enumType
-     * @param {string} currentValue
-     * @param {boolean} [excludeFirst]
-     */
-    static previousValue(enumType, currentValue, excludeFirst = true) {
-        var enumKeys = Object.keys(enumType);
-        var currentIndex = enumKeys.findIndex((x) => enumType[x] == currentValue);
-
-        if (currentIndex <= (excludeFirst ? 1 : 0)) return currentValue;
-
-        currentIndex--;
-        return Object.values(enumType)[currentIndex];
+        if (currentIndex >= entries.length - 1) return entries[0][1];
+        return entries[currentIndex + 1][1];
     }
 }

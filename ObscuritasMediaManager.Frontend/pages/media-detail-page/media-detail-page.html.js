@@ -171,7 +171,7 @@ export function renderMediaDetailPage(detailPage) {
                                     @click="${() =>
                                         detailPage.changeProperty(
                                             'targetGroup',
-                                            Enum.nextValue(TargetGroup, detailPage.updatedMedia.targetGroup, true)
+                                            Enum.nextValue(TargetGroup, detailPage.updatedMedia.targetGroup, 'None')
                                         )}"
                                 ></div>
                                 <svg id="target-group-label" viewbox="0 0 100 40">

@@ -7,6 +7,7 @@ using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 using ObscuritasMediaManager.Backend.Services;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
 
@@ -39,7 +40,7 @@ public class MediaController(MediaRepository _mediaRepository, MediaImportServic
     [HttpPut("{id}")]
     public async Task UpdateMedia(Guid id, [FromBody] UpdateRequest<MediaModel> _)
     {
-        var deserialized = await HttpContext.ReadRequestBodyAsync<UpdateRequest<JsonElement>>(_serializerOptions);
+        var deserialized = await HttpContext.ReadRequestBodyAsync<UpdateRequest<JsonNode>>(_serializerOptions);
         await _mediaRepository.UpdateAsync(id, deserialized.OldModel, deserialized.NewModel, _serializerOptions);
     }
 

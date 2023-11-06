@@ -14,6 +14,7 @@ import { MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backen
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
 import { AudioService } from '../../services/audio-service.js';
 import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
+import { setAbortableInterval } from '../../services/extensions/animation.extension.js';
 import { sortBy } from '../../services/extensions/array.extensions.js';
 import { changePage } from '../../services/extensions/url.extension.js';
 import { MediaImportService } from '../../services/media-import.service.js';
@@ -111,10 +112,14 @@ export class MusicPage extends LitElementBase {
             this.requestFullUpdate();
         });
 
-        setInterval(() => {
-            if (AudioService.paused) return;
-            this.requestFullUpdate();
-        }, 100);
+        setAbortableInterval(
+            100,
+            () => {
+                if (AudioService.paused) return;
+                this.requestFullUpdate();
+            },
+            this.abortController.signal
+        );
     }
 
     async initializeData() {

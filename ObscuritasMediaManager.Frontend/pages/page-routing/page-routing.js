@@ -91,7 +91,9 @@ export class PageRouting extends LitElementBase {
             this.classList.add(`current-page-${newValue}`);
 
         if (Pages.some((x) => getPageName(x) == newValue)) {
-            if (oldValue != newValue) {
+            var pageName = () => PageRouting.currentPageInstance.tagName.replace('-PAGE', '');
+            var isNewPageLoad = !PageRouting.currentPageInstance || newValue.toLowerCase() != pageName().toLowerCase();
+            if (isNewPageLoad) {
                 PageRouting.currentPageInstance?.remove();
                 var newPage = Pages.find((x) => newValue == getPageName(x));
                 PageRouting.currentPageInstance = new newPage();
@@ -106,7 +108,7 @@ export class PageRouting extends LitElementBase {
                     PageRouting.currentPageInstance[pair[0]] = pair[1];
                 }
             }
-            if (oldValue != newValue) PageRouting.container.appendChild(PageRouting.currentPageInstance);
+            if (isNewPageLoad) PageRouting.container.appendChild(PageRouting.currentPageInstance);
             await PageRouting.currentPageInstance.requestFullUpdate();
             return;
         }
