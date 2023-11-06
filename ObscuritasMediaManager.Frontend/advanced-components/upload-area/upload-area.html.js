@@ -15,7 +15,7 @@ export function renderUploadArea(uploadArea) {
             @dragleave="${(e) => uploadArea.dragLeave(e)}"
             @click=${(e) => uploadArea.setFocusToContainer(e)}
         >
-            <div id="add-icon" class="icon"></div>
+            <div id="add-icon" class="icon" icon="${Icons.Plus}"></div>
             <div
                 id="upload-description"
                 contenteditable="true"

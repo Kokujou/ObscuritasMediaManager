@@ -1,9 +1,7 @@
 import { LitElementBase } from '../../../data/lit-element-base.js';
 import { ContextMenu, ContextMenuItem } from '../../../native-components/context-menu/context-menu.js';
 import { MusicModel } from '../../../obscuritas-media-manager-backend-client.js';
-import { trashIcon } from '../../../pages/media-detail-page/images/trash-icon.svg.js';
-import { revertIcon } from '../../../resources/inline-icons/general/revert-icon.svg.js';
-import { clipboardIcon } from '../../upload-area/images/clipboard-icon.svg.js';
+import { Icons } from '../../../resources/inline-icons/icon-registry.js';
 import { renderAudioTileStyles } from './audio-tile.css.js';
 import { renderAudioTile } from './audio-tile.html.js';
 
@@ -37,22 +35,22 @@ export class AudioTile extends LitElementBase {
                 {
                     text: 'Kopieren',
                     action: () => this.dispatchEvent(new CustomEvent('clipboard')),
-                    iconString: clipboardIcon(),
+                    icon: Icons.Clipboard,
                 },
             ];
             /** @type {ContextMenuItem} */ var softDeleteItem = {
                 text: 'In Papierkorb verschieben',
-                iconString: trashIcon(),
+                icon: Icons.Trash,
                 action: () => this.dispatchEvent(new CustomEvent('soft-delete')),
             };
             /** @type {ContextMenuItem} */ var hardDeleteItem = {
                 text: 'Endgültig löschen',
-                iconString: trashIcon(),
+                icon: Icons.Trash,
                 action: () => this.dispatchEvent(new CustomEvent('hard-delete')),
             };
             /** @type {ContextMenuItem} */ var restoreItem = {
                 text: 'Wiederherstellen',
-                iconString: revertIcon(),
+                icon: Icons.Revert,
                 action: () => this.dispatchEvent(new CustomEvent('restore')),
             };
 

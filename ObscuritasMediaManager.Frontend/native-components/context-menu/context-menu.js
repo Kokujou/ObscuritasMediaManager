@@ -6,7 +6,7 @@ import { renderContextMenu } from './context-menu.html.js';
 
 export class ContextMenuItem {
     /** @type {string} */ text;
-    /** @type {string} */ iconString;
+    /** @type {string} */ icon;
     /** @type {()=>void} */ action;
 }
 

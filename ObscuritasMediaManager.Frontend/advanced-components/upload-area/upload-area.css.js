@@ -1,6 +1,4 @@
 import { css } from '../../exports.js';
-import { plusIcon } from '../../resources/inline-icons/general/plus-icon.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderUploadAreaStyles() {
     return css`
@@ -32,8 +30,6 @@ export function renderUploadAreaStyles() {
             top: 0;
             right: 0;
             bottom: 0;
-
-            ${renderMaskImage(plusIcon(true))};
         }
 
         .icon {

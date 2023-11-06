@@ -239,7 +239,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                           `
                         : html`
                               <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
-                                  <div id="edit-playlist-icon"></div>
+                                  <div id="edit-playlist-icon" icon="${Icons.SaveTick}"></div>
                                   <div id="edit-playlist-text">Playlist bearbeiten</div>
                               </div>
                           `}

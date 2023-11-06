@@ -1,6 +1,4 @@
 import { css } from '../../exports.js';
-import { importIcon } from '../../resources/inline-icons/general/import-icon.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderEditPlaylistDialogStyles() {
     return css`
@@ -114,10 +112,6 @@ export function renderEditPlaylistDialogStyles() {
             height: 60px;
             background: white;
             cursor: pointer;
-        }
-
-        #import-icon {
-            ${renderMaskImage(importIcon(true))};
         }
 
         #tracks-container {

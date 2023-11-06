@@ -2,8 +2,7 @@ import { MoodColors } from '../../data/enumerations/mood.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { ContextMenu } from '../../native-components/context-menu/context-menu.js';
 import { Mood, PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
-import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg.js';
-import { downloadPlaylistIcon } from '../../resources/inline-icons/playlist-icons/download-playlist-icon.svg.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { rgbHexToHsv } from '../../services/extensions/style.extensions.js';
 import { renderPlaylistTileStyles } from './playlist-tile.css.js';
 import { renderPlaylistTile } from './playlist-tile.html.js';
@@ -86,17 +85,17 @@ export class PlaylistTile extends LitElementBase {
                 ContextMenu.popup(
                     [
                         {
-                            iconString: downloadPlaylistIcon(),
+                            icon: Icons.DownloadPlaylist,
                             text: 'Lokal Exportieren',
                             action: () => this.dispatchEvent(new CustomEvent('local-export')),
                         },
                         {
-                            iconString: downloadPlaylistIcon(),
+                            icon: Icons.DownloadPlaylist,
                             text: 'Global Exportieren',
                             action: () => this.dispatchEvent(new CustomEvent('global-export')),
                         },
                         {
-                            iconString: trashIcon(),
+                            icon: Icons.Trash,
                             text: 'Endgültig Löschen',
                             action: () => this.dispatchEvent(new CustomEvent('remove')),
                         },

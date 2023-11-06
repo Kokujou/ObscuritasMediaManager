@@ -104,7 +104,12 @@ export function renderEditPlaylistDialog(dialog) {
                           ></div>`
                         : ''}
                     <div id="tracks-actions">
-                        <div id="import-icon" class="track-action" @click="${() => dialog.openImportDialog()}"></div>
+                        <div
+                            id="import-icon"
+                            class="track-action"
+                            icon="${Icons.Import}"
+                            @click="${() => dialog.openImportDialog()}"
+                        ></div>
                         <div
                             id="trash-icon"
                             class="track-action"

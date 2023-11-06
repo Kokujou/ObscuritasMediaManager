@@ -30,8 +30,17 @@ export function renderMusicPage(musicPage) {
                 <div id="result-options-container">
                     <div id="result-options">
                         <div class="option-section" id="import-section">
-                            <a id="import-files" @click="${() => musicPage.importFolder()}" tooltip="Tracks importieren"></a>
-                            <a id="create-song" @click="${() => changePage(MusicPlaylistPage, { createNew: true })}"></a>
+                            <a
+                                id="import-files"
+                                icon="${Icons.Import}"
+                                @click="${() => musicPage.importFolder()}"
+                                tooltip="Tracks importieren"
+                            ></a>
+                            <a
+                                id="create-song"
+                                icon="${Icons.Plus}"
+                                @click="${() => changePage(MusicPlaylistPage, { createNew: true })}"
+                            ></a>
                         </div>
                         <div class="option-section" id="import-section">
                             <a
