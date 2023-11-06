@@ -1,5 +1,5 @@
 import { html } from '../../exports.js';
-import { IconRegistry } from '../../resources/inline-icons/icon-registry.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { MediaPlaylist } from './media-playlist.js';
 
 /**
@@ -10,12 +10,14 @@ export function renderMediaPlaylist(mediaPlaylist) {
         <div id="playlist-container">
             <div id="playlist-options">
                 <div
-                    class="playlist-button ${IconRegistry.ShufflePlaylistIcon}"
+                    class="playlist-button"
+                    icon="${Icons.ShufflePlaylist}"
                     id="random-order-button"
                     @click="${() => mediaPlaylist.randomizeOrder()}"
                 ></div>
                 <div
-                    class="playlist-button ${IconRegistry.RevertIcon}"
+                    class="playlist-button"
+                    icon="${Icons.Revert}"
                     id="reset-order-button"
                     @click="${() => mediaPlaylist.restoreOrder()}"
                 ></div>

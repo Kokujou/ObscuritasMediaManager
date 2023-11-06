@@ -1,6 +1,7 @@
 import { html } from '../../exports.js';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
 import { Nation } from '../../obscuritas-media-manager-backend-client.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { EditPlaylistDialog } from './edit-playlist-dialog.js';
 
 /**
@@ -104,7 +105,12 @@ export function renderEditPlaylistDialog(dialog) {
                         : ''}
                     <div id="tracks-actions">
                         <div id="import-icon" class="track-action" @click="${() => dialog.openImportDialog()}"></div>
-                        <div id="trash-icon" class="track-action" @click="${() => dialog.clearTracks()}"></div>
+                        <div
+                            id="trash-icon"
+                            class="track-action"
+                            @click="${() => dialog.clearTracks()}"
+                            icon="${Icons.Trash}"
+                        ></div>
                     </div>
                     <ordered-list
                         id="tracks-container"

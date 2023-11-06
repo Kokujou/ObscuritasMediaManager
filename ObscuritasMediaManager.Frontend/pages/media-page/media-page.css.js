@@ -1,7 +1,4 @@
 import { css } from '../../exports.js';
-import { importIcon } from '../../resources/inline-icons/general/import-icon.svg.js';
-import { plusIcon } from '../../resources/inline-icons/general/plus-icon.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderMediaPageStyles() {
     return css`
@@ -50,16 +47,6 @@ export function renderMediaPageStyles() {
             cursor: pointer;
             width: 200px;
             min-height: 350px;
-        }
-
-        #add-button {
-            background-color: #bbbbbb77;
-            ${renderMaskImage(plusIcon())};
-        }
-
-        #import-button {
-            background-color: #bbbbbb77;
-            ${renderMaskImage(importIcon())};
         }
 
         video:not([src=]) {

@@ -1,4 +1,5 @@
 import { html } from '../../exports.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { changePage } from '../../services/extensions/url.extension.js';
 import { CreateRecipePage } from '../create-recipe-page/create-recipe-page.js';
 import { RecipesPage } from './recipes-page.js';
@@ -16,7 +17,12 @@ export function renderRecipesPage(recipesPage) {
                 @scrollBottom="${() => recipesPage.loadMoreItems()}"
             >
                 <div id="items">
-                    <div id="add-recipe-icon" class="recipe-tile" @click="${() => changePage(CreateRecipePage)}"></div>
+                    <div
+                        id="add-recipe-icon"
+                        icon="${Icons.Plus}"
+                        class="recipe-tile"
+                        @click="${() => changePage(CreateRecipePage)}"
+                    ></div>
                     ${recipesPage.recipes.map(
                         (x) =>
                             html`

@@ -1,6 +1,4 @@
 import { css } from '../../exports.js';
-import { importIcon } from '../../resources/inline-icons/general/import-icon.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderCreateRecipePageStyles() {
     return css`
@@ -155,15 +153,6 @@ export function renderCreateRecipePageStyles() {
             height: 100%;
             margin: 0;
             border-radius: 20px;
-        }
-
-        #empty-image-placeholder {
-            position: absolute;
-            inset: 100px;
-            background: white;
-
-            cursor: pointer;
-            ${renderMaskImage(importIcon())};
         }
 
         #rating {

@@ -1,5 +1,6 @@
 import { html } from '../../exports.js';
 import { MusicPlaylistPage } from '../../pages/music-playlist-page/music-playlist-page.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { getPageName } from '../../services/extensions/url.extension.js';
 import { PlaylistSelectionDialog } from './playlist-selection-dialog.js';
 
@@ -47,6 +48,7 @@ export function renderPlaylistSelectionDialog(dialog) {
                             <td>
                                 <div
                                     class="popup-icon"
+                                    icon="${Icons.Popup}"
                                     @click="${
                                         /** @param {Event} e */ (e) => {
                                             e.preventDefault();

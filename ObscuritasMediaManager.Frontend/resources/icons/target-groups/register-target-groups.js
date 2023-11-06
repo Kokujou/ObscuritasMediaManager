@@ -6,16 +6,18 @@ import { crossIcon } from '../../inline-icons/general/cross-icon.svg.js';
 export function registerTargetGroups() {
     return unsafeCSS(`
         *[target-group] {
-            ${renderMaskImage(crossIcon())};
+            ${renderMaskImage(crossIcon())}
         }
 
-        ${Object.values(TargetGroup).map(
-            (group) => `
+        ${Object.values(TargetGroup)
+            .map(
+                (group) => `
                 *[target-group='${group}'] {
                     mask: url('${getTargetGroupIconPath(group)}') 100% 100% / 100% 100%;
                 }
             `
-        )}
+            )
+            .join('\n\n')}
     `);
 }
 

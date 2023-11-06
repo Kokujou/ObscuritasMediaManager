@@ -12,7 +12,7 @@ import { stringsIcon } from '../../resources/inline-icons/instrument-icons/strin
 import { woodWindIcon } from '../../resources/inline-icons/instrument-icons/wood-wind-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
-export function renderInstrumentTypeIcons(parentSelector) {
+export function renderInstrumentTypeIcons() {
     return css`
         *[instrument-type='${unsafeCSS(InstrumentType.Unset)}'] {
             ${renderMaskImage(unsetIcon())};

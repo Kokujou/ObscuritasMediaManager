@@ -2,7 +2,7 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
 import { ContentWarning, MediaCategory, Nation, TargetGroup } from '../../obscuritas-media-manager-backend-client.js';
-import { IconRegistry } from '../../resources/inline-icons/icon-registry.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { MediaFilterSidebar } from './media-filter-sidebar.js';
 import { MediaFilter } from './media-filter.js';
 
@@ -50,13 +50,15 @@ export function renderMediaFilterSidebar(sidebar) {
                     <div
                         id="ascending-icon"
                         ?active="${sidebar.filter.sortingDirection == 'ascending'}"
-                        class="icon-button ${IconRegistry.AscendingIcon}"
+                        class="icon-button"
+                        icon="${Icons.Ascending}"
                         @click="${() => sidebar.changeFilterProperty('sortingDirection', 'ascending')}"
                     ></div>
                     <div
                         id="descending-icon"
                         ?active="${sidebar.filter.sortingDirection == 'descending'}"
-                        class="icon-button ${IconRegistry.DescendingIcon}"
+                        class="icon-button"
+                        icon="${Icons.Descending}"
                         @click="${() => sidebar.changeFilterProperty('sortingDirection', 'descending')}"
                     ></div>
                 </div>
@@ -86,11 +88,13 @@ export function renderMediaFilterSidebar(sidebar) {
                 <div class="filter-heading">
                     <div class="filter-label">Kategorie:</div>
                     <div
-                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        class="icon-button"
+                        icon="${Icons.SelectAll}"
                         @click="${() => sidebar.setArrayFilter('category', 'all', CheckboxState.Ignore)}"
                     ></div>
                     <div
-                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        class="icon-button"
+                        icon="${Icons.UnselectAll}"
                         @click="${() => sidebar.setArrayFilter('category', 'all', CheckboxState.Forbid)}"
                     ></div>
                 </div>
@@ -126,14 +130,16 @@ export function renderMediaFilterSidebar(sidebar) {
                 <div class="filter-heading">
                     <div class="filter-label">
                         Genres:
-                        <div class="icon-button ${IconRegistry.PopupIcon}" @click="${() => sidebar.openGenreDialog()}"></div>
+                        <div class="icon-button" icon="${Icons.Popup}" @click="${() => sidebar.openGenreDialog()}"></div>
                     </div>
                     <div
-                        class="icon-button ${IconRegistry.SelectAllIcon}"
+                        class="icon-button"
+                        icon="${Icons.SelectAll}"
                         @click="${() => sidebar.setArrayFilter('genres', 'all', CheckboxState.Ignore)}"
                     ></div>
                     <div
-                        class="icon-button ${IconRegistry.UnselectAllIcon}"
+                        class="icon-button"
+                        icon="${Icons.UnselectAll}"
                         @click="${() => sidebar.setArrayFilter('genres', 'all', CheckboxState.Forbid)}"
                     ></div>
                 </div>
@@ -157,6 +163,7 @@ export function renderMediaFilterSidebar(sidebar) {
                     <div class="filter-label">Inhaltswarnungen:</div>
                     <div
                         class="icon-button reset-button"
+                        icon="${Icons.Revert}"
                         @click="${() => sidebar.setArrayFilter('contentWarnings', 'all', CheckboxState.Ignore)}"
                     ></div>
                 </div>

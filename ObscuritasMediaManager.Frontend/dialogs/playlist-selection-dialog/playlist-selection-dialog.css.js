@@ -1,6 +1,4 @@
 import { css } from '../../exports.js';
-import { popupIcon } from '../../resources/inline-icons/general/popup-icon.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderPlaylistSelectionDialogStyles() {
     return css`
@@ -52,8 +50,6 @@ export function renderPlaylistSelectionDialogStyles() {
             width: 30px;
             height: 30px;
             background: white;
-
-            ${renderMaskImage(popupIcon())};
         }
     `;
 }

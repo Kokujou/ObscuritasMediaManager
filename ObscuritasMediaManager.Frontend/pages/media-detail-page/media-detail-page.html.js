@@ -9,7 +9,7 @@ import {
     Nation,
     TargetGroup,
 } from '../../obscuritas-media-manager-backend-client.js';
-import { IconRegistry } from '../../resources/inline-icons/icon-registry.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MediaDetailPage } from './media-detail-page.js';
 
@@ -48,7 +48,11 @@ export function renderMediaDetailPage(detailPage) {
                         >
                             ${detailPage.updatedMedia.image
                                 ? html`<div id="delete-icon-container">
-                                      <div id="delete-icon" @click="${() => detailPage.deleteImage()}"></div>
+                                      <div
+                                          id="delete-icon"
+                                          icon="${Icons.Trash}"
+                                          @click="${() => detailPage.deleteImage()}"
+                                      ></div>
                                   </div>`
                                 : ''}
                         </media-tile>
@@ -91,7 +95,7 @@ export function renderMediaDetailPage(detailPage) {
                         <div id="media-heading">
                             <div
                                 id="popup-icon"
-                                icon="${IconRegistry.PopupIcon.name}"
+                                icon="${Icons.Popup}"
                                 @click="${() =>
                                     window.open(
                                         `https://www.anisearch.de/anime/index?text=${detailPage.updatedMedia.name}&char=all&q=true`

@@ -1,12 +1,4 @@
-import { clipboardIcon } from '../../advanced-components/upload-area/images/clipboard-icon.svg.js';
 import { css } from '../../exports.js';
-import { saveTickIcon } from '../../resources/inline-icons/general/save-tick-icon.svg.js';
-import { changeVolumeIcon } from '../../resources/inline-icons/music-player-icons/change-volume-icon.svg.js';
-import { fastForwardIcon } from '../../resources/inline-icons/music-player-icons/fast-forward-icon.svg.js';
-import { pauseIcon } from '../../resources/inline-icons/music-player-icons/pause-icon.svg.js';
-import { playIcon } from '../../resources/inline-icons/music-player-icons/play-icon.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
-import { editIcon } from '../media-detail-page/images/edit-icon.svg.js';
 
 /**
  * TODO: - change detection - autosave
@@ -282,7 +274,6 @@ export function renderMusicPlaylistStyles() {
         #change-path-button {
             width: 40px;
             height: 40px;
-            ${renderMaskImage(editIcon())};
         }
 
         input.editable-label {
@@ -326,16 +317,12 @@ export function renderMusicPlaylistStyles() {
             width: 30px;
             height: 30px;
             background: var(--font-color);
-
-            ${renderMaskImage(editIcon())};
         }
 
         #create-track-icon {
             width: 30px;
             height: 30px;
             background: var(--font-color);
-
-            ${renderMaskImage(saveTickIcon())};
         }
 
         #media-playlist-container {
@@ -356,35 +343,8 @@ function renderAudioPlayerIcons() {
             cursor: pointer;
         }
 
-        #copy-track-button {
-            ${renderMaskImage(clipboardIcon())};
-        }
-
         #previous-track-button {
-            ${renderMaskImage(fastForwardIcon())};
             transform: rotate(180deg);
-        }
-
-        #toggle-track-button.playing,
-        #audio-tile-container #audio-image.playing {
-            ${renderMaskImage(pauseIcon())};
-        }
-
-        #toggle-track-button.paused,
-        #audio-tile-container #audio-image.paused {
-            ${renderMaskImage(playIcon())};
-        }
-
-        #toggle-track-button.playing {
-            ${renderMaskImage(pauseIcon())};
-        }
-
-        #next-track-button {
-            ${renderMaskImage(fastForwardIcon())};
-        }
-
-        #change-volume-button {
-            ${renderMaskImage(changeVolumeIcon())};
         }
 
         *[disabled] * {

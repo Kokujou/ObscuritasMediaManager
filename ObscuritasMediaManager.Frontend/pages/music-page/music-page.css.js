@@ -1,14 +1,7 @@
 import { css } from '../../exports.js';
-import { cleanIcon } from '../../resources/inline-icons/general/clean-icon.svg.js';
 import { importIcon } from '../../resources/inline-icons/general/import-icon.svg.js';
 import { plusIcon } from '../../resources/inline-icons/general/plus-icon.svg.js';
-import { addPlaylistIcon } from '../../resources/inline-icons/playlist-icons/add-playlist-icon.svg.js';
-import { browsePlaylistIcon } from '../../resources/inline-icons/playlist-icons/browse-playlist-icon.svg.js';
-import { downloadPlaylistIcon } from '../../resources/inline-icons/playlist-icons/download-playlist-icon.svg.js';
-import { playPlaylistIcon } from '../../resources/inline-icons/playlist-icons/play-playlist-icon.svg.js';
-import { savePlaylistIcon } from '../../resources/inline-icons/playlist-icons/save-playlist-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
-import { trashIcon } from '../media-detail-page/images/trash-icon.svg.js';
 
 export function renderMusicPageStyles() {
     return css`
@@ -157,36 +150,6 @@ function renderResultOptionsBar() {
             width: 35px;
             height: 35px;
             ${renderMaskImage(plusIcon(true))};
-        }
-
-        #add-to-playlist {
-            ${renderMaskImage(savePlaylistIcon())};
-        }
-
-        #create-playlist {
-            ${renderMaskImage(addPlaylistIcon())};
-        }
-
-        #play-playlist {
-            ${renderMaskImage(playPlaylistIcon())};
-        }
-
-        #browse-playlists {
-            ${renderMaskImage(browsePlaylistIcon())};
-        }
-
-        #download-playlist {
-            ${renderMaskImage(downloadPlaylistIcon())};
-        }
-
-        #cleanup-tracks {
-            ${renderMaskImage(cleanIcon())};
-        }
-
-        #trash-bin-icon {
-            width: 35px;
-            height: 35px;
-            ${renderMaskImage(trashIcon())};
         }
 
         #active-track-warning {

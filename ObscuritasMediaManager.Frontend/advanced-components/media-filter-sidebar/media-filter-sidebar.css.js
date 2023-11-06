@@ -1,7 +1,5 @@
 import { css } from '../../exports.js';
-import { revertIcon } from '../../resources/inline-icons/general/revert-icon.svg.js';
 import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderMediaFilterSidebarStyles() {
     return css`
@@ -78,10 +76,6 @@ export function renderMediaFilterSidebarStyles() {
             flex-direction: row;
             align-items: center;
             gap: 20px;
-        }
-
-        .reset-button {
-            ${renderMaskImage(revertIcon())};
         }
 
         #search-input {

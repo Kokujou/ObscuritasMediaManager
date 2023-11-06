@@ -1,5 +1,6 @@
 import { html } from '../../exports.js';
 import { Nation } from '../../obscuritas-media-manager-backend-client.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { LanguageSwitcher } from './language-switcher.js';
 
 /**
@@ -23,7 +24,7 @@ export function renderLanguageSwitcher(languageSwitcher) {
             ${renderLanguageWheel(languageSwitcher, smallestParentSize)}
             ${renderNationWheel(languageSwitcher, smallestParentSize)}
             <div id="confirm-button" @click="${languageSwitcher.confirm}">
-                <div id="confirm-icon"></div>
+                <div id="confirm-icon" icon="${Icons.SaveTick}"></div>
             </div>
             <div id="close-button" @click="${languageSwitcher.destroy}">&times;</div>
         </div>

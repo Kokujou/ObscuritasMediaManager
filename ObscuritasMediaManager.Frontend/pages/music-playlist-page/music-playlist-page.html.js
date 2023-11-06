@@ -9,6 +9,7 @@ import {
     Participants,
     PlaylistModel,
 } from '../../obscuritas-media-manager-backend-client.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { AudioService } from '../../services/audio-service.js';
 import { ClipboardService } from '../../services/clipboard.service.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
@@ -175,20 +176,32 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                             <div id="audio-controls">
                                 <div
                                     id="copy-track-button"
+                                    icon="${Icons.Clipboard}"
                                     class="audio-icon"
                                     tooltip="In Zwischenablage kopieren"
                                     @click="${() => ClipboardService.copyAudioToClipboard(this.currentTrack)}"
                                 ></div>
-                                <div id="previous-track-button" @click="${() => this.changeTrackBy(-1)}" class="audio-icon"></div>
+                                <div
+                                    id="previous-track-button"
+                                    icon="${Icons.FastForward}"
+                                    @click="${() => this.changeTrackBy(-1)}"
+                                    class="audio-icon"
+                                ></div>
                                 <div
                                     id="toggle-track-button"
                                     @click="${() => this.toggleCurrentTrack()}"
-                                    class="audio-icon ${AudioService.paused ? 'paused' : 'playing'}"
+                                    icon="${AudioService.paused ? Icons.Play : Icons.Pause}"
+                                    class="audio-icon"
                                 ></div>
-                                <div id="next-track-button" @click="${() => this.changeTrackBy(1)}" class="audio-icon"></div>
+                                <div
+                                    id="next-track-button"
+                                    icon="${Icons.FastForward}"
+                                    @click="${() => this.changeTrackBy(1)}"
+                                    class="audio-icon"
+                                ></div>
 
                                 <div id="change-volume-container">
-                                    <div id="change-volume-button" class="audio-icon"></div>
+                                    <div id="change-volume-button" icon="${Icons.ChangeVolume}" class="audio-icon"></div>
                                     <range-slider
                                         id="change-volume"
                                         @valueChanged="${(e) => this.changeVolume(e.detail.value)}"
@@ -206,6 +219,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                     : html`<div
                                           id="change-path-button"
                                           class="inline-icon"
+                                          icon="${Icons.Edit}"
                                           @click="${this.changeCurrentTrackPath}"
                                       ></div>`}
                             </div>
@@ -213,13 +227,13 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                     </div>
                     ${this.createNew
                         ? html` <div id="edit-playlist-link" @click="${() => this.createTrack()}">
-                              <div id="create-track-icon"></div>
+                              <div id="create-track-icon" icon="${Icons.SaveTick}"></div>
                               <div id="edit-playlist-text">Track erstellen</div>
                           </div>`
                         : this.playlist.isTemporary
                         ? html`
                               <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
-                                  <div id="edit-playlist-icon"></div>
+                                  <div id="edit-playlist-icon" icon="${Icons.Edit}"></div>
                                   <div id="edit-playlist-text">Zu Playlist befördern</div>
                               </div>
                           `

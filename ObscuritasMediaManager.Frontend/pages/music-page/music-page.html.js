@@ -1,5 +1,6 @@
 import { html } from '../../exports.js';
 import { LinkElement } from '../../native-components/link-element/link-element.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { AudioService } from '../../services/audio-service.js';
 import { ClipboardService } from '../../services/clipboard.service.js';
 import { changePage } from '../../services/extensions/url.extension.js';
@@ -35,6 +36,7 @@ export function renderMusicPage(musicPage) {
                         <div class="option-section" id="import-section">
                             <a
                                 id="cleanup-tracks"
+                                icon="${Icons.Clean}"
                                 @click="${() => musicPage.cleanupTracks()}"
                                 tooltip="Defekte Tracks bereinigen"
                             ></a>
@@ -42,16 +44,19 @@ export function renderMusicPage(musicPage) {
                         <div class="option-section" id="playlist-section">
                             <a
                                 id="add-to-playlist"
+                                icon="${Icons.SavePlaylist}"
                                 tooltip="Zu einer Playlist hinzufügen"
                                 @click="${() => musicPage.showPlaylistSelectionDialog()}"
                             ></a>
                             <a
                                 id="create-playlist"
+                                icon="${Icons.AddPlaylist}"
                                 tooltip="Playlist erstellen"
                                 @click="${() => musicPage.showCreatePlaylistDialog()}"
                             ></a>
                             <a
                                 id="play-playlist"
+                                icon="${Icons.PlayPlaylist}"
                                 tooltip="Ausgewählte Tracks abspielen"
                                 @click="${() => musicPage.playPlaylist()}"
                             ></a>

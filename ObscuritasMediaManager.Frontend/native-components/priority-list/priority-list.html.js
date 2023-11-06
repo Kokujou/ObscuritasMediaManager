@@ -1,8 +1,6 @@
 import { html } from '../../exports.js';
-import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg.js';
-import { dragIcon } from '../../resources/inline-icons/general/drag-icon.svg.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { sortBy } from '../../services/extensions/array.extensions.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { PriorityList } from './priority-list.js';
 
 /**
@@ -51,26 +49,20 @@ export function renderPriorityList(priorityList) {
             }
         </style>
 
-        <style>
-            .delete-icon {
-                ${renderMaskImage(trashIcon())};
-            }
-            .move-icon {
-                ${renderMaskImage(dragIcon())};
-            }
-        </style>
         ${sortBy(priorityList.items, (x) => x.order).map((item, index) => {
             item.order = index;
             return html`
                 <div class="item" order="${index}">
                     <div
                         class="move-icon icon"
+                        icon="${Icons.Drag}"
                         draggable="true"
                         @dragstart="${(e) => priorityList.registerDragItem(e, index)}"
                     ></div>
                     ${priorityList.itemRenderer(item)}
                     <div
-                        class="delete-icon icon"
+                        class="icon"
+                        icon="${Icons.Trash}"
                         @click="${() => priorityList.dispatchEvent(new CustomEvent('delete-item', { detail: item }))}"
                     ></div>
                 </div>

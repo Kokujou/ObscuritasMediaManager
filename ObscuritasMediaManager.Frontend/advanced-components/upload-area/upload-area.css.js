@@ -1,8 +1,6 @@
 import { css } from '../../exports.js';
 import { plusIcon } from '../../resources/inline-icons/general/plus-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
-import { clipboardIcon } from './images/clipboard-icon.svg.js';
-import { dropIcon } from './images/drop-icon.svg.js';
 
 export function renderUploadAreaStyles() {
     return css`
@@ -107,14 +105,6 @@ export function renderUploadAreaStyles() {
             transition: opacity ease 1s;
             user-select: none;
             caret-color: transparent;
-        }
-
-        #clipboard-icon {
-            ${renderMaskImage(clipboardIcon())};
-        }
-
-        #drop-icon {
-            ${renderMaskImage(dropIcon())};
         }
     `;
 }

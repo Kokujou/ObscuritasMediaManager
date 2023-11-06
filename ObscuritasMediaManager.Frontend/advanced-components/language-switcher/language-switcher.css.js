@@ -1,7 +1,5 @@
 import { css } from '../../exports.js';
-import { saveTickIcon } from '../../resources/inline-icons/general/save-tick-icon.svg.js';
 import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderLanguageSwitcherStyles() {
     return css`
@@ -73,7 +71,6 @@ export function renderLanguageSwitcherStyles() {
             justify-content: center;
 
             background-color: limegreen;
-            ${renderMaskImage(saveTickIcon())};
         }
 
         #close-button {

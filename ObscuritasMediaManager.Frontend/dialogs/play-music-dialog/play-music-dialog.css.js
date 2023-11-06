@@ -1,7 +1,4 @@
 import { css, unsafeCSS } from '../../exports.js';
-import { pauseIcon } from '../../resources/inline-icons/music-player-icons/pause-icon.svg.js';
-import { playIcon } from '../../resources/inline-icons/music-player-icons/play-icon.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { PlayMusicDialog } from './play-music-dialog.js';
 
 export function renderPlayMusicDialogStyles() {
@@ -51,11 +48,6 @@ export function renderPlayMusicDialogStyles() {
             left: 50%;
             top: 50%;
             background-color: white;
-            ${renderMaskImage(pauseIcon())};
-        }
-
-        #play-button[paused] {
-            ${renderMaskImage(playIcon())};
         }
 
         #close-button {

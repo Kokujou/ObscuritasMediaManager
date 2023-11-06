@@ -1,5 +1,6 @@
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood.js';
 import { html } from '../../exports.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { AudioService } from '../../services/audio-service.js';
 import { PlayMusicDialog } from './play-music-dialog.js';
 
@@ -17,7 +18,7 @@ export function renderPlayMusicDialog(dialog) {
         </style>
         <div id="player" @click="${() => dialog.toggle()}">
             <div id="close-button" @click="${() => dialog.close()}">&times;</div>
-            <div id="play-button" ?paused="${AudioService.paused}"></div>
+            <div id="play-button" icon="${AudioService.paused ? Icons.Play : Icons.Pause}"></div>
         </div>
         <div id="title">${dialog.currentTrack.displayName}</div>
 

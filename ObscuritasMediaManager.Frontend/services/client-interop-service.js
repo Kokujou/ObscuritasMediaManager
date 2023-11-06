@@ -5,6 +5,7 @@ import { InteropQueryRequest } from '../client-interop/interop-query-request.js'
 import { InteropQueryResponse } from '../client-interop/interop-query-response.js';
 import { ResponseStatus } from '../client-interop/response-status.js';
 import { Observable } from '../data/observable.js';
+import { MessageSnackbar } from '../native-components/message-snackbar/message-snackbar.js';
 import { waitForSeconds } from './extensions/animation.extension.js';
 
 export class ClientInteropService {
@@ -18,6 +19,10 @@ export class ClientInteropService {
      * @param {Omit<InteropCommandRequest, 'ticks'>} command
      */
     static sendCommand(command) {
+        if (this.socket?.readyState != WebSocket.OPEN) {
+            MessageSnackbar.popup('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.', 'warning');
+            return;
+        }
         return new Promise(async (resolve, reject) => {
             /** @type {InteropCommandRequest} */ var request = {
                 ...command,
@@ -39,6 +44,10 @@ export class ClientInteropService {
      * @param {Omit<InteropQueryRequest, 'ticks'>} query
      */
     static executeQuery(query) {
+        if (this.socket?.readyState != WebSocket.OPEN) {
+            MessageSnackbar.popup('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.', 'warning');
+            return;
+        }
         return new Promise(async (resolve, reject) => {
             /** @type {InteropQueryRequest} */ var request = {
                 ...query,

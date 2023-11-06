@@ -1,8 +1,5 @@
 import { css } from '../../exports.js';
 import { registerIcons } from '../../resources/inline-icons/icon-registry.js';
-import { pauseIcon } from '../../resources/inline-icons/music-player-icons/pause-icon.svg.js';
-import { playIcon } from '../../resources/inline-icons/music-player-icons/play-icon.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderAudioTileBaseStyles() {
     return css`
@@ -146,16 +143,8 @@ export function renderAudioTileBaseStyles() {
             display: none;
         }
 
-        :host(:not([paused])) #audio-image {
-            ${renderMaskImage(pauseIcon())};
-        }
-
         :host(:not([paused])) #audio-image[invisible] {
             opacity: 0;
-        }
-
-        :host([paused]) #audio-image {
-            ${renderMaskImage(playIcon())};
         }
 
         *[disabled] {

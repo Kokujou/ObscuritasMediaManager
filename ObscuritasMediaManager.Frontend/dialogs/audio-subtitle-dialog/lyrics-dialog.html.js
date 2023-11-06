@@ -1,5 +1,5 @@
 import { html } from '../../exports.js';
-import { IconRegistry } from '../../resources/inline-icons/icon-registry.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { AudioService } from '../../services/audio-service.js';
 import { LyricsDialog } from './lyrics-dialog.js';
 
@@ -22,7 +22,7 @@ export function renderAudioSubtitleDialog(dialog) {
                     @click="${() => dialog.notifyPlaylistSaved()}"
                     ?disabled="${!dialog.canSave}"
                 >
-                    <div class="icon" icon="${IconRegistry.SaveTickIcon.name}"></div>
+                    <div class="icon" icon="${Icons.SaveTick}"></div>
                     Lyrics Speichern
                 </div>
                 <div
@@ -31,7 +31,7 @@ export function renderAudioSubtitleDialog(dialog) {
                     @click="${() => dialog.requestNewLyrics()}"
                     ?disabled="${!dialog.canNext}"
                 >
-                    <div class="icon" icon="${IconRegistry.CrossIcon.name}"></div>
+                    <div class="icon" icon="${Icons.Cross}"></div>
                     Neue Lyrics Laden
                 </div>
                 <div id="volume-input"></div>
@@ -40,16 +40,16 @@ export function renderAudioSubtitleDialog(dialog) {
                 <div
                     id="scroll-up-button"
                     class="icon"
-                    icon="${IconRegistry.FastForwardIcon.name}"
+                    icon="${Icons.FastForward}"
                     @pointerdown="${(e) => dialog.startScrolling('up')}"
                 ></div>
                 ${dialog.scrollingPaused || AudioService.paused
-                    ? html`<div class="icon" icon="${IconRegistry.PlayIcon.name}" @click="${dialog.togglePlay}"></div>`
-                    : html` <div class="icon" icon="${IconRegistry.PauseIcon.name}" @click="${dialog.togglePlay}"></div>`}
+                    ? html`<div class="icon" icon="${Icons.Play}" @click="${dialog.togglePlay}"></div>`
+                    : html` <div class="icon" icon="${Icons.Pause}" @click="${dialog.togglePlay}"></div>`}
                 <div
                     class="icon"
                     id="scroll-down-button"
-                    icon="${IconRegistry.FastForwardIcon.name}"
+                    icon="${Icons.FastForward}"
                     @pointerdown="${(e) => dialog.startScrolling('down')}"
                 ></div>
             </div>

@@ -1,4 +1,7 @@
+import { clipboardIcon } from '../../advanced-components/upload-area/images/clipboard-icon.svg.js';
+import { dropIcon } from '../../advanced-components/upload-area/images/drop-icon.svg.js';
 import { unsafeCSS } from '../../exports.js';
+import { editIcon } from '../../pages/media-detail-page/images/edit-icon.svg.js';
 import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg.js';
 import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 import { arrowIcon } from './general/arrow.svg.js';
@@ -6,6 +9,7 @@ import { ascendingIcon } from './general/ascending-icon.svg.js';
 import { cleanIcon } from './general/clean-icon.svg.js';
 import { crossIcon } from './general/cross-icon.svg.js';
 import { descendingIcon } from './general/descending-icon.svg.js';
+import { dragIcon } from './general/drag-icon.svg.js';
 import { globusIcon } from './general/globus-icon.svg.js';
 import { importIcon } from './general/import-icon.svg.js';
 import { noteIcon } from './general/note-icon.svg.js';
@@ -29,70 +33,53 @@ import { playPlaylistIcon } from './playlist-icons/play-playlist-icon.svg.js';
 import { savePlaylistIcon } from './playlist-icons/save-playlist-icon.svg.js';
 import { shufflePlaylistIcon } from './playlist-icons/shuffle-playlist-icon.svg.js';
 
-class IconRegistryEntry {
-    name;
-    icon;
-
-    constructor(name, icon) {
-        this.name = name;
-        this.icon = icon;
-    }
-
-    toString() {
-        return this.name;
-    }
+class IconRegistry {
+    static Cross = crossIcon();
+    static Trash = trashIcon();
+    static Arrow = arrowIcon();
+    static Import = importIcon();
+    static Plus = plusIcon();
+    static Popup = popupIcon();
+    static AddPlaylist = addPlaylistIcon();
+    static BrowsePlaylist = browsePlaylistIcon();
+    static DownloadPlaylist = downloadPlaylistIcon();
+    static PlayPlaylist = playPlaylistIcon();
+    static SavePlaylist = savePlaylistIcon();
+    static ShufflePlaylist = shufflePlaylistIcon();
+    static ChangeVolume = changeVolumeIcon();
+    static FastForward = fastForwardIcon();
+    static IncreaseVolume = increaseVolumeIcon();
+    static Pause = pauseIcon();
+    static Play = playIcon();
+    static Clean = cleanIcon();
+    static Note = noteIcon();
+    static Revert = revertIcon();
+    static SaveTick = saveTickIcon();
+    static Unset = unsetIcon();
+    static SelectAll = selectAllIcon();
+    static UnselectAll = unselectAllIcon();
+    static Ascending = ascendingIcon();
+    static Descending = descendingIcon();
+    static Speech = speechIcon();
+    static Globus = globusIcon();
+    static Drag = dragIcon();
+    static Drop = dropIcon();
+    static Clipboard = clipboardIcon();
+    static Edit = editIcon();
 }
 
-export class IconRegistry {
-    static CrossIcon = new IconRegistryEntry('CrossIcon', crossIcon);
-    static TrashIcon = new IconRegistryEntry('TrashIcon', trashIcon);
-    static ArrowIcon = new IconRegistryEntry('ArrowIcon', arrowIcon);
-    static ImportIcon = new IconRegistryEntry('ImportIcon', importIcon);
-    static PlusIcon = new IconRegistryEntry('PlusIcon', plusIcon);
-    static PopupIcon = new IconRegistryEntry('PopupIcon', popupIcon);
-    static AddPlaylistIcon = new IconRegistryEntry('AddPlaylistIcon', addPlaylistIcon);
-    static BrowsePlaylistIcon = new IconRegistryEntry('BrowsePlaylistIcon', browsePlaylistIcon);
-    static DownloadPlaylistIcon = new IconRegistryEntry('DownloadPlaylistIcon', downloadPlaylistIcon);
-    static PlayPlaylistIcon = new IconRegistryEntry('PlayPlaylistIcon', playPlaylistIcon);
-    static SavePlaylistIcon = new IconRegistryEntry('SavePlaylistIcon', savePlaylistIcon);
-    static ShufflePlaylistIcon = new IconRegistryEntry('ShufflePlaylistIcon', shufflePlaylistIcon);
-    static ChangeVolumeIcon = new IconRegistryEntry('ChangeVolumeIcon', changeVolumeIcon);
-    static FastForwardIcon = new IconRegistryEntry('FastForwardIcon', fastForwardIcon);
-    static IncreaseVolumeIcon = new IconRegistryEntry('IncreaseVolumeIcon', increaseVolumeIcon);
-    static PauseIcon = new IconRegistryEntry('PauseIcon', pauseIcon);
-    static PlayIcon = new IconRegistryEntry('PlayIcon', playIcon);
-    static CleanIcon = new IconRegistryEntry('CleanIcon', cleanIcon);
-    static NoteIcon = new IconRegistryEntry('NoteIcon', noteIcon);
-    static RevertIcon = new IconRegistryEntry('RevertIcon', revertIcon);
-    static SaveTickIcon = new IconRegistryEntry('SaveTickIcon', saveTickIcon);
-    static UnsetIcon = new IconRegistryEntry('UnsetIcon', unsetIcon);
-    static SelectAllIcon = new IconRegistryEntry('SelectAllIcon', selectAllIcon);
-    static UnselectAllIcon = new IconRegistryEntry('UnselectAllIcon', unselectAllIcon);
-    static AscendingIcon = new IconRegistryEntry('AscendingIcon', ascendingIcon);
-    static DescendingIcon = new IconRegistryEntry('DescendingIcon', descendingIcon);
-    static SpeechIcon = new IconRegistryEntry('SpeechIcon', speechIcon);
-    static GlobusIcon = new IconRegistryEntry('GlobusIcon', globusIcon);
-
-    /** @access private */ constructor() {}
-}
+export const Icons = /** @type {typeof IconRegistry} */ ({});
+Object.keys(IconRegistry).forEach((x) => (Icons[x] = x));
 
 export function registerIcons() {
     return unsafeCSS(
-        Object.keys(IconRegistry)
+        Object.keys(Icons)
             .map(
                 (selector) =>
-                    `.${selector} {
-                        ${renderMaskImage(IconRegistry[selector].icon())}
+                    `[icon=${selector}] {
+                        ${renderMaskImage(IconRegistry[selector])}
                     }`
             )
-            .join('\n') +
-            Object.keys(IconRegistry)
-                .map(
-                    (selector) =>
-                        `[icon="${selector}"] {
-                        ${renderMaskImage(IconRegistry[selector].icon())}
-                    }`
-                )
-                .join('\n')
+            .join('\n\n')
     );
 }

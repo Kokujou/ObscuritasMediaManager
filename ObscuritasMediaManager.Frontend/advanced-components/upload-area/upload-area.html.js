@@ -1,4 +1,5 @@
 import { html } from '../../exports.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { UploadArea } from './upload-area.js';
 
 /**
@@ -22,8 +23,8 @@ export function renderUploadArea(uploadArea) {
                 @click=${(e) => uploadArea.openImageBrowser(e)}
             >
                 <div id="icon-section">
-                    <div id="clipboard-icon" class="icon"></div>
-                    <div id="drop-icon" class="icon"></div>
+                    <div id="clipboard-icon" class="icon" icon="${Icons.Clipboard}"></div>
+                    <div id="drop-icon" class="icon" icon="${Icons.Drop}"></div>
                 </div>
                 <div id="drop-paste-order">drop/paste image</div>
                 or

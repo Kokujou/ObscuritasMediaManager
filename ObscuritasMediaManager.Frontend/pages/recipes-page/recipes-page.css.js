@@ -1,6 +1,4 @@
 import { css } from '../../exports.js';
-import { plusIcon } from '../../resources/inline-icons/general/plus-icon.svg.js';
-import { renderMaskImage } from '../../services/extensions/style.extensions.js';
 
 export function renderRecipesPageStyles() {
     return css`
@@ -36,7 +34,6 @@ export function renderRecipesPageStyles() {
         #add-recipe-icon {
             background: gray;
             box-sizing: border-box;
-            ${renderMaskImage(plusIcon())};
         }
 
         .recipe-tile {
