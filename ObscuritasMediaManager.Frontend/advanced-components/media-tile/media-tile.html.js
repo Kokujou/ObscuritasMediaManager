@@ -7,7 +7,7 @@ import { MediaTile } from './media-tile.js';
 export function renderMediaTile(tile) {
     return html` <style>
             #tile-image {
-                background-image: url('${tile.imageSource}');
+                background-image: url('data:image/jpeg;base64, ${tile.imageSource}');
             }
         </style>
 

@@ -38,7 +38,7 @@ public class MediaController(MediaRepository _mediaRepository, MediaImportServic
     }
 
     [HttpPut("{id}")]
-    public async Task UpdateMedia(Guid id, [FromBody] UpdateRequest<MediaModel> _)
+    public async Task UpdateMedia(Guid id, [FromBody] UpdateRequest<JsonElement> _)
     {
         var deserialized = await HttpContext.ReadRequestBodyAsync<UpdateRequest<JsonNode>>(_serializerOptions);
         await _mediaRepository.UpdateAsync(id, deserialized.OldModel, deserialized.NewModel, _serializerOptions);

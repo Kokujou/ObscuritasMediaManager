@@ -43,6 +43,14 @@ export function renderMediaPageStyles() {
             cursor: pointer;
         }
 
+        .tile-button {
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            background: #fff6;
+            align-self: center;
+        }
+
         media-tile {
             cursor: pointer;
             width: 200px;

@@ -7,7 +7,7 @@ import {
     ContentWarning,
     MediaModel,
     StreamingEntryModel,
-    UpdateRequestOfMediaModel,
+    UpdateRequestOfJsonElement,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { MediaService } from '../../services/backend.services.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
@@ -94,6 +94,7 @@ export class MediaDetailPage extends LitElementBase {
                 this.mediaIds = MediaFilterService.filter([...newList], filter).map((x) => x.id);
             })
         );
+        Session.mediaList.refresh();
     }
 
     render() {
@@ -133,9 +134,10 @@ export class MediaDetailPage extends LitElementBase {
      */
     async changeProperty(property, value) {
         try {
-            var media = this.updatedMedia.clone();
-            media[property] = value;
-            await MediaService.updateMedia(media.id, new UpdateRequestOfMediaModel({ oldModel: this.oldMedia, newModel: media }));
+            /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
+            oldModel[property] = this.updatedMedia[property];
+            newModel[property] = value;
+            await MediaService.updateMedia(this.updatedMedia.id, new UpdateRequestOfJsonElement({ oldModel, newModel }));
             this.updatedMedia[property] = value;
             this.oldMedia[property] = value;
             this.requestFullUpdate();

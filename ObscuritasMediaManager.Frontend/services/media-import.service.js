@@ -1,5 +1,6 @@
 import { InteropQuery } from '../client-interop/interop-query.js';
 import { EntityStatusDialog } from '../dialogs/entity-status-dialog/entity-status-dialog.js';
+import { LinkElement } from '../native-components/link-element/link-element.js';
 import { MediaModel, ModelCreationState } from '../obscuritas-media-manager-backend-client.js';
 import { MusicPlaylistPage } from '../pages/music-playlist-page/music-playlist-page.js';
 import { MediaService, MusicService, PlaylistService } from './backend.services.js';
@@ -20,7 +21,10 @@ export class MediaImportService {
         for (let path of filePaths)
             MusicService.createMusicTrackFromPath(path).then((result) => {
                 var name = path.split('\\').at(-1);
-                dialog.addEntry({ text: name, status: result.value });
+                dialog.addEntry({
+                    text: LinkElement.forPage(MusicPlaylistPage, { trackHash: result.key }, name),
+                    status: result.value,
+                });
                 if (result.value == ModelCreationState.Success || result.value == ModelCreationState.Updated)
                     affectedTrackHashs.push(result.key);
             });

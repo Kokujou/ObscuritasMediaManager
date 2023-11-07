@@ -42,6 +42,7 @@ export function renderEntityStatusDialogStyles() {
 
         .entry-text {
             flex: auto;
+            user-select: text;
         }
 
         #entries-loading-indication {

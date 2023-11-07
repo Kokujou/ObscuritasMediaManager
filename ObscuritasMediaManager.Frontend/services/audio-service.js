@@ -34,7 +34,7 @@ export class AudioService {
             this.reset();
             this.ended.next();
         }
-    }, true);
+    });
 
     /** @type {Subscription} */ static #commandSubscription = ClientInteropService.commandResponse.subscribe((x) => {
         switch (x?.command) {
@@ -58,7 +58,7 @@ export class AudioService {
                 return;
         }
         this.changed.next();
-    }, true);
+    });
     /** @type {Subscription} */ static #querySubscription = ClientInteropService.queryResponse.subscribe((x) => {
         switch (x?.query) {
             case InteropQuery.LoadTrack:
@@ -70,7 +70,7 @@ export class AudioService {
                 return;
         }
         this.changed.next();
-    }, true);
+    });
 
     static async reinitialize() {
         try {

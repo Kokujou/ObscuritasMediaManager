@@ -1,11 +1,12 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { TemplateResult } from '../../exports.js';
 import { ModelCreationState } from '../../obscuritas-media-manager-backend-client.js';
 import { renderEntityStatusDialogStyles } from './entity-status-dialog.css.js';
 import { renderEntityStatusDialog } from './entity-status-dialog.html.js';
 
 /**
  * @typedef {Object} EntityStatusEntry
- * @prop {string} text
+ * @prop {string | TemplateResult} text
  * @prop {ModelCreationState} status
  */
 

@@ -12,7 +12,7 @@ export function registerTargetGroups() {
         ${Object.values(TargetGroup)
             .map(
                 (group) => `
-                *[target-group='${group}'] {
+                *[target-group="${group}"] {
                     mask: url('${getTargetGroupIconPath(group)}') 100% 100% / 100% 100%;
                 }
             `

@@ -23,7 +23,7 @@ export class LinkElement extends LitElementBase {
      * @template {Omit<InstanceType<T>, keyof LitElementBase>} U
      * @param {T} page
      * @param {Partial<Pick<U, import('../../services/extensions/url.extension.js').NonMethodKeys<U>>>} params
-     * @param {TemplateResult} inner
+     * @param {TemplateResult | string} inner
      * @param {boolean} [disabled]
      */
     static forPage(page, params, inner, disabled, id = '') {

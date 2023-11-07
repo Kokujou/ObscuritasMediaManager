@@ -72,8 +72,8 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                     <div id="current-track-container">
                         <div id="mood-switcher-container" ?disabled="${this.updatedTrack.complete}">
                             <div id="mood-tabs">
-                                <div id="first-mood" class="mood-tab" @click="${() => (this.moodToSwitch = 'mood1')}"></div>
-                                <div id="second-mood" class="mood-tab" @click="${() => (this.moodToSwitch = 'mood2')}"></div>
+                                <div id="first-mood" class="mood-tab" @click="${() => this.switchSelectedMood('mood1')}"></div>
+                                <div id="second-mood" class="mood-tab" @click="${() => this.switchSelectedMood('mood2')}"></div>
                             </div>
                             <div id="mood-switcher" ?disabled="${this.updatedTrack.complete}">
                                 <scroll-select

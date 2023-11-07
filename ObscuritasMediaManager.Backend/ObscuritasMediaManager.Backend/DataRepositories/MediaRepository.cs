@@ -3,6 +3,7 @@ using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 
 using ObscuritasMediaManager.Backend.Models;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -20,8 +21,19 @@ public class MediaRepository
 
     public async Task UpdateAsync(Guid id, JsonNode old, JsonNode updated, JsonSerializerOptions serializerOptions)
     {
-        var actual = await _context.Media.AsTracking().SingleOrDefaultAsync(x => x.Id == id);
+        var actual = await _context.Media.IgnoreAutoIncludes().AsTracking().SingleOrDefaultAsync(x => x.Id == id);
         if (actual == default) throw new ModelNotFoundException(id);
+
+        if (updated[nameof(MediaModel.Genres)] is not null)
+        {
+            var updatedGenres = updated[nameof(MusicModel.Genres)].Deserialize<List<GenreModel>>(serializerOptions);
+            var newGenres = updatedGenres.Except(actual.Genres, (a, b) => a.Id == b.Id).ToList();
+            var removedGenres = actual.Genres.Except(updatedGenres, (a, b) => a.Id == b.Id).ToList();
+            foreach (var added in newGenres) actual.Genres.Add(added);
+            foreach (var removed in removedGenres) actual.Genres.Remove(removed);
+            old.AsObject().Remove(nameof(MediaModel.Genres));
+            updated.AsObject().Remove(nameof(MediaModel.Genres));
+        }
 
         actual.UpdateFromJson(old, updated, serializerOptions);
         await _context.SaveChangesAsync();

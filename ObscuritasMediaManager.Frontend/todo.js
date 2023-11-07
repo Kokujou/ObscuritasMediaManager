@@ -4,7 +4,6 @@
  * - Add Message Snackbar for all Update/Delete/Create actions
  */
 
-// TODO: Fix concurrency exception happening when not retrieving live-model the first time
 //TODO: Media page finalization
 /**
  * - think about icons for language

@@ -81,12 +81,14 @@ export function renderMusicPlaylistStyles() {
         }
 
         #first-mood {
-            background: var(--primary-color);
+            background: linear-gradient(var(--primary-color) 0% 100%);
+            border: 2px solid var(--primary-color);
             color: var(--font-color);
         }
 
         #second-mood {
-            background: var(--secondary-color);
+            background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
+            border: 2px solid var(--secondary-color);
             color: var(--secondary-font-color);
         }
 

@@ -2258,7 +2258,7 @@ export var MediaCategory;
     MediaCategory["RealSeries"] = "RealSeries";
     MediaCategory["JDrama"] = "JDrama";
 })(MediaCategory || (MediaCategory = {}));
-export class UpdateRequestOfMediaModel {
+export class UpdateRequestOfJsonElement {
     oldModel;
     newModel;
     constructor(data) {
@@ -2271,23 +2271,23 @@ export class UpdateRequestOfMediaModel {
     }
     init(_data, _mappings) {
         if (_data) {
-            this.oldModel = _data["oldModel"] ? MediaModel.fromJS(_data["oldModel"], _mappings) : null;
-            this.newModel = _data["newModel"] ? MediaModel.fromJS(_data["newModel"], _mappings) : null;
+            this.oldModel = _data["oldModel"] !== undefined ? _data["oldModel"] : null;
+            this.newModel = _data["newModel"] !== undefined ? _data["newModel"] : null;
         }
     }
     static fromJS(data, _mappings) {
         data = typeof data === 'object' ? data : {};
-        return createInstance(data, _mappings, UpdateRequestOfMediaModel);
+        return createInstance(data, _mappings, UpdateRequestOfJsonElement);
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data["oldModel"] = this.oldModel ? this.oldModel.toJSON() : null;
-        data["newModel"] = this.newModel ? this.newModel.toJSON() : null;
+        data["oldModel"] = this.oldModel !== undefined ? this.oldModel : null;
+        data["newModel"] = this.newModel !== undefined ? this.newModel : null;
         return data;
     }
     clone() {
         const json = this.toJSON();
-        let result = new UpdateRequestOfMediaModel();
+        let result = new UpdateRequestOfJsonElement();
         result.init(json);
         return result;
     }
@@ -2365,40 +2365,6 @@ export class LyricsResponse {
     clone() {
         const json = this.toJSON();
         let result = new LyricsResponse();
-        result.init(json);
-        return result;
-    }
-}
-export class UpdateRequestOfJsonElement {
-    oldModel;
-    newModel;
-    constructor(data) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
-                    this[property] = data[property];
-            }
-        }
-    }
-    init(_data, _mappings) {
-        if (_data) {
-            this.oldModel = _data["oldModel"] !== undefined ? _data["oldModel"] : null;
-            this.newModel = _data["newModel"] !== undefined ? _data["newModel"] : null;
-        }
-    }
-    static fromJS(data, _mappings) {
-        data = typeof data === 'object' ? data : {};
-        return createInstance(data, _mappings, UpdateRequestOfJsonElement);
-    }
-    toJSON(data) {
-        data = typeof data === 'object' ? data : {};
-        data["oldModel"] = this.oldModel !== undefined ? this.oldModel : null;
-        data["newModel"] = this.newModel !== undefined ? this.newModel : null;
-        return data;
-    }
-    clone() {
-        const json = this.toJSON();
-        let result = new UpdateRequestOfJsonElement();
         result.init(json);
         return result;
     }

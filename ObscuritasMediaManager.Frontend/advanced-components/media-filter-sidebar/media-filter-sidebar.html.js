@@ -14,7 +14,7 @@ export function renderMediaFilterSidebar(sidebar) {
     return html`
         <div id="heading">
             <div id="heading-text">Suche</div>
-            <div class="icon-button reset-button" @click="${() => sidebar.resetFilter()}"></div>
+            <div class="icon-button reset-button" icon="${Icons.Revert}" @click="${() => sidebar.resetFilter()}"></div>
         </div>
         <div id="filters">
             <div id="search-filter" class="filter-entry" simple>
@@ -185,6 +185,7 @@ export function renderMediaFilterSidebar(sidebar) {
                     <div class="filter-label">Zielgruppe:</div>
                     <div
                         class="icon-button reset-button"
+                        icon="${Icons.Revert}"
                         @click="${() => sidebar.setArrayFilter('targetGroups', 'all', CheckboxState.Ignore)}"
                     ></div>
                 </div>

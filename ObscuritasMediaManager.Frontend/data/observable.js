@@ -13,13 +13,12 @@ export class Observable {
      * @returns {Subscription}
      * @param {( newValue: T,oldValue: T)=> void} observer
      */
-    subscribe(observer, suppressInitial = false) {
+    subscribe(observer) {
         var subscription = new Subscription(
             observer,
             () => (this.subscriptions = this.subscriptions.filter((x) => x != subscription))
         );
         this.subscriptions.push(subscription);
-        if (!suppressInitial) observer(this.currentValue, this.currentValue);
         return subscription;
     }
 
@@ -37,6 +36,10 @@ export class Observable {
                 //
             }
         });
+    }
+
+    refresh() {
+        this.next(this.currentValue);
     }
 
     /**

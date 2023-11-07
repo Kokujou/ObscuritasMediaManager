@@ -98,7 +98,7 @@ export function renderMediaDetailPage(detailPage) {
                                 icon="${Icons.Popup}"
                                 @click="${() =>
                                     window.open(
-                                        `https://www.anisearch.de/anime/index?text=${detailPage.updatedMedia.name}&char=all&q=true`
+                                        `https://www.anisearch.de/anime/index?text=${detailPage.updatedMedia.name}&kev=7478ce6e&titlex=1,2&char=all&q=true&title=de,en,fr,it,es`
                                     )}"
                             ></div>
                             <input

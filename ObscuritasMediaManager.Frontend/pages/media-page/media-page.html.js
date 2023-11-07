@@ -1,7 +1,6 @@
 import { html } from '../../exports.js';
 import { LinkElement } from '../../native-components/link-element/link-element.js';
-import { importIcon } from '../../resources/inline-icons/general/import-icon.svg.js';
-import { plusIcon } from '../../resources/inline-icons/general/plus-icon.svg.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { MediaDetailPage } from '../media-detail-page/media-detail-page.js';
 import { MediaPage } from './media-page.js';
 
@@ -18,18 +17,19 @@ export function renderMediaPageTemplate(page) {
                     ${page.loading
                         ? html`<partial-loading></partial-loading>`
                         : html` <div id="result-container">
-                              <media-tile
-                                  id="123"
-                                  name="Eintrag hinzufügen"
-                                  .imageSource="data:image/svg+xml;base64,${btoa(plusIcon())}"
-                                  displayStyle="simple"
-                              ></media-tile>
-                              <media-tile
-                                  .imageSource="data:image/svg+xml;base64,${btoa(importIcon())}"
-                                  name="Ordner importieren"
-                                  displayStyle="simple"
+                              <div
+                                  id="add-entry-button"
+                                  class="tile-button"
+                                  icon="${Icons.Plus}"
+                                  tooltip="Eintrag hinzufügen"
+                              ></div>
+                              <div
+                                  id="import-button"
+                                  class="tile-button"
+                                  icon="${Icons.Import}"
+                                  tooltip="Importieren"
                                   @click="${() => page.importFolder()}"
-                              ></media-tile>
+                              ></div>
                               ${page.filteredMedia.map((media) =>
                                   LinkElement.forPage(
                                       MediaDetailPage,

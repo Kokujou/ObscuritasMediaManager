@@ -41,6 +41,7 @@ export class GenreDialog extends LitElementBase {
             options.allowThreeValues = true;
         } else {
             options.allowedGenres = genresOrFilter;
+            options.ignoredState = CheckboxState.Forbid;
         }
 
         var genreDialog = GenreDialog.#show(options);

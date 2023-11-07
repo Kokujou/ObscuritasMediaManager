@@ -36,7 +36,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     static get properties() {
         return {
             hoveredRating: { type: Number, reflect: false },
-            moodToSwitch: { type: String, reflect: false },
+            moodToSwitch: { type: String, reflect: true },
         };
     }
 
@@ -91,7 +91,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
             AudioService.ended.subscribe(() => {
                 if (this.trackIndex + 1 >= this.playlist.tracks.length && !this.loop) return;
                 this.changeTrackBy(1);
-            }, true),
+            }),
             AudioService.changed.subscribe(() => {
                 this.requestFullUpdate();
             })
@@ -139,6 +139,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
     async toggleCurrentTrack() {
         if (!this.updatedTrack.path) return await MessageSnackbar.popup('Kein Pfad ausgewählt', 'error');
+        if (AudioService.currentTrackPath != this.updatedTrack.path) await AudioService.changeTrack(this.updatedTrack);
         try {
             if (AudioService.paused) await AudioService.play();
             else await AudioService.pause();
@@ -289,6 +290,11 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     async createTrack() {
         var trackHash = await MusicService.createMusicTrack(this.updatedTrack);
         changePage(MusicPlaylistPage, { trackHash });
+    }
+
+    switchSelectedMood(mood) {
+        this.moodToSwitch = mood;
+        this.requestFullUpdate();
     }
 
     async disconnectedCallback() {

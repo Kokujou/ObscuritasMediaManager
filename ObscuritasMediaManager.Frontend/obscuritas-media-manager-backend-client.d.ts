@@ -59,7 +59,7 @@ export declare class MediaClient {
     protected processGetAll(response: Response): Promise<MediaModel[]>;
     batchCreateMedia(media: MediaModel[], signal?: AbortSignal | undefined): Promise<void>;
     protected processBatchCreateMedia(response: Response): Promise<void>;
-    updateMedia(id: string, _: UpdateRequestOfMediaModel, signal?: AbortSignal | undefined): Promise<void>;
+    updateMedia(id: string, _: UpdateRequestOfJsonElement, signal?: AbortSignal | undefined): Promise<void>;
     protected processUpdateMedia(response: Response): Promise<void>;
     addMediaImage(image: string, guid: string, signal?: AbortSignal | undefined): Promise<void>;
     protected processAddMediaImage(response: Response): Promise<void>;
@@ -415,18 +415,18 @@ export declare enum MediaCategory {
     RealSeries = "RealSeries",
     JDrama = "JDrama"
 }
-export declare class UpdateRequestOfMediaModel implements IUpdateRequestOfMediaModel {
-    oldModel: MediaModel | null;
-    newModel: MediaModel | null;
-    constructor(data?: Partial<IUpdateRequestOfMediaModel>);
+export declare class UpdateRequestOfJsonElement implements IUpdateRequestOfJsonElement {
+    oldModel: any;
+    newModel: any;
+    constructor(data?: Partial<IUpdateRequestOfJsonElement>);
     init(_data?: any, _mappings?: any): void;
-    static fromJS(data: any, _mappings?: any): UpdateRequestOfMediaModel | null;
+    static fromJS(data: any, _mappings?: any): UpdateRequestOfJsonElement | null;
     toJSON(data?: any): any;
-    clone(): UpdateRequestOfMediaModel;
+    clone(): UpdateRequestOfJsonElement;
 }
-export interface IUpdateRequestOfMediaModel {
-    oldModel: MediaModel | null;
-    newModel: MediaModel | null;
+export interface IUpdateRequestOfJsonElement {
+    oldModel: any;
+    newModel: any;
 }
 export declare class KeyValuePairOfStringAndModelCreationState implements IKeyValuePairOfStringAndModelCreationState {
     key: string;
@@ -461,19 +461,6 @@ export declare class LyricsResponse implements ILyricsResponse {
 export interface ILyricsResponse {
     title: string | null;
     text: string | null;
-}
-export declare class UpdateRequestOfJsonElement implements IUpdateRequestOfJsonElement {
-    oldModel: any;
-    newModel: any;
-    constructor(data?: Partial<IUpdateRequestOfJsonElement>);
-    init(_data?: any, _mappings?: any): void;
-    static fromJS(data: any, _mappings?: any): UpdateRequestOfJsonElement | null;
-    toJSON(data?: any): any;
-    clone(): UpdateRequestOfJsonElement;
-}
-export interface IUpdateRequestOfJsonElement {
-    oldModel: any;
-    newModel: any;
 }
 export declare class PlaylistModel implements IPlaylistModel {
     id: string;

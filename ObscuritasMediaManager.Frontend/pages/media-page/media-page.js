@@ -1,7 +1,7 @@
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Session } from '../../data/session.js';
-import { MediaModel, UpdateRequestOfMediaModel } from '../../obscuritas-media-manager-backend-client.js';
+import { MediaModel, UpdateRequestOfJsonElement } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService } from '../../services/backend.services.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
 import { MediaImportService } from '../../services/media-import.service.js';
@@ -45,6 +45,7 @@ export class MediaPage extends LitElementBase {
 
     async connectedCallback() {
         super.connectedCallback();
+        document.title = 'Medien';
         var genres = await GenreService.getAll();
         this.genreList = genres.map((x) => x.name);
         this.filter = new MediaFilter(genres.map((x) => x.id));
@@ -105,8 +106,10 @@ export class MediaPage extends LitElementBase {
         try {
             if (typeof media[property] != typeof value) return;
 
-            media[property] = value;
-            await MediaService.updateMedia(media.id, new UpdateRequestOfMediaModel({ oldModel: null, newModel: media }));
+            /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
+            oldModel[property] = media[property];
+            newModel[property] = value;
+            await MediaService.updateMedia(media.id, new UpdateRequestOfJsonElement({ oldModel, newModel }));
             media[property] = value;
             this.requestFullUpdate();
         } catch (err) {
