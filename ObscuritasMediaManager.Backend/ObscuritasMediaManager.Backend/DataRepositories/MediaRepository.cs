@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 
@@ -17,6 +19,36 @@ public class MediaRepository
     public MediaRepository(DatabaseContext context)
     {
         _context = context;
+    }
+
+    public async Task<ModelCreationState> CreateAsync(MediaModel media)
+    {
+        try
+        {
+            var existing = await _context.Media.FirstOrDefaultAsync(x => x.RootFolderPath == media.RootFolderPath);
+
+            if ((existing is not null) && (existing.GetNormalizedPath() == media.GetNormalizedPath()))
+                return ModelCreationState.Ignored;
+
+            if (existing is not null)
+            {
+                await UpdatePropertyAsync(existing.Id, x => x.RootFolderPath, media.GetNormalizedPath());
+                return ModelCreationState.Updated;
+            }
+
+            await _context.Media.AddAsync(media);
+            await _context.SaveChangesAsync();
+            return ModelCreationState.Success;
+        }
+        catch (Exception ex) when (ex.InnerException is SqliteException inner and { SqliteExtendedErrorCode: 2067 })
+        {
+            return ModelCreationState.Ignored;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex.ToString());
+            return ModelCreationState.Error;
+        }
     }
 
     public async Task UpdateAsync(Guid id, JsonNode old, JsonNode updated, JsonSerializerOptions serializerOptions)
@@ -44,27 +76,9 @@ public class MediaRepository
         await _context.Media.IgnoreAutoIncludes().Where(x => x.Id == id).ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
     }
 
-    public async Task AddMediaImageAsync(Guid guid, string mediaImage)
-    {
-        var item = await _context.Media.SingleOrDefaultAsync(x => x.Id == guid);
-        if (item == default)
-            throw new ModelNotFoundException(guid);
-        item.Image = mediaImage;
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task RemoveMediaImageAsync(Guid guid)
-    {
-        var item = await _context.Media.SingleOrDefaultAsync(x => x.Id == guid);
-        if (item == default)
-            throw new ModelNotFoundException(guid);
-        item.Image = null;
-        await _context.SaveChangesAsync();
-    }
-
     public async Task<MediaModel> GetAsync(Guid guid)
     {
-        var response = await _context.Media.Include(x => x.StreamingEntries).SingleOrDefaultAsync(x => x.Id == guid);
+        var response = await _context.Media.SingleOrDefaultAsync(x => x.Id == guid);
         if (response == default)
             throw new ModelNotFoundException(guid);
         return response;
@@ -73,11 +87,6 @@ public class MediaRepository
     public  IQueryable<MediaModel> GetAll()
     {
         return  _context.Media;
-    }
-
-    public async Task BatchCreateMediaAsync(IEnumerable<MediaModel> media)
-    {
-        await _context.InsertIfNotExistsAsync(media);
     }
 
     public async ValueTask DisposeAsync()

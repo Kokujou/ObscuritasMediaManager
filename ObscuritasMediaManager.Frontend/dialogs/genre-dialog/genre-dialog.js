@@ -211,6 +211,7 @@ export class GenreDialog extends LitElementBase {
      */
     async addGenre(section) {
         var name = await InputDialog.show('Bitte Namen eingeben:');
+        if (!name) return;
         this.dispatchEvent(new CustomEvent('add-genre', { detail: { name, section } }));
     }
 

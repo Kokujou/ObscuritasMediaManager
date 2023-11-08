@@ -12,6 +12,7 @@ export function renderSelectOptionsDialog(dialog) {
             caption="Make your choice"
             acceptActionText="Auswählen"
             declineActionText="Abbrechen"
+            ?canAccept="${dialog.isComplete()}"
             @accept="${() => dialog.accept()}"
         >
             <div id="content">

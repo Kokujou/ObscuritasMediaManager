@@ -51,7 +51,6 @@ import { ObscuritasMediaManager } from './pages/obscuritas-media-manager/obscuri
 import { PageLayout } from './pages/page-layout/page-layout.js';
 import { PageRouting } from './pages/page-routing/page-routing.js';
 import { RecipesPage } from './pages/recipes-page/recipes-page.js';
-import { VideoPlayerPopup } from './pages/video-player-popup/video-player-popup.js';
 import { WelcomePage } from './pages/welcome-page/welcome-page.js';
 
 /** @typedef {(typeof LitElementBase & {isPage: boolean})} Page */
@@ -80,7 +79,6 @@ window.customElements.define('tag-label', TagLabel);
 window.customElements.define('media-detail-page', MediaDetailPage);
 window.customElements.define('path-input-dialog', InputDialog);
 window.customElements.define('upload-area', UploadArea);
-window.customElements.define('video-player-popup', VideoPlayerPopup);
 window.customElements.define('media-page', MediaPage);
 window.customElements.define('music-page', MusicPage);
 window.customElements.define('audio-tile', AudioTile);

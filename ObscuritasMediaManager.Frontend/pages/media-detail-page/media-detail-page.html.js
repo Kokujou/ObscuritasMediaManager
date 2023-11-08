@@ -43,15 +43,15 @@ export function renderMediaDetailPage(detailPage) {
                         <media-tile
                             displayStyle="simple"
                             ?disabled="${!detailPage.editMode}"
-                            .imageSource="${detailPage.updatedMedia.image}"
-                            @imageReceived="${(e) => detailPage.addImage(e.detail.imageData)}"
+                            .media="${detailPage.updatedMedia}"
+                            @imageReceived="${(e) => detailPage.changeProperty('image', e.detail.imageData)}"
                         >
                             ${detailPage.updatedMedia.image
                                 ? html`<div id="delete-icon-container">
                                       <div
                                           id="delete-icon"
                                           icon="${Icons.Trash}"
-                                          @click="${() => detailPage.deleteImage()}"
+                                          @click="${() => detailPage.changeProperty('image', null)}"
                                       ></div>
                                   </div>`
                                 : ''}
@@ -77,29 +77,19 @@ export function renderMediaDetailPage(detailPage) {
                         </div>
                     </div>
                     <div id="right-panel">
-                        ${LinkElement.forPage(
-                            MediaDetailPage,
-                            { mediaId: detailPage.prevMediaId },
-                            html`&LeftArrow; Letzer`,
-                            false,
-                            'prev-link'
-                        )}
-                        ${LinkElement.forPage(
-                            MediaDetailPage,
-                            { mediaId: detailPage.nextMediaId },
-                            html`Nächster &RightArrow;`,
-                            false,
-                            'next-link'
-                        )}
+                        ${LinkElement.forPage(MediaDetailPage, { mediaId: detailPage.prevMediaId }, html`&LeftArrow; Letzer`, {
+                            id: 'prev-link',
+                        })}
+                        ${LinkElement.forPage(MediaDetailPage, { mediaId: detailPage.nextMediaId }, html`Nächster &RightArrow;`, {
+                            id: 'next-link',
+                        })}
 
                         <div id="media-heading">
                             <div
                                 id="popup-icon"
                                 icon="${Icons.Popup}"
                                 @click="${() =>
-                                    window.open(
-                                        `https://www.anisearch.de/anime/index?text=${detailPage.updatedMedia.name}&kev=7478ce6e&titlex=1,2&char=all&q=true&title=de,en,fr,it,es`
-                                    )}"
+                                    window.open(`https://anilist.co/search/anime?search=${detailPage.updatedMedia.name}`)}"
                             ></div>
                             <input
                                 ?disabled="${!detailPage.editMode}"
@@ -195,47 +185,6 @@ export function renderMediaDetailPage(detailPage) {
                                 .defaultValue="${detailPage.updatedMedia.description}"
                             ></textarea>
                         </div>
-                    </div>
-                </div>
-                <div id="streaming-panel">
-                    <div id="season-scroll-area">
-                        <div
-                            class="arrow ${(!detailPage.seasonScrollContainer || detailPage.seasonScrollContainer.scrollLeft) == 0
-                                ? 'inactive'
-                                : ''}"
-                            @click="${() => detailPage.seasonScrollContainer.scrollBy({ left: -150, behavior: 'smooth' })}"
-                        >
-                            ◀
-                        </div>
-                        <div id="season-inner" id="season-inner" @scroll="${() => detailPage.requestFullUpdate()}">
-                            ${detailPage.seasons.map(
-                                (season, index) =>
-                                    html`<div
-                                        @click="${() => (detailPage.selectedSeason = index)}"
-                                        class="link ${detailPage.selectedSeason == index ? 'active' : ''}"
-                                    >
-                                        ${season}
-                                    </div>`
-                            )}
-                        </div>
-                        <div
-                            id="arrow ${detailPage.seasonScrollContainer &&
-                            detailPage.seasonScrollContainer.scrollLeft >=
-                                detailPage.seasonScrollContainer.scrollWidth - detailPage.seasonScrollContainer.offsetWidth
-                                ? 'inactive'
-                                : ''}"
-                            @click="${() => detailPage.seasonScrollContainer.scrollBy({ left: 150, behavior: 'smooth' })}"
-                        >
-                            ▶
-                        </div>
-                    </div>
-                    <div id="season-content">
-                        ${detailPage.episodes.map(
-                            (entry) =>
-                                html`<div @click="${() => detailPage.openVideoPlayer(entry)}" class="link">
-                                    ${detailPage.updatedMedia.name} - ${entry.season}: Episode ${entry.episode}
-                                </div>`
-                        )}
                     </div>
                 </div>
             </div>

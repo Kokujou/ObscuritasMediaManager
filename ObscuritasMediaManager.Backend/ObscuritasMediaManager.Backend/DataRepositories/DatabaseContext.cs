@@ -9,7 +9,6 @@ public class DatabaseContext : DbContext
 {
     public DbSet<GenreModel> Genres { get; set; }
     public DbSet<MediaModel> Media { get; set; }
-    public DbSet<StreamingEntryModel> StreamingEntries { get; set; }
     public DbSet<MusicModel> Music { get; set; }
     public DbSet<InstrumentModel> Instruments { get; set; }
     public DbSet<UserModel> Users { get; set; }
@@ -26,16 +25,16 @@ public class DatabaseContext : DbContext
 
         modelBuilder.Entity<MusicModel>()
             .Property(x => x.Genres)
-            .HasConversion(x => string.Join(",", x),
-            x => x.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(y => y.ParseEnumOrDefault<MusicGenre>()).ToList());
+            .HasConversion(
+                x => string.Join(",", x),
+                x => x.Split(",",
+                             StringSplitOptions.RemoveEmptyEntries).Select(y => y.ParseEnumOrDefault<MusicGenre>()).ToList());
 
         PlaylistModel.Configure(modelBuilder);
 
         modelBuilder.Entity<MusicInstrumentMappingModel>();
 
         MusicModel.Configure(modelBuilder);
-
-        modelBuilder.Entity<StreamingEntryModel>().HasKey(x => new { x.Id, x.Season, x.Episode });
 
         modelBuilder.Entity<GenreModel>();
 

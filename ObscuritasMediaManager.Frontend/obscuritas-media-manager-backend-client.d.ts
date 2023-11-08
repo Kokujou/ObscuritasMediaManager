@@ -7,6 +7,8 @@ export declare class CleanupClient {
     });
     getBrokenAudioTracks(signal?: AbortSignal | undefined): Promise<MusicModel[]>;
     protected processGetBrokenAudioTracks(response: Response): Promise<MusicModel[]>;
+    validateMediaRoot(rootPath: string, signal?: AbortSignal | undefined): Promise<boolean>;
+    protected processValidateMediaRoot(response: Response): Promise<boolean>;
 }
 export declare class FileClient {
     private http;
@@ -143,18 +145,6 @@ export declare class RecipeClient {
     protected processUpdateRecipe(response: Response): Promise<void>;
     getRecipe(id: string, signal?: AbortSignal | undefined): Promise<RecipeModel>;
     protected processGetRecipe(response: Response): Promise<RecipeModel>;
-}
-export declare class StreamingClient {
-    private http;
-    private baseUrl;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
-    constructor(baseUrl?: string, http?: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    });
-    batchPostStreamingEntries(streamingEntries: StreamingEntryModel[], signal?: AbortSignal | undefined): Promise<void>;
-    protected processBatchPostStreamingEntries(response: Response): Promise<void>;
-    getStream(guid: string, season: string | null, episode: number, signal?: AbortSignal | undefined): Promise<StreamingEntryModel>;
-    protected processGetStream(response: Response): Promise<StreamingEntryModel>;
 }
 export declare class MusicModel implements IMusicModel {
     name: string | null;
@@ -334,7 +324,6 @@ export declare class MediaModel implements IMediaModel {
     contentWarnings: ContentWarning[] | null;
     description: string | null;
     genres: GenreModel[] | null;
-    streamingEntries: StreamingEntryModel[] | null;
     hash: string | null;
     id: string;
     image: string | null;
@@ -345,6 +334,7 @@ export declare class MediaModel implements IMediaModel {
     status: MediaStatus;
     targetGroup: TargetGroup;
     type: MediaCategory;
+    rootFolderPath: string | null;
     constructor(data?: Partial<IMediaModel>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): MediaModel | null;
@@ -355,7 +345,6 @@ export interface IMediaModel {
     contentWarnings: ContentWarning[] | null;
     description: string | null;
     genres: GenreModel[] | null;
-    streamingEntries: StreamingEntryModel[] | null;
     hash: string | null;
     id: string;
     image: string | null;
@@ -366,6 +355,7 @@ export interface IMediaModel {
     status: MediaStatus;
     targetGroup: TargetGroup;
     type: MediaCategory;
+    rootFolderPath: string | null;
 }
 export declare enum ContentWarning {
     Depression = "Depression",
@@ -375,23 +365,6 @@ export declare enum ContentWarning {
     Gore = "Gore",
     Vulgarity = "Vulgarity",
     Nudity = "Nudity"
-}
-export declare class StreamingEntryModel implements IStreamingEntryModel {
-    id: string;
-    season: string | null;
-    episode: number;
-    src: string | null;
-    constructor(data?: Partial<IStreamingEntryModel>);
-    init(_data?: any, _mappings?: any): void;
-    static fromJS(data: any, _mappings?: any): StreamingEntryModel | null;
-    toJSON(data?: any): any;
-    clone(): StreamingEntryModel;
-}
-export interface IStreamingEntryModel {
-    id: string;
-    season: string | null;
-    episode: number;
-    src: string | null;
 }
 export declare enum MediaStatus {
     Completed = "Completed",

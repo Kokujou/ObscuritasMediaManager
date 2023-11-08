@@ -15,6 +15,7 @@ import { importIcon } from './general/import-icon.svg.js';
 import { noteIcon } from './general/note-icon.svg.js';
 import { plusIcon } from './general/plus-icon.svg.js';
 import { popupIcon } from './general/popup-icon.svg.js';
+import { repairIcon } from './general/repair-icon.svg.js';
 import { revertIcon } from './general/revert-icon.svg.js';
 import { saveTickIcon } from './general/save-tick-icon.svg.js';
 import { selectAllIcon } from './general/select-all-icon.svg.js';
@@ -66,6 +67,7 @@ class IconRegistry {
     static Drop = dropIcon();
     static Clipboard = clipboardIcon();
     static Edit = editIcon();
+    static Repair = repairIcon();
 }
 
 export const Icons = /** @type {typeof IconRegistry} */ ({});

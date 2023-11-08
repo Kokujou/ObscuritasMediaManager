@@ -19,14 +19,12 @@ public class Startup
         services.AddControllers();
         services.AddScoped<GenreRepository>();
         services.AddScoped<MediaRepository>();
-        services.AddScoped<StreamingRepository>();
         services.AddScoped<MusicRepository>();
         services.AddScoped<UserRepository>();
         services.AddScoped<PlaylistRepository>();
         services.AddScoped<RecipeRepository>();
         services.AddSingleton(new GeniusClient("_i5cToYg6uB_yorzbeVRYbBtqfLdhU-LtzTxaA5swKJVkDK3W_Yj33IILm1VdL1o"));
         services.AddSingleton<LyricsService>();
-        services.AddSingleton<MediaImportService>();
 
         services.AddDbContext<DatabaseContext>(
             x => x.UseSqlite(

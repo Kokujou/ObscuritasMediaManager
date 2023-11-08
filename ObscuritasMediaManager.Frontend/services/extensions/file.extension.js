@@ -11,12 +11,12 @@ export function fileToDataUrl(file) {
         var fileReader = new FileReader();
         fileReader.onload = async (fileData) => {
             var dataUrl = fileData.target.result;
-            if (dataUrl instanceof ArrayBuffer) reject('the string must be an base64 image string');
+            if (dataUrl instanceof ArrayBuffer) return reject('the string must be an base64 image string');
 
-            resolve(dataUrl);
+            resolve(btoa(dataUrl));
         };
 
-        fileReader.readAsDataURL(file);
+        fileReader.readAsBinaryString(file);
     });
 }
 

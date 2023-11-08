@@ -24,13 +24,11 @@ public class MediaModel
             .HasConversion(
                 x => string.Join(",", x.Select(x => x.ToString())),
                 x => x.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => x.ParseEnumOrDefault<ContentWarning>()));
-        entity.HasMany(x => x.StreamingEntries).WithOne().HasPrincipalKey(x => x.Id).HasForeignKey(x => x.Id);
     }
 
     public IEnumerable<ContentWarning> ContentWarnings { get; set; }
     public string Description { get; set; }
     public List<GenreModel> Genres { get; set; } = new List<GenreModel>();
-    public List<StreamingEntryModel> StreamingEntries { get; set; }
 
     [NotMapped]
     [NotHashable]
@@ -45,9 +43,15 @@ public class MediaModel
     public MediaStatus Status { get; set; }
     public TargetGroup TargetGroup { get; set; }
     public MediaCategory Type { get; set; }
+    public string RootFolderPath { get; set; }
 
     public override string ToString()
     {
         return $"{Name} - {Type}";
+    }
+
+    public string GetNormalizedPath()
+    {
+        return new FileInfo(RootFolderPath).FullName;
     }
 }

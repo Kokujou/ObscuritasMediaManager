@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
+using ObscuritasMediaManager.Backend.Data;
+using ObscuritasMediaManager.Backend.Data.Media;
+using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
-using ObscuritasMediaManager.Backend.Services;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -14,8 +16,7 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class MediaController(MediaRepository _mediaRepository, MediaImportService _mediaImportService,
-    IOptions<JsonOptions> jsonOptions) : ControllerBase
+public class MediaController(MediaRepository _mediaRepository, IOptions<JsonOptions> jsonOptions) : ControllerBase
 {
     private JsonSerializerOptions _serializerOptions => jsonOptions?.Value.JsonSerializerOptions;
 
@@ -32,9 +33,30 @@ public class MediaController(MediaRepository _mediaRepository, MediaImportServic
     }
 
     [HttpPost]
-    public async Task BatchCreateMediaAsync([FromBody] IEnumerable<MediaModel> media)
+    public async Task<KeyValuePair<Guid?, ModelCreationState>> CreateFromMediaAsync([FromBody] string mediaPath,
+        MediaCategory category, Language language)
     {
-        await _mediaRepository.BatchCreateMediaAsync(media);
+        var directory = new DirectoryInfo(mediaPath);
+        if (!directory.Exists) return new(null, ModelCreationState.Invalid);
+
+        if (directory.GetFiles("*.*", SearchOption.AllDirectories)
+            .Any(x => FFMPEGExtensions.HasVideoOrSubtitleStreamAsync(x.FullName).Result))
+            return new(null, ModelCreationState.Invalid);
+
+        var mediaId = Guid.NewGuid();
+        await _mediaRepository.CreateAsync(
+            new()
+            {
+                Id = mediaId,
+                Type = category,
+                Language = language,
+                Genres = new List<GenreModel>(),
+                Name = directory.Name,
+                RootFolderPath = directory.FullName,
+                Status = MediaStatus.Completed,
+                Release = 1900,
+            });
+        return new(mediaId, ModelCreationState.Success);
     }
 
     [HttpPut("{id}")]
@@ -47,23 +69,12 @@ public class MediaController(MediaRepository _mediaRepository, MediaImportServic
     [HttpPut("{guid:Guid}/image")]
     public async Task AddMediaImage([FromBody] string image, Guid guid)
     {
-        await _mediaRepository.AddMediaImageAsync(guid, image);
+        await _mediaRepository.UpdatePropertyAsync(guid, x => x.Image, image);
     }
 
     [HttpDelete("{guid:Guid}/image")]
     public async Task DeleteMediaImage(Guid guid)
     {
-        await _mediaRepository.RemoveMediaImageAsync(guid);
-    }
-
-    [HttpPost("import")]
-    public async IAsyncEnumerable<MediaModel> ImportRootFolderAsync([FromBody] string rootFolderPath)
-    {
-        await foreach (var media in _mediaImportService.ImportRootFolderAsync(rootFolderPath))
-        {
-            yield return media;
-            await Response.Body.FlushAsync();
-        }
-        ;
+        await _mediaRepository.UpdatePropertyAsync(guid, x => x.Image, string.Empty);
     }
 }

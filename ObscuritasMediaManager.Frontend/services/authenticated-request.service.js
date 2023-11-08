@@ -19,9 +19,12 @@ export class AuthenticatedRequestService {
                 changePage(LoginPage);
             }
 
+            if (response.status > 400) throw { httpStatus: response.status };
+
             return response;
         } catch (err) {
             console.error(err);
+            throw { httpStatus: response?.status, status: 9999 };
         }
     }
 }

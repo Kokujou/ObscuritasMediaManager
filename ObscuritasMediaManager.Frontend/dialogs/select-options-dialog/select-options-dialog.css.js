@@ -12,6 +12,8 @@ export function renderSelectOptionsDialogStyles() {
         }
 
         .option {
+            display: flex;
+            flex-direction: row;
             margin: 10px 0;
             width: 100%;
         }

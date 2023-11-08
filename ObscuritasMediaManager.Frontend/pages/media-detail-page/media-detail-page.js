@@ -3,16 +3,10 @@ import { LitElementBase } from '../../data/lit-element-base.js';
 import { Session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
-import {
-    ContentWarning,
-    MediaModel,
-    StreamingEntryModel,
-    UpdateRequestOfJsonElement,
-} from '../../obscuritas-media-manager-backend-client.js';
+import { ContentWarning, MediaModel, UpdateRequestOfJsonElement } from '../../obscuritas-media-manager-backend-client.js';
 import { MediaService } from '../../services/backend.services.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
-import { VideoPlayerPopup } from '../video-player-popup/video-player-popup.js';
 import { renderMediaDetailPageStyles } from './media-detail-page.css.js';
 import { renderMediaDetailPage } from './media-detail-page.html.js';
 
@@ -41,18 +35,6 @@ export class MediaDetailPage extends LitElementBase {
 
     get descriptionInputValue() {
         return /** @type {HTMLInputElement} */ (this.shadowRoot.querySelector('#description-input')).value;
-    }
-
-    get seasons() {
-        /** @type {string[]} */ var seasons = [];
-        this.updatedMedia.streamingEntries.forEach((x) => {
-            if (!seasons.includes(x.season)) seasons.push(x.season);
-        });
-        return seasons.sort((a, b) => a.localeCompare(b));
-    }
-
-    get episodes() {
-        return this.updatedMedia.streamingEntries.filter((x) => x.season == this.seasons[this.selectedSeason]);
     }
 
     /** @returns {HTMLElement} */
@@ -140,6 +122,7 @@ export class MediaDetailPage extends LitElementBase {
             await MediaService.updateMedia(this.updatedMedia.id, new UpdateRequestOfJsonElement({ oldModel, newModel }));
             this.updatedMedia[property] = value;
             this.oldMedia[property] = value;
+            Session.mediaList.refresh();
             this.requestFullUpdate();
         } catch (err) {
             console.error(err);
@@ -177,35 +160,5 @@ export class MediaDetailPage extends LitElementBase {
             'contentWarnings',
             this.updatedMedia.contentWarnings.filter((x) => x != warning)
         );
-    }
-
-    /**
-     * @param {string} imageData
-     */
-    async addImage(imageData) {
-        try {
-            await MediaService.addMediaImage(imageData, this.updatedMedia.id);
-            this.updatedMedia.image = imageData;
-            this.requestFullUpdate();
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    async deleteImage() {
-        try {
-            await MediaService.deleteMediaImage(this.updatedMedia.id);
-            this.updatedMedia.image = null;
-            this.requestFullUpdate();
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    /**
-     * @param {StreamingEntryModel} entry
-     */
-    openVideoPlayer(entry) {
-        VideoPlayerPopup.popup(entry);
     }
 }

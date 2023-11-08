@@ -22,6 +22,23 @@ export class SelectOptionsDialog extends LitElementBase {
         var dialog = new SelectOptionsDialog();
         dialog.options = options;
         dialog.multiselect = multiselect;
+        dialog.isComplete = () => true;
+
+        PageRouting.container.append(dialog);
+
+        return dialog;
+    }
+
+    /**
+     *
+     * @param {()=>boolean} isComplete
+     * @returns
+     */
+    static startShowing(isComplete, multiselect = true) {
+        var dialog = new SelectOptionsDialog();
+        dialog.options = {};
+        dialog.multiselect = multiselect;
+        dialog.isComplete = isComplete;
 
         PageRouting.container.append(dialog);
 
@@ -33,6 +50,7 @@ export class SelectOptionsDialog extends LitElementBase {
 
         /** @type {Object.<string,string>} */ this.options = {};
         /** @type {boolean} */ this.multiselect = true;
+        /** @type {()=>boolean} */ this.isComplete = () => false;
     }
 
     render() {
@@ -44,5 +62,10 @@ export class SelectOptionsDialog extends LitElementBase {
         var selectedIds = [];
         for (var input of checkedInputs) selectedIds.push(input.value);
         this.dispatchEvent(new CustomEvent('accept', { detail: { selected: selectedIds } }));
+    }
+
+    addEntry(key, value) {
+        this.options[key] = value;
+        this.requestFullUpdate();
     }
 }

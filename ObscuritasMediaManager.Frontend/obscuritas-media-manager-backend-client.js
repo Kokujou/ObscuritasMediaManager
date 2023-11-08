@@ -59,6 +59,45 @@ export class CleanupClient {
         }
         return Promise.resolve(null);
     }
+    validateMediaRoot(rootPath, signal) {
+        let url_ = this.baseUrl + "/api/Cleanup/validate-media-root";
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(rootPath);
+        let options_ = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processValidateMediaRoot(_response);
+        });
+    }
+    processValidateMediaRoot(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null;
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
 }
 export class FileClient {
     http;
@@ -1663,96 +1702,6 @@ export class RecipeClient {
         return Promise.resolve(null);
     }
 }
-export class StreamingClient {
-    http;
-    baseUrl;
-    jsonParseReviver = undefined;
-    constructor(baseUrl, http) {
-        this.http = http ? http : window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-    batchPostStreamingEntries(streamingEntries, signal) {
-        let url_ = this.baseUrl + "/api/Streaming";
-        url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(streamingEntries);
-        let options_ = {
-            body: content_,
-            method: "POST",
-            signal,
-            headers: {
-                "Content-Type": "application/json",
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processBatchPostStreamingEntries(_response);
-        });
-    }
-    processBatchPostStreamingEntries(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                return;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-    getStream(guid, season, episode, signal) {
-        let url_ = this.baseUrl + "/api/Streaming/{guid}/season/{season}/episode/{episode}";
-        if (guid === undefined || guid === null)
-            throw new Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
-        if (season === undefined || season === null)
-            throw new Error("The parameter 'season' must be defined.");
-        url_ = url_.replace("{season}", encodeURIComponent("" + season));
-        if (episode === undefined || episode === null)
-            throw new Error("The parameter 'episode' must be defined.");
-        url_ = url_.replace("{episode}", encodeURIComponent("" + episode));
-        url_ = url_.replace(/[?&]$/, "");
-        let options_ = {
-            method: "GET",
-            signal,
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processGetStream(_response);
-        });
-    }
-    processGetStream(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        let _mappings = [];
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = StreamingEntryModel.fromJS(resultData200, _mappings);
-                return result200;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-}
 export class MusicModel {
     name;
     displayName;
@@ -2084,7 +2033,6 @@ export class MediaModel {
     contentWarnings;
     description;
     genres;
-    streamingEntries;
     hash;
     id;
     image;
@@ -2095,6 +2043,7 @@ export class MediaModel {
     status;
     targetGroup;
     type;
+    rootFolderPath;
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -2122,14 +2071,6 @@ export class MediaModel {
             else {
                 this.genres = null;
             }
-            if (Array.isArray(_data["streamingEntries"])) {
-                this.streamingEntries = [];
-                for (let item of _data["streamingEntries"])
-                    this.streamingEntries.push(StreamingEntryModel.fromJS(item, _mappings));
-            }
-            else {
-                this.streamingEntries = null;
-            }
             this.hash = _data["hash"] !== undefined ? _data["hash"] : null;
             this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.image = _data["image"] !== undefined ? _data["image"] : null;
@@ -2140,6 +2081,7 @@ export class MediaModel {
             this.status = _data["status"] !== undefined ? _data["status"] : null;
             this.targetGroup = _data["targetGroup"] !== undefined ? _data["targetGroup"] : null;
             this.type = _data["type"] !== undefined ? _data["type"] : null;
+            this.rootFolderPath = _data["rootFolderPath"] !== undefined ? _data["rootFolderPath"] : null;
         }
     }
     static fromJS(data, _mappings) {
@@ -2159,11 +2101,6 @@ export class MediaModel {
             for (let item of this.genres)
                 data["genres"].push(item.toJSON());
         }
-        if (Array.isArray(this.streamingEntries)) {
-            data["streamingEntries"] = [];
-            for (let item of this.streamingEntries)
-                data["streamingEntries"].push(item.toJSON());
-        }
         data["hash"] = this.hash !== undefined ? this.hash : null;
         data["id"] = this.id !== undefined ? this.id : null;
         data["image"] = this.image !== undefined ? this.image : null;
@@ -2174,6 +2111,7 @@ export class MediaModel {
         data["status"] = this.status !== undefined ? this.status : null;
         data["targetGroup"] = this.targetGroup !== undefined ? this.targetGroup : null;
         data["type"] = this.type !== undefined ? this.type : null;
+        data["rootFolderPath"] = this.rootFolderPath !== undefined ? this.rootFolderPath : null;
         return data;
     }
     clone() {
@@ -2193,46 +2131,6 @@ export var ContentWarning;
     ContentWarning["Vulgarity"] = "Vulgarity";
     ContentWarning["Nudity"] = "Nudity";
 })(ContentWarning || (ContentWarning = {}));
-export class StreamingEntryModel {
-    id;
-    season;
-    episode;
-    src;
-    constructor(data) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
-                    this[property] = data[property];
-            }
-        }
-    }
-    init(_data, _mappings) {
-        if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : null;
-            this.season = _data["season"] !== undefined ? _data["season"] : null;
-            this.episode = _data["episode"] !== undefined ? _data["episode"] : null;
-            this.src = _data["src"] !== undefined ? _data["src"] : null;
-        }
-    }
-    static fromJS(data, _mappings) {
-        data = typeof data === 'object' ? data : {};
-        return createInstance(data, _mappings, StreamingEntryModel);
-    }
-    toJSON(data) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : null;
-        data["season"] = this.season !== undefined ? this.season : null;
-        data["episode"] = this.episode !== undefined ? this.episode : null;
-        data["src"] = this.src !== undefined ? this.src : null;
-        return data;
-    }
-    clone() {
-        const json = this.toJSON();
-        let result = new StreamingEntryModel();
-        result.init(json);
-        return result;
-    }
-}
 export var MediaStatus;
 (function (MediaStatus) {
     MediaStatus["Completed"] = "Completed";

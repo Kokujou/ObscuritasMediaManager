@@ -151,7 +151,7 @@ export function renderMusicPage(musicPage) {
                                                       @restore="${() => musicPage.undeleteTrack(track)}"
                                                       @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
                                                   ></audio-tile>`,
-                                                  musicPage.selectionModeTimer == null || musicPage.selectionMode
+                                                  { disabled: musicPage.selectionModeTimer == null || musicPage.selectionMode }
                                               )}
                                           </div>
                                       `

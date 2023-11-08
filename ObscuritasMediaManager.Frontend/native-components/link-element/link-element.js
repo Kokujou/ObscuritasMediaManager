@@ -12,6 +12,8 @@ export class LinkElement extends LitElementBase {
     static get properties() {
         return {
             href: { type: String, reflect: true },
+            id: { type: String, reflect: true },
+            target: { type: String, reflect: true },
             page: { type: Object, reflect: true },
             params: { type: Object, reflect: true },
             disabled: { type: Boolean, reflect: true },
@@ -24,10 +26,18 @@ export class LinkElement extends LitElementBase {
      * @param {T} page
      * @param {Partial<Pick<U, import('../../services/extensions/url.extension.js').NonMethodKeys<U>>>} params
      * @param {TemplateResult | string} inner
-     * @param {boolean} [disabled]
+     * @param {Partial<Record<keyof LinkElement.properties, any>>} options
      */
-    static forPage(page, params, inner, disabled, id = '') {
-        return html`<link-element id="${id}" .page="${page}" .params="${params}" ?disabled="${disabled}">${inner}</link-element>`;
+    static forPage(page, params, inner, options = {}) {
+        return html`<link-element
+            id="${options.id}"
+            .page="${page}"
+            .params="${params}"
+            ?disabled="${options.disabled}"
+            target="${options.target}"
+        >
+            ${inner}
+        </link-element>`;
     }
 
     get fullLink() {
@@ -45,6 +55,7 @@ export class LinkElement extends LitElementBase {
         super();
 
         this.href = null;
+        this.target = null;
         /** @type {import('../../custom-elements.js').Page} */ this.page = null;
         /** @type {Object.<string, any>} */ this.params = null;
         this.disabled = false;

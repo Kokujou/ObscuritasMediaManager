@@ -20,10 +20,10 @@ export function renderMediaPageStyles() {
 
         #results {
             position: absolute;
-            bottom: 0;
+            bottom: 110px;
             top: 0;
             left: 0;
-            right: 500px;
+            right: 460px;
             margin-left: 60px;
         }
 
@@ -55,6 +55,37 @@ export function renderMediaPageStyles() {
             cursor: pointer;
             width: 200px;
             min-height: 350px;
+        }
+
+        #footer {
+            position: absolute;
+            bottom: 0;
+            height: 100px;
+            left: 50px;
+            right: 500px;
+
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+        }
+
+        #result-options {
+            background: var(--accent-color);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            border-radius: 20px;
+            height: 100%;
+            padding: 0 30px;
+        }
+
+        .option-button {
+            width: 40px;
+            height: 40px;
+            background: white;
+            cursor: pointer;
         }
 
         video:not([src=]) {

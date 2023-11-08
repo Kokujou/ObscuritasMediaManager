@@ -47,11 +47,10 @@ export class MediaImportService {
         var complete = false;
         var dialog = EntityStatusDialog.show(() => complete);
         for await (const media of this.importRootFolder(rootPath))
-            for (var entry of media.streamingEntries)
-                dialog.addEntry({
-                    text: `${media.name} - ${entry.season} Episode ${entry.episode}`,
-                    status: ModelCreationState.Loading,
-                });
+            dialog.addEntry({
+                text: `${media.name}`,
+                status: ModelCreationState.Loading,
+            });
     }
 
     /**

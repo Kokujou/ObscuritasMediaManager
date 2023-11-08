@@ -28,6 +28,9 @@ export class LitElementBase extends LitElement {
     async requestFullUpdate() {
         //@ts-ignore
         await super.requestUpdate(undefined);
+        this.shadowRoot.querySelectorAll('*').forEach((x) => {
+            if (x instanceof LitElementBase) x.requestFullUpdate();
+        });
     }
 
     updated(_changedProperties) {

@@ -7,16 +7,16 @@ import { DialogBase } from '../../dialogs/dialog-base/dialog-base.js';
 import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { PlaylistSelectionDialog } from '../../dialogs/playlist-selection-dialog/playlist-selection-dialog.js';
-import { SelectOptionsDialog } from '../../dialogs/select-options-dialog/select-options-dialog.js';
 import { ContextMenu } from '../../native-components/context-menu/context-menu.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import { MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
 import { AudioService } from '../../services/audio-service.js';
-import { CleanupService, MusicService, PlaylistService } from '../../services/backend.services.js';
+import { MusicService, PlaylistService } from '../../services/backend.services.js';
 import { setAbortableInterval } from '../../services/extensions/animation.extension.js';
 import { sortBy } from '../../services/extensions/array.extensions.js';
 import { changePage } from '../../services/extensions/url.extension.js';
+import { MaintenanceService } from '../../services/maintenance.service.js';
 import { MediaImportService } from '../../services/media-import.service.js';
 import { MusicFilterService } from '../../services/music-filter.service.js';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
@@ -195,12 +195,6 @@ export class MusicPage extends LitElementBase {
     }
 
     /**
-     * @param {File[]} files
-     * @param {string} basePath
-     */
-    static async processFiles(files, basePath) {}
-
-    /**
      * @param {MusicFilterOptions} filter
      */
     updateFilter(filter) {
@@ -220,41 +214,8 @@ export class MusicPage extends LitElementBase {
     }
 
     async cleanupTracks() {
-        var brokenTracks = (await CleanupService.getBrokenAudioTracks()).map((x) => new MusicModel(x));
-
-        if (brokenTracks.length <= 0)
-            return await DialogBase.show('Alles Ok!', {
-                content: 'Alle in Tracks in der Datenbank sind valide Audio-Dateien.',
-                declineActionText: 'Ok',
-            });
-
-        var dialog = SelectOptionsDialog.show(
-            brokenTracks.reduce((prev, curr) => {
-                prev[curr.hash] = curr.displayName;
-                return prev;
-            }, {})
-        );
-
-        dialog.addEventListener('decline', () => dialog.remove());
-        dialog.addEventListener('accept', async (e) => {
-            try {
-                var accpeted = await DialogBase.show('Achtung!!', {
-                    content:
-                        'Diese Aktion wird sämtliche ausgewählten Dateien endgültig löschen.\r\n Diese Aktion kann nicht rückgägnig gemacht werden.\r\nFortfahren?',
-                    acceptActionText: 'Ja',
-                    declineActionText: 'Nein',
-                    noImplicitAccept: true,
-                });
-                if (!accpeted) return dialog.remove();
-
-                var selected = /** @type {CustomEvent<{selected: string[]}>} */ (e).detail.selected;
-                await MusicService.hardDeleteTracks(selected);
-                dialog.remove();
-                await this.initializeData();
-            } catch (err) {
-                DialogBase.show('Bereinigung fehlgeschlagen', { content: err, declineActionText: 'Ok' });
-            }
-        });
+        var success = await MaintenanceService.cleanAudioTracks();
+        if (success) await this.initializeData();
     }
 
     /**

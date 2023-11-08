@@ -9,25 +9,30 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class CleanupController : ControllerBase
+public class CleanupController(MusicRepository musicRepository, MediaRepository mediaRepository) : ControllerBase
 {
-    private static bool ValidateAudio(string path)
+    private static async Task<bool> ValidateAudioAsync(string path)
     {
-        return FFMPEGExtensions.HasAudioStreamAsync(path).Result;
+        return await FFMPEGExtensions.HasAudioStreamAsync(path);
     }
 
-    private readonly MusicRepository _musicRepository;
-
-    public CleanupController(MusicRepository musicRepository)
+    private static async Task<bool> ValidateVideoAsync(string path)
     {
-        _musicRepository = musicRepository;
+        return await FFMPEGExtensions.HasVideoOrSubtitleStreamAsync(path);
     }
 
     [HttpGet("music")]
     public IEnumerable<MusicModel> GetBrokenAudioTracks()
     {
-        var tracks = _musicRepository.GetAll();
+        var tracks = musicRepository.GetAll();
 
-        return tracks.AsParallel().Where(track => !ValidateAudio(track.Path));
+        return tracks.AsParallel().Where(track => !ValidateAudioAsync(track.Path).Result);
+    }
+
+    [HttpPost("validate-media-root")]
+    public bool ValidateMediaRoot([FromBody] string rootPath)
+    {
+        if (!Directory.Exists(rootPath)) return false;
+        return Directory.GetFiles(rootPath, "*.*", SearchOption.AllDirectories).Any(x => ValidateVideoAsync(x).Result);
     }
 }

@@ -1,4 +1,5 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { GenreModel, MediaModel } from '../../obscuritas-media-manager-backend-client.js';
 import { renderMediaTileStyles } from './media-tile.css.js';
 import { renderMediaTile } from './media-tile.html.js';
 
@@ -10,12 +11,9 @@ export class MediaTile extends LitElementBase {
     static get properties() {
         return {
             displayStyle: { type: String, reflect: true },
-            name: { type: String, reflect: true },
-            imageSource: { type: String, reflect: true },
-            rating: { type: Number, reflect: true },
-            genres: { type: Array, reflect: true },
+            media: { type: Object, reflect: true },
             autocompleteGenres: { type: Array, reflect: true },
-            status: { type: String, reflect: true },
+            disabled: { type: Boolean, reflect: true },
 
             hoveredRating: { type: Number, reflect: false },
         };
@@ -25,12 +23,8 @@ export class MediaTile extends LitElementBase {
         super();
 
         /** @type {string} */ this.displayStyle = 'solid';
-        /** @type {string} */ this.name = '';
-        /** @type {string} */ this.imageSource = '';
-        /** @type {number} */ this.rating = 0;
-        /** @type {string[]} */ this.genres = [];
+        /** @type {MediaModel} */ this.media = new MediaModel();
         /** @type {string[]} */ this.autocompleteGenres = [];
-        /** @type {string} */ this.status = '';
 
         /** @type {number} */ this.hoveredRating = 0;
     }
@@ -39,19 +33,19 @@ export class MediaTile extends LitElementBase {
         return renderMediaTile(this);
     }
     /**
-     * @param {string} genre
+     * @param {GenreModel} genre
      */
     addGenre(genre) {
         if (!genre) return;
-        if (genre) this.genres = this.genres.filter((x) => x);
+        if (genre) this.media.genres = this.media.genres.filter((x) => x);
 
         if (!genre) {
-            this.genres.push(genre);
+            this.media.genres.push(genre);
             this.requestFullUpdate();
             return;
         }
 
-        this.notifyGenresChanged(this.genres.concat(genre), null);
+        this.notifyGenresChanged(this.media.genres.concat(genre), null);
     }
 
     /**
@@ -65,7 +59,7 @@ export class MediaTile extends LitElementBase {
     }
 
     /**
-     * @param {string[]} genres
+     * @param {GenreModel[]} genres
      * @param {Event} e
      */
     notifyGenresChanged(genres, e) {

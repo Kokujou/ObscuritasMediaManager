@@ -1,4 +1,5 @@
 import { html } from '../../exports.js';
+import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
 import { MediaTile } from './media-tile.js';
 
 /**
@@ -7,7 +8,7 @@ import { MediaTile } from './media-tile.js';
 export function renderMediaTile(tile) {
     return html` <style>
             #tile-image {
-                background-image: url('data:image/jpeg;base64, ${tile.imageSource}');
+                background-image: url('data:image/jpeg;base64, ${tile.media.image}');
             }
         </style>
 
@@ -15,13 +16,13 @@ export function renderMediaTile(tile) {
             ${tile.displayStyle == 'simple' ? '' : html`<div id="rating-container">${renderRating(tile)}</div>`} <br />
             ${renderImageContainer(tile)}
             ${tile.displayStyle == 'solid'
-                ? html` <div ?no-background="${!tile.imageSource}" id="caption">${tile.name}</div> `
+                ? html` <div ?no-background="${!tile.media.image}" id="caption">${tile.media.name}</div> `
                 : ''}
         </div>
         ${tile.displayStyle == 'solid'
             ? html`
                   <div id="genre-list" @click="${(e) => e.preventDefault()}">
-                      ${tile.genres.slice(0, 4).map((genre) => renderGenreTag(tile, genre))} <br />
+                      ${tile.media.genres.slice(0, 4).map((genre) => renderGenreTag(tile, genre))} <br />
                   </div>
               `
             : ''}
@@ -32,25 +33,25 @@ export function renderMediaTile(tile) {
  * @param {MediaTile} tile
  */
 function renderImageContainer(tile) {
-    if (tile.imageSource)
+    if (tile.media.image)
         return html`<div id="tile-image">
-            <div class="status-icon ${tile.status}"></div>
+            <div class="status-icon ${tile.media.status}"></div>
         </div>`;
 
     return html` <upload-area @imageReceived="${(e) => tile.notifyImageAdded(e.detail.imageData)}"></upload-area>`;
 }
 
 /**
- * @param {string} genre
+ * @param {GenreModel} genre
  * @param {MediaTile} tile
  */
-function renderGenreTag(tile, genre = '') {
+function renderGenreTag(tile, genre = null) {
     if (!genre) return;
     return html`<tag-label
         .autocomplete="${tile.autocompleteGenres}"
-        @tagCreated="${(e) => tile.addGenre(e.detail.value)}"
+        @tagCreated="${(e) => tile.addGenre(genre)}"
         disabled
-        text="${genre}"
+        text="${genre?.name}"
     ></tag-label>`;
 }
 
@@ -63,7 +64,7 @@ function renderRating(tile) {
         (rating) =>
             html`
                 <div
-                    class="star ${rating < tile.rating ? 'selected' : ''} ${rating < tile.hoveredRating ? 'hovered' : ''}"
+                    class="star ${rating < tile.media.rating ? 'selected' : ''} ${rating < tile.hoveredRating ? 'hovered' : ''}"
                     @pointerover="${() => (tile.hoveredRating = rating + 1)}"
                     @pointerout="${() => (tile.hoveredRating = 0)}"
                     @click="${(e) => tile.notifyRatingChanged(rating + 1, e)}"

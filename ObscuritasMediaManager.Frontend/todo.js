@@ -7,7 +7,11 @@
 //TODO: Media page finalization
 /**
  * - think about icons for language
- * - (re)-implement watch-functionality, export anime as playlist (local is enough because global is impossible either way)
+ * - export anime as playlist (local is enough because global is impossible either way)
+ * - add possibility to change base path
+ * - finalize import and reimport functionality
+ * - import button should get a hover context menu to select category and language
+ * - finalize cleanup functionality
  */
 
 //TODO: (optional) create templates for edit - might be a bit late... also mainstream is usually < 3*
