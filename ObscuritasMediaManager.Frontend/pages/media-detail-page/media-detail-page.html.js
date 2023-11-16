@@ -10,6 +10,7 @@ import {
     TargetGroup,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
+import { createRange } from '../../services/extensions/array.extensions.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MediaDetailPage } from './media-detail-page.js';
 
@@ -40,23 +41,24 @@ export function renderMediaDetailPage(detailPage) {
             <div id="media-detail-container">
                 <div id="content-panels">
                     <div id="left-panel" ?disabled="${!detailPage.editMode}">
-                        <media-tile
-                            displayStyle="simple"
-                            ?disabled="${!detailPage.editMode}"
-                            .media="${detailPage.updatedMedia}"
-                            @imageReceived="${(e) => detailPage.changeProperty('image', e.detail.imageData)}"
-                        >
+                        <div id="media-image-container">
                             ${detailPage.updatedMedia.image
-                                ? html`<div id="delete-icon-container">
-                                      <div
-                                          id="delete-icon"
-                                          icon="${Icons.Trash}"
-                                          @click="${() => detailPage.changeProperty('image', null)}"
-                                      ></div>
-                                  </div>`
-                                : ''}
-                        </media-tile>
-                        <div id="media-rating" ?disabled="${!detailPage.editMode}">${renderRating(detailPage)}</div>
+                                ? html`<div
+                                      id="media-image"
+                                      style="background-image: url('data:image/jpeg;base64, ${detailPage.updatedMedia.image}');"
+                                  ></div>`
+                                : html`<upload-area
+                                      @imageReceived="${(e) => detailPage.changeProperty('image', e.detail.imageData)}"
+                                  ></upload-area>`}
+                        </div>
+
+                        <div id="media-rating" ?disabled="${!detailPage.editMode}">
+                            <star-rating
+                                max="5"
+                                singleSelect
+                                .values="${createRange(0, detailPage.updatedMedia.rating)}"
+                            ></star-rating>
+                        </div>
                     </div>
                     <div id="middle-panel" ?disabled="${!detailPage.editMode}">
                         <div id="content-warning-section" class="property-entry">
@@ -66,7 +68,7 @@ export function renderMediaDetailPage(detailPage) {
                                     (warning) =>
                                         html`<div
                                             class="content-warning-icon-wrapper"
-                                            ?selected="${detailPage.updatedMedia.contentWarnings.includes(warning)}"
+                                            ?selected="${detailPage.updatedMedia?.contentWarnings?.includes(warning)}"
                                             @click="${() => detailPage.toggleContentWarning(warning)}"
                                         >
                                             <div class="content-warning-icon" content-warning="${warning}"></div>
@@ -77,12 +79,24 @@ export function renderMediaDetailPage(detailPage) {
                         </div>
                     </div>
                     <div id="right-panel">
-                        ${LinkElement.forPage(MediaDetailPage, { mediaId: detailPage.prevMediaId }, html`&LeftArrow; Letzer`, {
-                            id: 'prev-link',
-                        })}
-                        ${LinkElement.forPage(MediaDetailPage, { mediaId: detailPage.nextMediaId }, html`Nächster &RightArrow;`, {
-                            id: 'next-link',
-                        })}
+                        ${detailPage.createNew
+                            ? ''
+                            : html` ${LinkElement.forPage(
+                                  MediaDetailPage,
+                                  { mediaId: detailPage.prevMediaId },
+                                  html`&LeftArrow; Letzer`,
+                                  {
+                                      id: 'prev-link',
+                                  }
+                              )}
+                              ${LinkElement.forPage(
+                                  MediaDetailPage,
+                                  { mediaId: detailPage.nextMediaId },
+                                  html`Nächster &RightArrow;`,
+                                  {
+                                      id: 'next-link',
+                                  }
+                              )}`}
 
                         <div id="media-heading">
                             <div
@@ -188,9 +202,22 @@ export function renderMediaDetailPage(detailPage) {
                         </div>
                     </div>
                 </div>
+                <div id="action-row">
+                    ${detailPage.createNew
+                        ? html` <div id="create-entry-link" @click="${() => detailPage.createEntry()}">
+                              <div id="create-entry-icon" icon="${Icons.SaveTick}"></div>
+                              <div id="create-entry-text">Eintrag erstellen</div>
+                          </div>`
+                        : ''}
+                </div>
                 <div id="path-row">
                     <label>Basispfad: </label>
-                    <input id="path" type="text" readonly value="${detailPage.updatedMedia.rootFolderPath}" />
+                    <input
+                        id="path"
+                        type="text"
+                        readonly
+                        value="${detailPage.updatedMedia.rootFolderPath ?? 'Kein Pfad ausgewählt'}"
+                    />
                     <div
                         id="edit-path-button"
                         icon="${Icons.Edit}"
@@ -211,7 +238,7 @@ function renderGenreSection(page) {
     return html`<div class="property-entry genre-entry">
         <div class="property-name">Genres:</div>
         <div class="property-value">
-            ${page.updatedMedia.genres.map(
+            ${page.updatedMedia?.genres?.map(
                 (x) =>
                     html`<tag-label
                         ?disabled="${!page.editMode}"
@@ -226,26 +253,4 @@ function renderGenreSection(page) {
             ${page.editMode ? html` <div id="add-genre-button" @click="${() => page.showGenreSelectionDialog()}">+</div> ` : ''}
         </div>
     </div> `;
-}
-
-/**
- * @param {MediaDetailPage} detailPage
- */
-function renderRating(detailPage) {
-    var ratingArray = [...Array(5).keys()];
-    return ratingArray.map(
-        (rating) =>
-            html`
-                <div
-                    class="star ${rating < detailPage.updatedMedia.rating ? 'selected' : ''} ${rating < detailPage.hoveredRating
-                        ? 'hovered'
-                        : ''}"
-                    @pointerover="${() => (detailPage.hoveredRating = rating + 1)}"
-                    @pointerout="${() => (detailPage.hoveredRating = 0)}"
-                    @click="${() => detailPage.changeProperty('rating', rating + 1)}"
-                >
-                    ★
-                </div>
-            `
-    );
 }

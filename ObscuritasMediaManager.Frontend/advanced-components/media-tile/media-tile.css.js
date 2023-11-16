@@ -67,8 +67,8 @@ export function renderMediaTileStyles() {
             left: 0;
             right: 0;
             z-index: 1;
-            margin-top: 100%;
-            margin-bottom: 10px;
+            padding-top: 100%;
+            padding-bottom: 10px;
             background: linear-gradient(to bottom, transparent, #000c);
             pointer-events: none;
 

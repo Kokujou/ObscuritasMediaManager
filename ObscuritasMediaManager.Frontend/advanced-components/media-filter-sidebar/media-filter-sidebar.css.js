@@ -86,6 +86,12 @@ export function renderMediaFilterSidebarStyles() {
             padding: 10px 5px;
         }
 
+        #delete-toggle {
+            --slider-color: #aaa;
+            --toggled-color: #f008;
+            --untoggled-color: #f004;
+        }
+
         #sort-input {
             display: flex;
             flex-direction: row;

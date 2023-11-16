@@ -20,6 +20,7 @@ export class MediaFilterService {
         ObjectFilterService.applyPropertyFilter(result, filter.category, 'type');
         ObjectFilterService.applyArrayFilter(result, filter.contentWarnings, 'contentWarnings');
         ObjectFilterService.applyPropertyFilter(result, filter.targetGroups, 'targetGroup', CheckboxState.Ignore);
+        ObjectFilterService.applyValueFilter(result, filter.deleted ? CheckboxState.Require : CheckboxState.Forbid, 'deleted');
 
         if (!filter.sortingProperty) return result;
         var sorted = sortBy(result, (x) => x[filter.sortingProperty]);

@@ -69,18 +69,8 @@ export class LinkElement extends LitElementBase {
      * @param {Event} event
      */
     handleClick(event) {
-        if (this.disabled) {
-            event.stopPropagation();
-            event.stopImmediatePropagation();
-            event.returnValue = false;
-            event.preventDefault();
-            return;
-        }
-
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        event.returnValue = false;
         event.preventDefault();
+        if (this.disabled) return;
 
         if (this.href) location.assign(this.fullLink);
         else changePage(this.page, this.params);

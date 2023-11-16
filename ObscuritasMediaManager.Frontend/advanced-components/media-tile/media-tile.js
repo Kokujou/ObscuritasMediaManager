@@ -1,5 +1,7 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu.js';
 import { GenreModel, MediaModel } from '../../obscuritas-media-manager-backend-client.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { renderMediaTileStyles } from './media-tile.css.js';
 import { renderMediaTile } from './media-tile.html.js';
 
@@ -27,6 +29,41 @@ export class MediaTile extends LitElementBase {
         /** @type {string[]} */ this.autocompleteGenres = [];
 
         /** @type {number} */ this.hoveredRating = 0;
+    }
+
+    async connectedCallback() {
+        super.connectedCallback();
+
+        this.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            /** @type {ContextMenuItem[]} */ const contextItems = [];
+
+            /** @type {ContextMenuItem} */ const softDeleteItem = {
+                icon: Icons.Trash,
+                text: 'In Papierkorb verschieben',
+                action: () => this.dispatchEvent(new CustomEvent('soft-delete')),
+            };
+            /** @type {ContextMenuItem} */ const hardDeleteItem = {
+                icon: Icons.Trash,
+                text: 'Aus Datenbank löschen',
+                action: () => this.dispatchEvent(new CustomEvent('hard-delete')),
+            };
+            /** @type {ContextMenuItem} */ const fullDeleteItem = {
+                icon: Icons.Trash,
+                text: 'Vollständig Löschen',
+                action: () => this.dispatchEvent(new CustomEvent('full-delete')),
+            };
+            /** @type {ContextMenuItem} */ const undeleteItem = {
+                icon: Icons.Revert,
+                text: 'Wiederherstellen',
+                action: () => this.dispatchEvent(new CustomEvent('undelete')),
+            };
+
+            if (this.media.deleted) contextItems.push(hardDeleteItem, fullDeleteItem, undeleteItem);
+            else contextItems.push(softDeleteItem);
+
+            ContextMenu.popup(contextItems, e);
+        });
     }
 
     render() {

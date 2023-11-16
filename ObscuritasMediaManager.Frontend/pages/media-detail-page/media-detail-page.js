@@ -4,10 +4,18 @@ import { LitElementBase } from '../../data/lit-element-base.js';
 import { Session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
-import { ContentWarning, MediaModel, UpdateRequestOfJsonElement } from '../../obscuritas-media-manager-backend-client.js';
+import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
+import {
+    ContentWarning,
+    MediaCreationRequest,
+    MediaModel,
+    ModelCreationState,
+    UpdateRequestOfJsonElement,
+} from '../../obscuritas-media-manager-backend-client.js';
 import { MediaService } from '../../services/backend.services.js';
 import { ClientInteropService } from '../../services/client-interop-service.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
+import { changePage } from '../../services/extensions/url.extension.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
 import { renderMediaDetailPageStyles } from './media-detail-page.css.js';
 import { renderMediaDetailPage } from './media-detail-page.html.js';
@@ -57,16 +65,21 @@ export class MediaDetailPage extends LitElementBase {
         return this.mediaIds[currentIndex - 1];
     }
 
-    /** @type {string} */ mediaId = null;
-    /** @type {MediaModel} */ oldMedia = null;
-    /** @type {MediaModel} */ updatedMedia = null;
-    /** @type {string[]} */ mediaIds = [];
-    /** @type {boolean} */ createNew = false;
-    hoveredRating = 0;
-    selectedSeason = 0;
-    editMode = false;
+    constructor() {
+        super();
+
+        /** @type {string} */ this.mediaId = null;
+        /** @type {MediaModel} */ this.updatedMedia = new MediaModel();
+        /** @type {string[]} */ this.mediaIds = [];
+        /** @type {boolean} */ this.createNew = false;
+        this.hoveredRating = 0;
+        this.selectedSeason = 0;
+        this.editMode = false;
+    }
 
     async connectedCallback() {
+        this.updatedMedia = await MediaService.getDefault();
+
         super.connectedCallback();
         this.subscriptions.push(
             Session.mediaList.subscribe((newList) => {
@@ -80,6 +93,8 @@ export class MediaDetailPage extends LitElementBase {
     render() {
         if (!this.updatedMedia) return;
 
+        document.title = this.updatedMedia.name;
+
         return renderMediaDetailPage(this);
     }
 
@@ -90,7 +105,6 @@ export class MediaDetailPage extends LitElementBase {
         super.updated(_changedProperties);
         if (this.mediaId != this.updatedMedia?.id) {
             var media = await MediaService.get(this.mediaId);
-            this.oldMedia = Object.assign(new MediaModel(), media);
             this.updatedMedia = Object.assign(new MediaModel(), media);
 
             this.requestFullUpdate();
@@ -117,9 +131,11 @@ export class MediaDetailPage extends LitElementBase {
             /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
             oldModel[property] = this.updatedMedia[property];
             newModel[property] = value;
-            await MediaService.updateMedia(this.updatedMedia.id, new UpdateRequestOfJsonElement({ oldModel, newModel }));
+
+            if (!this.createNew)
+                await MediaService.updateMedia(this.updatedMedia.id, new UpdateRequestOfJsonElement({ oldModel, newModel }));
+
             this.updatedMedia[property] = value;
-            this.oldMedia[property] = value;
             Session.mediaList.refresh();
             this.requestFullUpdate();
         } catch (err) {
@@ -164,5 +180,24 @@ export class MediaDetailPage extends LitElementBase {
         var folderPath = await ClientInteropService.executeQuery({ query: InteropQuery.RequestFolderPath, payload: null });
         if (!folderPath) return;
         await this.changeProperty('rootFolderPath', folderPath);
+    }
+
+    async createEntry() {
+        try {
+            if (!this.updatedMedia.rootFolderPath) throw new Error('The folder path must be valid.');
+            var result = await MediaService.createFromMediaPath(
+                new MediaCreationRequest({
+                    category: this.updatedMedia.type,
+                    entry: this.updatedMedia,
+                    language: this.updatedMedia.language,
+                    rootPath: this.updatedMedia.rootFolderPath,
+                })
+            );
+            if (result.value != ModelCreationState.Success) throw new Error(result.value);
+            await MessageSnackbar.popup('Der Eintrag wurde erfolgreich erstellt.', 'success');
+            changePage(MediaDetailPage, { mediaId: result.key });
+        } catch (err) {
+            await MessageSnackbar.popup('Ein Fehler ist beim erstellen des Eintrags aufgetreten: ' + err, 'error');
+        }
     }
 }

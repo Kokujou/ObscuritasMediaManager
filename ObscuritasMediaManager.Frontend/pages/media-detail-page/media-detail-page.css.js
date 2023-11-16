@@ -175,12 +175,19 @@ export function renderMediaDetailPageStyles() {
             flex: auto;
         }
 
-        media-tile {
+        #media-image-container {
             width: 100%;
             min-height: 500px;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            align-items: stretch;
+            justify-content: stretch;
+        }
+
+        #media-image {
+            width: 100%;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center;
         }
 
         #delete-icon-container {
@@ -356,6 +363,33 @@ export function renderMediaDetailPageStyles() {
         .link.active {
             text-decoration: underline;
             text-underline-offset: 10px;
+        }
+
+        #action-row {
+            font-size: 36px;
+            text-shadow: 0 0 10px purple;
+            margin: 20px 0;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #create-entry-link {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            cursor: pointer;
+        }
+
+        #create-entry-icon {
+            width: 30px;
+            height: 30px;
+            background: white;
         }
 
         #path-row {

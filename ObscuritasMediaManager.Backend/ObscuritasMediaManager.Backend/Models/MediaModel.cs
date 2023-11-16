@@ -10,6 +10,21 @@ namespace ObscuritasMediaManager.Backend.Models;
 
 public class MediaModel
 {
+    public static MediaModel CreateDefault()
+    {
+        return new()
+               {
+                   ContentWarnings = new List<ContentWarning>(),
+                   Genres = new List<GenreModel>(),
+                   Release = 1900,
+                   Language = Language.Japanese,
+                   Type = MediaCategory.AnimeSeries,
+                   Status = MediaStatus.Completed,
+                   TargetGroup = TargetGroup.None,
+                   Name = "Neuer Eintrag",
+               };
+    }
+
     public static void Configure(ModelBuilder builder)
     {
         var entity = builder.Entity<MediaModel>();
@@ -44,6 +59,7 @@ public class MediaModel
     public TargetGroup TargetGroup { get; set; }
     public MediaCategory Type { get; set; }
     public string RootFolderPath { get; set; }
+    public bool Deleted { get; set; }
 
     public override string ToString()
     {

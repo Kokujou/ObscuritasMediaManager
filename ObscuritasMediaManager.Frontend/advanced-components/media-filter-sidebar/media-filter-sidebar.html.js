@@ -27,6 +27,14 @@ export function renderMediaFilterSidebar(sidebar) {
                     @change="${(e) => sidebar.changeFilterProperty('search', e.currentTarget.value)}"
                 />
             </div>
+            <div id="deleted" class="filter-entry">
+                <div class="filter-heading">Gelöschte anzeigen:</div>
+                <custom-toggle
+                    id="delete-toggle"
+                    ?toggled="${sidebar.filter.deleted}"
+                    @toggle="${(e) => sidebar.changeFilterProperty('deleted', e.detail == CheckboxState.Ignore)}"
+                ></custom-toggle>
+            </div>
             <div id="sorting" class="filter-entry" complex>
                 <div class="filter-heading">
                     <div class="filter-label">Sortieren:</div>

@@ -55,6 +55,8 @@ export declare class MediaClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
+    getDefault(signal?: AbortSignal | undefined): Promise<MediaModel>;
+    protected processGetDefault(response: Response): Promise<MediaModel>;
     get(guid: string, signal?: AbortSignal | undefined): Promise<MediaModel>;
     protected processGet(response: Response): Promise<MediaModel>;
     getAll(signal?: AbortSignal | undefined): Promise<MediaModel[]>;
@@ -67,6 +69,10 @@ export declare class MediaClient {
     protected processAddMediaImage(response: Response): Promise<void>;
     deleteMediaImage(guid: string, signal?: AbortSignal | undefined): Promise<void>;
     protected processDeleteMediaImage(response: Response): Promise<void>;
+    hardDeleteMedium(mediaId: string, signal?: AbortSignal | undefined): Promise<void>;
+    protected processHardDeleteMedium(response: Response): Promise<void>;
+    fullDeleteMedium(mediaId: string, signal?: AbortSignal | undefined): Promise<void>;
+    protected processFullDeleteMedium(response: Response): Promise<void>;
 }
 export declare class MusicClient {
     private http;
@@ -333,6 +339,7 @@ export declare class MediaModel implements IMediaModel {
     targetGroup: TargetGroup;
     type: MediaCategory;
     rootFolderPath: string | null;
+    deleted: boolean;
     constructor(data?: Partial<IMediaModel>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): MediaModel | null;
@@ -354,6 +361,7 @@ export interface IMediaModel {
     targetGroup: TargetGroup;
     type: MediaCategory;
     rootFolderPath: string | null;
+    deleted: boolean;
 }
 export declare enum ContentWarning {
     Depression = "Depression",
@@ -411,6 +419,7 @@ export declare class MediaCreationRequest implements IMediaCreationRequest {
     rootPath: string | null;
     category: MediaCategory;
     language: Language;
+    entry: MediaModel | null;
     constructor(data?: Partial<IMediaCreationRequest>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): MediaCreationRequest | null;
@@ -421,6 +430,7 @@ export interface IMediaCreationRequest {
     rootPath: string | null;
     category: MediaCategory;
     language: Language;
+    entry: MediaModel | null;
 }
 export declare class UpdateRequestOfJsonElement implements IUpdateRequestOfJsonElement {
     oldModel: any;

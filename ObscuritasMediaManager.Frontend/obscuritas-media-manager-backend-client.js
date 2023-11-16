@@ -403,6 +403,43 @@ export class MediaClient {
         this.http = http ? http : window;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
+    getDefault(signal) {
+        let url_ = this.baseUrl + "/api/Media/default";
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetDefault(_response);
+        });
+    }
+    processGetDefault(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        let _mappings = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = MediaModel.fromJS(resultData200, _mappings);
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
     get(guid, signal) {
         let url_ = this.baseUrl + "/api/Media/{guid}";
         if (guid === undefined || guid === null)
@@ -619,6 +656,74 @@ export class MediaClient {
         });
     }
     processDeleteMediaImage(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    hardDeleteMedium(mediaId, signal) {
+        let url_ = this.baseUrl + "/api/Media/{mediaId}/hard";
+        if (mediaId === undefined || mediaId === null)
+            throw new Error("The parameter 'mediaId' must be defined.");
+        url_ = url_.replace("{mediaId}", encodeURIComponent("" + mediaId));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "DELETE",
+            signal,
+            headers: {}
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processHardDeleteMedium(_response);
+        });
+    }
+    processHardDeleteMedium(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    fullDeleteMedium(mediaId, signal) {
+        let url_ = this.baseUrl + "/api/Media/{mediaId}/full";
+        if (mediaId === undefined || mediaId === null)
+            throw new Error("The parameter 'mediaId' must be defined.");
+        url_ = url_.replace("{mediaId}", encodeURIComponent("" + mediaId));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "DELETE",
+            signal,
+            headers: {}
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processFullDeleteMedium(_response);
+        });
+    }
+    processFullDeleteMedium(response) {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
@@ -2002,6 +2107,7 @@ export class MediaModel {
     targetGroup;
     type;
     rootFolderPath;
+    deleted;
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -2040,6 +2146,7 @@ export class MediaModel {
             this.targetGroup = _data["targetGroup"] !== undefined ? _data["targetGroup"] : null;
             this.type = _data["type"] !== undefined ? _data["type"] : null;
             this.rootFolderPath = _data["rootFolderPath"] !== undefined ? _data["rootFolderPath"] : null;
+            this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : null;
         }
     }
     static fromJS(data, _mappings) {
@@ -2070,6 +2177,7 @@ export class MediaModel {
         data["targetGroup"] = this.targetGroup !== undefined ? this.targetGroup : null;
         data["type"] = this.type !== undefined ? this.type : null;
         data["rootFolderPath"] = this.rootFolderPath !== undefined ? this.rootFolderPath : null;
+        data["deleted"] = this.deleted !== undefined ? this.deleted : null;
         return data;
     }
     clone() {
@@ -2161,6 +2269,7 @@ export class MediaCreationRequest {
     rootPath;
     category;
     language;
+    entry;
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -2174,6 +2283,7 @@ export class MediaCreationRequest {
             this.rootPath = _data["rootPath"] !== undefined ? _data["rootPath"] : null;
             this.category = _data["category"] !== undefined ? _data["category"] : null;
             this.language = _data["language"] !== undefined ? _data["language"] : null;
+            this.entry = _data["entry"] ? MediaModel.fromJS(_data["entry"], _mappings) : null;
         }
     }
     static fromJS(data, _mappings) {
@@ -2185,6 +2295,7 @@ export class MediaCreationRequest {
         data["rootPath"] = this.rootPath !== undefined ? this.rootPath : null;
         data["category"] = this.category !== undefined ? this.category : null;
         data["language"] = this.language !== undefined ? this.language : null;
+        data["entry"] = this.entry ? this.entry.toJSON() : null;
         return data;
     }
     clone() {

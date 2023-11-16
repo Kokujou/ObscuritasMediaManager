@@ -28,6 +28,10 @@ export function renderMediaPageTemplate(page) {
                                           @imageReceived="${(e) => page.changePropertyOf(media, 'image', e.detail.imageData)}"
                                           @ratingChanged="${(e) => page.changePropertyOf(media, 'rating', e.detail.newRating)}"
                                           @genresChanged="${(e) => page.changePropertyOf(media, 'genres', e.detail.genres)}"
+                                          @soft-delete="${() => page.changePropertyOf(media, 'deleted', true)}"
+                                          @hard-delete="${() => page.hardDelete(media)}"
+                                          @full-delete="${() => page.fullDelete(media)}"
+                                          @undelete="${() => page.changePropertyOf(media, 'deleted', false)}"
                                       ></media-tile>
                                   `
                               )
@@ -36,7 +40,18 @@ export function renderMediaPageTemplate(page) {
             </paginated-scrolling>
             <div id="footer">
                 <div id="result-options">
-                    <div id="add-media-button" class="option-button" icon="${Icons.Plus}" tooltip="Eintrag hinzufügen"></div>
+                    ${LinkElement.forPage(
+                        MediaDetailPage,
+                        { createNew: true, editMode: true },
+                        html`
+                            <div
+                                id="add-media-button"
+                                class="option-button"
+                                icon="${Icons.Plus}"
+                                tooltip="Eintrag hinzufügen"
+                            ></div>
+                        `
+                    )}
                     <div
                         id="import-media-button"
                         class="option-button"

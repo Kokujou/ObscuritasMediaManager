@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualBasic.FileIO;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.Data;
-using ObscuritasMediaManager.Backend.Data.Media;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
@@ -18,6 +18,12 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 public class MediaController(MediaRepository _mediaRepository, IOptions<JsonOptions> jsonOptions) : ControllerBase
 {
     private JsonSerializerOptions _serializerOptions => jsonOptions?.Value.JsonSerializerOptions;
+
+    [HttpGet("default")]
+    public MediaModel GetDefault()
+    {
+        return MediaModel.CreateDefault();
+    }
 
     [HttpGet("{guid:Guid}")]
     public async Task<MediaModel> Get([FromRoute] Guid guid)
@@ -37,24 +43,17 @@ public class MediaController(MediaRepository _mediaRepository, IOptions<JsonOpti
         var directory = new DirectoryInfo(request.RootPath);
         if (!directory.Exists) return new(null, ModelCreationState.Invalid);
 
-        if (!directory.GetFiles("*.*", SearchOption.AllDirectories)
+        if (!directory.GetFiles("*.*", System.IO.SearchOption.AllDirectories)
             .Any(x => FFMPEGExtensions.HasVideoStreamAsync(x.FullName).Result))
             return new(null, ModelCreationState.Invalid);
 
-        var mediaId = Guid.NewGuid();
-        return await _mediaRepository.CreateAsync(
-            new()
-            {
-                Id = mediaId,
-                Type = request.Category,
-                Language = request.Language,
-                Genres = new List<GenreModel>(),
-                ContentWarnings = new List<ContentWarning>(),
-                Name = directory.Name,
-                RootFolderPath = directory.FullName,
-                Status = MediaStatus.Completed,
-                Release = 1900,
-            });
+        request.Entry ??= MediaModel.CreateDefault();
+        request.Entry.Id = Guid.NewGuid();
+        request.Entry.Language = request.Language;
+        request.Entry.Type = request.Category;
+        request.Entry.RootFolderPath = directory.FullName;
+
+        return await _mediaRepository.CreateAsync(request.Entry);
     }
 
     [HttpPut("{id}")]
@@ -74,5 +73,19 @@ public class MediaController(MediaRepository _mediaRepository, IOptions<JsonOpti
     public async Task DeleteMediaImage(Guid guid)
     {
         await _mediaRepository.UpdatePropertyAsync(guid, x => x.Image, string.Empty);
+    }
+
+    [HttpDelete("{mediaId:Guid}/hard")]
+    public async Task HardDeleteMedium(Guid mediaId)
+    {
+        await _mediaRepository.DeleteAsync(mediaId);
+    }
+
+    [HttpDelete("{mediaId:Guid}/full")]
+    public async Task FullDeleteMedium(Guid mediaId)
+    {
+        var medium = await _mediaRepository.GetAsync(mediaId);
+        await _mediaRepository.DeleteAsync(mediaId);
+        FileSystem.DeleteDirectory(medium.RootFolderPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
     }
 }

@@ -2,6 +2,7 @@ import { MediaFilter } from '../../advanced-components/media-filter-sidebar/medi
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Session } from '../../data/session.js';
 import { ContextTooltip } from '../../native-components/context-tooltip/context-tooltip.js';
+import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import {
     Language,
     MediaCategory,
@@ -126,9 +127,37 @@ export class MediaPage extends LitElementBase {
             newModel[property] = value;
             await MediaService.updateMedia(media.id, new UpdateRequestOfJsonElement({ oldModel, newModel }));
             media[property] = value;
+            MessageSnackbar.popup('Der Eintrag wurde erfolgreich geändert.', 'success');
             this.requestFullUpdate();
         } catch (err) {
+            MessageSnackbar.popup('Ein Fehler ist beim update des Eintrags aufgetreten: ' + err, 'error');
             console.error(err);
+        }
+    }
+
+    /**
+     * @param {MediaModel} media
+     */
+    async hardDelete(media) {
+        try {
+            await MediaService.hardDeleteMedium(media.id);
+            Session.mediaList.next(Session.mediaList.current().filter((x) => x.id != media.id));
+            MessageSnackbar.popup('Der Track wurde erfolgreich aus der Datenbank gelöscht.', 'success');
+        } catch (err) {
+            MessageSnackbar.popup('Ein Fehler ist beim löschen des Eintrags aufgetreten: ' + err, 'error');
+        }
+    }
+
+    /**
+     * @param {MediaModel} media
+     */
+    async fullDelete(media) {
+        try {
+            await MediaService.fullDeleteMedium(media.id);
+            Session.mediaList.next(Session.mediaList.current().filter((x) => x.id != media.id));
+            MessageSnackbar.popup('Der Track wurde vollständig gelöscht.', 'success');
+        } catch (err) {
+            MessageSnackbar.popup('Ein Fehler ist beim löschen des Eintrags aufgetreten: ' + err, 'error');
         }
     }
 }

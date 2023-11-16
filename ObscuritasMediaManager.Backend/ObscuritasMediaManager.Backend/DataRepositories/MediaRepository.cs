@@ -92,6 +92,11 @@ public class MediaRepository
         return  _context.Media;
     }
 
+    public async Task DeleteAsync(Guid mediaId)
+    {
+        await _context.Media.IgnoreAutoIncludes().Where(x => x.Id == mediaId).ExecuteDeleteAsync();
+    }
+
     public async ValueTask DisposeAsync()
     {
         await _context.DisposeAsync();
