@@ -24,6 +24,7 @@ import { PlaylistSelectionDialog } from './dialogs/playlist-selection-dialog/pla
 import { SelectOptionsDialog } from './dialogs/select-options-dialog/select-options-dialog.js';
 import { BorderButton } from './native-components/border-button/border-button.js';
 import { ContextMenu } from './native-components/context-menu/context-menu.js';
+import { ContextTooltip } from './native-components/context-tooltip/context-tooltip.js';
 import { CustomToggle } from './native-components/custom-toggle/custom-toggle.js';
 import { CustomTooltip } from './native-components/custom-tooltip/custom-tooltip.js';
 import { DropDown } from './native-components/drop-down/drop-down.js';
@@ -118,3 +119,4 @@ window.customElements.define('lyrics-dialog', LyricsDialog);
 window.customElements.define('warning-banner', WarningBanner);
 window.customElements.define('entity-status-dialog', EntityStatusDialog);
 window.customElements.define('loading-circle', LoadingCircle);
+window.customElements.define('context-tooltip', ContextTooltip);

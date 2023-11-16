@@ -21,5 +21,11 @@ export function renderSelectOptionsDialogStyles() {
         label {
             width: 100%;
         }
+
+        loading-circle {
+            width: 50px;
+            height: 50px;
+            align-self: center;
+        }
     `;
 }

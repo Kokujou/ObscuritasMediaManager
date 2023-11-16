@@ -23,6 +23,7 @@ export function renderSelectOptionsDialog(dialog) {
                             <label for="${key}">${dialog.options[key]}</label>
                         </div>`
                 )}
+                ${!dialog.isComplete() ? html`<loading-circle></loading-circle>` : ''}
             </div>
         </dialog-base>
     `;

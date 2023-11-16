@@ -7,18 +7,6 @@ export class LoadingCircle extends LitElementBase {
         return renderLoadingCircleStyles();
     }
 
-    static get properties() {
-        return {
-            someProperty: { type: String, reflect: true },
-        };
-    }
-
-    constructor() {
-        super();
-
-        /** @type {string} */ this.someProperty;
-    }
-
     render() {
         return renderLoadingCircle(this);
     }

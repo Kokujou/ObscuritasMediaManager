@@ -346,66 +346,6 @@ export function renderMediaDetailPageStyles() {
             color: darkorange;
         }
 
-        #streaming-panel {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .arrow {
-            cursor: pointer;
-            margin: 20px;
-        }
-
-        .arrow.inactive {
-            color: gray;
-            cursor: default;
-        }
-
-        #season-scroll-area {
-            max-width: 50%;
-            display: flex;
-            flex-direction: row;
-            margin: 20px;
-            align-items: center;
-        }
-
-        #season-inner {
-            display: flex;
-            flex-direction: row;
-
-            justify-content: flex-start;
-            font-size: 30px;
-            overflow-x: auto;
-            overflow-y: hidden;
-
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-            flex-wrap: nowrap;
-        }
-
-        #season-scroll-area ::-webkit-scrollbar {
-            display: none;
-        }
-
-        #season-scroll-area .link {
-            white-space: nowrap;
-        }
-
-        #season-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 18px;
-            padding: 20px;
-            margin-bottom: 40px;
-            border-radius: 20px;
-
-            background-color: #883377bb;
-        }
-
         .link {
             text-shadow: 1px 1px 1px black;
             margin: 10px 30px;
@@ -418,8 +358,43 @@ export function renderMediaDetailPageStyles() {
             text-underline-offset: 10px;
         }
 
+        #path-row {
+            margin: 20px;
+            padding: 20px 80px;
+            align-self: center;
+            border-radius: 20px;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+
+            background: var(--accent-color);
+
+            font-size: 24px;
+        }
+
+        #path {
+            flex: auto;
+            font: inherit;
+            font-size: inherit;
+            width: 700px;
+        }
+
+        #edit-path-button {
+            width: 40px;
+            height: 40px;
+            background: white;
+
+            cursor: pointer;
+        }
+
         *[disabled] {
             pointer-events: none;
+        }
+        *[icon][disabled] {
+            background: darkgray !important;
         }
     `;
 }

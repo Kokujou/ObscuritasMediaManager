@@ -487,32 +487,37 @@ export class MediaClient {
         }
         return Promise.resolve(null);
     }
-    batchCreateMedia(media, signal) {
+    createFromMediaPath(request, signal) {
         let url_ = this.baseUrl + "/api/Media";
         url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(media);
+        const content_ = JSON.stringify(request);
         let options_ = {
             body: content_,
             method: "POST",
             signal,
             headers: {
                 "Content-Type": "application/json",
+                "Accept": "application/json"
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
-            return this.processBatchCreateMedia(_response);
+            return this.processCreateFromMediaPath(_response);
         });
     }
-    processBatchCreateMedia(response) {
+    processCreateFromMediaPath(response) {
         const status = response.status;
         let _headers = {};
         if (response.headers && response.headers.forEach) {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = KeyValuePairOfNullableGuidAndModelCreationState.fromJS(resultData200, _mappings);
+                return result200;
             });
         }
         else if (status !== 200 && status !== 204) {
@@ -623,53 +628,6 @@ export class MediaClient {
         if (status === 200) {
             return response.text().then((_responseText) => {
                 return;
-            });
-        }
-        else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve(null);
-    }
-    importRootFolder(rootFolderPath, signal) {
-        let url_ = this.baseUrl + "/api/Media/import";
-        url_ = url_.replace(/[?&]$/, "");
-        const content_ = JSON.stringify(rootFolderPath);
-        let options_ = {
-            body: content_,
-            method: "POST",
-            signal,
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-        return this.http.fetch(url_, options_).then((_response) => {
-            return this.processImportRootFolder(_response);
-        });
-    }
-    processImportRootFolder(response) {
-        const status = response.status;
-        let _headers = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v, k) => _headers[k] = v);
-        }
-        ;
-        let _mappings = [];
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-                let result200 = null;
-                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [];
-                    for (let item of resultData200)
-                        result200.push(MediaModel.fromJS(item, _mappings));
-                }
-                else {
-                    result200 = null;
-                }
-                return result200;
             });
         }
         else if (status !== 200 && status !== 204) {
@@ -2156,6 +2114,86 @@ export var MediaCategory;
     MediaCategory["RealSeries"] = "RealSeries";
     MediaCategory["JDrama"] = "JDrama";
 })(MediaCategory || (MediaCategory = {}));
+export class KeyValuePairOfNullableGuidAndModelCreationState {
+    key;
+    value;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data, _mappings) {
+        if (_data) {
+            this.key = _data["key"] !== undefined ? _data["key"] : null;
+            this.value = _data["value"] !== undefined ? _data["value"] : null;
+        }
+    }
+    static fromJS(data, _mappings) {
+        data = typeof data === 'object' ? data : {};
+        return createInstance(data, _mappings, KeyValuePairOfNullableGuidAndModelCreationState);
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["key"] = this.key !== undefined ? this.key : null;
+        data["value"] = this.value !== undefined ? this.value : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new KeyValuePairOfNullableGuidAndModelCreationState();
+        result.init(json);
+        return result;
+    }
+}
+export var ModelCreationState;
+(function (ModelCreationState) {
+    ModelCreationState["Loading"] = "Loading";
+    ModelCreationState["Success"] = "Success";
+    ModelCreationState["Updated"] = "Updated";
+    ModelCreationState["Ignored"] = "Ignored";
+    ModelCreationState["Invalid"] = "Invalid";
+    ModelCreationState["Error"] = "Error";
+})(ModelCreationState || (ModelCreationState = {}));
+export class MediaCreationRequest {
+    rootPath;
+    category;
+    language;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data, _mappings) {
+        if (_data) {
+            this.rootPath = _data["rootPath"] !== undefined ? _data["rootPath"] : null;
+            this.category = _data["category"] !== undefined ? _data["category"] : null;
+            this.language = _data["language"] !== undefined ? _data["language"] : null;
+        }
+    }
+    static fromJS(data, _mappings) {
+        data = typeof data === 'object' ? data : {};
+        return createInstance(data, _mappings, MediaCreationRequest);
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["rootPath"] = this.rootPath !== undefined ? this.rootPath : null;
+        data["category"] = this.category !== undefined ? this.category : null;
+        data["language"] = this.language !== undefined ? this.language : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new MediaCreationRequest();
+        result.init(json);
+        return result;
+    }
+}
 export class UpdateRequestOfJsonElement {
     oldModel;
     newModel;
@@ -2224,15 +2262,6 @@ export class KeyValuePairOfStringAndModelCreationState {
         return result;
     }
 }
-export var ModelCreationState;
-(function (ModelCreationState) {
-    ModelCreationState["Loading"] = "Loading";
-    ModelCreationState["Success"] = "Success";
-    ModelCreationState["Updated"] = "Updated";
-    ModelCreationState["Ignored"] = "Ignored";
-    ModelCreationState["Invalid"] = "Invalid";
-    ModelCreationState["Error"] = "Error";
-})(ModelCreationState || (ModelCreationState = {}));
 export class LyricsResponse {
     title;
     text;

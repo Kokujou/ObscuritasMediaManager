@@ -59,16 +59,14 @@ export declare class MediaClient {
     protected processGet(response: Response): Promise<MediaModel>;
     getAll(signal?: AbortSignal | undefined): Promise<MediaModel[]>;
     protected processGetAll(response: Response): Promise<MediaModel[]>;
-    batchCreateMedia(media: MediaModel[], signal?: AbortSignal | undefined): Promise<void>;
-    protected processBatchCreateMedia(response: Response): Promise<void>;
+    createFromMediaPath(request: MediaCreationRequest, signal?: AbortSignal | undefined): Promise<KeyValuePairOfNullableGuidAndModelCreationState>;
+    protected processCreateFromMediaPath(response: Response): Promise<KeyValuePairOfNullableGuidAndModelCreationState>;
     updateMedia(id: string, _: UpdateRequestOfJsonElement, signal?: AbortSignal | undefined): Promise<void>;
     protected processUpdateMedia(response: Response): Promise<void>;
     addMediaImage(image: string, guid: string, signal?: AbortSignal | undefined): Promise<void>;
     protected processAddMediaImage(response: Response): Promise<void>;
     deleteMediaImage(guid: string, signal?: AbortSignal | undefined): Promise<void>;
     protected processDeleteMediaImage(response: Response): Promise<void>;
-    importRootFolder(rootFolderPath: string, signal?: AbortSignal | undefined): Promise<MediaModel[]>;
-    protected processImportRootFolder(response: Response): Promise<MediaModel[]>;
 }
 export declare class MusicClient {
     private http;
@@ -388,6 +386,42 @@ export declare enum MediaCategory {
     RealSeries = "RealSeries",
     JDrama = "JDrama"
 }
+export declare class KeyValuePairOfNullableGuidAndModelCreationState implements IKeyValuePairOfNullableGuidAndModelCreationState {
+    key: string | null;
+    value: ModelCreationState;
+    constructor(data?: Partial<IKeyValuePairOfNullableGuidAndModelCreationState>);
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): KeyValuePairOfNullableGuidAndModelCreationState | null;
+    toJSON(data?: any): any;
+    clone(): KeyValuePairOfNullableGuidAndModelCreationState;
+}
+export interface IKeyValuePairOfNullableGuidAndModelCreationState {
+    key: string | null;
+    value: ModelCreationState;
+}
+export declare enum ModelCreationState {
+    Loading = "Loading",
+    Success = "Success",
+    Updated = "Updated",
+    Ignored = "Ignored",
+    Invalid = "Invalid",
+    Error = "Error"
+}
+export declare class MediaCreationRequest implements IMediaCreationRequest {
+    rootPath: string | null;
+    category: MediaCategory;
+    language: Language;
+    constructor(data?: Partial<IMediaCreationRequest>);
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): MediaCreationRequest | null;
+    toJSON(data?: any): any;
+    clone(): MediaCreationRequest;
+}
+export interface IMediaCreationRequest {
+    rootPath: string | null;
+    category: MediaCategory;
+    language: Language;
+}
 export declare class UpdateRequestOfJsonElement implements IUpdateRequestOfJsonElement {
     oldModel: any;
     newModel: any;
@@ -413,14 +447,6 @@ export declare class KeyValuePairOfStringAndModelCreationState implements IKeyVa
 export interface IKeyValuePairOfStringAndModelCreationState {
     key: string;
     value: ModelCreationState;
-}
-export declare enum ModelCreationState {
-    Loading = "Loading",
-    Success = "Success",
-    Updated = "Updated",
-    Ignored = "Ignored",
-    Invalid = "Invalid",
-    Error = "Error"
 }
 export declare class LyricsResponse implements ILyricsResponse {
     title: string | null;

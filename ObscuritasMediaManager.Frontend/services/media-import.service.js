@@ -1,7 +1,9 @@
 import { InteropQuery } from '../client-interop/interop-query.js';
 import { EntityStatusDialog } from '../dialogs/entity-status-dialog/entity-status-dialog.js';
+import { html } from '../exports.js';
 import { LinkElement } from '../native-components/link-element/link-element.js';
-import { MediaModel, ModelCreationState } from '../obscuritas-media-manager-backend-client.js';
+import { Language, MediaCategory, MediaCreationRequest, ModelCreationState } from '../obscuritas-media-manager-backend-client.js';
+import { MediaDetailPage } from '../pages/media-detail-page/media-detail-page.js';
 import { MusicPlaylistPage } from '../pages/music-playlist-page/music-playlist-page.js';
 import { MediaService, MusicService, PlaylistService } from './backend.services.js';
 import { ClientInteropService } from './client-interop-service.js';
@@ -37,39 +39,51 @@ export class MediaImportService {
         });
     }
 
-    static async importMediaCollections() {
-        /** @type {string} */ var rootPath = await ClientInteropService.executeQuery({
-            query: InteropQuery.RequestFolderPath,
-            payload: null,
-        });
-        if (!rootPath) return;
-
-        var complete = false;
-        var dialog = EntityStatusDialog.show(() => complete);
-        for await (const media of this.importRootFolder(rootPath))
-            dialog.addEntry({
-                text: `${media.name}`,
-                status: ModelCreationState.Loading,
-            });
-    }
-
     /**
-     * @param {string} rootPath
-     * @returns {AsyncGenerator<MediaModel>}
+     *
+     * @param {MediaCategory} category
+     * @param {Language} language
      */
-    static async *importRootFolder(rootPath) {
-        // @ts-ignore
-        MediaService.processImportRootFolder = (x) => x;
-        var response = /** @type {Response} */ (/** @type {any} */ (await MediaService.importRootFolder(rootPath)));
-        var decoder = new TextDecoder('utf-8');
-        for await (let item of /** @type {any} */ (response.body)) {
-            var text = decoder.decode(item);
-            if (text.startsWith('[')) text = text.substring(1);
-            if (text.startsWith(',')) text = text.substring(1);
-            if (text.endsWith(']')) text = text.slice(0, -1);
-            var result = JSON.parse('[' + text + ']');
-            for (var res of result) yield res;
-        }
+    static importMediaCollections(category, language) {
+        return new Promise(async (resolve) => {
+            /** @type {string[]} */ var mediaPaths = await ClientInteropService.executeQuery({
+                query: InteropQuery.RequestSubFolders,
+                payload: null,
+            });
+            if (!mediaPaths) return;
+
+            var complete = false;
+            var dialog = EntityStatusDialog.show(() => complete);
+
+            for (const path of mediaPaths) {
+                var response = await MediaService.createFromMediaPath(
+                    new MediaCreationRequest({ rootPath: path, category, language })
+                );
+
+                if (!response.key) {
+                    var mediaName = path.split('\\').at(-1);
+                    dialog.addEntry({
+                        text: html`<link-element tooltip="${path}">${mediaName}</link-element>`,
+                        status: response.value,
+                    });
+                    continue;
+                }
+
+                var media = await MediaService.get(response.key);
+                dialog.addEntry({
+                    text: LinkElement.forPage(MediaDetailPage, { mediaId: response.key }, media.name),
+                    status: response.value,
+                });
+            }
+
+            complete = true;
+            dialog.requestFullUpdate();
+
+            dialog.addEventListener('accept', () => {
+                dialog.remove();
+                resolve();
+            });
+        });
     }
 
     /**

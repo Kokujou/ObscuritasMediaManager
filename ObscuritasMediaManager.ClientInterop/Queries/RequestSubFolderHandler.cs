@@ -1,12 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
 namespace ObscuritasMediaManager.ClientInterop.Queries;
 
-public class RequestFolderPathHandler : IQueryHandler
+public class RequestSubFolderHandler : IQueryHandler
 {
-    public InteropQuery Query => InteropQuery.RequestFolderPath;
+    public InteropQuery Query => InteropQuery.RequestSubFolders;
 
     public async Task<object?> ExecuteAsync(JsonElement? payload)
     {
@@ -19,7 +20,7 @@ public class RequestFolderPathHandler : IQueryHandler
                     var folderBrowserDialog = new FolderBrowserDialog();
                     var result = folderBrowserDialog.ShowDialog();
                     if (result != DialogResult.OK) return null;
-                    return folderBrowserDialog.SelectedPath;
+                    return Directory.GetDirectories(folderBrowserDialog.SelectedPath);
                 });
     }
 }

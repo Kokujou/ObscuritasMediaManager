@@ -9,6 +9,7 @@ public enum InteropQuery
 {
     RequestFiles,
     RequestFolderContent,
-    RequestFolderPath,
+    RequestSubFolders,
     LoadTrack,
+    RequestFolderPath,
 }

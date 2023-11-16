@@ -1,10 +1,12 @@
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter.js';
+import { InteropQuery } from '../../client-interop/interop-query.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Session } from '../../data/session.js';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result.js';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { ContentWarning, MediaModel, UpdateRequestOfJsonElement } from '../../obscuritas-media-manager-backend-client.js';
 import { MediaService } from '../../services/backend.services.js';
+import { ClientInteropService } from '../../services/client-interop-service.js';
 import { setFavicon } from '../../services/extensions/style.extensions.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
 import { renderMediaDetailPageStyles } from './media-detail-page.css.js';
@@ -160,5 +162,11 @@ export class MediaDetailPage extends LitElementBase {
             'contentWarnings',
             this.updatedMedia.contentWarnings.filter((x) => x != warning)
         );
+    }
+
+    async changeBasePath() {
+        var folderPath = await ClientInteropService.executeQuery({ query: InteropQuery.RequestFolderPath, payload: null });
+        if (!folderPath) return;
+        await this.changeProperty('rootFolderPath', folderPath);
     }
 }

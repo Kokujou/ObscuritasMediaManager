@@ -4,7 +4,6 @@ using Microsoft.Extensions.Options;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.Data.Media;
-using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
@@ -33,30 +32,29 @@ public class MediaController(MediaRepository _mediaRepository, IOptions<JsonOpti
     }
 
     [HttpPost]
-    public async Task<KeyValuePair<Guid?, ModelCreationState>> CreateFromMediaAsync([FromBody] string mediaPath,
-        MediaCategory category, Language language)
+    public async Task<KeyValuePair<Guid?, ModelCreationState>> CreateFromMediaPathAsync([FromBody] MediaCreationRequest request)
     {
-        var directory = new DirectoryInfo(mediaPath);
+        var directory = new DirectoryInfo(request.RootPath);
         if (!directory.Exists) return new(null, ModelCreationState.Invalid);
 
-        if (directory.GetFiles("*.*", SearchOption.AllDirectories)
-            .Any(x => FFMPEGExtensions.HasVideoOrSubtitleStreamAsync(x.FullName).Result))
+        if (!directory.GetFiles("*.*", SearchOption.AllDirectories)
+            .Any(x => FFMPEGExtensions.HasVideoStreamAsync(x.FullName).Result))
             return new(null, ModelCreationState.Invalid);
 
         var mediaId = Guid.NewGuid();
-        await _mediaRepository.CreateAsync(
+        return await _mediaRepository.CreateAsync(
             new()
             {
                 Id = mediaId,
-                Type = category,
-                Language = language,
+                Type = request.Category,
+                Language = request.Language,
                 Genres = new List<GenreModel>(),
+                ContentWarnings = new List<ContentWarning>(),
                 Name = directory.Name,
                 RootFolderPath = directory.FullName,
                 Status = MediaStatus.Completed,
                 Release = 1900,
             });
-        return new(mediaId, ModelCreationState.Success);
     }
 
     [HttpPut("{id}")]

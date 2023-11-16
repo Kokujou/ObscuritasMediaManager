@@ -1,7 +1,13 @@
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Session } from '../../data/session.js';
-import { MediaModel, UpdateRequestOfJsonElement } from '../../obscuritas-media-manager-backend-client.js';
+import { ContextTooltip } from '../../native-components/context-tooltip/context-tooltip.js';
+import {
+    Language,
+    MediaCategory,
+    MediaModel,
+    UpdateRequestOfJsonElement,
+} from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService } from '../../services/backend.services.js';
 import { MaintenanceService } from '../../services/maintenance.service.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
@@ -59,9 +65,14 @@ export class MediaPage extends LitElementBase {
         return renderMediaPageTemplate(this);
     }
 
-    async importFolder() {
+    /**
+     * @param {MediaCategory} category
+     * @param {Language} language
+     */
+    async importFolder(category, language) {
         try {
-            await MediaImportService.importMediaCollections();
+            await MediaImportService.importMediaCollections(category, language);
+            Session.mediaList.next(await MediaService.getAll());
         } catch (err) {
             console.error('the import of files was aborted', err);
         }
@@ -79,6 +90,25 @@ export class MediaPage extends LitElementBase {
         if (!success) return;
         Session.mediaList.next(await MediaService.getAll());
         await this.requestFullUpdate();
+    }
+
+    /**
+     * @param {PointerEvent} event
+     */
+    async requestImportTypeSelection(event) {
+        const tooltipItems = [
+            { text: 'Animes Ger Dub', category: MediaCategory.AnimeSeries, language: Language.German },
+            { text: 'Animes Ger Sub', category: MediaCategory.AnimeSeries, language: Language.Japanese },
+            { text: 'Realfilme', category: MediaCategory.RealMovies, language: Language.German },
+            { text: 'Animefilme', category: MediaCategory.AnimeMovies, language: Language.German },
+            { text: 'Realfilmserien', category: MediaCategory.RealSeries, language: Language.German },
+            { text: 'J-Dramen', category: MediaCategory.RealSeries, language: Language.Japanese },
+        ];
+        /** @type {typeof tooltipItems[0]} */ var selection = await ContextTooltip.spawn(event, tooltipItems);
+
+        if (!selection) return;
+
+        await this.importFolder(selection.category, selection.language);
     }
 
     /**

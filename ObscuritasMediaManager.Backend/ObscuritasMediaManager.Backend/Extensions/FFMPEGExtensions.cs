@@ -18,12 +18,12 @@ public static class FFMPEGExtensions
         }
     }
 
-    public static async Task<bool> HasVideoOrSubtitleStreamAsync(string filePath)
+    public static async Task<bool> HasVideoStreamAsync(string filePath)
     {
         try
         {
             var mediaInfo = await FFmpeg.GetMediaInfo(filePath);
-            return mediaInfo.VideoStreams.Any() || mediaInfo.SubtitleStreams.Any();
+            return mediaInfo.VideoStreams.Any();
         }
         catch
         {

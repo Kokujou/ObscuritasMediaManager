@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Windows.Interop;
+using System.Windows;
 
 namespace ObscuritasMediaManager.ClientInterop.Queries;
 
@@ -19,9 +19,9 @@ public class RequestFolderContentHandler : IQueryHandler
             .Invoke(
                 () =>
                 {
-                    var win32Parent = new NativeWindow();
-                    win32Parent.AssignHandle(new WindowInteropHelper(MainWindow.Instance).Handle);
-                    var result = folderBrowserDialog.ShowDialog(win32Parent);
+                    MainWindow.Instance.Show();
+                    MainWindow.Instance.Visibility = Visibility.Hidden;
+                    var result = folderBrowserDialog.ShowDialog();
                     if (result != DialogResult.OK) return;
                     files = Directory.GetFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories);
                 });

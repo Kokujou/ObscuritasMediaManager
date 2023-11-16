@@ -41,8 +41,7 @@ export function renderMediaPageTemplate(page) {
                         id="import-media-button"
                         class="option-button"
                         icon="${Icons.Import}"
-                        tooltip="Ordner importieren"
-                        @click="${() => page.importFolder()}"
+                        @pointerover="${(e) => page.requestImportTypeSelection(e)}"
                     ></div>
                     <div
                         id="cleanup-button"

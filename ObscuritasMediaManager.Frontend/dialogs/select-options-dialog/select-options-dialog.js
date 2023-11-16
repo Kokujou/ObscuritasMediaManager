@@ -1,4 +1,5 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { TemplateResult } from '../../exports.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
 import { renderSelectOptionsDialogStyles } from './select-options-dialog.css.js';
 import { renderSelectOptionsDialog } from './select-options-dialog.html.js';
@@ -16,7 +17,7 @@ export class SelectOptionsDialog extends LitElementBase {
     }
 
     /**
-     * @param {Object.<string,string>} options
+     * @param {Object.<string,TemplateResult | string>} options
      */
     static show(options, multiselect = true) {
         var dialog = new SelectOptionsDialog();
@@ -44,14 +45,9 @@ export class SelectOptionsDialog extends LitElementBase {
 
         return dialog;
     }
-
-    constructor() {
-        super();
-
-        /** @type {Object.<string,string>} */ this.options = {};
-        /** @type {boolean} */ this.multiselect = true;
-        /** @type {()=>boolean} */ this.isComplete = () => false;
-    }
+    /** @type {Object.<string,TemplateResult | string>} */ options = {};
+    /** @type {boolean} */ multiselect = true;
+    /** @type {()=>boolean} */ isComplete = () => false;
 
     render() {
         return renderSelectOptionsDialog(this);
@@ -64,6 +60,11 @@ export class SelectOptionsDialog extends LitElementBase {
         this.dispatchEvent(new CustomEvent('accept', { detail: { selected: selectedIds } }));
     }
 
+    /**
+     *
+     * @param {string} key
+     * @param {TemplateResult | string} value
+     */
     addEntry(key, value) {
         this.options[key] = value;
         this.requestFullUpdate();

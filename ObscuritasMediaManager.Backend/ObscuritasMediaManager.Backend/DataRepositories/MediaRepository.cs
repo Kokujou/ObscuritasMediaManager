@@ -21,33 +21,36 @@ public class MediaRepository
         _context = context;
     }
 
-    public async Task<ModelCreationState> CreateAsync(MediaModel media)
+    public async Task<KeyValuePair<Guid?, ModelCreationState>> CreateAsync(MediaModel media)
     {
         try
         {
-            var existing = await _context.Media.FirstOrDefaultAsync(x => x.RootFolderPath == media.RootFolderPath);
+            var existing = await _context.Media
+                .FirstOrDefaultAsync(
+                    x => (x.RootFolderPath == media.RootFolderPath)
+                        || ((x.Type == media.Type) && (x.Language == media.Language) && (x.Name.ToLower() == media.Name.ToLower())));
 
             if ((existing is not null) && (existing.GetNormalizedPath() == media.GetNormalizedPath()))
-                return ModelCreationState.Ignored;
+                return new(existing.Id, ModelCreationState.Ignored);
 
             if (existing is not null)
             {
                 await UpdatePropertyAsync(existing.Id, x => x.RootFolderPath, media.GetNormalizedPath());
-                return ModelCreationState.Updated;
+                return new(existing.Id, ModelCreationState.Updated);
             }
 
             await _context.Media.AddAsync(media);
             await _context.SaveChangesAsync();
-            return ModelCreationState.Success;
+            return new(media.Id, ModelCreationState.Success);
         }
         catch (Exception ex) when (ex.InnerException is SqliteException inner and { SqliteExtendedErrorCode: 2067 })
         {
-            return ModelCreationState.Ignored;
+            return new(media.Id, ModelCreationState.Ignored);
         }
         catch (Exception ex)
         {
             Log.Error(ex.ToString());
-            return ModelCreationState.Error;
+            return new(media.Id, ModelCreationState.Error);
         }
     }
 

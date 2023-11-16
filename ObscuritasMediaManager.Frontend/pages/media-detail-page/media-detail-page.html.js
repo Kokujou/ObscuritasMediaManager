@@ -88,6 +88,7 @@ export function renderMediaDetailPage(detailPage) {
                             <div
                                 id="popup-icon"
                                 icon="${Icons.Popup}"
+                                tooltip="Auf AniList suchen"
                                 @click="${() =>
                                     window.open(`https://anilist.co/search/anime?search=${detailPage.updatedMedia.name}`)}"
                             ></div>
@@ -186,6 +187,17 @@ export function renderMediaDetailPage(detailPage) {
                             ></textarea>
                         </div>
                     </div>
+                </div>
+                <div id="path-row">
+                    <label>Basispfad: </label>
+                    <input id="path" type="text" readonly value="${detailPage.updatedMedia.rootFolderPath}" />
+                    <div
+                        id="edit-path-button"
+                        icon="${Icons.Edit}"
+                        ?disabled="${!detailPage.editMode}"
+                        tooltip="PC durchsuchen"
+                        @click="${() => detailPage.changeBasePath()}"
+                    ></div>
                 </div>
             </div>
         </page-layout>

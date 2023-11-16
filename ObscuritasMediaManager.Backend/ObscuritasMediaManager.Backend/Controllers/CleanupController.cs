@@ -18,7 +18,7 @@ public class CleanupController(MusicRepository musicRepository, MediaRepository 
 
     private static async Task<bool> ValidateVideoAsync(string path)
     {
-        return await FFMPEGExtensions.HasVideoOrSubtitleStreamAsync(path);
+        return await FFMPEGExtensions.HasVideoStreamAsync(path);
     }
 
     [HttpGet("music")]

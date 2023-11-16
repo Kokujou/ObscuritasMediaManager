@@ -8,22 +8,11 @@
 /**
  * - think about icons for language
  * - export anime as playlist (local is enough because global is impossible either way)
- * - add possibility to change base path
- * - finalize import and reimport functionality
- * - import button should get a hover context menu to select category and language
  * - finalize cleanup functionality
  */
 
 //TODO: (optional) create templates for edit - might be a bit late... also mainstream is usually < 3*
 //TODO: implement loading-indiciation for requests - does that really make sense? the API is quite performant
-
-//TODO: improve re-upload algorithm to not overwrite or duplicate data (media-pages)
-/**
- * - new series should be added
- * - new seasons + episodes to existing seasons should be added
- * - be sensitive to change in folder structure e.g. no seasons -> s1 + s2
- * - maybe display results in table form to emergency-edit if required
- */
 
 //TODO: Change cleanup functionality for audio
 /**
