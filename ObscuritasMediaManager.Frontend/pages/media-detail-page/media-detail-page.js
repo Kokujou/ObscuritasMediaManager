@@ -57,18 +57,14 @@ export class MediaDetailPage extends LitElementBase {
         return this.mediaIds[currentIndex - 1];
     }
 
-    constructor() {
-        super();
-
-        /** @type {string} */ this.mediaId = null;
-
-        /** @type {MediaModel} */ this.oldMedia = null;
-        /** @type {MediaModel} */ this.updatedMedia = null;
-        /** @type {string[]} */ this.mediaIds = [];
-        this.hoveredRating = 0;
-        this.selectedSeason = 0;
-        this.editMode = false;
-    }
+    /** @type {string} */ mediaId = null;
+    /** @type {MediaModel} */ oldMedia = null;
+    /** @type {MediaModel} */ updatedMedia = null;
+    /** @type {string[]} */ mediaIds = [];
+    /** @type {boolean} */ createNew = false;
+    hoveredRating = 0;
+    selectedSeason = 0;
+    editMode = false;
 
     async connectedCallback() {
         super.connectedCallback();

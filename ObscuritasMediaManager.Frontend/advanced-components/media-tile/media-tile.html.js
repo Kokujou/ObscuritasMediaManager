@@ -1,5 +1,6 @@
 import { html } from '../../exports.js';
 import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
+import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { MediaTile } from './media-tile.js';
 
 /**
@@ -38,7 +39,7 @@ function renderImageContainer(tile) {
             <div class="status-icon ${tile.media.status}"></div>
         </div>`;
 
-    return html` <upload-area @imageReceived="${(e) => tile.notifyImageAdded(e.detail.imageData)}"></upload-area>`;
+    return html` <div id="no-image-icon" icon="${Icons.Cross}"></div> `;
 }
 
 /**

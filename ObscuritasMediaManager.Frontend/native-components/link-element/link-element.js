@@ -34,7 +34,7 @@ export class LinkElement extends LitElementBase {
             .page="${page}"
             .params="${params}"
             ?disabled="${options.disabled}"
-            target="${options.target}"
+            .target="${options.target}"
         >
             ${inner}
         </link-element>`;
