@@ -14,13 +14,11 @@ export class AudioTile extends LitElementBase {
         return {
             track: { type: Object, reflect: true },
             paused: { type: Boolean, reflect: true },
-            visualizationData: { type: Object, reflect: true },
         };
     }
 
     constructor() {
         super();
-        /** @type {Float32Array} */ this.visualizationData;
         /** @type {MusicModel} */ this.track = new MusicModel();
         this.paused = true;
     }

@@ -91,7 +91,6 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                 ?disabled="${this.updatedTrack.complete}"
                                 .track="${new MusicModel(this.updatedTrack)}"
                                 ?paused="${AudioService.paused}"
-                                .visualizationData="${AudioService.visualizationData.current()}"
                                 @imageClicked="${() => this.toggleCurrentTrack()}"
                                 @changeLanguage="${() => this.showLanguageSwitcher()}"
                                 @nextParticipants="${() =>

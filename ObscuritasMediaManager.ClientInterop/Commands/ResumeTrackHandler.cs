@@ -12,6 +12,6 @@ public class ResumeTrackHandler : ICommandHandler
     {
         await Task.Yield();
         AudioService.Play();
-        AudioTrackUpdatedEventService.StartReporting();
+        AudioTrackUpdatedEventHandler.StartReporting();
     }
 }

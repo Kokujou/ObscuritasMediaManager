@@ -1,7 +1,9 @@
+import { ConnectedEventResponse } from '../client-interop/connected-event-response.js';
 import { InteropCommand } from '../client-interop/interop-command.js';
 import { InteropEvent } from '../client-interop/interop-event.js';
 import { InteropQuery } from '../client-interop/interop-query.js';
-import { TrackChangedEventResponse } from '../client-interop/track-changed-event-response.js';
+import { PlaybackState } from '../client-interop/playback-state.js';
+import { TrackUpdatedEventResponse } from '../client-interop/track-updated-event-response.js';
 import { Observable, Subscription } from '../data/observable.js';
 import { MusicModel } from '../obscuritas-media-manager-backend-client.js';
 import { ClientInteropService } from './client-interop-service.js';
@@ -25,14 +27,18 @@ export class AudioService {
         this.paused = false;
         if (x?.event == InteropEvent.TrackChanged) {
             this.paused = false;
-            var response = /** @type {TrackChangedEventResponse} */ (x.payload);
-            this.currentTrackPath = response.trackPath;
+            let response = /** @type {TrackUpdatedEventResponse} */ (x.payload);
             this.trackPosition.next(response.trackPosition);
             this.visualizationData.next(new Float32Array(response.visualizationData));
             this.changed.next();
         } else if (x?.event == InteropEvent.TrackEnded) {
             this.reset();
             this.ended.next();
+        } else if (x?.event == InteropEvent.Connected) {
+            let response = /** @type {ConnectedEventResponse} */ (x.payload);
+            this.currentTrackPath = response.trackPath;
+            this.paused = response.playbackState != PlaybackState.Playing;
+            this.changed.next();
         }
     });
 

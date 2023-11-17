@@ -3,8 +3,9 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-export class TrackChangedEventResponse {
+import { PlaybackState } from "./playback-state";
+
+export class ConnectedEventResponse {
     trackPath: string;
-    visualizationData: number[];
-    trackPosition: number;
+    playbackState: PlaybackState;
 }

@@ -140,9 +140,6 @@ export function renderMusicPage(musicPage) {
                                                   { trackHash: track.hash },
                                                   html` <audio-tile
                                                       .track="${track}"
-                                                      .visualizationData="${AudioService.currentTrackPath == track.path
-                                                          ? AudioService.visualizationData.current()
-                                                          : null}"
                                                       ?paused="${AudioService.paused ||
                                                       AudioService.currentTrackPath != track.path}"
                                                       @musicToggled="${() => musicPage.toggleMusic(track)}"

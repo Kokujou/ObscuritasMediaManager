@@ -6,5 +6,6 @@ public enum MediaStatus
     Completed,
     Airing,
     PreAiring,
-    Aborted
+    Aborted,
+    Incomplete
 }

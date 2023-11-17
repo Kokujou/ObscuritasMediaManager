@@ -12,6 +12,6 @@ public class StopTrackHandler : ICommandHandler
     {
         await Task.Yield();
         AudioService.Stop();
-        AudioTrackUpdatedEventService.StopReporting();
+        AudioTrackUpdatedEventHandler.StopReporting();
     }
-}
+} 

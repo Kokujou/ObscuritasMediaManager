@@ -5,9 +5,8 @@ using TypeGen.Core.TypeAnnotations;
 namespace ObscuritasMediaManager.ClientInterop.Responses;
 
 [ExportTsClass]
-class TrackChangedEventResponse
+public class TrackUpdatedEventResponse
 {
-    public required string TrackPath { get; set; }
     public required float[] VisualizationData { get; set; }
-    public required long TrackPosition { get; set; }
+    public required int TrackPosition { get; set; }
 }

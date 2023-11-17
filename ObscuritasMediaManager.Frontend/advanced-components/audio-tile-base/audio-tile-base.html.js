@@ -1,5 +1,6 @@
 import { html } from '../../exports.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
+import { AudioService } from '../../services/audio-service.js';
 import { AudioTileBase } from './audio-tile-base.js';
 
 /**
@@ -18,7 +19,7 @@ export function renderAudioTileBase(audioTile) {
             <div
                 id="audio-image"
                 icon="${audioTile.paused ? Icons.Play : Icons.Pause}"
-                ?invisible="${!!audioTile.visualizationData}"
+                ?invisible="${!!AudioService.visualizationData.current()}"
                 @click="${(e) => audioTile.dispatchEvent(new CustomEvent('imageClicked', { composed: true, bubbles: true }))}"
             ></div>
             <canvas id="audio-visualization"></canvas>

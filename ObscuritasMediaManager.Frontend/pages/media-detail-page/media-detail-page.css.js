@@ -1,4 +1,6 @@
 import { css } from '../../exports.js';
+import { renderMaskImage } from '../../services/extensions/style.extensions.js';
+import { trashIcon } from './images/trash-icon.svg.js';
 
 export function renderMediaDetailPageStyles() {
     return css`
@@ -184,10 +186,37 @@ export function renderMediaDetailPageStyles() {
         }
 
         #media-image {
+            position: relative;
             width: 100%;
             background-size: 100% 100%;
             background-repeat: no-repeat;
             background-position: center;
+            cursor: pointer;
+        }
+
+        #media-image:hover:before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: #fff6;
+        }
+
+        #media-image:hover:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            background-color: darkred;
+            ${renderMaskImage(trashIcon())};
         }
 
         #delete-icon-container {

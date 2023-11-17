@@ -46,6 +46,7 @@ export function renderMediaDetailPage(detailPage) {
                                 ? html`<div
                                       id="media-image"
                                       style="background-image: url('data:image/jpeg;base64, ${detailPage.updatedMedia.image}');"
+                                      @click="${() => detailPage.changeProperty('image', null)}"
                                   ></div>`
                                 : html`<upload-area
                                       @imageReceived="${(e) => detailPage.changeProperty('image', e.detail.imageData)}"
@@ -57,6 +58,7 @@ export function renderMediaDetailPage(detailPage) {
                                 max="5"
                                 singleSelect
                                 .values="${createRange(0, detailPage.updatedMedia.rating)}"
+                                @ratingChanged="${(e) => detailPage.changeProperty('rating', e.detail.rating)}"
                             ></star-rating>
                         </div>
                     </div>

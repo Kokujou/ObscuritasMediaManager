@@ -70,7 +70,6 @@ export class ClientInteropService {
      * @prop {number} duration
      * @prop {Observable<number>} position
      */
-
     static async startConnection() {
         while (true) {
             await waitForSeconds(3);
@@ -88,7 +87,7 @@ export class ClientInteropService {
             }
         }
 
-        this.socket.onmessage = (e) => {
+        this.socket.onmessage = async (e) => {
             var deserialized = JSON.parse(e.data);
             if (/** @type {InteropCommandResponse} */ (deserialized).command != undefined)
                 this.commandResponse.next(deserialized);

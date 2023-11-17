@@ -1,4 +1,5 @@
 ﻿using ObscuritasMediaManager.ClientInterop.Commands;
+using ObscuritasMediaManager.ClientInterop.Evemts;
 using ObscuritasMediaManager.ClientInterop.Queries;
 using ObscuritasMediaManager.ClientInterop.Responses;
 using System;
@@ -36,9 +37,11 @@ public class WebSocketInterop : WebSocketBehavior
 
     public Guid Id { get; set; }
 
-    public void InvokeEvent(InteropEventResponse response)
+    public void InvokeEvent<T>(IInteropEvent<T> response)
     {
-        var serialized = JsonSerializer.Serialize(response, DefaultJsonOptions);
+        var payload = response.Invoke();
+        var serialized = JsonSerializer.Serialize(
+            new InteropEventResponse { Event = response.Event, Payload = payload }, DefaultJsonOptions);
         Send(serialized);
     }
 
@@ -47,6 +50,7 @@ public class WebSocketInterop : WebSocketBehavior
         base.OnOpen();
         Id = Guid.NewGuid();
         Clients.Add(Id, this);
+        InvokeEvent(new ConnectedEvent());
     }
 
     protected override async void OnMessage(MessageEventArgs e)

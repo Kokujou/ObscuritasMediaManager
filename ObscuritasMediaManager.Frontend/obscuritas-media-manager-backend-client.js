@@ -2203,6 +2203,7 @@ export var MediaStatus;
     MediaStatus["Airing"] = "Airing";
     MediaStatus["PreAiring"] = "PreAiring";
     MediaStatus["Aborted"] = "Aborted";
+    MediaStatus["Incomplete"] = "Incomplete";
 })(MediaStatus || (MediaStatus = {}));
 export var TargetGroup;
 (function (TargetGroup) {

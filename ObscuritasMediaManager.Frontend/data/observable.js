@@ -29,9 +29,10 @@ export class Observable {
         var oldValue = this.currentValue;
         this.currentValue = value;
 
-        this.subscriptions.forEach((subscription) => {
+        this.subscriptions.forEach(async (subscription) => {
             try {
-                subscription.observer(this.currentValue, oldValue);
+                var result = subscription.observer(this.currentValue, oldValue);
+                if (result instanceof Promise) await result;
             } catch {
                 //
             }
@@ -55,7 +56,7 @@ export class Observable {
 }
 
 export class Subscription {
-    /** @type {(oldValue, newValue)=> void} */ observer;
+    /** @type {(oldValue, newValue)=> any} */ observer;
     /** @type {()=>void} */ unsubscribe;
 
     /**

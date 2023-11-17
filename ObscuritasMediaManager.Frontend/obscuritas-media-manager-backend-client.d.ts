@@ -376,7 +376,8 @@ export declare enum MediaStatus {
     Completed = "Completed",
     Airing = "Airing",
     PreAiring = "PreAiring",
-    Aborted = "Aborted"
+    Aborted = "Aborted",
+    Incomplete = "Incomplete"
 }
 export declare enum TargetGroup {
     Children = "Children",
