@@ -26,7 +26,7 @@ function getContentWarningIconPath(warning) {
     switch (warning) {
         case ContentWarning.Violence:
             return '/resources/icons/content-warnings/conflict.png';
-        case ContentWarning.Nudity:
+        case ContentWarning.Sexuality:
             return '/resources/icons/content-warnings/sex.png';
         case ContentWarning.Gore:
             return '/resources/icons/content-warnings/gore.png';

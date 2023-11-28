@@ -11,8 +11,11 @@
  * - finalize cleanup functionality
  */
 
+//TODO: think about dependencies for media genres (e.g. relationship only available if main genre = romance, ...)
+
 //TODO: (optional) create templates for edit - might be a bit late... also mainstream is usually < 3*
 //TODO: implement loading-indiciation for requests - does that really make sense? the API is quite performant
+//TODO: think about creating an UDP channel for visualization stuff, as this stuff might require a different lossful handing
 
 //TODO: Change cleanup functionality for audio
 /**

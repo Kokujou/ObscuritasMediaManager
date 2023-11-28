@@ -38,6 +38,7 @@ export function getDistance(array, selectedEntry, targetEntry) {
  * @returns { { [key:string] : T[] } }
  */
 export function groupBy(array, key) {
+    if (!array) return {};
     return array.reduce(function (rv, x) {
         (rv[x[key]] = rv[x[key]] || []).push(x);
         return rv;

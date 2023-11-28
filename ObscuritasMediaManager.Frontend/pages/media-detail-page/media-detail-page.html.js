@@ -10,7 +10,7 @@ import {
     TargetGroup,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
-import { createRange } from '../../services/extensions/array.extensions.js';
+import { createRange, groupBy } from '../../services/extensions/array.extensions.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
 import { MediaDetailPage } from './media-detail-page.js';
 
@@ -83,30 +83,33 @@ export function renderMediaDetailPage(detailPage) {
                     <div id="right-panel">
                         ${detailPage.createNew
                             ? ''
-                            : html` ${LinkElement.forPage(
-                                  MediaDetailPage,
-                                  { mediaId: detailPage.prevMediaId },
-                                  html`&LeftArrow; Letzer`,
-                                  {
-                                      id: 'prev-link',
-                                  }
-                              )}
-                              ${LinkElement.forPage(
-                                  MediaDetailPage,
-                                  { mediaId: detailPage.nextMediaId },
-                                  html`Nächster &RightArrow;`,
-                                  {
-                                      id: 'next-link',
-                                  }
-                              )}`}
+                            : html` ${detailPage.prevMediaId
+                                  ? LinkElement.forPage(
+                                        MediaDetailPage,
+                                        { mediaId: detailPage.prevMediaId },
+                                        html`&LeftArrow; Letzer`,
+                                        {
+                                            id: 'prev-link',
+                                        }
+                                    )
+                                  : ''}
+                              ${detailPage.nextMediaId
+                                  ? LinkElement.forPage(
+                                        MediaDetailPage,
+                                        { mediaId: detailPage.nextMediaId },
+                                        html`Nächster &RightArrow;`,
+                                        {
+                                            id: 'next-link',
+                                        }
+                                    )
+                                  : ''}`}
 
                         <div id="media-heading">
                             <div
                                 id="popup-icon"
                                 icon="${Icons.Popup}"
                                 tooltip="Auf AniList suchen"
-                                @click="${() =>
-                                    window.open(`https://anilist.co/search/anime?search=${detailPage.updatedMedia.name}`)}"
+                                @click="${() => detailPage.openMediaExternal()}"
                             ></div>
                             <input
                                 ?disabled="${!detailPage.editMode}"
@@ -240,18 +243,20 @@ function renderGenreSection(page) {
     return html`<div class="property-entry genre-entry">
         <div class="property-name">Genres:</div>
         <div class="property-value">
-            ${page.updatedMedia?.genres?.map(
-                (x) =>
-                    html`<tag-label
-                        ?disabled="${!page.editMode}"
-                        @removed="${() =>
-                            page.changeProperty(
-                                'genres',
-                                page.updatedMedia.genres.filter((genre) => genre != x)
-                            )}"
-                        .text="${x.name}"
-                    ></tag-label>`
-            )}
+            ${Object.entries(groupBy(page.updatedMedia?.genres, 'section'))
+                .flatMap((x) => x[1])
+                .map(
+                    (x) =>
+                        html`<tag-label
+                            ?disabled="${!page.editMode}"
+                            @removed="${() =>
+                                page.changeProperty(
+                                    'genres',
+                                    page.updatedMedia.genres.filter((genre) => genre != x)
+                                )}"
+                            .text="${x.name}"
+                        ></tag-label>`
+                )}
             ${page.editMode ? html` <div id="add-genre-button" @click="${() => page.showGenreSelectionDialog()}">+</div> ` : ''}
         </div>
     </div> `;

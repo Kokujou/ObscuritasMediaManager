@@ -53,7 +53,9 @@ export class SelectOptionsDialog extends LitElementBase {
         return renderSelectOptionsDialog(this);
     }
 
+    /** @param {Event} e */
     accept(e) {
+        e.stopPropagation();
         /** @type {NodeListOf<HTMLInputElement>} */ var checkedInputs = this.shadowRoot.querySelectorAll('input:checked');
         var selectedIds = [];
         for (var input of checkedInputs) selectedIds.push(input.value);

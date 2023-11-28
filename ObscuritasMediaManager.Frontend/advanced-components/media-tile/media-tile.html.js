@@ -23,7 +23,8 @@ export function renderMediaTile(tile) {
         ${tile.displayStyle == 'solid'
             ? html`
                   <div id="genre-list" @click="${(e) => e.preventDefault()}">
-                      ${tile.media.genres.slice(0, 4).map((genre) => renderGenreTag(tile, genre))} <br />
+                      ${tile.media.genres.filter((x) => x.section == 'Hauptgenre').map((genre) => renderGenreTag(tile, genre))}
+                      <br />
                   </div>
               `
             : ''}

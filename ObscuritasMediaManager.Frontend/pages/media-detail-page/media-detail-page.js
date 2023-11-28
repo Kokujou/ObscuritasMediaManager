@@ -7,6 +7,7 @@ import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import {
     ContentWarning,
+    MediaCategory,
     MediaCreationRequest,
     MediaModel,
     ModelCreationState,
@@ -136,6 +137,7 @@ export class MediaDetailPage extends LitElementBase {
                 await MediaService.updateMedia(this.updatedMedia.id, new UpdateRequestOfJsonElement({ oldModel, newModel }));
 
             this.updatedMedia[property] = value;
+            Session.mediaList.current().find((x) => x.id == this.updatedMedia.id)[property] = value;
             Session.mediaList.refresh();
             this.requestFullUpdate();
         } catch (err) {
@@ -199,5 +201,11 @@ export class MediaDetailPage extends LitElementBase {
         } catch (err) {
             await MessageSnackbar.popup('Ein Fehler ist beim erstellen des Eintrags aufgetreten: ' + err, 'error');
         }
+    }
+
+    openMediaExternal() {
+        if (this.updatedMedia.type == MediaCategory.AnimeSeries || this.updatedMedia.type == MediaCategory.AnimeMovies)
+            window.open(`https://anilist.co/search/anime?search=${this.updatedMedia.name}`);
+        else window.open(`https://www.imdb.com/find/?q=${this.updatedMedia.name}&ref_=nv_sr_sm`);
     }
 }

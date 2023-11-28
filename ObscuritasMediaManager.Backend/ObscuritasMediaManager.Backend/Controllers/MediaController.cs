@@ -86,6 +86,11 @@ public class MediaController(MediaRepository _mediaRepository, IOptions<JsonOpti
     {
         var medium = await _mediaRepository.GetAsync(mediaId);
         await _mediaRepository.DeleteAsync(mediaId);
-        FileSystem.DeleteDirectory(medium.RootFolderPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+
+        try
+        {
+            FileSystem.DeleteDirectory(medium.RootFolderPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+        }
+        catch { }
     }
 }

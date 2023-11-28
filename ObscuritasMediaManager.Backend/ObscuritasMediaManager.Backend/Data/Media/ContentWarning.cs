@@ -9,5 +9,5 @@ public enum ContentWarning
     Horror,
     Gore,
     Vulgarity,
-    Nudity
+    Sexuality
 }

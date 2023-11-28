@@ -36,6 +36,7 @@ export class DialogBase extends LitElementBase {
     /**
      * @param {string} caption
      * @param {Partial<DialogProperties>} properties
+     * @returns {Promise<boolean>}
      */
     static show(caption, properties) {
         var dialog = new DialogBase();

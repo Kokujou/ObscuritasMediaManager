@@ -2195,7 +2195,7 @@ export var ContentWarning;
     ContentWarning["Horror"] = "Horror";
     ContentWarning["Gore"] = "Gore";
     ContentWarning["Vulgarity"] = "Vulgarity";
-    ContentWarning["Nudity"] = "Nudity";
+    ContentWarning["Sexuality"] = "Sexuality";
 })(ContentWarning || (ContentWarning = {}));
 export var MediaStatus;
 (function (MediaStatus) {

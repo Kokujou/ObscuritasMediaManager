@@ -370,7 +370,7 @@ export declare enum ContentWarning {
     Horror = "Horror",
     Gore = "Gore",
     Vulgarity = "Vulgarity",
-    Nudity = "Nudity"
+    Sexuality = "Sexuality"
 }
 export declare enum MediaStatus {
     Completed = "Completed",
