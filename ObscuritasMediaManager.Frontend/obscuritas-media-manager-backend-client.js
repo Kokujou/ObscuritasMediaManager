@@ -995,6 +995,7 @@ export class MusicClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
+                "Accept": "application/json"
             }
         };
         return this.http.fetch(url_, options_).then((_response) => {
@@ -1008,9 +1009,13 @@ export class MusicClient {
             response.headers.forEach((v, k) => _headers[k] = v);
         }
         ;
+        let _mappings = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = MusicModel.fromJS(resultData200, _mappings);
+                return result200;
             });
         }
         else if (status !== 200 && status !== 204) {

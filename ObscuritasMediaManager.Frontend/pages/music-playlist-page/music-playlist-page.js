@@ -200,14 +200,21 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
                 /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
                 oldModel[property] = this.updatedTrack[property];
                 newModel[property] = value;
-                await MusicService.update(this.updatedTrack.hash, new UpdateRequestOfJsonElement({ oldModel, newModel }));
-            }
-            this.updatedTrack[property] = value;
-            this.currentTrack[property] = value;
-            this.playlist.tracks[this.trackIndex][property] = value;
-            if (property == 'instruments') {
-                this.updatedTrack.instrumentNames = this.updatedTrack.instruments.map((x) => x.name);
-                this.updatedTrack.instrumentTypes = distinct(this.updatedTrack.instruments.map((x) => x.type));
+                var updated = await MusicService.update(
+                    this.updatedTrack.hash,
+                    new UpdateRequestOfJsonElement({ oldModel, newModel })
+                );
+                this.updatedTrack = updated;
+                this.currentTrack = updated;
+                this.playlist.tracks[this.trackIndex] = updated;
+            } else {
+                this.updatedTrack[property] = value;
+                this.currentTrack[property] = value;
+                this.playlist.tracks[this.trackIndex][property] = value;
+                if (property == 'instruments') {
+                    this.updatedTrack.instrumentNames = this.updatedTrack.instruments.map((x) => x.name);
+                    this.updatedTrack.instrumentTypes = distinct(this.updatedTrack.instruments.map((x) => x.type));
+                }
             }
             await this.requestFullUpdate();
         } catch (err) {}

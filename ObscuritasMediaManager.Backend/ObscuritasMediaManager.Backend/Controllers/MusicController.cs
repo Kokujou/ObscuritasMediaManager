@@ -110,11 +110,12 @@ public class MusicController : ControllerBase
     }
 
     [HttpPut("{hash}")]
-    public async Task UpdateAsync(string hash, [FromBody] UpdateRequest<JsonElement> _)
+    public async Task<MusicModel> UpdateAsync(string hash, [FromBody] UpdateRequest<JsonElement> _)
     {
         var deserialized = await HttpContext.ReadRequestBodyAsync<UpdateRequest<JsonNode>>(_jsonOptions);
 
         await _musicRepository.UpdateAsync(hash, deserialized.OldModel, deserialized.NewModel, _jsonOptions);
+        return await _musicRepository.GetAsync(hash);
     }
 
     [HttpDelete("music/soft")]
