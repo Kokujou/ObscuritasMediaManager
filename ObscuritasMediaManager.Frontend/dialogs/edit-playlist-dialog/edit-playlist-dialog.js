@@ -1,8 +1,16 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
-import { MusicGenre, PlaylistModel, UpdateRequestOfPlaylistModel } from '../../obscuritas-media-manager-backend-client.js';
+import {
+    Language,
+    MusicGenre,
+    MusicModel,
+    PlaylistModel,
+    UpdateRequestOfJsonElement,
+    UpdateRequestOfPlaylistModel,
+} from '../../obscuritas-media-manager-backend-client.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
-import { PlaylistService } from '../../services/backend.services.js';
+import { MusicService, PlaylistService } from '../../services/backend.services.js';
+import { distinct } from '../../services/extensions/array.extensions.js';
 import { DialogBase } from '../dialog-base/dialog-base.js';
 import { renderEditPlaylistDialogStyles } from './edit-playlist-dialog.css.js';
 import { renderEditPlaylistDialog } from './edit-playlist-dialog.html.js';
@@ -39,6 +47,9 @@ export class EditPlaylistDialog extends LitElementBase {
                             new UpdateRequestOfPlaylistModel({ oldModel: dialog.oldPlaylist, newModel: dialog.newPlaylist })
                         );
                     else await PlaylistService.createPlaylist(dialog.newPlaylist);
+
+                    for (var track of dialog.newPlaylist.tracks) await dialog.updateTrackPlaylistProperties(track);
+
                     await MessageSnackbar.popup('Playlist was successfully added', 'success');
                     resolve();
                     dialog.remove();
@@ -130,4 +141,27 @@ export class EditPlaylistDialog extends LitElementBase {
      * @param {DragEvent} event
      */
     async dropFiles(event) {}
+
+    /** @param {MusicModel} track */
+    async updateTrackPlaylistProperties(track) {
+        /** @type {Partial<MusicModel>} */ var updatedTrack = {};
+        if (this.newPlaylist.author?.length > 1) updatedTrack.author = this.newPlaylist.author;
+        if (this.newPlaylist.language != Language.Unset) updatedTrack.language = this.newPlaylist.language;
+
+        try {
+            var newGenres = this.newPlaylist.genres ?? [];
+            var oldGenres = this.oldPlaylist.genres ?? [];
+            var removedGenres = oldGenres.filter((genre) => !newGenres.includes(genre));
+            var addedGenres = newGenres.filter((genre) => !oldGenres.includes(genre));
+            updatedTrack.genres = [...track.genres];
+            if (addedGenres.length > 0) updatedTrack.genres = updatedTrack.genres.concat(newGenres);
+            if (removedGenres.length > 0)
+                updatedTrack.genres = updatedTrack.genres.filter((genre) => !removedGenres.includes(genre));
+            updatedTrack.genres = distinct(updatedTrack.genres);
+
+            await MusicService.update(track.hash, new UpdateRequestOfJsonElement({ oldModel: track, newModel: updatedTrack }));
+        } catch (err) {
+            console.error(`error updating track ${track.name} to fit playlist properties`, err);
+        }
+    }
 }

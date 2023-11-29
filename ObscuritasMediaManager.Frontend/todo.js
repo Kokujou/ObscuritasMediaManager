@@ -11,6 +11,7 @@
  * - finalize cleanup functionality
  */
 
+//TODO: think about solution - computed backend properties will not be changed when base properties change
 //TODO: think about dependencies for media genres (e.g. relationship only available if main genre = romance, ...)
 
 //TODO: (optional) create templates for edit - might be a bit late... also mainstream is usually < 3*

@@ -20,7 +20,7 @@ function renderNewLabelForm(tagLabel) {
     return html`<form id="new-label-form" action="javascript:void(0)">
         <input
             id="new-tag-input"
-            @keyup="${(e) => tagLabel.handleInput(e)}"
+            @keydown="${(e) => tagLabel.handleInput(e)}"
             @input="${() => tagLabel.requestFullUpdate()}"
             @focus="${() => (tagLabel.showAutocomplete = true)}"
             @focusout="${() => (tagLabel.showAutocomplete = false)}"

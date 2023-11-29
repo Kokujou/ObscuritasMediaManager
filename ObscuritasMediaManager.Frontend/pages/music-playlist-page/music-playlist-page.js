@@ -41,7 +41,9 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     }
 
     get autocompleteGenres() {
-        return Object.values(MusicGenre).filter((genre) => !this.updatedTrack.genres?.some((x) => MusicGenre[x] == genre));
+        return Object.values(MusicGenre).filter(
+            (genre) => !this.updatedTrack.genres?.some((x) => MusicGenre[x] == genre) && genre != MusicGenre.Unset
+        );
     }
 
     get audioSource() {

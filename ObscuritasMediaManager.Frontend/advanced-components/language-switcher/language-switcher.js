@@ -39,7 +39,7 @@ export class LanguageSwitcher extends LitElementBase {
         /** @type {Language} */ this.language = Language.Unset;
         /** @type {number} */ this.languageRotationOffset = 0;
 
-        /** @type {(Nation)=>void} */ this.resolve = () => {};
+        /** @type {(Language)=>void} */ this.resolve = () => {};
     }
 
     connectedCallback() {

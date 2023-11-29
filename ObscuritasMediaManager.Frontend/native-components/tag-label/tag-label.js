@@ -76,7 +76,7 @@ export class TagLabel extends LitElementBase {
             if (!selectedElement) return;
             if (selectedElement.offsetTop <= selectedElement.parentElement.scrollTop)
                 selectedElement.parentElement.scrollTo({ top: selectedElement.offsetTop });
-        } else if (event.key == 'Enter')
+        } else if (event.key == 'Enter' || event.key == 'Tab')
             this.setSearchText(this.autocompleteItems[this.autofillIndex > 0 ? this.autofillIndex : 0]);
 
         this.requestFullUpdate();
