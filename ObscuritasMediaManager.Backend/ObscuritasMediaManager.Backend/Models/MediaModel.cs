@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ObscuritasMediaManager.Backend.Attributes;
 using ObscuritasMediaManager.Backend.Data.Media;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Extensions;
@@ -15,7 +14,7 @@ public class MediaModel
         return new()
                {
                    ContentWarnings = new List<ContentWarning>(),
-                   Genres = new List<GenreModel>(),
+                   Genres = new(),
                    Release = 1900,
                    Language = Language.Japanese,
                    Type = MediaCategory.AnimeSeries,
@@ -32,7 +31,10 @@ public class MediaModel
             .WithMany()
             .UsingEntity(
                 "MediaGenreMapping",
-                x => x.HasOne(typeof(GenreModel)).WithMany().HasForeignKey("GenreId").HasPrincipalKey(nameof(GenreModel.Id)),
+                x => x.HasOne(typeof(MediaGenreModel))
+                    .WithMany()
+                    .HasForeignKey("GenreId")
+                    .HasPrincipalKey(nameof(MediaGenreModel.Id)),
                 x => x.HasOne(typeof(MediaModel)).WithMany().HasForeignKey("MediaId").HasPrincipalKey(nameof(MediaModel.Id)));
         entity.Navigation(x => x.Genres).AutoInclude();
         entity.Property(x => x.ContentWarnings)
@@ -43,7 +45,7 @@ public class MediaModel
 
     public IEnumerable<ContentWarning> ContentWarnings { get; set; }
     public string Description { get; set; }
-    public List<GenreModel> Genres { get; set; } = new List<GenreModel>();
+    public List<MediaGenreModel> Genres { get; set; } = new();
 
     [NotMapped]
     [NotHashable]

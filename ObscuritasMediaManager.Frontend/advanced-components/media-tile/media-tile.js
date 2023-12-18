@@ -1,6 +1,6 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu.js';
-import { GenreModel, MediaModel } from '../../obscuritas-media-manager-backend-client.js';
+import { GenreModel, MediaGenreModel, MediaModel } from '../../obscuritas-media-manager-backend-client.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { renderMediaTileStyles } from './media-tile.css.js';
 import { renderMediaTile } from './media-tile.html.js';
@@ -70,7 +70,7 @@ export class MediaTile extends LitElementBase {
         return renderMediaTile(this);
     }
     /**
-     * @param {GenreModel} genre
+     * @param {MediaGenreModel} genre
      */
     addGenre(genre) {
         if (!genre) return;

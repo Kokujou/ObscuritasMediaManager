@@ -1,5 +1,5 @@
 import { html } from '../../exports.js';
-import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
+import { MediaGenreCategory, MediaGenreModel } from '../../obscuritas-media-manager-backend-client.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { MediaTile } from './media-tile.js';
 
@@ -23,7 +23,9 @@ export function renderMediaTile(tile) {
         ${tile.displayStyle == 'solid'
             ? html`
                   <div id="genre-list" @click="${(e) => e.preventDefault()}">
-                      ${tile.media.genres.filter((x) => x.section == 'Hauptgenre').map((genre) => renderGenreTag(tile, genre))}
+                      ${tile.media.genres
+                          .filter((x) => x.section == MediaGenreCategory.MainGenre)
+                          .map((genre) => renderGenreTag(tile, genre))}
                       <br />
                   </div>
               `
@@ -44,7 +46,7 @@ function renderImageContainer(tile) {
 }
 
 /**
- * @param {GenreModel} genre
+ * @param {MediaGenreModel} genre
  * @param {MediaTile} tile
  */
 function renderGenreTag(tile, genre = null) {

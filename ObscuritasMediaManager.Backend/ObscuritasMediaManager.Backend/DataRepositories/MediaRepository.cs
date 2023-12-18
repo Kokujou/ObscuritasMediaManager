@@ -61,7 +61,7 @@ public class MediaRepository
 
         if (updated[nameof(MediaModel.Genres)] is not null)
         {
-            var updatedGenres = updated[nameof(MusicModel.Genres)].Deserialize<List<GenreModel>>(serializerOptions);
+            var updatedGenres = updated[nameof(MusicModel.Genres)].Deserialize<List<MediaGenreModel>>(serializerOptions);
             var newGenres = updatedGenres.Except(actual.Genres, (a, b) => a.Id == b.Id).ToList();
             var removedGenres = actual.Genres.Except(updatedGenres, (a, b) => a.Id == b.Id).ToList();
             foreach (var added in newGenres) actual.Genres.Add(added);

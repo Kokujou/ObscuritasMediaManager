@@ -1,6 +1,8 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { Session } from '../../data/session.js';
 import { html } from '../../exports.js';
 import { LinkElement } from '../../native-components/link-element/link-element.js';
+import { getPageName } from '../../services/extensions/url.extension.js';
 import { MediaPage } from '../media-page/media-page.js';
 import { MusicPage } from '../music-page/music-page.js';
 import { RecipesPage } from '../recipes-page/recipes-page.js';
@@ -30,7 +32,11 @@ function renderNavigation() {
         <div id="navigation">
             <div id="link-area">
                 <div id="nav-section">
-                    <div class="nav-section-links">${LinkElement.forPage(WelcomePage, null, html`Start`)}</div>
+                    <div class="nav-section-links">
+                        ${LinkElement.forPage(WelcomePage, null, html`Start`, {
+                            class: getPageName(WelcomePage) == Session.currentPage.current() ? 'active' : 'normal',
+                        })}
+                    </div>
                 </div>
                 <div id="nav-section">
                     <div class="nav-section-heading">Zeugs</div>
@@ -51,5 +57,6 @@ function renderNavigation() {
  * @param {T} element
  */
 function renderNavItem(element) {
-    return LinkElement.forPage(element, null, html`${element.pageName}`);
+    var active = Session.currentPage.current() == getPageName(element);
+    return LinkElement.forPage(element, null, html`${element.pageName}`, { class: active ? 'active' : 'normal' });
 }

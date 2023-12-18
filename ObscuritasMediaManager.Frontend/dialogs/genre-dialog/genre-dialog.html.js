@@ -36,17 +36,17 @@ export function renderGenreDialog(genreDialog) {
 }
 
 /**
- * @param {string} section
+ * @param {string} sectionName
  * @param {GenreModel[]} genres
  * @param {GenreDialog} genreDialog
  */
-function renderGenreSection(section, genres, genreDialog) {
+function renderGenreSection(sectionName, genres, genreDialog) {
     return html`<div class="genre-section">
-        <div class="section-title">${section}</div>
+        <div class="section-title">${sectionName}</div>
         <div class="genre-list">
             ${genres.map((genre) => renderGenre(genre, genreDialog))}
             ${genreDialog.options.allowAdd
-                ? html`<div id="add-genre-button" @click="${() => genreDialog.addGenre(section)}">+</div>`
+                ? html`<div id="add-genre-button" @click="${() => genreDialog.addGenre(sectionName)}">+</div>`
                 : ''}
         </div>
     </div>`;

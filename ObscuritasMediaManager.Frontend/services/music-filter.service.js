@@ -40,7 +40,7 @@ export class MusicFilterService {
         var filteredTracks = [...tracks];
 
         ObjectFilterService.applyArrayFilter(filteredTracks, filter.instrumentTypes, 'instrumentTypes');
-        ObjectFilterService.applyArrayFilter(filteredTracks, filter.instruments, 'instruments');
+        ObjectFilterService.applyArrayFilter(filteredTracks, filter.instruments, 'instruments', (x) => x.name);
         ObjectFilterService.applyArrayFilter(filteredTracks, filter.genres, 'genres');
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.instrumentations, 'instrumentation');
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.languages, 'language');

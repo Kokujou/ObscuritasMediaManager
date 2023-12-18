@@ -31,8 +31,8 @@ export declare class GenreClient {
     constructor(baseUrl?: string, http?: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
     });
-    getAll(signal?: AbortSignal | undefined): Promise<GenreModel[]>;
-    protected processGetAll(response: Response): Promise<GenreModel[]>;
+    getAll(signal?: AbortSignal | undefined): Promise<MediaGenreModel[]>;
+    protected processGetAll(response: Response): Promise<MediaGenreModel[]>;
     addGenre(section: string | null, name: string | null, signal?: AbortSignal | undefined): Promise<void>;
     protected processAddGenre(response: Response): Promise<void>;
     removeGenre(id: string, signal?: AbortSignal | undefined): Promise<void>;
@@ -298,8 +298,8 @@ export declare enum MusicGenre {
 }
 export declare class GenreModel implements IGenreModel {
     id: string;
-    section: string | null;
     name: string | null;
+    sectionName: string | null;
     constructor(data?: Partial<IGenreModel>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): GenreModel | null;
@@ -308,8 +308,37 @@ export declare class GenreModel implements IGenreModel {
 }
 export interface IGenreModel {
     id: string;
-    section: string | null;
     name: string | null;
+    sectionName: string | null;
+}
+export declare class MediaGenreModel extends GenreModel implements IMediaGenreModel {
+    section: MediaGenreCategory;
+    sectionName: string | null;
+    constructor(data?: Partial<IMediaGenreModel>);
+    init(_data?: any, _mappings?: any): void;
+    static fromJS(data: any, _mappings?: any): MediaGenreModel | null;
+    toJSON(data?: any): any;
+    clone(): MediaGenreModel;
+}
+export interface IMediaGenreModel extends IGenreModel {
+    section: MediaGenreCategory;
+    sectionName: string | null;
+}
+export declare enum MediaGenreCategory {
+    Relationship = "Relationship",
+    Plot = "Plot",
+    MainGenre = "MainGenre",
+    JobsOrHobbies = "JobsOrHobbies",
+    Battle = "Battle",
+    Art = "Art",
+    Location = "Location",
+    Personalities = "Personalities",
+    Protagonist = "Protagonist",
+    School = "School",
+    Sports = "Sports",
+    Style = "Style",
+    Beings = "Beings",
+    Era = "Era"
 }
 export declare class CredentialsRequest implements ICredentialsRequest {
     username: string | null;
@@ -327,7 +356,7 @@ export interface ICredentialsRequest {
 export declare class MediaModel implements IMediaModel {
     contentWarnings: ContentWarning[] | null;
     description: string | null;
-    genres: GenreModel[] | null;
+    genres: MediaGenreModel[] | null;
     hash: string | null;
     id: string;
     image: string | null;
@@ -349,7 +378,7 @@ export declare class MediaModel implements IMediaModel {
 export interface IMediaModel {
     contentWarnings: ContentWarning[] | null;
     description: string | null;
-    genres: GenreModel[] | null;
+    genres: MediaGenreModel[] | null;
     hash: string | null;
     id: string;
     image: string | null;

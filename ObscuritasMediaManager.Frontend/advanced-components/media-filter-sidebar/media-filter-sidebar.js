@@ -93,6 +93,7 @@ export class MediaFilterSidebar extends LitElementBase {
             /** @param {CustomEvent<GenreDialogResult>} e */ (e) => {
                 var acceptedGenreIds = e.detail.acceptedGenres.map((x) => x.id);
                 var forbiddendGenreIds = e.detail.forbiddenGenres.map((x) => x.id);
+                this.setArrayFilter('genres', 'all', CheckboxState.Ignore);
                 this.setArrayFilter('genres', acceptedGenreIds, CheckboxState.Require);
                 this.setArrayFilter('genres', forbiddendGenreIds, CheckboxState.Forbid);
                 this.notifyFilterUpdated();

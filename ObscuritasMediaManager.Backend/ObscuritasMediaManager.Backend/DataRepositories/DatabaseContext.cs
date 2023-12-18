@@ -7,7 +7,7 @@ namespace ObscuritasMediaManager.Backend.DataRepositories;
 
 public class DatabaseContext : DbContext
 {
-    public DbSet<GenreModel> Genres { get; set; }
+    public DbSet<MediaGenreModel> MediaGenres { get; set; }
     public DbSet<MediaModel> Media { get; set; }
     public DbSet<MusicModel> Music { get; set; }
     public DbSet<InstrumentModel> Instruments { get; set; }

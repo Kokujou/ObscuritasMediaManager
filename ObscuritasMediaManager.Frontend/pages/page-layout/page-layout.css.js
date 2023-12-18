@@ -206,5 +206,9 @@ function renderNavigationStyles() {
         link-element:hover {
             border-bottom: 2px solid var(--font-color);
         }
+
+        link-element.active {
+            font-weight: bold;
+        }
     `;
 }

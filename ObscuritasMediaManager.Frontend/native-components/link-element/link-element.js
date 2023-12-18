@@ -17,6 +17,7 @@ export class LinkElement extends LitElementBase {
             page: { type: Object, reflect: true },
             params: { type: Object, reflect: true },
             disabled: { type: Boolean, reflect: true },
+            class: { type: String, reflect: true },
         };
     }
 
@@ -35,6 +36,7 @@ export class LinkElement extends LitElementBase {
             .params="${params}"
             ?disabled="${options.disabled}"
             .target="${options.target}"
+            .class="${options.class}"
         >
             ${inner}
         </link-element>`;

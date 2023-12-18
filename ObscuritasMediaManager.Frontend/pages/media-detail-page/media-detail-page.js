@@ -9,6 +9,7 @@ import {
     ContentWarning,
     MediaCategory,
     MediaCreationRequest,
+    MediaGenreModel,
     MediaModel,
     ModelCreationState,
     UpdateRequestOfJsonElement,
@@ -116,8 +117,11 @@ export class MediaDetailPage extends LitElementBase {
 
     async showGenreSelectionDialog() {
         var genreDialog = await GenreDialog.startShowingWithGenres(this.updatedMedia.genres);
+
+        genreDialog.addEventListener('selection-changed', () => {});
+
         genreDialog.addEventListener('accept', async (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
-            await this.changeProperty('genres', e.detail.acceptedGenres);
+            await this.changeProperty('genres', /** @type {MediaGenreModel[]} */ (e.detail.acceptedGenres));
             genreDialog.remove();
         });
     }

@@ -12,7 +12,7 @@ export class MediaFilterService {
      */
     static filter(result, filter) {
         ObjectFilterService.applyPropertyFilter(result, filter.ratings, 'rating');
-        ObjectFilterService.applyArrayFilter(result, filter.genres, 'genres');
+        ObjectFilterService.applyArrayFilter(result, filter.genres, 'genres', (x) => x.id);
         ObjectFilterService.applyMultiPropertySearch(result, filter.search ?? '', 'name', 'description');
         ObjectFilterService.applyPropertyFilter(result, filter.status, 'status');
         ObjectFilterService.applyRangeFilter(result, filter.release, 'release');

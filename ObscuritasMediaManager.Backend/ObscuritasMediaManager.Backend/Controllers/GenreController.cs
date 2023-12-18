@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ObscuritasMediaManager.Backend.Data.Media;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Models;
 
@@ -18,15 +19,15 @@ public class GenreController : ControllerBase
     }
 
     [HttpGet]
-    public IQueryable<GenreModel> GetAll()
+    public IQueryable<MediaGenreModel> GetAll()
     {
         return _genreRepository.GetAll();
     }
 
     [HttpPut("section/{section}/name/{name}")]
-    public async Task AddGenre(string section, string name)
+    public async Task AddGenre(MediaGenreCategory section, string name)
     {
-        await _genreRepository.AddGenreAsync(new GenreModel { Id = Guid.NewGuid(), Section = section, Name = name });
+        await _genreRepository.AddGenreAsync(new() { Id = Guid.NewGuid(), Section = section, Name = name });
     }
 
     [HttpDelete("{id:guid}")]

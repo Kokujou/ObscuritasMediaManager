@@ -138,7 +138,7 @@ export class MusicFilter extends LitElementBase {
             }
             for (var allowed of e.detail.acceptedGenres) {
                 this.filter.instruments.states[allowed.name] = CheckboxState.Require;
-                this.filter.instrumentTypes.states[allowed.section] = CheckboxState.Require;
+                this.filter.instrumentTypes.states[allowed.sectionName] = CheckboxState.Require;
             }
             for (var forbidden of e.detail.forbiddenGenres) {
                 this.filter.instruments.states[forbidden.name] = CheckboxState.Forbid;

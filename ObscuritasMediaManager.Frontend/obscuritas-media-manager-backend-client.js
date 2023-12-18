@@ -260,7 +260,7 @@ export class GenreClient {
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(GenreModel.fromJS(item, _mappings));
+                        result200.push(MediaGenreModel.fromJS(item, _mappings));
                 }
                 else {
                     result200 = null;
@@ -2028,8 +2028,8 @@ export var MusicGenre;
 })(MusicGenre || (MusicGenre = {}));
 export class GenreModel {
     id;
-    section;
     name;
+    sectionName;
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -2041,8 +2041,8 @@ export class GenreModel {
     init(_data, _mappings) {
         if (_data) {
             this.id = _data["id"] !== undefined ? _data["id"] : null;
-            this.section = _data["section"] !== undefined ? _data["section"] : null;
             this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.sectionName = _data["sectionName"] !== undefined ? _data["sectionName"] : null;
         }
     }
     static fromJS(data, _mappings) {
@@ -2052,8 +2052,8 @@ export class GenreModel {
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id !== undefined ? this.id : null;
-        data["section"] = this.section !== undefined ? this.section : null;
         data["name"] = this.name !== undefined ? this.name : null;
+        data["sectionName"] = this.sectionName !== undefined ? this.sectionName : null;
         return data;
     }
     clone() {
@@ -2063,6 +2063,60 @@ export class GenreModel {
         return result;
     }
 }
+export class MediaGenreModel extends GenreModel {
+    section;
+    sectionName;
+    constructor(data) {
+        super(data);
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data, _mappings) {
+        super.init(_data);
+        if (_data) {
+            this.section = _data["section"] !== undefined ? _data["section"] : null;
+            this.sectionName = _data["sectionName"] !== undefined ? _data["sectionName"] : null;
+        }
+    }
+    static fromJS(data, _mappings) {
+        data = typeof data === 'object' ? data : {};
+        return createInstance(data, _mappings, MediaGenreModel);
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["section"] = this.section !== undefined ? this.section : null;
+        data["sectionName"] = this.sectionName !== undefined ? this.sectionName : null;
+        super.toJSON(data);
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new MediaGenreModel();
+        result.init(json);
+        return result;
+    }
+}
+export var MediaGenreCategory;
+(function (MediaGenreCategory) {
+    MediaGenreCategory["Relationship"] = "Relationship";
+    MediaGenreCategory["Plot"] = "Plot";
+    MediaGenreCategory["MainGenre"] = "MainGenre";
+    MediaGenreCategory["JobsOrHobbies"] = "JobsOrHobbies";
+    MediaGenreCategory["Battle"] = "Battle";
+    MediaGenreCategory["Art"] = "Art";
+    MediaGenreCategory["Location"] = "Location";
+    MediaGenreCategory["Personalities"] = "Personalities";
+    MediaGenreCategory["Protagonist"] = "Protagonist";
+    MediaGenreCategory["School"] = "School";
+    MediaGenreCategory["Sports"] = "Sports";
+    MediaGenreCategory["Style"] = "Style";
+    MediaGenreCategory["Beings"] = "Beings";
+    MediaGenreCategory["Era"] = "Era";
+})(MediaGenreCategory || (MediaGenreCategory = {}));
 export class CredentialsRequest {
     username;
     password;
@@ -2135,7 +2189,7 @@ export class MediaModel {
             if (Array.isArray(_data["genres"])) {
                 this.genres = [];
                 for (let item of _data["genres"])
-                    this.genres.push(GenreModel.fromJS(item, _mappings));
+                    this.genres.push(MediaGenreModel.fromJS(item, _mappings));
             }
             else {
                 this.genres = null;

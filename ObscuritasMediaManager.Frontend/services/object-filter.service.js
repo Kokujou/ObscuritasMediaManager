@@ -8,8 +8,9 @@ export class ObjectFilterService {
      * @param {T[]} list
      * @param {FilterEntry<U>} filter
      * @param {keyof T} filterProperty
+     * @param {(item: T) => string} idSelector
      */
-    static applyArrayFilter(list, filter, filterProperty) {
+    static applyArrayFilter(list, filter, filterProperty, idSelector = (x) => x) {
         var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Require);
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
         var results = list.filter((item) => {
@@ -17,8 +18,10 @@ export class ObjectFilterService {
             if (!Array.isArray(array)) throw new Error('property must be an array');
             var itemPropertyValues = array;
             return (
-                allowedValues.every((allowedItem) => itemPropertyValues.some((anotherItem) => anotherItem == allowedItem)) &&
-                itemPropertyValues.every((value) => !forbiddenValues.some((forbiddenItem) => forbiddenItem == value))
+                allowedValues.every((allowedItem) =>
+                    itemPropertyValues.some((anotherItem) => idSelector(anotherItem) == allowedItem)
+                ) &&
+                itemPropertyValues.every((value) => !forbiddenValues.some((forbiddenItem) => forbiddenItem == idSelector(value)))
             );
         });
         list.length = 0;

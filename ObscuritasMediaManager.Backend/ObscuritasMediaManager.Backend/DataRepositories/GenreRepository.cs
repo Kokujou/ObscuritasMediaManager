@@ -12,22 +12,22 @@ public class GenreRepository
         _context = context;
     }
 
-    public IQueryable<GenreModel> GetAll()
+    public IQueryable<MediaGenreModel> GetAll()
     {
-        return _context.Genres;
+        return _context.MediaGenres;
     }
 
-    public async Task AddGenreAsync(GenreModel genreModel)
+    public async Task AddGenreAsync(MediaGenreModel genreModel)
     {
-        await _context.Genres.AddAsync(genreModel);
+        await _context.MediaGenres.AddAsync(genreModel);
         await _context.SaveChangesAsync();
     }
 
     public async Task RemoveGenreAsync(Guid id)
     {
-        var genre = await _context.Genres.FirstOrDefaultAsync(x => x.Id == id);
+        var genre = await _context.MediaGenres.FirstOrDefaultAsync(x => x.Id == id);
         if (genre is null) return;
-        _context.Genres.Remove(genre);
+        _context.MediaGenres.Remove(genre);
         await _context.SaveChangesAsync();
     }
 }
