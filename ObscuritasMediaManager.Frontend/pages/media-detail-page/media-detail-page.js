@@ -118,8 +118,6 @@ export class MediaDetailPage extends LitElementBase {
     async showGenreSelectionDialog() {
         var genreDialog = await GenreDialog.startShowingWithGenres(this.updatedMedia.genres);
 
-        genreDialog.addEventListener('selection-changed', () => {});
-
         genreDialog.addEventListener('accept', async (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
             await this.changeProperty('genres', /** @type {MediaGenreModel[]} */ (e.detail.acceptedGenres));
             genreDialog.remove();

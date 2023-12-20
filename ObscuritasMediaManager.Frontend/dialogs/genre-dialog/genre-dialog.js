@@ -54,15 +54,19 @@ export class GenreDialog extends LitElementBase {
             var availableSections = getAvailableGenreSections(
                 /** @type {MediaGenreModel[]} */ (genreDialog.options.allowedGenres)
             );
-            genreDialog.options.genres = genres.filter((x) => availableSections.includes(x.section));
+            var mediaGenres = /** @type {MediaGenreModel[]} */ (genreDialog.options.genres);
+            genreDialog.options.genres = mediaGenres.filter((x) => availableSections.includes(x.section));
         });
 
         genreDialog.addEventListener(
             'add-genre',
-            /** @param {CustomEvent<{name, section}>} e */ async (e) => {
+            /** @param {CustomEvent<{name, sectionName}>} e */ async (e) => {
                 try {
-                    await GenreService.addGenre(e.detail.section, e.detail.name);
-                    genreDialog.options.genres = await GenreService.getAll();
+                    var mediaGenres = /** @type {MediaGenreModel[]} */ (genreDialog.options.genres);
+                    var sectionCategory = mediaGenres.find((x) => x.sectionName == e.detail.sectionName).section;
+                    await GenreService.addGenre(sectionCategory, e.detail.name);
+                    var genres = await GenreService.getAll();
+                    genreDialog.options.genres = genres.filter((x) => availableSections.includes(x.section));
                     genreDialog.requestFullUpdate();
                     MessageSnackbar.popup('Das Genre wurde erfolgreich hinzugefügt.', 'success');
                 } catch (err) {
@@ -76,7 +80,8 @@ export class GenreDialog extends LitElementBase {
             /** @param {CustomEvent<GenreModel>} e */ async (e) => {
                 try {
                     await GenreService.removeGenre(e.detail.id);
-                    genreDialog.options.genres = await GenreService.getAll();
+                    var genres = await GenreService.getAll();
+                    genreDialog.options.genres = genres.filter((x) => availableSections.includes(x.section));
                     genreDialog.requestFullUpdate();
                     MessageSnackbar.popup('Das Genre wurde erfolgreich gelöscht.', 'success');
                 } catch (err) {
@@ -227,12 +232,12 @@ export class GenreDialog extends LitElementBase {
     }
 
     /**
-     * @param {string} section
+     * @param {string} sectionName
      */
-    async addGenre(section) {
+    async addGenre(sectionName) {
         var name = await InputDialog.show('Bitte Namen eingeben:');
         if (!name) return;
-        this.dispatchEvent(new CustomEvent('add-genre', { detail: { name, section } }));
+        this.dispatchEvent(new CustomEvent('add-genre', { detail: { name, sectionName } }));
     }
 
     /**
