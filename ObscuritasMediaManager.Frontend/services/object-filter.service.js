@@ -8,7 +8,7 @@ export class ObjectFilterService {
      * @param {T[]} list
      * @param {FilterEntry<U>} filter
      * @param {keyof T} filterProperty
-     * @param {(item: T) => string} idSelector
+     * @param {(item: T) => any} idSelector
      */
     static applyArrayFilter(list, filter, filterProperty, idSelector = (x) => x) {
         var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Require);

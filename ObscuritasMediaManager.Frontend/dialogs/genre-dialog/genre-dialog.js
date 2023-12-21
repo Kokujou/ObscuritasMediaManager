@@ -47,15 +47,12 @@ export class GenreDialog extends LitElementBase {
 
         var genreDialog = GenreDialog.#show(options);
 
-        var availableSections = getAvailableGenreSections(/** @type {MediaGenreModel[]} */ (genreDialog.options.allowedGenres));
-        genreDialog.options.genres = genres.filter((x) => availableSections.includes(x.section));
+        genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
 
-        genreDialog.addEventListener('selection-changed', (e) => {
-            var availableSections = getAvailableGenreSections(
-                /** @type {MediaGenreModel[]} */ (genreDialog.options.allowedGenres)
-            );
-            var mediaGenres = /** @type {MediaGenreModel[]} */ (genreDialog.options.genres);
-            genreDialog.options.genres = mediaGenres.filter((x) => availableSections.includes(x.section));
+        genreDialog.addEventListener('selection-changed', async (e) => {
+            var mediaGenres = await GenreService.getAll();
+            genreDialog.options.genres = mediaGenres.filter((x) => genreDialog.availableSections.includes(x.section));
+            genreDialog.requestFullUpdate();
         });
 
         genreDialog.addEventListener(
@@ -66,7 +63,7 @@ export class GenreDialog extends LitElementBase {
                     var sectionCategory = mediaGenres.find((x) => x.sectionName == e.detail.sectionName).section;
                     await GenreService.addGenre(sectionCategory, e.detail.name);
                     var genres = await GenreService.getAll();
-                    genreDialog.options.genres = genres.filter((x) => availableSections.includes(x.section));
+                    genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
                     genreDialog.requestFullUpdate();
                     MessageSnackbar.popup('Das Genre wurde erfolgreich hinzugefügt.', 'success');
                 } catch (err) {
@@ -81,7 +78,7 @@ export class GenreDialog extends LitElementBase {
                 try {
                     await GenreService.removeGenre(e.detail.id);
                     var genres = await GenreService.getAll();
-                    genreDialog.options.genres = genres.filter((x) => availableSections.includes(x.section));
+                    genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
                     genreDialog.requestFullUpdate();
                     MessageSnackbar.popup('Das Genre wurde erfolgreich gelöscht.', 'success');
                 } catch (err) {
@@ -156,6 +153,10 @@ export class GenreDialog extends LitElementBase {
         dialog.requestFullUpdate();
 
         return dialog;
+    }
+
+    get availableSections() {
+        return getAvailableGenreSections(/** @type {MediaGenreModel[]} */ (this.options.allowedGenres));
     }
 
     /** @returns {Object.<string, MediaGenreModel[]>} */
