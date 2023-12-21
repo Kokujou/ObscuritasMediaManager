@@ -299,6 +299,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     async createTrack() {
         var trackHash = await MusicService.createMusicTrack(this.updatedTrack);
         changePage(MusicPlaylistPage, { trackHash });
+        this.requestFullUpdate();
     }
 
     switchSelectedMood(mood) {

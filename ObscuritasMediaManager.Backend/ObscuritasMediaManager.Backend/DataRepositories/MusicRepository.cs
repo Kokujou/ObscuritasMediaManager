@@ -97,6 +97,8 @@ public class MusicRepository
             }
 
             await _context.Music.AddAsync(track);
+            foreach (var entry in _context.ChangeTracker.Entries<InstrumentModel>())
+                entry.State = EntityState.Unchanged;
             await _context.SaveChangesAsync();
             return ModelCreationState.Success;
         }
