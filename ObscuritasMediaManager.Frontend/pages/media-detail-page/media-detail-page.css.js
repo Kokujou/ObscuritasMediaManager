@@ -49,7 +49,8 @@ export function renderMediaDetailPageStyles() {
             margin-left: 60px;
         }
 
-        link-element {
+        #prev-link,
+        #next-link {
             position: absolute;
             top: 20px;
             font-weight: bold;
@@ -73,7 +74,6 @@ export function renderMediaDetailPageStyles() {
         #media-heading {
             font-size: 36px;
             margin-top: 20px;
-            margin-bottom: 20px;
 
             position: relative;
             display: flex;
@@ -81,6 +81,12 @@ export function renderMediaDetailPageStyles() {
             align-items: center;
             gap: 20px;
             width: 100%;
+        }
+
+        #trailer-link {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 20px;
         }
 
         #media-name {

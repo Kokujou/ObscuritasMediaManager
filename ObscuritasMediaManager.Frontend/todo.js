@@ -9,6 +9,11 @@
  * - think about icons for language
  * - export anime as playlist (local is enough because global is impossible either way)
  * - finalize cleanup functionality
+ * - enrich media data with:
+ *      - episode count
+ *      - open ending?
+ *      - dual language? (1. season ger, 2. season jap)
+ *      - multilingual titles
  */
 
 //TODO: think about solution - computed backend properties will not be changed when base properties change

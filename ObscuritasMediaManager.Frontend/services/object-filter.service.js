@@ -37,7 +37,7 @@ export class ObjectFilterService {
      * @param {CheckboxState} ignoreState
      */
     static applyPropertyFilter(list, filter, filterProperty, ignoreState = CheckboxState.Require) {
-        var results = this.#filterForbidden([...list], filter, filterProperty);
+        let results = this.#filterForbidden([...list], filter, filterProperty);
         if (ignoreState != CheckboxState.Require) results = this.#filterNotForced([...results], filter, filterProperty);
 
         list.length = 0;
@@ -68,7 +68,7 @@ export class ObjectFilterService {
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value] == CheckboxState.Forbid);
         if (forbiddenValues.length == 0) return list;
 
-        return list.filter((item) => !item[filterProperty] || !forbiddenValues.includes(`${item[filterProperty]}`));
+        return list.filter((item) => !forbiddenValues.includes(`${item[filterProperty]}`));
     }
 
     /**

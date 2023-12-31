@@ -196,16 +196,21 @@ export function renderMusicFilter(musicFilter) {
                         @click="${() => musicFilter.setArrayFilter('ratings', CheckboxState.Forbid)}"
                     ></div>
                 </div>
+                <div class="filter-row">
+                    <div class="filter-label">Show undefined:</div>
+                    <custom-toggle
+                        .state="${musicFilter.filter.ratings.states[0]}"
+                        @toggle="${(e) => musicFilter.setFilterEntryValue('ratings', '0', e.detail)}"
+                    ></custom-toggle>
+                </div>
                 <star-rating
                     max="5"
-                    .values="${Object.keys(musicFilter.filter.ratings.states)
-                        .filter((x) => musicFilter.filter.ratings.states[x] == CheckboxState.Require)
-                        .map((x) => Number.parseInt(x))}"
+                    .values="${musicFilter.filter.ratings.ignored.map((x) => Number.parseInt(x))}"
                     @ratingChanged="${(e) =>
                         musicFilter.setFilterEntryValue(
                             'ratings',
                             `${e.detail.rating}`,
-                            e.detail.include ? CheckboxState.Require : CheckboxState.Forbid
+                            e.detail.include ? CheckboxState.Ignore : CheckboxState.Forbid
                         )}"
                 ></star-rating>
             </div>

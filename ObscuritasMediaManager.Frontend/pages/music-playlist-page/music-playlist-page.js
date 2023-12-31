@@ -91,6 +91,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
                 PlayMusicDialog.show(this.currentTrack, AudioService.volume, AudioService.trackPosition.current());
             }),
             AudioService.ended.subscribe(() => {
+                console.log('track ended', new Date().toTimeString());
                 if (this.trackIndex + 1 >= this.playlist.tracks.length && !this.loop) return;
                 this.changeTrackBy(1);
             }),
@@ -283,7 +284,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
     randomize() {
         this.playlist.tracks = randomizeArray(this.playlist.tracks);
-        this.trackIndex = 0;
+        this.changeTrack(0);
         this.requestFullUpdate();
     }
 

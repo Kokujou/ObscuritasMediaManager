@@ -121,6 +121,12 @@ export function renderMediaDetailPage(detailPage) {
                                 .defaultValue="${detailPage.updatedMedia.name}"
                             />
                         </div>
+                        <link-element
+                            id="trailer-link"
+                            href="https://www.youtube.com/results?search_query=${detailPage.updatedMedia.name}%20trailer"
+                            target="_blank"
+                            >Trailer suchen</link-element
+                        >
                         ${renderGenreSection(detailPage)}
                         <div id="right-panel-top">
                             <div id="right-panel-left-side">

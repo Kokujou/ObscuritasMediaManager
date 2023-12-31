@@ -49,7 +49,8 @@ export function renderCustomToggleStyles() {
         }
 
         :host([state='${unsafeCSS(CheckboxState.Require)}']) #slider,
-        :host(:not([threeValues])[state='${unsafeCSS(CheckboxState.Ignore)}']) #slider {
+        :host(:not([threeValues])[state='${unsafeCSS(CheckboxState.Ignore)}']) #slider,
+        :host(:not([threeValues])[toggled]) #slider {
             margin-left: calc(var(--width) - var(--height) + 5px);
             rotate: 180deg;
         }

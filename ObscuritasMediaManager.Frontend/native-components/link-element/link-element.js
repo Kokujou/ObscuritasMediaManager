@@ -71,6 +71,7 @@ export class LinkElement extends LitElementBase {
      * @param {Event} event
      */
     handleClick(event) {
+        if (this.target == '_blank') return;
         event.preventDefault();
         if (this.disabled) return;
 

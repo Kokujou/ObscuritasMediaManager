@@ -55,6 +55,12 @@ export function renderMusicFilterStyles() {
             margin-bottom: 20px;
         }
 
+        .filter-row {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
         .filter[simple] {
             display: flex;
             flex-direction: row;

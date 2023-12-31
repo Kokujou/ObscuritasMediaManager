@@ -17,7 +17,7 @@ export class MusicFilterOptions {
     /** @type {CheckboxState} */ showDeleted = CheckboxState.Forbid;
 
     languages = new FilterEntry(Object.values(Language), CheckboxState.Require);
-    ratings = new FilterEntry(['1', '2', '3', '4', '5'], CheckboxState.Require);
+    ratings = new FilterEntry(['0', '1', '2', '3', '4', '5'], CheckboxState.Ignore);
     instrumentTypes = new FilterEntry(Object.values(InstrumentType));
     instruments = new FilterEntry(
         Session.instruments.current().map((x) => x.name),

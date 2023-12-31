@@ -28,9 +28,9 @@ public static class AudioTrackUpdatedEventHandler
     public static void StartReporting()
     {
         Started = true;
-        AudioService.player.PlaybackStopped += (_, _) =>
+        AudioService.player.PlaybackStopped += (_, args) =>
         {
-            if (AudioService.GetCurrentTrackDuration() <= AudioService.GetCurrentTrackPosition())
+            if (AudioService.GetCurrentTrackDuration() - TimeSpan.FromSeconds(5) <= AudioService.GetCurrentTrackPosition())
                 foreach (var client in WebSocketInterop.Clients.Values.ToList())
                     client.InvokeEvent(new TrackEndedEvent());
             AudioService.Stop();

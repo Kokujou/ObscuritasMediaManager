@@ -33,7 +33,7 @@ export class MediaFilter {
     /** @type {'ascending' | 'descending'} */ sortingDirection = 'ascending';
     /** @type {keyof MediaModel | null} */ sortingProperty = null;
     status = new FilterEntry(Object.values(MediaStatus), CheckboxState.Ignore);
-    ratings = new FilterEntry([1, 2, 3, 4, 5], CheckboxState.Require);
+    ratings = new FilterEntry([0, 1, 2, 3, 4, 5], CheckboxState.Require);
     /** @type {FilterEntry<string>} */ genres;
     release = { min: null, max: null };
     languages = new FilterEntry(Object.values(Language), CheckboxState.Require);
