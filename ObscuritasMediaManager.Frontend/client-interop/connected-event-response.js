@@ -5,4 +5,5 @@
 export class ConnectedEventResponse {
     trackPath;
     playbackState;
+    duration;
 }

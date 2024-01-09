@@ -6,4 +6,5 @@ import { PlaybackState } from "./playback-state";
 export declare class ConnectedEventResponse {
     trackPath: string;
     playbackState: PlaybackState;
+    duration: number;
 }

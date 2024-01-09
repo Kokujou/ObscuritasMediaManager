@@ -9,4 +9,5 @@ public class ConnectedEventResponse
 {
     public string? TrackPath { get; set; }
     public PlaybackState PlaybackState { get; set; }
+    public double Duration { get; set; }
 }

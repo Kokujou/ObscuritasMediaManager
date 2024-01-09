@@ -23,7 +23,7 @@ export class LyricsDialog extends LitElementBase {
      * @param {boolean} canAccept
      * @returns
      */
-    static async startShowing(track, audio, canAccept) {
+    static async startShowing(track, canAccept) {
         var dialog = new LyricsDialog();
 
         if (track.lyrics?.length > 0) {
@@ -39,14 +39,16 @@ export class LyricsDialog extends LitElementBase {
         dialog.track = track;
         dialog.canSave = canAccept;
         dialog.scrollingPaused = AudioService.paused;
+        dialog.extendedScrollY = 0;
 
         document.body.appendChild(dialog);
         await dialog.requestFullUpdate();
         /** @type {HTMLElement} */ var scrollContainer = dialog.shadowRoot.querySelector('#lyrics-content-wrapper-2');
 
-        scrollContainer.style.animationDuration = audio.duration + 'ms';
-        audio.onpause = () => dialog.requestFullUpdate();
-        audio.onplay = () => dialog.requestFullUpdate();
+        scrollContainer.style.translate = '0 0';
+        scrollContainer.style.animationDuration = AudioService.duration + 'ms';
+
+        AudioService.changed.subscribe(() => dialog.requestFullUpdate());
 
         return dialog;
     }
@@ -77,7 +79,9 @@ export class LyricsDialog extends LitElementBase {
             { signal: this.abortController.signal }
         );
 
-        window.addEventListener('pointerup', () => clearInterval(this.scrollInterval), { signal: this.abortController.signal });
+        window.addEventListener('pointerup', () => {
+            clearInterval(this.scrollInterval), { signal: this.abortController.signal };
+        });
     }
 
     render() {

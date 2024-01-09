@@ -38,6 +38,7 @@ export class AudioService {
             let response = /** @type {ConnectedEventResponse} */ (x.payload);
             this.currentTrackPath = response.trackPath;
             this.paused = response.playbackState != PlaybackState.Playing;
+            this.duration = response.duration;
             this.changed.next();
         }
     });

@@ -290,7 +290,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
     async showLyrics() {
         try {
-            var dialog = await LyricsDialog.startShowing(this.currentTrack, AudioService, true);
+            var dialog = await LyricsDialog.startShowing(this.currentTrack, true);
             dialog.addEventListener('playlist-saved', async () => await this.changeProperty('lyrics', dialog.lyrics));
         } catch {
             MessageSnackbar.popup('Es konnten leider keine passenden Lyrics gefunden werden.', 'error');

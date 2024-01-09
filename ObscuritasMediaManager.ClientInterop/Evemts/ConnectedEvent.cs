@@ -10,6 +10,11 @@ class ConnectedEvent : IInteropEvent<ConnectedEventResponse>
 
     public ConnectedEventResponse Invoke()
     {
-        return new() { PlaybackState = AudioService.player.PlaybackState, TrackPath = AudioService.TrackPath };
+        return new()
+               {
+                   PlaybackState = AudioService.player.PlaybackState,
+                   TrackPath = AudioService.TrackPath,
+                   Duration = AudioService.GetCurrentTrackDuration().TotalMilliseconds
+               };
     }
 }

@@ -9,6 +9,7 @@
  * - think about icons for language
  * - export anime as playlist (local is enough because global is impossible either way)
  * - finalize cleanup functionality
+ * - create a link between media and audio (show related songs -> navigate to source)
  * - enrich media data with:
  *      - episode count
  *      - open ending?
