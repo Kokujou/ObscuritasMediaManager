@@ -40,6 +40,8 @@ public class MediaRepository
             }
 
             await _context.Media.AddAsync(media);
+            foreach (var entry in _context.ChangeTracker.Entries<MediaGenreModel>())
+                entry.State = EntityState.Unchanged;
             await _context.SaveChangesAsync();
             return new(media.Id, ModelCreationState.Success);
         }

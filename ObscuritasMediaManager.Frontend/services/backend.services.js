@@ -10,7 +10,7 @@ import {
 } from '../obscuritas-media-manager-backend-client.js';
 import { AuthenticatedRequestService } from './authenticated-request.service.js';
 
-const baseUrl = 'https://localhost/ObscuritasMediaManager';
+const baseUrl = '/ObscuritasMediaManager';
 
 var authenticatedRequestService = new AuthenticatedRequestService();
 export const MusicService = new MusicClient(baseUrl, authenticatedRequestService);

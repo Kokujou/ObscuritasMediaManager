@@ -105,7 +105,7 @@ export class MediaDetailPage extends LitElementBase {
      */
     async updated(_changedProperties) {
         super.updated(_changedProperties);
-        if (this.mediaId != this.updatedMedia?.id) {
+        if (this.mediaId != this.updatedMedia?.id && !this.createNew) {
             var media = await MediaService.get(this.mediaId);
             this.updatedMedia = Object.assign(new MediaModel(), media);
 
@@ -135,12 +135,13 @@ export class MediaDetailPage extends LitElementBase {
             oldModel[property] = this.updatedMedia[property];
             newModel[property] = value;
 
-            if (!this.createNew)
+            if (!this.createNew) {
                 await MediaService.updateMedia(this.updatedMedia.id, new UpdateRequestOfJsonElement({ oldModel, newModel }));
+                Session.mediaList.current().find((x) => x.id == this.updatedMedia.id)[property] = value;
+                Session.mediaList.refresh();
+            }
 
             this.updatedMedia[property] = value;
-            Session.mediaList.current().find((x) => x.id == this.updatedMedia.id)[property] = value;
-            Session.mediaList.refresh();
             this.requestFullUpdate();
         } catch (err) {
             console.error(err);
@@ -199,6 +200,8 @@ export class MediaDetailPage extends LitElementBase {
             );
             if (result.value != ModelCreationState.Success) throw new Error(result.value);
             await MessageSnackbar.popup('Der Eintrag wurde erfolgreich erstellt.', 'success');
+            Session.mediaList.current().push(this.updatedMedia);
+            Session.mediaList.refresh();
             changePage(MediaDetailPage, { mediaId: result.key });
         } catch (err) {
             await MessageSnackbar.popup('Ein Fehler ist beim erstellen des Eintrags aufgetreten: ' + err, 'error');

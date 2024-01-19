@@ -28,7 +28,8 @@ export class LoginPage extends LitElementBase {
 
     async login() {
         try {
-            var token = await LoginService.login(new CredentialsRequest({ username: this.username, password: this.password }));
+            var request = new CredentialsRequest({ username: this.username, password: this.password });
+            var token = await LoginService.login(request);
             if (!token) throw Error('bad token');
             changePage(WelcomePage);
         } catch {

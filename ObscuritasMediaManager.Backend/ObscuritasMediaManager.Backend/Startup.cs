@@ -36,7 +36,8 @@ public class Startup
             x =>
                 x.AddPolicy(
                 "all", builder =>
-                                builder.WithOrigins("https://localhost", "https://obscuritas.strangled.net")
+                                builder.WithOrigins(
+                    "https://localhost", "https://obscuritas.strangled.net", "https://192.168.178.30")
                     .AllowAnyHeader()
                     .AllowAnyMethod()));
 

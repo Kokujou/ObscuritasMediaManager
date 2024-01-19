@@ -19,7 +19,7 @@ export class AudioService {
 
     static visualizationData = new Observable(new Float32Array());
     static trackPosition = new Observable(0);
-    static duration = 0;
+    static duration = null;
     /** @type {Observable} */ static ended = new Observable(null);
     /** @type {Observable} */ static changed = new Observable(null);
 

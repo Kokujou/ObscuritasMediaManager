@@ -46,9 +46,13 @@ export class LyricsDialog extends LitElementBase {
         /** @type {HTMLElement} */ var scrollContainer = dialog.shadowRoot.querySelector('#lyrics-content-wrapper-2');
 
         scrollContainer.style.translate = '0 0';
-        scrollContainer.style.animationDuration = AudioService.duration + 'ms';
+        scrollContainer.style.animationDuration = (AudioService.duration ?? 30) + 'ms';
 
-        AudioService.changed.subscribe(() => dialog.requestFullUpdate());
+        AudioService.changed.subscribe(() => {
+            scrollContainer.style.animationDuration = (AudioService.duration ?? 30) + 'ms';
+            console.log(AudioService.duration, scrollContainer);
+            dialog.requestFullUpdate();
+        });
 
         return dialog;
     }
