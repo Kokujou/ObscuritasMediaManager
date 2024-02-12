@@ -19,8 +19,8 @@ export function renderAudioSubtitleDialog(dialog) {
                 <div
                     id="save-lyrics-button"
                     class="link"
-                    @click="${() => dialog.notifyPlaylistSaved()}"
-                    ?disabled="${!dialog.canSave}"
+                    @click="${() => dialog.notifyLyricsSaved()}"
+                    ?disabled="${dialog.lyricsOffset < 0}"
                 >
                     <div class="icon" icon="${Icons.SaveTick}"></div>
                     Lyrics Speichern

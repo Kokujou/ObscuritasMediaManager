@@ -1,4 +1,5 @@
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { Session } from '../../data/session.js';
 import { MusicModel } from '../../obscuritas-media-manager-backend-client.js';
 import { AudioService } from '../../services/audio-service.js';
 import { MusicService } from '../../services/backend.services.js';
@@ -20,10 +21,9 @@ export class LyricsDialog extends LitElementBase {
     /**
      *
      * @param {MusicModel} track
-     * @param {boolean} canAccept
      * @returns
      */
-    static async startShowing(track, canAccept) {
+    static async startShowing(track) {
         var dialog = new LyricsDialog();
 
         if (track.lyrics?.length > 0) {
@@ -34,10 +34,9 @@ export class LyricsDialog extends LitElementBase {
             var lyrics = await MusicService.getLyrics(track.hash);
             dialog.lyrics = lyrics.text;
             dialog.title = lyrics.title;
-            dialog.lyricsOffset = -0;
+            dialog.lyricsOffset = 0;
         }
         dialog.track = track;
-        dialog.canSave = canAccept;
         dialog.scrollingPaused = AudioService.paused;
         dialog.extendedScrollY = 0;
 
@@ -65,7 +64,6 @@ export class LyricsDialog extends LitElementBase {
         super();
 
         /** @type {string} */ this.lyrics;
-        /** @type {boolean} */ this.canSave = false;
         /** @type {boolean} */ this.canNext = true;
         /** @type {boolean} */ this.scrollingPaused = false;
         /** @type {number} */ this.lyricsOffset = -1;
@@ -86,6 +84,8 @@ export class LyricsDialog extends LitElementBase {
         window.addEventListener('pointerup', () => {
             clearInterval(this.scrollInterval), { signal: this.abortController.signal };
         });
+
+        Session.currentPage.subscribe((x) => this.fadeAndRemove());
     }
 
     render() {
@@ -107,8 +107,9 @@ export class LyricsDialog extends LitElementBase {
         await this.requestFullUpdate();
     }
 
-    notifyPlaylistSaved() {
-        this.dispatchEvent(new CustomEvent('playlist-saved'));
+    notifyLyricsSaved() {
+        this.dispatchEvent(new CustomEvent('lyrics-saved'));
+        this.lyricsOffset = -1;
     }
 
     async requestNewLyrics() {
@@ -120,7 +121,6 @@ export class LyricsDialog extends LitElementBase {
             this.canNext = false;
             await this.requestFullUpdate();
         }
-        this.canSave = true;
         this.requestFullUpdate();
     }
 

@@ -19,9 +19,9 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Route("api/[controller]")]
 public class MusicController : ControllerBase
 {
-    private readonly MusicRepository _musicRepository;
     private readonly JsonSerializerOptions _jsonOptions;
     private readonly LyricsService _lyricsService;
+    private readonly MusicRepository _musicRepository;
 
     public MusicController(MusicRepository repository, IOptions<JsonOptions> jsonOptions, LyricsService lyricsService)
     {
@@ -41,21 +41,22 @@ public class MusicController : ControllerBase
     {
         track.CalculateHash();
         var state = await _musicRepository.CreateTrackAsync(track);
-        if (state != ModelCreationState.Success) throw new Exception($"An error occured while creationg tag. Status: {state}");
+        if (state != ModelCreationState.Success) throw new($"An error occured while creationg tag. Status: {state}");
 
         return track.Hash;
     }
 
     [HttpPost("tracks")]
-    public async Task<KeyValuePair<string, ModelCreationState>> CreateMusicTrackFromPathAsync([FromBody] string trackPath)
+    public async Task<KeyValuePair<string, ModelCreationState>> CreateMusicTrackFromPathAsync(
+        [FromBody] string trackPath)
     {
         if (!System.IO.File.Exists(trackPath))
-                 return new(null, ModelCreationState.Invalid);
+            return new(null, ModelCreationState.Invalid);
 
         var track = MusicModel.CreateDefault(trackPath.Split('\\').Last());
         track.Path = trackPath;
 
-        if (!(await FFMPEGExtensions.HasAudioStreamAsync(track.GetNormalizedPath())))
+        if (!await FFMPEGExtensions.HasAudioStreamAsync(track.GetNormalizedPath()))
             return new(track.Hash, ModelCreationState.Invalid);
 
         track.CalculateHash();
@@ -87,7 +88,16 @@ public class MusicController : ControllerBase
     {
         var track = await GetAsync(hash);
 
-        return await _lyricsService.SearchForLyricsAsync(track, offset);
+        while (true)
+            try
+            {
+                return await _lyricsService.SearchForLyricsAsync(track, offset);
+            }
+            catch (LyricsNotFoundException) { throw; }
+            catch (Exception ex)
+            {
+                Log.Error($"An error occurred while parsing the lyrics, incrementing offset: {ex}");
+            }
     }
 
     [HttpGet("instruments")]
