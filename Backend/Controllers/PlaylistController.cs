@@ -9,16 +9,10 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class PlaylistController : ControllerBase
+public class PlaylistController(MusicRepository musicRepository, PlaylistRepository playlistRepository)
+    : ControllerBase
 {
-    private readonly MusicRepository _musicRepository;
-    private readonly PlaylistRepository _playlistRepository;
-
-    public PlaylistController(MusicRepository musicRepository, PlaylistRepository playlistRepository)
-    {
-        _musicRepository = musicRepository;
-        _playlistRepository = playlistRepository;
-    }
+    private readonly MusicRepository _musicRepository = musicRepository;
 
     [HttpGet("dummy")]
     public PlaylistModel GetDummyPlaylist()
@@ -29,27 +23,27 @@ public class PlaylistController : ControllerBase
     [HttpPost("temp")]
     public Guid CreateTemporaryPlaylist([FromBody] List<string> hashes)
     {
-        var playlistId = _playlistRepository.CreateTemporaryPlaylist(hashes);
+        var playlistId = playlistRepository.CreateTemporaryPlaylist(hashes);
         return playlistId;
     }
 
     [HttpGet("{playlistId}")]
     public async Task<PlaylistModel> GetPlaylist(Guid playlistId)
     {
-        return await _playlistRepository.GetPlaylistAsync(playlistId);
+        return await playlistRepository.GetPlaylistAsync(playlistId);
     }
 
     [HttpGet("list")]
     public IQueryable<PlaylistModel> ListPlaylists()
     {
-        return _playlistRepository.GetAll();
+        return playlistRepository.GetAll();
     }
 
     [HttpPost("create")]
     public async Task CreatePlaylistAsync(PlaylistModel playlist)
     {
         playlist.Id = Guid.NewGuid();
-        await _playlistRepository.CreatePlaylistAsync(playlist);
+        await playlistRepository.CreatePlaylistAsync(playlist);
     }
 
     [HttpPut("{playlistId:guid}")]
@@ -58,33 +52,33 @@ public class PlaylistController : ControllerBase
         if ((updateRequest.OldModel.Id != default) && (playlistId != updateRequest.OldModel.Id))
             throw new Exception("Ids of objects did not match");
 
-        var actual = await _playlistRepository.GetPlaylistAsync(playlistId);
+        var actual = await playlistRepository.GetPlaylistAsync(playlistId);
         if (actual is null)
         {
-            await _playlistRepository.CreatePlaylistAsync(updateRequest.NewModel);
+            await playlistRepository.CreatePlaylistAsync(updateRequest.NewModel);
             return;
         }
 
-        _playlistRepository.DeleteTemporaryPlaylist(playlistId);
+        playlistRepository.DeleteTemporaryPlaylist(playlistId);
 
         foreach (var track in updateRequest.NewModel.Tracks.Where(x => x.Hash is null))
             track.CalculateHash();
 
-        await _playlistRepository.UpdateDataAsync(actual, updateRequest.OldModel, updateRequest.NewModel);
-        await _playlistRepository.UpdateTracksAsync(updateRequest.NewModel);
-        await _playlistRepository.UpdatePlaylistTrackMappingAsync(updateRequest.NewModel.Id, updateRequest.NewModel.Name,
+        await playlistRepository.UpdateDataAsync(actual, updateRequest.OldModel, updateRequest.NewModel);
+        await playlistRepository.UpdateTracksAsync(updateRequest.NewModel);
+        await playlistRepository.UpdatePlaylistTrackMappingAsync(updateRequest.NewModel.Id, updateRequest.NewModel.Name,
         updateRequest.NewModel.Tracks);
     }
 
     [HttpPut("{playlistId}/tracks")]
     public async Task AddTracksToPlaylistAsync(Guid playlistId, [FromBody] IEnumerable<string> trackHashes)
     {
-        await _playlistRepository.AddTracksAsync(playlistId, trackHashes);
+        await playlistRepository.AddTracksAsync(playlistId, trackHashes);
     }
 
     [HttpDelete("{playlistId}")]
     public async Task DeletePlaylist(Guid playlistId)
     {
-        await _playlistRepository.DeletePlaylistAsync(playlistId);
+        await playlistRepository.DeletePlaylistAsync(playlistId);
     }
 }

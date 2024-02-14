@@ -7,7 +7,7 @@ import { LoginPage } from './login-page.js';
 export function renderLoginPage(loginPage) {
     return html`
         <div id="page-container">
-            <form id="login-form" @submit="${() => loginPage.login()}">
+            <form id="login-form" action="javascript:void(0)" @submit="${() => loginPage.login()}">
                 <div id="username-container" class="floating-container">
                     <label for="username" ?float="${loginPage.username.length > 0}">Benutzername</label>
                     <input

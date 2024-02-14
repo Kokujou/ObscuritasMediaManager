@@ -4,20 +4,13 @@ using System.Collections.Concurrent;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
-public class PlaylistRepository
+public class PlaylistRepository(DatabaseContext context)
 {
     private static readonly ConcurrentDictionary<Guid, List<string>> TemporaryPlaylistRepository = new();
 
-    private readonly DatabaseContext _context;
-
-    public PlaylistRepository(DatabaseContext context)
-    {
-        _context = context;
-    }
-
     public IQueryable<PlaylistModel> GetAll()
     {
-        return _context.Playlists;
+        return context.Playlists;
     }
 
     public async Task<PlaylistModel> GetPlaylistAsync(Guid playlistId)
@@ -28,12 +21,12 @@ public class PlaylistRepository
                        TrackMappings =
                            await Task.WhenAll(trackHashes.Select(async (trackHash, index) =>
                                            PlaylistTrackMappingModel.Create(playlistId, string.Empty,
-                                   await _context.Music.SingleAsync(x => x.Hash == trackHash), index))),
+                                   await context.Music.SingleAsync(x => x.Hash == trackHash), index))),
                        IsTemporary = true,
                        Id = playlistId
                    };
 
-        return await _context.Playlists.SingleOrDefaultAsync(x => x.Id == playlistId);
+        return await context.Playlists.SingleOrDefaultAsync(x => x.Id == playlistId);
     }
 
     public Guid CreateTemporaryPlaylist(List<string> hashs)
@@ -49,15 +42,15 @@ public class PlaylistRepository
 
         var cached = playlist.Tracks.ToList();
         playlist.TrackMappings = null;
-        await _context.Playlists.AddAsync(playlist);
-        await _context.SaveChangesAsync();
+        await context.Playlists.AddAsync(playlist);
+        await context.SaveChangesAsync();
 
         await UpdatePlaylistTrackMappingAsync(playlist.Id, playlist.Name, cached);
     }
 
     public async Task UpdateDataAsync(PlaylistModel actual, PlaylistModel old, PlaylistModel updated)
     {
-        _context.Entry(actual).State = EntityState.Unchanged;
+        context.Entry(actual).State = EntityState.Unchanged;
         if (!string.IsNullOrEmpty(updated.Name) && (old.Name == actual.Name))
             actual.Name = updated.Name;
         if (!string.IsNullOrEmpty(updated.Author) && (old.Author == actual.Author))
@@ -74,7 +67,7 @@ public class PlaylistRepository
             actual.Image = updated.Image;
         actual.Complete = updated.Complete;
 
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 
     public async Task UpdateTracksAsync(PlaylistModel playlist)
@@ -83,18 +76,18 @@ public class PlaylistRepository
         if (tracksToAdd is null) return;
 
         var newTrackIds = tracksToAdd.Select(u => u.Hash).ToArray();
-        var hashsToAddInDb = _context.Music.Where(u => newTrackIds.Contains(u.Hash)).Select(u => u.Hash).ToArray();
+        var hashsToAddInDb = context.Music.Where(u => newTrackIds.Contains(u.Hash)).Select(u => u.Hash).ToArray();
         tracksToAdd = tracksToAdd.Where(x => !hashsToAddInDb.Contains(x.Hash));
 
         if (!tracksToAdd.Any()) return;
 
-        _context.Music.AddRange(tracksToAdd);
-        await _context.SaveChangesAsync();
+        context.Music.AddRange(tracksToAdd);
+        await context.SaveChangesAsync();
     }
 
     public async Task UpdatePlaylistTrackMappingAsync(Guid playlistId, string playlistName, IEnumerable<MusicModel> updatedTracks)
     {
-        var actualMapping = await _context.PlaylistEntries.Where(x => x.PlaylistId == playlistId).ToListAsync();
+        var actualMapping = await context.PlaylistEntries.Where(x => x.PlaylistId == playlistId).ToListAsync();
         var updatedTrackMappings = updatedTracks
                                           .Select((track, index) =>
                                               PlaylistTrackMappingModel.Create(playlistId, playlistName, track, index))
@@ -108,18 +101,18 @@ public class PlaylistRepository
             .Where(x => !updatedTrackMappings.Contains(x))
             .Select(x => x with { Track = null, Playlist = null })
             .ToList();
-        if (removedTracks.Any()) _context.PlaylistEntries.RemoveRange(removedTracks);
-        await _context.SaveChangesAsync();
-        if (newTracks.Any()) await _context.PlaylistEntries.AddRangeAsync(newTracks);
-        await _context.SaveChangesAsync();
+        if (removedTracks.Any()) context.PlaylistEntries.RemoveRange(removedTracks);
+        await context.SaveChangesAsync();
+        if (newTracks.Any()) await context.PlaylistEntries.AddRangeAsync(newTracks);
+        await context.SaveChangesAsync();
     }
 
     public async Task AddTracksAsync(Guid playlistId, IEnumerable<string> trackHashes)
     {
-        var playlist = await _context.Playlists.SingleOrDefaultAsync(x => x.Id == playlistId);
+        var playlist = await context.Playlists.SingleOrDefaultAsync(x => x.Id == playlistId);
         trackHashes = trackHashes.Union(playlist.Tracks.Select(x => x.Hash));
         if (!trackHashes.Any()) return;
-        var selectedTracks = await _context.Music.Where(x => trackHashes.Contains(x.Hash)).ToListAsync();
+        var selectedTracks = await context.Music.Where(x => trackHashes.Contains(x.Hash)).ToListAsync();
         await UpdatePlaylistTrackMappingAsync(playlistId, playlist.Name, selectedTracks);
     }
 
@@ -130,7 +123,7 @@ public class PlaylistRepository
 
     public async Task DeletePlaylistAsync(Guid playlistId)
     {
-        _context.Remove(new PlaylistModel { Id = playlistId });
-        await _context.SaveChangesAsync();
+        context.Remove(new PlaylistModel { Id = playlistId });
+        await context.SaveChangesAsync();
     }
 }

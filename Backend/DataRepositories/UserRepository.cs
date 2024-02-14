@@ -6,18 +6,11 @@ using System.Linq.Expressions;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
-public class UserRepository
+public class UserRepository(DatabaseContext dbContext)
 {
-    private readonly DatabaseContext _dbContext;
-
-    public UserRepository(DatabaseContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public async Task<UserModel> LogonAsync(string username, string password)
     {
-        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Name.ToLower() == username.ToLower());
+        var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Name.ToLower() == username.ToLower());
         if (user is null) return null;
         if (password != user.Password.Decrypt()) return null;
         return user;
@@ -26,31 +19,31 @@ public class UserRepository
     public async Task CreateUser(string username, string password)
     {
         var encryptedPassword = password.Encrypt();
-        await _dbContext.Users.AddAsync(new UserModel { Password = encryptedPassword, Name = username, Id = Guid.NewGuid() });
-        await _dbContext.SaveChangesAsync();
+        await dbContext.Users.AddAsync(new UserModel { Password = encryptedPassword, Name = username, Id = Guid.NewGuid() });
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task<UserSettingsModel> GetSettingsAsync(Guid userId)
     {
-        var settings = await _dbContext.UserSettings.FirstOrDefaultAsync(x => x.Id == userId);
+        var settings = await dbContext.UserSettings.FirstOrDefaultAsync(x => x.Id == userId);
         if (settings is not null) return settings;
 
         settings = new UserSettingsModel { Id = userId };
-        await _dbContext.UserSettings.AddAsync(settings);
-        await _dbContext.SaveChangesAsync();
+        await dbContext.UserSettings.AddAsync(settings);
+        await dbContext.SaveChangesAsync();
 
         return settings;
     }
 
     public async Task UpdateUserSettingsAsync(UserSettingsModel updated)
     {
-        _dbContext.UserSettings.Update(updated);
-        await _dbContext.SaveChangesAsync();
+        dbContext.UserSettings.Update(updated);
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task UpdateUserSettingsAsync(Guid userId,
         Expression<Func<SetPropertyCalls<UserSettingsModel>, SetPropertyCalls<UserSettingsModel>>> setCalls)
     {
-        await _dbContext.UserSettings.Where(x => x.Id == userId).ExecuteUpdateAsync(setCalls);
+        await dbContext.UserSettings.Where(x => x.Id == userId).ExecuteUpdateAsync(setCalls);
     }
 }

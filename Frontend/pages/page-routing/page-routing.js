@@ -94,7 +94,7 @@ export class PageRouting extends LitElementBase {
             var pageName = () => PageRouting.currentPageInstance.tagName.replace('-PAGE', '');
             var isNewPageLoad = !PageRouting.currentPageInstance || newValue.toLowerCase() != pageName().toLowerCase();
             if (isNewPageLoad) {
-                PageRouting.currentPageInstance?.remove();
+                PageRouting.container.querySelectorAll(':not(slot)').forEach((x) => x.remove());
                 var newPage = Pages.find((x) => newValue == getPageName(x));
                 PageRouting.currentPageInstance = new newPage();
             }

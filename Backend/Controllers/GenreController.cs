@@ -9,30 +9,23 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [ApiController]
 [Route("/api/[controller]")]
-public class GenreController : ControllerBase
+public class GenreController(GenreRepository genreRepository) : ControllerBase
 {
-    private readonly GenreRepository _genreRepository;
-
-    public GenreController(GenreRepository genreRepository)
-    {
-        _genreRepository = genreRepository;
-    }
-
     [HttpGet]
     public IQueryable<MediaGenreModel> GetAll()
     {
-        return _genreRepository.GetAll();
+        return genreRepository.GetAll();
     }
 
     [HttpPut("section/{section}/name/{name}")]
     public async Task AddGenre(MediaGenreCategory section, string name)
     {
-        await _genreRepository.AddGenreAsync(new() { Id = Guid.NewGuid(), Section = section, Name = name });
+        await genreRepository.AddGenreAsync(new() { Id = Guid.NewGuid(), Section = section, Name = name });
     }
 
     [HttpDelete("{id:guid}")]
     public async Task RemoveGenre(Guid id)
     {
-        await _genreRepository.RemoveGenreAsync(id);
+        await genreRepository.RemoveGenreAsync(id);
     }
 }

@@ -5,8 +5,6 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObscuritasMediaManager.ClientInterop", "ObscuritasMediaManager.ClientInterop.csproj", "{8DF52702-0015-4EC6-A1AE-28DA776244F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObscuritasMediaManager.Backend", "..\Backend\ObscuritasMediaManager.Backend\ObscuritasMediaManager.Backend.csproj", "{770C66B3-101D-44DC-BA7B-900122999712}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,14 +21,6 @@ Global
 		{8DF52702-0015-4EC6-A1AE-28DA776244F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DF52702-0015-4EC6-A1AE-28DA776244F8}.Release|x64.ActiveCfg = Release|Any CPU
 		{8DF52702-0015-4EC6-A1AE-28DA776244F8}.Release|x64.Build.0 = Release|Any CPU
-		{770C66B3-101D-44DC-BA7B-900122999712}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{770C66B3-101D-44DC-BA7B-900122999712}.Debug|Any CPU.Build.0 = Debug|x64
-		{770C66B3-101D-44DC-BA7B-900122999712}.Debug|x64.ActiveCfg = Debug|x64
-		{770C66B3-101D-44DC-BA7B-900122999712}.Debug|x64.Build.0 = Debug|x64
-		{770C66B3-101D-44DC-BA7B-900122999712}.Release|Any CPU.ActiveCfg = Release|x64
-		{770C66B3-101D-44DC-BA7B-900122999712}.Release|Any CPU.Build.0 = Release|x64
-		{770C66B3-101D-44DC-BA7B-900122999712}.Release|x64.ActiveCfg = Release|x64
-		{770C66B3-101D-44DC-BA7B-900122999712}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

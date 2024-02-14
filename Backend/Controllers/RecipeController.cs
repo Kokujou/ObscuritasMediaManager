@@ -8,25 +8,18 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class RecipeController : ControllerBase
+public class RecipeController(RecipeRepository recipeRepository) : ControllerBase
 {
-    private readonly RecipeRepository _recipeRepository;
-
-    public RecipeController(RecipeRepository recipeRepository)
-    {
-        _recipeRepository = recipeRepository;
-    }
-
     [HttpGet]
     public IQueryable<RecipeModel> GetAllRecipes()
     {
-        return _recipeRepository.GetAll();
+        return recipeRepository.GetAll();
     }
 
     [HttpGet("{id}")]
     public async Task<RecipeModel> GetRecipe(Guid id)
     {
-        return await _recipeRepository.GetAsync(id);
+        return await recipeRepository.GetAsync(id);
     }
 
     [HttpPost]
@@ -39,14 +32,14 @@ public class RecipeController : ControllerBase
             ingredient.Id = Guid.NewGuid();
         }
 
-        await _recipeRepository.CreateRecipe(recipe);
+        await recipeRepository.CreateRecipe(recipe);
     }
 
     [HttpPatch]
     public async Task UpdateRecipeAsync(RecipeModel recipe)
     {
-        if (!(await _recipeRepository.ExistsAsync(recipe.Id))) throw new Exception("recipe not found");
+        if (!(await recipeRepository.ExistsAsync(recipe.Id))) throw new Exception("recipe not found");
 
-        await _recipeRepository.UpdateRecipe(recipe);
+        await recipeRepository.UpdateRecipe(recipe);
     }
 }

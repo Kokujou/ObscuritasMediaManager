@@ -32,7 +32,7 @@ public class Startup
 
         services.AddDbContext<DatabaseContext>(
             x => x.UseSqlite(
-                    @"Data Source=J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\ObscuritasMediaManager.Backend/database.sqlite")
+                    @"Data Source=J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\database.sqlite")
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .EnableSensitiveDataLogging());
 

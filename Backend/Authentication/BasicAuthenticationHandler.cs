@@ -7,17 +7,13 @@ using System.Text.Encodings.Web;
 
 namespace ObscuritasMediaManager.Backend.Authentication;
 
-public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+public class BasicAuthenticationHandler(
+    IOptionsMonitor<AuthenticationSchemeOptions> options,
+    ILoggerFactory logger,
+    UrlEncoder encoder,
+    UserRepository userRepository)
+    : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
 {
-    private readonly UserRepository _userRepository;
-
-    public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger,
-        UrlEncoder encoder, ISystemClock clock, UserRepository userRepository)
-        : base(options, logger, encoder, clock)
-    {
-        _userRepository = userRepository;
-    }
-
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         var cookie = Request.Headers.Cookie.GetCookie("Authorization");
@@ -34,7 +30,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         var username = split[0];
         var password = split[1];
 
-        var user = await _userRepository.LogonAsync(username, password);
+        var user = await userRepository.LogonAsync(username, password);
         if (user is null) return AuthenticateResult.Fail("wrong combination of username and password");
 
         return AuthenticateResult.Success(new AuthenticationTicket(new ClaimsPrincipal(user), "basic"));

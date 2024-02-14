@@ -17,18 +17,10 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class MusicController : ControllerBase
+public class MusicController(MusicRepository repository, IOptions<JsonOptions> jsonOptions, LyricsService lyricsService)
+    : ControllerBase
 {
-    private readonly JsonSerializerOptions _jsonOptions;
-    private readonly LyricsService _lyricsService;
-    private readonly MusicRepository _musicRepository;
-
-    public MusicController(MusicRepository repository, IOptions<JsonOptions> jsonOptions, LyricsService lyricsService)
-    {
-        _musicRepository = repository;
-        _jsonOptions = jsonOptions.Value.JsonSerializerOptions;
-        _lyricsService = lyricsService;
-    }
+    private readonly JsonSerializerOptions _jsonOptions = jsonOptions.Value.JsonSerializerOptions;
 
     [HttpGet("default")]
     public MusicModel GetDefault()
@@ -40,7 +32,7 @@ public class MusicController : ControllerBase
     public async Task<string> CreateMusicTrackAsync(MusicModel track)
     {
         track.CalculateHash();
-        var state = await _musicRepository.CreateTrackAsync(track);
+        var state = await repository.CreateTrackAsync(track);
         if (state != ModelCreationState.Success) throw new($"An error occured while creationg tag. Status: {state}");
 
         return track.Hash;
@@ -61,26 +53,26 @@ public class MusicController : ControllerBase
 
         track.CalculateHash();
 
-        var result = await _musicRepository.CreateTrackAsync(track);
+        var result = await repository.CreateTrackAsync(track);
         return new(track.Hash, result);
     }
 
     [HttpPost("recalculate-hashes")]
     public async Task RecalculateHashes()
     {
-        await _musicRepository.RecalculateHashesAsync();
+        await repository.RecalculateHashesAsync();
     }
 
     [HttpGet]
     public IQueryable<MusicModel> GetAll()
     {
-        return _musicRepository.GetAll();
+        return repository.GetAll();
     }
 
     [HttpGet("{hash}")]
     public async Task<MusicModel> GetAsync(string hash)
     {
-        return await _musicRepository.GetAsync(hash);
+        return await repository.GetAsync(hash);
     }
 
     [HttpGet("{hash}/lyrics")]
@@ -91,7 +83,7 @@ public class MusicController : ControllerBase
         while (true)
             try
             {
-                return await _lyricsService.SearchForLyricsAsync(track, offset);
+                return await lyricsService.SearchForLyricsAsync(track, offset);
             }
             catch (LyricsNotFoundException) { throw; }
             catch (Exception ex)
@@ -103,20 +95,20 @@ public class MusicController : ControllerBase
     [HttpGet("instruments")]
     public async Task<IEnumerable<InstrumentModel>> GetInstruments()
     {
-        return await _musicRepository.GetInstrumentsAsync();
+        return await repository.GetInstrumentsAsync();
     }
 
     [HttpPut("instrument/{name}/type/{type}")]
     public async Task AddInstrument(InstrumentType type, string name)
     {
         var newInstrument = new InstrumentModel { Name = name, Type = type };
-        await _musicRepository.AddInstrumentAsync(newInstrument);
+        await repository.AddInstrumentAsync(newInstrument);
     }
 
     [HttpDelete("instrument/{name}/type/{type}")]
     public async Task RemoveInstrument(InstrumentType type, string name)
     {
-        await _musicRepository.RemoveInstrumentAsync(type, name);
+        await repository.RemoveInstrumentAsync(type, name);
     }
 
     [HttpPut("{hash}")]
@@ -124,8 +116,8 @@ public class MusicController : ControllerBase
     {
         var deserialized = await HttpContext.ReadRequestBodyAsync<UpdateRequest<JsonNode>>(_jsonOptions);
 
-        await _musicRepository.UpdateAsync(hash, deserialized.OldModel, deserialized.NewModel, _jsonOptions);
-        return await _musicRepository.GetAsync(hash);
+        await repository.UpdateAsync(hash, deserialized.OldModel, deserialized.NewModel, _jsonOptions);
+        return await repository.GetAsync(hash);
     }
 
     [HttpDelete("music/soft")]
@@ -133,7 +125,7 @@ public class MusicController : ControllerBase
     {
         if (!trackHashes.Any()) return;
 
-        await _musicRepository.SoftDeleteTracksAsync(trackHashes);
+        await repository.SoftDeleteTracksAsync(trackHashes);
     }
 
     [HttpPut("music/undelete")]
@@ -141,7 +133,7 @@ public class MusicController : ControllerBase
     {
         if (!trackHashes.Any()) return;
 
-        await _musicRepository.UndeleteTracksAsync(trackHashes);
+        await repository.UndeleteTracksAsync(trackHashes);
     }
 
     [HttpDelete("music/hard")]
@@ -149,6 +141,6 @@ public class MusicController : ControllerBase
     {
         if (!trackHashes.Any()) return;
 
-        await _musicRepository.HardDeleteTracksAsync(trackHashes);
+        await repository.HardDeleteTracksAsync(trackHashes);
     }
 }

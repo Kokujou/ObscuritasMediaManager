@@ -7,19 +7,12 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 
 [ApiController]
 [Route("/api/[controller]")]
-public class LoginController : ControllerBase
+public class LoginController(UserRepository userRepository) : ControllerBase
 {
-    private readonly UserRepository _userRepository;
-
-    public LoginController(UserRepository userRepository)
-    {
-        _userRepository = userRepository;
-    }
-
     [HttpPost]
     public async Task<string> LoginAsync(CredentialsRequest request)
     {
-        var user = await _userRepository.LogonAsync(request.Username, request.Password);
+        var user = await userRepository.LogonAsync(request.Username, request.Password);
         if (user is null) throw new Exception("invalid username or password");
 
         var token = $"{request.Username}:{request.Password}".ToBase64String();

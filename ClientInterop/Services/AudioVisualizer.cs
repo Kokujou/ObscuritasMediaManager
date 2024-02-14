@@ -102,26 +102,15 @@ public class AudioVisualizer : ISampleProvider
     }
 }
 
-public class MaxSampleEventArgs : EventArgs
+[method: DebuggerStepThrough]
+public class MaxSampleEventArgs(float minValue, float maxValue) : EventArgs
 {
-    public float MaxSample { get; private set; }
-    public float MinSample { get; private set; }
-
-    [DebuggerStepThrough]
-    public MaxSampleEventArgs(float minValue, float maxValue)
-    {
-        MaxSample = maxValue;
-        MinSample = minValue;
-    }
+    public float MaxSample { get; private set; } = maxValue;
+    public float MinSample { get; private set; } = minValue;
 }
 
-public class FftEventArgs : EventArgs
+[method: DebuggerStepThrough]
+public class FftEventArgs(Complex[] result) : EventArgs
 {
-    public Complex[] Result { get; private set; }
-
-    [DebuggerStepThrough]
-    public FftEventArgs(Complex[] result)
-    {
-        Result = result;
-    }
+    public Complex[] Result { get; private set; } = result;
 }

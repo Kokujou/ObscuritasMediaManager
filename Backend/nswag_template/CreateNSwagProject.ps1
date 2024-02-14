@@ -15,7 +15,7 @@ function Resolve-Parameters(){
     $solution = Get-ChildItem -Include "*.sln" -Path $directory.Path -Recurse
     $solutionName = $solution.Name.Replace(".sln","")
 
-    $global:sourceProjectPath = (Get-Item -Path "$($solution.Directory.FullName)/$solutionName/$solutionName.csproj").FullName
+    $global:sourceProjectPath = (Get-Item -Path "$($solution.Directory.FullName)/$solutionName.csproj").FullName
     Write-Host "Writing variable sourceProjectPath=$sourceProjectPath"
     $global:csProjectNamespace = $solutionName
     Write-Host "Writing variable csProjectNamespace=$csProjectNamespace"
@@ -75,4 +75,4 @@ cd $targetProjectFolder
 npm install typescript -g
 tsc --project tsconfig.json
 cd $PSScriptRoot
-copy-item .\nswag_client\dist\* ..\..\..\ObscuritasMediaManager.Frontend\ -Recurse
+copy-item .\nswag_client\dist\* ..\..\..\ObscuritasMediaManager\Frontend -Recurse

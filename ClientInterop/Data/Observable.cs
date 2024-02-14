@@ -3,17 +3,13 @@ using System.Linq;
 
 namespace ObscuritasMediaManager.ClientInterop.Data;
 
-public class Observable<T> where T : notnull
+public class Observable<T>(T initialValue)
+    where T : notnull
 {
     public T Current => currentValue;
 
     private List<Subscription> subscriptions { get; set; } = new();
-    private T currentValue { get; set; }
-
-    public Observable(T initialValue)
-    {
-        currentValue = initialValue;
-    }
+    private T currentValue { get; set; } = initialValue;
 
     public Subscription Subscribe(Action<(T? oldValue, T? newValue)> observer, bool skipInitial = false)
     {

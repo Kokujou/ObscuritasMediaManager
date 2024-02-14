@@ -5,7 +5,7 @@ using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
-public class DatabaseContext : DbContext
+public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbContext(options)
 {
     public DbSet<MediaGenreModel> MediaGenres { get; set; }
     public DbSet<MediaModel> Media { get; set; }
@@ -16,8 +16,6 @@ public class DatabaseContext : DbContext
     public DbSet<PlaylistModel> Playlists { get; set; }
     public DbSet<RecipeModel> Recipes { get; set; }
     public DbSet<UserSettingsModel> UserSettings { get; set; }
-
-    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

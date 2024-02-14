@@ -1,4 +1,4 @@
 {
-  "outputPath": "../ObscuritasMediaManager.Frontend/client-interop/",
+  "outputPath": "../Frontend/client-interop/",
   "clearOutputDirectory":  true
 }

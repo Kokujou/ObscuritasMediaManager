@@ -12,20 +12,13 @@ using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
-public class MediaRepository
+public class MediaRepository(DatabaseContext context)
 {
-    private readonly DatabaseContext _context;
-
-    public MediaRepository(DatabaseContext context)
-    {
-        _context = context;
-    }
-
     public async Task<KeyValuePair<Guid?, ModelCreationState>> CreateAsync(MediaModel media)
     {
         try
         {
-            var existing = await _context.Media
+            var existing = await context.Media
                 .FirstOrDefaultAsync(
                     x => (x.RootFolderPath == media.RootFolderPath)
                         || ((x.Type == media.Type) && (x.Language == media.Language) && (x.Name.ToLower() == media.Name.ToLower())));
@@ -39,10 +32,10 @@ public class MediaRepository
                 return new(existing.Id, ModelCreationState.Updated);
             }
 
-            await _context.Media.AddAsync(media);
-            foreach (var entry in _context.ChangeTracker.Entries<MediaGenreModel>())
+            await context.Media.AddAsync(media);
+            foreach (var entry in context.ChangeTracker.Entries<MediaGenreModel>())
                 entry.State = EntityState.Unchanged;
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return new(media.Id, ModelCreationState.Success);
         }
         catch (Exception ex) when (ex.InnerException is SqliteException inner and { SqliteExtendedErrorCode: 2067 })
@@ -58,7 +51,7 @@ public class MediaRepository
 
     public async Task UpdateAsync(Guid id, JsonNode old, JsonNode updated, JsonSerializerOptions serializerOptions)
     {
-        var actual = await _context.Media.IgnoreAutoIncludes().AsTracking().SingleOrDefaultAsync(x => x.Id == id);
+        var actual = await context.Media.IgnoreAutoIncludes().AsTracking().SingleOrDefaultAsync(x => x.Id == id);
         if (actual == default) throw new ModelNotFoundException(id);
 
         if (updated[nameof(MediaModel.Genres)] is not null)
@@ -73,17 +66,17 @@ public class MediaRepository
         }
 
         actual.UpdateFromJson(old, updated, serializerOptions);
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 
     public async Task UpdatePropertyAsync<T>(Guid id, Expression<Func<MediaModel, T>> property, T value)
     {
-        await _context.Media.IgnoreAutoIncludes().Where(x => x.Id == id).ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
+        await context.Media.IgnoreAutoIncludes().Where(x => x.Id == id).ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
     }
 
     public async Task<MediaModel> GetAsync(Guid guid)
     {
-        var response = await _context.Media.SingleOrDefaultAsync(x => x.Id == guid);
+        var response = await context.Media.SingleOrDefaultAsync(x => x.Id == guid);
         if (response == default)
             throw new ModelNotFoundException(guid);
         return response;
@@ -91,16 +84,16 @@ public class MediaRepository
 
     public  IQueryable<MediaModel> GetAll()
     {
-        return  _context.Media;
+        return  context.Media;
     }
 
     public async Task DeleteAsync(Guid mediaId)
     {
-        await _context.Media.IgnoreAutoIncludes().Where(x => x.Id == mediaId).ExecuteDeleteAsync();
+        await context.Media.IgnoreAutoIncludes().Where(x => x.Id == mediaId).ExecuteDeleteAsync();
     }
 
     public async ValueTask DisposeAsync()
     {
-        await _context.DisposeAsync();
+        await context.DisposeAsync();
     }
 }

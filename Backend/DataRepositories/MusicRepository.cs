@@ -13,18 +13,11 @@ using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
-public class MusicRepository
+public class MusicRepository(DatabaseContext context)
 {
-    private readonly DatabaseContext _context;
-
-    public MusicRepository(DatabaseContext context)
-    {
-        _context = context;
-    }
-
     public async Task UpdatePropertyAsync<T>(string hash, Expression<Func<MusicModel, T>> property, T value)
     {
-        await _context.Music
+        await context.Music
             .IgnoreAutoIncludes()
             .Where(x => x.Hash == hash)
             .ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
@@ -32,7 +25,7 @@ public class MusicRepository
 
     public async Task UpdateAsync(string hash, JsonNode old, JsonNode updated, JsonSerializerOptions serializerOptions)
     {
-        var actual = await _context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);
+        var actual = await context.Music.AsTracking().SingleOrDefaultAsync(x => x.Hash == hash);
         if (actual == default) throw new ModelNotFoundException(hash);
 
         if (updated[nameof(MusicModel.Instruments)] is not null)
@@ -47,7 +40,7 @@ public class MusicRepository
         }
 
         actual.UpdateFromJson(old, updated, serializerOptions);
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 
     public async Task RecalculateHashesAsync()
@@ -60,32 +53,32 @@ public class MusicRepository
             track.CalculateHash();
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (Exception)
             {
                 track.Hash = $"{track.Hash}_{new Random().Next()}";
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
         }
     }
 
     public async Task<MusicModel> GetAsync(string hash)
     {
-        var response = await _context.Music.SingleAsync(x => x.Hash == hash);
+        var response = await context.Music.SingleAsync(x => x.Hash == hash);
         return response;
     }
 
     public IQueryable<MusicModel> GetAll()
     {
-        return _context.Music;
+        return context.Music;
     }
 
     public async Task<ModelCreationState> CreateTrackAsync(MusicModel track)
     {
         try
         {
-            var existing = await _context.Music.FirstOrDefaultAsync(x => x.Hash == track.Hash);
+            var existing = await context.Music.FirstOrDefaultAsync(x => x.Hash == track.Hash);
 
             if ((existing is not null) && (existing.GetNormalizedPath() == track.GetNormalizedPath()))
                 return ModelCreationState.Ignored;
@@ -96,10 +89,10 @@ public class MusicRepository
                 return ModelCreationState.Updated;
             }
 
-            await _context.Music.AddAsync(track);
-            foreach (var entry in _context.ChangeTracker.Entries<InstrumentModel>())
+            await context.Music.AddAsync(track);
+            foreach (var entry in context.ChangeTracker.Entries<InstrumentModel>())
                 entry.State = EntityState.Unchanged;
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return ModelCreationState.Success;
         }
         catch (Exception ex) when (ex.InnerException is SqliteException inner and { SqliteExtendedErrorCode : 2067 })
@@ -115,18 +108,18 @@ public class MusicRepository
 
     public async Task<IEnumerable<InstrumentModel>> GetInstrumentsAsync()
     {
-        return await _context.Instruments.ToListAsync();
+        return await context.Instruments.ToListAsync();
     }
 
     public async Task AddInstrumentAsync(InstrumentModel instrument)
     {
-        await _context.Instruments.AddAsync(instrument);
-        await _context.SaveChangesAsync();
+        await context.Instruments.AddAsync(instrument);
+        await context.SaveChangesAsync();
     }
 
     public async Task SoftDeleteTracksAsync(IEnumerable<string> trackHashes)
     {
-        await _context.Music
+        await context.Music
             .IgnoreAutoIncludes()
             .Where(x => trackHashes.Contains(x.Hash))
             .ExecuteUpdateAsync(builder => builder.SetProperty(x => x.Deleted, x => true));
@@ -134,14 +127,14 @@ public class MusicRepository
 
     public async Task UndeleteTracksAsync(IEnumerable<string> trackHashes)
     {
-        await _context.Music
+        await context.Music
             .Where(x => trackHashes.Contains(x.Hash))
             .ExecuteUpdateAsync(builder => builder.SetProperty(x => x.Deleted, x => false));
     }
 
     public async Task HardDeleteTracksAsync(IEnumerable<string> trackHashes)
     {
-        var tracks = await _context.Music.Where(x => trackHashes.Contains(x.Hash)).ToListAsync();
+        var tracks = await context.Music.Where(x => trackHashes.Contains(x.Hash)).ToListAsync();
         var failedTrackDictionary = new Dictionary<string, string>();
         foreach (var track in tracks)
             try
@@ -154,7 +147,7 @@ public class MusicRepository
             }
 
         var succeededTrackHashes = trackHashes.Except(failedTrackDictionary.Keys);
-        var deleted = await _context.Music.Where(x => succeededTrackHashes.Contains(x.Hash)).ExecuteDeleteAsync();
+        var deleted = await context.Music.Where(x => succeededTrackHashes.Contains(x.Hash)).ExecuteDeleteAsync();
 
         if (deleted != succeededTrackHashes.Count())
             failedTrackDictionary.Add("Unknown", "Some weird SQL error");
@@ -168,7 +161,7 @@ public class MusicRepository
 
     public async Task RemoveInstrumentAsync(InstrumentType type, string name)
     {
-        _context.Instruments.Where(x => (x.Type == type) && (x.Name == name)).ExecuteDelete();
-        await _context.SaveChangesAsync();
+        context.Instruments.Where(x => (x.Type == type) && (x.Name == name)).ExecuteDelete();
+        await context.SaveChangesAsync();
     }
 }

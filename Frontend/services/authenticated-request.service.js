@@ -13,7 +13,9 @@ export class AuthenticatedRequestService {
      */
     async fetch(url, requestInit) {
         try {
-            var response = await fetch(url, requestInit);
+            requestInit.mode = 'cors';
+            requestInit.signal = null;
+            var response = await window.fetch(url, requestInit);
 
             if (response.status == 401) {
                 changePage(LoginPage);
