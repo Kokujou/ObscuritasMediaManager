@@ -23,16 +23,27 @@ export class MaintenanceService {
                 resolve(false);
             });
 
+            var hasInvalid = false;
             for (var medium of Session.mediaList.current()) {
                 if (aborted) return;
 
                 var isValid = await CleanupService.validateMediaRoot(medium.rootFolderPath);
                 if (isValid) continue;
+
+                hasInvalid = true;
                 selectionDialog.addEntry(
                     medium.id,
                     LinkElement.forPage(MediaDetailPage, { mediaId: medium.id }, medium.name, { target: '_blank' })
                 );
             }
+
+            if (!hasInvalid) {
+                selectionDialog.remove();
+                await DialogBase.show('Erfolg', { content: 'Keine fehlerhaften Medien gefunden.', acceptActionText: 'Ok' });
+                resolve(false);
+                return;
+            }
+
             complete = true;
 
             selectionDialog.addEventListener(
