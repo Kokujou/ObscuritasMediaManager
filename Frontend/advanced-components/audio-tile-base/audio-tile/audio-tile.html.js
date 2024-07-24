@@ -42,5 +42,5 @@ function renderGenreTags(audioTile) {
  */
 function renderInstrumentIcons(audioTile) {
     var iconsToDisplay = audioTile.track.instrumentTypes;
-    return html`${iconsToDisplay.map((x) => html`<div class="inline-icon instrument-type ${x}"></div>`)}`;
+    return html`${iconsToDisplay.map((x) => html`<div class="inline-icon" instrument-type="${x}"></div>`)}`;
 }

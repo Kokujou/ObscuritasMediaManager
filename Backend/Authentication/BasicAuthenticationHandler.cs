@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
-using System.Security.Claims;
 using System.Text.Encodings.Web;
 
 namespace ObscuritasMediaManager.Backend.Authentication;
@@ -19,7 +18,7 @@ public class BasicAuthenticationHandler(
         var cookie = Request.Headers.Cookie.GetCookie("Authorization");
         if (cookie is null) return AuthenticateResult.Fail("invalid auth header");
 
-        var token = cookie["Basic ".Length..].Split(";")[0];
+        var token = cookie.Split(";")[0];
         var decoded = token.FromBase64String();
         if (decoded is null) return AuthenticateResult.Fail("token could not be decoded");
 
@@ -33,6 +32,6 @@ public class BasicAuthenticationHandler(
         var user = await userRepository.LogonAsync(username, password);
         if (user is null) return AuthenticateResult.Fail("wrong combination of username and password");
 
-        return AuthenticateResult.Success(new AuthenticationTicket(new ClaimsPrincipal(user), "basic"));
+        return AuthenticateResult.Success(new(new(user), "basic"));
     }
 }

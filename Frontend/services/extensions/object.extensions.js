@@ -9,9 +9,9 @@ export function getKeyFor(target, value) {
 }
 
 /**
- * @template T
+ * @template {function} T
  * @param {T} object
- * @param {keyof T & string} property
+ * @param {keyof T["prototype"] & string} property
  */
 export function nameof(object, property) {
     return property;

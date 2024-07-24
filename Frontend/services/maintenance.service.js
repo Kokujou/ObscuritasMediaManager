@@ -28,7 +28,10 @@ export class MaintenanceService {
 
                 var isValid = await CleanupService.validateMediaRoot(medium.rootFolderPath);
                 if (isValid) continue;
-                selectionDialog.addEntry(medium.id, LinkElement.forPage(MediaDetailPage, { mediaId: medium.id }, medium.name));
+                selectionDialog.addEntry(
+                    medium.id,
+                    LinkElement.forPage(MediaDetailPage, { mediaId: medium.id }, medium.name, { target: '_blank' })
+                );
             }
             complete = true;
 

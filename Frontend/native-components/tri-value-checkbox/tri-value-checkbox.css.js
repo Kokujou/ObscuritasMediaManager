@@ -22,6 +22,7 @@ export function renderTriValueCheckbox() {
             color: white;
             text-shadow: 2px 2px 2px black;
             font-size: 18px;
+            white-space: collapse;
         }
 
         .checkbox:active::after {

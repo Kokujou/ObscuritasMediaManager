@@ -25,18 +25,18 @@ export function registerContentWarnings() {
 function getContentWarningIconPath(warning) {
     switch (warning) {
         case ContentWarning.Violence:
-            return '/resources/icons/content-warnings/conflict.png';
+            return './resources/icons/content-warnings/conflict.png';
         case ContentWarning.Sexuality:
-            return '/resources/icons/content-warnings/sex.png';
+            return './resources/icons/content-warnings/sex.png';
         case ContentWarning.Gore:
-            return '/resources/icons/content-warnings/gore.png';
+            return './resources/icons/content-warnings/gore.png';
         case ContentWarning.Horror:
-            return '/resources/icons/content-warnings/horror.png';
+            return './resources/icons/content-warnings/horror.png';
         case ContentWarning.Vulgarity:
-            return '/resources/icons/content-warnings/swearing.png';
+            return './resources/icons/content-warnings/swearing.png';
         case ContentWarning.Drugs:
-            return '/resources/icons/content-warnings/drugs.png';
+            return './resources/icons/content-warnings/drugs.png';
         case ContentWarning.Depression:
-            return '/resources/icons/content-warnings/depression.png';
+            return './resources/icons/content-warnings/depression.png';
     }
 }

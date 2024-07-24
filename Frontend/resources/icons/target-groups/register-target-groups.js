@@ -27,16 +27,16 @@ export function registerTargetGroups() {
 function getTargetGroupIconPath(group) {
     switch (group) {
         case TargetGroup.Children:
-            return '/resources/icons/target-groups/children.png';
+            return './resources/icons/target-groups/children.png';
         case TargetGroup.Adolescents:
-            return '/resources/icons/target-groups/adolescents.png';
+            return './resources/icons/target-groups/adolescents.png';
         case TargetGroup.Adults:
-            return '/resources/icons/target-groups/adults.png';
+            return './resources/icons/target-groups/adults.png';
         case TargetGroup.Families:
-            return '/resources/icons/target-groups/family.png';
+            return './resources/icons/target-groups/family.png';
         case TargetGroup.Men:
-            return '/resources/icons/target-groups/male.png';
+            return './resources/icons/target-groups/male.png';
         case TargetGroup.Women:
-            return '/resources/icons/target-groups/female.png';
+            return './resources/icons/target-groups/female.png';
     }
 }

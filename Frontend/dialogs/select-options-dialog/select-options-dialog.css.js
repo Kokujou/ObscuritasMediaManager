@@ -3,12 +3,14 @@ import { css } from '../../exports.js';
 export function renderSelectOptionsDialogStyles() {
     return css`
         #content {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        #items {
             display: flex;
             flex-direction: column;
             justify-content: center;
-
-            max-height: 300px;
-            overflow-y: auto;
         }
 
         .option {
@@ -20,6 +22,10 @@ export function renderSelectOptionsDialogStyles() {
 
         label {
             width: 100%;
+        }
+
+        link-element:hover {
+            text-decoration: underline;
         }
 
         loading-circle {

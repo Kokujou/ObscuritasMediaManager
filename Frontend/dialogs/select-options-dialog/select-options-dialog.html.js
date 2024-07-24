@@ -16,14 +16,16 @@ export function renderSelectOptionsDialog(dialog) {
             @accept="${(e) => dialog.accept(e)}"
         >
             <div id="content">
-                ${Object.keys(dialog.options).map(
-                    (key) =>
-                        html`<div class="option">
-                            <input id="${key}" type="${dialog.multiselect ? 'checkbox' : 'radio'}" .value="${key}" checked />
-                            <label for="${key}">${dialog.options[key]}</label>
-                        </div>`
-                )}
-                ${!dialog.isComplete() ? html`<loading-circle></loading-circle>` : ''}
+                <div id="items">
+                    ${Object.keys(dialog.options).map(
+                        (key) =>
+                            html`<div class="option">
+                                <input id="${key}" type="${dialog.multiselect ? 'checkbox' : 'radio'}" .value="${key}" checked />
+                                <label for="${key}">${dialog.options[key]}</label>
+                            </div>`
+                    )}
+                    ${!dialog.isComplete() ? html`<loading-circle></loading-circle>` : ''}
+                </div>
             </div>
         </dialog-base>
     `;

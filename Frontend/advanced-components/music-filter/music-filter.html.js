@@ -152,7 +152,7 @@ export function renderMusicFilter(musicFilter) {
                                 .value="${musicFilter.filter.instrumentTypes.states[type]}"
                                 .disabled="${!musicFilter.canFilterInstrumentType(type)}"
                             >
-                                <div class="inline-icon ${type}"></div>
+                                <div class="inline-icon" instrument-type="${type}"></div>
                             </tri-value-checkbox>`
                     )}
                 </side-scroller>

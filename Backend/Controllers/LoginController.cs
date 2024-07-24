@@ -12,11 +12,11 @@ public class LoginController(UserRepository userRepository) : ControllerBase
     [HttpPost]
     public async Task<string> LoginAsync(CredentialsRequest request)
     {
-        var user = await userRepository.LogonAsync(request.Username, request.Password);
-        if (user is null) throw new Exception("invalid username or password");
-
+        _ = await userRepository.LogonAsync(request.Username, request.Password) ??
+            throw new("invalid username or password");
         var token = $"{request.Username}:{request.Password}".ToBase64String();
-        Response.Cookies.Append("Authorization", $"Basic {token}", new CookieOptions { Expires = DateTimeOffset.MaxValue });
+        Response.Cookies.Append("Authorization", $"{token}",
+            new() { Expires = DateTimeOffset.MaxValue, Path = HttpContext.Request.PathBase });
         return token;
     }
 }

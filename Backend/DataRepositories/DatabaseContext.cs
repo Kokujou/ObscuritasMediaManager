@@ -26,7 +26,7 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
             .HasConversion(
                 x => string.Join(",", x),
                 x => x.Split(",",
-                             StringSplitOptions.RemoveEmptyEntries).Select(y => y.ParseEnumOrDefault<MusicGenre>()).ToList());
+                    StringSplitOptions.RemoveEmptyEntries).Select(y => y.ParseEnumOrDefault<MusicGenre>()).ToList());
 
         PlaylistModel.Configure(modelBuilder);
 
