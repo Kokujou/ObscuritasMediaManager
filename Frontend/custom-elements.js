@@ -42,6 +42,7 @@ import { SideScroller } from './native-components/side-scroller/side-scroller.js
 import { TagLabel } from './native-components/tag-label/tag-label.js';
 import { TriValueCheckbox } from './native-components/tri-value-checkbox/tri-value-checkbox.js';
 import { WarningBanner } from './native-components/warning-banner/warning-banner.js';
+import { CreateMediaPage } from './pages/create-media-page/create-media-page.js';
 import { CreateRecipePage } from './pages/create-recipe-page/create-recipe-page.js';
 import { LoginPage } from './pages/login-page/login-page.js';
 import { MediaDetailPage } from './pages/media-detail-page/media-detail-page.js';
@@ -120,3 +121,4 @@ window.customElements.define('warning-banner', WarningBanner);
 window.customElements.define('entity-status-dialog', EntityStatusDialog);
 window.customElements.define('loading-circle', LoadingCircle);
 window.customElements.define('context-tooltip', ContextTooltip);
+window.customElements.define('create-media-page', CreateMediaPage);

@@ -1,6 +1,7 @@
 import { html } from '../../exports.js';
 import { LinkElement } from '../../native-components/link-element/link-element.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
+import { CreateMediaPage } from '../create-media-page/create-media-page.js';
 import { MediaDetailPage } from '../media-detail-page/media-detail-page.js';
 import { MediaPage } from './media-page.js';
 
@@ -41,8 +42,8 @@ export function renderMediaPageTemplate(page) {
             <div id="footer">
                 <div id="result-options">
                     ${LinkElement.forPage(
-                        MediaDetailPage,
-                        { createNew: true, editMode: true },
+                        CreateMediaPage,
+                        {},
                         html`
                             <div
                                 id="add-media-button"

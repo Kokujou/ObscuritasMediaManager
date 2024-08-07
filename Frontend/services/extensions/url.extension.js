@@ -24,13 +24,15 @@ import { setFavicon } from './style.extensions.js';
  */
 export function changePage(target, params = {}, reflectInHistory = true) {
     setFavicon('');
-    var search = '';
+    var newUrl = new URL(location.href);
+    newUrl.search = '';
+    newUrl.hash = '';
     var paramEntries = Object.entries(params ?? {});
-    if (paramEntries.length > 0) search = '?' + paramEntries.map((x) => `${x[0]}=${x[1]}`).join('&');
-    var newUrl = search + `#${getPageName(target)}`;
-    if (reflectInHistory) {
-        history.pushState(null, '', newUrl);
-    } else history.replaceState(null, '', newUrl);
+    if (paramEntries.length > 0) newUrl.search = '?' + paramEntries.map((x) => `${x[0]}=${x[1]}`).join('&');
+    newUrl.hash = '#' + getPageName(target);
+    if (reflectInHistory) history.pushState(null, '', newUrl);
+    else history.replaceState(null, '', newUrl);
+
     Session.currentPage.next(getPageName(target));
 }
 

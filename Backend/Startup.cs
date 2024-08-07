@@ -28,6 +28,7 @@ public class Startup
         services.AddSingleton<ILyricsClient, RizuchanClient>();
         services.AddSingleton<ILyricsClient, GeniusClientExtended>();
         services.AddSingleton<LyricsService>();
+        services.AddSingleton<AnimeLoadsService>();
         services.AddHttpClient();
 
         services.AddDbContext<DatabaseContext>(
@@ -61,6 +62,8 @@ public class Startup
         services.AddAuthentication("basic")
             .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("basic", null);
         services.AddAuthorization();
+
+        services.BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true });
     }
 
     public void Configure(IApplicationBuilder app)
@@ -102,5 +105,8 @@ public class Startup
         app.UseSwaggerUI(
             options => options.SwaggerEndpoint("v1/swagger.json",
                 "Obscuritas Media Management"));
+
+        var animeLoadsService = app.ApplicationServices.GetRequiredService<AnimeLoadsService>();
+        _ = animeLoadsService.FillAnimesAsync();
     }
 }

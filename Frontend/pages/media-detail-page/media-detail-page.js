@@ -34,6 +34,7 @@ export class MediaDetailPage extends LitElementBase {
     static get properties() {
         return {
             editMode: { type: Boolean, reflect: true },
+            createNew: { type: Boolean, reflect: true },
 
             newGenre: { type: Boolean, reflect: false },
             hoveredRating: { type: Number, reflect: false },
@@ -199,9 +200,8 @@ export class MediaDetailPage extends LitElementBase {
                 })
             );
             if (result.value != ModelCreationState.Success) throw new Error(result.value);
+            Session.mediaList.next(await MediaService.getAll());
             await MessageSnackbar.popup('Der Eintrag wurde erfolgreich erstellt.', 'success');
-            Session.mediaList.current().push(this.updatedMedia);
-            Session.mediaList.refresh();
             changePage(MediaDetailPage, { mediaId: result.key });
         } catch (err) {
             await MessageSnackbar.popup('Ein Fehler ist beim erstellen des Eintrags aufgetreten: ' + err, 'error');
