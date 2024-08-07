@@ -105,8 +105,5 @@ public class Startup
         app.UseSwaggerUI(
             options => options.SwaggerEndpoint("v1/swagger.json",
                 "Obscuritas Media Management"));
-
-        var animeLoadsService = app.ApplicationServices.GetRequiredService<AnimeLoadsService>();
-        _ = animeLoadsService.FillAnimesAsync();
     }
 }
