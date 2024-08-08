@@ -1,18 +1,22 @@
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Session } from '../../data/session.js';
+import { EntityStatusDialog } from '../../dialogs/entity-status-dialog/entity-status-dialog.js';
 import { ContextTooltip } from '../../native-components/context-tooltip/context-tooltip.js';
+import { LinkElement } from '../../native-components/link-element/link-element.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
 import {
     Language,
     MediaCategory,
     MediaModel,
+    ModelCreationState,
     UpdateRequestOfJsonElement,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService } from '../../services/backend.services.js';
 import { MaintenanceService } from '../../services/maintenance.service.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
 import { MediaImportService } from '../../services/media-import.service.js';
+import { MediaDetailPage } from '../media-detail-page/media-detail-page.js';
 import { renderMediaPageStyles } from './media-page.css.js';
 import { renderMediaPageTemplate } from './media-page.html.js';
 
@@ -84,6 +88,28 @@ export class MediaPage extends LitElementBase {
         if (!success) return;
         Session.mediaList.next(await MediaService.getAll());
         await this.requestFullUpdate();
+    }
+
+    async autoFillAnime() {
+        var relevantAnime = Session.mediaList
+            .current()
+            .filter((x) => x.type == MediaCategory.AnimeMovies || x.type == MediaCategory.AnimeSeries);
+
+        var isComplete = false;
+        var dialog = EntityStatusDialog.show(() => isComplete);
+        for (var anime of relevantAnime) {
+            try {
+                var updated = await MediaService.autoFillMediaDetails(anime.id);
+                dialog.addEntry({
+                    status: ModelCreationState.Updated,
+                    text: LinkElement.forPage(MediaDetailPage, { mediaId: anime.id }, updated.name),
+                });
+            } catch {}
+        }
+        dialog.addEventListener('accept', () => dialog.remove());
+        isComplete = true;
+
+        dialog.requestFullUpdate();
     }
 
     async repairMedia() {

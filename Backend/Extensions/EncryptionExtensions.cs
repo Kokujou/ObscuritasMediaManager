@@ -14,7 +14,7 @@ public static class EncryptionExtensions
     public static string Decrypt(this string text)
     {
         return Encoding.Unicode
-                       .GetString(
-                           ProtectedData.Unprotect(Convert.FromBase64String(text), null, DataProtectionScope.LocalMachine));
+            .GetString(
+                ProtectedData.Unprotect(Convert.FromBase64String(text), null, DataProtectionScope.LocalMachine));
     }
 }

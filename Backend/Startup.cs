@@ -28,7 +28,7 @@ public class Startup
         services.AddSingleton<ILyricsClient, RizuchanClient>();
         services.AddSingleton<ILyricsClient, GeniusClientExtended>();
         services.AddSingleton<LyricsService>();
-        services.AddSingleton<AnimeLoadsService>();
+        services.AddScoped<AnimeLoadsService>();
         services.AddHttpClient();
 
         services.AddDbContext<DatabaseContext>(

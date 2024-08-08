@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Xabe.FFmpeg;
+﻿using Xabe.FFmpeg;
 
 namespace ObscuritasMediaManager.Backend.Extensions;
 

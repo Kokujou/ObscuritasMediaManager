@@ -8,6 +8,7 @@ Param(
     $sourceFramework = "net8.0",
     $clientTargetRuntime = "Net60"
 )
+Start-Sleep -Seconds 3
 cd $PSScriptRoot
 function Resolve-Parameters(){
     $directory = Resolve-Path -Path $workingDirectory

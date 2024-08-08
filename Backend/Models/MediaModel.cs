@@ -52,6 +52,9 @@ public class MediaModel
     [NotMapped] [NotHashable] public string Hash => this.GetHash();
 
     [MaxLength(255)] public string Name { get; set; } = null!;
+    [MaxLength(255)] public string? KanjiName { get; set; }
+    [MaxLength(255)] public string? GermanName { get; set; }
+    [MaxLength(255)] public string? EnglishName { get; set; }
     [Key] public Guid Id { get; set; } = Guid.NewGuid();
     [MaxLength(255)] public string? Image { get; set; }
     public Language Language { get; set; }

@@ -9,6 +9,7 @@ export function renderEntityStatusDialogStyles() {
             font-size: 18px;
 
             max-height: 250px;
+            min-width: 400px;
             overflow-y: scroll;
             overflow-x: hidden;
 
@@ -48,6 +49,8 @@ export function renderEntityStatusDialogStyles() {
         #entries-loading-indication {
             min-width: 50px;
             min-height: 50px;
+            width: 50px;
+            height: 50px;
             max-width: 50px;
             max-height: 50px;
             align-self: center;

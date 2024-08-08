@@ -1,5 +1,4 @@
-﻿
-namespace ObscuritasMediaManager.Backend.Attributes;
+﻿namespace ObscuritasMediaManager.Backend.Attributes;
 
 public class TranslationAttribute(string translation) : Attribute
 {

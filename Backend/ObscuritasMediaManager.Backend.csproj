@@ -26,7 +26,8 @@
 		<PackageReference Include="Genius.NET" Version="4.0.1" />
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.62" />
 		<PackageReference Include="MediaInfo.Wrapper.Core" Version="21.9.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.7" /> <!--if you remove this, you will die--> 
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.7" />
+		<!--if you remove this, you will die-->
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
 			<PrivateAssets>all</PrivateAssets>
@@ -34,6 +35,9 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.7" />
 		<PackageReference Include="PuppeteerSharp" Version="18.0.5" />
+		<PackageReference Include="Selenium.Firefox.WebDriver" Version="0.27.0" />
+		<PackageReference Include="Selenium.WebDriver" Version="4.23.0" />
+		<PackageReference Include="Selenium.WebDriver.GeckoDriver.Win64" Version="0.35.0" />
 		<PackageReference Include="Serialize.Linq" Version="3.0.152" />
 		<PackageReference Include="Serilog" Version="4.0.1" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
@@ -42,6 +46,7 @@
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.7.0" />
 		<PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
 		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
+		<PackageReference Include="WebDriverManager" Version="2.17.4" />
 		<PackageReference Include="Xabe.FFmpeg" Version="5.2.6" />
 	</ItemGroup>
 
@@ -50,15 +55,15 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="MediaInfo.dll">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Services\Interfaces\" />
+		<Folder Include="Services\Interfaces\" />
 	</ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<Target Name="PostBuild" AfterTargets="Build">
 		<Exec Command="powershell  -file BuildClients.ps1 -configuration $(Configuration)" />
 	</Target>
 

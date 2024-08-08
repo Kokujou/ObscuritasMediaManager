@@ -1,4 +1,5 @@
-﻿
-namespace ObscuritasMediaManager.Backend.Attributes;
+﻿namespace ObscuritasMediaManager.Backend.Attributes;
 
-public class NotHashableAttribute : Attribute { }
+public class NotHashableAttribute : Attribute
+{
+}

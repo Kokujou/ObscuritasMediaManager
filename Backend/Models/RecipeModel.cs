@@ -9,6 +9,13 @@ namespace ObscuritasMediaManager.Backend.Models;
 [Table("Recipes")]
 public class RecipeModel
 {
+    public static void Configure(ModelBuilder builder)
+    {
+        var entity = builder.Entity<RecipeModel>();
+        entity.HasMany(x => x.Ingredients).WithOne().HasForeignKey(x => x.RecipeId).HasPrincipalKey(x => x.Id);
+        entity.Navigation(x => x.Ingredients).AutoInclude();
+    }
+
     public Guid Id { get; set; }
     [MaxLength(255)] public required string Title { get; set; }
     public Language Nation { get; set; }
@@ -25,11 +32,4 @@ public class RecipeModel
 
     public IEnumerable<IngredientModel> Ingredients { get; set; } = [];
     [MaxLength(9999)] public string? FormattedText { get; set; }
-
-    public static void Configure(ModelBuilder builder)
-    {
-        var entity = builder.Entity<RecipeModel>();
-        entity.HasMany(x => x.Ingredients).WithOne().HasForeignKey(x => x.RecipeId).HasPrincipalKey(x => x.Id);
-        entity.Navigation(x => x.Ingredients).AutoInclude();
-    }
 }

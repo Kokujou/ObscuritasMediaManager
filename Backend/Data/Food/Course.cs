@@ -1,5 +1,4 @@
-﻿
-namespace ObscuritasMediaManager.Backend.Data.Food;
+﻿namespace ObscuritasMediaManager.Backend.Data.Food;
 
 public enum Course
 {

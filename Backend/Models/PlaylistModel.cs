@@ -11,26 +11,6 @@ namespace ObscuritasMediaManager.Backend.Models;
 [Table("Playlists")]
 public class PlaylistModel
 {
-    [Key] public Guid Id { get; set; }
-    [MaxLength(255)] public required string Name { get; set; }
-    [MaxLength(255)] public string? Author { get; set; }
-    [MaxLength(255)] public string? Image { get; set; }
-    public byte Rating { get; set; }
-    public Language Language { get; set; }
-    public Language Nation { get; set; }
-    public IEnumerable<MusicGenre> Genres { get; set; } = new List<MusicGenre>();
-    public bool Complete { get; set; }
-    [NotMapped] public bool IsTemporary { get; set; }
-
-    [JsonIgnore] [IgnoreDataMember] public IEnumerable<PlaylistTrackMappingModel>? TrackMappings { get; set; }
-
-    [NotMapped]
-    public IEnumerable<MusicModel> Tracks
-    {
-        get => TrackMappings?.OrderBy(x => x.Order).Select(x => x.Track!) ?? [];
-        set => CreateMappingsFromTracks(value);
-    }
-
     public static void Configure(ModelBuilder builder)
     {
         var entity = builder.Entity<PlaylistModel>();
@@ -56,6 +36,26 @@ public class PlaylistModel
         mappingEntity.Navigation(x => x.Playlist).AutoInclude();
         mappingEntity.Navigation(x => x.Track).AutoInclude();
         entity.Navigation(x => x.TrackMappings).AutoInclude();
+    }
+
+    [Key] public Guid Id { get; set; }
+    [MaxLength(255)] public required string Name { get; set; }
+    [MaxLength(255)] public string? Author { get; set; }
+    [MaxLength(255)] public string? Image { get; set; }
+    public byte Rating { get; set; }
+    public Language Language { get; set; }
+    public Language Nation { get; set; }
+    public IEnumerable<MusicGenre> Genres { get; set; } = new List<MusicGenre>();
+    public bool Complete { get; set; }
+    [NotMapped] public bool IsTemporary { get; set; }
+
+    [JsonIgnore] [IgnoreDataMember] public IEnumerable<PlaylistTrackMappingModel>? TrackMappings { get; set; }
+
+    [NotMapped]
+    public IEnumerable<MusicModel> Tracks
+    {
+        get => TrackMappings?.OrderBy(x => x.Order).Select(x => x.Track!) ?? [];
+        set => CreateMappingsFromTracks(value);
     }
 
 

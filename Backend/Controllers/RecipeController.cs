@@ -38,7 +38,7 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
     [HttpPatch]
     public async Task UpdateRecipeAsync(RecipeModel recipe)
     {
-        if (!(await recipeRepository.ExistsAsync(recipe.Id))) throw new Exception("recipe not found");
+        if (!await recipeRepository.ExistsAsync(recipe.Id)) throw new("recipe not found");
 
         await recipeRepository.UpdateRecipe(recipe);
     }

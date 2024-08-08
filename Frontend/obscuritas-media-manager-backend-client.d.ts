@@ -73,6 +73,8 @@ export declare class MediaClient {
     protected processHardDeleteMedium(response: Response): Promise<void>;
     fullDeleteMedium(mediaId: string, signal?: AbortSignal | undefined): Promise<void>;
     protected processFullDeleteMedium(response: Response): Promise<void>;
+    autoFillMediaDetails(animeId: string, signal?: AbortSignal | undefined): Promise<MediaModel>;
+    protected processAutoFillMediaDetails(response: Response): Promise<MediaModel>;
 }
 export declare class MusicClient {
     private http;
@@ -360,6 +362,9 @@ export declare class MediaModel implements IMediaModel {
     genres: MediaGenreModel[];
     hash: string;
     name: string;
+    kanjiName: string | null;
+    germanName: string | null;
+    englishName: string | null;
     id: string;
     image: string | null;
     language: Language;
@@ -382,6 +387,9 @@ export interface IMediaModel {
     genres: MediaGenreModel[];
     hash: string;
     name: string;
+    kanjiName: string | null;
+    germanName: string | null;
+    englishName: string | null;
     id: string;
     image: string | null;
     language: Language;

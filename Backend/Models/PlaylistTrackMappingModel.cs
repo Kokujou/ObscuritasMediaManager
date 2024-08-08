@@ -6,14 +6,6 @@ namespace ObscuritasMediaManager.Backend.Models;
 [Table("PlaylistTrackMapping")]
 public record PlaylistTrackMappingModel
 {
-    public required Guid PlaylistId { get; set; }
-    [MaxLength(255)] public required string PlaylistName { get; set; }
-    public PlaylistModel? Playlist { get; set; }
-    [MaxLength(255)] public string? TrackHash { get; set; }
-    [MaxLength(255)] public required string TrackName { get; set; }
-    public MusicModel? Track { get; set; }
-    public int Order { get; set; }
-
     public static PlaylistTrackMappingModel Create(Guid playlistId, string playlistName, MusicModel track, int index)
     {
         return new()
@@ -27,4 +19,12 @@ public record PlaylistTrackMappingModel
             Order = index
         };
     }
+
+    public required Guid PlaylistId { get; set; }
+    [MaxLength(255)] public required string PlaylistName { get; set; }
+    public PlaylistModel? Playlist { get; set; }
+    [MaxLength(255)] public string? TrackHash { get; set; }
+    [MaxLength(255)] public required string TrackName { get; set; }
+    public MusicModel? Track { get; set; }
+    public int Order { get; set; }
 }

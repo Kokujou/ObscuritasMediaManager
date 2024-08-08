@@ -1,5 +1,4 @@
-﻿
-namespace ObscuritasMediaManager.Backend.Extensions;
+﻿namespace ObscuritasMediaManager.Backend.Extensions;
 
 public static class LinqExtensions
 {

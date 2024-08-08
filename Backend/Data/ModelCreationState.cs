@@ -1,5 +1,4 @@
-﻿
-namespace ObscuritasMediaManager.Backend.Data;
+﻿namespace ObscuritasMediaManager.Backend.Data;
 
 public enum ModelCreationState
 {

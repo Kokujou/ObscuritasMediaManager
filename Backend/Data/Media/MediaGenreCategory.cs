@@ -1,5 +1,4 @@
-﻿
-namespace ObscuritasMediaManager.Backend.Data.Media;
+﻿namespace ObscuritasMediaManager.Backend.Data.Media;
 
 public enum MediaGenreCategory
 {
@@ -16,5 +15,5 @@ public enum MediaGenreCategory
     [Translation("Sport")] Sports,
     [Translation("Stil")] Style,
     [Translation("Wesen")] Beings,
-    [Translation("Zeitalter")] Era,
+    [Translation("Zeitalter")] Era
 }

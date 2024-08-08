@@ -742,6 +742,46 @@ export class MediaClient {
         }
         return Promise.resolve(null);
     }
+    autoFillMediaDetails(animeId, signal) {
+        let url_ = this.baseUrl + "/api/Media/auto-fill-anime-details/{animeId}";
+        if (animeId === undefined || animeId === null)
+            throw new Error("The parameter 'animeId' must be defined.");
+        url_ = url_.replace("{animeId}", encodeURIComponent("" + animeId));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "POST",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processAutoFillMediaDetails(_response);
+        });
+    }
+    processAutoFillMediaDetails(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        let _mappings = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = MediaModel.fromJS(resultData200, _mappings);
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
 }
 export class MusicClient {
     http;
@@ -2158,6 +2198,9 @@ export class MediaModel {
     genres;
     hash;
     name;
+    kanjiName;
+    germanName;
+    englishName;
     id;
     image;
     language;
@@ -2197,6 +2240,9 @@ export class MediaModel {
             }
             this.hash = _data["hash"] !== undefined ? _data["hash"] : null;
             this.name = _data["name"] !== undefined ? _data["name"] : null;
+            this.kanjiName = _data["kanjiName"] !== undefined ? _data["kanjiName"] : null;
+            this.germanName = _data["germanName"] !== undefined ? _data["germanName"] : null;
+            this.englishName = _data["englishName"] !== undefined ? _data["englishName"] : null;
             this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.image = _data["image"] !== undefined ? _data["image"] : null;
             this.language = _data["language"] !== undefined ? _data["language"] : null;
@@ -2228,6 +2274,9 @@ export class MediaModel {
         }
         data["hash"] = this.hash !== undefined ? this.hash : null;
         data["name"] = this.name !== undefined ? this.name : null;
+        data["kanjiName"] = this.kanjiName !== undefined ? this.kanjiName : null;
+        data["germanName"] = this.germanName !== undefined ? this.germanName : null;
+        data["englishName"] = this.englishName !== undefined ? this.englishName : null;
         data["id"] = this.id !== undefined ? this.id : null;
         data["image"] = this.image !== undefined ? this.image : null;
         data["language"] = this.language !== undefined ? this.language : null;

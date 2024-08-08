@@ -1,5 +1,4 @@
-﻿
-namespace ObscuritasMediaManager.Backend.Data.Media;
+﻿namespace ObscuritasMediaManager.Backend.Data.Media;
 
 public enum MediaCategory
 {

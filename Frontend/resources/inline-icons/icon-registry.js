@@ -12,6 +12,7 @@ import { descendingIcon } from './general/descending-icon.svg.js';
 import { dragIcon } from './general/drag-icon.svg.js';
 import { globusIcon } from './general/globus-icon.svg.js';
 import { importIcon } from './general/import-icon.svg.js';
+import { lookupIcon } from './general/lookup-icon.svg.js';
 import { noteIcon } from './general/note-icon.svg.js';
 import { plusIcon } from './general/plus-icon.svg.js';
 import { popupIcon } from './general/popup-icon.svg.js';
@@ -53,6 +54,7 @@ class IconRegistry {
     static Pause = pauseIcon();
     static Play = playIcon();
     static Clean = cleanIcon();
+    static Lookup = lookupIcon();
     static Note = noteIcon();
     static Revert = revertIcon();
     static SaveTick = saveTickIcon();

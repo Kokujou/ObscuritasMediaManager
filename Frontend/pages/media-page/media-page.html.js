@@ -60,6 +60,13 @@ export function renderMediaPageTemplate(page) {
                         @pointerover="${(e) => page.requestImportTypeSelection(e)}"
                     ></div>
                     <div
+                        id="auto-fill-button"
+                        class="option-button"
+                        icon="${Icons.Lookup}"
+                        tooltip="Einträge automatisch verfollständigen"
+                        @click="${() => page.autoFillAnime()}"
+                    ></div>
+                    <div
                         id="cleanup-button"
                         class="option-button"
                         icon="${Icons.Clean}"
