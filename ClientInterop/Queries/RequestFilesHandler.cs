@@ -1,7 +1,6 @@
 ﻿using ObscuritasMediaManager.ClientInterop.Requests;
-using System;
-using System.Linq;
 using System.Windows;
+using Application = System.Windows.Application;
 
 namespace ObscuritasMediaManager.ClientInterop.Queries;
 
@@ -13,8 +12,9 @@ public class RequestFilesHandler : IQueryHandler
 
     public async Task<object?> ExecuteAsync(JsonElement? payload)
     {
+        await Task.Yield();
         string[]? files = null;
-        App.Current.Dispatcher
+        Application.Current.Dispatcher
             .Invoke(
                 () =>
                 {
@@ -25,7 +25,11 @@ public class RequestFilesHandler : IQueryHandler
                     OpenFileDialog.Filter = request.GetDialogFilter();
                     var result = OpenFileDialog.ShowDialog();
                     MainWindow.Instance.Hide();
-                    if (result != DialogResult.OK) return;
+                    if (result != DialogResult.OK)
+                    {
+                        return;
+                    }
+
                     files = OpenFileDialog.FileNames;
                 });
         return files;

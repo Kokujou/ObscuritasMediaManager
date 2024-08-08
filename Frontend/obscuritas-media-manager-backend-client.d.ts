@@ -151,8 +151,8 @@ export declare class RecipeClient {
     protected processGetRecipe(response: Response): Promise<RecipeModel>;
 }
 export declare class MusicModel implements IMusicModel {
-    name: string | null;
-    displayName: string | null;
+    name: string;
+    displayName: string;
     author: string | null;
     source: string | null;
     mood1: Mood;
@@ -160,11 +160,11 @@ export declare class MusicModel implements IMusicModel {
     language: Language;
     instrumentation: Instrumentation;
     participants: Participants;
-    instruments: InstrumentModel[] | null;
-    instrumentTypes: InstrumentType[] | null;
-    instrumentNames: string[] | null;
-    genres: MusicGenre[] | null;
-    path: string | null;
+    instruments: InstrumentModel[];
+    instrumentTypes: InstrumentType[];
+    instrumentNames: string[];
+    genres: MusicGenre[];
+    path: string;
     lyrics: string | null;
     rating: number;
     complete: boolean;
@@ -177,8 +177,8 @@ export declare class MusicModel implements IMusicModel {
     clone(): MusicModel;
 }
 export interface IMusicModel {
-    name: string | null;
-    displayName: string | null;
+    name: string;
+    displayName: string;
     author: string | null;
     source: string | null;
     mood1: Mood;
@@ -186,11 +186,11 @@ export interface IMusicModel {
     language: Language;
     instrumentation: Instrumentation;
     participants: Participants;
-    instruments: InstrumentModel[] | null;
-    instrumentTypes: InstrumentType[] | null;
-    instrumentNames: string[] | null;
-    genres: MusicGenre[] | null;
-    path: string | null;
+    instruments: InstrumentModel[];
+    instrumentTypes: InstrumentType[];
+    instrumentNames: string[];
+    genres: MusicGenre[];
+    path: string;
     lyrics: string | null;
     rating: number;
     complete: boolean;
@@ -240,7 +240,7 @@ export declare enum Participants {
 }
 export declare class InstrumentModel implements IInstrumentModel {
     id: number;
-    name: string | null;
+    name: string;
     type: InstrumentType;
     constructor(data?: Partial<IInstrumentModel>);
     init(_data?: any, _mappings?: any): void;
@@ -250,7 +250,7 @@ export declare class InstrumentModel implements IInstrumentModel {
 }
 export interface IInstrumentModel {
     id: number;
-    name: string | null;
+    name: string;
     type: InstrumentType;
 }
 export declare enum InstrumentType {
@@ -275,9 +275,10 @@ export declare enum MusicGenre {
     Country = "Country",
     EasyListening = "EasyListening",
     Electronic = "Electronic",
-    House = "House",
     Flamenco = "Flamenco",
     Folk = "Folk",
+    House = "House",
+    Instrumental = "Instrumental",
     Jazz = "Jazz",
     Latin = "Latin",
     Pop = "Pop",
@@ -298,8 +299,8 @@ export declare enum MusicGenre {
 }
 export declare class GenreModel implements IGenreModel {
     id: string;
-    name: string | null;
-    sectionName: string | null;
+    name: string;
+    sectionName: string;
     constructor(data?: Partial<IGenreModel>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): GenreModel | null;
@@ -308,12 +309,12 @@ export declare class GenreModel implements IGenreModel {
 }
 export interface IGenreModel {
     id: string;
-    name: string | null;
-    sectionName: string | null;
+    name: string;
+    sectionName: string;
 }
 export declare class MediaGenreModel extends GenreModel implements IMediaGenreModel {
+    sectionName: string;
     section: MediaGenreCategory;
-    sectionName: string | null;
     constructor(data?: Partial<IMediaGenreModel>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): MediaGenreModel | null;
@@ -321,8 +322,8 @@ export declare class MediaGenreModel extends GenreModel implements IMediaGenreMo
     clone(): MediaGenreModel;
 }
 export interface IMediaGenreModel extends IGenreModel {
+    sectionName: string;
     section: MediaGenreCategory;
-    sectionName: string | null;
 }
 export declare enum MediaGenreCategory {
     Relationship = "Relationship",
@@ -341,8 +342,8 @@ export declare enum MediaGenreCategory {
     Era = "Era"
 }
 export declare class CredentialsRequest implements ICredentialsRequest {
-    username: string | null;
-    password: string | null;
+    username: string;
+    password: string;
     constructor(data?: Partial<ICredentialsRequest>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): CredentialsRequest | null;
@@ -350,24 +351,24 @@ export declare class CredentialsRequest implements ICredentialsRequest {
     clone(): CredentialsRequest;
 }
 export interface ICredentialsRequest {
-    username: string | null;
-    password: string | null;
+    username: string;
+    password: string;
 }
 export declare class MediaModel implements IMediaModel {
-    contentWarnings: ContentWarning[] | null;
+    contentWarnings: ContentWarning[];
     description: string | null;
-    genres: MediaGenreModel[] | null;
-    hash: string | null;
+    genres: MediaGenreModel[];
+    hash: string;
+    name: string;
     id: string;
     image: string | null;
     language: Language;
-    name: string | null;
     rating: number;
     release: number;
     status: MediaStatus;
     targetGroup: TargetGroup;
     type: MediaCategory;
-    rootFolderPath: string | null;
+    rootFolderPath: string;
     deleted: boolean;
     constructor(data?: Partial<IMediaModel>);
     init(_data?: any, _mappings?: any): void;
@@ -376,20 +377,20 @@ export declare class MediaModel implements IMediaModel {
     clone(): MediaModel;
 }
 export interface IMediaModel {
-    contentWarnings: ContentWarning[] | null;
+    contentWarnings: ContentWarning[];
     description: string | null;
-    genres: MediaGenreModel[] | null;
-    hash: string | null;
+    genres: MediaGenreModel[];
+    hash: string;
+    name: string;
     id: string;
     image: string | null;
     language: Language;
-    name: string | null;
     rating: number;
     release: number;
     status: MediaStatus;
     targetGroup: TargetGroup;
     type: MediaCategory;
-    rootFolderPath: string | null;
+    rootFolderPath: string;
     deleted: boolean;
 }
 export declare enum ContentWarning {
@@ -446,7 +447,7 @@ export declare enum ModelCreationState {
     Error = "Error"
 }
 export declare class MediaCreationRequest implements IMediaCreationRequest {
-    rootPath: string | null;
+    rootPath: string;
     category: MediaCategory;
     language: Language;
     entry: MediaModel | null;
@@ -457,7 +458,7 @@ export declare class MediaCreationRequest implements IMediaCreationRequest {
     clone(): MediaCreationRequest;
 }
 export interface IMediaCreationRequest {
-    rootPath: string | null;
+    rootPath: string;
     category: MediaCategory;
     language: Language;
     entry: MediaModel | null;
@@ -489,8 +490,8 @@ export interface IKeyValuePairOfStringAndModelCreationState {
     value: ModelCreationState;
 }
 export declare class LyricsResponse implements ILyricsResponse {
-    title: string | null;
-    text: string | null;
+    title: string;
+    text: string;
     constructor(data?: Partial<ILyricsResponse>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): LyricsResponse | null;
@@ -498,21 +499,21 @@ export declare class LyricsResponse implements ILyricsResponse {
     clone(): LyricsResponse;
 }
 export interface ILyricsResponse {
-    title: string | null;
-    text: string | null;
+    title: string;
+    text: string;
 }
 export declare class PlaylistModel implements IPlaylistModel {
     id: string;
-    name: string | null;
+    name: string;
     author: string | null;
     image: string | null;
     rating: number;
     language: Language;
     nation: Language;
-    genres: MusicGenre[] | null;
+    genres: MusicGenre[];
     complete: boolean;
     isTemporary: boolean;
-    tracks: MusicModel[] | null;
+    tracks: MusicModel[];
     constructor(data?: Partial<IPlaylistModel>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): PlaylistModel | null;
@@ -521,20 +522,20 @@ export declare class PlaylistModel implements IPlaylistModel {
 }
 export interface IPlaylistModel {
     id: string;
-    name: string | null;
+    name: string;
     author: string | null;
     image: string | null;
     rating: number;
     language: Language;
     nation: Language;
-    genres: MusicGenre[] | null;
+    genres: MusicGenre[];
     complete: boolean;
     isTemporary: boolean;
-    tracks: MusicModel[] | null;
+    tracks: MusicModel[];
 }
 export declare class UpdateRequestOfPlaylistModel implements IUpdateRequestOfPlaylistModel {
-    oldModel: PlaylistModel | null;
-    newModel: PlaylistModel | null;
+    oldModel: PlaylistModel;
+    newModel: PlaylistModel;
     constructor(data?: Partial<IUpdateRequestOfPlaylistModel>);
     init(_data?: any, _mappings?: any): void;
     static fromJS(data: any, _mappings?: any): UpdateRequestOfPlaylistModel | null;
@@ -542,12 +543,12 @@ export declare class UpdateRequestOfPlaylistModel implements IUpdateRequestOfPla
     clone(): UpdateRequestOfPlaylistModel;
 }
 export interface IUpdateRequestOfPlaylistModel {
-    oldModel: PlaylistModel | null;
-    newModel: PlaylistModel | null;
+    oldModel: PlaylistModel;
+    newModel: PlaylistModel;
 }
 export declare class RecipeModel implements IRecipeModel {
     id: string;
-    title: string | null;
+    title: string;
     nation: Language;
     imageUrl: string | null;
     difficulty: number;
@@ -558,7 +559,7 @@ export declare class RecipeModel implements IRecipeModel {
     preparationTime: string;
     cookingTime: string;
     totalTime: string;
-    ingredients: IngredientModel[] | null;
+    ingredients: IngredientModel[];
     formattedText: string | null;
     constructor(data?: Partial<IRecipeModel>);
     init(_data?: any, _mappings?: any): void;
@@ -568,7 +569,7 @@ export declare class RecipeModel implements IRecipeModel {
 }
 export interface IRecipeModel {
     id: string;
-    title: string | null;
+    title: string;
     nation: Language;
     imageUrl: string | null;
     difficulty: number;
@@ -579,7 +580,7 @@ export interface IRecipeModel {
     preparationTime: string;
     cookingTime: string;
     totalTime: string;
-    ingredients: IngredientModel[] | null;
+    ingredients: IngredientModel[];
     formattedText: string | null;
 }
 export declare enum Course {
@@ -617,7 +618,7 @@ export declare enum CookingTechnique {
 export declare class IngredientModel implements IIngredientModel {
     id: string;
     recipeId: string;
-    name: string | null;
+    name: string;
     description: string | null;
     groupName: string | null;
     amount: number;
@@ -632,7 +633,7 @@ export declare class IngredientModel implements IIngredientModel {
 export interface IIngredientModel {
     id: string;
     recipeId: string;
-    name: string | null;
+    name: string;
     description: string | null;
     groupName: string | null;
     amount: number;

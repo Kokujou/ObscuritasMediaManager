@@ -6,12 +6,13 @@ namespace ObscuritasMediaManager.Backend.Models;
 
 public class MediaGenreModel : GenreModel
 {
+    [NotMapped] public override string SectionName => TranslateSection();
     public MediaGenreCategory Section { get; set; }
-    [NotMapped] public new string SectionName => TranslateSection();
 
     public string TranslateSection()
     {
-        return Section.GetType().GetMember(Section.ToString()).Single().GetCustomAttribute<TranslationAttribute>()?.Translation ??
-            Section.ToString();
+        return Section.GetType().GetMember(Section.ToString()).Single().GetCustomAttribute<TranslationAttribute>()
+                   ?.Translation ??
+               Section.ToString();
     }
 }

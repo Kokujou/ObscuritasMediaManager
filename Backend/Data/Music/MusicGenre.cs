@@ -1,5 +1,4 @@
-﻿
-namespace ObscuritasMediaManager.Backend.Data.Music;
+﻿namespace ObscuritasMediaManager.Backend.Data.Music;
 
 public enum MusicGenre
 {
@@ -12,9 +11,10 @@ public enum MusicGenre
     Country,
     EasyListening,
     Electronic,
-    House,
     Flamenco,
     Folk,
+    House,
+    Instrumental,
     Jazz,
     Latin,
     Pop,

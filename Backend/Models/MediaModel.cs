@@ -12,16 +12,17 @@ public class MediaModel
     public static MediaModel CreateDefault()
     {
         return new()
-               {
-                   ContentWarnings = new List<ContentWarning>(),
-                   Genres = new(),
-                   Release = 1900,
-                   Language = Language.Japanese,
-                   Type = MediaCategory.AnimeSeries,
-                   Status = MediaStatus.Completed,
-                   TargetGroup = TargetGroup.None,
-                   Name = "Neuer Eintrag",
-               };
+        {
+            ContentWarnings = new List<ContentWarning>(),
+            Genres = [],
+            Release = 1900,
+            Language = Language.Japanese,
+            Type = MediaCategory.AnimeSeries,
+            Status = MediaStatus.Completed,
+            TargetGroup = TargetGroup.None,
+            Name = "Neuer Eintrag",
+            RootFolderPath = string.Empty
+        };
     }
 
     public static void Configure(ModelBuilder builder)
@@ -35,32 +36,31 @@ public class MediaModel
                     .WithMany()
                     .HasForeignKey("GenreId")
                     .HasPrincipalKey(nameof(MediaGenreModel.Id)),
-                x => x.HasOne(typeof(MediaModel)).WithMany().HasForeignKey("MediaId").HasPrincipalKey(nameof(MediaModel.Id)));
+                x => x.HasOne(typeof(MediaModel)).WithMany().HasForeignKey("MediaId").HasPrincipalKey(nameof(Id)));
         entity.Navigation(x => x.Genres).AutoInclude();
         entity.Property(x => x.ContentWarnings)
             .HasConversion(
-                x => string.Join(",", x.Select(x => x.ToString())),
-                x => x.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => x.ParseEnumOrDefault<ContentWarning>()));
+                x => string.Join(",", x.Select(y => y.ToString())),
+                x => x.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                    .Select(y => y.ParseEnumOrDefault<ContentWarning>()));
     }
 
-    public IEnumerable<ContentWarning> ContentWarnings { get; set; }
-    public string Description { get; set; }
-    public List<MediaGenreModel> Genres { get; set; } = new();
+    public IEnumerable<ContentWarning> ContentWarnings { get; set; } = [];
+    [MaxLength(9999)] public string? Description { get; set; }
+    public List<MediaGenreModel> Genres { get; set; } = [];
 
-    [NotMapped]
-    [NotHashable]
-    public string Hash => this.GetHash();
+    [NotMapped] [NotHashable] public string Hash => this.GetHash();
 
+    [MaxLength(255)] public string Name { get; set; } = null!;
     [Key] public Guid Id { get; set; } = Guid.NewGuid();
-    public string Image { get; set; }
+    [MaxLength(255)] public string? Image { get; set; }
     public Language Language { get; set; }
-    public string Name { get; set; }
     public int Rating { get; set; }
     public int Release { get; set; }
     public MediaStatus Status { get; set; }
     public TargetGroup TargetGroup { get; set; }
     public MediaCategory Type { get; set; }
-    public string RootFolderPath { get; set; }
+    [MaxLength(255)] public string RootFolderPath { get; set; } = null!;
     public bool Deleted { get; set; }
 
     public override string ToString()

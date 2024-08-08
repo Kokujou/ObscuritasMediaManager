@@ -35,11 +35,11 @@ public class MusicController(MusicRepository repository, IOptions<JsonOptions> j
         var state = await repository.CreateTrackAsync(track);
         if (state != ModelCreationState.Success) throw new($"An error occured while creationg tag. Status: {state}");
 
-        return track.Hash;
+        return track.Hash!;
     }
 
     [HttpPost("tracks")]
-    public async Task<KeyValuePair<string, ModelCreationState>> CreateMusicTrackFromPathAsync(
+    public async Task<KeyValuePair<string?, ModelCreationState>> CreateMusicTrackFromPathAsync(
         [FromBody] string trackPath)
     {
         if (!System.IO.File.Exists(trackPath))

@@ -109,16 +109,20 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                             <div id="show-lyrics-link" @click="${() => this.showLyrics()}">Show Lyrics</div>
                         </div>
                         <div id="audio-control-container">
-                            <input
-                                type="text"
-                                id="audio-title"
-                                class="editable-label"
-                                tooltip="Name"
-                                ?disabled="${this.updatedTrack.complete}"
-                                .value="${this.updatedTrack.name}"
-                                oninput="this.dispatchEvent(new Event('change'))"
-                                @change="${(e) => this.changeProperty('name', e.currentTarget.value)}"
-                            />
+                            ${this.updatedTrack.complete
+                                ? html`<div id="audio-title">${this.updatedTrack.name}</div>`
+                                : html`
+                                      <input
+                                          type="text"
+                                          id="audio-title"
+                                          class="editable-label"
+                                          tooltip="Name"
+                                          ?disabled="${this.updatedTrack.complete}"
+                                          .value="${this.updatedTrack.name}"
+                                          oninput="this.dispatchEvent(new Event('change'))"
+                                          @change="${(e) => this.changeProperty('name', e.currentTarget.value)}"
+                                      />
+                                  `}
 
                             <div id="audio-subtitle">
                                 <input

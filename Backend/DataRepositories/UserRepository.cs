@@ -8,7 +8,7 @@ namespace ObscuritasMediaManager.Backend.DataRepositories;
 
 public class UserRepository(DatabaseContext dbContext)
 {
-    public async Task<UserModel> LogonAsync(string username, string password)
+    public async Task<UserModel?> LogonAsync(string username, string password)
     {
         var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Name.ToLower() == username.ToLower());
         if (user is null) return null;
@@ -19,7 +19,7 @@ public class UserRepository(DatabaseContext dbContext)
     public async Task CreateUser(string username, string password)
     {
         var encryptedPassword = password.Encrypt();
-        await dbContext.Users.AddAsync(new UserModel { Password = encryptedPassword, Name = username, Id = Guid.NewGuid() });
+        await dbContext.Users.AddAsync(new() { Password = encryptedPassword, Name = username, Id = Guid.NewGuid() });
         await dbContext.SaveChangesAsync();
     }
 
@@ -28,7 +28,7 @@ public class UserRepository(DatabaseContext dbContext)
         var settings = await dbContext.UserSettings.FirstOrDefaultAsync(x => x.Id == userId);
         if (settings is not null) return settings;
 
-        settings = new UserSettingsModel { Id = userId };
+        settings = new() { Id = userId };
         await dbContext.UserSettings.AddAsync(settings);
         await dbContext.SaveChangesAsync();
 

@@ -6,7 +6,6 @@ using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -30,7 +29,8 @@ public class MusicRepository(DatabaseContext context)
 
         if (updated[nameof(MusicModel.Instruments)] is not null)
         {
-            var updatedInstruments = updated[nameof(MusicModel.Instruments)].Deserialize<List<InstrumentModel>>(serializerOptions);
+            var updatedInstruments = updated[nameof(MusicModel.Instruments)]
+                .Deserialize<List<InstrumentModel>>(serializerOptions)!;
             var newInstruments = updatedInstruments.Except(actual.Instruments, (a, b) => a.Id == b.Id).ToList();
             var removedInstruments = actual.Instruments.Except(updatedInstruments, (a, b) => a.Id == b.Id).ToList();
             foreach (var added in newInstruments) actual.Instruments.Add(added);
@@ -80,12 +80,12 @@ public class MusicRepository(DatabaseContext context)
         {
             var existing = await context.Music.FirstOrDefaultAsync(x => x.Hash == track.Hash);
 
-            if ((existing is not null) && (existing.GetNormalizedPath() == track.GetNormalizedPath()))
+            if (existing is not null && existing.GetNormalizedPath() == track.GetNormalizedPath())
                 return ModelCreationState.Ignored;
 
             if (existing is not null)
             {
-                await UpdatePropertyAsync(track.Hash, x => x.Path, track.GetNormalizedPath());
+                await UpdatePropertyAsync(track.Hash!, x => x.Path, track.GetNormalizedPath());
                 return ModelCreationState.Updated;
             }
 
@@ -95,7 +95,7 @@ public class MusicRepository(DatabaseContext context)
             await context.SaveChangesAsync();
             return ModelCreationState.Success;
         }
-        catch (Exception ex) when (ex.InnerException is SqliteException inner and { SqliteExtendedErrorCode : 2067 })
+        catch (Exception ex) when (ex.InnerException is SqliteException { SqliteExtendedErrorCode : 2067 })
         {
             return ModelCreationState.Ignored;
         }
@@ -155,13 +155,14 @@ public class MusicRepository(DatabaseContext context)
         if (failedTrackDictionary.Count <= 0)
             return;
 
-        var trackReasonString = string.Join("\r\n", failedTrackDictionary.Select(x => $"Track: {x.Key}, Reason: {x.Value}"));
-        throw new Exception($"The following tracks could not be deleted: \r\n{trackReasonString}");
+        var trackReasonString =
+            string.Join("\r\n", failedTrackDictionary.Select(x => $"Track: {x.Key}, Reason: {x.Value}"));
+        throw new($"The following tracks could not be deleted: \r\n{trackReasonString}");
     }
 
     public async Task RemoveInstrumentAsync(InstrumentType type, string name)
     {
-        context.Instruments.Where(x => (x.Type == type) && (x.Name == name)).ExecuteDelete();
+        context.Instruments.Where(x => x.Type == type && x.Name == name).ExecuteDelete();
         await context.SaveChangesAsync();
     }
 }

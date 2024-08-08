@@ -9,7 +9,7 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class CleanupController(MusicRepository musicRepository, MediaRepository mediaRepository) : ControllerBase
+public class CleanupController(MusicRepository musicRepository) : ControllerBase
 {
     private static async Task<bool> ValidateAudioAsync(string path)
     {

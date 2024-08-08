@@ -3,9 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
-
 using ObscuritasMediaManager.Backend.Models;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -20,10 +18,11 @@ public class MediaRepository(DatabaseContext context)
         {
             var existing = await context.Media
                 .FirstOrDefaultAsync(
-                    x => (x.RootFolderPath == media.RootFolderPath)
-                        || ((x.Type == media.Type) && (x.Language == media.Language) && (x.Name.ToLower() == media.Name.ToLower())));
+                    x => x.RootFolderPath == media.RootFolderPath
+                         || (x.Type == media.Type && x.Language == media.Language &&
+                             x.Name.ToLower() == media.Name.ToLower()));
 
-            if ((existing is not null) && (existing.GetNormalizedPath() == media.GetNormalizedPath()))
+            if (existing is not null && existing.GetNormalizedPath() == media.GetNormalizedPath())
                 return new(existing.Id, ModelCreationState.Ignored);
 
             if (existing is not null)
@@ -38,7 +37,7 @@ public class MediaRepository(DatabaseContext context)
             await context.SaveChangesAsync();
             return new(media.Id, ModelCreationState.Success);
         }
-        catch (Exception ex) when (ex.InnerException is SqliteException inner and { SqliteExtendedErrorCode: 2067 })
+        catch (Exception ex) when (ex.InnerException is SqliteException { SqliteExtendedErrorCode: 2067 })
         {
             return new(media.Id, ModelCreationState.Ignored);
         }
@@ -56,7 +55,8 @@ public class MediaRepository(DatabaseContext context)
 
         if (updated[nameof(MediaModel.Genres)] is not null)
         {
-            var updatedGenres = updated[nameof(MusicModel.Genres)].Deserialize<List<MediaGenreModel>>(serializerOptions);
+            var updatedGenres =
+                updated[nameof(MusicModel.Genres)].Deserialize<List<MediaGenreModel>>(serializerOptions)!;
             var newGenres = updatedGenres.Except(actual.Genres, (a, b) => a.Id == b.Id).ToList();
             var removedGenres = actual.Genres.Except(updatedGenres, (a, b) => a.Id == b.Id).ToList();
             foreach (var added in newGenres) actual.Genres.Add(added);
@@ -71,7 +71,8 @@ public class MediaRepository(DatabaseContext context)
 
     public async Task UpdatePropertyAsync<T>(Guid id, Expression<Func<MediaModel, T>> property, T value)
     {
-        await context.Media.IgnoreAutoIncludes().Where(x => x.Id == id).ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
+        await context.Media.IgnoreAutoIncludes().Where(x => x.Id == id)
+            .ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
     }
 
     public async Task<MediaModel> GetAsync(Guid guid)
@@ -82,9 +83,9 @@ public class MediaRepository(DatabaseContext context)
         return response;
     }
 
-    public  IQueryable<MediaModel> GetAll()
+    public IQueryable<MediaModel> GetAll()
     {
-        return  context.Media;
+        return context.Media;
     }
 
     public async Task DeleteAsync(Guid mediaId)

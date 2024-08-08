@@ -9,6 +9,8 @@ public class MusicInstrumentMappingModel
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public string TrackHash { get; set; }
+
+    [MaxLength(250)] public required string TrackHash { get; set; }
+
     public int InstrumentId { get; set; }
 }

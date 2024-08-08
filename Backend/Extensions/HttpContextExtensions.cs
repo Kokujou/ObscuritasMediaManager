@@ -5,14 +5,15 @@ namespace ObscuritasMediaManager.Backend.Extensions;
 
 public static class HttpContextExtensions
 {
-    public static async Task<T> ReadRequestBodyAsync<T>(this HttpContext context, JsonSerializerOptions serializerOptions)
+    public static async Task<T> ReadRequestBodyAsync<T>(this HttpContext context,
+        JsonSerializerOptions serializerOptions)
     {
         context.Request.Body.Position = 0;
-        using var reader = new StreamReader(context.Request.Body, encoding: Encoding.UTF8,
-        detectEncodingFromByteOrderMarks: false, leaveOpen: true);
+        using var reader = new StreamReader(context.Request.Body, Encoding.UTF8,
+            false, leaveOpen: true);
 
         var body = await reader.ReadToEndAsync();
         context.Request.Body.Position = 0;
-        return JsonSerializer.Deserialize<T>(body, serializerOptions);
+        return JsonSerializer.Deserialize<T>(body, serializerOptions)!;
     }
 }

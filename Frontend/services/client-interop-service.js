@@ -21,7 +21,7 @@ export class ClientInteropService {
      */
     static sendCommand(command) {
         if (this.socket?.readyState != WebSocket.OPEN) {
-            MessageSnackbar.popup('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.', 'warning');
+            console.warn('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.');
             return;
         }
         return new Promise(async (resolve, reject) => {
@@ -46,7 +46,7 @@ export class ClientInteropService {
      */
     static executeQuery(query) {
         if (this.socket?.readyState != WebSocket.OPEN) {
-            MessageSnackbar.popup('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.', 'warning');
+            console.warn('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.');
             return;
         }
         return new Promise(async (resolve, reject) => {

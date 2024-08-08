@@ -1,7 +1,6 @@
-﻿
-namespace ObscuritasMediaManager.Backend.Controllers.Requests;
+﻿namespace ObscuritasMediaManager.Backend.Controllers.Requests;
 
 public class UpdateImageRequest
 {
-    public string Image { get; set; }
+    public required string Image { get; set; }
 }

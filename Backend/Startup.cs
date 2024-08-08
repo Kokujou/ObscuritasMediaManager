@@ -63,7 +63,9 @@ public class Startup
             .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("basic", null);
         services.AddAuthorization();
 
+#pragma warning disable ASP0000
         services.BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true });
+#pragma warning restore ASP0000
     }
 
     public void Configure(IApplicationBuilder app)
@@ -72,7 +74,7 @@ public class Startup
             async (context, next) =>
             {
                 context.Request.EnableBuffering();
-                context.Features.Get<IHttpResponseBodyFeature>().DisableBuffering();
+                context.Features.Get<IHttpResponseBodyFeature>()!.DisableBuffering();
                 await next();
             });
         app.UseRouting();
@@ -84,6 +86,7 @@ public class Startup
                     {
                         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
                         var exception = exceptionHandlerPathFeature?.Error;
+                        if (exception is null) return;
                         Log.Error(exception.ToString());
                         context.Response.StatusCode = 400;
 

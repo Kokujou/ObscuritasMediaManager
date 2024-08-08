@@ -2005,9 +2005,10 @@ export var MusicGenre;
     MusicGenre["Country"] = "Country";
     MusicGenre["EasyListening"] = "EasyListening";
     MusicGenre["Electronic"] = "Electronic";
-    MusicGenre["House"] = "House";
     MusicGenre["Flamenco"] = "Flamenco";
     MusicGenre["Folk"] = "Folk";
+    MusicGenre["House"] = "House";
+    MusicGenre["Instrumental"] = "Instrumental";
     MusicGenre["Jazz"] = "Jazz";
     MusicGenre["Latin"] = "Latin";
     MusicGenre["Pop"] = "Pop";
@@ -2064,8 +2065,8 @@ export class GenreModel {
     }
 }
 export class MediaGenreModel extends GenreModel {
-    section;
     sectionName;
+    section;
     constructor(data) {
         super(data);
         if (data) {
@@ -2078,8 +2079,8 @@ export class MediaGenreModel extends GenreModel {
     init(_data, _mappings) {
         super.init(_data);
         if (_data) {
-            this.section = _data["section"] !== undefined ? _data["section"] : null;
             this.sectionName = _data["sectionName"] !== undefined ? _data["sectionName"] : null;
+            this.section = _data["section"] !== undefined ? _data["section"] : null;
         }
     }
     static fromJS(data, _mappings) {
@@ -2088,8 +2089,8 @@ export class MediaGenreModel extends GenreModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
-        data["section"] = this.section !== undefined ? this.section : null;
         data["sectionName"] = this.sectionName !== undefined ? this.sectionName : null;
+        data["section"] = this.section !== undefined ? this.section : null;
         super.toJSON(data);
         return data;
     }
@@ -2156,10 +2157,10 @@ export class MediaModel {
     description;
     genres;
     hash;
+    name;
     id;
     image;
     language;
-    name;
     rating;
     release;
     status;
@@ -2195,10 +2196,10 @@ export class MediaModel {
                 this.genres = null;
             }
             this.hash = _data["hash"] !== undefined ? _data["hash"] : null;
+            this.name = _data["name"] !== undefined ? _data["name"] : null;
             this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.image = _data["image"] !== undefined ? _data["image"] : null;
             this.language = _data["language"] !== undefined ? _data["language"] : null;
-            this.name = _data["name"] !== undefined ? _data["name"] : null;
             this.rating = _data["rating"] !== undefined ? _data["rating"] : null;
             this.release = _data["release"] !== undefined ? _data["release"] : null;
             this.status = _data["status"] !== undefined ? _data["status"] : null;
@@ -2226,10 +2227,10 @@ export class MediaModel {
                 data["genres"].push(item.toJSON());
         }
         data["hash"] = this.hash !== undefined ? this.hash : null;
+        data["name"] = this.name !== undefined ? this.name : null;
         data["id"] = this.id !== undefined ? this.id : null;
         data["image"] = this.image !== undefined ? this.image : null;
         data["language"] = this.language !== undefined ? this.language : null;
-        data["name"] = this.name !== undefined ? this.name : null;
         data["rating"] = this.rating !== undefined ? this.rating : null;
         data["release"] = this.release !== undefined ? this.release : null;
         data["status"] = this.status !== undefined ? this.status : null;

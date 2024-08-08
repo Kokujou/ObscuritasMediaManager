@@ -6,6 +6,6 @@ namespace ObscuritasMediaManager.Backend.Models;
 public class InstrumentModel
 {
     [Key] public int Id { get; set; }
-    public string Name { get; set; }
+    [MaxLength(255)] public required string Name { get; set; }
     public InstrumentType Type { get; set; }
 }

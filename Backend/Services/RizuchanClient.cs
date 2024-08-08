@@ -23,7 +23,7 @@ public class RizuchanClient(HttpClient httpClient) : ILyricsClient
         var htmlDocument = new HtmlDocument();
         htmlDocument.LoadHtml(htmlContent);
         var linkNodes = htmlDocument.DocumentNode.SelectNodes("//*[@class='entry-title']//a");
-        if (linkNodes is null) return new();
+        if (linkNodes is null) return [];
         return htmlDocument.DocumentNode.SelectNodes("//*[@class='entry-title']//a")
             .Select(x => new LyricsSearchResponse
             {

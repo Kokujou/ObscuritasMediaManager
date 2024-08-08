@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
-using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -8,12 +6,12 @@ namespace ObscuritasMediaManager.Backend.Extensions;
 
 public static class ExpressionExtensions
 {
-    public static MemberInfo GetPropertyInfo(this LambdaExpression propertyExpression)
+    public static MemberInfo? GetPropertyInfo(this LambdaExpression? propertyExpression)
     {
         if (propertyExpression is null) return null;
         if (propertyExpression.Body is MemberExpression memberExpression) return memberExpression.Member;
-        if ((propertyExpression.Body is UnaryExpression unaryExpression)
-            && (unaryExpression.Operand is MemberExpression unaryMemberExpression))
+        if (propertyExpression.Body is UnaryExpression unaryExpression
+            && unaryExpression.Operand is MemberExpression unaryMemberExpression)
             return unaryMemberExpression.Member;
         return null;
     }
@@ -34,7 +32,8 @@ public static class ExpressionExtensions
             fieldInfo.SetValue(target, value);
     }
 
-    public static Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> ToSetPropertyCalls<TEntity, TProperty>(
+    public static Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> ToSetPropertyCalls<TEntity,
+        TProperty>(
         this Expression<Func<TEntity, TProperty>> property, TProperty value)
     {
         var setParameter = Expression.Parameter(typeof(SetPropertyCalls<TEntity>), "x");
@@ -42,9 +41,9 @@ public static class ExpressionExtensions
         var method = typeof(SetPropertyCalls<TEntity>).GetMethods().Where(x => x.Name == "SetProperty").ElementAt(1);
         var call = Expression.Call(
             setParameter,
-        method.MakeGenericMethod(typeof(TProperty)),
-        property,
-        Expression.Constant(value));
+            method.MakeGenericMethod(typeof(TProperty)),
+            property,
+            Expression.Constant(value));
 
         var lambda = Expression.Lambda<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>>(
             call, setParameter);

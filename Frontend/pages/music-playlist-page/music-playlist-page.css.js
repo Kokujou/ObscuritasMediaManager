@@ -166,6 +166,10 @@ export function renderMusicPlaylistStyles() {
             font-size: 30px;
             max-width: 100%;
             margin-top: -10px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         #audio-subtitle {

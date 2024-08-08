@@ -6,6 +6,6 @@ namespace ObscuritasMediaManager.Backend.Models;
 public class GenreModel
 {
     [Key] public Guid Id { get; set; } = Guid.NewGuid();
-    public string Name { get; set; }
-    [NotMapped] public string SectionName { get; set; }
+    [MaxLength(250)] public required string Name { get; set; }
+    [NotMapped] [MaxLength(250)] public virtual string SectionName => null!;
 }

@@ -18,7 +18,7 @@ public class AnimeLoadsService(IServiceProvider provider)
             await context.Media.AsTracking()
                 .Where(x => x.Type == MediaCategory.AnimeSeries || x.Type == MediaCategory.AnimeMovies)
                 .Where(media => media.Image == null || media.Image.Length < 5 || media.Release <= 1900 ||
-                                (media.Description == null && media.Description.Length < 5))
+                                media.Description == null || media.Description.Length < 5)
                 .ToListAsync();
         foreach (var media in mediaList.Where(x => x.Release <= 1900))
         {

@@ -9,15 +9,13 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class PlaylistController(MusicRepository musicRepository, PlaylistRepository playlistRepository)
+public class PlaylistController(PlaylistRepository playlistRepository)
     : ControllerBase
 {
-    private readonly MusicRepository _musicRepository = musicRepository;
-
     [HttpGet("dummy")]
     public PlaylistModel GetDummyPlaylist()
     {
-        return new PlaylistModel();
+        return new() { Name = string.Empty };
     }
 
     [HttpPost("temp")]
@@ -28,7 +26,7 @@ public class PlaylistController(MusicRepository musicRepository, PlaylistReposit
     }
 
     [HttpGet("{playlistId}")]
-    public async Task<PlaylistModel> GetPlaylist(Guid playlistId)
+    public async Task<PlaylistModel?> GetPlaylist(Guid playlistId)
     {
         return await playlistRepository.GetPlaylistAsync(playlistId);
     }
@@ -49,8 +47,8 @@ public class PlaylistController(MusicRepository musicRepository, PlaylistReposit
     [HttpPut("{playlistId:guid}")]
     public async Task UpdatePlaylistDataAsync(Guid playlistId, [FromBody] UpdateRequest<PlaylistModel> updateRequest)
     {
-        if ((updateRequest.OldModel.Id != default) && (playlistId != updateRequest.OldModel.Id))
-            throw new Exception("Ids of objects did not match");
+        if (updateRequest.OldModel.Id != default && playlistId != updateRequest.OldModel.Id)
+            throw new("Ids of objects did not match");
 
         var actual = await playlistRepository.GetPlaylistAsync(playlistId);
         if (actual is null)
@@ -67,7 +65,7 @@ public class PlaylistController(MusicRepository musicRepository, PlaylistReposit
         await playlistRepository.UpdateDataAsync(actual, updateRequest.OldModel, updateRequest.NewModel);
         await playlistRepository.UpdateTracksAsync(updateRequest.NewModel);
         await playlistRepository.UpdatePlaylistTrackMappingAsync(updateRequest.NewModel.Id, updateRequest.NewModel.Name,
-        updateRequest.NewModel.Tracks);
+            updateRequest.NewModel.Tracks);
     }
 
     [HttpPut("{playlistId}/tracks")]

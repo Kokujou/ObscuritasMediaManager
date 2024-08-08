@@ -1,5 +1,4 @@
-﻿using ObscuritasMediaManager.Backend.Attributes;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -18,7 +17,7 @@ public static class HashingExtensions
         return BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
     }
 
-    public static string GetHash<T>(this T input)
+    public static string GetHash<T>(this T input) where T : notnull
     {
         var type = typeof(T);
         if (type == typeof(object))
@@ -30,14 +29,14 @@ public static class HashingExtensions
     {
         using var md5 = MD5.Create();
 
-        if (type.IsPrimitive || (type == typeof(string)) || (type == typeof(decimal)))
+        if (type.IsPrimitive || type == typeof(string) || type == typeof(decimal))
             return string.Join(string.Empty,
-                               md5.ComputeHash(Encoding.UTF8.GetBytes(input.ToString() ?? string.Empty))
-                                  .Select(x => x.ToString("X2")));
+                md5.ComputeHash(Encoding.UTF8.GetBytes(input.ToString() ?? string.Empty))
+                    .Select(x => x.ToString("X2")));
 
         List<PropertyInfo> hashableProperties;
         lock (TypeSignatures)
-            if (!TypeSignatures.TryGetValue(type, out hashableProperties))
+            if (!TypeSignatures.TryGetValue(type, out hashableProperties!))
             {
                 hashableProperties = type
                     .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)

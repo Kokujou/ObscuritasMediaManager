@@ -1,11 +1,31 @@
-﻿using System;
-using System.Linq;
-
-namespace ObscuritasMediaManager.ClientInterop.Evemts;
+﻿namespace ObscuritasMediaManager.ClientInterop.Evemts;
 
 public static class AudioTrackUpdatedEventHandler
 {
-    public static bool Started = false;
+    public static bool Started;
+
+    public static void StartReporting()
+    {
+        Started = true;
+        AudioService.Player.PlaybackStopped += (_, args) =>
+        {
+            if (AudioService.GetCurrentTrackDuration() - TimeSpan.FromSeconds(5) <=
+                AudioService.GetCurrentTrackPosition())
+            {
+                foreach (var client in WebSocketInterop.Clients.Values.ToList())
+                {
+                    client.InvokeEvent(new TrackEndedEvent());
+                }
+            }
+
+            AudioService.Stop();
+        };
+    }
+
+    public static void StopReporting()
+    {
+        Started = false;
+    }
 
     static AudioTrackUpdatedEventHandler()
     {
@@ -17,28 +37,15 @@ public static class AudioTrackUpdatedEventHandler
                     await Task.Delay(50);
 
                     if (!Started)
+                    {
                         continue;
+                    }
 
                     foreach (var client in WebSocketInterop.Clients.Values.ToList())
+                    {
                         client.InvokeEvent(new TrackUpdatedEvent());
+                    }
                 }
             });
-    }
-
-    public static void StartReporting()
-    {
-        Started = true;
-        AudioService.player.PlaybackStopped += (_, args) =>
-        {
-            if (AudioService.GetCurrentTrackDuration() - TimeSpan.FromSeconds(5) <= AudioService.GetCurrentTrackPosition())
-                foreach (var client in WebSocketInterop.Clients.Values.ToList())
-                    client.InvokeEvent(new TrackEndedEvent());
-            AudioService.Stop();
-        };
-    }
-
-    public static void StopReporting()
-    {
-        Started = false;
     }
 }

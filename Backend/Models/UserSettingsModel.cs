@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
@@ -7,6 +8,6 @@ public class UserSettingsModel
 {
     public Guid Id { get; set; }
     public int Volume { get; set; }
-    public string MusicFilter { get; set; }
-    public string MediaFilter { get; set; }
+    [MaxLength(9999)] public string? MusicFilter { get; set; }
+    [MaxLength(9999)] public string? MediaFilter { get; set; }
 }

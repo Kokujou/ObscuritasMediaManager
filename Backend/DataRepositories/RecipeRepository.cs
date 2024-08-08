@@ -12,7 +12,7 @@ public class RecipeRepository(DatabaseContext databaseContext)
 
     public async Task<RecipeModel> GetAsync(Guid id)
     {
-        return await databaseContext.Recipes.FirstOrDefaultAsync(x => x.Id == id);
+        return await databaseContext.Recipes.SingleAsync(x => x.Id == id);
     }
 
     public async Task<bool> ExistsAsync(Guid id)

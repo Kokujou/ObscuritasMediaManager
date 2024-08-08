@@ -1,26 +1,32 @@
-﻿using System;
-using System.Linq;
-
-namespace ObscuritasMediaManager.ClientInterop.Data;
+﻿namespace ObscuritasMediaManager.ClientInterop.Data;
 
 public class Observable<T>(T initialValue)
     where T : notnull
 {
     public T Current => currentValue;
 
-    private List<Subscription> subscriptions { get; set; } = new();
+    private List<Subscription> subscriptions { get; } = [];
     private T currentValue { get; set; } = initialValue;
 
     public Subscription Subscribe(Action<(T? oldValue, T? newValue)> observer, bool skipInitial = false)
     {
-        var subscription = new Subscription((oldValue, newValue) => observer(((T?)oldValue, (T?)newValue)), (s) => subscriptions.Remove(s));
+        var subscription = new Subscription((oldValue, newValue) => observer(((T?)oldValue, (T?)newValue)),
+            s => subscriptions.Remove(s));
         subscriptions.Add(subscription);
-        if (skipInitial) return subscription;
+        if (skipInitial)
+        {
+            return subscription;
+        }
+
         try
         {
             observer((currentValue, currentValue));
         }
-        catch (Exception ex) { }
+        catch
+        {
+            // ignored
+        }
+
         return subscription;
     }
 
@@ -30,10 +36,12 @@ public class Observable<T>(T initialValue)
         currentValue = value;
 
         foreach (var subscription in subscriptions)
+        {
             try
             {
                 subscription.observer(currentValue, oldValue);
             }
             catch { }
+        }
     }
 }

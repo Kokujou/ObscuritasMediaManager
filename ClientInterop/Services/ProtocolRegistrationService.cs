@@ -1,7 +1,4 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 
 namespace ObscuritasMediaManager.ClientInterop.Services;
@@ -21,7 +18,7 @@ public static class ProtocolRegistrationService
         defaultIcon.SetValue(string.Empty, iconPath);
 
         using var commandKey = key.CreateSubKey(@"shell\open\command");
-        var cmdPath = Process.GetCurrentProcess().MainModule.FileName;
+        var cmdPath = Environment.ProcessPath;
         commandKey.SetValue(string.Empty, $"\"{cmdPath}\" \"%1\"");
     }
 }
