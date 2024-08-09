@@ -8,5 +8,6 @@ export declare enum InteropCommand {
     PauseTrack = 2,
     StopTrack = 3,
     ChangeTrackPosition = 4,
-    ChangeTrackVolume = 5
+    ChangeTrackVolume = 5,
+    OpenChromeForDebugging = 6
 }

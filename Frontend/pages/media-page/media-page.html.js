@@ -26,7 +26,7 @@ export function renderMediaPageTemplate(page) {
                                       <media-tile
                                           .media="${media}"
                                           .autocompleteGenres="${page.genreList}"
-                                          @imageReceived="${(e) => page.changePropertyOf(media, 'image', e.detail.imageData)}"
+                                          @imageReceived="${(e) => page.setMediaImage(media.id, e.detail.imageData)}"
                                           @ratingChanged="${(e) => page.changePropertyOf(media, 'rating', e.detail.newRating)}"
                                           @genresChanged="${(e) => page.changePropertyOf(media, 'genres', e.detail.genres)}"
                                           @soft-delete="${() => page.changePropertyOf(media, 'deleted', true)}"

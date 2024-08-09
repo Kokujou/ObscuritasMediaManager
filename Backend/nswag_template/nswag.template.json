@@ -1,58 +1,11 @@
 {
     "runtime": "%%ClientTargetRuntime%%",
     "defaultVariables": null,
-    "documentGenerator": {
-        "aspNetCoreToOpenApi": {
-            "project": "%%SourceProjectPath%%",
-            "msBuildProjectExtensionsPath": null,
-            "configuration": "x64\%%configuration%%",
-            "runtime": "",
-            "targetFramework": "%%SourceFramework%%",
-            "noBuild": true,
-            "verbose": true,
-            "workingDirectory": null,
-            "requireParametersWithoutDefault": false,
-            "apiGroupNames": null,
-            "defaultPropertyNameHandling": "CamelCase",
-            "defaultReferenceTypeNullHandling": "Null",
-            "defaultDictionaryValueReferenceTypeNullHandling": "NotNull",
-            "defaultResponseReferenceTypeNullHandling": "NotNull",
-            "defaultEnumHandling": "String",
-            "flattenInheritanceHierarchy": false,
-            "generateKnownTypes": true,
-            "generateEnumMappingDescription": false,
-            "generateXmlObjects": false,
-            "generateAbstractProperties": true,
-            "generateAbstractSchemas": true,
-            "ignoreObsoleteProperties": false,
-            "allowReferencesWithProperties": false,
-            "excludedTypeNames": [],
-            "serviceHost": null,
-            "serviceBasePath": null,
-            "serviceSchemes": [],
-            "infoTitle": "My Title",
-            "infoDescription": null,
-            "infoVersion": "1.0.0",
-            "documentTemplate": null,
-            "documentProcessorTypes": [],
-            "operationProcessorTypes": [],
-            "typeNameGeneratorType": null,
-            "schemaNameGeneratorType": null,
-            "contractResolverType": null,
-            "serializerSettingsType": null,
-            "useDocumentProvider": false,
-            "documentName": "v1",
-            "aspNetCoreEnvironment": "Development",
-            "createWebHostBuilderMethod": null,
-            "startupType": null,
-            "allowNullableBodyParameters": true,
-            "output": null,
-            "outputType": "OpenApi3",
-            "assemblyPaths": [],
-            "assemblyConfig": null,
-            "referencePaths": [],
-            "useNuGetCache": false
-        }
+     "documentGenerator": {
+        "fromDocument": {
+      "url": "https://localhost/ObscuritasMediaManager/Backend/swagger/swagger/swagger.json",
+      "output": null
+    }
     },
     "codeGenerators": {
         "openApiToCSharpClient": {
@@ -173,7 +126,8 @@
             "useAbortSignal": true,
             "generateExceptionClasses": true,
             "defaultReferenceTypeNullHandling": "NotNull",
-            "templateDirectory": "../hotfix_template"
+            "templateDirectory": "../hotfix_template",
+"inlineNamedAny":false
         }
     }
 }

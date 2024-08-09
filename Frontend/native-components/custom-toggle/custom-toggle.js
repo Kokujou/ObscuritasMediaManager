@@ -40,7 +40,7 @@ export class CustomToggle extends LitElementBase {
             if (this.threeValues) {
                 this.toggleState();
             } else this.state = this.state == CheckboxState.Ignore ? CheckboxState.Forbid : CheckboxState.Ignore;
-            this.dispatchEvent(new CustomEvent('toggle', { detail: this.state }));
+            this.dispatchEvent(new CustomEvent('toggle', { detail: this.state, bubbles: true }));
         };
     }
 

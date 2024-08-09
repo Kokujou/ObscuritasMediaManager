@@ -120,5 +120,10 @@ export function renderMediaTileStyles() {
         br {
             display: none;
         }
+
+        #dummy-image {
+            position: fixed;
+            opacity: 0;
+        }
     `;
 }

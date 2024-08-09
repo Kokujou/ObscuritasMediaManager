@@ -9,15 +9,22 @@ import { MediaTile } from './media-tile.js';
 export function renderMediaTile(tile) {
     return html` <style>
             #tile-image {
-                background-image: url('data:image/jpeg;base64, ${tile.media.image}');
+                background-image: url('./Backend/api/media/${tile.media.id}/image?rev=${tile.imageRevision}');
             }
         </style>
+
+        <img
+            id="dummy-image"
+            src="./Backend/api/media/${tile.media.id}/image?rev=${tile.imageRevision}"
+            @load="${() => (tile.hasImage = true)}"
+            @error="${() => (tile.hasImage = false)}"
+        />
 
         <div id="tile-container">
             ${tile.displayStyle == 'simple' ? '' : html`<div id="rating-container">${renderRating(tile)}</div>`} <br />
             ${renderImageContainer(tile)}
             ${tile.displayStyle == 'solid'
-                ? html` <div ?no-background="${!tile.media.image}" id="caption">${tile.media.name}</div> `
+                ? html` <div ?no-background="${!tile.hasImage}" id="caption">${tile.media.name}</div> `
                 : ''}
         </div>
         ${tile.displayStyle == 'solid'
@@ -37,7 +44,7 @@ export function renderMediaTile(tile) {
  * @param {MediaTile} tile
  */
 function renderImageContainer(tile) {
-    if (tile.media.image)
+    if (tile.hasImage)
         return html`<div id="tile-image">
             <div class="status-icon ${tile.media.status}"></div>
         </div>`;

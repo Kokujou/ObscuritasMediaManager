@@ -300,6 +300,7 @@ export function renderMediaDetailPageStyles() {
         input,
         textarea {
             outline: none;
+            pointer-events: all !important;
 
             font: inherit;
             color: inherit;
@@ -464,6 +465,11 @@ export function renderMediaDetailPageStyles() {
         }
         *[icon][disabled] {
             background: darkgray !important;
+        }
+
+        #dummy-image {
+            position: fixed;
+            opacity: 0;
         }
     `;
 }

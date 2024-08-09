@@ -1,3 +1,5 @@
+using System.Text.Encodings.Web;
+using System.Text.Json.Serialization;
 using Genius;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
@@ -6,8 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Authentication;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Services;
-using System.Text.Encodings.Web;
-using System.Text.Json.Serialization;
 using Xabe.FFmpeg;
 
 namespace ObscuritasMediaManager.Backend;
@@ -57,7 +57,12 @@ public class Startup
 
         FFmpeg.SetExecutablesPath("D:\\Programme\\ffmpeg\\bin");
 
-        services.AddSwaggerGen(options => { });
+        services.AddSwaggerDocument(options =>
+        {
+            options.SchemaSettings.AllowReferencesWithProperties = true;
+            options.DocumentName = "swagger";
+            options.Title = "ObscuritasMediaManager";
+        });
 
         services.AddAuthentication("basic")
             .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("basic", null);
@@ -104,9 +109,7 @@ public class Startup
 
         app.UseEndpoints(endpoints => endpoints.MapControllers());
 
-        app.UseSwagger();
-        app.UseSwaggerUI(
-            options => options.SwaggerEndpoint("v1/swagger.json",
-                "Obscuritas Media Management"));
+        app.UseOpenApi();
+        app.UseSwaggerUi(options => { options.WithCredentials = true; });
     }
 }

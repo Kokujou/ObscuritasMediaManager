@@ -5,7 +5,7 @@ import {
     MusicGenre,
     MusicModel,
     PlaylistModel,
-    UpdateRequestOfJsonElement,
+    UpdateRequestOfObject,
     UpdateRequestOfPlaylistModel,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { PageRouting } from '../../pages/page-routing/page-routing.js';
@@ -144,7 +144,7 @@ export class EditPlaylistDialog extends LitElementBase {
 
     /** @param {MusicModel} track */
     async updateTrackPlaylistProperties(track) {
-        /** @type {Partial<MusicModel>} */ var updatedTrack = {};
+        /** @type {MusicModel} */ var updatedTrack = {};
         if (this.newPlaylist.author?.length > 1) updatedTrack.author = this.newPlaylist.author;
         if (this.newPlaylist.language != Language.Unset) updatedTrack.language = this.newPlaylist.language;
 
@@ -159,7 +159,7 @@ export class EditPlaylistDialog extends LitElementBase {
                 updatedTrack.genres = updatedTrack.genres.filter((genre) => !removedGenres.includes(genre));
             updatedTrack.genres = distinct(updatedTrack.genres);
 
-            await MusicService.update(track.hash, new UpdateRequestOfJsonElement({ oldModel: track, newModel: updatedTrack }));
+            await MusicService.update(track.hash, new UpdateRequestOfObject({ oldModel: track, newModel: updatedTrack }));
         } catch (err) {
             console.error(`error updating track ${track.name} to fit playlist properties`, err);
         }

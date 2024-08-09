@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using TypeGen.Core.TypeAnnotations;
+﻿using TypeGen.Core.TypeAnnotations;
 
 namespace ObscuritasMediaManager.ClientInterop.Commands;
 
@@ -12,5 +10,6 @@ public enum InteropCommand
     PauseTrack,
     StopTrack,
     ChangeTrackPosition,
-    ChangeTrackVolume
+    ChangeTrackVolume,
+    OpenChromeForDebugging
 }

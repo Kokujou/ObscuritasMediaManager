@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Text.Json;
+using System.Text.Json.Nodes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
@@ -9,8 +11,6 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 using ObscuritasMediaManager.Backend.Services;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
 
@@ -85,7 +85,10 @@ public class MusicController(MusicRepository repository, IOptions<JsonOptions> j
             {
                 return await lyricsService.SearchForLyricsAsync(track, offset);
             }
-            catch (LyricsNotFoundException) { throw; }
+            catch (LyricsNotFoundException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 Log.Error($"An error occurred while parsing the lyrics, incrementing offset: {ex}");
@@ -112,7 +115,7 @@ public class MusicController(MusicRepository repository, IOptions<JsonOptions> j
     }
 
     [HttpPut("{hash}")]
-    public async Task<MusicModel> UpdateAsync(string hash, [FromBody] UpdateRequest<JsonElement> _)
+    public async Task<MusicModel> UpdateAsync(string hash, [FromBody] UpdateRequest<dynamic> _)
     {
         var deserialized = await HttpContext.ReadRequestBodyAsync<UpdateRequest<JsonNode>>(_jsonOptions);
 

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Text.Json;
+using System.Text.Json.Nodes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualBasic.FileIO;
@@ -8,8 +10,6 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 using ObscuritasMediaManager.Backend.Services;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using SearchOption = System.IO.SearchOption;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
@@ -34,6 +34,14 @@ public class MediaController(
     public async Task<MediaModel> Get([FromRoute] Guid guid)
     {
         return await mediaRepository.GetAsync(guid);
+    }
+
+    [HttpGet("{guid:Guid}/image")]
+    public async Task<ActionResult> GetImageFor(Guid guid)
+    {
+        var image = await mediaRepository.GetMediaImageAsync(guid);
+        return File(Convert.FromBase64String(image ?? string.Empty),
+            "image/jpeg");
     }
 
     [HttpGet]
@@ -63,7 +71,7 @@ public class MediaController(
     }
 
     [HttpPut("{id}")]
-    public async Task UpdateMedia(Guid id, [FromBody] UpdateRequest<JsonElement> _)
+    public async Task UpdateMedia(Guid id, [FromBody] UpdateRequest<dynamic> _)
     {
         var deserialized = await HttpContext.ReadRequestBodyAsync<UpdateRequest<JsonNode>>(SerializerOptions);
         await mediaRepository.UpdateAsync(id, deserialized.OldModel, deserialized.NewModel, SerializerOptions);
@@ -72,13 +80,13 @@ public class MediaController(
     [HttpPut("{guid:Guid}/image")]
     public async Task AddMediaImage([FromBody] string image, Guid guid)
     {
-        await mediaRepository.UpdatePropertyAsync(guid, x => x.Image, image);
+        await mediaRepository.SetMediaImageAsync(guid, image);
     }
 
     [HttpDelete("{guid:Guid}/image")]
     public async Task DeleteMediaImage(Guid guid)
     {
-        await mediaRepository.UpdatePropertyAsync(guid, x => x.Image, string.Empty);
+        await mediaRepository.SetMediaImageAsync(guid, null);
     }
 
     [HttpDelete("{mediaId:Guid}/hard")]
@@ -107,7 +115,7 @@ public class MediaController(
     [HttpPost("auto-fill-anime-details/{animeId}")]
     public async Task<MediaModel> AutoFillMediaDetailsAsync(Guid animeId)
     {
-        var anime = await mediaRepository.GetAsync(animeId);
+        var anime = await mediaRepository.GetAsync(animeId, true);
         return await animeLoadsService.AutoFillAnimeAsync(anime);
     }
 }

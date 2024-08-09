@@ -1,12 +1,12 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System.Linq.Expressions;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
-using System.Linq.Expressions;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -75,13 +75,12 @@ public class MediaRepository(DatabaseContext context)
             .ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
     }
 
-    public async Task<MediaModel> GetAsync(Guid guid)
+    public async Task<MediaModel> GetAsync(Guid guid, bool asTracking = false)
     {
-        var response = await context.Media.SingleOrDefaultAsync(x => x.Id == guid);
-        if (response == default)
-            throw new ModelNotFoundException(guid);
-        return response;
+        var source = asTracking ? context.Media.AsTracking() : context.Media;
+        return await source.SingleOrDefaultAsync(x => x.Id == guid) ?? throw new ModelNotFoundException(guid);
     }
+
 
     public IQueryable<MediaModel> GetAll()
     {
@@ -93,8 +92,16 @@ public class MediaRepository(DatabaseContext context)
         await context.Media.IgnoreAutoIncludes().Where(x => x.Id == mediaId).ExecuteDeleteAsync();
     }
 
-    public async ValueTask DisposeAsync()
+    public async Task SetMediaImageAsync(Guid mediaId, string? image)
     {
-        await context.DisposeAsync();
+        await context.Database.ExecuteSqlInterpolatedAsync(
+            $"UPDATE Media SET image = {image} WHERE Id = {mediaId} ");
+    }
+
+    public async Task<string?> GetMediaImageAsync(Guid mediaId)
+    {
+        return await context.Database
+            .SqlQuery<string?>($"SELECT image as value FROM Media WHERE Id  = {mediaId}")
+            .SingleAsync();
     }
 }

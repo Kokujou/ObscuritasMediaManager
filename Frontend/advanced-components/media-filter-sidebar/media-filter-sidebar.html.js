@@ -31,8 +31,18 @@ export function renderMediaFilterSidebar(sidebar) {
                 <div class="filter-heading">Gelöschte anzeigen:</div>
                 <custom-toggle
                     id="delete-toggle"
-                    ?toggled="${sidebar.filter.deleted}"
-                    @toggle="${(e) => sidebar.changeFilterProperty('deleted', e.detail == CheckboxState.Ignore)}"
+                    .state="${sidebar.filter.deleted}"
+                    threeValues
+                    @toggle="${(e) => sidebar.changeFilterProperty('deleted', e.detail)}"
+                ></custom-toggle>
+            </div>
+            <div id="deleted" class="filter-entry">
+                <div class="filter-heading">Vollständige anzeigen:</div>
+                <custom-toggle
+                    id="complete-toggle"
+                    .state="${sidebar.filter.complete}"
+                    threeValues
+                    @toggle="${(e) => sidebar.changeFilterProperty('complete', e.detail)}"
                 ></custom-toggle>
             </div>
             <div id="sorting" class="filter-entry" complex>

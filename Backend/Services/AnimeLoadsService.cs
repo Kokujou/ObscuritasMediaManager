@@ -5,7 +5,7 @@ using PuppeteerSharp;
 
 namespace ObscuritasMediaManager.Backend.Services;
 
-public class AnimeLoadsService(DatabaseContext context)
+public class AnimeLoadsService(DatabaseContext context, MediaRepository mediaRepository)
 {
     private static async Task<string?> ExtractImageFromAsync(IPage page)
     {
@@ -63,18 +63,20 @@ public class AnimeLoadsService(DatabaseContext context)
     {
         if (anime.Type is not MediaCategory.AnimeMovies and not MediaCategory.AnimeSeries)
             throw new("Media type is not supported");
-        if (anime is { Image.Length: > 5, Release: > 1900, Description.Length: > 5 })
+        var image = await mediaRepository.GetMediaImageAsync(anime.Id);
+        if (anime is
+            {
+                Release: > 1900, Description.Length: > 5, KanjiName.Length: > 1,
+                GermanName.Length: > 1, EnglishName.Length: > 1
+            } && image is { Length: > 5 })
             throw new("Anime is already complete");
-
         await using var browser =
             await Puppeteer.ConnectAsync(new() { BrowserURL = "http://localhost:8083", SlowMo = 10 });
-
         await using var page = (await browser.PagesAsync()).First();
 
         try
         {
-            await page.GoToAsync("https://www.anime-loads.org/search?q=" + anime.Name, 0);
-            var content = await page.GetContentAsync();
+            await page.GoToAsync("https://www.anime-loads.org/search?sort=title&order=asc&q=" + anime.Name, 0);
             if (!page.Url.Contains("/media/"))
             {
                 var firstImageLink = await page.QuerySelectorAsync(".cover-img") ??
@@ -83,15 +85,20 @@ public class AnimeLoadsService(DatabaseContext context)
                 await page.GoToAsync(firstAnimeAddress);
             }
 
-            anime.Name = await ExtractRomajiNameFromAsync(page) ?? anime.Name;
-            anime.KanjiName = await ExtractKanjiNameFromAsync(page) ?? anime.KanjiName;
-            anime.GermanName = await ExtractGermanNameFromAsync(page) ?? anime.GermanName;
-            anime.EnglishName = await ExtractEnglishNameFromAsync(page) ?? anime.EnglishName;
+            if (anime.RomajiName is not { Length: > 1 })
+                anime.RomajiName = await ExtractRomajiNameFromAsync(page) ?? anime.RomajiName;
+            if (anime.KanjiName is not { Length : > 1 })
+                anime.KanjiName = await ExtractKanjiNameFromAsync(page) ?? anime.KanjiName;
+            if (anime.KanjiName is not { Length: > 1 })
+                anime.GermanName = await ExtractGermanNameFromAsync(page) ?? anime.GermanName;
+            if (anime.KanjiName is not { Length: > 1 })
+                anime.EnglishName = await ExtractEnglishNameFromAsync(page) ?? anime.EnglishName;
             if (anime is not { Release: > 1900 })
                 anime.Release = await ExtractReleaseYearFromAsync(page) ?? anime.Release;
             if (anime.Description is not { Length: > 5 })
                 anime.Description = await ExtractDescriptionFromAsync(page) ?? anime.Description;
-            if (anime.Image is not { Length: > 5 }) anime.Image = await ExtractImageFromAsync(page) ?? anime.Image;
+            if (image is not { Length: > 5 })
+                await mediaRepository.SetMediaImageAsync(anime.Id, await ExtractImageFromAsync(page) ?? image);
             await context.SaveChangesAsync();
             Log.Warning($"media {anime.Name} was successfully updated.");
             return anime;
@@ -103,7 +110,7 @@ public class AnimeLoadsService(DatabaseContext context)
         }
         finally
         {
-            await browser.CloseAsync();
+            browser.Disconnect();
         }
     }
 }

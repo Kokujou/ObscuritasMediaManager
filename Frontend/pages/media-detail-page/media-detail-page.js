@@ -12,7 +12,7 @@ import {
     MediaGenreModel,
     MediaModel,
     ModelCreationState,
-    UpdateRequestOfJsonElement,
+    UpdateRequestOfObject,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { MediaService } from '../../services/backend.services.js';
 import { ClientInteropService } from '../../services/client-interop-service.js';
@@ -33,12 +33,13 @@ export class MediaDetailPage extends LitElementBase {
 
     static get properties() {
         return {
-            editMode: { type: Boolean, reflect: true },
             createNew: { type: Boolean, reflect: true },
 
             newGenre: { type: Boolean, reflect: false },
             hoveredRating: { type: Number, reflect: false },
             selectedSeason: { type: Number, reflect: false },
+            hasImage: { type: Boolean, reflect: false },
+            imageRevision: { type: Number, reflect: false },
         };
     }
 
@@ -68,20 +69,25 @@ export class MediaDetailPage extends LitElementBase {
         return this.mediaIds[currentIndex - 1];
     }
 
+    get imageUrl() {
+        return `./Backend/api/media/${this.updatedMedia.id}/image?rev=${this.imageRevision}`;
+    }
+
     constructor() {
         super();
 
         /** @type {string} */ this.mediaId = null;
-        /** @type {MediaModel} */ this.updatedMedia = new MediaModel();
+        /** @type {MediaModel} */ this.updatedMedia = null;
         /** @type {string[]} */ this.mediaIds = [];
         /** @type {boolean} */ this.createNew = false;
+        /** @type {boolean} */ this.hasImage = false;
+        /** @type {number} */ this.imageRevision = Date.now();
         this.hoveredRating = 0;
         this.selectedSeason = 0;
-        this.editMode = false;
     }
 
     async connectedCallback() {
-        this.updatedMedia = await MediaService.getDefault();
+        if (this.createNew) this.updatedMedia = await MediaService.getDefault();
 
         super.connectedCallback();
         this.subscriptions.push(
@@ -112,7 +118,7 @@ export class MediaDetailPage extends LitElementBase {
 
             this.requestFullUpdate();
             document.title = this.updatedMedia.name;
-            setFavicon(this.updatedMedia.image, 'url');
+            setFavicon(this.imageUrl, 'url');
         }
     }
 
@@ -137,7 +143,7 @@ export class MediaDetailPage extends LitElementBase {
             newModel[property] = value;
 
             if (!this.createNew) {
-                await MediaService.updateMedia(this.updatedMedia.id, new UpdateRequestOfJsonElement({ oldModel, newModel }));
+                await MediaService.updateMedia(this.updatedMedia.id, new UpdateRequestOfObject({ oldModel, newModel }));
                 Session.mediaList.current().find((x) => x.id == this.updatedMedia.id)[property] = value;
                 Session.mediaList.refresh();
             }
@@ -147,6 +153,13 @@ export class MediaDetailPage extends LitElementBase {
         } catch (err) {
             console.error(err);
         }
+    }
+
+    async setMediaImage(image) {
+        if (!image) await MediaService.deleteMediaImage(this.updatedMedia.id);
+        else await MediaService.addMediaImage(image, this.updatedMedia.id);
+        this.imageRevision = Date.now();
+        await this.requestFullUpdate();
     }
 
     /**

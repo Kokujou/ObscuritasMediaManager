@@ -8,12 +8,7 @@ import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-play
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog.js';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog.js';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar.js';
-import {
-    MusicGenre,
-    MusicModel,
-    PlaylistModel,
-    UpdateRequestOfJsonElement,
-} from '../../obscuritas-media-manager-backend-client.js';
+import { MusicGenre, MusicModel, PlaylistModel, UpdateRequestOfObject } from '../../obscuritas-media-manager-backend-client.js';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg.js';
 import { AudioService } from '../../services/audio-service.js';
 import { MusicService, PlaylistService } from '../../services/backend.services.js';
@@ -203,7 +198,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
                 newModel[property] = value;
                 var updated = await MusicService.update(
                     this.updatedTrack.hash,
-                    new UpdateRequestOfJsonElement({ oldModel, newModel })
+                    new UpdateRequestOfObject({ oldModel, newModel })
                 );
                 this.updatedTrack = updated;
                 this.currentTrack = updated;

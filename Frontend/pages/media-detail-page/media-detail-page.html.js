@@ -19,41 +19,40 @@ import { MediaDetailPage } from './media-detail-page.js';
  */
 export function renderMediaDetailPage(detailPage) {
     return html`
-        <style>
-            .media-image {
-                background-image: url(${detailPage.updatedMedia.image});
-            }
-        </style>
-
+        <img
+            id="dummy-image"
+            src="${detailPage.imageUrl}"
+            @load="${() => (detailPage.hasImage = true)}"
+            @error="${() => (detailPage.hasImage = false)}"
+        />
         <div
             id="edit-button"
             onclick="this.dispatchEvent(new CustomEvent('toggle'))"
-            @toggle="${(e) => (detailPage.editMode = !detailPage.editMode)}"
+            @toggle="${(e) => detailPage.changeProperty('complete', !detailPage.updatedMedia.complete)}"
         >
             <custom-toggle
-                .state="${detailPage.editMode ? CheckboxState.Ignore : CheckboxState.Forbid}"
-                @toggle="${(e) => (detailPage.editMode = e.detail == CheckboxState.Ignore)}"
+                .state="${detailPage.updatedMedia.complete ? CheckboxState.Ignore : CheckboxState.Forbid}"
                 id="edit-toggle"
             ></custom-toggle>
-            <div id="toggle-edit-text">${detailPage.editMode ? 'Bearbeitung deaktivieren' : 'Bearbeitung aktivieren'}</div>
+            <div id="toggle-edit-text">${detailPage.updatedMedia.complete ? 'Vollständig' : 'Unvollständig'}</div>
         </div>
         <page-layout>
             <div id="media-detail-container">
                 <div id="content-panels">
-                    <div id="left-panel" ?disabled="${!detailPage.editMode}">
+                    <div id="left-panel" ?disabled="${detailPage.updatedMedia.complete}">
                         <div id="media-image-container">
-                            ${detailPage.updatedMedia.image
+                            ${detailPage.hasImage
                                 ? html`<div
                                       id="media-image"
-                                      style="background-image: url('data:image/jpeg;base64, ${detailPage.updatedMedia.image}');"
-                                      @click="${() => detailPage.changeProperty('image', null)}"
+                                      style="background-image: url('${detailPage.imageUrl}')"
+                                      @click="${() => detailPage.setMediaImage(null)}"
                                   ></div>`
                                 : html`<upload-area
-                                      @imageReceived="${(e) => detailPage.changeProperty('image', e.detail.imageData)}"
+                                      @imageReceived="${(e) => detailPage.setMediaImage(e.detail.imageData)}"
                                   ></upload-area>`}
                         </div>
 
-                        <div id="media-rating" ?disabled="${!detailPage.editMode}">
+                        <div id="media-rating" ?disabled="${detailPage.updatedMedia.complete}">
                             <star-rating
                                 max="5"
                                 singleSelect
@@ -62,7 +61,7 @@ export function renderMediaDetailPage(detailPage) {
                             ></star-rating>
                         </div>
                     </div>
-                    <div id="middle-panel" ?disabled="${!detailPage.editMode}">
+                    <div id="middle-panel" ?disabled="${detailPage.updatedMedia.complete}">
                         <div id="content-warning-section" class="property-entry">
                             <div class="property-name">Inhaltswarnungen:</div>
                             <div id="content-warnings">
@@ -112,7 +111,7 @@ export function renderMediaDetailPage(detailPage) {
                                 @click="${() => detailPage.openMediaExternal()}"
                             ></div>
                             <input
-                                ?disabled="${!detailPage.editMode}"
+                                ?disabled="${detailPage.updatedMedia.complete}"
                                 type="text"
                                 id="media-name"
                                 @change="${() => detailPage.changeProperty('name', detailPage.nameInputValue)}"
@@ -134,7 +133,7 @@ export function renderMediaDetailPage(detailPage) {
                                     <div class="property-name">Release:</div>
                                     <input
                                         id="release-input"
-                                        ?disabled="${!detailPage.editMode}"
+                                        ?disabled="${detailPage.updatedMedia.complete}"
                                         type="text"
                                         class="property-value"
                                         .value="${detailPage.updatedMedia.release.toString()}"
@@ -147,7 +146,7 @@ export function renderMediaDetailPage(detailPage) {
                                     <div class="property-name">Kategorie:</div>
                                     <drop-down
                                         class="property-value"
-                                        ?disabled="${!detailPage.editMode}"
+                                        ?disabled="${detailPage.updatedMedia.complete}"
                                         .options="${DropDownOption.createSimpleArray(
                                             Object.values(MediaCategory),
                                             detailPage.updatedMedia.type
@@ -158,7 +157,7 @@ export function renderMediaDetailPage(detailPage) {
                                     <div class="property-name">Sprache:</div>
                                     <drop-down
                                         class="property-value"
-                                        ?disabled="${!detailPage.editMode}"
+                                        ?disabled="${detailPage.updatedMedia.complete}"
                                         .options="${DropDownOption.createSimpleArray(
                                             Object.values(Language),
                                             detailPage.updatedMedia.language
@@ -170,7 +169,7 @@ export function renderMediaDetailPage(detailPage) {
                                     <div class="property-name">Status:</div>
                                     <drop-down
                                         class="property-value"
-                                        ?disabled="${!detailPage.editMode}"
+                                        ?disabled="${detailPage.updatedMedia.complete}"
                                         .options="${DropDownOption.createSimpleArray(
                                             Object.values(MediaStatus),
                                             detailPage.updatedMedia.status
@@ -179,7 +178,7 @@ export function renderMediaDetailPage(detailPage) {
                                     ></drop-down>
                                 </div>
                             </div>
-                            <div id="target-group-section" class="property-entry" ?disabled="${!detailPage.editMode}">
+                            <div id="target-group-section" class="property-entry" ?disabled="${detailPage.updatedMedia.complete}">
                                 <div class="property-name">Zielgruppe:</div>
                                 <div
                                     id="target-group-icon"
@@ -202,7 +201,7 @@ export function renderMediaDetailPage(detailPage) {
                                 <div class="property-name">Beschreibung:</div>
                             </div>
                             <textarea
-                                ?disabled="${!detailPage.editMode}"
+                                ?disabled="${detailPage.updatedMedia.complete}"
                                 class="textarea property-value"
                                 id="description-input"
                                 onclick="this.focus()"
@@ -232,7 +231,7 @@ export function renderMediaDetailPage(detailPage) {
                     <div
                         id="edit-path-button"
                         icon="${Icons.Edit}"
-                        ?disabled="${!detailPage.editMode}"
+                        ?disabled="${detailPage.updatedMedia.complete}"
                         tooltip="PC durchsuchen"
                         @click="${() => detailPage.changeBasePath()}"
                     ></div>
@@ -254,7 +253,7 @@ function renderGenreSection(page) {
                 .map(
                     (x) =>
                         html`<tag-label
-                            ?disabled="${!page.editMode}"
+                            ?disabled="${page.updatedMedia.complete}"
                             @removed="${() =>
                                 page.changeProperty(
                                     'genres',
@@ -263,7 +262,9 @@ function renderGenreSection(page) {
                             .text="${x.name}"
                         ></tag-label>`
                 )}
-            ${page.editMode ? html` <div id="add-genre-button" @click="${() => page.showGenreSelectionDialog()}">+</div> ` : ''}
+            ${!page.updatedMedia.complete
+                ? html` <div id="add-genre-button" @click="${() => page.showGenreSelectionDialog()}">+</div> `
+                : ''}
         </div>
     </div> `;
 }

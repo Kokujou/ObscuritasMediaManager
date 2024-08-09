@@ -18,6 +18,7 @@ export class MediaTile extends LitElementBase {
             disabled: { type: Boolean, reflect: true },
 
             hoveredRating: { type: Number, reflect: false },
+            hasImage: { type: Boolean, reflect: false },
         };
     }
 
@@ -27,6 +28,8 @@ export class MediaTile extends LitElementBase {
         /** @type {string} */ this.displayStyle = 'solid';
         /** @type {MediaModel} */ this.media = new MediaModel();
         /** @type {string[]} */ this.autocompleteGenres = [];
+        /** @type {boolean} */ this.hasImage = false;
+        /** @type {number} */ this.imageRevision = Date.now();
 
         /** @type {number} */ this.hoveredRating = 0;
     }

@@ -1,4 +1,5 @@
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter.js';
+import { InteropCommand } from '../../client-interop/interop-command.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Session } from '../../data/session.js';
 import { EntityStatusDialog } from '../../dialogs/entity-status-dialog/entity-status-dialog.js';
@@ -10,9 +11,10 @@ import {
     MediaCategory,
     MediaModel,
     ModelCreationState,
-    UpdateRequestOfJsonElement,
+    UpdateRequestOfObject,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreService, MediaService } from '../../services/backend.services.js';
+import { ClientInteropService } from '../../services/client-interop-service.js';
 import { MaintenanceService } from '../../services/maintenance.service.js';
 import { MediaFilterService } from '../../services/media-filter.service.js';
 import { MediaImportService } from '../../services/media-import.service.js';
@@ -97,6 +99,9 @@ export class MediaPage extends LitElementBase {
 
         var isComplete = false;
         var dialog = EntityStatusDialog.show(() => isComplete);
+
+        if (relevantAnime.length > 0)
+            await ClientInteropService.sendCommand({ command: InteropCommand.OpenChromeForDebugging, payload: null });
         for (var anime of relevantAnime) {
             try {
                 var updated = await MediaService.autoFillMediaDetails(anime.id);
@@ -106,6 +111,8 @@ export class MediaPage extends LitElementBase {
                 });
             } catch {}
         }
+        if (relevantAnime.length > 0)
+            await ClientInteropService.sendCommand({ command: InteropCommand.OpenChromeForDebugging, payload: { close: true } });
         dialog.addEventListener('accept', () => dialog.remove());
         isComplete = true;
 
@@ -151,7 +158,7 @@ export class MediaPage extends LitElementBase {
             /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
             oldModel[property] = media[property];
             newModel[property] = value;
-            await MediaService.updateMedia(media.id, new UpdateRequestOfJsonElement({ oldModel, newModel }));
+            await MediaService.updateMedia(media.id, new UpdateRequestOfObject({ oldModel, newModel }));
             media[property] = value;
             MessageSnackbar.popup('Der Eintrag wurde erfolgreich geändert.', 'success');
             this.requestFullUpdate();
@@ -159,6 +166,11 @@ export class MediaPage extends LitElementBase {
             MessageSnackbar.popup('Ein Fehler ist beim update des Eintrags aufgetreten: ' + err, 'error');
             console.error(err);
         }
+    }
+
+    async setMediaImage(mediaId, image) {
+        await MediaService.addMediaImage(image, mediaId);
+        await this.requestFullUpdate();
     }
 
     /**

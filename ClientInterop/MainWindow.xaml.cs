@@ -1,8 +1,9 @@
-﻿using Serilog;
-using Serilog.Events;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
+using ObscuritasMediaManager.ClientInterop.Commands;
+using Serilog;
+using Serilog.Events;
 using Application = System.Windows.Forms.Application;
 
 namespace ObscuritasMediaManager.ClientInterop;
@@ -28,7 +29,6 @@ public partial class MainWindow
         Icon = BitmapFrame.Create(new Uri(Path.Combine(GetProjectPath(), "magic-circle.ico")));
         Topmost = true;
         Hide();
-
         var server = new WebSocketServer("ws://localhost:8005");
         server.AddWebSocketService<WebSocketInterop>("/Interop");
         server.Start();
@@ -44,6 +44,7 @@ public partial class MainWindow
 
         AppDomain.CurrentDomain.UnhandledException += (_, e) => Log.Error(e.ExceptionObject.ToString() ?? string.Empty);
         Application.ThreadException += (_, e) => Log.Error(e.Exception.ToString());
+        Closing += (_, _) => new OpenChromeForDebuggingHandler().TerminateProcess();
     }
 
     public NotifyIcon NotifyIcon { get; set; }

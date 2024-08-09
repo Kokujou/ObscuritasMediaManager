@@ -40,7 +40,8 @@ export class MediaFilter {
     category = new FilterEntry(Object.values(MediaCategory), CheckboxState.Ignore);
     contentWarnings = new FilterEntry(Object.values(ContentWarning), CheckboxState.Ignore);
     targetGroups = new FilterEntry(Object.values(TargetGroup), CheckboxState.Ignore);
-    deleted = false;
+    deleted = CheckboxState.Ignore;
+    complete = CheckboxState.Ignore;
 
     /**
      * @param {string[]} genreIds

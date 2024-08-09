@@ -10,4 +10,5 @@ export enum InteropCommand {
     StopTrack = 3,
     ChangeTrackPosition = 4,
     ChangeTrackVolume = 5,
+    OpenChromeForDebugging = 6,
 }

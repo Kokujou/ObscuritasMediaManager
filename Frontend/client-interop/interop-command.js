@@ -10,4 +10,5 @@ export var InteropCommand;
     InteropCommand[InteropCommand["StopTrack"] = 3] = "StopTrack";
     InteropCommand[InteropCommand["ChangeTrackPosition"] = 4] = "ChangeTrackPosition";
     InteropCommand[InteropCommand["ChangeTrackVolume"] = 5] = "ChangeTrackVolume";
+    InteropCommand[InteropCommand["OpenChromeForDebugging"] = 6] = "OpenChromeForDebugging";
 })(InteropCommand || (InteropCommand = {}));
