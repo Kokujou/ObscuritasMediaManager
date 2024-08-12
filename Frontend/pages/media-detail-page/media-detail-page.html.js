@@ -2,7 +2,13 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
 import { LinkElement } from '../../native-components/link-element/link-element.js';
-import { ContentWarning, Language, MediaStatus, TargetGroup } from '../../obscuritas-media-manager-backend-client.js';
+import {
+    ContentWarning,
+    Language,
+    MediaCategory,
+    MediaStatus,
+    TargetGroup,
+} from '../../obscuritas-media-manager-backend-client.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { createRange, groupBy } from '../../services/extensions/array.extensions.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
@@ -76,26 +82,28 @@ export function renderMediaDetailPage(detailPage) {
                     <div id="right-panel">
                         ${detailPage.createNew
                             ? ''
-                            : html` ${detailPage.prevMediaId
-                                  ? LinkElement.forPage(
-                                        MediaDetailPage,
-                                        { mediaId: detailPage.prevMediaId },
-                                        html`&LeftArrow; Letzer`,
-                                        {
-                                            id: 'prev-link',
-                                        }
-                                    )
-                                  : ''}
-                              ${detailPage.nextMediaId
-                                  ? LinkElement.forPage(
-                                        MediaDetailPage,
-                                        { mediaId: detailPage.nextMediaId },
-                                        html`Nächster &RightArrow;`,
-                                        {
-                                            id: 'next-link',
-                                        }
-                                    )
-                                  : ''}`}
+                            : html` <div id="navigation">
+                                  ${detailPage.prevMediaId
+                                      ? LinkElement.forPage(
+                                            MediaDetailPage,
+                                            { mediaId: detailPage.prevMediaId },
+                                            html`&LeftArrow; Letzer`,
+                                            {
+                                                id: 'prev-link',
+                                            }
+                                        )
+                                      : ''}
+                                  ${detailPage.nextMediaId
+                                      ? LinkElement.forPage(
+                                            MediaDetailPage,
+                                            { mediaId: detailPage.nextMediaId },
+                                            html`Nächster &RightArrow;`,
+                                            {
+                                                id: 'next-link',
+                                            }
+                                        )
+                                      : ''}
+                              </div>`}
 
                         <div id="media-heading">
                             <div
@@ -180,6 +188,17 @@ export function renderMediaDetailPage(detailPage) {
                                     />
                                 </div>
                                 <div class="property-entry">
+                                    <div class="property-name">Kategorie:</div>
+                                    <drop-down
+                                        class="property-value"
+                                        ?disabled="${detailPage.updatedMedia.complete}"
+                                        .options="${DropDownOption.createSimpleArray(
+                                            Object.values(MediaCategory),
+                                            detailPage.updatedMedia.type
+                                        )}"
+                                    ></drop-down>
+                                </div>
+                                <div class="property-entry">
                                     <div class="property-name">Sprache:</div>
                                     <drop-down
                                         class="property-value"
@@ -244,14 +263,16 @@ export function renderMediaDetailPage(detailPage) {
                         .value="${detailPage.updatedMedia.description}"
                     ></textarea>
                 </div>
-                <div id="action-row">
-                    ${detailPage.createNew
-                        ? html` <div id="create-entry-link" @click="${() => detailPage.createEntry()}">
-                              <div id="create-entry-icon" icon="${Icons.SaveTick}"></div>
-                              <div id="create-entry-text">Eintrag erstellen</div>
-                          </div>`
-                        : ''}
-                </div>
+                ${detailPage.createNew
+                    ? html`
+                          <div id="action-row">
+                              <div id="create-entry-link" @click="${() => detailPage.createEntry()}">
+                                  <div id="create-entry-icon" icon="${Icons.SaveTick}"></div>
+                                  <div id="create-entry-text">Eintrag erstellen</div>
+                              </div>
+                          </div>
+                      `
+                    : ''}
                 <div id="path-row">
                     <label>Basispfad: </label>
                     <input

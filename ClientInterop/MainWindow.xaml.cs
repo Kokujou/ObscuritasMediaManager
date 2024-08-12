@@ -44,7 +44,7 @@ public partial class MainWindow
 
         AppDomain.CurrentDomain.UnhandledException += (_, e) => Log.Error(e.ExceptionObject.ToString() ?? string.Empty);
         Application.ThreadException += (_, e) => Log.Error(e.Exception.ToString());
-        Closing += (_, _) => new OpenChromeForDebuggingHandler().TerminateProcess();
+        Closing += (_, _) => OpenChromeForDebuggingHandler.TerminateProcess();
     }
 
     public NotifyIcon NotifyIcon { get; set; }

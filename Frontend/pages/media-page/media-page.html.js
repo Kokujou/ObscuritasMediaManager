@@ -70,7 +70,8 @@ export function renderMediaPageTemplate(page) {
                         id="auto-fill-button"
                         class="option-button"
                         icon="${Icons.Lookup}"
-                        tooltip="Einträge automatisch verfollständigen"
+                        ?disabled="${page.animeToAutoFill.length == 0}"
+                        tooltip="${page.animeToAutoFill.length} Einträge automatisch verfollständigen"
                         @click="${() => page.autoFillAnime()}"
                     ></div>
                     <div

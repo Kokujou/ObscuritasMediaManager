@@ -76,7 +76,9 @@ public class AnimeLoadsService(DatabaseContext context, MediaRepository mediaRep
 
         try
         {
-            await page.GoToAsync("https://www.anime-loads.org/search?sort=title&order=asc&q=" + anime.Name, 0);
+            var type = anime.Type == MediaCategory.AnimeSeries ? "anime-series" : "anime-movies";
+            await page.GoToAsync($"https://www.anime-loads.org/search?sort=title&order=asc&type={type}&q=" + anime.Name,
+                0);
             if (!page.Url.Contains("/media/"))
             {
                 var firstImageLink = await page.QuerySelectorAsync(".cover-img") ??

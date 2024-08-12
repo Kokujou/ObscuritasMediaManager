@@ -2,6 +2,7 @@ import { MediaFilter } from '../../advanced-components/media-filter-sidebar/medi
 import { InteropCommand } from '../../client-interop/interop-command.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { Session } from '../../data/session.js';
+import { DialogBase } from '../../dialogs/dialog-base/dialog-base.js';
 import { EntityStatusDialog } from '../../dialogs/entity-status-dialog/entity-status-dialog.js';
 import { ContextTooltip } from '../../native-components/context-tooltip/context-tooltip.js';
 import { LinkElement } from '../../native-components/link-element/link-element.js';
@@ -47,6 +48,20 @@ export class MediaPage extends LitElementBase {
 
     get paginatedMedia() {
         return this.filteredMedia.slice(0, this.itemsPerPage * this.page);
+    }
+
+    get animeToAutoFill() {
+        return Session.mediaList
+            .current()
+            .filter((x) => x.type == MediaCategory.AnimeMovies || x.type == MediaCategory.AnimeSeries)
+            .filter(
+                (x) =>
+                    (x.description?.length ?? 0) <= 5 ||
+                    (x.englishName?.length ?? 0) < 5 ||
+                    (x.germanName?.length ?? 0) < 5 ||
+                    (x.kanjiName?.length ?? 0) < 5 ||
+                    x.release <= 1900
+            );
     }
 
     constructor() {
@@ -98,12 +113,9 @@ export class MediaPage extends LitElementBase {
     }
 
     async autoFillAnime() {
-        var relevantAnime = Session.mediaList
-            .current()
-            .filter((x) => x.type == MediaCategory.AnimeMovies || x.type == MediaCategory.AnimeSeries);
-
         var isComplete = false;
         var dialog = EntityStatusDialog.show(() => isComplete);
+        var relevantAnime = this.animeToAutoFill;
 
         if (relevantAnime.length > 0)
             await ClientInteropService.sendCommand({ command: InteropCommand.OpenChromeForDebugging, payload: null });
@@ -183,6 +195,13 @@ export class MediaPage extends LitElementBase {
      */
     async hardDelete(media) {
         try {
+            var confirmed = await DialogBase.show('Achtung', {
+                content:
+                    'Der Anime wird aus der Datenbank gelöscht.!\n' +
+                    'Alle eingegebenen Daten werden unwiederruflich gelöscht.!\n' +
+                    'Bist du sicher?\n',
+            });
+            if (!confirmed) return;
             await MediaService.hardDeleteMedium(media.id);
             Session.mediaList.next(Session.mediaList.current().filter((x) => x.id != media.id));
             MessageSnackbar.popup('Der Track wurde erfolgreich aus der Datenbank gelöscht.', 'success');
@@ -196,6 +215,13 @@ export class MediaPage extends LitElementBase {
      */
     async fullDelete(media) {
         try {
+            var confirmed = await DialogBase.show('ACHTUNG - NICHT RÜCKGÄNGIG ZU MACHEN!', {
+                content:
+                    'Der Eintrag wird nicht nur aus der Datenbank sondern auch von der Festplatte gelöscht.\n' +
+                    'Daten die so verloren werden können nicht wiederhergestellt werden!\n' +
+                    'Bist du sicher, dass du den Eintrag löschen möchtest?\n',
+            });
+            if (!confirmed) return;
             await MediaService.fullDeleteMedium(media.id);
             Session.mediaList.next(Session.mediaList.current().filter((x) => x.id != media.id));
             MessageSnackbar.popup('Der Track wurde vollständig gelöscht.', 'success');

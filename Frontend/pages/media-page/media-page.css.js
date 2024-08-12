@@ -95,5 +95,14 @@ export function renderMediaPageStyles() {
             width: 100vw;
             height: 100vh;
         }
+
+        .option-button[disabled] {
+            background-color: gray;
+        }
+
+        *[disabled] {
+            color: lightgray;
+            pointer-events: none;
+        }
     `;
 }

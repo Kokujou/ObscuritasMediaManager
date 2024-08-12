@@ -35,8 +35,8 @@ export function renderMediaDetailPageStyles() {
         #edit-toggle {
             margin-right: 20px;
 
-            --untoggled-color: white;
-            --toggled-color: red;
+            --untoggled-color: red;
+            --toggled-color: green;
         }
 
         #toggle-edit-text {
@@ -57,20 +57,19 @@ export function renderMediaDetailPageStyles() {
 
         #prev-link,
         #next-link {
-            position: absolute;
-            top: 20px;
             font-weight: bold;
             font-size: 18px;
+            margin-bottom: 10px;
             z-index: 1;
             cursor: pointer;
         }
 
         #prev-link {
-            left: 20px;
+            float: left;
         }
 
         #next-link {
-            right: 20px;
+            float: right;
         }
 
         link-element {
@@ -441,7 +440,7 @@ export function renderMediaDetailPageStyles() {
         }
 
         #path-row {
-            margin: 20px;
+            margin-bottom: 20px;
             padding: 20px 80px;
             align-self: center;
             border-radius: 20px;
