@@ -89,9 +89,9 @@ public class AnimeLoadsService(DatabaseContext context, MediaRepository mediaRep
                 anime.RomajiName = await ExtractRomajiNameFromAsync(page) ?? anime.RomajiName;
             if (anime.KanjiName is not { Length : > 1 })
                 anime.KanjiName = await ExtractKanjiNameFromAsync(page) ?? anime.KanjiName;
-            if (anime.KanjiName is not { Length: > 1 })
+            if (anime.GermanName is not { Length: > 1 })
                 anime.GermanName = await ExtractGermanNameFromAsync(page) ?? anime.GermanName;
-            if (anime.KanjiName is not { Length: > 1 })
+            if (anime.EnglishName is not { Length: > 1 })
                 anime.EnglishName = await ExtractEnglishNameFromAsync(page) ?? anime.EnglishName;
             if (anime is not { Release: > 1900 })
                 anime.Release = await ExtractReleaseYearFromAsync(page) ?? anime.Release;

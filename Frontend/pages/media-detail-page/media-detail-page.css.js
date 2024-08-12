@@ -4,6 +4,12 @@ import { trashIcon } from './images/trash-icon.svg.js';
 
 export function renderMediaDetailPageStyles() {
     return css`
+        .separator {
+            border-bottom: 3px solid gray;
+            border-radius: 50px;
+            margin: 20px 10px;
+        }
+
         #edit-button {
             position: fixed;
             right: 0;
@@ -73,7 +79,6 @@ export function renderMediaDetailPageStyles() {
 
         #media-heading {
             font-size: 36px;
-            margin-top: 20px;
 
             position: relative;
             display: flex;
@@ -164,11 +169,12 @@ export function renderMediaDetailPageStyles() {
             letter-spacing: -2px;
         }
 
-        #right-panel {
+        #right-panel,
+        #description-section {
             position: relative;
             background: var(--accent-color);
-            border-radius: 40px;
-            padding: 40px 40px;
+            border-radius: 30px;
+            padding: 20px 40px;
             flex: auto;
             margin-right: 20px;
         }
@@ -267,6 +273,11 @@ export function renderMediaDetailPageStyles() {
             gap: 20px;
         }
 
+        .sub-entry {
+            font-size: 18px;
+            margin-bottom: 0px !important;
+        }
+
         .property-name {
             font-weight: bold;
             text-decoration: underline;
@@ -278,6 +289,7 @@ export function renderMediaDetailPageStyles() {
             flex-direction: row;
             flex-wrap: wrap;
             flex: auto;
+            text-overflow: ellipsis;
         }
 
         .genre-entry {
@@ -470,6 +482,7 @@ export function renderMediaDetailPageStyles() {
         #dummy-image {
             position: fixed;
             opacity: 0;
+            pointer-events: none;
         }
     `;
 }

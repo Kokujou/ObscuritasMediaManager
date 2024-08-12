@@ -124,6 +124,7 @@ export function renderMediaTileStyles() {
         #dummy-image {
             position: fixed;
             opacity: 0;
+            pointer-events: none;
         }
     `;
 }

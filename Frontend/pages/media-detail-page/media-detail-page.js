@@ -47,10 +47,6 @@ export class MediaDetailPage extends LitElementBase {
         return /** @type {HTMLInputElement} */ (this.shadowRoot.querySelector('#media-name')).value;
     }
 
-    get descriptionInputValue() {
-        return /** @type {HTMLInputElement} */ (this.shadowRoot.querySelector('#description-input')).value;
-    }
-
     /** @returns {HTMLElement} */
     get seasonScrollContainer() {
         var element = this.shadowRoot.getElementById('season-inner');
@@ -71,6 +67,11 @@ export class MediaDetailPage extends LitElementBase {
 
     get imageUrl() {
         return `./Backend/api/media/${this.updatedMedia.id}/image?rev=${this.imageRevision}`;
+    }
+
+    get isJapanese() {
+        var type = this.updatedMedia.type;
+        return type == MediaCategory.AnimeMovies || type == MediaCategory.AnimeSeries || type == MediaCategory.JDrama;
     }
 
     constructor() {

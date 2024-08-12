@@ -14,11 +14,18 @@ export function renderMediaPageTemplate(page) {
             <media-filter-sidebar id="media-filter" .filter="${page.filter}" @change="${() => page.requestFullUpdate()}">
                 <div slot="footer" id="result-overview">${page.filteredMedia.length} Ergebnisse gefunden</div>
             </media-filter-sidebar>
-            <paginated-scrolling id="results" scrollTopThreshold="50">
+            <paginated-scrolling
+                id="results"
+                scrollTopThreshold="50"
+                @scrollBottom="${() => {
+                    page.page++;
+                    page.requestFullUpdate();
+                }}"
+            >
                 ${page.loading
                     ? html`<partial-loading></partial-loading>`
                     : html` <div id="result-container">
-                          ${page.filteredMedia.map((media) =>
+                          ${page.paginatedMedia.map((media) =>
                               LinkElement.forPage(
                                   MediaDetailPage,
                                   { mediaId: media.id },

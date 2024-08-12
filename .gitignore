@@ -4,7 +4,6 @@ node_modules
 .vscode
 bin
 obj
-database.sqlite
 **/nswag_template/nswag_client
 database.sqlite-wal
 database.sqlite-shm

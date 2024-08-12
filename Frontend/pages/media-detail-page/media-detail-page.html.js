@@ -2,13 +2,7 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state.js';
 import { html } from '../../exports.js';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option.js';
 import { LinkElement } from '../../native-components/link-element/link-element.js';
-import {
-    ContentWarning,
-    Language,
-    MediaCategory,
-    MediaStatus,
-    TargetGroup,
-} from '../../obscuritas-media-manager-backend-client.js';
+import { ContentWarning, Language, MediaStatus, TargetGroup } from '../../obscuritas-media-manager-backend-client.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { createRange, groupBy } from '../../services/extensions/array.extensions.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
@@ -117,15 +111,59 @@ export function renderMediaDetailPage(detailPage) {
                                 @change="${() => detailPage.changeProperty('name', detailPage.nameInputValue)}"
                                 class="property-value"
                                 .value="${detailPage.updatedMedia.name}"
-                                .defaultValue="${detailPage.updatedMedia.name}"
                             />
                         </div>
+
                         <link-element
                             id="trailer-link"
                             href="https://www.youtube.com/results?search_query=${detailPage.updatedMedia.name}%20trailer"
                             target="_blank"
                             >Trailer suchen</link-element
                         >
+                        ${detailPage.isJapanese
+                            ? html` <div class="property-entry sub-entry">
+                                      <div class="property-name">Romaji:</div>
+                                      <input
+                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          type="text"
+                                          class="property-value"
+                                          .value="${detailPage.updatedMedia.romajiName}"
+                                          @change="${(e) => detailPage.changeProperty('romajiName', e.currentTarget.value)}"
+                                      />
+                                  </div>
+                                  <div class="property-entry sub-entry">
+                                      <div class="property-name">Kanji:</div>
+                                      <input
+                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          type="text"
+                                          class="property-value"
+                                          .value="${detailPage.updatedMedia.kanjiName}"
+                                          @change="${(e) => detailPage.changeProperty('kanjiName', e.currentTarget.value)}"
+                                      />
+                                  </div>
+                                  <div class="property-entry sub-entry">
+                                      <div class="property-name">Deutsch:</div>
+                                      <input
+                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          type="text"
+                                          class="property-value"
+                                          .value="${detailPage.updatedMedia.germanName}"
+                                          @change="${(e) => detailPage.changeProperty('germanName', e.currentTarget.value)}"
+                                      />
+                                  </div>
+                                  <div class="property-entry sub-entry">
+                                      <div class="property-name">Englisch:</div>
+                                      <input
+                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          type="text"
+                                          class="property-value"
+                                          .value="${detailPage.updatedMedia.englishName}"
+                                          @change="${(e) => detailPage.changeProperty('englishName', e.currentTarget.value)}"
+                                      />
+                                  </div>`
+                            : ''}
+
+                        <div class="separator"></div>
                         ${renderGenreSection(detailPage)}
                         <div id="right-panel-top">
                             <div id="right-panel-left-side">
@@ -137,21 +175,9 @@ export function renderMediaDetailPage(detailPage) {
                                         type="text"
                                         class="property-value"
                                         .value="${detailPage.updatedMedia.release.toString()}"
-                                        .defaultValue="${detailPage.updatedMedia.release.toString()}"
                                         @input="${(e) => detailPage.releaseInput(e.currentTarget)}"
                                         @change="${(e) => detailPage.releaseChanged(e.currentTarget)}"
                                     />
-                                </div>
-                                <div class="property-entry">
-                                    <div class="property-name">Kategorie:</div>
-                                    <drop-down
-                                        class="property-value"
-                                        ?disabled="${detailPage.updatedMedia.complete}"
-                                        .options="${DropDownOption.createSimpleArray(
-                                            Object.values(MediaCategory),
-                                            detailPage.updatedMedia.type
-                                        )}"
-                                    ></drop-down>
                                 </div>
                                 <div class="property-entry">
                                     <div class="property-name">Sprache:</div>
@@ -189,28 +215,34 @@ export function renderMediaDetailPage(detailPage) {
                                             Enum.nextValue(TargetGroup, detailPage.updatedMedia.targetGroup, 'None')
                                         )}"
                                 ></div>
-                                <svg id="target-group-label" viewbox="0 0 100 40">
-                                    <text textLength="100" x="0" y="50%" lengthAdjust="spacingAndGlyphs" fill="white">
+                                <svg id="target-group-label" viewbox="0 0 100 30">
+                                    <text
+                                        textLength="100"
+                                        x="0"
+                                        y="50%"
+                                        lengthAdjust="spacingAndGlyphs"
+                                        fill="white"
+                                        dominant-baseline="central"
+                                    >
                                         ${detailPage.updatedMedia.targetGroup}
                                     </text>
                                 </svg>
                             </div>
                         </div>
-                        <div class="property-group">
-                            <div class="property-entry">
-                                <div class="property-name">Beschreibung:</div>
-                            </div>
-                            <textarea
-                                ?disabled="${detailPage.updatedMedia.complete}"
-                                class="textarea property-value"
-                                id="description-input"
-                                onclick="this.focus()"
-                                @change="${() => detailPage.changeProperty('description', detailPage.descriptionInputValue)}"
-                                .value="${detailPage.updatedMedia.description}"
-                                .defaultValue="${detailPage.updatedMedia.description}"
-                            ></textarea>
-                        </div>
                     </div>
+                </div>
+                <div id="description-section" class="property-group" style="margin: 30px">
+                    <div class="property-entry">
+                        <div class="property-name">Beschreibung:</div>
+                    </div>
+                    <textarea
+                        ?disabled="${detailPage.updatedMedia.complete}"
+                        class="textarea property-value"
+                        id="description-input"
+                        onclick="this.focus()"
+                        @change="${(e) => detailPage.changeProperty('description', e.currentTarget.value)}"
+                        .value="${detailPage.updatedMedia.description}"
+                    ></textarea>
                 </div>
                 <div id="action-row">
                     ${detailPage.createNew

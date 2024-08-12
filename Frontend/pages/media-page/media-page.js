@@ -41,10 +41,19 @@ export class MediaPage extends LitElementBase {
         return MediaFilterService.filter([...Session.mediaList.current()], this.filter);
     }
 
+    get itemsPerPage() {
+        return Math.floor((this.shadowRoot.querySelector('#results')?.getBoundingClientRect()?.width ?? 800) / 200) * 5;
+    }
+
+    get paginatedMedia() {
+        return this.filteredMedia.slice(0, this.itemsPerPage * this.page);
+    }
+
     constructor() {
         super();
 
         /** @type {string[]} */ this.genreList = [];
+        this.page = 1;
         this.loading = true;
     }
 
@@ -61,11 +70,7 @@ export class MediaPage extends LitElementBase {
         this.subscriptions.push(Session.mediaList.subscribe(() => this.requestFullUpdate()));
 
         this.loading = false;
-        this.requestFullUpdate();
-    }
-
-    get paginatedMedia() {
-        return Session.mediaList;
+        await this.requestFullUpdate();
     }
 
     render() {
