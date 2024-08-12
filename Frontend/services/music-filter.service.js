@@ -39,6 +39,7 @@ export class MusicFilterService {
         if (filter.showPlaylists == CheckboxState.Require) return [];
         var filteredTracks = [...tracks];
 
+        if (filter.search) this.search(filteredTracks, filter.search ?? '');
         ObjectFilterService.applyArrayFilter(filteredTracks, filter.instrumentTypes, 'instrumentTypes');
         ObjectFilterService.applyArrayFilter(filteredTracks, filter.instruments, 'instruments', (x) => x.name);
         ObjectFilterService.applyArrayFilter(filteredTracks, filter.genres, 'genres');
@@ -46,7 +47,6 @@ export class MusicFilterService {
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.languages, 'language');
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.participants, 'participants');
         ObjectFilterService.applyPropertyFilter(filteredTracks, filter.ratings, 'rating');
-        ObjectFilterService.applyMultiPropertySearch(filteredTracks, filter.search, 'name', 'author', 'source', 'path');
         ObjectFilterService.applyValueFilter(filteredTracks, filter.showComplete, 'complete');
         ObjectFilterService.applyValueFilter(filteredTracks, filter.showDeleted, 'deleted');
         ObjectFilterService.applyMultiPropertyFilter(filteredTracks, filter.moods, (item) =>
@@ -54,5 +54,14 @@ export class MusicFilterService {
         );
 
         return filteredTracks;
+    }
+
+    /**
+     * @param {MusicModel[]} list
+     * @param {string} search
+     */
+    static search(list, search) {
+        ObjectFilterService.applyMultiPropertySearch(list, search, 'name', 'author', 'source', 'path');
+        return list;
     }
 }

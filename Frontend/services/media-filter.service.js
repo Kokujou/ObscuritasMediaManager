@@ -10,9 +10,9 @@ export class MediaFilterService {
      * @param {MediaFilter} filter
      */
     static filter(result, filter) {
+        if (filter.search) this.search(result, filter.search ?? '', true);
         ObjectFilterService.applyPropertyFilter(result, filter.ratings, 'rating');
         ObjectFilterService.applyArrayFilter(result, filter.genres, 'genres', (x) => x.id);
-        this.search(result, filter.search ?? '');
         ObjectFilterService.applyPropertyFilter(result, filter.status, 'status');
         ObjectFilterService.applyRangeFilter(result, filter.release, 'release');
         ObjectFilterService.applyPropertyFilter(result, filter.languages, 'language');
@@ -31,17 +31,18 @@ export class MediaFilterService {
     /**
      * @param {MediaModel[]} list
      * @param {string} search
+     * @param {boolean} includeDescription
      */
-    static search(list, search) {
+    static search(list, search, includeDescription) {
         ObjectFilterService.applyMultiPropertySearch(
             list,
             search ?? '',
             'name',
-            'description',
             'kanjiName',
             'romajiName',
             'germanName',
-            'englishName'
+            'englishName',
+            includeDescription ? 'description' : 'name'
         );
         return list;
     }

@@ -12,6 +12,7 @@ import {
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { createRange, groupBy } from '../../services/extensions/array.extensions.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
+import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page.js';
 import { MediaDetailPage } from './media-detail-page.js';
 
 /**
@@ -248,6 +249,29 @@ export function renderMediaDetailPage(detailPage) {
                                 </svg>
                             </div>
                         </div>
+                        ${detailPage.relatedTracks.length > 0
+                            ? html`
+                                  <div id="related-tracks-section" class="property-group">
+                                      <div class="property-entry">
+                                          <div class="property-name" style="width: unset">Verwandte Songs:</div>
+                                      </div>
+                                      ${detailPage.relatedTracks.map(
+                                          (track) => html`
+                                              <div class="property-entry">
+                                                  ♫
+                                                  ${LinkElement.forPage(
+                                                      MusicPlaylistPage,
+                                                      { trackHash: track.hash },
+                                                      track.name,
+                                                      { class: 'track-name' }
+                                                  )}
+                                                  <compact-audio-player .track="${track}"></compact-audio-player>
+                                              </div>
+                                          `
+                                      )}
+                                  </div>
+                              `
+                            : ''}
                     </div>
                 </div>
                 <div id="description-section" class="property-group" style="margin: 30px">

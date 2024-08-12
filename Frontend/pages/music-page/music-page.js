@@ -55,7 +55,7 @@ export class MusicPage extends LitElementBase {
     }
 
     get filteredTracks() {
-        var sorted = MusicFilterService.filterTracks(this.musicTracks, this.filter);
+        var sorted = MusicFilterService.filterTracks(Session.tracks.current(), this.filter);
         if (this.sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[this.sortingProperty]);
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
@@ -64,7 +64,6 @@ export class MusicPage extends LitElementBase {
     constructor() {
         super();
 
-        /** @type {MusicModel[]} */ this.musicTracks = [];
         /** @type {PlaylistModel[]} */ this.playlists = [];
         /** @type {MusicModel} */ this.currentTrack = new MusicModel();
         /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
@@ -118,7 +117,6 @@ export class MusicPage extends LitElementBase {
 
         try {
             this.playlists = await PlaylistService.listPlaylists();
-            this.musicTracks = (await MusicService.getAll()).map((x) => new MusicModel(x));
         } catch (err) {
             console.error(err);
         }

@@ -128,7 +128,11 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
         if ((this.updatedTrack.source?.length ?? 0) > 1)
-            this.sourceMediaId = MediaFilterService.search([...Session.mediaList.current()], this.updatedTrack.source)[0]?.id;
+            this.sourceMediaId = MediaFilterService.search(
+                [...Session.mediaList.current()],
+                this.updatedTrack.source,
+                false
+            )[0]?.id;
 
         AudioService.changeTrack(this.currentTrack);
         await this.requestFullUpdate();
@@ -180,7 +184,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         changePage(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.trackIndex }, false);
 
         if ((this.updatedTrack.source?.length ?? 0) > 1)
-            this.sourceMediaId = MediaFilterService.search(Session.mediaList.current(), this.updatedTrack.source)[0]?.id;
+            this.sourceMediaId = MediaFilterService.search(Session.mediaList.current(), this.updatedTrack.source, false)[0]?.id;
 
         await this.requestFullUpdate();
         await AudioService.changeTrack(this.currentTrack);

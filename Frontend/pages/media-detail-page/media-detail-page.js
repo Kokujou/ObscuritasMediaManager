@@ -12,6 +12,7 @@ import {
     MediaGenreModel,
     MediaModel,
     ModelCreationState,
+    MusicModel,
     UpdateRequestOfObject,
 } from '../../obscuritas-media-manager-backend-client.js';
 import { MediaService } from '../../services/backend.services.js';
@@ -82,6 +83,7 @@ export class MediaDetailPage extends LitElementBase {
         /** @type {string[]} */ this.mediaIds = [];
         /** @type {boolean} */ this.createNew = false;
         /** @type {boolean} */ this.hasImage = false;
+        /** @type {MusicModel[]} */ this.relatedTracks = [];
         /** @type {number} */ this.imageRevision = Date.now();
         this.hoveredRating = 0;
         this.selectedSeason = 0;
@@ -114,8 +116,11 @@ export class MediaDetailPage extends LitElementBase {
     async updated(_changedProperties) {
         super.updated(_changedProperties);
         if (this.mediaId != this.updatedMedia?.id && !this.createNew) {
-            var media = await MediaService.get(this.mediaId);
-            this.updatedMedia = Object.assign(new MediaModel(), media);
+            this.updatedMedia = await MediaService.get(this.mediaId);
+            this.relatedTracks = Session.tracks
+                .current()
+                .filter((x) => x.source && x.source.length > 2)
+                .filter((x) => MediaFilterService.search([this.updatedMedia], x.source, false).length > 0);
 
             this.requestFullUpdate();
             document.title = this.updatedMedia.name;

@@ -1,4 +1,7 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System.Linq.Expressions;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.FileIO;
 using ObscuritasMediaManager.Backend.Data;
@@ -6,9 +9,6 @@ using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
-using System.Linq.Expressions;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 

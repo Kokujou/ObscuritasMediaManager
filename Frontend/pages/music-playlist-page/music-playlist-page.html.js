@@ -217,11 +217,11 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                     <div id="change-volume-button" icon="${Icons.ChangeVolume}" class="audio-icon"></div>
                                     <range-slider
                                         id="change-volume"
-                                        @valueChanged="${(e) => this.changeVolume(e.detail.value)}"
                                         step="1"
                                         min="0"
                                         max="100"
                                         .value="${`${AudioService.volume * 100}`}"
+                                        @valueChanged="${(e) => this.changeVolume(e.detail.value)}"
                                     ></range-slider>
                                 </div>
                             </div>

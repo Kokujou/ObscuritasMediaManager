@@ -483,5 +483,14 @@ export function renderMediaDetailPageStyles() {
             opacity: 0;
             pointer-events: none;
         }
+
+        #related-tracks-section {
+            gap: 5px;
+        }
+
+        .track-name {
+            font-size: 20px;
+            flex: auto;
+        }
     `;
 }

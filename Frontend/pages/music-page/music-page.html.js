@@ -1,3 +1,4 @@
+import { Session } from '../../data/session.js';
 import { html } from '../../exports.js';
 import { LinkElement } from '../../native-components/link-element/link-element.js';
 import { Icons } from '../../resources/inline-icons/icon-registry.js';
@@ -24,7 +25,7 @@ export function renderMusicPage(musicPage) {
                         id="music-filter"
                     ></music-filter>
                     <div id="result-count-label">
-                        ${musicPage.filteredTracks.length} von ${musicPage.musicTracks.length} Musik-Tracks
+                        ${musicPage.filteredTracks.length} von ${Session.tracks.current().length} Musik-Tracks
                     </div>
                 </div>
                 <div id="result-options-container">
