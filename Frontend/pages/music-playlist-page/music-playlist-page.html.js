@@ -1,6 +1,7 @@
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
 import { html } from '../../exports.js';
+import { LinkElement } from '../../native-components/link-element/link-element.js';
 import {
     Instrumentation,
     Mood,
@@ -13,6 +14,7 @@ import { Icons } from '../../resources/inline-icons/icon-registry.js';
 import { AudioService } from '../../services/audio-service.js';
 import { ClipboardService } from '../../services/clipboard.service.js';
 import { Enum } from '../../services/extensions/enum.extensions.js';
+import { MediaDetailPage } from '../media-detail-page/media-detail-page.js';
 import { MusicPlaylistPage } from './music-playlist-page.js';
 
 export class MusicPlaylistPageTemplate extends LitElementBase {
@@ -143,8 +145,16 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                     tooltip="Quelle"
                                     .value="${this.updatedTrack.source || '---'}"
                                     ?disabled="${this.updatedTrack.complete}"
+                                    ?hoverable="${this.sourceMediaId && this.updatedTrack.complete}"
                                     oninput="this.dispatchEvent(new Event('change'))"
                                     @change="${(e) => this.changeProperty('source', e.currentTarget.value)}"
+                                    @pointerup="${(e) => {
+                                        if (e.button < 2 && this.sourceMediaId && this.updatedTrack.complete)
+                                            window.open(
+                                                LinkElement.getLinkFor(MediaDetailPage, { mediaId: this.sourceMediaId }),
+                                                '_blank'
+                                            );
+                                    }}"
                                 />
                             </div>
                             <div id="genre-section">

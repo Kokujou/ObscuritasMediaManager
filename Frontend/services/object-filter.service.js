@@ -93,7 +93,7 @@ export class ObjectFilterService {
      */
     static applyMultiPropertySearch(list, search, ...properties) {
         var results = list.filter((item) =>
-            properties.some((prop) => (item[prop] ?? '').toString().toLowerCase().includes(search.toLowerCase()))
+            properties.some((prop) => (item[prop] ?? '').toString().toLowerCase().trim().includes(search.toLowerCase().trim()))
         );
         list.length = 0;
         list.push(...results);

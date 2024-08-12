@@ -191,6 +191,17 @@ export function renderMusicPlaylistStyles() {
             justify-content: center;
         }
 
+        #audio-source[hoverable] {
+            pointer-events: all;
+            text-decoration: underline;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        *[hoverable]:hover {
+            font-weight: bold;
+        }
+
         #genre-section {
             display: flex;
             flex-direction: row;

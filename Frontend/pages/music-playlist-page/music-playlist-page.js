@@ -15,6 +15,7 @@ import { MusicService, PlaylistService } from '../../services/backend.services.j
 import { ClientInteropService } from '../../services/client-interop-service.js';
 import { distinct, randomizeArray } from '../../services/extensions/array.extensions.js';
 import { changePage } from '../../services/extensions/url.extension.js';
+import { MediaFilterService } from '../../services/media-filter.service.js';
 import { AudioFileExtensions } from './audio-file-extensions.js';
 import { renderMusicPlaylistStyles } from './music-playlist-page.css.js';
 import { MusicPlaylistPageTemplate } from './music-playlist-page.html.js';
@@ -76,6 +77,10 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         /** @type {string} */ this.trackHash = null;
         /** @type {number} */ this.trackIndex = 0;
         /** @type {boolean} */ this.createNew = false;
+
+        /** @type {MusicModel} */ this.currentTrack = null;
+        /** @type {MusicModel} */ this.updatedTrack = null;
+        /** @type {string} */ this.sourceMediaId = null;
     }
 
     connectedCallback() {
@@ -122,6 +127,9 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
         this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
+        if ((this.updatedTrack.source?.length ?? 0) > 1)
+            this.sourceMediaId = MediaFilterService.search([...Session.mediaList.current()], this.updatedTrack.source)[0]?.id;
+
         AudioService.changeTrack(this.currentTrack);
         await this.requestFullUpdate();
     }
@@ -170,6 +178,9 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
 
         changePage(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.trackIndex }, false);
+
+        if ((this.updatedTrack.source?.length ?? 0) > 1)
+            this.sourceMediaId = MediaFilterService.search(Session.mediaList.current(), this.updatedTrack.source)[0]?.id;
 
         await this.requestFullUpdate();
         await AudioService.changeTrack(this.currentTrack);

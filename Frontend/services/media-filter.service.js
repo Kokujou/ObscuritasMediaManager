@@ -6,23 +6,13 @@ import { ObjectFilterService } from './object-filter.service.js';
 
 export class MediaFilterService {
     /**
-     *
      * @param {MediaModel[]} result
      * @param {MediaFilter} filter
      */
     static filter(result, filter) {
         ObjectFilterService.applyPropertyFilter(result, filter.ratings, 'rating');
         ObjectFilterService.applyArrayFilter(result, filter.genres, 'genres', (x) => x.id);
-        ObjectFilterService.applyMultiPropertySearch(
-            result,
-            filter.search ?? '',
-            'name',
-            'description',
-            'kanjiName',
-            'romajiName',
-            'germanName',
-            'englishName'
-        );
+        this.search(result, filter.search ?? '');
         ObjectFilterService.applyPropertyFilter(result, filter.status, 'status');
         ObjectFilterService.applyRangeFilter(result, filter.release, 'release');
         ObjectFilterService.applyPropertyFilter(result, filter.languages, 'language');
@@ -36,5 +26,23 @@ export class MediaFilterService {
         var sorted = sortBy(result, (x) => x[filter.sortingProperty]);
         if (!filter.sortingDirection || filter.sortingDirection == 'ascending') return sorted;
         else return sorted.reverse();
+    }
+
+    /**
+     * @param {MediaModel[]} list
+     * @param {string} search
+     */
+    static search(list, search) {
+        ObjectFilterService.applyMultiPropertySearch(
+            list,
+            search ?? '',
+            'name',
+            'description',
+            'kanjiName',
+            'romajiName',
+            'germanName',
+            'englishName'
+        );
+        return list;
     }
 }

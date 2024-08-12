@@ -42,15 +42,26 @@ export class LinkElement extends LitElementBase {
         </link-element>`;
     }
 
+    /**
+     * @template {import('../../custom-elements.js').Page} T
+     * @template {Omit<InstanceType<T>, keyof LitElementBase>} U
+     * @param {T} page
+     * @param {Partial<Pick<U, import('../../services/extensions/url.extension.js').NonMethodKeys<U>>>} params
+     */
+    static getLinkFor(page, params) {
+        var link = '';
+        if (params)
+            link += `?${Object.entries(params)
+                .map((x) => `${x[0]}=${x[1]}`)
+                .join('&')}`;
+        if (page) link += `#${getPageName(page)}`;
+        return link;
+    }
+
     get fullLink() {
         if (this.href) return this.href;
         var link = this.href ?? '';
-        if (this.params)
-            link += `?${Object.entries(this.params)
-                .map((x) => `${x[0]}=${x[1]}`)
-                .join('&')}`;
-        if (this.page) link += `#${getPageName(this.page)}`;
-        return link;
+        return LinkElement.getLinkFor(this.page, this.params);
     }
 
     constructor() {
