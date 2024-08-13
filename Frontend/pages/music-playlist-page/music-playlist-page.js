@@ -287,7 +287,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         });
         if (!filePaths || filePaths.length != 1) return;
 
-        this.updatedTrack.path = filePaths[0];
+        this.changeProperty('path', filePaths[0]);
         this.requestFullUpdate();
         AudioService.changeTrack(this.updatedTrack);
     }

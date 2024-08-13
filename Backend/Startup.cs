@@ -28,6 +28,7 @@ public class Startup
         services.AddSingleton<ILyricsClient, RizuchanClient>();
         services.AddSingleton<ILyricsClient, GeniusClientExtended>();
         services.AddSingleton<LyricsService>();
+        services.AddSingleton(new InteropConnectionChecker());
         services.AddScoped<AnimeLoadsService>();
         services.AddHttpClient();
 
@@ -91,7 +92,11 @@ public class Startup
                     {
                         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
                         var exception = exceptionHandlerPathFeature?.Error;
-                        if (exception is null) return;
+                        if (exception is null)
+                        {
+                            return;
+                        }
+
                         Log.Error(exception.ToString());
                         context.Response.StatusCode = 400;
 

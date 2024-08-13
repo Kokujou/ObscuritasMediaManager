@@ -38,6 +38,16 @@ export declare class GenreClient {
     removeGenre(id: string, signal?: AbortSignal): Promise<void>;
     protected processRemoveGenre(response: Response): Promise<void>;
 }
+export declare class InteropProxyClient {
+    private http;
+    private baseUrl;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined;
+    constructor(baseUrl?: string, http?: {
+        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
+    });
+    connectToInterop(signal?: AbortSignal): Promise<void>;
+    protected processConnectToInterop(response: Response): Promise<void>;
+}
 export declare class LoginClient {
     private http;
     private baseUrl;

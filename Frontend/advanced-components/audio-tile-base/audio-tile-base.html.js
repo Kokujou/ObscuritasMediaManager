@@ -19,7 +19,8 @@ export function renderAudioTileBase(audioTile) {
             <div
                 id="audio-image"
                 icon="${audioTile.paused ? Icons.Play : Icons.Pause}"
-                ?invisible="${!!AudioService.visualizationData.current()}"
+                ?invisible="${!!AudioService.visualizationData.current() ||
+                AudioService.currentTrackPath != audioTile.track.path}"
                 @click="${(e) => audioTile.dispatchEvent(new CustomEvent('imageClicked', { composed: true, bubbles: true }))}"
             ></div>
             <canvas id="audio-visualization"></canvas>

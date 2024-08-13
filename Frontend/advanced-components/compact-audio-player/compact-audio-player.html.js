@@ -15,7 +15,6 @@ export function renderCompactAudioPlayer(player) {
             @click="${() => player.toggleCurrentTrack()}"
         ></div>
         <div id="position-container">
-            <div id="track-position-label"></div>
             <range-slider
                 id="track-position-input"
                 @valueChanged="${(e) => player.changeTrackPosition(e.detail.value)}"
@@ -24,7 +23,6 @@ export function renderCompactAudioPlayer(player) {
                 .max="${player.currentTrackDuration.toString()}"
                 steps="1000"
             ></range-slider>
-            <div id="track-duration-label"></div>
         </div>
         <div id="volume-button-container">
             <div id="volume-button" icon="${Icons.ChangeVolume}" class="button"></div>

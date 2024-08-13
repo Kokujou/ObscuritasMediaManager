@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
 using ObscuritasMediaManager.ClientInterop.Commands;
@@ -16,6 +17,8 @@ public partial class MainWindow
     {
         return Path.GetDirectoryName(currentFilePath)!;
     }
+
+    public NotifyIcon NotifyIcon { get; set; }
 
     public MainWindow()
     {
@@ -44,8 +47,16 @@ public partial class MainWindow
 
         AppDomain.CurrentDomain.UnhandledException += (_, e) => Log.Error(e.ExceptionObject.ToString() ?? string.Empty);
         Application.ThreadException += (_, e) => Log.Error(e.Exception.ToString());
-        Closing += (_, _) => OpenChromeForDebuggingHandler.TerminateProcess();
-    }
 
-    public NotifyIcon NotifyIcon { get; set; }
+        var client = new UdpClient();
+        client.Connect("127.0.0.1", 80);
+        client.Send([1]);
+
+        Closing += (_, _) =>
+        {
+            OpenChromeForDebuggingHandler.TerminateProcess();
+            client.Send([0]);
+            client.Dispose();
+        };
+    }
 }

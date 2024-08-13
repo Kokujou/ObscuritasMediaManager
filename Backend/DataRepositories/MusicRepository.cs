@@ -139,7 +139,8 @@ public class MusicRepository(DatabaseContext context)
         foreach (var track in tracks)
             try
             {
-                FileSystem.DeleteFile(track.Path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                if (File.Exists(track.Path))
+                    FileSystem.DeleteFile(track.Path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
             }
             catch (Exception ex)
             {
@@ -147,7 +148,8 @@ public class MusicRepository(DatabaseContext context)
             }
 
         var succeededTrackHashes = trackHashes.Except(failedTrackDictionary.Keys);
-        var deleted = await context.Music.Where(x => succeededTrackHashes.Contains(x.Hash)).ExecuteDeleteAsync();
+        var deleted = await context.Music.IgnoreAutoIncludes().Where(x => succeededTrackHashes.Contains(x.Hash))
+            .ExecuteDeleteAsync();
 
         if (deleted != succeededTrackHashes.Count())
             failedTrackDictionary.Add("Unknown", "Some weird SQL error");

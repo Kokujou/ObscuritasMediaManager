@@ -6,6 +6,7 @@ import { InteropQueryResponse } from '../client-interop/interop-query-response.j
 import { ResponseStatus } from '../client-interop/response-status.js';
 import { Observable } from '../data/observable.js';
 import { MessageSnackbar } from '../native-components/message-snackbar/message-snackbar.js';
+import { InteropProxyService } from './backend.services.js';
 import { waitForSeconds } from './extensions/animation.extension.js';
 
 export class ClientInteropService {
@@ -71,21 +72,16 @@ export class ClientInteropService {
      * @prop {Observable<number>} position
      */
     static async startConnection() {
-        while (true) {
-            await waitForSeconds(3);
-            try {
-                await fetch('http://localhost:8005/Interop', { mode: 'no-cors', redirect: 'follow' });
-                this.socket = await this.#tryConnect();
-                console.log('websocket connection successfull');
-                this.onConnected.next(null);
-                MessageSnackbar.popup('Websocket Verbindung zum Client Interop erfolgreich', 'success');
-                this.failCounter.next(0);
-                break;
-            } catch {
-                console.error('websocket conection closed, trying reconnect.');
-                this.failCounter.next(this.failCounter.current() + 1);
-            }
-        }
+        setTimeout(() => {
+            if (this.socket?.readyState != WebSocket.OPEN) this.failCounter.next(2);
+        }, 5000);
+
+        await InteropProxyService.connectToInterop();
+        this.socket = await this.#tryConnect();
+        console.log('websocket connection successfull');
+        this.onConnected.next(null);
+        this.failCounter.next(0);
+        MessageSnackbar.popup('Websocket Verbindung zum Client Interop erfolgreich', 'success');
 
         this.socket.onmessage = async (e) => {
             var deserialized = JSON.parse(e.data);
@@ -111,4 +107,3 @@ export class ClientInteropService {
         });
     }
 }
-ClientInteropService.startConnection();
