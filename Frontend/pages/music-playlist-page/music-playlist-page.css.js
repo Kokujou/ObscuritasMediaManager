@@ -181,7 +181,7 @@ export function renderMusicPlaylistStyles() {
 
         #audio-subtitle > * {
             flex: auto;
-            margin-top: -10px;
+            margin-top: -10px !important;
         }
 
         #subtitle-separator {
@@ -191,15 +191,8 @@ export function renderMusicPlaylistStyles() {
             justify-content: center;
         }
 
-        #audio-source[hoverable] {
-            pointer-events: all;
+        link-element {
             text-decoration: underline;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        *[hoverable]:hover {
-            font-weight: bold;
         }
 
         #genre-section {

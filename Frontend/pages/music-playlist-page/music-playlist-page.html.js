@@ -1,5 +1,6 @@
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood.js';
 import { LitElementBase } from '../../data/lit-element-base.js';
+import { Session } from '../../data/session.js';
 import { html } from '../../exports.js';
 import { LinkElement } from '../../native-components/link-element/link-element.js';
 import {
@@ -138,24 +139,14 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                     @change="${(e) => this.changeProperty('author', e.currentTarget.value)}"
                                 />
                                 <div id="subtitle-separator">-</div>
-                                <input
-                                    type="text"
-                                    id="audio-source"
-                                    class="editable-label"
-                                    tooltip="Quelle"
-                                    .value="${this.updatedTrack.source || '---'}"
-                                    ?disabled="${this.updatedTrack.complete}"
-                                    ?hoverable="${this.sourceMediaId && this.updatedTrack.complete}"
-                                    oninput="this.dispatchEvent(new Event('change'))"
-                                    @change="${(e) => this.changeProperty('source', e.currentTarget.value)}"
-                                    @pointerup="${(e) => {
-                                        if (e.button < 2 && this.sourceMediaId && this.updatedTrack.complete)
-                                            window.open(
-                                                LinkElement.getLinkFor(MediaDetailPage, { mediaId: this.sourceMediaId }),
-                                                '_blank'
-                                            );
-                                    }}"
-                                />
+                                ${this.updatedTrack?.complete && this.sourceMediaId
+                                    ? LinkElement.forPage(
+                                          MediaDetailPage,
+                                          { mediaId: this.sourceMediaId },
+                                          this.updatedTrack.source,
+                                          { target: '_blank' }
+                                      )
+                                    : this.renderSourceInput()}
                             </div>
                             <div id="genre-section">
                                 ${this.updatedTrack.genres?.map(
@@ -192,7 +183,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                     icon="${Icons.Clipboard}"
                                     class="audio-icon"
                                     tooltip="In Zwischenablage kopieren"
-                                    @click="${() => ClipboardService.copyAudioToClipboard(this.currentTrack)}"
+                                    @click="${() => ClipboardService.copyAudioToClipboard(this.updatedTrack)}"
                                 ></div>
                                 <div
                                     id="previous-track-button"
@@ -267,5 +258,27 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                 </div>
             </page-layout>
         `;
+    }
+
+    /**
+     * @this MusicPlaylistPage
+     */
+    renderSourceInput() {
+        return html` <input
+                type="text"
+                id="audio-source"
+                class="editable-label"
+                tooltip="Quelle"
+                .value="${this.updatedTrack.source || '---'}"
+                ?disabled="${this.updatedTrack.complete}"
+                ?hoverable="${this.sourceMediaId && this.updatedTrack.complete}"
+                oninput="this.dispatchEvent(new Event('change'))"
+                list="media-list"
+                @change="${(e) => this.changeProperty('source', e.currentTarget.value)}"
+                @click="${(e) => e.preventDefault()}"
+            />
+            <datalist id="media-list">
+                ${Session.mediaList.current().map((x) => html`<option value="${x.name}"></option>`)}
+            </datalist>`;
     }
 }

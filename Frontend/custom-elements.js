@@ -1,6 +1,5 @@
 import { AudioTileBase } from './advanced-components/audio-tile-base/audio-tile-base.js';
 import { AudioTile } from './advanced-components/audio-tile-base/audio-tile/audio-tile.js';
-import { CompactAudioPlayer } from './advanced-components/compact-audio-player/compact-audio-player.js';
 import { DurationInput } from './advanced-components/duration-input/duration-input.js';
 import { ImageTile } from './advanced-components/image-tile/image-tile.js';
 import { LanguageSwitcher } from './advanced-components/language-switcher/language-switcher.js';
@@ -123,4 +122,3 @@ window.customElements.define('entity-status-dialog', EntityStatusDialog);
 window.customElements.define('loading-circle', LoadingCircle);
 window.customElements.define('context-tooltip', ContextTooltip);
 window.customElements.define('create-media-page', CreateMediaPage);
-window.customElements.define('compact-audio-player', CompactAudioPlayer);

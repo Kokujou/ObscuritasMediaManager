@@ -43,8 +43,8 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     }
 
     get audioSource() {
-        if (!this.currentTrack?.path) return;
-        return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.currentTrack?.path)}`;
+        if (!this.updatedTrack?.path) return;
+        return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.updatedTrack?.path)}`;
     }
 
     get currentTrackPosition() {
@@ -71,6 +71,10 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         return `${Math.floor(minutes).toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
+    get sourceMediaId() {
+        return MediaFilterService.search([...Session.mediaList.current()], this.updatedTrack.source, false)[0]?.id;
+    }
+
     constructor() {
         super();
         /** @type {string} */ this.playlistId = null;
@@ -78,17 +82,16 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         /** @type {number} */ this.trackIndex = 0;
         /** @type {boolean} */ this.createNew = false;
 
-        /** @type {MusicModel} */ this.currentTrack = null;
         /** @type {MusicModel} */ this.updatedTrack = null;
-        /** @type {string} */ this.sourceMediaId = null;
     }
 
-    connectedCallback() {
-        super.connectedCallback();
+    async connectedCallback() {
+        await super.connectedCallback();
 
+        this.initializeData();
         this.subscriptions.push(
             Session.currentPage.subscribe((nextPage) => {
-                PlayMusicDialog.show(this.currentTrack, AudioService.volume, AudioService.trackPosition.current());
+                PlayMusicDialog.show(this.updatedTrack, AudioService.volume, AudioService.trackPosition.current());
             }),
             AudioService.ended.subscribe(() => {
                 console.log('track ended', new Date().toTimeString());
@@ -101,11 +104,10 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         );
 
         window.addEventListener('hashchange', (e) => {
-            PlayMusicDialog.show(this.currentTrack, AudioService.volume, AudioService.trackPosition.current() ?? 0);
+            PlayMusicDialog.show(this.updatedTrack, AudioService.volume, AudioService.trackPosition.current() ?? 0);
         });
 
         this.subscriptions.push(AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
-        this.initializeData();
     }
 
     async initializeData() {
@@ -125,23 +127,17 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
             this.trackIndex = this.trackIndex;
         }
 
-        this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
-        if ((this.updatedTrack.source?.length ?? 0) > 1)
-            this.sourceMediaId = MediaFilterService.search(
-                [...Session.mediaList.current()],
-                this.updatedTrack.source,
-                false
-            )[0]?.id;
 
-        AudioService.changeTrack(this.currentTrack);
+        AudioService.changeTrack(this.updatedTrack);
         await this.requestFullUpdate();
     }
 
     render() {
+        if (!this.updatedTrack) return;
         var title = '';
         if (this.createNew) title = 'Neuer Track' + (this.updatedTrack.name ? ` - ${this.updatedTrack.name}` : '');
-        else if (this.playlist?.isTemporary || !this.playlist?.name) title = this.updatedTrack.displayName;
+        else if (this.playlist?.isTemporary || !this.playlist?.name) title = this.updatedTrack?.displayName;
         else title = this.playlist.name + ' - ' + this.updatedTrack.name;
         if (document.title != title) document.title = title;
         return super.render();
@@ -178,16 +174,12 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     async changeTrack(index) {
         if (this.playlist.tracks.length == 1) return;
         this.trackIndex = index;
-        this.currentTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
 
         changePage(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.trackIndex }, false);
 
-        if ((this.updatedTrack.source?.length ?? 0) > 1)
-            this.sourceMediaId = MediaFilterService.search(Session.mediaList.current(), this.updatedTrack.source, false)[0]?.id;
-
         await this.requestFullUpdate();
-        await AudioService.changeTrack(this.currentTrack);
+        await AudioService.changeTrack(this.updatedTrack);
         await AudioService.play();
     }
 
@@ -216,11 +208,9 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
                     new UpdateRequestOfObject({ oldModel, newModel })
                 );
                 this.updatedTrack = updated;
-                this.currentTrack = updated;
                 this.playlist.tracks[this.trackIndex] = updated;
             } else {
                 this.updatedTrack[property] = value;
-                this.currentTrack[property] = value;
                 this.playlist.tracks[this.trackIndex][property] = value;
                 if (property == 'instruments') {
                     this.updatedTrack.instrumentNames = this.updatedTrack.instruments.map((x) => x.name);
@@ -300,7 +290,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
     async showLyrics() {
         try {
-            var dialog = await LyricsDialog.startShowing(this.currentTrack);
+            var dialog = await LyricsDialog.startShowing(this.updatedTrack);
             dialog.addEventListener('lyrics-saved', async () => {
                 await this.changeProperty('lyrics', dialog.lyrics);
                 MessageSnackbar.popup('The lyrics have been successfully saved', 'success');

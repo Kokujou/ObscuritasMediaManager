@@ -25,6 +25,13 @@ export class TagLabel extends LitElementBase {
         return null;
     }
 
+    get autocompleteItems() {
+        /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#new-tag-input');
+        if (!input) return [];
+        var searchText = input.value;
+        return this.autocomplete.filter((x) => x.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
+    }
+
     constructor() {
         super();
         /** @type {string} */ this.text;
@@ -33,13 +40,6 @@ export class TagLabel extends LitElementBase {
         /** @type {string[]} */ this.autocomplete = [];
         /** @type {number} */ this.autofillIndex = -1;
         /** @type {boolean} */ this.showAutocomplete = false;
-    }
-
-    get autocompleteItems() {
-        /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#new-tag-input');
-        if (!input) return [];
-        var searchText = input.value;
-        return this.autocomplete.filter((x) => x.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
     }
 
     render() {
