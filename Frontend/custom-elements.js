@@ -23,6 +23,7 @@ import { PlayMusicDialog } from './dialogs/play-music-dialog/play-music-dialog.j
 import { PlaylistSelectionDialog } from './dialogs/playlist-selection-dialog/playlist-selection-dialog.js';
 import { SelectOptionsDialog } from './dialogs/select-options-dialog/select-options-dialog.js';
 import { BorderButton } from './native-components/border-button/border-button.js';
+import { CompactAudioPlayer } from './native-components/compact-audio-player/compact-audio-player.js';
 import { ContextMenu } from './native-components/context-menu/context-menu.js';
 import { ContextTooltip } from './native-components/context-tooltip/context-tooltip.js';
 import { CustomToggle } from './native-components/custom-toggle/custom-toggle.js';
@@ -122,3 +123,4 @@ window.customElements.define('entity-status-dialog', EntityStatusDialog);
 window.customElements.define('loading-circle', LoadingCircle);
 window.customElements.define('context-tooltip', ContextTooltip);
 window.customElements.define('create-media-page', CreateMediaPage);
+window.customElements.define('compact-audio-player', CompactAudioPlayer);

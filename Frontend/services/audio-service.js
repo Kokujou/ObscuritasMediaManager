@@ -5,7 +5,6 @@ import { InteropQuery } from '../client-interop/interop-query.js';
 import { PlaybackState } from '../client-interop/playback-state.js';
 import { TrackUpdatedEventResponse } from '../client-interop/track-updated-event-response.js';
 import { Observable, Subscription } from '../data/observable.js';
-import { MusicModel } from '../obscuritas-media-manager-backend-client.js';
 import { ClientInteropService } from './client-interop-service.js';
 
 export class AudioService {
@@ -92,13 +91,13 @@ export class AudioService {
     }
 
     /**
-     * @param {MusicModel} track
+     * @param {string} path
      */
-    static async changeTrack(track) {
-        if (!track?.path) return;
+    static async changeTrack(path) {
+        if (!path) return;
 
         try {
-            await ClientInteropService.executeQuery({ query: InteropQuery.LoadTrack, payload: track.path });
+            await ClientInteropService.executeQuery({ query: InteropQuery.LoadTrack, payload: path });
             await this.changeVolume(this.volume);
         } catch (err) {
             console.error('initializing track failed:', err);

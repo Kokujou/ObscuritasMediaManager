@@ -129,7 +129,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
 
-        AudioService.changeTrack(this.updatedTrack);
+        AudioService.changeTrack(this.updatedTrack?.path);
         await this.requestFullUpdate();
     }
 
@@ -145,7 +145,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
     async toggleCurrentTrack() {
         if (!this.updatedTrack.path) return await MessageSnackbar.popup('Kein Pfad ausgewählt', 'error');
-        if (AudioService.currentTrackPath != this.updatedTrack.path) await AudioService.changeTrack(this.updatedTrack);
+        if (AudioService.currentTrackPath != this.updatedTrack.path) await AudioService.changeTrack(this.updatedTrack?.path);
         try {
             if (AudioService.paused) await AudioService.play();
             else await AudioService.pause();
@@ -179,7 +179,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         changePage(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.trackIndex }, false);
 
         await this.requestFullUpdate();
-        await AudioService.changeTrack(this.updatedTrack);
+        await AudioService.changeTrack(this.updatedTrack?.path);
         await AudioService.play();
     }
 
@@ -279,7 +279,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
         this.changeProperty('path', filePaths[0]);
         this.requestFullUpdate();
-        AudioService.changeTrack(this.updatedTrack);
+        AudioService.changeTrack(this.updatedTrack?.path);
     }
 
     randomize() {

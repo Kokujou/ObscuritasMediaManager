@@ -10,7 +10,7 @@ export function renderCompactAudioPlayer(player) {
     return html`
         <div
             id="toggle-button"
-            icon="${AudioService.currentTrackPath == player.track.path && !AudioService.paused ? Icons.Pause : Icons.Play}"
+            icon="${AudioService.currentTrackPath == player.path && !AudioService.paused ? Icons.Pause : Icons.Play}"
             class="button"
             @click="${() => player.toggleCurrentTrack()}"
         ></div>

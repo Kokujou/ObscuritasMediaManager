@@ -193,6 +193,7 @@ export function renderMusicPlaylistStyles() {
 
         link-element {
             text-decoration: underline;
+            text-overflow: ellipsis;
         }
 
         #genre-section {

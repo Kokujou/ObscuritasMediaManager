@@ -49,7 +49,7 @@ export class PlayMusicDialog extends LitElementBase {
      * @param {number} startPosition
      */
     async reinitialize(track, initialVolume, startPosition) {
-        await AudioService.changeTrack(track);
+        await AudioService.changeTrack(track?.path);
         await AudioService.changeVolume(initialVolume);
         await AudioService.changePosition(startPosition);
         await AudioService.play();

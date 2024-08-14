@@ -265,7 +265,7 @@ export function renderMediaDetailPage(detailPage) {
                                                       track.name,
                                                       { class: 'track-name' }
                                                   )}
-                                                  <compact-audio-player .track="${track}"></compact-audio-player>
+                                                  <compact-audio-player .path="${track?.path}"></compact-audio-player>
                                               </div>
                                           `
                                       )}

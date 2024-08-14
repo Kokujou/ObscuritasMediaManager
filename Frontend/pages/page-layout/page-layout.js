@@ -28,7 +28,7 @@ export class PageLayout extends LitElementBase {
                 if (x >= 1) {
                     WarningBanner.spawn(html`
                         Die Socket-Verbindung zum Client ist fehlgeschlagen. Bitte starte das&nbsp;
-                        <a class="banner-link" @click="${() => location.assign('ommci://')}">Client-Programm</a>.
+                        <a class="banner-link" @click="${() => this.openClientProgram()}">Client-Programm</a>.
                     `);
                 }
 
@@ -37,5 +37,12 @@ export class PageLayout extends LitElementBase {
                 }
             })
         );
+    }
+
+    openClientProgram() {
+        var iframe = document.createElement('iframe');
+        iframe.src = 'ommci://';
+        document.body.appendChild(iframe);
+        iframe.remove();
     }
 }

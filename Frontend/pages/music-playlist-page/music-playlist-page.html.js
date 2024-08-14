@@ -274,6 +274,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                 ?hoverable="${this.sourceMediaId && this.updatedTrack.complete}"
                 oninput="this.dispatchEvent(new Event('change'))"
                 list="media-list"
+                style="text-overflow: ellipsis"
                 @change="${(e) => this.changeProperty('source', e.currentTarget.value)}"
                 @click="${(e) => e.preventDefault()}"
             />
