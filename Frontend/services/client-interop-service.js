@@ -73,7 +73,7 @@ export class ClientInteropService {
      */
     static async startConnection() {
         setTimeout(() => {
-            if (this.socket?.readyState != WebSocket.OPEN) this.failCounter.next(2);
+            if (!this.socket || this.socket.readyState != WebSocket.OPEN) this.failCounter.next(2);
         }, 5000);
 
         await InteropProxyService.connectToInterop();
