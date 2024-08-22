@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Nodes;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
@@ -8,9 +6,12 @@ using ObscuritasMediaManager.Backend.Controllers.Responses;
 using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.DataRepositories;
+using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 using ObscuritasMediaManager.Backend.Services;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
 
@@ -42,8 +43,7 @@ public class MusicController(MusicRepository repository, IOptions<JsonOptions> j
     public async Task<KeyValuePair<string?, ModelCreationState>> CreateMusicTrackFromPathAsync(
         [FromBody] string trackPath)
     {
-        if (!System.IO.File.Exists(trackPath))
-            return new(null, ModelCreationState.Invalid);
+        if (!System.IO.File.Exists(trackPath)) return new(null, ModelCreationState.Invalid);
 
         var track = MusicModel.CreateDefault(trackPath.Split('\\').Last());
         track.Path = trackPath;

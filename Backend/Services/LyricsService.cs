@@ -1,5 +1,7 @@
 ﻿using ObscuritasMediaManager.Backend.Controllers.Responses;
+using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Models;
+using ObscuritasMediaManager.Backend.Services.Interfaces;
 
 namespace ObscuritasMediaManager.Backend.Services;
 
@@ -11,6 +13,7 @@ public class LyricsService(IEnumerable<ILyricsClient> lyricsClients)
         {
             var links = await client.SearchForAsync(track);
             if (offset < links.Count) return await client.GetRomanizedLyricsAsync(links[offset]);
+
             offset -= links.Count;
         }
 

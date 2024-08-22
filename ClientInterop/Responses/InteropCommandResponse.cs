@@ -1,6 +1,4 @@
 ﻿using ObscuritasMediaManager.ClientInterop.Commands;
-using System;
-using System.Linq;
 using TypeGen.Core.TypeAnnotations;
 
 namespace ObscuritasMediaManager.ClientInterop.Responses;
@@ -14,4 +12,3 @@ public class InteropCommandResponse
     public required object? Request { get; set; }
     public string? Message { get; set; }
 }
-

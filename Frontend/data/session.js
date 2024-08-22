@@ -12,23 +12,19 @@ export class Session {
     static async initialize() {
         Session.initialized = false;
 
-        try {
-            Session.mediaList.next(await MediaService.getAll());
-        } catch (err) {
-            console.error(err);
-        }
+        var promises = [
+            MediaService.getAll()
+                .then((list) => Session.mediaList.next(list))
+                .catch((err) => console.error(err)),
+            MusicService.getAll()
+                .then((list) => Session.tracks.next(list))
+                .catch((err) => console.error(err)),
+            MusicService.getInstruments()
+                .then((list) => Session.instruments.next(list))
+                .catch((err) => console.error(err)),
+        ];
 
-        try {
-            Session.tracks.next(await MusicService.getAll());
-        } catch (err) {
-            console.error(err);
-        }
-
-        try {
-            Session.instruments.next(await MusicService.getInstruments());
-        } catch (err) {
-            console.error(err);
-        }
+        for (var promise of promises) await promise;
 
         Session.initialized = true;
     }

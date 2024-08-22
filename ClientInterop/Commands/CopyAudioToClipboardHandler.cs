@@ -6,26 +6,6 @@ namespace ObscuritasMediaManager.ClientInterop.Commands;
 
 public class CopyAudioToClipboardHandler : ICommandHandler
 {
-    public InteropCommand Command => InteropCommand.CopyAudioToClipboard;
-
-    [STAThread]
-    public async Task ExecuteAsync(JsonElement? payload)
-    {
-        await Task.Yield();
-        var trackPath = payload?.GetString()!;
-
-        var fi = new FileInfo(trackPath);
-        var dataObject = new DataObject();
-        dataObject.SetFileDropList([fi.FullName]);
-        dataObject.SetData("Shell IDList Array", true, CreateShellIDList([fi.FullName]));
-
-        var thread = new Thread(() => Clipboard.SetDataObject(dataObject, true));
-
-        thread.SetApartmentState(ApartmentState.STA);
-        thread.Start();
-        thread.Join();
-    }
-
     [DllImport("shell32.dll", CharSet = CharSet.Auto)]
     public static extern IntPtr ILCreateFromPath(string path);
 
@@ -61,11 +41,28 @@ public class CopyAudioToClipboardHandler : ICommandHandler
         }
 
         sw.Write(0);
-        foreach (var pidl in pidls)
-        {
-            sw.Write(pidl);
-        }
+        foreach (var pidl in pidls) sw.Write(pidl);
 
         return memStream;
+    }
+
+    public InteropCommand Command => InteropCommand.CopyAudioToClipboard;
+
+    [STAThread]
+    public async Task ExecuteAsync(JsonElement? payload)
+    {
+        await Task.Yield();
+        var trackPath = payload?.GetString()!;
+
+        var fi = new FileInfo(trackPath);
+        var dataObject = new DataObject();
+        dataObject.SetFileDropList([fi.FullName]);
+        dataObject.SetData("Shell IDList Array", true, CreateShellIDList([fi.FullName]));
+
+        var thread = new Thread(() => Clipboard.SetDataObject(dataObject, true));
+
+        thread.SetApartmentState(ApartmentState.STA);
+        thread.Start();
+        thread.Join();
     }
 }

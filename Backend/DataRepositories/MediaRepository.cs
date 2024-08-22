@@ -1,12 +1,12 @@
-﻿using System.Linq.Expressions;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
+using System.Linq.Expressions;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -80,7 +80,6 @@ public class MediaRepository(DatabaseContext context)
         var source = asTracking ? context.Media.AsTracking() : context.Media;
         return await source.SingleOrDefaultAsync(x => x.Id == guid) ?? throw new ModelNotFoundException(guid);
     }
-
 
     public IQueryable<MediaModel> GetAll()
     {

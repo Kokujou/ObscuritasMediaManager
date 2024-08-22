@@ -1,21 +1,25 @@
 using Concentus;
 using Concentus.Oggfile;
+using ObscuritasMediaManager.ClientInterop.Events;
 using System.IO;
 
 namespace ObscuritasMediaManager.ClientInterop.Services;
 
 public static class AudioService
 {
+    public static WebSocketInterop? Interop { get; set; }
     public static string? TrackPath { get; private set; }
 
-    public static float Volume { get => Player.Volume; set => Player.Volume = value; }
+    public static float Volume
+    {
+        get => Player.Volume;
+        set => Player.Volume = value;
+    }
 
-    public static TimeSpan Position { get => Reader?.CurrentTime ?? TimeSpan.Zero; set => SetPosition(value); }
-
-    public static float[] VisualizationData = [];
-    public static WaveOutEvent Player = new();
-    private static WaveStream? Reader;
-    private static AudioVisualizer? Visualizer;
+    public static float[] VisualizationData { get; private set; } = [];
+    public static WaveOutEvent Player { get; private set; } = new();
+    private static WaveStream? _reader;
+    private static AudioVisualizer? _visualizer;
 
     public static void Pause()
     {
@@ -43,18 +47,15 @@ public static class AudioService
 
     public static void ChangeTrack(string trackPath)
     {
-        if (trackPath is null)
-        {
-            throw new ArgumentNullException(nameof(trackPath));
-        }
+        ArgumentNullException.ThrowIfNull(trackPath);
 
         Stop();
         Player = new();
-        Reader?.Dispose();
+        _reader?.Dispose();
 
         try
         {
-            Reader = new MediaFoundationReader(trackPath);
+            _reader = new MediaFoundationReader(trackPath);
         }
         catch
         {
@@ -66,59 +67,49 @@ public static class AudioService
             while (oggIn.HasNextPacket)
             {
                 var packet = oggIn.DecodeNextPacket();
-                if (packet != null)
+                if (packet == null)
+                    continue;
+
+                foreach (var t in packet)
                 {
-                    for (var i = 0; i < packet.Length; i++)
-                    {
-                        var bytes = BitConverter.GetBytes(packet[i]);
-                        pcmStream.Write(bytes, 0, bytes.Length);
-                    }
+                    var bytes = BitConverter.GetBytes(t);
+                    pcmStream.Write(bytes, 0, bytes.Length);
                 }
             }
 
             pcmStream.Position = 0;
-            Reader = new RawSourceWaveStream(pcmStream, new(48000, 1));
+            _reader = new RawSourceWaveStream(pcmStream, new(48000, 1));
         }
 
-        Visualizer = new(Reader.ToSampleProvider());
-        Visualizer.Samples.Subscribe(x => VisualizationData = x.newValue ?? new float[0]);
-        Visualizer.Reset();
-        Player.Init(Visualizer);
+        _visualizer = new(_reader.ToSampleProvider());
+        _visualizer.Samples.Subscribe(x => VisualizationData = x.newValue ?? []);
+        _visualizer.Reset();
+        Player.Init(_visualizer);
         TrackPath = trackPath;
-    }
-
-    public static bool Paused()
-    {
-        return Player.PlaybackState != PlaybackState.Playing;
+        Interop?.InvokeEvent(new ConnectedEvent());
     }
 
     public static TimeSpan GetCurrentTrackPosition()
     {
-        if (Reader is null)
-        {
+        if (_reader is null)
             return TimeSpan.Zero;
-        }
 
-        return Reader.CurrentTime;
+        return _reader.CurrentTime;
     }
 
     public static TimeSpan GetCurrentTrackDuration()
     {
-        if (Reader is null)
-        {
+        if (_reader is null)
             return TimeSpan.MinValue;
-        }
 
-        return Reader.TotalTime;
+        return _reader.TotalTime;
     }
 
     public static void SetPosition(TimeSpan position)
     {
-        if (Reader is null)
-        {
+        if (_reader is null)
             return;
-        }
 
-        Reader.CurrentTime = position;
+        _reader.CurrentTime = position;
     }
 }

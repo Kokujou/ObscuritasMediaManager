@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿namespace ObscuritasMediaManager.ClientInterop.Commands;
 
-namespace ObscuritasMediaManager.ClientInterop.Commands;
-
-interface ICommandHandler
+internal interface ICommandHandler
 {
     InteropCommand Command { get; }
-
     Task ExecuteAsync(JsonElement? payload);
 }

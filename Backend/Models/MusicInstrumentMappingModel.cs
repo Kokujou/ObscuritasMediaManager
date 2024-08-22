@@ -11,6 +11,5 @@ public class MusicInstrumentMappingModel
     public int Id { get; set; }
 
     [MaxLength(250)] public required string TrackHash { get; set; }
-
     public int InstrumentId { get; set; }
 }

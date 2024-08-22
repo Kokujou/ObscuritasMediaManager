@@ -2,6 +2,11 @@ import { css } from '../../exports.js';
 
 export function renderGenreDialogStyles() {
     return css`
+        #dialog-content {
+            display: flex;
+            flex-direction: column;
+        }
+
         #remove-toggle {
             position: absolute;
             top: -75px;
@@ -18,9 +23,16 @@ export function renderGenreDialogStyles() {
             --accent-color-full: gray;
         }
 
+        #search-input {
+            all: unset;
+            padding: 10px;
+            border-bottom: 1px solid lightgray;
+            margin: 20px 80px;
+        }
+
         #genre-container {
-            max-height: 600px;
-            max-width: 700px;
+            height: 450px;
+            width: 700px;
             overflow-y: auto;
         }
 

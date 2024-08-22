@@ -1,5 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 
+namespace ObscuritasMediaManager.Backend.Services;
+
 public static class DialogCloser
 {
     [DllImport("User32.dll")]

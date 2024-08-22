@@ -1,4 +1,4 @@
-﻿using ObscuritasMediaManager.ClientInterop.Evemts;
+﻿using ObscuritasMediaManager.ClientInterop.Events;
 using TypeGen.Core.TypeAnnotations;
 
 namespace ObscuritasMediaManager.ClientInterop.Responses;

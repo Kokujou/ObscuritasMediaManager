@@ -37,9 +37,7 @@ public class MusicModel
     }
 
     [MaxLength(255)] public string Name { get; set; } = null!;
-
     public string DisplayName => GetDisplayName();
-
     [MaxLength(255)] public string? Author { get; set; }
     [MaxLength(255)] public string? Source { get; set; }
     public Mood Mood1 { get; set; }
@@ -49,18 +47,14 @@ public class MusicModel
     public Participants Participants { get; set; }
     public List<InstrumentModel> Instruments { get; set; } = [];
     [NotMapped] public IEnumerable<InstrumentType> InstrumentTypes => Instruments.Select(x => x.Type).Distinct();
-
     [NotMapped] public IEnumerable<string> InstrumentNames => Instruments.Select(x => x.Name);
-
     public IEnumerable<MusicGenre> Genres { get; set; } = new List<MusicGenre>();
     [MaxLength(255)] public string Path { get; set; } = null!;
     [MaxLength(255)] public string? Lyrics { get; set; }
     public byte Rating { get; set; }
     public bool Complete { get; set; }
     [MaxLength(255)] [Key] public string? Hash { get; set; }
-
     [JsonIgnore] [IgnoreDataMember] public long FileBytes { get; set; }
-
     public bool Deleted { get; set; }
 
     public string GetNormalizedPath()

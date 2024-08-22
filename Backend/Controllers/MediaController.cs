@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Nodes;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualBasic.FileIO;
@@ -10,6 +8,8 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 using ObscuritasMediaManager.Backend.Services;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using SearchOption = System.IO.SearchOption;
 
 namespace ObscuritasMediaManager.Backend.Controllers;

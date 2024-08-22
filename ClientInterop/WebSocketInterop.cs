@@ -1,9 +1,7 @@
 ﻿using ObscuritasMediaManager.ClientInterop.Commands;
-using ObscuritasMediaManager.ClientInterop.Evemts;
+using ObscuritasMediaManager.ClientInterop.Events;
 using ObscuritasMediaManager.ClientInterop.Queries;
 using ObscuritasMediaManager.ClientInterop.Responses;
-using System;
-using System.Linq;
 using System.Reflection;
 using WebSocketSharp;
 
@@ -11,14 +9,17 @@ namespace ObscuritasMediaManager.ClientInterop;
 
 public class WebSocketInterop : WebSocketBehavior
 {
-    public static Dictionary<Guid, WebSocketInterop> Clients { get; private set; } = new();
+    public static Dictionary<Guid, WebSocketInterop> Clients { get; } = new();
+
     public static JsonSerializerOptions DefaultJsonOptions = new()
-                                                             {
-                                                                 PropertyNameCaseInsensitive = true,
-                                                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                                                             };
-    private static Dictionary<InteropCommand, ICommandHandler> CommandHandlers { get; set; }
-    private static Dictionary<InteropQuery, IQueryHandler> QueryHandlers { get; set; }
+    {
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    };
+
+    private static Dictionary<InteropCommand, ICommandHandler> CommandHandlers { get; }
+    private static Dictionary<InteropQuery, IQueryHandler> QueryHandlers { get; }
+    public Guid Id { get; set; }
 
     static WebSocketInterop()
     {
@@ -35,7 +36,10 @@ public class WebSocketInterop : WebSocketBehavior
             .ToDictionary(x => ((IQueryHandler)x!).Query, x => (IQueryHandler)x!);
     }
 
-    public Guid Id { get; set; }
+    public WebSocketInterop()
+    {
+        AudioService.Interop = this;
+    }
 
     public void InvokeEvent<T>(IInteropEvent<T> response)
     {
@@ -58,7 +62,8 @@ public class WebSocketInterop : WebSocketBehavior
         base.OnMessage(e);
         var json = JsonDocument.Parse(e.Data);
 
-        if (json.RootElement.EnumerateObject().Any(x => x.Name.ToLower() == nameof(InteropCommandRequest.Command).ToLower()))
+        if (json.RootElement.EnumerateObject()
+            .Any(x => x.Name.ToLower() == nameof(InteropCommandRequest.Command).ToLower()))
             await HandleInteropCommand(e.Data);
         else
             await HandleInteropQuery(e.Data);
@@ -69,6 +74,7 @@ public class WebSocketInterop : WebSocketBehavior
         base.OnClose(e);
         Clients.Remove(Id);
         if (Clients.Any()) return;
+
         await CommandHandlers[InteropCommand.StopTrack].ExecuteAsync(null);
     }
 
@@ -90,13 +96,13 @@ public class WebSocketInterop : WebSocketBehavior
     private void RespondOnCommand(InteropCommandRequest request, ResponseStatus status, string? message = null)
     {
         var response = new InteropCommandResponse
-                       {
-                           Command = request.Command,
-                           Status = status,
-                           Ticks = request.Ticks,
-                           Message = message,
-                           Request = request.Payload
-                       };
+        {
+            Command = request.Command,
+            Status = status,
+            Ticks = request.Ticks,
+            Message = message,
+            Request = request.Payload
+        };
 
         var serialized = JsonSerializer.Serialize(response, DefaultJsonOptions);
         Send(serialized);
@@ -117,20 +123,20 @@ public class WebSocketInterop : WebSocketBehavior
         }
     }
 
-    private void RespondOnQuery(InteropQueryRequest request, object? result, ResponseStatus status, string? message = null)
+    private void RespondOnQuery(InteropQueryRequest request, object? result, ResponseStatus status,
+        string? message = null)
     {
         var response = new InteropQueryResponse
-                       {
-                           Query = request.Query,
-                           Status = status,
-                           Ticks = request.Ticks,
-                           Message = message,
-                           Result = result,
-                           Request = request.Payload
-                       };
+        {
+            Query = request.Query,
+            Status = status,
+            Ticks = request.Ticks,
+            Message = message,
+            Result = result,
+            Request = request.Payload
+        };
 
         var serialized = JsonSerializer.Serialize(response, DefaultJsonOptions);
         Send(serialized);
     }
 }
- 

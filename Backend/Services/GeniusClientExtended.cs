@@ -3,6 +3,7 @@ using ObscuritasMediaManager.Backend.Controllers.Responses;
 using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Models;
+using ObscuritasMediaManager.Backend.Services.Interfaces;
 using System.Text.RegularExpressions;
 
 namespace ObscuritasMediaManager.Backend.Services;
@@ -15,7 +16,9 @@ public class GeniusClientExtended(GeniusClient geniusClient, HttpClient httpClie
         if (!string.IsNullOrEmpty(track.Author) && track.Author.ToLower() != "unset" &&
             track.Author.ToLower() != "undefined")
             search += $" {track.Author}";
+
         if (track.Language == Language.Japanese) search += " Romanized";
+
         var searchResult = await geniusClient.SearchClient.Search(search);
         var hits = searchResult.Response.Hits
             .Where(x => x.Type == "song")

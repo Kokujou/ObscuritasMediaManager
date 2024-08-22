@@ -2,6 +2,7 @@ using HtmlAgilityPack;
 using ObscuritasMediaManager.Backend.Controllers.Responses;
 using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.Models;
+using ObscuritasMediaManager.Backend.Services.Interfaces;
 using System.Text.RegularExpressions;
 
 namespace ObscuritasMediaManager.Backend.Services;
@@ -14,8 +15,8 @@ public class RizuchanClient(HttpClient httpClient) : ILyricsClient
         if (!string.IsNullOrEmpty(track.Author) && track.Author.ToLower() != "unset" &&
             track.Author.ToLower() != "undefined")
             search += $" {track.Author}";
-        if (!string.IsNullOrEmpty(track.Source))
-            search += $" {track.Source}";
+
+        if (!string.IsNullOrEmpty(track.Source)) search += $" {track.Source}";
 
         var encodedSearch = search.Replace(" ", "+");
         var response = await httpClient.GetAsync($"https://www.rizuchan.com/?s={encodedSearch}");
@@ -24,6 +25,7 @@ public class RizuchanClient(HttpClient httpClient) : ILyricsClient
         htmlDocument.LoadHtml(htmlContent);
         var linkNodes = htmlDocument.DocumentNode.SelectNodes("//*[@class='entry-title']//a");
         if (linkNodes is null) return [];
+
         return htmlDocument.DocumentNode.SelectNodes("//*[@class='entry-title']//a")
             .Select(x => new LyricsSearchResponse
             {

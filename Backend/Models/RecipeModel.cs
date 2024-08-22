@@ -27,9 +27,7 @@ public class RecipeModel
     public CookingTechnique Technique { get; set; }
     public TimeSpan PreparationTime { get; set; }
     public TimeSpan CookingTime { get; set; }
-
     public TimeSpan TotalTime => PreparationTime + CookingTime;
-
     public IEnumerable<IngredientModel> Ingredients { get; set; } = [];
     [MaxLength(9999)] public string? FormattedText { get; set; }
 }

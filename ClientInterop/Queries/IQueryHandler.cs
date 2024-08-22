@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿namespace ObscuritasMediaManager.ClientInterop.Queries;
 
-namespace ObscuritasMediaManager.ClientInterop.Queries;
-
-interface IQueryHandler
+internal interface IQueryHandler
 {
     InteropQuery Query { get; }
-
     Task<object?> ExecuteAsync(JsonElement? payload);
 }

@@ -1,10 +1,10 @@
-﻿using System.IO;
+﻿using ObscuritasMediaManager.ClientInterop.Commands;
+using Serilog;
+using Serilog.Events;
+using System.IO;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
-using ObscuritasMediaManager.ClientInterop.Commands;
-using Serilog;
-using Serilog.Events;
 using Application = System.Windows.Forms.Application;
 
 namespace ObscuritasMediaManager.ClientInterop;

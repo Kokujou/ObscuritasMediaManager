@@ -10,9 +10,6 @@ public class InteropProxyController(InteropConnectionChecker connectionChecker) 
     [HttpGet]
     public async Task ConnectToInteropAsync(CancellationToken token)
     {
-        while (!connectionChecker.IsConnected && !token.IsCancellationRequested)
-        {
-            await Task.Yield();
-        }
+        while (!connectionChecker.IsConnected && !token.IsCancellationRequested) await Task.Yield();
     }
 }

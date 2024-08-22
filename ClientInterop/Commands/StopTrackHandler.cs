@@ -1,6 +1,4 @@
-﻿using ObscuritasMediaManager.ClientInterop.Evemts;
-using System;
-using System.Linq;
+﻿using ObscuritasMediaManager.ClientInterop.Events;
 
 namespace ObscuritasMediaManager.ClientInterop.Commands;
 
@@ -14,4 +12,4 @@ public class StopTrackHandler : ICommandHandler
         AudioService.Stop();
         AudioTrackUpdatedEventHandler.StopReporting();
     }
-} 
+}

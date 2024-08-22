@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Data.Media;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Extensions;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
@@ -48,9 +48,7 @@ public class MediaModel
     public IEnumerable<ContentWarning> ContentWarnings { get; set; } = [];
     [MaxLength(9999)] public string? Description { get; set; }
     public List<MediaGenreModel> Genres { get; set; } = [];
-
     [NotMapped] [NotHashable] public string Hash => this.GetHash();
-
     [MaxLength(255)] public string Name { get; set; } = null!;
     [MaxLength(255)] public string? RomajiName { get; set; }
     [MaxLength(255)] public string? KanjiName { get; set; }

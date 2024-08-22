@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace ObscuritasMediaManager.ClientInterop.Commands;
+﻿namespace ObscuritasMediaManager.ClientInterop.Commands;
 
 public class ChangeTrackPositionHandler : ICommandHandler
 {

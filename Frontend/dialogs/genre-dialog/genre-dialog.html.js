@@ -4,9 +4,13 @@ import { GenreModel } from '../../obscuritas-media-manager-backend-client.js';
 import { GenreDialog } from './genre-dialog.js';
 
 /**
- * @param {GenreDialog} genreDialog
+ * @param {GenreDialog} dialog
  */
-export function renderGenreDialog(genreDialog) {
+export function renderGenreDialog(dialog) {
+    var filteredSections = Object.keys(dialog.genreDict).filter((section) =>
+        dialog.genreDict[section].some((genre) => genre.name.toLowerCase().includes(dialog.searchText.toLowerCase()))
+    );
+
     return html`
         <dialog-base
             showBorder
@@ -14,22 +18,31 @@ export function renderGenreDialog(genreDialog) {
             caption="Tags auswählen"
             acceptActionText="Speichern"
             declineActionText="Abbrechen"
-            @decline="${() => genreDialog.remove()}"
-            @accept="${(e) => genreDialog.accept(e)}"
+            @decline="${() => dialog.remove()}"
+            @accept="${(e) => dialog.accept(e)}"
         >
-            ${genreDialog.options.allowRemove
-                ? html` <div id="remove-toggle">
-                      <custom-toggle
-                          @toggle="${(e) => genreDialog.toggleAttribute('editModeEnabled', e.detail == CheckboxState.Ignore)}"
-                      ></custom-toggle>
-                      <div id="toggle-text">Löschen</div>
-                  </div>`
-                : ''}
+            <div id="dialog-content">
+                ${dialog.options.allowRemove
+                    ? html` <div id="remove-toggle">
+                          <custom-toggle
+                              @toggle="${(e) => dialog.toggleAttribute('editModeEnabled', e.detail == CheckboxState.Ignore)}"
+                          ></custom-toggle>
+                          <div id="toggle-text">Löschen</div>
+                      </div>`
+                    : ''}
 
-            <div id="genre-container">
-                ${Object.keys(genreDialog.genreDict).map((section) =>
-                    renderGenreSection(section, genreDialog.genreDict[section], genreDialog)
-                )}
+                <input
+                    id="search-input"
+                    type="text"
+                    placeholder="Search"
+                    oninput="javascript: this.dispatchEvent(new Event('change'))"
+                    @change="${(e) => (dialog.searchText = e.currentTarget.value)}"
+                />
+
+                <div id="genre-container">
+                    ${filteredSections.map((section) => renderGenreSection(section, dialog.genreDict[section], dialog))}
+                    ${filteredSections.length <= 0 ? html`Keine passenden Genres gefunden.` : ''}
+                </div>
             </div>
         </dialog-base>
     `;
@@ -38,15 +51,17 @@ export function renderGenreDialog(genreDialog) {
 /**
  * @param {string} sectionName
  * @param {GenreModel[]} genres
- * @param {GenreDialog} genreDialog
+ * @param {GenreDialog} dialog
  */
-function renderGenreSection(sectionName, genres, genreDialog) {
+function renderGenreSection(sectionName, genres, dialog) {
     return html`<div class="genre-section">
         <div class="section-title">${sectionName}</div>
         <div class="genre-list">
-            ${genres.map((genre) => renderGenre(genre, genreDialog))}
-            ${genreDialog.options.allowAdd
-                ? html`<div id="add-genre-button" @click="${() => genreDialog.addGenre(sectionName)}">+</div>`
+            ${genres
+                .filter((x) => x.name.toLowerCase().includes(dialog.searchText.toLowerCase()))
+                .map((genre) => renderGenre(genre, dialog))}
+            ${dialog.options.allowAdd
+                ? html`<div id="add-genre-button" @click="${() => dialog.addGenre(sectionName)}">+</div>`
                 : ''}
         </div>
     </div>`;

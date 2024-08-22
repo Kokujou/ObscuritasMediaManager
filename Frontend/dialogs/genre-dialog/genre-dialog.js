@@ -24,6 +24,12 @@ import { getAvailableGenreSections } from './media-genres.js';
  */
 
 export class GenreDialog extends LitElementBase {
+    static get properties() {
+        return {
+            searchText: { type: String },
+        };
+    }
+
     static get styles() {
         return renderGenreDialogStyles();
     }
@@ -180,6 +186,8 @@ export class GenreDialog extends LitElementBase {
             allowAdd: false,
             allowRemove: false,
         };
+
+        this.searchText = '';
     }
 
     render() {

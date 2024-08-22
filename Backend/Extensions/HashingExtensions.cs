@@ -36,6 +36,7 @@ public static class HashingExtensions
 
         List<PropertyInfo> hashableProperties;
         lock (TypeSignatures)
+        {
             if (!TypeSignatures.TryGetValue(type, out hashableProperties!))
             {
                 hashableProperties = type
@@ -44,6 +45,7 @@ public static class HashingExtensions
                     .ToList();
                 TypeSignatures.Add(type, hashableProperties);
             }
+        }
 
         var hashablePropertyValues =
             hashableProperties.ToDictionary(x => x.Name, x => x.GetValue(input));

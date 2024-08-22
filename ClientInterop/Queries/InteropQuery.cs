@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using TypeGen.Core.TypeAnnotations;
+﻿using TypeGen.Core.TypeAnnotations;
 
 namespace ObscuritasMediaManager.ClientInterop.Queries;
 
@@ -11,5 +9,5 @@ public enum InteropQuery
     RequestFolderContent,
     RequestSubFolders,
     LoadTrack,
-    RequestFolderPath,
+    RequestFolderPath
 }

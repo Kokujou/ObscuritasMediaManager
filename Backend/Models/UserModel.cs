@@ -11,6 +11,5 @@ public class UserModel : IIdentity
     [MaxLength(255)] public required string Password { get; set; }
     [MaxLength(255)] public required string Name { get; set; }
     [NotMapped] public string AuthenticationType => "basic";
-
     [NotMapped] public bool IsAuthenticated => true;
 }

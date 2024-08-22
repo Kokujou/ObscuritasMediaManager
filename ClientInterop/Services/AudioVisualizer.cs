@@ -11,29 +11,27 @@ public class AudioVisualizer : ISampleProvider
     }
 
     private readonly int channels;
-    private int count;
     private readonly FftEventArgs fftArgs;
     private readonly Complex[] fftBuffer;
-    public Observable<FftEventArgs>? FftCalculated = new(new([]));
     private readonly int fftLength;
-    private int fftPos;
     private readonly int m;
-
+    private readonly float[] sampleBuffer;
+    private readonly ISampleProvider source;
+    private int count;
+    public Observable<FftEventArgs>? FftCalculated = new(new([]));
+    private int fftPos;
     public Observable<MaxSampleEventArgs>? MaximumCalculated = new(new(0, 0));
     private float maxValue;
     private float minValue;
-    private readonly float[] sampleBuffer;
     private int samplePos;
     public Observable<float[]> Samples = new([]);
-    private readonly ISampleProvider source;
+    public int NotificationCount { get; set; }
+    public bool PerformFFT { get; set; }
 
     public AudioVisualizer(ISampleProvider newSource, int fftLength = 1024)
     {
         channels = newSource.WaveFormat.Channels;
-        if (!IsPowerOfTwo(fftLength))
-        {
-            throw new ArgumentException("FFT Length must be a power of two");
-        }
+        if (!IsPowerOfTwo(fftLength)) throw new ArgumentException("FFT Length must be a power of two");
 
         m = (int)Math.Log(fftLength, 2.0);
         this.fftLength = fftLength;
@@ -43,23 +41,16 @@ public class AudioVisualizer : ISampleProvider
         source = newSource;
     }
 
-    public int NotificationCount { get; set; }
-    public bool PerformFFT { get; set; }
-
     public WaveFormat WaveFormat => source.WaveFormat;
 
     public int Read(float[] buffer, int offset, int length)
     {
         var samplesRead = source.Read(buffer, offset, length);
 
-        for (var n = 0; n < samplesRead; n += channels)
-        {
-            Add(buffer[n + offset]);
-        }
+        for (var n = 0; n < samplesRead; n += channels) Add(buffer[n + offset]);
 
         return samplesRead;
     }
-
 
     public void Reset()
     {

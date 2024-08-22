@@ -131,6 +131,14 @@ export function renderMediaFilterSidebar(sidebar) {
                 <div class="filter-heading">
                     <div class="filter-label">Bewertung:</div>
                 </div>
+                <div class="filter-heading">
+                    <label for="undefined-rating-toggle">Unbewertete anzeigen:</label>
+                    <custom-toggle
+                        id="undefined-rating-toggle"
+                        .state="${sidebar.filter.ratings.states[0]}"
+                        @toggle="${(e) => sidebar.setFilterProperty('ratings', '0', e.detail)}"
+                    ></custom-toggle>
+                </div>
                 <star-rating
                     max="5"
                     .values="${Object.keys(sidebar.filter.ratings.states)

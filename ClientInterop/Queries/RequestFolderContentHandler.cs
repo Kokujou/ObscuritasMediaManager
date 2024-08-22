@@ -7,7 +7,6 @@ namespace ObscuritasMediaManager.ClientInterop.Queries;
 public class RequestFolderContentHandler : IQueryHandler
 {
     private static readonly FolderBrowserDialog FolderBrowserDialog = new();
-
     public InteropQuery Query => InteropQuery.RequestFolderContent;
 
     public async Task<object?> ExecuteAsync(JsonElement? payload)
@@ -22,10 +21,7 @@ public class RequestFolderContentHandler : IQueryHandler
                     MainWindow.Instance.Show();
                     MainWindow.Instance.Visibility = Visibility.Hidden;
                     var result = FolderBrowserDialog.ShowDialog();
-                    if (result != DialogResult.OK)
-                    {
-                        return;
-                    }
+                    if (result != DialogResult.OK) return;
 
                     files = Directory.GetFiles(FolderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories);
                 });

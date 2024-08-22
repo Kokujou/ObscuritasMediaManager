@@ -1,6 +1,5 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
+using Application = System.Windows.Application;
 
 namespace ObscuritasMediaManager.ClientInterop.Queries;
 
@@ -10,7 +9,7 @@ public class RequestFolderPathHandler : IQueryHandler
 
     public async Task<object?> ExecuteAsync(JsonElement? payload)
     {
-        return await App.Current.Dispatcher
+        return await Application.Current.Dispatcher
             .InvokeAsync(
                 () =>
                 {

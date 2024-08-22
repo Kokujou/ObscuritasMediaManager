@@ -4,7 +4,6 @@ public class Observable<T>(T initialValue)
     where T : notnull
 {
     public T Current => currentValue;
-
     private List<Subscription> subscriptions { get; } = [];
     private T currentValue { get; set; } = initialValue;
 
@@ -13,10 +12,7 @@ public class Observable<T>(T initialValue)
         var subscription = new Subscription((oldValue, newValue) => observer(((T?)oldValue, (T?)newValue)),
             s => subscriptions.Remove(s));
         subscriptions.Add(subscription);
-        if (skipInitial)
-        {
-            return subscription;
-        }
+        if (skipInitial) return subscription;
 
         try
         {
@@ -36,12 +32,12 @@ public class Observable<T>(T initialValue)
         currentValue = value;
 
         foreach (var subscription in subscriptions)
-        {
             try
             {
                 subscription.observer(currentValue, oldValue);
             }
-            catch { }
-        }
+            catch
+            {
+            }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using TypeGen.Core.TypeAnnotations;
+﻿using TypeGen.Core.TypeAnnotations;
 
 namespace ObscuritasMediaManager.ClientInterop.Responses;
 
@@ -8,5 +6,5 @@ namespace ObscuritasMediaManager.ClientInterop.Responses;
 public enum ResponseStatus
 {
     Success = 200,
-    Error = 400,
+    Error = 400
 }

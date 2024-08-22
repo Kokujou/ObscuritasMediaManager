@@ -48,7 +48,6 @@ public class PlaylistModel
     public IEnumerable<MusicGenre> Genres { get; set; } = new List<MusicGenre>();
     public bool Complete { get; set; }
     [NotMapped] public bool IsTemporary { get; set; }
-
     [JsonIgnore] [IgnoreDataMember] public IEnumerable<PlaylistTrackMappingModel>? TrackMappings { get; set; }
 
     [NotMapped]
@@ -57,7 +56,6 @@ public class PlaylistModel
         get => TrackMappings?.OrderBy(x => x.Order).Select(x => x.Track!) ?? [];
         set => CreateMappingsFromTracks(value);
     }
-
 
     private void CreateMappingsFromTracks(IEnumerable<MusicModel> tracks)
     {

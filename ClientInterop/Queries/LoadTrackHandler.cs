@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace ObscuritasMediaManager.ClientInterop.Queries;
+﻿namespace ObscuritasMediaManager.ClientInterop.Queries;
 
 public class LoadTrackHandler : IQueryHandler
 {
@@ -13,6 +10,7 @@ public class LoadTrackHandler : IQueryHandler
         var json = payload!;
         var filePath = json?.GetString()!;
         AudioService.ChangeTrack(filePath);
+
         return AudioService.GetCurrentTrackDuration().TotalMilliseconds;
     }
 }
