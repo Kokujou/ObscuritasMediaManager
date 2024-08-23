@@ -1,6 +1,5 @@
 /**
  * Running tasks:
- * - Add tooltips for all icons
  * - Add Message Snackbar for all Update/Delete/Create actions
  */
 
@@ -9,15 +8,13 @@
  * - think about icons for language
  * - export anime as playlist (local is enough because global is impossible either way)
  * - finalize cleanup functionality
- * - create a link between media and audio (show related songs -> navigate to source)
  * - think about a "tempo" property for songs or re-evanluate existing "calm" classification
- * - creating track does not redirct
+ * - creating track does not redirct ( to be verified)
  * - no feedback on creating track or saving lyrics
  * - enrich media data with:
  *      - episode count
  *      - open ending?
  *      - dual language? (1. season ger, 2. season jap)
- *      - multilingual titles
  */
 
 //TODO: bug: when starting TRACK A in media detail page of track B, it's not overwritten even when re-starting

@@ -11,8 +11,7 @@ public static class AudioTrackUpdatedEventHandler
         {
             if (AudioService.GetCurrentTrackDuration() - TimeSpan.FromSeconds(5) <=
                 AudioService.GetCurrentTrackPosition())
-                foreach (var client in WebSocketInterop.Clients.Values.ToList())
-                    client.InvokeEvent(new TrackEndedEvent());
+                WebSocketInteropServer.BroadcastEvent(new TrackEndedEvent());
 
             AudioService.Stop();
         };
@@ -34,8 +33,8 @@ public static class AudioTrackUpdatedEventHandler
 
                     if (!Started) continue;
 
-                    foreach (var client in WebSocketInterop.Clients.Values.ToList())
-                        client.InvokeEvent(new TrackUpdatedEvent());
+                    WebSocketInteropServer.BroadcastEvent(new TrackPositionChangedEvent(
+                        AudioService.GetCurrentTrackPosition().TotalMilliseconds, AudioService.VisualizationData));
                 }
             });
     }

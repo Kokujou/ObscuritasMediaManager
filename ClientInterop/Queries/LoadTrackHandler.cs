@@ -7,8 +7,7 @@ public class LoadTrackHandler : IQueryHandler
     public async Task<object?> ExecuteAsync(JsonElement? payload)
     {
         await Task.Yield();
-        var json = payload!;
-        var filePath = json?.GetString()!;
+        var filePath = payload?.GetString()!;
         AudioService.ChangeTrack(filePath);
 
         return AudioService.GetCurrentTrackDuration().TotalMilliseconds;

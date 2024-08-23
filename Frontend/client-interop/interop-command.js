@@ -4,11 +4,11 @@
  */
 export var InteropCommand;
 (function (InteropCommand) {
-    InteropCommand[InteropCommand["CopyAudioToClipboard"] = 0] = "CopyAudioToClipboard";
-    InteropCommand[InteropCommand["ResumeTrack"] = 1] = "ResumeTrack";
-    InteropCommand[InteropCommand["PauseTrack"] = 2] = "PauseTrack";
-    InteropCommand[InteropCommand["StopTrack"] = 3] = "StopTrack";
-    InteropCommand[InteropCommand["ChangeTrackPosition"] = 4] = "ChangeTrackPosition";
-    InteropCommand[InteropCommand["ChangeTrackVolume"] = 5] = "ChangeTrackVolume";
-    InteropCommand[InteropCommand["OpenChromeForDebugging"] = 6] = "OpenChromeForDebugging";
+    InteropCommand["CopyAudioToClipboard"] = "CopyAudioToClipboard";
+    InteropCommand["ResumeTrack"] = "ResumeTrack";
+    InteropCommand["PauseTrack"] = "PauseTrack";
+    InteropCommand["StopTrack"] = "StopTrack";
+    InteropCommand["ChangeTrackPosition"] = "ChangeTrackPosition";
+    InteropCommand["ChangeTrackVolume"] = "ChangeTrackVolume";
+    InteropCommand["OpenChromeForDebugging"] = "OpenChromeForDebugging";
 })(InteropCommand || (InteropCommand = {}));

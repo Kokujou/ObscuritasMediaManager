@@ -48,9 +48,8 @@ export class CompactAudioPlayer extends LitElementBase {
     }
 
     async toggleCurrentTrack() {
-        if (AudioService.currentTrackPath != this.path) await AudioService.changeTrack(this.path);
         try {
-            if (AudioService.paused) await AudioService.play();
+            if (AudioService.paused) await AudioService.play(this.path);
             else await AudioService.pause();
         } catch (ex) {
             console.error(ex);

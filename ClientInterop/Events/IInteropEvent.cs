@@ -1,7 +1,9 @@
-﻿namespace ObscuritasMediaManager.ClientInterop.Events;
+﻿using TypeGen.Core.TypeAnnotations;
 
-public interface IInteropEvent<T>
+namespace ObscuritasMediaManager.ClientInterop.Events;
+
+[ExportTsInterface]
+public interface IInteropEvent
 {
     InteropEvent Event { get; }
-    T? Invoke();
 }

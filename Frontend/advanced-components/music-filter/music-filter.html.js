@@ -21,7 +21,12 @@ export function renderMusicFilter(musicFilter) {
     return html`
         <div id="search-heading">
             <div class="heading-label">Suche</div>
-            <div class="icon-button" icon="${Icons.Revert}" @click="${() => musicFilter.resetAllFilters()}"></div>
+            <div
+                class="icon-button"
+                icon="${Icons.Revert}"
+                tooltip="Zurücksetzen"
+                @click="${() => musicFilter.resetAllFilters()}"
+            ></div>
         </div>
         <div id="search-panel">
             <div id="text-filter" class="filter" simple>
@@ -64,7 +69,12 @@ export function renderMusicFilter(musicFilter) {
             <div id="mood-filter" class="filter">
                 <div class="filter-heading">
                     <div class="heading-label">Sortieren:</div>
-                    <div class="icon-button" icon="${Icons.Revert}" @click="${() => musicFilter.changeSorting('unset')}"></div>
+                    <div
+                        class="icon-button"
+                        icon="${Icons.Revert}"
+                        tooltip="Zurücksetzen"
+                        @click="${() => musicFilter.changeSorting('unset')}"
+                    ></div>
                 </div>
                 <div id="sorting-container">
                     <drop-down
@@ -85,6 +95,7 @@ export function renderMusicFilter(musicFilter) {
                         ?active="${musicFilter.sortingDirection == 'ascending'}"
                         class="icon-button"
                         icon="${Icons.Ascending}"
+                        tooltip="Aufsteigend sortieren"
                         @click="${() => musicFilter.changeSorting(null, 'ascending')}"
                     ></div>
                     <div
@@ -92,6 +103,7 @@ export function renderMusicFilter(musicFilter) {
                         ?active="${musicFilter.sortingDirection == 'descending'}"
                         class="icon-button"
                         icon="${Icons.Descending}"
+                        tooltip="Absteigend sortieren"
                         @click="${() => musicFilter.changeSorting(null, 'descending')}"
                     ></div>
                 </div>
@@ -102,11 +114,13 @@ export function renderMusicFilter(musicFilter) {
                     <div
                         class="icon-button"
                         icon="${Icons.SelectAll}"
+                        tooltip="Alle auswählen"
                         @click="${() => musicFilter.setArrayFilter('languages', CheckboxState.Require)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.UnselectAll}"
+                        tooltip="Alle abwählen"
                         @click="${() => musicFilter.setArrayFilter('languages', CheckboxState.Forbid)}"
                     ></div>
                 </div>
@@ -129,16 +143,19 @@ export function renderMusicFilter(musicFilter) {
                     <div
                         class="icon-button"
                         icon="${Icons.SelectAll}"
+                        tooltip="Alle auswählen"
                         @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Require)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.UnselectAll}"
+                        tooltip="Alle abwählen"
                         @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Forbid)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.Revert}"
+                        tooltip="Zurücksetzen"
                         @click="${() => musicFilter.setArrayFilter('instrumentTypes', CheckboxState.Ignore)}"
                     ></div>
                 </div>
@@ -168,16 +185,19 @@ export function renderMusicFilter(musicFilter) {
                     <div
                         class="icon-button"
                         icon="${Icons.SelectAll}"
+                        tooltip="Alle auswählen"
                         @click="${() => musicFilter.setArrayFilter('instruments', CheckboxState.Require)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.UnselectAll}"
+                        tooltip="Alle abwählen"
                         @click="${() => musicFilter.setArrayFilter('instruments', CheckboxState.Forbid)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.Revert}"
+                        tooltip="Zurücksetzen"
                         @click="${() => musicFilter.setArrayFilter('instruments', CheckboxState.Ignore)}"
                     ></div>
                 </div>
@@ -188,11 +208,13 @@ export function renderMusicFilter(musicFilter) {
                     <div
                         class="icon-button"
                         icon="${Icons.SelectAll}"
+                        tooltip="Alle auswählen"
                         @click="${() => musicFilter.setArrayFilter('ratings', CheckboxState.Require)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.UnselectAll}"
+                        tooltip="Alle abwählen"
                         @click="${() => musicFilter.setArrayFilter('ratings', CheckboxState.Forbid)}"
                     ></div>
                 </div>
@@ -220,11 +242,13 @@ export function renderMusicFilter(musicFilter) {
                     <div
                         class="icon-button"
                         icon="${Icons.SelectAll}"
+                        tooltip="Alle auswählen"
                         @click="${() => musicFilter.setArrayFilter('moods', CheckboxState.Ignore)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.UnselectAll}"
+                        tooltip="Alle abwählen"
                         @click="${() => musicFilter.setArrayFilter('moods', CheckboxState.Forbid)}"
                     ></div>
                 </div>
@@ -253,11 +277,13 @@ export function renderMusicFilter(musicFilter) {
                     <div
                         class="icon-button"
                         icon="${Icons.SelectAll}"
+                        tooltip="Alle auswählen"
                         @click="${() => musicFilter.setArrayFilter('genres', CheckboxState.Ignore)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.UnselectAll}"
+                        tooltip="Alle abwählen"
                         @click="${() => musicFilter.setArrayFilter('genres', CheckboxState.Forbid)}"
                     ></div>
                 </div>
@@ -281,11 +307,13 @@ export function renderMusicFilter(musicFilter) {
                     <div
                         class="icon-button"
                         icon="${Icons.SelectAll}"
+                        tooltip="Alle auswählen"
                         @click="${() => musicFilter.setArrayFilter('instrumentations', CheckboxState.Ignore)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.UnselectAll}"
+                        tooltip="Alle abwählen"
                         @click="${() => musicFilter.setArrayFilter('instrumentations', CheckboxState.Forbid)}"
                     ></div>
                 </div>
@@ -307,11 +335,13 @@ export function renderMusicFilter(musicFilter) {
                     <div
                         class="icon-button"
                         icon="${Icons.SelectAll}"
+                        tooltip="Alle auswählen"
                         @click="${() => musicFilter.setArrayFilter('participants', CheckboxState.Require)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.UnselectAll}"
+                        tooltip="Alle abwählen"
                         @click="${() => musicFilter.setArrayFilter('participants', CheckboxState.Forbid)}"
                     ></div>
                 </div>

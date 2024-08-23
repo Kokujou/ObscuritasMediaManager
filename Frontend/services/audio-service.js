@@ -1,9 +1,12 @@
-import { ConnectedEventResponse } from '../client-interop/connected-event-response.js';
+import { ConnectedEvent } from '../client-interop/connected-event.js';
 import { InteropCommand } from '../client-interop/interop-command.js';
 import { InteropEvent } from '../client-interop/interop-event.js';
 import { InteropQuery } from '../client-interop/interop-query.js';
+import { PlaybackStateChangedEvent } from '../client-interop/playback-state-changed-event.js';
 import { PlaybackState } from '../client-interop/playback-state.js';
-import { TrackUpdatedEventResponse } from '../client-interop/track-updated-event-response.js';
+import { TrackChangedEvent } from '../client-interop/track-changed-event.js';
+import { TrackPositionChangedEvent } from '../client-interop/track-position-changed-event.js';
+import { VolumeChangedEvent } from '../client-interop/volume-changed-event.js';
 import { Observable, Subscription } from '../data/observable.js';
 import { ClientInteropService } from './client-interop-service.js';
 
@@ -23,59 +26,57 @@ export class AudioService {
     /** @type {Observable} */ static changed = new Observable(null);
 
     /** @type {Subscription} */ static #eventSubscription = ClientInteropService.eventResponse.subscribe((x) => {
-        this.paused = false;
-        if (x?.event == InteropEvent.TrackChanged) {
-            this.paused = false;
-            let response = /** @type {TrackUpdatedEventResponse} */ (x.payload);
-            this.trackPosition.next(response.trackPosition);
-            this.visualizationData.next(new Float32Array(response.visualizationData));
-            this.changed.next();
-        } else if (x?.event == InteropEvent.TrackEnded) {
-            this.reset();
-            this.ended.next();
-        } else if (x?.event == InteropEvent.Connected) {
-            let response = /** @type {ConnectedEventResponse} */ (x.payload);
-            this.currentTrackPath = response.trackPath;
-            this.paused = response.playbackState != PlaybackState.Playing;
-            this.duration = response.duration;
-            this.changed.next();
-        }
-    });
-
-    /** @type {Subscription} */ static #commandSubscription = ClientInteropService.commandResponse.subscribe((x) => {
-        switch (x?.command) {
-            case InteropCommand.ResumeTrack:
+        switch (x?.event) {
+            case InteropEvent.TrackPositionChanged: {
+                let response = /** @type {TrackPositionChangedEvent} */ (x);
                 this.paused = false;
+                this.trackPosition.next(response.trackPosition);
+                this.visualizationData.next(new Float32Array(response.visualizationData));
+
+                this.changed.next();
                 break;
-            case InteropCommand.PauseTrack:
-                this.paused = true;
+            }
+            case InteropEvent.TrackEnded: {
+                this.reset();
+
+                this.ended.next();
                 break;
-            case InteropCommand.StopTrack:
-                this.paused = true;
-                this.trackPosition.next(0);
-                this.visualizationData.next(new Float32Array());
+            }
+            case InteropEvent.Connected: {
+                let response = /** @type {ConnectedEvent} */ (x);
+                this.trackPosition.next(response.position);
+                this.visualizationData.next(new Float32Array(response.visualizationData));
+                this.paused = response.playbackState != PlaybackState.Playing;
+                this.duration = response.duration;
+                this.#volume = response.volume;
+                this.currentTrackPath = response.trackPath;
+
+                this.changed.next();
                 break;
-            case InteropCommand.ChangeTrackPosition:
+            }
+            case InteropEvent.TrackChanged: {
+                let response = /** @type {TrackChangedEvent} */ (x);
+                this.currentTrackPath = response.trackPath;
+                this.duration = response.duration;
+
+                this.changed.next();
                 break;
-            case InteropCommand.ChangeTrackVolume:
-                this.#volume = /** @type {number} */ (x.request);
+            }
+            case InteropEvent.PlaybackStateChanged: {
+                let response = /** @type {PlaybackStateChangedEvent} */ (x);
+                this.paused = response.playbackState != PlaybackState.Playing;
+
+                this.changed.next();
                 break;
-            default:
-                return;
+            }
+            case InteropEvent.VolumeChanged: {
+                let response = /** @type {VolumeChangedEvent} */ (x);
+                this.#volume = response.volume;
+
+                this.changed.next();
+                break;
+            }
         }
-        this.changed.next();
-    });
-    /** @type {Subscription} */ static #querySubscription = ClientInteropService.queryResponse.subscribe((x) => {
-        switch (x?.query) {
-            case InteropQuery.LoadTrack:
-                this.duration = /** @type {number} */ (x.result);
-                this.currentTrackPath = /** @type {string} */ (x.request);
-                this.paused = true;
-                break;
-            default:
-                return;
-        }
-        this.changed.next();
     });
 
     static async reinitialize() {
@@ -98,14 +99,18 @@ export class AudioService {
 
         try {
             await ClientInteropService.executeQuery({ query: InteropQuery.LoadTrack, payload: path });
-            await this.changeVolume(this.volume);
+            if (this.volume) await this.changeVolume(this.volume);
         } catch (err) {
             console.error('initializing track failed:', err);
         }
     }
 
-    static async play() {
+    /**
+     * @param {string} trackPath
+     */
+    static async play(trackPath) {
         try {
+            if (AudioService.currentTrackPath != trackPath) await this.changeTrack(trackPath);
             await ClientInteropService.sendCommand({ command: InteropCommand.ResumeTrack, payload: null });
         } catch (err) {
             console.error('playing audio failed, trying to reinitialize:', err);
@@ -134,6 +139,7 @@ export class AudioService {
      */
     static async changeVolume(value) {
         try {
+            if (!value) console.trace();
             await ClientInteropService.sendCommand({ command: InteropCommand.ChangeTrackVolume, payload: value });
         } catch (err) {
             console.error('changing volume failed:', err);

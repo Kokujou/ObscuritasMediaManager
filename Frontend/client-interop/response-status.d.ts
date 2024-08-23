@@ -3,6 +3,6 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 export declare enum ResponseStatus {
-    Success = 200,
-    Error = 400
+    Success = "Success",
+    Error = "Error"
 }

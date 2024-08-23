@@ -4,7 +4,7 @@
  */
 export var PlaybackState;
 (function (PlaybackState) {
-    PlaybackState[PlaybackState["Stopped"] = 0] = "Stopped";
-    PlaybackState[PlaybackState["Playing"] = 1] = "Playing";
-    PlaybackState[PlaybackState["Paused"] = 2] = "Paused";
+    PlaybackState["Stopped"] = "Stopped";
+    PlaybackState["Playing"] = "Playing";
+    PlaybackState["Paused"] = "Paused";
 })(PlaybackState || (PlaybackState = {}));

@@ -1,6 +1,5 @@
 import { InteropCommandRequest } from '../client-interop/interop-command-request.js';
 import { InteropCommandResponse } from '../client-interop/interop-command-response.js';
-import { InteropEventResponse } from '../client-interop/interop-event-response.js';
 import { InteropQueryRequest } from '../client-interop/interop-query-request.js';
 import { InteropQueryResponse } from '../client-interop/interop-query-response.js';
 import { ResponseStatus } from '../client-interop/response-status.js';
@@ -13,7 +12,9 @@ export class ClientInteropService {
     /** @type {WebSocket} */ static socket;
     /** @type {Observable<InteropCommandResponse>} */ static commandResponse = new Observable(null);
     /** @type {Observable<InteropQueryResponse>} */ static queryResponse = new Observable(null);
-    /** @type {Observable<InteropEventResponse>} */ static eventResponse = new Observable(null);
+    /** @type {Observable<import('../client-interop/i-interop-event.js').IInteropEvent>} */ static eventResponse = new Observable(
+        null
+    );
     /** @type {Observable<number>} */ static failCounter = new Observable(0);
     static onConnected = new Observable(null);
 
@@ -88,7 +89,8 @@ export class ClientInteropService {
             if (/** @type {InteropCommandResponse} */ (deserialized).command != undefined)
                 this.commandResponse.next(deserialized);
             if (/** @type {InteropQueryRequest} */ (deserialized).query != undefined) this.queryResponse.next(deserialized);
-            if (/** @type {InteropEventResponse} */ (deserialized).event != undefined) this.eventResponse.next(deserialized);
+            if (/** @type {import('../client-interop/i-interop-event.js').IInteropEvent} */ (deserialized).event != undefined)
+                this.eventResponse.next(deserialized);
         };
 
         this.socket.onclose = async (e) => {

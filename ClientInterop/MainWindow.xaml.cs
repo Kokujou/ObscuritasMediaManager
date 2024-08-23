@@ -32,8 +32,8 @@ public partial class MainWindow
         Icon = BitmapFrame.Create(new Uri(Path.Combine(GetProjectPath(), "magic-circle.ico")));
         Topmost = true;
         Hide();
-        var server = new WebSocketServer("ws://localhost:8005");
-        server.AddWebSocketService<WebSocketInterop>("/Interop");
+        var server = new WebSocketInteropServer();
+        server.AddWebSocketService<WebSocketInteropClient>("/Interop");
         server.Start();
 
         ProtocolRegistrationService.RegisterProtocol();

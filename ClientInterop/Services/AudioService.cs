@@ -1,29 +1,39 @@
 using Concentus;
 using Concentus.Oggfile;
-using ObscuritasMediaManager.ClientInterop.Events;
 using System.IO;
 
 namespace ObscuritasMediaManager.ClientInterop.Services;
 
 public static class AudioService
 {
-    public static WebSocketInterop? Interop { get; set; }
     public static string? TrackPath { get; private set; }
 
     public static float Volume
     {
         get => Player.Volume;
-        set => Player.Volume = value;
+        set
+        {
+            Player.Volume = value;
+            TrackVolumeChanged?.Invoke(value);
+        }
     }
 
     public static float[] VisualizationData { get; private set; } = [];
     public static WaveOutEvent Player { get; private set; } = new();
+
+    public static event Action<PlaybackState>? PlaybackStateChanged;
+    public static event Action<TimeSpan, float[]>? TrackPositionChanged;
+    public static event Action<float>? TrackVolumeChanged;
+    public static event Action<string, double>? TrackChanged;
+
     private static WaveStream? _reader;
+
     private static AudioVisualizer? _visualizer;
 
     public static void Pause()
     {
         Player.Pause();
+        PlaybackStateChanged?.Invoke(Player.PlaybackState);
     }
 
     public static void Play()
@@ -37,12 +47,15 @@ public static class AudioService
             Stop();
             throw;
         }
+
+        PlaybackStateChanged?.Invoke(Player.PlaybackState);
     }
 
     public static void Stop()
     {
         Player.Stop();
         SetPosition(TimeSpan.Zero);
+        PlaybackStateChanged?.Invoke(Player.PlaybackState);
     }
 
     public static void ChangeTrack(string trackPath)
@@ -86,7 +99,7 @@ public static class AudioService
         _visualizer.Reset();
         Player.Init(_visualizer);
         TrackPath = trackPath;
-        Interop?.InvokeEvent(new ConnectedEvent());
+        TrackChanged?.Invoke(trackPath, GetCurrentTrackDuration().TotalMilliseconds);
     }
 
     public static TimeSpan GetCurrentTrackPosition()
@@ -111,5 +124,6 @@ public static class AudioService
             return;
 
         _reader.CurrentTime = position;
+        TrackPositionChanged?.Invoke(position, VisualizationData);
     }
 }

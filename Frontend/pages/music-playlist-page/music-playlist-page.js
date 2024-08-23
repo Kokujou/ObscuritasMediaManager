@@ -147,7 +147,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         if (!this.updatedTrack.path) return await MessageSnackbar.popup('Kein Pfad ausgewählt', 'error');
         if (AudioService.currentTrackPath != this.updatedTrack.path) await AudioService.changeTrack(this.updatedTrack?.path);
         try {
-            if (AudioService.paused) await AudioService.play();
+            if (AudioService.paused) await AudioService.play(this.updatedTrack.path);
             else await AudioService.pause();
         } catch {
             await this.changeTrackBy(1);
@@ -179,8 +179,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         changePage(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.trackIndex }, false);
 
         await this.requestFullUpdate();
-        await AudioService.changeTrack(this.updatedTrack?.path);
-        await AudioService.play();
+        await AudioService.play(this.updatedTrack?.path);
     }
 
     /**

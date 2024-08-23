@@ -1,4 +1,5 @@
 {
   "outputPath": "../Frontend/client-interop/",
-  "clearOutputDirectory":  true
+  "clearOutputDirectory": true,
+  "enumStringInitializers": true,
 }

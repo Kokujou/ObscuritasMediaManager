@@ -4,7 +4,10 @@
  */
 
 export enum InteropEvent {
-    TrackChanged = 0,
-    TrackEnded = 1,
-    Connected = 2,
+    TrackPositionChanged = "TrackPositionChanged",
+    TrackEnded = "TrackEnded",
+    Connected = "Connected",
+    TrackChanged = "TrackChanged",
+    PlaybackStateChanged = "PlaybackStateChanged",
+    VolumeChanged = "VolumeChanged",
 }

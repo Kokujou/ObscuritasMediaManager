@@ -52,7 +52,7 @@ export class PlayMusicDialog extends LitElementBase {
         await AudioService.changeTrack(track?.path);
         await AudioService.changeVolume(initialVolume);
         await AudioService.changePosition(startPosition);
-        await AudioService.play();
+        await AudioService.play(track?.path);
         this.currentTrack = track;
         await this.requestFullUpdate();
 
@@ -64,7 +64,7 @@ export class PlayMusicDialog extends LitElementBase {
     }
 
     async toggle() {
-        if (AudioService.paused) await AudioService.play();
+        if (AudioService.paused) await AudioService.play(this.currentTrack.path);
         else await AudioService.pause();
     }
 

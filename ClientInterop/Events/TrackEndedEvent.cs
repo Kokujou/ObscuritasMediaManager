@@ -1,11 +1,9 @@
-﻿namespace ObscuritasMediaManager.ClientInterop.Events;
+﻿using TypeGen.Core.TypeAnnotations;
 
-public class TrackEndedEvent : IInteropEvent<object>
+namespace ObscuritasMediaManager.ClientInterop.Events;
+
+[ExportTsClass]
+public class TrackEndedEvent : IInteropEvent
 {
     public InteropEvent Event => InteropEvent.TrackEnded;
-
-    public object? Invoke()
-    {
-        return null;
-    }
 }

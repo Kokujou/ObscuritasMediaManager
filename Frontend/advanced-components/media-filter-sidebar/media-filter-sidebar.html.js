@@ -14,7 +14,12 @@ export function renderMediaFilterSidebar(sidebar) {
     return html`
         <div id="heading">
             <div id="heading-text">Suche</div>
-            <div class="icon-button reset-button" icon="${Icons.Revert}" @click="${() => sidebar.resetFilter()}"></div>
+            <div
+                class="icon-button reset-button"
+                icon="${Icons.Revert}"
+                tooltip="Zurücksetzen"
+                @click="${() => sidebar.resetFilter()}"
+            ></div>
         </div>
         <div id="filters">
             <div id="search-filter" class="filter-entry" simple>
@@ -70,6 +75,7 @@ export function renderMediaFilterSidebar(sidebar) {
                         ?active="${sidebar.filter.sortingDirection == 'ascending'}"
                         class="icon-button"
                         icon="${Icons.Ascending}"
+                        tooltip="Aufsteigend sortieren"
                         @click="${() => sidebar.changeFilterProperty('sortingDirection', 'ascending')}"
                     ></div>
                     <div
@@ -77,6 +83,7 @@ export function renderMediaFilterSidebar(sidebar) {
                         ?active="${sidebar.filter.sortingDirection == 'descending'}"
                         class="icon-button"
                         icon="${Icons.Descending}"
+                        tooltip="Absteigend sortieren"
                         @click="${() => sidebar.changeFilterProperty('sortingDirection', 'descending')}"
                     ></div>
                 </div>
@@ -108,11 +115,14 @@ export function renderMediaFilterSidebar(sidebar) {
                     <div
                         class="icon-button"
                         icon="${Icons.SelectAll}"
+                        tooltip="Alle auswählen"
+                        tooltip="Alle auswählen"
                         @click="${() => sidebar.setArrayFilter('category', 'all', CheckboxState.Ignore)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.UnselectAll}"
+                        tooltip="Alle abwählen"
                         @click="${() => sidebar.setArrayFilter('category', 'all', CheckboxState.Forbid)}"
                     ></div>
                 </div>
@@ -161,11 +171,13 @@ export function renderMediaFilterSidebar(sidebar) {
                     <div
                         class="icon-button"
                         icon="${Icons.SelectAll}"
+                        tooltip="Alle auswählen"
                         @click="${() => sidebar.setArrayFilter('genres', 'all', CheckboxState.Ignore)}"
                     ></div>
                     <div
                         class="icon-button"
                         icon="${Icons.UnselectAll}"
+                        tooltip="Alle abwählen"
                         @click="${() => sidebar.setArrayFilter('genres', 'all', CheckboxState.Forbid)}"
                     ></div>
                 </div>
@@ -190,6 +202,7 @@ export function renderMediaFilterSidebar(sidebar) {
                     <div
                         class="icon-button reset-button"
                         icon="${Icons.Revert}"
+                        tooltip="Zurücksetzen"
                         @click="${() => sidebar.setArrayFilter('contentWarnings', 'all', CheckboxState.Ignore)}"
                     ></div>
                 </div>
@@ -212,6 +225,7 @@ export function renderMediaFilterSidebar(sidebar) {
                     <div
                         class="icon-button reset-button"
                         icon="${Icons.Revert}"
+                        tooltip="Zurücksetzen"
                         @click="${() => sidebar.setArrayFilter('targetGroups', 'all', CheckboxState.Ignore)}"
                     ></div>
                 </div>

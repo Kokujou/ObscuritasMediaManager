@@ -3,11 +3,11 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 export declare enum InteropCommand {
-    CopyAudioToClipboard = 0,
-    ResumeTrack = 1,
-    PauseTrack = 2,
-    StopTrack = 3,
-    ChangeTrackPosition = 4,
-    ChangeTrackVolume = 5,
-    OpenChromeForDebugging = 6
+    CopyAudioToClipboard = "CopyAudioToClipboard",
+    ResumeTrack = "ResumeTrack",
+    PauseTrack = "PauseTrack",
+    StopTrack = "StopTrack",
+    ChangeTrackPosition = "ChangeTrackPosition",
+    ChangeTrackVolume = "ChangeTrackVolume",
+    OpenChromeForDebugging = "OpenChromeForDebugging"
 }

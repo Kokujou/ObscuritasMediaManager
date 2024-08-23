@@ -5,7 +5,10 @@ namespace ObscuritasMediaManager.ClientInterop.Events;
 [ExportTsEnum]
 public enum InteropEvent
 {
-    TrackChanged,
+    TrackPositionChanged,
     TrackEnded,
-    Connected
+    Connected,
+    TrackChanged,
+    PlaybackStateChanged,
+    VolumeChanged
 }

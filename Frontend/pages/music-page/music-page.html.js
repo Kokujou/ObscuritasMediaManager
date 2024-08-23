@@ -40,6 +40,7 @@ export function renderMusicPage(musicPage) {
                             <a
                                 id="create-song"
                                 icon="${Icons.Plus}"
+                                tooltip="Track hinzufügen"
                                 @click="${() => changePage(MusicPlaylistPage, { createNew: true })}"
                             ></a>
                         </div>

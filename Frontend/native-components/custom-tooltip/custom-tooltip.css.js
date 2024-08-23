@@ -14,6 +14,8 @@ export function renderTooltipStyles() {
             pointer-events: none;
             /* white-space: nowrap; */
             font: inherit;
+
+            box-shadow: 0 0 5px white;
         }
 
         :host([anchor='top']) {

@@ -4,7 +4,10 @@
  */
 export var InteropEvent;
 (function (InteropEvent) {
-    InteropEvent[InteropEvent["TrackChanged"] = 0] = "TrackChanged";
-    InteropEvent[InteropEvent["TrackEnded"] = 1] = "TrackEnded";
-    InteropEvent[InteropEvent["Connected"] = 2] = "Connected";
+    InteropEvent["TrackPositionChanged"] = "TrackPositionChanged";
+    InteropEvent["TrackEnded"] = "TrackEnded";
+    InteropEvent["Connected"] = "Connected";
+    InteropEvent["TrackChanged"] = "TrackChanged";
+    InteropEvent["PlaybackStateChanged"] = "PlaybackStateChanged";
+    InteropEvent["VolumeChanged"] = "VolumeChanged";
 })(InteropEvent || (InteropEvent = {}));

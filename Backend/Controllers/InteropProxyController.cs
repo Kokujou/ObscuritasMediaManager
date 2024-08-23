@@ -14,7 +14,7 @@ public class InteropProxyController(InteropConnectionChecker connectionChecker) 
         try
         {
             using var httpClient = new HttpClient();
-            var result = await httpClient.GetAsync("http://localhost:8005", token);
+            _ = await httpClient.GetAsync("http://localhost:8005", token);
             return;
         }
         catch

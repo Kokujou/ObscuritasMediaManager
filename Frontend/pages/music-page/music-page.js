@@ -160,14 +160,13 @@ export class MusicPage extends LitElementBase {
 
         if (this.currentTrack.hash != track.hash) {
             this.currentTrack = track;
-            await AudioService.changeTrack(track?.path);
-            await AudioService.play();
+            await AudioService.play(track?.path);
             await this.requestFullUpdate();
             return;
         }
 
         if (!AudioService.paused) await AudioService.pause();
-        else if (AudioService.paused) await AudioService.play();
+        else if (AudioService.paused) await AudioService.play(track?.path);
         await this.requestFullUpdate();
     }
 

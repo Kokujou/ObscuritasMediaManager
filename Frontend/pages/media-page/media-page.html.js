@@ -55,8 +55,8 @@ export function renderMediaPageTemplate(page) {
                             <div
                                 id="add-media-button"
                                 class="option-button"
-                                icon="${Icons.Plus}"
                                 tooltip="Eintrag hinzufügen"
+                                icon="${Icons.Plus}"
                             ></div>
                         `
                     )}

@@ -18,6 +18,7 @@ export function renderMediaPlaylist(mediaPlaylist) {
                 <div
                     class="playlist-button"
                     icon="${Icons.Revert}"
+                    tooltip="Zurücksetzen"
                     id="reset-order-button"
                     @click="${() => mediaPlaylist.restoreOrder()}"
                 ></div>

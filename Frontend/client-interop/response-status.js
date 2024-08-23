@@ -4,6 +4,6 @@
  */
 export var ResponseStatus;
 (function (ResponseStatus) {
-    ResponseStatus[ResponseStatus["Success"] = 200] = "Success";
-    ResponseStatus[ResponseStatus["Error"] = 400] = "Error";
+    ResponseStatus["Success"] = "Success";
+    ResponseStatus["Error"] = "Error";
 })(ResponseStatus || (ResponseStatus = {}));

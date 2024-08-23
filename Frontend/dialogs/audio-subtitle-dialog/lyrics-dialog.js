@@ -102,7 +102,7 @@ export class LyricsDialog extends LitElementBase {
         this.scrollingPaused = !this.scrollingPaused;
 
         if (this.scrollingPaused) await AudioService.pause();
-        else await AudioService.play();
+        else await AudioService.play(this.track.path);
 
         await this.requestFullUpdate();
     }

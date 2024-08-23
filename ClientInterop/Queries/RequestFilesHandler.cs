@@ -19,7 +19,7 @@ public class RequestFilesHandler : IQueryHandler
                 {
                     MainWindow.Instance.Show();
                     MainWindow.Instance.Visibility = Visibility.Hidden;
-                    var request = payload?.Deserialize<FilesQueryRequest>(WebSocketInterop.DefaultJsonOptions)!;
+                    var request = payload?.Deserialize<FilesQueryRequest>(WebSocketInteropClient.DefaultJsonOptions)!;
                     OpenFileDialog.Multiselect = request.Multiselect;
                     OpenFileDialog.Filter = request.GetDialogFilter();
                     var result = OpenFileDialog.ShowDialog();
