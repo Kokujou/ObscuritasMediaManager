@@ -93,7 +93,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                             <audio-tile-base
                                 ?disabled="${this.updatedTrack.complete}"
                                 .track="${new MusicModel(this.updatedTrack)}"
-                                ?paused="${AudioService.paused}"
+                                ?paused="${AudioService.paused || AudioService.currentTrackPath != this.updatedTrack.path}"
                                 @imageClicked="${() => this.toggleCurrentTrack()}"
                                 @changeLanguage="${() => this.showLanguageSwitcher()}"
                                 @nextParticipants="${() =>
