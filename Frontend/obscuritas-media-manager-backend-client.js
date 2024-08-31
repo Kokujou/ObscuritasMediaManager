@@ -2264,6 +2264,7 @@ export var MediaGenreCategory;
     MediaGenreCategory["Style"] = "Style";
     MediaGenreCategory["Beings"] = "Beings";
     MediaGenreCategory["Era"] = "Era";
+    MediaGenreCategory["Mood"] = "Mood";
 })(MediaGenreCategory || (MediaGenreCategory = {}));
 export class CredentialsRequest {
     username;

@@ -58,11 +58,13 @@ export class MediaDetailPage extends LitElementBase {
 
     get nextMediaId() {
         var currentIndex = this.mediaIds.findIndex((x) => x == this.updatedMedia.id);
+        if (currentIndex < 0) return null;
         return this.mediaIds[currentIndex + 1];
     }
 
     get prevMediaId() {
         var currentIndex = this.mediaIds.findIndex((x) => x == this.updatedMedia.id);
+        if (currentIndex < 0) return null;
         return this.mediaIds[currentIndex - 1];
     }
 

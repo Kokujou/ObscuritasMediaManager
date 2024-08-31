@@ -3,6 +3,7 @@ import { distinct } from '../../services/extensions/array.extensions.js';
 
 const MandatoryGenres = [
     MediaGenreCategory.MainGenre,
+    MediaGenreCategory.Mood,
     MediaGenreCategory.Era,
     MediaGenreCategory.Location,
     MediaGenreCategory.Personalities,

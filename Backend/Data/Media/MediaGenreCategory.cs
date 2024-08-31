@@ -15,5 +15,6 @@ public enum MediaGenreCategory
     [Translation("Sport")] Sports,
     [Translation("Stil")] Style,
     [Translation("Wesen")] Beings,
-    [Translation("Zeitalter")] Era
+    [Translation("Zeitalter")] Era,
+    [Translation("Stimmung")] Mood
 }

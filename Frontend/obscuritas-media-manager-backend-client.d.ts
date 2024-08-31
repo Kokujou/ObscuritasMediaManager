@@ -353,7 +353,8 @@ export declare enum MediaGenreCategory {
     Sports = "Sports",
     Style = "Style",
     Beings = "Beings",
-    Era = "Era"
+    Era = "Era",
+    Mood = "Mood"
 }
 export declare class CredentialsRequest implements ICredentialsRequest {
     username: string;

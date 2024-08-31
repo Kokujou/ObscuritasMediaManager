@@ -88,7 +88,7 @@ export function renderMediaDetailPage(detailPage) {
                                       ? LinkElement.forPage(
                                             MediaDetailPage,
                                             { mediaId: detailPage.prevMediaId },
-                                            html`&LeftArrow; Letzer`,
+                                            html`&LeftArrow; Letzter`,
                                             {
                                                 id: 'prev-link',
                                             }

@@ -8,7 +8,9 @@ import { GenreDialog } from './genre-dialog.js';
  */
 export function renderGenreDialog(dialog) {
     var filteredSections = Object.keys(dialog.genreDict).filter((section) =>
-        dialog.genreDict[section].some((genre) => genre.name.toLowerCase().includes(dialog.searchText.toLowerCase()))
+        dialog.genreDict[section].some(
+            (genre) => genre.name.toLowerCase().includes(dialog.searchText.toLowerCase()) || dialog.genreDict[section].length == 0
+        )
     );
 
     return html`
