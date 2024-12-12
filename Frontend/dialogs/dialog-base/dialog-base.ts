@@ -82,7 +82,7 @@ export class DialogBase extends LitElementBase {
         this.focus();
         this.addEventListener(
             'keyup',
-            (e) => {
+            (e: Event) => {
                 if (e.key == 'Escape' && !this.properties?.noImplicitDecline) this.decline();
                 if (e.key == 'Enter' && !this.properties?.noImplicitAccept) this.accept();
             },

@@ -46,34 +46,31 @@ export class MaintenanceService {
 
             complete = true;
 
-            selectionDialog.addEventListener(
-                'accept',
-                /** @param {CustomEvent<{selected:string[]}>} e */ async ((e: CustomEvent<{ selected: string[]; }>)) => {
-                    var accepted = await DialogBase.show('Achtung!', {
-                        content: `Die ausgewählten Einträge werden vollständig sowohl aus der Datenbank als auch vom Dateisystem entfernt. 
+            selectionDialog.addEventListener('accept', async (e: CustomEvent<{ selected: string[] }>) => {
+                var accepted = await DialogBase.show('Achtung!', {
+                    content: `Die ausgewählten Einträge werden vollständig sowohl aus der Datenbank als auch vom Dateisystem entfernt. 
                         Dieser Vorgang kann nicht rückgängig gemacht werden. 
                         ind Sie sicher?`,
-                        acceptActionText: 'Ja',
-                        declineActionText: 'Nein',
-                        noImplicitAccept: true,
-                        showBorder: true,
-                    });
+                    acceptActionText: 'Ja',
+                    declineActionText: 'Nein',
+                    noImplicitAccept: true,
+                    showBorder: true,
+                });
 
-                    if (!accepted) return;
+                if (!accepted) return;
 
-                    var errors = 0;
-                    for (var mediaId of e.detail.selected)
-                        try {
-                            await MediaService.fullDeleteMedium(mediaId);
-                        } catch (err) {
-                            errors++;
-                        }
+                var errors = 0;
+                for (var mediaId of e.detail.selected)
+                    try {
+                        await MediaService.fullDeleteMedium(mediaId);
+                    } catch (err) {
+                        errors++;
+                    }
 
-                    selectionDialog.remove();
-                    if (errors == 0) MessageSnackbar.popup('Alle Einträge worden erfolgreich gelöscht', 'success');
-                    else MessageSnackbar.popup('Ein Fehler ist beim Löschen der Einträge aufgetreten.', 'error');
-                }
-            );
+                selectionDialog.remove();
+                if (errors == 0) MessageSnackbar.popup('Alle Einträge worden erfolgreich gelöscht', 'success');
+                else MessageSnackbar.popup('Ein Fehler ist beim Löschen der Einträge aufgetreten.', 'error');
+            });
 
             selectionDialog.requestFullUpdate();
         });
@@ -113,7 +110,7 @@ export class MaintenanceService {
                 dialog.remove();
                 resolve(false);
             });
-            dialog.addEventListener('accept', async (e) => {
+            dialog.addEventListener('accept', async (e: Event) => {
                 try {
                     var accpeted = await DialogBase.show('Achtung!!', {
                         content:

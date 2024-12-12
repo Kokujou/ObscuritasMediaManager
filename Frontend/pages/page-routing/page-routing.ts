@@ -15,12 +15,6 @@ export class PageRouting extends LitElementBase {
         return renderPageRoutingStyles();
     }
 
-    static get properties() {
-        return {
-            defaultFragment: { type: String, reflect: true },
-        };
-    }
-
     static defaultPage = WelcomePage;
 
     static get container() {
@@ -32,7 +26,7 @@ export class PageRouting extends LitElementBase {
         return window.customElements.get(location.hash.substr(1) + '-page') ?? WelcomePage;
     }
 
-    /** @type {LitElementBase} */ static currentPageInstance = null;
+    static currentPageInstance: LitElementBase | null = null;
 
     constructor() {
         super();
@@ -45,7 +39,7 @@ export class PageRouting extends LitElementBase {
             this.loadPageFromHash(null);
         });
 
-        window.onpopstate = (e) => {
+        window.onpopstate = (e: Event) => {
             Session.currentPage.next(getPageName(this.currentPage));
         };
         window.addEventListener('resize', () => this.requestFullUpdate());
@@ -65,15 +59,15 @@ export class PageRouting extends LitElementBase {
         );
     }
 
-    firstUpdated(_changedProperties) {
+    firstUpdated(_changedProperties: Map<any, any>) {
         super.firstUpdated(_changedProperties);
         Session.currentPage.next(getPageName(this.currentPage));
-        document.querySelector(LoadingScreen.tag).remove();
+        document.querySelector(LoadingScreen.tag)?.remove();
     }
 
-    /** @type {PageRouting} */ static instance;
+    static instance: PageRouting;
 
-    changeHash(newHash) {
+    changeHash(newHash: string) {
         var newurl =
             window.location.protocol + '//' + window.location.host + window.location.pathname + location.search + `#${newHash}`;
         window.history.replaceState({ path: newurl }, '', newurl);
@@ -90,11 +84,11 @@ export class PageRouting extends LitElementBase {
 
         var newPage = window.customElements.get(newValue + '-page');
         if (newPage) {
-            var pageName = () => PageRouting.currentPageInstance.tagName.replace('-PAGE', '');
+            var pageName = () => PageRouting.currentPageInstance?.tagName.replace('-PAGE', '');
             var isNewPageLoad = !PageRouting.currentPageInstance || newValue.toLowerCase() != pageName().toLowerCase();
             if (isNewPageLoad) {
-                PageRouting.container.querySelectorAll(':not(slot)').forEach((x) => x.remove());
-                PageRouting.currentPageInstance = new newPage();
+                PageRouting.container!.querySelectorAll(':not(slot)').forEach((x) => x.remove());
+                PageRouting.currentPageInstance = new newPage() as LitElementBase;
             }
 
             this.changeHash(newValue);
@@ -106,8 +100,8 @@ export class PageRouting extends LitElementBase {
                     PageRouting.currentPageInstance[pair[0]] = pair[1];
                 }
             }
-            if (isNewPageLoad) PageRouting.container.appendChild(PageRouting.currentPageInstance);
-            await PageRouting.currentPageInstance.requestFullUpdate();
+            if (isNewPageLoad) PageRouting.container!.appendChild(PageRouting.currentPageInstance!);
+            await PageRouting.currentPageInstance?.requestFullUpdate();
             return;
         }
 
@@ -122,11 +116,11 @@ export class PageRouting extends LitElementBase {
     }
 
     override render() {
-        if (this.currentPage['icon']) setFavicon(this.currentPage['icon']);
+        if ('icon' in this.currentPage) setFavicon(this.currentPage['icon'] as string);
         return renderPageRouting(this);
     }
 
-    disoverride connectedCallback() {
+    override disconnectedCallback() {
         super.disconnectedCallback();
         PageRouting.instance = null;
     }

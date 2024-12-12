@@ -32,7 +32,7 @@ export class PriorityList extends LitElementBase {
         this.currentlyDraggedOverItemIndex = 0;
         this.currentlyDraggedItemIndex = 0;
         this.draggedElement = null;
-        document.addEventListener('dragover', (e) => this.handleItemMove(e), { signal: this.abortController.signal });
+        document.addEventListener('dragover', (e: Event) => this.handleItemMove(e), { signal: this.abortController.signal });
 
         document.addEventListener('dragend', () => this.handleItemDrop(), { signal: this.abortController.signal });
     }

@@ -32,11 +32,11 @@ export class LanguageSwitcher extends LitElementBase {
 
     override connectedCallback() {
         super.connectedCallback();
-        document.addEventListener('keyup', (e) => {
+        document.addEventListener('keyup', (e: Event) => {
             if (e.key == 'Escape') this.destroy();
         });
 
-        document.addEventListener('wheel', (e) => this.scrollWheel(e));
+        document.addEventListener('wheel', (e: Event) => this.scrollWheel(e));
     }
 
     override render() {

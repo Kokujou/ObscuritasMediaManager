@@ -17,7 +17,7 @@ export function renderCompactAudioPlayer(player: CompactAudioPlayer) {
         <div id="position-container">
             <range-slider
                 id="track-position-input"
-                @valueChanged="${(e) => player.changeTrackPosition(e.detail.value)}"
+                @valueChanged="${(e: Event) => player.changeTrackPosition(e.detail.value)}"
                 .value="${player.currentTrackPosition.toString()}"
                 min="0"
                 .max="${player.currentTrackDuration.toString()}"
@@ -33,7 +33,7 @@ export function renderCompactAudioPlayer(player: CompactAudioPlayer) {
                     min="0"
                     max="100"
                     .value="${`${AudioService.volume * 100}`}"
-                    @valueChanged="${(e) => player.changeVolume(e.detail.value)}"
+                    @valueChanged="${(e: Event) => player.changeVolume(e.detail.value)}"
                 ></range-slider>
             </div>
         </div>

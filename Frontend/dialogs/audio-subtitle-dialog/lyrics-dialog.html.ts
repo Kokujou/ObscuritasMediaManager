@@ -8,7 +8,7 @@ import { LyricsDialog } from './lyrics-dialog';
  */
 export function renderAudioSubtitleDialog(dialog: LyricsDialog) {
     return html`
-        <div id="lyrics-wrapper" @click="${(e) => e.stopPropagation()}">
+        <div id="lyrics-wrapper" @click="${(e: Event) => e.stopPropagation()}">
             <div id="lyrics-content-wrapper">
                 <div id="lyrics-content-wrapper-2">
                     <h3>${dialog.title}</h3>
@@ -41,7 +41,7 @@ export function renderAudioSubtitleDialog(dialog: LyricsDialog) {
                     id="scroll-up-button"
                     class="icon"
                     icon="${Icons.FastForward}"
-                    @pointerdown="${(e) => dialog.startScrolling('up')}"
+                    @pointerdown="${(e: Event) => dialog.startScrolling('up')}"
                 ></div>
                 ${dialog.scrollingPaused || AudioService.paused
                     ? html`<div class="icon" icon="${Icons.Play}" @click="${dialog.togglePlay}"></div>`
@@ -50,7 +50,7 @@ export function renderAudioSubtitleDialog(dialog: LyricsDialog) {
                     class="icon"
                     id="scroll-down-button"
                     icon="${Icons.FastForward}"
-                    @pointerdown="${(e) => dialog.startScrolling('down')}"
+                    @pointerdown="${(e: Event) => dialog.startScrolling('down')}"
                 ></div>
             </div>
         </div>

@@ -51,7 +51,7 @@ export class ScrollSelect extends LitElementBase {
         /** @type {boolean} */ this.mouseDown = false;
         /** @type {number} */ this.mouseStartY = 0;
 
-        document.addEventListener('pointermove', (e) => this.onPointerMove(e));
+        document.addEventListener('pointermove', (e: Event) => this.onPointerMove(e));
         document.addEventListener('pointerup', () => this.onPointerUp());
     }
 

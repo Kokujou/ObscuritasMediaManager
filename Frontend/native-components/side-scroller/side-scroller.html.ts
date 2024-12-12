@@ -14,7 +14,7 @@ export function renderSideScroller(sideScroller: SideScroller) {
             >
                 ◀
             </a>
-            <div id="content-container" @mousedown="${(e) => e.preventDefault()}">
+            <div id="content-container" @mousedown="${(e: Event) => e.preventDefault()}">
                 <div id="item-container">
                     <div class="inner-space" id="left-space"></div>
                     <slot @slotchange="${() => sideScroller.requestFullUpdate()}"></slot>

@@ -47,15 +47,15 @@ export class ContextMenu extends LitElementBase {
 
         document.addEventListener(
             'wheel',
-            (e) => {
+            (e:Event) => {
                 e.preventDefault();
                 e.stopPropagation();
             },
             { signal: this.abortController.signal, passive: false }
         );
 
-        window.addEventListener('click', (e) => this.remove(), { signal: this.abortController.signal });
-        window.addEventListener('contextmenu', (e) => this.remove(), { signal: this.abortController.signal });
+        window.addEventListener('click', (e:Event) => this.remove(), { signal: this.abortController.signal });
+        window.addEventListener('contextmenu', (e:Event) => this.remove(), { signal: this.abortController.signal });
     }
 
     override render() {

@@ -9,7 +9,7 @@ export function renderRangeSlider(slider: RangeSlider) {
         <input
             id="slider"
             type="range"
-            @input="${(e) => e.target.dispatchEvent(new Event('change'))}"
+            @input="${(e: Event) => (e.target as HTMLInputElement).dispatchEvent(new Event('change'))}"
             @change="${() => slider.notifyValueChanged()}"
             .step="${slider.step}"
             .min="${slider.min}"

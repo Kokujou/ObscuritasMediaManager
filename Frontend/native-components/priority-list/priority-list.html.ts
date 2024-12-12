@@ -57,7 +57,7 @@ export function renderPriorityList(priorityList: PriorityList) {
                         class="move-icon icon"
                         icon="${Icons.Drag}"
                         draggable="true"
-                        @dragstart="${(e) => priorityList.registerDragItem(e, index)}"
+                        @dragstart="${(e: Event) => priorityList.registerDragItem(e, index)}"
                     ></div>
                     ${priorityList.itemRenderer(item)}
                     <div

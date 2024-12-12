@@ -1,3 +1,4 @@
+import { IInteropEvent } from '../client-interop/i-interop-event';
 import { InteropCommandRequest } from '../client-interop/interop-command-request';
 import { InteropCommandResponse } from '../client-interop/interop-command-response';
 import { InteropQueryRequest } from '../client-interop/interop-query-request';
@@ -9,12 +10,10 @@ import { InteropProxyService } from './backend.services';
 import { waitForSeconds } from './extensions/animation.extension';
 
 export class ClientInteropService {
-    /** @type {WebSocket} */ static socket;
-    /** @type {Observable<InteropCommandResponse>} */ static commandResponse = new Observable(null);
-    /** @type {Observable<InteropQueryResponse>} */ static queryResponse = new Observable(null);
-    /** @type {Observable<import('../client-interop/i-interop-event').IInteropEvent>} */ static eventResponse = new Observable(
-        null
-    );
+    static socket: WebSocket | null;
+    static commandResponse = new Observable<InteropCommandResponse>(null!);
+    static queryResponse = new Observable<InteropQueryResponse>(null!);
+    static eventResponse = new Observable<IInteropEvent>(null!);
     /** @type {Observable<number>} */ static failCounter = new Observable(0);
     static onConnected = new Observable(null);
 
@@ -26,7 +25,7 @@ export class ClientInteropService {
             console.warn('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.');
             return;
         }
-        return new Promise(async (resolve, reject) => {
+        return new Promise<void>(async (resolve, reject) => {
             /** @type {InteropCommandRequest} */ var request = {
                 ...command,
                 ticks: Date.now(),
@@ -84,7 +83,7 @@ export class ClientInteropService {
         this.failCounter.next(0);
         MessageSnackbar.popup('Websocket Verbindung zum Client Interop erfolgreich', 'success');
 
-        this.socket.onmessage = async (e) => {
+        this.socket.onmessage = async (e: MessageEvent) => {
             var deserialized = JSON.parse(e.data);
             if (/** @type {InteropCommandResponse} */ deserialized.command != undefined) this.commandResponse.next(deserialized);
             if (/** @type {InteropQueryRequest} */ deserialized.query != undefined) this.queryResponse.next(deserialized);
@@ -92,7 +91,7 @@ export class ClientInteropService {
                 this.eventResponse.next(deserialized);
         };
 
-        this.socket.onclose = async (e) => {
+        this.socket.onclose = async (e: Event) => {
             this.socket = null;
             console.error('websocket conection closed, trying reconnect.');
             this.failCounter.next(this.failCounter.current() + 1);
@@ -101,7 +100,7 @@ export class ClientInteropService {
     }
 
     static #tryConnect() {
-        return new Promise((resolve, reject) => {
+        return new Promise<WebSocket>((resolve, reject) => {
             var socket = new WebSocket('ws://localhost:8005/Interop');
             socket.onopen = () => resolve(socket);
             socket.onclose = reject;

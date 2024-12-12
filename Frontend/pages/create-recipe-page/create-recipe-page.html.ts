@@ -13,7 +13,7 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
     return html`
         <page-layout>
             <div id="page-container">
-                <form id="create-recipe-form" @submit="${(e) => page.submit(e)}">
+                <form id="create-recipe-form" @submit="${(e: Event) => page.submit(e)}">
                     <div id="image-ingredients-container">
                         <div id="ingredient-container">
                             <input
@@ -21,13 +21,13 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
                                 id="title"
                                 .value="${page.recipe.title}"
                                 onclick="javascript:this.select()"
-                                @input="${(e) => handleLabelInput(e)}"
-                                @change="${(e) => page.changeProperty('title', e.detail.value)}"
+                                @input="${(e: Event) => handleLabelInput(e)}"
+                                @change="${(e: Event) => page.changeProperty('title', e.detail.value)}"
                             />
                             ${Object.entries(groupBy(page.recipe.ingredients, 'groupName')).map((group) =>
                                 renderIngredientGroup(group, page)
                             )}
-                            <button tabindex="0" id="add-group-link" @click="${(e) => page.addGroup(e)}">
+                            <button tabindex="0" id="add-group-link" @click="${(e: Event) => page.addGroup(e)}">
                                 + Gruppe hinzufügen
                             </button>
                         </div>
@@ -37,7 +37,9 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
                                 ?set="${page.recipe.imageUrl}"
                                 style="background-image: url('${page.recipe.imageUrl}')"
                             >
-                                <upload-area @imageReceived="${(e) => page.notifyImageAdded(e.detail.imageData)}"></upload-area>
+                                <upload-area
+                                    @imageReceived="${(e: Event) => page.notifyImageAdded(e.detail.imageData)}"
+                                ></upload-area>
                             </div>
 
                             <star-rating
@@ -45,7 +47,7 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
                                 max="5"
                                 singleSelect
                                 .values="${createRange(0, page.recipe.rating)}"
-                                @ratingChanged="${(e) => page.changeProperty('rating', e.detail.rating)}"
+                                @ratingChanged="${(e: Event) => page.changeProperty('rating', e.detail.rating)}"
                             ></star-rating>
                             <star-rating
                                 vertical
@@ -54,7 +56,7 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
                                 max="5"
                                 singleSelect
                                 .values="${createRange(0, page.recipe.difficulty)}"
-                                @ratingChanged="${(e) => page.changeProperty('difficulty', e.detail.rating)}"
+                                @ratingChanged="${(e: Event) => page.changeProperty('difficulty', e.detail.rating)}"
                             ></star-rating>
                             <div id="nation-icon" nation="${page.recipe.nation}"></div>
                         </div>
@@ -68,7 +70,7 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
                                     id="course"
                                     tabindex="0"
                                     .options="${DropDownOption.createSimpleArray(Object.values(Course), page.recipe.course)}"
-                                    @selectionChange="${(e) => page.changeProperty('course', e.detail.option.value)}"
+                                    @selectionChange="${(e: Event) => page.changeProperty('course', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                             <div class="description-input">
@@ -80,7 +82,8 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
                                         Object.values(Ingredient),
                                         page.recipe.mainIngredient
                                     )}"
-                                    @selectionChange="${(e) => page.changeProperty('mainIngredient', e.detail.option.value)}"
+                                    @selectionChange="${(e: Event) =>
+                                        page.changeProperty('mainIngredient', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                             <div class="description-input">
@@ -92,7 +95,7 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
                                         Object.values(CookingTechnique),
                                         page.recipe.technique
                                     )}"
-                                    @selectionChange="${(e) => page.changeProperty('technique', e.detail.option.value)}"
+                                    @selectionChange="${(e: Event) => page.changeProperty('technique', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                         </div>
@@ -102,7 +105,7 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
                                 <duration-input
                                     id="preparation-time"
                                     .timespan="${TimeSpan.fromString(page.recipe.preparationTime)}"
-                                    @duration-changed="${(e) => page.changeProperty('preparationTime', e.detail)}"
+                                    @duration-changed="${(e: Event) => page.changeProperty('preparationTime', e.detail)}"
                                 ></duration-input>
                             </div>
                             <div class="description-input">
@@ -110,7 +113,7 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
                                 <duration-input
                                     id="cooking-time"
                                     .timespan="${TimeSpan.fromString(page.recipe.cookingTime)}"
-                                    @duration-changed="${(e) => page.changeProperty('cookingTime', e.detail)}"
+                                    @duration-changed="${(e: Event) => page.changeProperty('cookingTime', e.detail)}"
                                 ></duration-input>
                             </div>
                             <div class="description-input">
@@ -119,7 +122,7 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
                                     disabled
                                     id="total-time"
                                     .timespan="${TimeSpan.fromString(page.recipe.totalTime)}"
-                                    @duration-changed="${(e) => page.changeProperty('totalTime', e.detail)}"
+                                    @duration-changed="${(e: Event) => page.changeProperty('totalTime', e.detail)}"
                                 ></duration-input>
                             </div>
                         </div>
@@ -127,7 +130,7 @@ export function renderCreateRecipePage(page: CreateRecipePage) {
                     <textarea
                         id="recipe-text"
                         oninput="this.dispatchEvent(new Event('change'))"
-                        @change="${(e) => page.changeProperty('formattedText', e.target.value)}"
+                        @change="${(e: Event) => page.changeProperty('formattedText', (e.target as HTMLInputElement).value)}"
                         .value="${page.recipe.formattedText}"
                     >
                     </textarea>
@@ -153,16 +156,16 @@ function renderIngredientGroup(group: [name: string, ingredients: IngredientMode
                 class="group-title"
                 .value="${group[0]}"
                 onclick="javascript:this.select()"
-                @input="${(e) => handleLabelInput(e)}"
-                @change="${(e) => page.renameGroup(group[1], e.detail.value)}"
+                @input="${(e: Event) => handleLabelInput(e)}"
+                @change="${(e: Event) => page.renameGroup(group[1], e.detail.value)}"
             />
             <priority-list
                 .items="${group[1]}"
                 .itemRenderer="${renderIngredient}"
-                @delete-item="${(e) => page.removeItem(e.detail)}"
+                @delete-item="${(e: Event) => page.removeItem(e.detail)}"
             >
             </priority-list>
-            <button tabindex="0" id="add-ingredient-link" @click="${(e) => page.addIngredient(group[0], e)}">
+            <button tabindex="0" id="add-ingredient-link" @click="${(e: Event) => page.addIngredient(group[0], e)}">
                 + Zutat hinzufügen
             </button>
         </div>
@@ -181,8 +184,8 @@ function renderIngredient(ingredient: IngredientModel) {
             supportedCharacters="[0-9.]"
             .value="${ingredient.amount.toString()}"
             onclick="javascript:this.select()"
-            @input="${(e) => handleLabelInput(e, /[0-9.]/g)}"
-            @change="${(e) => (ingredient.amount = Number.parseFloat(e.target.value) ?? 0)}"
+            @input="${(e: Event) => handleLabelInput(e, /[0-9.]/g)}"
+            @change="${(e: Event) => (ingredient.amount = Number.parseFloat((e.target as HTMLInputElement).value) ?? 0)}"
         />
         <grouped-dropdown
             tabindex="0"
@@ -190,23 +193,23 @@ function renderIngredient(ingredient: IngredientModel) {
             .result="${{ category: ingredient.measurement, value: unit }}"
             .options="${ExtendedIngredientUnit}"
             class="ingredient-unit"
-            @change="${(e) => ([ingredient.measurement, ingredient['unit']] = [e.detail.category, e.detail.value])}"
+            @change="${(e: Event) => ([ingredient.measurement, ingredient['unit']] = [e.detail.category, e.detail.value])}"
         ></grouped-dropdown>
         <input
             type="text"
             class="ingredient-name"
             .value="${ingredient.name}"
             onclick="javascript:this.select()"
-            @input="${(e) => handleLabelInput(e)}"
-            @change="${(e) => (ingredient.name = e.detail.value)}"
+            @input="${(e: Event) => handleLabelInput(e)}"
+            @change="${(e: Event) => (ingredient.name = e.detail.value)}"
         />
         <input
             type="text"
             class="ingredient-description"
             .value="${ingredient.description}"
             onclick="javascript:this.select()"
-            @input="${(e) => handleLabelInput(e)}"
-            @change="${(e) => (ingredient.description = e.detail.value)}"
+            @input="${(e: Event) => handleLabelInput(e)}"
+            @change="${(e: Event) => (ingredient.description = e.detail.value)}"
         />
     </div>`;
 }
@@ -217,7 +220,7 @@ function renderIngredient(ingredient: IngredientModel) {
  */
 function handleLabelInput(e: KeyboardEvent, supportedCharacters?: RegExp) {
     if (!supportedCharacters || e.key.length != 1 || e.key.match(supportedCharacters)) return;
-    e.target.dispatchEvent(new Event('change'));
+    (e.target as HTMLInputElement).dispatchEvent(new Event('change'));
     e.stopPropagation();
     e.preventDefault();
 }

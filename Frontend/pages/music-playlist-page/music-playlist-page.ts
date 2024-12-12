@@ -102,7 +102,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
             })
         );
 
-        window.addEventListener('hashchange', (e) => {
+        window.addEventListener('hashchange', (e:Event) => {
             PlayMusicDialog.show(this.updatedTrack, AudioService.volume, AudioService.trackPosition.current() ?? 0);
         });
 

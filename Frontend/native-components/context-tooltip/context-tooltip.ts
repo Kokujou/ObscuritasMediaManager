@@ -36,8 +36,8 @@ export class ContextTooltip extends LitElementBase {
         let tooltipLeft = scrollLeft + rect.left + rect.width / 2;
         tooltip.style.left = tooltipLeft + 'px';
         tooltip.style.top = tooltipTop + 'px';
-        tooltip.addEventListener('pointermove', (e) => e.stopPropagation());
-        event.currentTarget.addEventListener('pointermove', (e) => e.stopPropagation());
+        tooltip.addEventListener('pointermove', (e:Event) => e.stopPropagation());
+        event.currentTarget.addEventListener('pointermove', (e:Event) => e.stopPropagation());
 
         PageRouting.instance.shadowRoot!.appendChild(ContextTooltip.currentInstance);
         tooltip.requestFullUpdate();

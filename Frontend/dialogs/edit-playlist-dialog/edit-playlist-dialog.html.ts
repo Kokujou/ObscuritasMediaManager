@@ -21,13 +21,13 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                     <div id="image-data-section">
                         <upload-area
                             id="playlist-image"
-                            @imageReceived="${(e) => dialog.changeProperty('image', e.imageData)}"
+                            @imageReceived="${(e: Event) => dialog.changeProperty('image', e.imageData)}"
                         ></upload-area>
                         <div id="playlist-rating">
                             <star-rating
                                 max="5"
                                 singleSelect
-                                @selectionChange="${(e) => dialog.changeProperty('rating', e.detail.rating)}"
+                                @selectionChange="${(e: Event) => dialog.changeProperty('rating', e.detail.rating)}"
                             ></star-rating>
                         </div>
                     </div>
@@ -38,7 +38,8 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                                 class="property-value"
                                 .value="${dialog.newPlaylist.name}"
                                 oninput="this.dispatchEvent(new Event('change'))"
-                                @change="${(e) => dialog.changeProperty('name', e.currentTarget.value)}"
+                                @change="${(e: Event) =>
+                                    dialog.changeProperty('name', (e.currentTarget as HTMLInputElement).value)}"
                             />
                         </div>
                         <div id="playlist-author" class="property">
@@ -47,7 +48,8 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                                 class="property-value"
                                 .value="${dialog.newPlaylist.author}"
                                 oninput="this.dispatchEvent(new Event('change'))"
-                                @change="${(e) => dialog.changeProperty('author', e.currentTarget.value)}"
+                                @change="${(e: Event) =>
+                                    dialog.changeProperty('author', (e.currentTarget as HTMLInputElement).value)}"
                             />
                         </div>
                         <div id="playlist-genres" class="property">
@@ -62,7 +64,7 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                                 <tag-label
                                     createNew
                                     .autocomplete="${dialog.autocompleteGenres}"
-                                    @tagCreated="${(e) => dialog.addGenre(e.detail.value)}"
+                                    @tagCreated="${(e: Event) => dialog.addGenre(e.detail.value)}"
                                 ></tag-label>
                             </div>
                         </div>
@@ -74,7 +76,7 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                                         Object.values(Language),
                                         dialog.newPlaylist.language
                                     )}"
-                                    @selectionChange="${(e) => dialog.changeProperty('language', e.detail.option.value)}"
+                                    @selectionChange="${(e: Event) => dialog.changeProperty('language', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                         </div>
@@ -86,7 +88,7 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                                         Object.values(Language),
                                         dialog.newPlaylist.nation
                                     )}"
-                                    @selectionChange="${(e) => dialog.changeProperty('nation', e.detail.option.value)}"
+                                    @selectionChange="${(e: Event) => dialog.changeProperty('nation', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                         </div>
@@ -96,7 +98,7 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                     ${dialog.draggingFiles
                         ? html`<div
                               id="drag-info-overlay"
-                              @dragleave="${(e) => {
+                              @dragleave="${(e: Event) => {
                                   e.preventDefault();
                                   dialog.draggingFiles = false;
                               }}"
@@ -120,7 +122,7 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                     <ordered-list
                         id="tracks-container"
                         .items="${dialog.newPlaylist?.tracks ?? []}"
-                        @items-changed="${(e) => dialog.changeProperty('tracks', e.detail)}"
+                        @items-changed="${(e: Event) => dialog.changeProperty('tracks', e.detail)}"
                         propertyName="name"
                     ></ordered-list>
                 </div>

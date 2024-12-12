@@ -6,9 +6,9 @@ import { TagLabel } from './tag-label';
  */
 export function renderTagLabel(tagLabel: TagLabel) {
     return html`
-        <div id="label-container" @click="${(e) => e.stopPropagation()}">
+        <div id="label-container" @click="${(e: Event) => e.stopPropagation()}">
             ${tagLabel.createNew ? renderNewLabelForm(tagLabel) : html`<div id="label-text">${tagLabel.text}</div>`}
-            <div id="x-button" @click="${(e) => tagLabel.notifyRemoved(e)}">&times;</div>
+            <div id="x-button" @click="${(e: Event) => tagLabel.notifyRemoved(e)}">&times;</div>
         </div>
     `;
 }
@@ -20,7 +20,7 @@ function renderNewLabelForm(tagLabel: TagLabel) {
     return html`<form id="new-label-form" action="javascript:void(0)">
         <input
             id="new-tag-input"
-            @keydown="${(e) => tagLabel.handleInput(e)}"
+            @keydown="${(e: Event) => tagLabel.handleInput(e)}"
             @input="${() => tagLabel.requestFullUpdate()}"
             @focus="${() => (tagLabel.showAutocomplete = true)}"
             @focusout="${() => (tagLabel.showAutocomplete = false)}"

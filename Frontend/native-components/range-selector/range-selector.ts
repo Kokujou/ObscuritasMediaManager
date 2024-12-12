@@ -52,7 +52,7 @@ export class RangeSelector extends LitElementBase {
 
         window.addEventListener(
             'pointermove',
-            (e) => {
+            (e: Event) => {
                 if (this.draggingLeft) return this.changeLeftByMouse(e);
                 if (this.draggingRight) return this.changeRightByMouse(e);
             },
@@ -61,7 +61,7 @@ export class RangeSelector extends LitElementBase {
 
         window.addEventListener(
             'pointerup',
-            (e) => {
+            (e: Event) => {
                 this.draggingLeft = false;
                 this.draggingRight = false;
                 this.dispatchEvent(new CustomEvent('range-changed', { detail: { left: this.left, right: this.right } }));

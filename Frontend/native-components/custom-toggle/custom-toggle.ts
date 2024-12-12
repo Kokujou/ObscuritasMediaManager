@@ -36,7 +36,7 @@ export class CustomToggle extends LitElementBase {
     override connectedCallback() {
         super.connectedCallback();
 
-        this.onclick = (e) => {
+        this.onclick = (e: Event) => {
             e.stopPropagation();
             e.preventDefault();
             if (this.threeValues) {

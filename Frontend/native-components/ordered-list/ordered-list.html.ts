@@ -13,16 +13,16 @@ export function renderOrderedList(list: OrderedList) {
                     index="${index}"
                     ?dragTarget="${index.toString() == list.lastHovered?.getAttribute('index')}"
                     ?active="${list.selectedIndices.includes(index)}"
-                    @click="${(e) => list.handleRowClick(e, index)}"
-                    @dragover="${(e) => {
+                    @click="${(e: Event) => list.handleRowClick(e, index)}"
+                    @dragover="${(e: Event) => {
                         if (!list.dragged) return;
 
                         e.stopPropagation();
                         e.preventDefault();
-                        list.lastHovered = e.currentTarget;
+                        list.lastHovered = e.currentTarget as HTMLInputElement;
                         list.requestFullUpdate();
                     }}"
-                    @dragstart="${(e) => (list.dragged = e.currentTarget)}"
+                    @dragstart="${(e: Event) => (list.dragged = e.currentTarget as HTMLInputElement)}"
                     draggable="true"
                 >
                     <div class="index-column column">${index + 1}</div>

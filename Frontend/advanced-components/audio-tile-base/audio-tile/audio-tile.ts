@@ -18,7 +18,7 @@ export class AudioTile extends LitElementBase {
     override connectedCallback() {
         super.connectedCallback();
 
-        this.addEventListener('contextmenu', (e) => {
+        this.addEventListener('contextmenu', (e: Event) => {
             e.preventDefault();
 
             /** @type {ContextMenuItem[]} */ var contextMenuItems = [

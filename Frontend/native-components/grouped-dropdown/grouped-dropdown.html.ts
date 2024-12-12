@@ -25,7 +25,7 @@ export function renderGroupedDropdown(dropdown: GroupedDropdown) {
             <div
                 class="options"
                 tabindex="-1"
-                @scroll="${(e) => dropdown.scroll(e)}"
+                @scroll="${(e: Event) => dropdown.scroll(e)}"
                 style="display: ${dropdown.showDropDown ? 'block' : 'none'}"
             >
                 ${Object.entries(dropdown.options).map((section) => {

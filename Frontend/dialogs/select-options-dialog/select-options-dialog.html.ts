@@ -13,7 +13,7 @@ export function renderSelectOptionsDialog(dialog: SelectOptionsDialog) {
             acceptActionText="Auswählen"
             declineActionText="Abbrechen"
             ?canAccept="${dialog.isComplete()}"
-            @accept="${(e) => dialog.accept(e)}"
+            @accept="${(e: Event) => dialog.accept(e)}"
         >
             <div id="content">
                 <div id="items">

@@ -71,7 +71,7 @@ export class PlaylistTile extends LitElementBase {
 
         this.addEventListener(
             'contextmenu',
-            (e) => {
+            (e: Event) => {
                 e.preventDefault();
                 ContextMenu.popup(
                     [

@@ -27,7 +27,7 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                     .value="${this.filter.search ?? ''}"
                     oninput="this.dispatchEvent(new Event('change'))"
                     @change="${(e: CustomEvent) =>
-                        this.changeFilterProperty('search', (e.currentTarget as HTMLInputElement).value)}"
+                        this.changeFilterProperty('search', (e.currentTarget as HTMLInputElement as HTMLInputElement).value)}"
                 />
             </div>
             <div id="deleted" class="filter-entry">

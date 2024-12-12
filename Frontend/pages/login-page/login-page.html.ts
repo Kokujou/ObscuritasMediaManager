@@ -16,7 +16,7 @@ export function renderLoginPage(loginPage: LoginPage) {
                         type="text"
                         autocomplete="username"
                         oninput="javascript:this.dispatchEvent(new Event('change'))"
-                        @change="${(e) => (loginPage.username = e.target.value)}"
+                        @change="${(e: Event) => (loginPage.username = (e.target as HTMLInputElement).value)}"
                     />
                 </div>
 
@@ -28,7 +28,7 @@ export function renderLoginPage(loginPage: LoginPage) {
                         type="password"
                         autocomplete="current-password"
                         oninput="javascript:this.dispatchEvent(new Event('change'))"
-                        @change="${(e) => (loginPage.password = e.target.value)}"
+                        @change="${(e: Event) => (loginPage.password = (e.target as HTMLInputElement).value)}"
                     />
                 </div>
 

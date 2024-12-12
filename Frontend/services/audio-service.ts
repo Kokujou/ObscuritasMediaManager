@@ -1,3 +1,4 @@
+import { ConnectedEvent } from '../client-interop/connected-event';
 import { InteropCommand } from '../client-interop/interop-command';
 import { InteropEvent } from '../client-interop/interop-event';
 import { InteropQuery } from '../client-interop/interop-query';
@@ -16,7 +17,7 @@ export class AudioService {
 
     static visualizationData = new Observable(new Float32Array());
     static trackPosition = new Observable(0);
-    static duration = null;
+    static duration: number | null = null;
     /** @type {Observable} */ static ended = new Observable(null);
     /** @type {Observable} */ static changed = new Observable(null);
 
@@ -38,7 +39,7 @@ export class AudioService {
                 break;
             }
             case InteropEvent.Connected: {
-                let response = /** @type {ConnectedEvent} */ x;
+                let response = x as ConnectedEvent;
                 this.trackPosition.next(response.position);
                 this.visualizationData.next(new Float32Array(response.visualizationData));
                 this.paused = response.playbackState != PlaybackState.Playing;

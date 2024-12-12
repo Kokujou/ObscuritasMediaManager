@@ -19,9 +19,9 @@ export class FilterEntry<U> {
             .map((x) => x[0] as U);
     }
 
-    states: { [key: string]: CheckboxState };
+    states: { [key: string | number]: CheckboxState };
 
-    constructor(type: string[], defaultValue = CheckboxState.Ignore) {
+    constructor(type: (string | number)[], defaultValue = CheckboxState.Ignore) {
         this.states = {} as any;
         for (var key of type) this.states[key] = defaultValue;
     }

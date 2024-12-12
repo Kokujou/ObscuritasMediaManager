@@ -57,7 +57,7 @@ export class GenreDialog extends LitElementBase {
 
         genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
 
-        genreDialog.addEventListener('selection-changed', async (e) => {
+        genreDialog.addEventListener('selection-changed', async (e:Event) => {
             var mediaGenres = await GenreService.getAll();
             genreDialog.options.genres = mediaGenres.filter((x) => genreDialog.availableSections.includes(x.section));
             genreDialog.requestFullUpdate();

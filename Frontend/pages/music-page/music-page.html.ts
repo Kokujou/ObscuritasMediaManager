@@ -20,8 +20,8 @@ export function renderMusicPage(musicPage: MusicPage) {
                         .filter="${musicPage.filter}"
                         .sortingProperty="${musicPage.sortingProperty}"
                         .sortingDirection="${musicPage.sortingDirection}"
-                        @filterChanged="${(e) => musicPage.updateFilter(e.detail.filter)}"
-                        @sortingUpdated="${(e) => musicPage.updateSorting(e.detail.property, e.detail.direction)}"
+                        @filterChanged="${(e: Event) => musicPage.updateFilter(e.detail.filter)}"
+                        @sortingUpdated="${(e: Event) => musicPage.updateSorting(e.detail.property, e.detail.direction)}"
                         id="music-filter"
                     ></music-filter>
                     <div id="result-count-label">
@@ -75,7 +75,7 @@ export function renderMusicPage(musicPage: MusicPage) {
 
                         <div class="option-section">
                             <range-slider
-                                @valueChanged="${(e) => musicPage.changeVolume(e.detail.value)}"
+                                @valueChanged="${(e: Event) => musicPage.changeVolume(e.detail.value)}"
                                 step="1"
                                 min="0"
                                 max="100"
@@ -126,15 +126,19 @@ export function renderMusicPage(musicPage: MusicPage) {
                                       html`
                                           <div
                                               class="audio-link-container"
-                                              @pointerdown="${(e) => musicPage.startSelectionModeTimer(track.hash, e)}"
-                                              @pointerup="${(e) => musicPage.stopSelectionModeTimer(track.hash, e)}"
+                                              @pointerdown="${(e: Event) => musicPage.startSelectionModeTimer(track.hash, e)}"
+                                              @pointerup="${(e: Event) => musicPage.stopSelectionModeTimer(track.hash, e)}"
                                           >
                                               ${musicPage.selectionMode
                                                   ? html`<input
                                                         type="checkbox"
                                                         class="audio-select"
                                                         ?checked="${musicPage.selectedHashes.includes(track.hash)}"
-                                                        @change="${(e) => musicPage.toggleTrackSelection(e.target, track.hash)}"
+                                                        @change="${(e: Event) =>
+                                                            musicPage.toggleTrackSelection(
+                                                                e.target as HTMLInputElement,
+                                                                track.hash
+                                                            )}"
                                                     />`
                                                   : ''}
                                               ${LinkElement.forPage(

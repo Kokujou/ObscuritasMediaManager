@@ -23,7 +23,7 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
         <div
             id="edit-button"
             onclick="this.dispatchEvent(new CustomEvent('toggle'))"
-            @toggle="${(e) => detailPage.changeProperty('complete', !detailPage.updatedMedia.complete)}"
+            @toggle="${(e: Event) => detailPage.changeProperty('complete', !detailPage.updatedMedia.complete)}"
         >
             <custom-toggle
                 .state="${detailPage.updatedMedia.complete ? CheckboxState.Ignore : CheckboxState.Forbid}"
@@ -43,7 +43,7 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                       @click="${() => detailPage.setMediaImage(null)}"
                                   ></div>`
                                 : html`<upload-area
-                                      @imageReceived="${(e) => detailPage.setMediaImage(e.detail.imageData)}"
+                                      @imageReceived="${(e: Event) => detailPage.setMediaImage(e.detail.imageData)}"
                                   ></upload-area>`}
                         </div>
 
@@ -52,7 +52,7 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                 max="5"
                                 singleSelect
                                 .values="${createRange(0, detailPage.updatedMedia.rating)}"
-                                @ratingChanged="${(e) => detailPage.changeProperty('rating', e.detail.rating)}"
+                                @ratingChanged="${(e: Event) => detailPage.changeProperty('rating', e.detail.rating)}"
                             ></star-rating>
                         </div>
                     </div>
@@ -131,7 +131,11 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                           type="text"
                                           class="property-value"
                                           .value="${detailPage.updatedMedia.romajiName}"
-                                          @change="${(e) => detailPage.changeProperty('romajiName', e.currentTarget.value)}"
+                                          @change="${(e: Event) =>
+                                              detailPage.changeProperty(
+                                                  'romajiName',
+                                                  (e.currentTarget as HTMLInputElement).value
+                                              )}"
                                       />
                                   </div>
                                   <div class="property-entry sub-entry">
@@ -141,7 +145,11 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                           type="text"
                                           class="property-value"
                                           .value="${detailPage.updatedMedia.kanjiName}"
-                                          @change="${(e) => detailPage.changeProperty('kanjiName', e.currentTarget.value)}"
+                                          @change="${(e: Event) =>
+                                              detailPage.changeProperty(
+                                                  'kanjiName',
+                                                  (e.currentTarget as HTMLInputElement).value
+                                              )}"
                                       />
                                   </div>
                                   <div class="property-entry sub-entry">
@@ -151,7 +159,11 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                           type="text"
                                           class="property-value"
                                           .value="${detailPage.updatedMedia.germanName}"
-                                          @change="${(e) => detailPage.changeProperty('germanName', e.currentTarget.value)}"
+                                          @change="${(e: Event) =>
+                                              detailPage.changeProperty(
+                                                  'germanName',
+                                                  (e.currentTarget as HTMLInputElement).value
+                                              )}"
                                       />
                                   </div>
                                   <div class="property-entry sub-entry">
@@ -161,7 +173,11 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                           type="text"
                                           class="property-value"
                                           .value="${detailPage.updatedMedia.englishName}"
-                                          @change="${(e) => detailPage.changeProperty('englishName', e.currentTarget.value)}"
+                                          @change="${(e: Event) =>
+                                              detailPage.changeProperty(
+                                                  'englishName',
+                                                  (e.currentTarget as HTMLInputElement).value
+                                              )}"
                                       />
                                   </div>`
                             : ''}
@@ -178,8 +194,8 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                         type="text"
                                         class="property-value"
                                         .value="${detailPage.updatedMedia.release.toString()}"
-                                        @input="${(e) => detailPage.releaseInput(e.currentTarget)}"
-                                        @change="${(e) => detailPage.releaseChanged(e.currentTarget)}"
+                                        @input="${(e: Event) => detailPage.releaseInput(e.currentTarget as HTMLInputElement)}"
+                                        @change="${(e: Event) => detailPage.releaseChanged(e.currentTarget as HTMLInputElement)}"
                                     />
                                 </div>
                                 <div class="property-entry">
@@ -202,7 +218,8 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                             Object.values(Language),
                                             detailPage.updatedMedia.language
                                         )}"
-                                        @selectionChange="${(e) => detailPage.changeProperty('language', e.detail.option.value)}"
+                                        @selectionChange="${(e: Event) =>
+                                            detailPage.changeProperty('language', e.detail.option.value)}"
                                     ></drop-down>
                                 </div>
                                 <div class="property-entry">
@@ -214,7 +231,8 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                             Object.values(MediaStatus),
                                             detailPage.updatedMedia.status
                                         )}"
-                                        @selectionChange="${(e) => detailPage.changeProperty('status', e.detail.option.value)}"
+                                        @selectionChange="${(e: Event) =>
+                                            detailPage.changeProperty('status', e.detail.option.value)}"
                                     ></drop-down>
                                 </div>
                             </div>
@@ -277,7 +295,8 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                         class="textarea property-value"
                         id="description-input"
                         onclick="this.focus()"
-                        @change="${(e) => detailPage.changeProperty('description', e.currentTarget.value)}"
+                        @change="${(e: Event) =>
+                            detailPage.changeProperty('description', (e.currentTarget as HTMLInputElement).value)}"
                         .value="${detailPage.updatedMedia.description}"
                     ></textarea>
                 </div>

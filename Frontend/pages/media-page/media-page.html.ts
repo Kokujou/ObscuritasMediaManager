@@ -33,9 +33,11 @@ export function renderMediaPageTemplate(page: MediaPage) {
                                       <media-tile
                                           .media="${media}"
                                           .autocompleteGenres="${page.genreList}"
-                                          @imageReceived="${(e) => page.setMediaImage(media.id, e.detail.imageData)}"
-                                          @ratingChanged="${(e) => page.changePropertyOf(media, 'rating', e.detail.newRating)}"
-                                          @genresChanged="${(e) => page.changePropertyOf(media, 'genres', e.detail.genres)}"
+                                          @imageReceived="${(e: Event) => page.setMediaImage(media.id, e.detail.imageData)}"
+                                          @ratingChanged="${(e: Event) =>
+                                              page.changePropertyOf(media, 'rating', e.detail.newRating)}"
+                                          @genresChanged="${(e: Event) =>
+                                              page.changePropertyOf(media, 'genres', e.detail.genres)}"
                                           @soft-delete="${() => page.changePropertyOf(media, 'deleted', true)}"
                                           @hard-delete="${() => page.hardDelete(media)}"
                                           @full-delete="${() => page.fullDelete(media)}"
@@ -64,7 +66,7 @@ export function renderMediaPageTemplate(page: MediaPage) {
                         id="import-media-button"
                         class="option-button"
                         icon="${Icons.Import}"
-                        @pointerover="${(e) => page.requestImportTypeSelection(e)}"
+                        @pointerover="${(e: Event) => page.requestImportTypeSelection(e)}"
                     ></div>
                     <div
                         id="auto-fill-button"

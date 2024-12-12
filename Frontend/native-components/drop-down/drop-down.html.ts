@@ -36,16 +36,16 @@ function showDropDown(dropdown: DropDown) {
         </div>
         <div
             class="options"
-            @click="${(e) => {
+            @click="${(e: Event) => {
                 if (dropdown.multiselect) e.stopPropagation();
             }}"
-            @scroll="${(e) => dropdown.scroll(e)}"
+            @scroll="${(e: Event) => dropdown.scroll(e)}"
             style="display: ${dropdown.showDropDown ? 'block' : 'none'}"
         >
             ${dropdown.useSearch
                 ? html`
                       <div
-                          @click="${(e) => {
+                          @click="${(e: Event) => {
                               e.preventDefault();
                               e.stopPropagation();
                           }}"
@@ -55,7 +55,7 @@ function showDropDown(dropdown: DropDown) {
                               type="text"
                               placeholder="Suchtext eingeben..."
                               id="dropdown-search"
-                              @input="${(e) => e.target.dispatchEvent(new Event('change'))}"
+                              @input="${(e: Event) => (e.target as HTMLInputElement).dispatchEvent(new Event('change'))}"
                               @change="${() => dropdown.updateSearchFilter()}"
                           />
                       </div>
@@ -102,7 +102,7 @@ function renderToggle(dropdown: DropDown, option: DropDownOption) {
             style="--toggled-color:${option.color || 'unset'}"
             .state="${option.state}"
             ?threeValues="${dropdown.threeValues}"
-            @toggle="${(e) => dropdown.changeOptionState(option, e.detail)}"
+            @toggle="${(e: Event) => dropdown.changeOptionState(option, e.detail)}"
         ></custom-toggle>
     `;
 }

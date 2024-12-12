@@ -66,7 +66,7 @@ export class LyricsDialog extends LitElementBase {
 
         window.addEventListener(
             'keyup',
-            (e) => {
+            (e: Event) => {
                 if (e.key == 'Escape') this.fadeAndRemove();
             },
             { signal: this.abortController.signal }

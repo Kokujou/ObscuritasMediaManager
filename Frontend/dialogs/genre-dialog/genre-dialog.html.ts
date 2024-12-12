@@ -21,13 +21,14 @@ export function renderGenreDialog(dialog: GenreDialog) {
             acceptActionText="Speichern"
             declineActionText="Abbrechen"
             @decline="${() => dialog.remove()}"
-            @accept="${(e) => dialog.accept(e)}"
+            @accept="${(e: Event) => dialog.accept(e)}"
         >
             <div id="dialog-content">
                 ${dialog.options.allowRemove
                     ? html` <div id="remove-toggle">
                           <custom-toggle
-                              @toggle="${(e) => dialog.toggleAttribute('editModeEnabled', e.detail == CheckboxState.Ignore)}"
+                              @toggle="${(e: Event) =>
+                                  dialog.toggleAttribute('editModeEnabled', e.detail == CheckboxState.Ignore)}"
                           ></custom-toggle>
                           <div id="toggle-text">Löschen</div>
                       </div>`
@@ -38,7 +39,7 @@ export function renderGenreDialog(dialog: GenreDialog) {
                     type="text"
                     placeholder="Search"
                     oninput="javascript: this.dispatchEvent(new Event('change'))"
-                    @change="${(e) => (dialog.searchText = e.currentTarget.value)}"
+                    @change="${(e: Event) => (dialog.searchText = (e.currentTarget as HTMLInputElement).value)}"
                 />
 
                 <div id="genre-container">
@@ -76,12 +77,12 @@ function renderGenreSection(sectionName: string, genres: GenreModel[], dialog: G
 function renderGenre(genre: GenreModel, genreDialog: GenreDialog) {
     return html`<tri-value-checkbox
         .allowThreeValues="${genreDialog.options.allowThreeValues}"
-        @valueChanged="${(e) => genreDialog.handleGenreSelection(e.detail, genre)}"
+        @valueChanged="${(e: Event) => genreDialog.handleGenreSelection(e.detail, genre)}"
         .value="${genreDialog.getValue(genre)}"
         .ignoredState="${genreDialog.options.ignoredState}"
         class="genre-checkbox"
     >
         ${genre.name}
-        <div class="remove-genre-button" @click="${(e) => genreDialog.removeGenre(e, genre)}"></div>
+        <div class="remove-genre-button" @click="${(e: Event) => genreDialog.removeGenre(e, genre)}"></div>
     </tri-value-checkbox> `;
 }

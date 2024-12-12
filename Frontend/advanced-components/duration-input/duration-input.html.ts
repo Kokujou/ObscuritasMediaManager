@@ -28,6 +28,6 @@ function renderBoundInput(this: DurationInput, property: keyof TimeSpan, max: Nu
         onchange="javascript: if(Number.parseInt(this.value) > Number.parseInt(this.max)) this.value = this.max;
          this.value = this.value.toString().padStart(2,'0');
          this.dispatchEvent(new CustomEvent('valueChanged'))"
-        @valueChanged="${(e: Event) => this.handleValueChange(property, e.target as HTMLInputElement)}"
+        @valueChanged="${(e: Event) => this.handleValueChange(property, e.target as HTMLInputElement as HTMLInputElement)}"
     />`;
 }

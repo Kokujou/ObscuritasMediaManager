@@ -23,7 +23,7 @@ export class MediaTile extends LitElementBase {
     override async connectedCallback() {
         super.connectedCallback();
 
-        this.addEventListener('contextmenu', (e) => {
+        this.addEventListener('contextmenu', (e: Event) => {
             e.preventDefault();
             /** @type {ContextMenuItem[]} */ const contextItems = [];
 

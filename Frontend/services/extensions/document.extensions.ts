@@ -26,7 +26,13 @@ export function scrollIntoParentViewX(element: HTMLElement, elementContainer: HT
  * @param {HTMLElement} parent
  * @param {HTMLElement} elementContainer
  */
-export function scrollIntoParentViewY(element: HTMLElement, elementContainer: HTMLElement, parent: HTMLElement, max = null, min = null) {
+export function scrollIntoParentViewY(
+    element: HTMLElement,
+    elementContainer: HTMLElement,
+    parent: HTMLElement,
+    max = null,
+    min = null
+) {
     var targetTop = element.offsetTop + elementContainer.offsetTop - parent.offsetHeight / 2 + element.offsetHeight / 2;
     elementContainer.style.transform = `translateY(${-targetTop}px)`;
 }
@@ -51,7 +57,7 @@ export function openFileDialog(selectFolders: boolean = false) {
         /** @type {HTMLInputElement} */ var fileInput = document.createElement('input');
         fileInput.type = 'file';
         if (selectFolders) fileInput.setAttribute('webkitdirectory', '');
-        fileInput.onchange = (e) => {
+        fileInput.onchange = (e: Event) => {
             resolve(Array.from(fileInput.files));
         };
         fileInput.click();

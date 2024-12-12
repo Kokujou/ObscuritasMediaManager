@@ -27,7 +27,8 @@ export function renderMusicFilter(this: MusicFilter) {
                     id="search-input"
                     placeholder="Suchbegriff eingeben..."
                     oninput="this.dispatchEvent(new Event('change'))"
-                    @change="${(e: CustomEvent) => this.setfilterEntry('search', (e.target as HTMLInputElement).value)}"
+                    @change="${(e: CustomEvent) =>
+                        this.setfilterEntry('search', (e.target as HTMLInputElement as HTMLInputElement).value)}"
                     .value="${this.filter.search || ''}"
                 />
             </div>

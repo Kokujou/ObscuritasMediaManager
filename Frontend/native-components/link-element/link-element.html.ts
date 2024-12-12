@@ -6,7 +6,11 @@ import { LinkElement } from './link-element';
  */
 export function renderLinkElement(linkElement: LinkElement) {
     return html`
-        <a target="${linkElement.target ?? '_self'}" @click="${(e) => linkElement.handleClick(e)}" href="${linkElement.fullLink}">
+        <a
+            target="${linkElement.target ?? '_self'}"
+            @click="${(e: Event) => linkElement.handleClick(e)}"
+            href="${linkElement.fullLink}"
+        >
             <slot></slot
         ></a>
     `;
