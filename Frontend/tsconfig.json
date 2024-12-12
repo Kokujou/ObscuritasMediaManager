@@ -1,0 +1,34 @@
+{
+    "buildOptions": {},
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "esnext",
+        "checkJs": true,
+        "allowJs": true,
+        "sourceMap": false,
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+        "pretty": true,
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "strictNullChecks": true
+    },
+    "include": ["**/*.ts", "**/*.json"],
+    "exclude": [
+        "**/*.bundled.js",
+        "**/exports.js",
+        "**/rollup.config.js",
+        "<node_internals>/**/*.js",
+        "**/templates/**",
+        "**/node_modules/**",
+        "**/*.stories*",
+        "**/.storybook/**",
+        "**/obscuritas-media-manager-backend-client.ts",
+        "**/bin/**",
+        "**/obj/**"
+    ],
+
+    "compileOnSave": true
+}

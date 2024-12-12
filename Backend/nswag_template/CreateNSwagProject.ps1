@@ -69,11 +69,8 @@ New-Item "$targetProjectFolder/package.json" -Value $(Rename-CustomProperties -f
 New-Item "$targetProjectFolder/$csProjectNamespace.Client.csproj" -Value $(Rename-CustomProperties -fileContent $dotnetProjectTemplate) -Force
 New-Item "$targetProjectFolder/nswag.json" -Value $(Rename-CustomProperties -fileContent $nswagTemplate) -Force
 
-Copy-Item .\tsconfig.json "$targetProjectFolder/tsconfig.json" -Force
 
 dotnet publish $targetProjectFolder -c "$configuration"
 cd $targetProjectFolder
-npm install typescript -g
-tsc --project tsconfig.json
 cd $PSScriptRoot
-copy-item .\nswag_client\dist\* ..\..\..\ObscuritasMediaManager\Frontend -Recurse
+copy-item .\nswag_client\*.ts ..\..\..\ObscuritasMediaManager\Frontend -Recurse

@@ -22,6 +22,5 @@
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<Exec Command="dotnet-typegen generate -p ./" ContinueOnError="true" />
-		<Exec Command="tsc --project ../Frontend/client-interop.tsconfig.json --declaration --allowJs" ContinueOnError="true" />
 	</Target>
 </Project>

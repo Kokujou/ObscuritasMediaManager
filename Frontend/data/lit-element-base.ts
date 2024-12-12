@@ -1,0 +1,69 @@
+import { LitElement } from 'lit-element';
+import { registerContentWarnings } from '../resources/icons/content-warnings/register-content-warnings';
+import { registerTargetGroups } from '../resources/icons/target-groups/register-target-groups';
+import { registerIcons } from '../resources/inline-icons/icon-registry';
+import { renderInstrumentTypeIcons } from './enumerations/instrument-types';
+import { renderLanguageFlags } from './enumerations/nation';
+import { renderParticipantCountIcon } from './enumerations/participants';
+import { Subscription } from './observable';
+
+export class LitElementBase extends LitElement {
+    static baseStyles = [
+        registerIcons().styleSheet!,
+        renderLanguageFlags().styleSheet!,
+        renderParticipantCountIcon().styleSheet!,
+        registerContentWarnings().styleSheet!,
+        registerTargetGroups().styleSheet!,
+        renderInstrumentTypeIcons().styleSheet!,
+    ];
+
+    protected subscriptions: Subscription[] = [];
+    abortController = new AbortController();
+    protected elementsWithTooltips: Element[] = [];
+
+    constructor() {
+        super();
+        this.shadowRoot?.adoptedStyleSheets?.push(...LitElementBase.baseStyles);
+    }
+
+    async requestFullUpdate() {
+        //@ts-ignore
+        await super.requestUpdate(undefined);
+        this.shadowRoot!.querySelectorAll('*').forEach((x) => {
+            if (x instanceof LitElementBase) x.requestFullUpdate();
+        });
+    }
+
+    override updated(_changedProperties: Map<any, any>) {
+        super.updated(_changedProperties);
+
+        this.attachTooltips();
+    }
+
+    redispatchEvent(event: Event, target: HTMLElement | null = null) {
+        target ??= this;
+        target.dispatchEvent(new Event(event.type, { bubbles: true, composed: true }));
+    }
+
+    attachTooltips() {
+        var elementsWithTooltips = this.shadowRoot!.querySelectorAll('*[tooltip]');
+        for (var element of elementsWithTooltips) {
+            if (!this.elementsWithTooltips.includes(element)) this.attachTooltip(element);
+        }
+    }
+
+    attachTooltip(element: Element) {
+        var CustomTooltip = window.customElements.get(
+            'custom-tooltip'
+        ) as typeof import('../native-components/custom-tooltip/custom-tooltip').CustomTooltip;
+        element.addEventListener('pointerover', (e) => CustomTooltip.show(element.getAttribute('tooltip'), e));
+        this.elementsWithTooltips.push(element);
+    }
+
+    override disconnectedCallback() {
+        super.disconnectedCallback();
+        this.abortController.abort();
+        this.subscriptions.forEach((x) => x.unsubscribe());
+        this.subscriptions = [];
+    }
+}

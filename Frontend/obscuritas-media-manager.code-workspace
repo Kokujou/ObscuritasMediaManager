@@ -10,7 +10,7 @@
         "blueprint.templatesPath": ["./templates"],
         "task.allowAutomaticTasks": "on",
         "files.associations": {
-            "**/templates/**/*.js": "txt"
+            "**/templates/**": "txt"
         },
         "files.exclude": {
             "**/.DS_Store": true,
@@ -25,11 +25,13 @@
         },
         "typescript.enablePromptUseWorkspaceTsdk": true,
         "typescript.tsserver.watchOptions": {
-            "watchDirectory": "useFsEvents",
-            "watchFile": "useFsEvents"
+            "watchDirectory": "fixedPollingInterval",
+            "watchFile": "fixedPollingInterval"
         },
-        "files.watcherInclude": ["**/*.js"],
-        "typescript.tsdk": "node_modules\\typescript\\lib"
+        "files.watcherInclude": ["**/*.ts"],
+        "typescript.tsdk": "node_modules\\typescript\\lib",
+        "typescript.preferences.importModuleSpecifierEnding": "minimal",
+        "typescript.tsserver.experimental.enableProjectDiagnostics": true
     },
     "tasks": {
         "version": "2.0.0",
@@ -37,8 +39,8 @@
             {
                 "label": "Check for build errors",
                 "type": "shell",
-                "command": "./node_modules/.bin/tsc",
-                "args": ["-p", "./jsconfig.json", "-watch"],
+                "command": "npx",
+                "args": ["webpack", "--watch"],
                 "presentation": {
                     "reveal": "never",
                     "echo": false,
