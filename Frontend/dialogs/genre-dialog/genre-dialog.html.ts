@@ -6,7 +6,7 @@ import { GenreDialog } from './genre-dialog';
 /**
  * @param {GenreDialog} dialog
  */
-export function renderGenreDialog(dialog) {
+export function renderGenreDialog(dialog: GenreDialog) {
     var filteredSections = Object.keys(dialog.genreDict).filter((section) =>
         dialog.genreDict[section].some(
             (genre) => genre.name.toLowerCase().includes(dialog.searchText.toLowerCase()) || dialog.genreDict[section].length == 0
@@ -55,7 +55,7 @@ export function renderGenreDialog(dialog) {
  * @param {GenreModel[]} genres
  * @param {GenreDialog} dialog
  */
-function renderGenreSection(sectionName, genres, dialog) {
+function renderGenreSection(sectionName: string, genres: GenreModel[], dialog: GenreDialog) {
     return html`<div class="genre-section">
         <div class="section-title">${sectionName}</div>
         <div class="genre-list">
@@ -73,7 +73,7 @@ function renderGenreSection(sectionName, genres, dialog) {
  * @param {GenreModel} genre
  * @param {GenreDialog} genreDialog
  */
-function renderGenre(genre, genreDialog) {
+function renderGenre(genre: GenreModel, genreDialog: GenreDialog) {
     return html`<tri-value-checkbox
         .allowThreeValues="${genreDialog.options.allowThreeValues}"
         @valueChanged="${(e) => genreDialog.handleGenreSelection(e.detail, genre)}"

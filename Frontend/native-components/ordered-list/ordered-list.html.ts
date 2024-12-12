@@ -4,7 +4,7 @@ import { OrderedList } from './ordered-list';
 /**
  * @param { OrderedList } list
  */
-export function renderOrderedList(list) {
+export function renderOrderedList(list: OrderedList) {
     return html`
         <div id="list" @dragleave="${list.handleDragLeave}">
             ${list.items.map(

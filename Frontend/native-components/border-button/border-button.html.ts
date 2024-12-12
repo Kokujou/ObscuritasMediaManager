@@ -4,7 +4,7 @@ import { BorderButton } from './border-button';
 /**
  * @param {BorderButton} borderButton
  */
-export function renderBorderButton(borderButton) {
+export function renderBorderButton(borderButton: BorderButton) {
     return html`
         <div id="button-container">
             <div class="top left border"></div>

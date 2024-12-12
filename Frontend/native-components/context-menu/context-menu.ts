@@ -23,7 +23,7 @@ export class ContextMenu extends LitElementBase {
      * @param {ContextMenuItem[]} items
      * @param {PointerEvent | MouseEvent} pointerEvent
      */
-    static popup(items, pointerEvent) {
+    static popup(items: ContextMenuItem[], pointerEvent: PointerEvent | MouseEvent) {
         if (ContextMenu.instance) ContextMenu.instance.remove();
         var menu = new ContextMenu();
         pointerEvent.stopPropagation();
@@ -65,7 +65,7 @@ export class ContextMenu extends LitElementBase {
     /**
      * @param {ContextMenuItem} item
      */
-    triggerAction(item) {
+    triggerAction(item: ContextMenuItem) {
         item.action();
         this.remove();
     }

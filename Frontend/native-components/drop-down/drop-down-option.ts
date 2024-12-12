@@ -11,7 +11,7 @@ export class DropDownOption {
      * @template T
      * @param {Partial<DropDownOption<T>> & {value: T}} obj
      */
-    static create(obj) {
+    static create(obj: Partial<DropDownOption<T>> & { value: T; }) {
         var newObj = new DropDownOption(obj.value);
         newObj = Object.assign(newObj, obj);
         return newObj;
@@ -22,7 +22,7 @@ export class DropDownOption {
      * @param {T[]} values
      * @param {T} defaultValue
      */
-    static createSimpleArray(values, defaultValue) {
+    static createSimpleArray(values: T[], defaultValue: T) {
         return values.map((key) =>
             DropDownOption.create({
                 value: key,
@@ -35,7 +35,7 @@ export class DropDownOption {
     /**
      * @param {T} value
      */
-    constructor(value) {
+    constructor(value: T) {
         this.value = value;
     }
 }

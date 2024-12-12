@@ -4,7 +4,7 @@ import { MessageSnackbar } from './message-snackbar';
 /**
  * @param { MessageSnackbar } messageSnackbar
  */
-export function renderMessageSnackbar(messageSnackbar) {
+export function renderMessageSnackbar(messageSnackbar: MessageSnackbar) {
     return html`
         <div id="message-text">${messageSnackbar.message}</div>
         <div id="x-button" @click="${() => messageSnackbar.dismiss()}">&times;</div>

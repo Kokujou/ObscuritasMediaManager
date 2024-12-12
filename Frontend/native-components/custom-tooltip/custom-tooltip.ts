@@ -27,7 +27,7 @@ export class CustomTooltip extends LitElementBase {
      * @param {Event} pointerEvent
      * @param { 'top' | 'bottom' | 'right' | 'left'  } anchor
      */
-    static show(text, pointerEvent, anchor = 'top') {
+    static show(text: string, pointerEvent: Event, anchor: 'top' | 'bottom' | 'right' | 'left' = 'top') {
         if (!text || text.length < 2) return;
         text = text[0].toUpperCase() + text.substring(1);
         if (CustomTooltip.currentInstance && CustomTooltip.currentInstance.target == pointerEvent.target) {

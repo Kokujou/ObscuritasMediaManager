@@ -89,7 +89,7 @@ export class AudioService {
     /**
      * @param {string} path
      */
-    static async changeTrack(path) {
+    static async changeTrack(path: string) {
         if (!path) return;
 
         try {
@@ -103,7 +103,7 @@ export class AudioService {
     /**
      * @param {string} trackPath
      */
-    static async play(trackPath) {
+    static async play(trackPath: string) {
         try {
             if (AudioService.currentTrackPath != trackPath) await this.changeTrack(trackPath);
             await ClientInteropService.sendCommand({ command: InteropCommand.ResumeTrack, payload: null });
@@ -132,7 +132,7 @@ export class AudioService {
     /**
      * @param {number} value
      */
-    static async changeVolume(value) {
+    static async changeVolume(value: number) {
         try {
             if (!value) console.trace();
             await ClientInteropService.sendCommand({ command: InteropCommand.ChangeTrackVolume, payload: value });
@@ -144,7 +144,7 @@ export class AudioService {
     /**
      * @param {number} value
      */
-    static async changePosition(value) {
+    static async changePosition(value: number) {
         try {
             await ClientInteropService.sendCommand({ command: InteropCommand.ChangeTrackPosition, payload: value });
         } catch (err) {

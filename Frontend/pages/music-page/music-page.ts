@@ -156,7 +156,7 @@ export class MusicPage extends LitElementBase {
     /**
      * @param {MusicModel} track
      */
-    async toggleMusic(track) {
+    async toggleMusic(track: MusicModel) {
         if (this.selectionMode || this.selectionModeUnset) return;
         await PlayMusicDialog.instance?.close();
 
@@ -186,7 +186,7 @@ export class MusicPage extends LitElementBase {
     /**
      * @param {MusicFilterOptions} filter
      */
-    updateFilter(filter) {
+    updateFilter(filter: MusicFilterOptions) {
         this.filter = filter;
         localStorage.setItem(`music.search`, JSON.stringify(this.filter));
         this.requestFullUpdate();
@@ -211,7 +211,7 @@ export class MusicPage extends LitElementBase {
      * @param {string} audioHash
      * @param {PointerEvent} event
      */
-    startSelectionModeTimer(audioHash, event) {
+    startSelectionModeTimer(audioHash: string, event: PointerEvent) {
         if (event.button != 0) return;
         if (this.selectionModeUnset) this.selectionModeUnset = false;
         if (this.selectionMode) return;
@@ -229,7 +229,7 @@ export class MusicPage extends LitElementBase {
      * @param {string} hash
      * @param {PointerEvent} event
      */
-    stopSelectionModeTimer(hash, event) {
+    stopSelectionModeTimer(hash: string, event: PointerEvent) {
         if (event.button != 0) return;
         if (this.selectionMode && !this.selectionModeSet) this.toggleTrackSelection(null, hash);
         this.selectionModeSet = false;
@@ -242,7 +242,7 @@ export class MusicPage extends LitElementBase {
      * @param {HTMLInputElement} input
      * @param {string} hash
      */
-    toggleTrackSelection(input, hash) {
+    toggleTrackSelection(input: HTMLInputElement, hash: string) {
         if ((!input || input.checked) && !this.selectedHashes.includes(hash)) this.selectedHashes.push(hash);
         else if (!input || !input.checked) this.selectedHashes = this.selectedHashes.filter((x) => x != hash);
         if (this.selectedHashes.length == 0) {
@@ -275,7 +275,7 @@ export class MusicPage extends LitElementBase {
      * @param {'local' | 'global'} mode
      * @param {MusicModel} track
      */
-    getTrackPath(mode, track) {
+    getTrackPath(mode: 'local' | 'global', track: MusicModel) {
         if (mode == 'local') return track.path;
         return `https://${location.hostname}/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
     }
@@ -284,7 +284,7 @@ export class MusicPage extends LitElementBase {
      * @param {'local' | 'global'} mode
      * @param {PlaylistModel} playlist
      */
-    async exportPlaylist(mode, playlist) {
+    async exportPlaylist(mode: 'local' | 'global', playlist: PlaylistModel) {
         var m3uString = '#EXTM3U\r\n';
         m3uString += playlist.tracks
             .map((track) => `#EXTINF:-1, ${track.displayName.replaceAll('\n', '')}\r\n${this.getTrackPath(mode, track)}`)
@@ -303,7 +303,7 @@ export class MusicPage extends LitElementBase {
     /**
      * @param {PlaylistModel} playlist
      */
-    async removePlaylist(playlist) {
+    async removePlaylist(playlist: PlaylistModel) {
         var accpeted = await DialogBase.show('Bist du sicher?', {
             content: `Bist du sicher, dass du die Playlist löschen möchtest?\r\n
                 Diese Aktion kann nicht rückgängig gemacht werden!`,
@@ -327,7 +327,7 @@ export class MusicPage extends LitElementBase {
     /**
      * @param {MusicModel} track
      */
-    async softDeleteTrack(track) {
+    async softDeleteTrack(track: MusicModel) {
         var trackHashes = [track.hash];
         if (this.selectionMode && this.selectedHashes.includes(track.hash)) {
             trackHashes = this.selectedHashes;
@@ -385,7 +385,7 @@ export class MusicPage extends LitElementBase {
     /**
      * @param {MusicModel} track
      */
-    async undeleteTrack(track) {
+    async undeleteTrack(track: MusicModel) {
         var trackHashes = [track.hash];
         if (this.selectionMode && this.selectedHashes.includes(track.hash)) trackHashes = this.selectedHashes;
 

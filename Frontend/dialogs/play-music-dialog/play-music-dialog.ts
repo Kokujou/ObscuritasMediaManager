@@ -22,7 +22,7 @@ export class PlayMusicDialog extends LitElementBase {
      * @param {number} initialVolume
      * @param {number} startPosition
      */
-    static show(track, initialVolume, startPosition) {
+    static show(track: MusicModel, initialVolume: number, startPosition: number) {
         if (
             AudioService.paused ||
             AudioService.trackPosition.current() <= 0 ||
@@ -50,7 +50,7 @@ export class PlayMusicDialog extends LitElementBase {
      * @param {number} initialVolume
      * @param {number} startPosition
      */
-    async reinitialize(track, initialVolume, startPosition) {
+    async reinitialize(track: MusicModel, initialVolume: number, startPosition: number) {
         await AudioService.changeTrack(track?.path);
         await AudioService.changeVolume(initialVolume);
         await AudioService.changePosition(startPosition);

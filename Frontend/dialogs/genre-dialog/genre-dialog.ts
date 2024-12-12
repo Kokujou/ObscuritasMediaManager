@@ -40,7 +40,7 @@ export class GenreDialog extends LitElementBase {
      *
      * @param {MediaGenreModel[] | FilterEntry<string>} genresOrFilter
      */
-    static async startShowingWithGenres(genresOrFilter) {
+    static async startShowingWithGenres(genresOrFilter: MediaGenreModel[] | FilterEntry<string>) {
         var genres = await GenreService.getAll();
 
         /** @type {Partial<GenreDialogOptions>} */ var options = { genres, allowAdd: true, allowRemove: true };
@@ -65,7 +65,7 @@ export class GenreDialog extends LitElementBase {
 
         genreDialog.addEventListener(
             'add-genre',
-            /** @param {CustomEvent<{name, sectionName}>} e */ async (e) => {
+            /** @param {CustomEvent<{name, sectionName}>} e */ async ((e: CustomEvent<{ name; sectionName; }>)) => {
                 try {
                     var mediaGenres = /** @type {MediaGenreModel[]} */ genreDialog.options.genres;
                     var sectionCategory = mediaGenres.find((x) => x.sectionName == e.detail.sectionName).section;
@@ -82,7 +82,7 @@ export class GenreDialog extends LitElementBase {
         );
         genreDialog.addEventListener(
             'remove-genre',
-            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
+            /** @param {CustomEvent<GenreModel>} e */ async ((e: CustomEvent<GenreModel>)) => {
                 try {
                     await GenreService.removeGenre(e.detail.id);
                     var genres = await GenreService.getAll();
@@ -102,9 +102,9 @@ export class GenreDialog extends LitElementBase {
     /**
      * @param {InstrumentModel[] | FilterEntry<string>} instrumentsOrFilter
      */
-    static async startShowingWithInstruments(instrumentsOrFilter) {
+    static async startShowingWithInstruments(instrumentsOrFilter: InstrumentModel[] | FilterEntry<string>) {
         /** @param {InstrumentModel} item */
-        var instrumentToGenre = (item, index) => new GenreModel({ id: `${index}`, name: item.name, sectionName: item.type });
+        var instrumentToGenre = (item: InstrumentModel, index) => new GenreModel({ id: `${index}`, name: item.name, sectionName: item.type });
         var genres = Session.instruments.current().map(instrumentToGenre);
 
         /** @type {Partial<GenreDialogOptions>} */ var options = { genres, allowAdd: true, allowRemove: true };
@@ -122,7 +122,7 @@ export class GenreDialog extends LitElementBase {
 
         dialog.addEventListener(
             'add-genre',
-            /** @param {CustomEvent<MediaGenreModel>} e */ async (e) => {
+            /** @param {CustomEvent<MediaGenreModel>} e */ async ((e: CustomEvent<MediaGenreModel>)) => {
                 await MusicService.addInstrument(/** @type {InstrumentType} */ e.detail.sectionName, e.detail.name);
                 dialog.options.genres.push(
                     new MediaGenreModel({
@@ -138,7 +138,7 @@ export class GenreDialog extends LitElementBase {
         );
         dialog.addEventListener(
             'remove-genre',
-            /** @param {CustomEvent<GenreModel>} e */ async (e) => {
+            /** @param {CustomEvent<GenreModel>} e */ async ((e: CustomEvent<GenreModel>)) => {
                 await MusicService.removeInstrument(/** @type {InstrumentType} */ e.detail.sectionName, e.detail.name);
                 dialog.options.genres = dialog.options.genres.filter((x) => x.name != e.detail.name);
                 Session.instruments.next(await MusicService.getInstruments());
@@ -152,7 +152,7 @@ export class GenreDialog extends LitElementBase {
     /**
      * @param {Partial<GenreDialogOptions>} options
      */
-    static show(options) {
+    static show(options: Partial<GenreDialogOptions>) {
         var dialog = new GenreDialog();
 
         Object.assign(dialog.options, options);
@@ -200,7 +200,7 @@ export class GenreDialog extends LitElementBase {
      * @param {{value: CheckboxState}} eventDetail
      * @param {GenreModel} genre
      */
-    handleGenreSelection(eventDetail, genre) {
+    handleGenreSelection(eventDetail: { value: CheckboxState; }, genre: GenreModel) {
         switch (eventDetail.value) {
             case CheckboxState.Forbid:
                 this.options.forbiddenGenres.push(genre);
@@ -225,7 +225,7 @@ export class GenreDialog extends LitElementBase {
     /**
      * @param {Event} e
      */
-    accept(e) {
+    accept(e: Event) {
         e.stopPropagation();
         var result = new GenreDialogResult();
         result.acceptedGenres = this.options.allowedGenres;
@@ -236,7 +236,7 @@ export class GenreDialog extends LitElementBase {
     /**
      * @param {GenreModel} genre
      */
-    getValue(genre) {
+    getValue(genre: GenreModel) {
         if (this.options.allowedGenres.some((x) => x.name == genre.name)) return CheckboxState.Require;
         if (this.options.forbiddenGenres.some((x) => x.name == genre.name)) return CheckboxState.Forbid;
         return CheckboxState.Ignore;
@@ -245,7 +245,7 @@ export class GenreDialog extends LitElementBase {
     /**
      * @param {string} sectionName
      */
-    async addGenre(sectionName) {
+    async addGenre(sectionName: string) {
         var name = await InputDialog.show('Bitte Namen eingeben:');
         if (!name) return;
         this.dispatchEvent(new CustomEvent('add-genre', { detail: { name, sectionName } }));
@@ -255,7 +255,7 @@ export class GenreDialog extends LitElementBase {
      * @param {Event} event
      * @param {GenreModel} genre
      */
-    async removeGenre(event, genre) {
+    async removeGenre(event: Event, genre: GenreModel) {
         this.dispatchEvent(new CustomEvent('remove-genre', { detail: genre }));
         event.stopPropagation();
     }

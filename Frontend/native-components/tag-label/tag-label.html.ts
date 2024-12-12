@@ -4,7 +4,7 @@ import { TagLabel } from './tag-label';
 /**
  * @param {TagLabel} tagLabel
  */
-export function renderTagLabel(tagLabel) {
+export function renderTagLabel(tagLabel: TagLabel) {
     return html`
         <div id="label-container" @click="${(e) => e.stopPropagation()}">
             ${tagLabel.createNew ? renderNewLabelForm(tagLabel) : html`<div id="label-text">${tagLabel.text}</div>`}
@@ -16,7 +16,7 @@ export function renderTagLabel(tagLabel) {
 /**
  * @param {TagLabel} tagLabel
  */
-function renderNewLabelForm(tagLabel) {
+function renderNewLabelForm(tagLabel: TagLabel) {
     return html`<form id="new-label-form" action="javascript:void(0)">
         <input
             id="new-tag-input"

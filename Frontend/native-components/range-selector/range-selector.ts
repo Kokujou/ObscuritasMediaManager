@@ -79,7 +79,7 @@ export class RangeSelector extends LitElementBase {
     /**
      * @param {MouseEvent} event
      */
-    changeLeftByMouse(event) {
+    changeLeftByMouse(event: MouseEvent) {
         var targetValue = this.getValueForMousePosition(event);
         if (targetValue < this.right) this.left = targetValue;
     }
@@ -87,7 +87,7 @@ export class RangeSelector extends LitElementBase {
     /**
      * @param {MouseEvent} event
      */
-    changeRightByMouse(event) {
+    changeRightByMouse(event: MouseEvent) {
         var targetValue = this.getValueForMousePosition(event);
         if (this.left < targetValue) this.right = targetValue;
     }
@@ -95,7 +95,7 @@ export class RangeSelector extends LitElementBase {
     /**
      * @param {MouseEvent} event
      */
-    getValueForMousePosition(event) {
+    getValueForMousePosition(event: MouseEvent) {
         /** @type {HTMLElement} */ var target = this.shadowRoot!.querySelector('#container');
         var rect = target.getBoundingClientRect();
         var rangeAvailable = (this.max - this.min) / 100;

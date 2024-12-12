@@ -6,7 +6,7 @@ import { LyricsDialog } from './lyrics-dialog';
 /**
  * @param { LyricsDialog } dialog
  */
-export function renderAudioSubtitleDialog(dialog) {
+export function renderAudioSubtitleDialog(dialog: LyricsDialog) {
     return html`
         <div id="lyrics-wrapper" @click="${(e) => e.stopPropagation()}">
             <div id="lyrics-content-wrapper">

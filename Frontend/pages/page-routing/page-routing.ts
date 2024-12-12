@@ -83,7 +83,7 @@ export class PageRouting extends LitElementBase {
      * @param {string} newValue
      * @param {string} oldValue
      */
-    async switchPage(newValue, oldValue) {
+    async switchPage(newValue: string, oldValue: string) {
         // @ts-ignore
         if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`))
             this.classList.add(`current-page-${newValue}`);

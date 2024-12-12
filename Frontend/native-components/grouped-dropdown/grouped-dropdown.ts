@@ -70,7 +70,7 @@ export class GroupedDropdown extends LitElementBase {
     /**
      * @param {Map<string,any>} _changedProperties
      */
-    updated(_changedProperties) {
+    updated(_changedProperties: Map<string, any>) {
         super.updated(_changedProperties);
         if (_changedProperties.has('result')) {
             this.dispatchEvent(new CustomEvent('selectionChange', { detail: this.result }));

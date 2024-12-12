@@ -48,7 +48,7 @@ export class MaintenanceService {
 
             selectionDialog.addEventListener(
                 'accept',
-                /** @param {CustomEvent<{selected:string[]}>} e */ async (e) => {
+                /** @param {CustomEvent<{selected:string[]}>} e */ async ((e: CustomEvent<{ selected: string[]; }>)) => {
                     var accepted = await DialogBase.show('Achtung!', {
                         content: `Die ausgewählten Einträge werden vollständig sowohl aus der Datenbank als auch vom Dateisystem entfernt. 
                         Dieser Vorgang kann nicht rückgängig gemacht werden. 

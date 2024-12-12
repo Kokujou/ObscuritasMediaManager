@@ -5,7 +5,7 @@ export function minmax(value, min, max) {
 }
 
 /** @param {string} color */
-export function colorCodeToNumber(color) {
+export function colorCodeToNumber(color: string) {
     return Number.parseInt(color.replace('#', '0x'));
 }
 
@@ -14,7 +14,7 @@ export function colorCodeToNumber(color) {
  * @param {number} number
  * @param {number} digits
  */
-export function decToHex(number, digits) {
+export function decToHex(number: number, digits: number) {
     // Konvertiere die Dezimalzahl in eine Hexadezimalzahl
     const hex = number.toString(16);
 

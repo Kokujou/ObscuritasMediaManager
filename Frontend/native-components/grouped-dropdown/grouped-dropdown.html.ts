@@ -4,7 +4,7 @@ import { GroupedDropdown } from './grouped-dropdown';
 /**
  * @param { GroupedDropdown } dropdown
  */
-export function renderGroupedDropdown(dropdown) {
+export function renderGroupedDropdown(dropdown: GroupedDropdown) {
     var maxHeight = dropdown.maxDisplayDepth * 40;
 
     return html`
@@ -44,7 +44,7 @@ export function renderGroupedDropdown(dropdown) {
  * @param {string[]} values
  * @returns
  */
-function renderDropdownSection(dropdown, section, values) {
+function renderDropdownSection(dropdown: GroupedDropdown, section: string, values: string[]) {
     return html` <div class="dropdown-section">
         <div class="section-title">${section}</div>
         ${values.map((value) => renderDropDownOption(dropdown, { category: section, value }))}
@@ -55,7 +55,7 @@ function renderDropdownSection(dropdown, section, values) {
  * @param {GroupedDropdown} dropdown
  * @param {import('./grouped-dropdown').GroupedDropdownResult} value
  */
-function renderDropDownOption(dropdown, value) {
+function renderDropDownOption(dropdown: GroupedDropdown, value: import('./grouped-dropdown').GroupedDropdownResult) {
     return html`
         <div
             ?selected="${dropdown.result.value == value.value}"

@@ -11,7 +11,7 @@ export function waitForAnimation() {
  * @param {()=> void} action
  * @param {AbortSignal} signal
  */
-export function setAbortableInterval(duration, action, signal) {
+export function setAbortableInterval(duration: number, action: () => void, signal: AbortSignal) {
     let interval = setInterval(action, duration);
     signal.onabort = () => clearInterval(interval);
 }

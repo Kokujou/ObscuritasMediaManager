@@ -22,7 +22,7 @@ export function registerContentWarnings() {
 /**
  * @param {ContentWarning} warning
  */
-function getContentWarningIconPath(warning) {
+function getContentWarningIconPath(warning: ContentWarning) {
     switch (warning) {
         case ContentWarning.Violence:
             return './resources/icons/content-warnings/conflict.png';

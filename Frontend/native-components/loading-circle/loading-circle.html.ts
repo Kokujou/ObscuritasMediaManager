@@ -4,7 +4,7 @@ import { LoadingCircle } from './loading-circle';
 /**
  * @param { LoadingCircle } loadingCircle
  */
-export function renderLoadingCircle(loadingCircle) {
+export function renderLoadingCircle(loadingCircle: LoadingCircle) {
     return html`
         <svg width="100%" height="100%">
             <g>

@@ -5,7 +5,7 @@ import { PageRouting } from './page-routing';
 /**
  * @param {PageRouting} routing
  */
-export function renderPageRouting(routing) {
+export function renderPageRouting(routing: PageRouting) {
     var scaleX = getScaleFactorX();
     var scaleY = getScaleFactorY();
     return html`<style>

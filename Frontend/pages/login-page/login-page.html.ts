@@ -4,7 +4,7 @@ import { LoginPage } from './login-page';
 /**
  * @param { LoginPage } loginPage
  */
-export function renderLoginPage(loginPage) {
+export function renderLoginPage(loginPage: LoginPage) {
     return html`
         <div id="page-container">
             <form id="login-form" action="javascript:void(0)" @submit="${() => loginPage.login()}">

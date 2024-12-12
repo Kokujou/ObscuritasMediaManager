@@ -4,7 +4,7 @@ import { RangeSelector } from './range-selector';
 /**
  * @param { RangeSelector } selector
  */
-export function renderRangeSelector(selector) {
+export function renderRangeSelector(selector: RangeSelector) {
     return html`
         <div id="container">
             <div id="range-graph">

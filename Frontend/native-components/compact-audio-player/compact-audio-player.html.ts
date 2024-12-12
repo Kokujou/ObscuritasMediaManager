@@ -6,7 +6,7 @@ import { CompactAudioPlayer } from './compact-audio-player';
 /**
  * @param { CompactAudioPlayer } player
  */
-export function renderCompactAudioPlayer(player) {
+export function renderCompactAudioPlayer(player: CompactAudioPlayer) {
     return html`
         <div
             id="toggle-button"

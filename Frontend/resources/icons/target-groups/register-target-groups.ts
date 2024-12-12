@@ -24,7 +24,7 @@ export function registerTargetGroups() {
 /**
  * @param {TargetGroup} group
  */
-function getTargetGroupIconPath(group) {
+function getTargetGroupIconPath(group: TargetGroup) {
     switch (group) {
         case TargetGroup.Children:
             return './resources/icons/target-groups/children.png';

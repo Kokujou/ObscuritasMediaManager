@@ -4,7 +4,7 @@ export class Enum {
      * @param {TEnum} enumType
      * @param {(keyof TEnum)[]} excludes
      */
-    static nextValue(enumType, currentValue, ...excludes) {
+    static nextValue(enumType: TEnum, currentValue, ...excludes: (keyof TEnum)[]) {
         var entries = Object.entries(enumType).filter((x) => !excludes.includes(x[0]));
         if (!currentValue) return entries[0][1];
 

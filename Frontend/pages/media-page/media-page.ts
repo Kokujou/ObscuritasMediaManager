@@ -98,7 +98,7 @@ export class MediaPage extends LitElementBase {
      * @param {MediaCategory} category
      * @param {Language} language
      */
-    async importFolder(category, language) {
+    async importFolder(category: MediaCategory, language: Language) {
         try {
             await MediaImportService.importMediaCollections(category, language);
             Session.mediaList.next(await MediaService.getAll());
@@ -148,7 +148,7 @@ export class MediaPage extends LitElementBase {
     /**
      * @param {PointerEvent} event
      */
-    async requestImportTypeSelection(event) {
+    async requestImportTypeSelection(event: PointerEvent) {
         const tooltipItems = [
             { text: 'Animes Ger Dub', category: MediaCategory.AnimeSeries, language: Language.German },
             { text: 'Animes Ger Sub', category: MediaCategory.AnimeSeries, language: Language.Japanese },
@@ -170,7 +170,7 @@ export class MediaPage extends LitElementBase {
      * @param {T} property
      * @param {MediaModel[T]} value
      */
-    async changePropertyOf(media, property, value) {
+    async changePropertyOf(media: MediaModel, property: T, value: MediaModel[T]) {
         try {
             if (typeof media[property] != typeof value) return;
 
@@ -195,7 +195,7 @@ export class MediaPage extends LitElementBase {
     /**
      * @param {MediaModel} media
      */
-    async hardDelete(media) {
+    async hardDelete(media: MediaModel) {
         try {
             var confirmed = await DialogBase.show('Achtung', {
                 content:
@@ -215,7 +215,7 @@ export class MediaPage extends LitElementBase {
     /**
      * @param {MediaModel} media
      */
-    async fullDelete(media) {
+    async fullDelete(media: MediaModel) {
         try {
             var confirmed = await DialogBase.show('ACHTUNG - NICHT RÜCKGÄNGIG ZU MACHEN!', {
                 content:

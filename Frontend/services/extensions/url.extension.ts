@@ -3,7 +3,7 @@ import { Session } from '../../data/session';
 import { pascalToKeabCase } from './convention.extension';
 import { setFavicon } from './style.extensions';
 
-/** @param {string} query */ export function getQueryValue(query) {
+/** @param {string} query */ export function getQueryValue(query: string) {
     var queries = location.search.substr(1).split('&');
     var desiredQuery = queries.find((x) => x.split('=')[0] == query);
 
@@ -22,7 +22,7 @@ import { setFavicon } from './style.extensions';
  * @param {T} target
  * @param {Partial<Pick<U, NonMethodKeys<U>>>} [params]
  */
-export function changePage(target, params = {}, reflectInHistory = true) {
+export function changePage(target: T, params: Partial<Pick<U, NonMethodKeys<U>>> = {}, reflectInHistory = true) {
     setFavicon('');
     var newUrl = new URL(location.href);
     newUrl.search = '';
@@ -51,7 +51,7 @@ export function queryToObject() {
 }
 
 /** @param  {import('../../custom-elements').Page} component */
-export function getPageName(component) {
+export function getPageName(component: import('../../custom-elements').Page) {
     var componentName = pascalToKeabCase(component.name);
     return componentName.replace('-page', '');
 }

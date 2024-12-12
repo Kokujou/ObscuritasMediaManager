@@ -4,7 +4,7 @@ import { SelectOptionsDialog } from './select-options-dialog';
 /**
  * @param { SelectOptionsDialog } dialog
  */
-export function renderSelectOptionsDialog(dialog) {
+export function renderSelectOptionsDialog(dialog: SelectOptionsDialog) {
     return html`
         <dialog-base
             showBorder

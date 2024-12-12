@@ -22,7 +22,7 @@ export class OrderedList extends LitElementBase {
     /**
      * @param {Event} eventTarget
      */
-    static getRowToDropOn(eventTarget) {
+    static getRowToDropOn(eventTarget: Event) {
         // @ts-ignore
         var targetElement = eventTarget.originalTarget;
         if (targetElement.draggable) return targetElement;
@@ -115,7 +115,7 @@ export class OrderedList extends LitElementBase {
      * @param {MouseEvent} event
      * @param {number} index
      */
-    handleRowClick(event, index) {
+    handleRowClick(event: MouseEvent, index: number) {
         var newValues = [index];
 
         if (event.shiftKey) newValues = Array.from(this.getRangeBetween(this.lastIndex, index));
@@ -131,7 +131,7 @@ export class OrderedList extends LitElementBase {
      * @param {number} a
      * @param {number} b
      */
-    *getRangeBetween(a, b) {
+    *getRangeBetween(a: number, b: number) {
         var add = 1;
         if (a > b) add = -1;
         for (var current = a; current != b; current += add) yield current;
@@ -141,7 +141,7 @@ export class OrderedList extends LitElementBase {
     /**
      * @param {DragEvent} event
      */
-    handleDragLeave(event) {
+    handleDragLeave(event: DragEvent) {
         if (!this.dragged) return;
         event.stopPropagation();
     }

@@ -21,7 +21,7 @@ export class WarningBanner extends LitElementBase {
     /**
      * @param {TemplateResult} inner
      */
-    static spawn(inner) {
+    static spawn(inner: TemplateResult) {
         if (this.instance) return;
         var banner = new WarningBanner();
         banner.inner = inner;

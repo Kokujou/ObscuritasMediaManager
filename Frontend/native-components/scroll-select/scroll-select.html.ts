@@ -4,7 +4,7 @@ import { ScrollSelect } from './scroll-select';
 /**
  * @param {ScrollSelect} scrollSelect
  */
-export function renderScrollSelect(scrollSelect) {
+export function renderScrollSelect(scrollSelect: ScrollSelect) {
     return html`
         <div id="scroll-container" @pointerdown="${() => scrollSelect.startDragScrolling()}">
             <div id="scroll-items">

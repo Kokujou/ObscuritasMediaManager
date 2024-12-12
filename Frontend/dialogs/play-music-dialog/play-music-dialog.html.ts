@@ -7,7 +7,7 @@ import { PlayMusicDialog } from './play-music-dialog';
 /**
  * @param { PlayMusicDialog } dialog
  */
-export function renderPlayMusicDialog(dialog) {
+export function renderPlayMusicDialog(dialog: PlayMusicDialog) {
     return html`
         <style>
             :host {

@@ -44,7 +44,7 @@ export class MediaImportService {
      * @param {MediaCategory} category
      * @param {Language} language
      */
-    static importMediaCollections(category, language) {
+    static importMediaCollections(category: MediaCategory, language: Language) {
         return new Promise(async (resolve) => {
             /** @type {string[]} */ var mediaPaths = await ClientInteropService.executeQuery({
                 query: InteropQuery.RequestSubFolders,
@@ -89,7 +89,7 @@ export class MediaImportService {
     /**
      * @param {Response} response
      */
-    static async *fetchAndProcessData(response) {
+    static async *fetchAndProcessData(response: Response) {
         response.body.getReader({ mode: 'byob' });
         const reader = response.body.getReader();
         const decoder = new TextDecoder('utf-8');

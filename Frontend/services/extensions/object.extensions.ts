@@ -4,7 +4,7 @@
  * @param {any} value
  * @returns {keyof T}
  */
-export function getKeyFor(target, value) {
+export function getKeyFor(target: T, value: any) {
     return /** @type {(keyof T)[]} */ (Object.keys(target)).find((key) => target[key] == value);
 }
 
@@ -13,6 +13,6 @@ export function getKeyFor(target, value) {
  * @param {T} object
  * @param {keyof T["prototype"] & string} property
  */
-export function nameof(object, property) {
+export function nameof(object: T, property: keyof T["prototype"] & string) {
     return property;
 }

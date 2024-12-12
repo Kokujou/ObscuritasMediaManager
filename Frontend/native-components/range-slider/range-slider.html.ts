@@ -4,7 +4,7 @@ import { RangeSlider } from './range-slider';
 /**
  * @param {RangeSlider} slider
  */
-export function renderRangeSlider(slider) {
+export function renderRangeSlider(slider: RangeSlider) {
     return html`
         <input
             id="slider"

@@ -7,7 +7,7 @@ import { EditPlaylistDialog } from './edit-playlist-dialog';
 /**
  * @param { EditPlaylistDialog } dialog
  */
-export function renderEditPlaylistDialog(dialog) {
+export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
     return html`
         <dialog-base
             showBorder

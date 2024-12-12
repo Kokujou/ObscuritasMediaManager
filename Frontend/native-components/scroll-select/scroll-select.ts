@@ -31,7 +31,7 @@ export class ScrollSelect extends LitElementBase {
 
     get scrollChildren() {
         return [...this.shadowRoot!.querySelectorAll('#item-container > *:not(.inner-space)')].map(
-            /** @param {HTMLElement} x */ (x) => x
+            /** @param {HTMLElement} x */ (x: HTMLElement) => x
         );
     }
 
@@ -58,7 +58,7 @@ export class ScrollSelect extends LitElementBase {
     /**
      * @param {Map<any, any>} _changedProperties
      */
-    updated(_changedProperties) {
+    updated(_changedProperties: Map<any, any>) {
         super.updated(_changedProperties);
 
         if (!_changedProperties.has('value') || !this.value) return;
@@ -100,7 +100,7 @@ export class ScrollSelect extends LitElementBase {
     /**
      * @param {PointerEvent} e
      */
-    onPointerMove(e) {
+    onPointerMove(e: PointerEvent) {
         if (!this.mouseDown) return;
         var deltaY = e.movementY;
         this.mouseStartY += deltaY * 3;

@@ -16,7 +16,7 @@ export const viewportHeight = 900;
  * @param {HTMLElement} parent
  * @param {HTMLElement} elementContainer
  */
-export function scrollIntoParentViewX(element, elementContainer, parent) {
+export function scrollIntoParentViewX(element: HTMLElement, elementContainer: HTMLElement, parent: HTMLElement) {
     var targetLeft = element.offsetLeft + elementContainer.offsetLeft - parent.offsetWidth / 2 - element.offsetWidth / 2;
     elementContainer.style.transform = `translateX(${-targetLeft}px)`;
 }
@@ -26,7 +26,7 @@ export function scrollIntoParentViewX(element, elementContainer, parent) {
  * @param {HTMLElement} parent
  * @param {HTMLElement} elementContainer
  */
-export function scrollIntoParentViewY(element, elementContainer, parent, max = null, min = null) {
+export function scrollIntoParentViewY(element: HTMLElement, elementContainer: HTMLElement, parent: HTMLElement, max = null, min = null) {
     var targetTop = element.offsetTop + elementContainer.offsetTop - parent.offsetHeight / 2 + element.offsetHeight / 2;
     elementContainer.style.transform = `translateY(${-targetTop}px)`;
 }
@@ -36,7 +36,7 @@ export function scrollIntoParentViewY(element, elementContainer, parent, max = n
  * @param {HTMLElement} parent
  * @param {HTMLElement} elementContainer
  */
-export function getTargetScrollPosition(element, elementContainer, parent) {
+export function getTargetScrollPosition(element: HTMLElement, elementContainer: HTMLElement, parent: HTMLElement) {
     var targetLeft = element.offsetLeft + elementContainer.offsetLeft - parent.offsetWidth / 2 - element.offsetWidth / 2;
     var targetTop = element.offsetTop + elementContainer.offsetTop - parent.offsetHeight / 2 + element.offsetHeight / 2;
     return { left: -targetLeft, top: -targetTop };
@@ -46,7 +46,7 @@ export function getTargetScrollPosition(element, elementContainer, parent) {
  * @param {boolean} selectFolders
  * @returns {Promise<File[]>}
  */
-export function openFileDialog(selectFolders = false) {
+export function openFileDialog(selectFolders: boolean = false) {
     return new Promise((resolve) => {
         /** @type {HTMLInputElement} */ var fileInput = document.createElement('input');
         fileInput.type = 'file';
@@ -64,7 +64,7 @@ const focusableElements = ['a', 'input', 'button'];
 /**
  * @param {Element} currentElement
  */
-export function getNextFocusableElement(currentElement) {
+export function getNextFocusableElement(currentElement: Element) {
     var allElements = getAllElementsRecurse(document.body);
     var elementChildren = [
         ...(currentElement.querySelectorAll('*') ?? []),
@@ -80,7 +80,7 @@ export function getNextFocusableElement(currentElement) {
  * @param {HTMLElement} start
  * @param {HTMLElement[]} array
  */
-export function getAllElementsRecurse(start, array = []) {
+export function getAllElementsRecurse(start: HTMLElement, array: HTMLElement[] = []) {
     array.push(start);
     var children = [...(start.children ?? []), ...(start.shadowRoot?.children ?? [])];
     for (var child of children) getAllElementsRecurse(/** @type {HTMLElement} */ child, array);
@@ -90,7 +90,7 @@ export function getAllElementsRecurse(start, array = []) {
 /**
  * @param {HTMLElement} element
  */
-export function cloneElementAsFixed(element) {
+export function cloneElementAsFixed(element: HTMLElement) {
     var clonedElement = /** @type {HTMLElement} */ element.cloneNode(true);
     var elementBoundingRect = element.getBoundingClientRect();
 
@@ -106,7 +106,7 @@ export function cloneElementAsFixed(element) {
  * @param {number} cursorY
  * @param {NodeListOf<Element>} elements
  */
-export function findElementIndexMatchingCursorY(cursorY, elements) {
+export function findElementIndexMatchingCursorY(cursorY: number, elements: NodeListOf<Element>) {
     for (const [index, element] of elements.entries()) {
         var boundingRect = element.getBoundingClientRect();
         if (index == 0 && cursorY < boundingRect.top) return 0;

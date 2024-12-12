@@ -20,7 +20,7 @@ export class SelectOptionsDialog extends LitElementBase {
     /**
      * @param {Object.<string,TemplateResult | string>} options
      */
-    static show(options, multiselect = true) {
+    static show(options: { [s: string]: TemplateResult | string; }, multiselect = true) {
         var dialog = new SelectOptionsDialog();
         dialog.options = options;
         dialog.multiselect = multiselect;
@@ -36,7 +36,7 @@ export class SelectOptionsDialog extends LitElementBase {
      * @param {()=>boolean} isComplete
      * @returns
      */
-    static startShowing(isComplete, multiselect = true) {
+    static startShowing(isComplete: () => boolean, multiselect = true) {
         var dialog = new SelectOptionsDialog();
         dialog.options = {};
         dialog.multiselect = multiselect;
@@ -55,7 +55,7 @@ export class SelectOptionsDialog extends LitElementBase {
     }
 
     /** @param {Event} e */
-    accept(e) {
+    accept(e: Event) {
         e.stopPropagation();
         /** @type {NodeListOf<HTMLInputElement>} */ var checkedInputs = this.shadowRoot!.querySelectorAll('input:checked');
         var selectedIds = [];
@@ -68,7 +68,7 @@ export class SelectOptionsDialog extends LitElementBase {
      * @param {string} key
      * @param {TemplateResult | string} value
      */
-    addEntry(key, value) {
+    addEntry(key: string, value: TemplateResult | string) {
         this.options[key] = value;
         this.requestFullUpdate();
     }

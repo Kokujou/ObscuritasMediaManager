@@ -12,7 +12,7 @@ import { MediaDetailPage } from './media-detail-page';
 /**
  * @param {MediaDetailPage} detailPage
  */
-export function renderMediaDetailPage(detailPage) {
+export function renderMediaDetailPage(detailPage: MediaDetailPage) {
     return html`
         <img
             id="dummy-image"
@@ -315,7 +315,7 @@ export function renderMediaDetailPage(detailPage) {
 /**
  * @param {MediaDetailPage} page
  */
-function renderGenreSection(page) {
+function renderGenreSection(page: MediaDetailPage) {
     return html`<div class="property-entry genre-entry">
         <div class="property-name">Genres:</div>
         <div class="property-value">

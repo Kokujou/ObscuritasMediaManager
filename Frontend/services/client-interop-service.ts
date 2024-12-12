@@ -21,7 +21,7 @@ export class ClientInteropService {
     /**
      * @param {Omit<InteropCommandRequest, 'ticks'>} command
      */
-    static sendCommand(command) {
+    static sendCommand(command: Omit<InteropCommandRequest, 'ticks'>) {
         if (this.socket?.readyState != WebSocket.OPEN) {
             console.warn('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.');
             return;
@@ -46,7 +46,7 @@ export class ClientInteropService {
     /**
      * @param {Omit<InteropQueryRequest, 'ticks'>} query
      */
-    static executeQuery(query) {
+    static executeQuery(query: Omit<InteropQueryRequest, 'ticks'>) {
         if (this.socket?.readyState != WebSocket.OPEN) {
             console.warn('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.');
             return;

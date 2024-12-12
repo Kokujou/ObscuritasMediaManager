@@ -51,7 +51,7 @@ export class TagLabel extends LitElementBase {
     /**
      * @param {Event} e
      */
-    notifyRemoved(e) {
+    notifyRemoved(e: Event) {
         this.dispatchEvent(new CustomEvent('removed'));
     }
 
@@ -61,7 +61,7 @@ export class TagLabel extends LitElementBase {
     }
 
     /**@param {KeyboardEvent} event */
-    handleInput(event) {
+    handleInput(event: KeyboardEvent) {
         if (event.key == 'ArrowDown') {
             this.autofillIndex++;
             if (this.autofillIndex >= this.autocompleteItems.length) this.autofillIndex = 0;

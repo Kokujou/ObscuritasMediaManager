@@ -8,7 +8,7 @@ import { MediaPage } from './media-page';
 /**
  * @param {MediaPage} page
  */
-export function renderMediaPageTemplate(page) {
+export function renderMediaPageTemplate(page: MediaPage) {
     return html`<page-layout>
         <div id="media-page-container">
             <media-filter-sidebar id="media-filter" .filter="${page.filter}" @change="${() => page.requestFullUpdate()}">

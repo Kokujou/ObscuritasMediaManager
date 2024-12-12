@@ -21,7 +21,7 @@ export class ContextTooltip extends LitElementBase {
      * @param {PointerEvent} event
      * @param {ContextTooltipItem[]} items
      */
-    static spawn(event, items) {
+    static spawn(event: PointerEvent, items: ContextTooltipItem[]) {
         var tooltip = new ContextTooltip();
         tooltip.items = items;
 

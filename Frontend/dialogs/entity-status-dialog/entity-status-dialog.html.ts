@@ -5,7 +5,7 @@ import { EntityStatusDialog } from './entity-status-dialog';
 /**
  * @param { EntityStatusDialog } dialog
  */
-export function renderEntityStatusDialog(dialog) {
+export function renderEntityStatusDialog(dialog: EntityStatusDialog) {
     return html`
         <dialog-base caption="Fortschritt" acceptActionText="Weiter" ?canAccept="${dialog.isComplete(dialog)}" showBorder>
             <div id="entries">

@@ -64,7 +64,7 @@ export class CompactAudioPlayer extends LitElementBase {
     /**
      * @param { number} newVolume
      */
-    async changeVolume(newVolume) {
+    async changeVolume(newVolume: number) {
         await AudioService.changeVolume(newVolume / 100);
         localStorage.setItem('volume', newVolume.toString());
         await this.requestFullUpdate();

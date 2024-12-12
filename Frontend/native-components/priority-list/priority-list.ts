@@ -46,7 +46,7 @@ export class PriorityList extends LitElementBase {
      * @param {DragEvent} event
      * @param {number} index
      */
-    registerDragItem(event, index) {
+    registerDragItem(event: DragEvent, index: number) {
         this.oldEntries = [...this.items];
 
         event.dataTransfer.setData('text/html', null);
@@ -68,7 +68,7 @@ export class PriorityList extends LitElementBase {
      *
      * @param {DragEvent} event
      */
-    handleItemMove(event) {
+    handleItemMove(event: DragEvent) {
         if (this.currentlyDraggedItemIndex < 0) return;
         event.preventDefault();
         var items = this.querySelectorAll('.item');
@@ -100,7 +100,7 @@ export class PriorityList extends LitElementBase {
      * @param {number} index1
      * @param {number} index2
      */
-    switchItems(index1, index2) {
+    switchItems(index1: number, index2: number) {
         this.items[index1].order = index2;
         this.items[index2].order = index1;
         this.items = sortBy(this.items, (x) => x.order);
@@ -109,7 +109,7 @@ export class PriorityList extends LitElementBase {
     /**
      * @param {number} index
      */
-    switchWithDragged(index) {
+    switchWithDragged(index: number) {
         if (
             this.currentlyDraggedItemIndex < 0 ||
             index < 0 ||

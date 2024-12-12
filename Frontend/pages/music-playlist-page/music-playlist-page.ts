@@ -158,7 +158,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     /**
      * @param {number} offset
      */
-    async changeTrackBy(offset) {
+    async changeTrackBy(offset: number) {
         var index = this.trackIndex + offset;
         if (index < 0) index = this.playlist.tracks.length - 1;
         if (index >= this.playlist.tracks.length) index = 0;
@@ -170,7 +170,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
      * @param {number} index
      * @returns
      */
-    async changeTrack(index) {
+    async changeTrack(index: number) {
         if (this.playlist.tracks.length == 1) return;
         this.trackIndex = index;
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
@@ -184,7 +184,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     /**
      * @param { number} newVolume
      */
-    async changeVolume(newVolume) {
+    async changeVolume(newVolume: number) {
         await AudioService.changeVolume(newVolume / 100);
         localStorage.setItem('volume', newVolume.toString());
         await this.requestFullUpdate();
@@ -195,7 +195,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
      * @param {T} property
      * @param {MusicModel[T]} value
      */
-    async changeProperty(property, value) {
+    async changeProperty(property: T, value: MusicModel[T]) {
         try {
             if (this.updatedTrack.hash) {
                 /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
@@ -234,7 +234,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     /**
      * @param {MusicGenre} genre
      */
-    addGenre(genre) {
+    addGenre(genre: MusicGenre) {
         if (!genre || !Object.values(MusicGenre).includes(genre)) return;
         var newGenres = this.updatedTrack.genres.concat([genre]);
         this.changeProperty('genres', newGenres);

@@ -40,7 +40,7 @@ export class DialogBase extends LitElementBase {
      * @param {Partial<DialogProperties>} properties
      * @returns {Promise<boolean>}
      */
-    static show(caption, properties) {
+    static show(caption: string, properties: Partial<DialogProperties>) {
         var dialog = new DialogBase();
         dialog.caption = caption;
         dialog.acceptActionText = properties?.acceptActionText;

@@ -7,7 +7,7 @@ import { RecipesPage } from './recipes-page';
 /**
  * @param { RecipesPage } recipesPage
  */
-export function renderRecipesPage(recipesPage) {
+export function renderRecipesPage(recipesPage: RecipesPage) {
     return html`
         <page-layout>
             <div id="filter-area"></div>

@@ -4,7 +4,7 @@ import { ObscuritasMediaManager } from './obscuritas-media-manager';
 /**
  * @param {ObscuritasMediaManager} mediaManager
  */
-export function renderObscuritasMediaManager(mediaManager) {
+export function renderObscuritasMediaManager(mediaManager: ObscuritasMediaManager) {
     if (!mediaManager.initialized) return html``;
     return html`<page-routing
         defaultFragment="welcome"

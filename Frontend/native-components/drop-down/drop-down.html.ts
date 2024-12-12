@@ -6,7 +6,7 @@ import { DropDownOption } from './drop-down-option';
 /**
  * @param {DropDown} dropdown
  */
-export function renderDropDown(dropdown) {
+export function renderDropDown(dropdown: DropDown) {
     var maxHeight = dropdown.maxDisplayDepth * 40;
     if (dropdown.useSearch) maxHeight += 50;
     return html`
@@ -23,7 +23,7 @@ export function renderDropDown(dropdown) {
 /**
  * @param {DropDown} dropdown
  */
-function showDropDown(dropdown) {
+function showDropDown(dropdown: DropDown) {
     return html`<div
         class="dropdown"
         @click="${() => {
@@ -75,7 +75,7 @@ function showDropDown(dropdown) {
  * @param {DropDown} dropdown
  * @param {DropDownOption} option
  */
-function renderDropDownOption(dropdown, option) {
+function renderDropDownOption(dropdown: DropDown, option: DropDownOption) {
     return html`
         <div
             ?selected="${option.state != CheckboxState.Forbid}"
@@ -95,7 +95,7 @@ function renderDropDownOption(dropdown, option) {
  * @param {DropDown} dropdown
  * @param {DropDownOption} option
  */
-function renderToggle(dropdown, option) {
+function renderToggle(dropdown: DropDown, option: DropDownOption) {
     return html`
         <div class="label">${option.text}</div>
         <custom-toggle

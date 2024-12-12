@@ -18,7 +18,7 @@ export class EntityStatusDialog extends LitElementBase {
     /**
      * @param {((dialog: EntityStatusDialog) => boolean)} isComplete
      */
-    static show(isComplete) {
+    static show(isComplete: ((dialog: EntityStatusDialog) => boolean)) {
         var dialog = new EntityStatusDialog();
         dialog.isComplete = isComplete;
 
@@ -41,7 +41,7 @@ export class EntityStatusDialog extends LitElementBase {
     /**
      * @param {EntityStatusEntry} entry,
      */
-    async addEntry(entry) {
+    async addEntry(entry: EntityStatusEntry) {
         this.entries.push(entry);
 
         await this.requestFullUpdate();

@@ -11,7 +11,7 @@ export class AuthenticatedRequestService {
      * @param {RequestInit} requestInit
      * @returns {Promise<Response>}
      */
-    async fetch(url, requestInit) {
+    async fetch(url: RequestInfo, requestInit: RequestInit) {
         try {
             requestInit.mode = 'cors';
             requestInit.signal = null;

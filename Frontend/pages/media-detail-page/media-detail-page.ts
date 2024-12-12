@@ -116,7 +116,7 @@ export class MediaDetailPage extends LitElementBase {
     /**
      * @param {Map<keyof MediaDetailPage, any>} _changedProperties
      */
-    async updated(_changedProperties) {
+    async updated(_changedProperties: Map<keyof MediaDetailPage, any>) {
         super.updated(_changedProperties);
         if (this.mediaId != this.updatedMedia?.id && !this.createNew) {
             this.updatedMedia = await MediaService.get(this.mediaId);
@@ -145,7 +145,7 @@ export class MediaDetailPage extends LitElementBase {
      * @param {T} property
      * @param {MediaModel[T]} value
      */
-    async changeProperty(property, value) {
+    async changeProperty(property: T, value: MediaModel[T]) {
         try {
             /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
             oldModel[property] = this.updatedMedia[property];
@@ -174,7 +174,7 @@ export class MediaDetailPage extends LitElementBase {
     /**
      * @param {HTMLInputElement} inputElement
      */
-    async releaseChanged(inputElement) {
+    async releaseChanged(inputElement: HTMLInputElement) {
         var numberValue = Number.parseInt(inputElement.value);
         var maxYears = new Date().getFullYear() + 2;
         if (numberValue < 1900) numberValue = 1900;
@@ -186,7 +186,7 @@ export class MediaDetailPage extends LitElementBase {
     /**
      * @param {HTMLInputElement} inputElement
      */
-    releaseInput(inputElement) {
+    releaseInput(inputElement: HTMLInputElement) {
         var numberValue = Number.parseInt(inputElement.value);
         if (`${numberValue}` != inputElement.value) inputElement.value = `${numberValue}`;
     }
@@ -194,7 +194,7 @@ export class MediaDetailPage extends LitElementBase {
     /**
      * @param {ContentWarning} warning
      */
-    async toggleContentWarning(warning) {
+    async toggleContentWarning(warning: ContentWarning) {
         if (!this.updatedMedia.contentWarnings.includes(warning))
             return await this.changeProperty('contentWarnings', this.updatedMedia.contentWarnings.concat(warning));
 

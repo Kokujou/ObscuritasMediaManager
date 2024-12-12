@@ -23,7 +23,7 @@ const MainGenreConditions = {
 /**
  * @param {MediaGenreModel[]} selectedGenres
  */
-export function getAvailableGenreSections(selectedGenres) {
+export function getAvailableGenreSections(selectedGenres: MediaGenreModel[]) {
     var baseSections = MandatoryGenres.concat(selectedGenres.map((x) => x.section));
     var selectedMainGenres = selectedGenres.filter((x) => x.section == MediaGenreCategory.MainGenre);
     for (var mainGenre of selectedMainGenres) baseSections = baseSections.concat(MainGenreConditions[mainGenre.name] ?? []);

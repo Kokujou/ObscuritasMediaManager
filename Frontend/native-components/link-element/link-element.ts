@@ -31,7 +31,7 @@ export class LinkElement extends LitElementBase {
      * @param {TemplateResult | string} inner
      * @param {Partial<Record<keyof LinkElement.properties, any>>} options
      */
-    static forPage(page, params, inner, options = {}) {
+    static forPage(page: T, params: Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>>, inner: TemplateResult | string, options: Partial<Record<keyof LinkElement.properties, any>> = {}) {
         return html`<link-element
             id="${options.id}"
             .page="${page}"
@@ -50,7 +50,7 @@ export class LinkElement extends LitElementBase {
      * @param {T} page
      * @param {Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>>} params
      */
-    static getLinkFor(page, params) {
+    static getLinkFor(page: T, params: Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>>) {
         var link = '';
         if (params)
             link += `?${Object.entries(params)
@@ -83,7 +83,7 @@ export class LinkElement extends LitElementBase {
     /**
      * @param {Event} event
      */
-    handleClick(event) {
+    handleClick(event: Event) {
         if (this.target == '_blank') return;
         event.preventDefault();
         if (this.disabled) return;

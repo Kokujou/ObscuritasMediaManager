@@ -7,7 +7,7 @@ import { PlaylistSelectionDialog } from './playlist-selection-dialog';
 /**
  * @param { PlaylistSelectionDialog } dialog
  */
-export function renderPlaylistSelectionDialog(dialog) {
+export function renderPlaylistSelectionDialog(dialog: PlaylistSelectionDialog) {
     return html`
         <dialog-base
             caption="Playlists"
@@ -50,7 +50,7 @@ export function renderPlaylistSelectionDialog(dialog) {
                                     class="popup-icon"
                                     icon="${Icons.Popup}"
                                     @click="${
-                                        /** @param {Event} e */ (e) => {
+                                        /** @param {Event} e */ (e: Event) => {
                                             e.preventDefault();
                                             e.stopPropagation();
                                             window.open(`./?guid=${playlist.id}#${getPageName(MusicPlaylistPage)}`, '_blank');

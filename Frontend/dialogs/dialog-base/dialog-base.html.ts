@@ -4,7 +4,7 @@ import { DialogBase } from './dialog-base';
 /**
  * @param {DialogBase} dialog
  */
-export function renderDialogBase(dialog) {
+export function renderDialogBase(dialog: DialogBase) {
     return html`
         <div id="dialog-outer">
             <div id="dialog-border" ?invisible="${!dialog.properties?.showBorder}">

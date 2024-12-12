@@ -31,7 +31,7 @@ export class SideScroller extends LitElementBase {
             .querySelector('slot')
             .assignedElements()
             .filter((x) => x.className != 'inner-space')
-            .map(/** @param {HTMLElement} x */ (x) => x);
+            .map(/** @param {HTMLElement} x */ (x: HTMLElement) => x);
     }
 
     get canScrollLeft() {

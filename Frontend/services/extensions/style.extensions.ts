@@ -17,7 +17,7 @@ export function renderBackgroundImage(image) {
  * @param {string} icon
  * @param {'icon' | 'image' | 'url'} mode
  */
-export function setFavicon(icon, mode = 'icon') {
+export function setFavicon(icon: string, mode: 'icon' | 'image' | 'url' = 'icon') {
     /** @type {HTMLLinkElement} */ var link = document.querySelector("link[rel~='icon']");
 
     if (!link) {

@@ -87,7 +87,7 @@ export class EditPlaylistDialog extends LitElementBase {
      * @param {T} propertyName
      * @param {PlaylistModel[T]} value
      */
-    changeProperty(propertyName, value) {
+    changeProperty(propertyName: T, value: PlaylistModel[T]) {
         this.newPlaylist[propertyName] = value;
         this.requestFullUpdate();
     }
@@ -95,7 +95,7 @@ export class EditPlaylistDialog extends LitElementBase {
     /**
      * @param {MusicGenre} genre
      */
-    addGenre(genre) {
+    addGenre(genre: MusicGenre) {
         if (!genre || !Object.values(MusicGenre).includes(genre)) return;
         this.changeProperty('genres', this.newPlaylist.genres.concat(genre));
     }
@@ -103,7 +103,7 @@ export class EditPlaylistDialog extends LitElementBase {
     /**
      * @param {MusicGenre} genre
      */
-    removeGenre(genre) {
+    removeGenre(genre: MusicGenre) {
         this.changeProperty(
             'genres',
             this.newPlaylist.genres.filter((x) => x != genre)
@@ -129,7 +129,7 @@ export class EditPlaylistDialog extends LitElementBase {
     /**
      * @param {DragEvent} event
      */
-    handleFilesDragOver(event) {
+    handleFilesDragOver(event: DragEvent) {
         if (!event.dataTransfer.types.includes('Files')) return;
         event.preventDefault();
         this.draggingFiles = true;
@@ -139,10 +139,10 @@ export class EditPlaylistDialog extends LitElementBase {
     /**
      * @param {DragEvent} event
      */
-    async dropFiles(event) {}
+    async dropFiles(event: DragEvent) {}
 
     /** @param {MusicModel} track */
-    async updateTrackPlaylistProperties(track) {
+    async updateTrackPlaylistProperties(track: MusicModel) {
         /** @type {MusicModel} */ var updatedTrack = {};
         if (this.newPlaylist.author?.length > 1) updatedTrack.author = this.newPlaylist.author;
         if (this.newPlaylist.language != Language.Unset) updatedTrack.language = this.newPlaylist.language;

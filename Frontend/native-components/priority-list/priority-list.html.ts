@@ -6,7 +6,7 @@ import { PriorityList } from './priority-list';
 /**
  * @param { PriorityList } priorityList
  */
-export function renderPriorityList(priorityList) {
+export function renderPriorityList(priorityList: PriorityList) {
     return html` <style>
             .item {
                 position: relative;

@@ -9,7 +9,7 @@ import { CreateRecipePage } from './create-recipe-page';
 /**
  * @param { CreateRecipePage } page
  */
-export function renderCreateRecipePage(page) {
+export function renderCreateRecipePage(page: CreateRecipePage) {
     return html`
         <page-layout>
             <div id="page-container">
@@ -145,7 +145,7 @@ export function renderCreateRecipePage(page) {
  * @param {[name: string, ingredients: IngredientModel[]]} group
  * @param {CreateRecipePage} page
  */
-function renderIngredientGroup(group, page) {
+function renderIngredientGroup(group: [name: string, ingredients: IngredientModel[]], page: CreateRecipePage) {
     return html`
         <div id="${group[0]}" class="ingredient-group">
             <input
@@ -172,7 +172,7 @@ function renderIngredientGroup(group, page) {
 /**
  * @param {IngredientModel} ingredient
  */
-function renderIngredient(ingredient) {
+function renderIngredient(ingredient: IngredientModel) {
     var unit = ingredient['unit'] ?? ExtendedIngredientUnit[ingredient.measurement][0];
     return html` <div class="ingredient">
         <input
@@ -215,7 +215,7 @@ function renderIngredient(ingredient) {
  * @param {KeyboardEvent} e
  * @param {RegExp} [supportedCharacters]
  */
-function handleLabelInput(e, supportedCharacters) {
+function handleLabelInput(e: KeyboardEvent, supportedCharacters?: RegExp) {
     if (!supportedCharacters || e.key.length != 1 || e.key.match(supportedCharacters)) return;
     e.target.dispatchEvent(new Event('change'));
     e.stopPropagation();

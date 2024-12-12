@@ -89,7 +89,7 @@ export class DropDown extends LitElementBase {
      * @param {DropDownOption} option
      * @param {CheckboxState} state
      */
-    changeOptionState(option, state) {
+    changeOptionState(option: DropDownOption, state: CheckboxState) {
         if (state != CheckboxState.Forbid && !this.multiselect) for (let o of this.options) o.state = CheckboxState.Forbid;
         option.state = state;
 

@@ -8,7 +8,7 @@ export class TimeSpan {
     /**
      * @param {string} value
      */
-    static fromString(value) {
+    static fromString(value: string) {
         var result = new TimeSpan();
         if (!value) return result;
         var splitted = value.split(':');

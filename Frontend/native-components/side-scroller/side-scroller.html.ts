@@ -4,7 +4,7 @@ import { SideScroller } from './side-scroller';
 /**
  * @param {SideScroller} sideScroller
  */
-export function renderSideScroller(sideScroller) {
+export function renderSideScroller(sideScroller: SideScroller) {
     return html`
         <div id="scroll-container">
             <a

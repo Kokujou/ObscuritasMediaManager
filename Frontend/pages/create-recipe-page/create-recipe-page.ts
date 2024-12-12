@@ -72,7 +72,7 @@ export class CreateRecipePage extends LitElementBase {
     /**
      * @param {Event} event
      */
-    addGroup(event) {
+    addGroup(event: Event) {
         event.stopPropagation();
         event.preventDefault();
         this.recipe.ingredients.push(this.emptyGroup);
@@ -83,7 +83,7 @@ export class CreateRecipePage extends LitElementBase {
      * @param {string} group
      * @param {Event} event
      */
-    addIngredient(group, event) {
+    addIngredient(group: string, event: Event) {
         event.stopPropagation();
         event.preventDefault();
         this.recipe.ingredients.push(
@@ -106,7 +106,7 @@ export class CreateRecipePage extends LitElementBase {
      * @param {keyof import('../../obscuritas-media-manager-backend-client').IRecipeModel} property
      * @param {string} value
      */
-    changeProperty(property, value) {
+    changeProperty(property: keyof import('../../obscuritas-media-manager-backend-client').IRecipeModel, value: string) {
         /** @type {any} */ this.recipe[property] = value;
         this.requestFullUpdate();
     }
@@ -116,7 +116,7 @@ export class CreateRecipePage extends LitElementBase {
      * @param { IngredientModel[] } affectedIngredients
      * @param {string} newName
      */
-    renameGroup(affectedIngredients, newName) {
+    renameGroup(affectedIngredients: IngredientModel[], newName: string) {
         for (var ingredient of affectedIngredients) ingredient.groupName = newName;
 
         this.requestFullUpdate();
@@ -125,7 +125,7 @@ export class CreateRecipePage extends LitElementBase {
     /**
      * @param {string} imageData
      */
-    notifyImageAdded(imageData) {
+    notifyImageAdded(imageData: string) {
         this.recipe.imageUrl = imageData;
         this.requestFullUpdate();
     }
@@ -133,7 +133,7 @@ export class CreateRecipePage extends LitElementBase {
     /**
      * @param {IngredientModel} ingredient
      */
-    removeItem(ingredient) {
+    removeItem(ingredient: IngredientModel) {
         this.recipe.ingredients = this.recipe.ingredients.filter((x) => x.id != ingredient.id);
         this.requestFullUpdate();
     }
@@ -141,7 +141,7 @@ export class CreateRecipePage extends LitElementBase {
     /**
      * @param {SubmitEvent} event
      */
-    async submit(event) {
+    async submit(event: SubmitEvent) {
         event.preventDefault();
         event.stopPropagation();
 

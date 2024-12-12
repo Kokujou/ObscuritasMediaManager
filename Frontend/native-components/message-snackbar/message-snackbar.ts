@@ -22,7 +22,7 @@ export class MessageSnackbar extends LitElementBase {
      * @param {string} message
      * @param {MessageType} messageType
      */
-    static async popup(message, messageType) {
+    static async popup(message: string, messageType: MessageType) {
         var snackbar = new MessageSnackbar();
         snackbar.message = message;
         snackbar.messageType = messageType;

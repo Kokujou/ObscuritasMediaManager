@@ -9,7 +9,7 @@ export class MediaFilterService {
      * @param {MediaModel[]} result
      * @param {MediaFilter} filter
      */
-    static filter(result, filter) {
+    static filter(result: MediaModel[], filter: MediaFilter) {
         if (filter.search) this.search(result, filter.search ?? '', true);
         ObjectFilterService.applyPropertyFilter(result, filter.ratings, 'rating');
         ObjectFilterService.applyArrayFilter(result, filter.genres, 'genres', (x) => x.id);
@@ -33,7 +33,7 @@ export class MediaFilterService {
      * @param {string} search
      * @param {boolean} includeDescription
      */
-    static search(list, search, includeDescription) {
+    static search(list: MediaModel[], search: string, includeDescription: boolean) {
         ObjectFilterService.applyMultiPropertySearch(
             list,
             search ?? '',

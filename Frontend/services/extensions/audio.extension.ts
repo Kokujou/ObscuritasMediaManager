@@ -1,5 +1,5 @@
 /** @param {HTMLAudioElement} audioElement */
-export function playAudio(audioElement) {
+export function playAudio(audioElement: HTMLAudioElement) {
     return new Promise(async (resolve) => {
         var controller = new AbortController();
 

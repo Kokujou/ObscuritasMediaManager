@@ -56,7 +56,7 @@ function renderNavigation() {
  * @template {typeof LitElementBase & {isPage: boolean, pageName: string}} T
  * @param {T} element
  */
-function renderNavItem(element) {
+function renderNavItem(element: T) {
     var active = Session.currentPage.current() == getPageName(element);
     return LinkElement.forPage(element, null, html`${element.pageName}`, { class: active ? 'active' : 'normal' });
 }

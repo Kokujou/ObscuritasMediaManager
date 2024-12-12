@@ -8,7 +8,7 @@ export class MusicFilterService {
      * @param {PlaylistModel[]} playlists
      * @param {MusicFilterOptions} filter
      */
-    static filterPlaylists(playlists, filter) {
+    static filterPlaylists(playlists: PlaylistModel[], filter: MusicFilterOptions) {
         if (filter.showPlaylists == CheckboxState.Forbid || filter.showDeleted == CheckboxState.Require) return [];
 
         var filteredPlaylists = [...playlists];
@@ -35,7 +35,7 @@ export class MusicFilterService {
      * @param {MusicModel[]} tracks
      * @param {MusicFilterOptions} filter
      */
-    static filterTracks(tracks, filter) {
+    static filterTracks(tracks: MusicModel[], filter: MusicFilterOptions) {
         if (filter.showPlaylists == CheckboxState.Require) return [];
         var filteredTracks = [...tracks];
 
@@ -60,7 +60,7 @@ export class MusicFilterService {
      * @param {MusicModel[]} list
      * @param {string} search
      */
-    static search(list, search) {
+    static search(list: MusicModel[], search: string) {
         ObjectFilterService.applyMultiPropertySearch(list, search, 'name', 'author', 'source', 'path');
         return list;
     }

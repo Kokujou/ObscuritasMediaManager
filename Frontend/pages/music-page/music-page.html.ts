@@ -11,7 +11,7 @@ import { MusicPage } from './music-page';
 /**
  * @param {MusicPage} musicPage
  */
-export function renderMusicPage(musicPage) {
+export function renderMusicPage(musicPage: MusicPage) {
     return html`
         <page-layout>
             <div id="music-page">
