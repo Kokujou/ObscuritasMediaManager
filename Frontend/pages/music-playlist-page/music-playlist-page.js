@@ -77,9 +77,9 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
 
     constructor() {
         super();
+        /** @type {number} */ this.trackIndex = 0;
         /** @type {string} */ this.playlistId = null;
         /** @type {string} */ this.trackHash = null;
-        /** @type {number} */ this.trackIndex = 0;
         /** @type {boolean} */ this.createNew = false;
 
         /** @type {MusicModel} */ this.updatedTrack = null;

@@ -20,7 +20,6 @@ import { MusicPlaylistPage } from './music-playlist-page.js';
 
 export class MusicPlaylistPageTemplate extends LitElementBase {
     /** @protected @type {PlaylistModel} */ playlist = new PlaylistModel({ tracks: [] });
-    /** @protected @type {number} */ trackIndex = 0;
     /** @protected @type {MusicModel} */ currentTrack = new MusicModel();
     /** @protected @type {MusicModel} */ updatedTrack = new MusicModel();
     /** @protected @type {number} */ currentVolume = 0.1;

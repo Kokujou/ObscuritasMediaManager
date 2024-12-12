@@ -15,8 +15,7 @@
         "files.exclude": {
             "**/.DS_Store": true,
             "**/node_modules/**": true,
-            "exports.js": true,
-            ".vscode/**": true
+            "exports.js": true
         },
         "search.exclude": {
             "**/node_modules": true,
@@ -39,7 +38,7 @@
                 "label": "Check for build errors",
                 "type": "shell",
                 "command": "./node_modules/.bin/tsc",
-                "args": ["-p", "./jsconfig.json"],
+                "args": ["-p", "./jsconfig.json", "-watch"],
                 "presentation": {
                     "reveal": "never",
                     "echo": false,
