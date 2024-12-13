@@ -1,49 +1,43 @@
 import { html } from 'lit-element';
 import { TagLabel } from './tag-label';
 
-/**
- * @param {TagLabel} tagLabel
- */
-export function renderTagLabel(tagLabel: TagLabel) {
+export function renderTagLabel(this: TagLabel) {
     return html`
         <div id="label-container" @click="${(e: Event) => e.stopPropagation()}">
-            ${tagLabel.createNew ? renderNewLabelForm(tagLabel) : html`<div id="label-text">${tagLabel.text}</div>`}
-            <div id="x-button" @click="${(e: Event) => tagLabel.notifyRemoved(e)}">&times;</div>
+            ${this.createNew ? renderNewLabelForm.call(this) : html`<div id="label-text">${this.text}</div>`}
+            <div id="x-button" @click="${(e: Event) => this.notifyRemoved(e)}">&times;</div>
         </div>
     `;
 }
 
-/**
- * @param {TagLabel} tagLabel
- */
-function renderNewLabelForm(tagLabel: TagLabel) {
+function renderNewLabelForm(this: TagLabel) {
     return html`<form id="new-label-form" action="javascript:void(0)">
         <input
             id="new-tag-input"
-            @keydown="${(e: Event) => tagLabel.handleInput(e)}"
-            @input="${() => tagLabel.requestFullUpdate()}"
-            @focus="${() => (tagLabel.showAutocomplete = true)}"
-            @focusout="${() => (tagLabel.showAutocomplete = false)}"
+            @keydown="${(e: KeyboardEvent) => this.handleInput(e)}"
+            @input="${() => this.requestFullUpdate()}"
+            @focus="${() => (this.showAutocomplete = true)}"
+            @focusout="${() => (this.showAutocomplete = false)}"
             type="text"
             autocomplete="off"
         />
 
-        <div id="autocomplete-list" class="${tagLabel.showAutocomplete ? '' : 'hidden'}">
-            ${tagLabel.autocompleteItems.map(
+        <div id="autocomplete-list" class="${this.showAutocomplete ? '' : 'hidden'}">
+            ${this.autocompleteItems.map(
                 (x, index) => html`<div
-                    class="autocomplete-item ${tagLabel.autofillIndex == index ? 'active' : ''}"
+                    class="autocomplete-item ${this.autofillIndex == index ? 'active' : ''}"
                     @pointerover="${() => {
-                        tagLabel.autofillIndex = index;
-                        tagLabel.requestFullUpdate();
+                        this.autofillIndex = index;
+                        this.requestFullUpdate();
                     }}"
-                    @pointerdown="${() => tagLabel.setSearchText(x)}"
+                    @pointerdown="${() => this.setSearchText(x)}"
                 >
                     ${x}
                 </div> `
             )}
         </div>
         <div id="invisible-text">
-            ${/** @type {HTMLInputElement} */ tagLabel.shadowRoot!.querySelector('#new-tag-input')?.value.replaceAll(' ', '\xA0')}
+            ${(this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement)?.value.replaceAll(' ', '\xA0')}
         </div>
     </form>`;
 }

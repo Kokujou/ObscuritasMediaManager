@@ -11,7 +11,7 @@ import { changePage } from './extensions/url.extension';
 
 export class MediaImportService {
     static async importAudioFiles() {
-        /** @type {string[]} */ var filePaths = await ClientInteropService.executeQuery({
+        const filePaths = await ClientInteropService.executeQuery<string[]>({
             query: InteropQuery.RequestFolderContent,
             payload: null,
         });
@@ -19,34 +19,32 @@ export class MediaImportService {
 
         var dialog = EntityStatusDialog.show((x) => x.entries.length == filePaths.length);
 
-        /** @type {string[]} */ var affectedTrackHashs = [];
-        for (let path of filePaths)
+        var affectedTrackHashs: string[] = [];
+        for (let path of filePaths) {
+            var name = path.split('\\').at(-1);
             MusicService.createMusicTrackFromPath(path).then((result) => {
-                var name = path.split('\\').at(-1);
                 dialog.addEntry({
-                    text: LinkElement.forPage(MusicPlaylistPage, { trackHash: result.key }, name),
+                    text: result.key
+                        ? LinkElement.forPage(MusicPlaylistPage, { trackHash: result.key }, name ?? path)
+                        : name ?? path,
                     status: result.value,
                 });
                 if (result.value == ModelCreationState.Success || result.value == ModelCreationState.Updated)
-                    affectedTrackHashs.push(result.key);
+                    affectedTrackHashs.push(result.key!);
             });
+        }
 
         dialog.addEventListener('accept', async () => {
             dialog.remove();
             if (affectedTrackHashs.length <= 0) return;
-            var playlistId = await PlaylistService.createTemporaryPlaylist(affectedTrackHashs);
+            var playlistId = await PlaylistService.createTemporaryPlaylist(affectedTrackHashs)!;
             changePage(MusicPlaylistPage, { playlistId });
         });
     }
 
-    /**
-     *
-     * @param {MediaCategory} category
-     * @param {Language} language
-     */
     static importMediaCollections(category: MediaCategory, language: Language) {
-        return new Promise(async (resolve) => {
-            /** @type {string[]} */ var mediaPaths = await ClientInteropService.executeQuery({
+        return new Promise<void>(async (resolve) => {
+            var mediaPaths = await ClientInteropService.executeQuery<string[]>({
                 query: InteropQuery.RequestSubFolders,
                 payload: null,
             });
@@ -86,12 +84,9 @@ export class MediaImportService {
         });
     }
 
-    /**
-     * @param {Response} response
-     */
     static async *fetchAndProcessData(response: Response) {
-        response.body.getReader({ mode: 'byob' });
-        const reader = response.body.getReader();
+        response!.body!.getReader({ mode: 'byob' });
+        const reader = response!.body!.getReader();
         const decoder = new TextDecoder('utf-8');
         let data = '';
 

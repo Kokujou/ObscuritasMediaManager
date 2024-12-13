@@ -1,10 +1,10 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { FilterEntry } from '../../data/filter-entry';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
-import { GenreModel, InstrumentModel, MediaGenreModel } from '../../obscuritas-media-manager-backend-client';
+import { GenreModel, InstrumentModel, InstrumentType, MediaGenreModel } from '../../obscuritas-media-manager-backend-client';
 import { PageRouting } from '../../pages/page-routing/page-routing';
 import { GenreService, MusicService } from '../../services/backend.services';
 import { GenreDialogResult } from '../dialog-result/genre-dialog.result';
@@ -13,16 +13,15 @@ import { renderGenreDialogStyles } from './genre-dialog.css';
 import { renderGenreDialog } from './genre-dialog.html';
 import { getAvailableGenreSections } from './media-genres';
 
-/**
- * @typedef {object} GenreDialogOptions
- * @prop {GenreModel[]} genres
- * @prop {GenreModel[]} allowedGenres
- * @prop {GenreModel[]} forbiddenGenres
- * @prop {boolean} allowThreeValues
- * @prop {boolean} allowAdd
- * @prop {boolean} allowRemove
- * @prop {CheckboxState} ignoredState
- */
+export class GenreDialogOptions {
+    genres: (MediaGenreModel | GenreModel)[] = [];
+    allowedGenres: (MediaGenreModel | GenreModel)[] = [];
+    forbiddenGenres: (MediaGenreModel | GenreModel)[] = [];
+    allowThreeValues: boolean;
+    allowAdd: boolean;
+    allowRemove: boolean;
+    ignoredState: CheckboxState;
+}
 
 @customElement('genre-dialog')
 export class GenreDialog extends LitElementBase {
@@ -36,14 +35,10 @@ export class GenreDialog extends LitElementBase {
         return renderGenreDialogStyles();
     }
 
-    /**
-     *
-     * @param {MediaGenreModel[] | FilterEntry<string>} genresOrFilter
-     */
     static async startShowingWithGenres(genresOrFilter: MediaGenreModel[] | FilterEntry<string>) {
         var genres = await GenreService.getAll();
 
-        /** @type {Partial<GenreDialogOptions>} */ var options = { genres, allowAdd: true, allowRemove: true };
+        var options = { genres, allowAdd: true, allowRemove: true } as GenreDialogOptions;
         if (genresOrFilter instanceof FilterEntry) {
             options.allowedGenres = genres.filter((x) => genresOrFilter.required.includes(x.id));
             options.forbiddenGenres = genres.filter((x) => genresOrFilter.forbidden.includes(x.id));
@@ -57,57 +52,48 @@ export class GenreDialog extends LitElementBase {
 
         genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
 
-        genreDialog.addEventListener('selection-changed', async (e:Event) => {
+        genreDialog.addEventListener('selection-changed', async (e: Event) => {
             var mediaGenres = await GenreService.getAll();
             genreDialog.options.genres = mediaGenres.filter((x) => genreDialog.availableSections.includes(x.section));
             genreDialog.requestFullUpdate();
         });
 
-        genreDialog.addEventListener(
-            'add-genre',
-            /** @param {CustomEvent<{name, sectionName}>} e */ async ((e: CustomEvent<{ name; sectionName; }>)) => {
-                try {
-                    var mediaGenres = /** @type {MediaGenreModel[]} */ genreDialog.options.genres;
-                    var sectionCategory = mediaGenres.find((x) => x.sectionName == e.detail.sectionName).section;
-                    await GenreService.addGenre(sectionCategory, e.detail.name);
-                    var genres = await GenreService.getAll();
-                    genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
-                    genreDialog.requestFullUpdate();
-                    MessageSnackbar.popup('Das Genre wurde erfolgreich hinzugefügt.', 'success');
-                } catch (err) {
-                    MessageSnackbar.popup('Ein Fehler ist beim hinzufügen des Genres aufgetreten: ' + err, 'error');
-                    e.preventDefault();
-                }
+        genreDialog.addEventListener('add-genre', async (e: CustomEvent<{ name: string; sectionName: string }>) => {
+            try {
+                var mediaGenres = genreDialog.options.genres as MediaGenreModel[];
+                var sectionCategory = mediaGenres.find((x) => x.sectionName == e.detail.sectionName)!.section;
+                await GenreService.addGenre(sectionCategory, e.detail.name);
+                var genres = await GenreService.getAll();
+                genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
+                genreDialog.requestFullUpdate();
+                MessageSnackbar.popup('Das Genre wurde erfolgreich hinzugefügt.', 'success');
+            } catch (err) {
+                MessageSnackbar.popup('Ein Fehler ist beim hinzufügen des Genres aufgetreten: ' + err, 'error');
+                e.preventDefault();
             }
-        );
-        genreDialog.addEventListener(
-            'remove-genre',
-            /** @param {CustomEvent<GenreModel>} e */ async ((e: CustomEvent<GenreModel>)) => {
-                try {
-                    await GenreService.removeGenre(e.detail.id);
-                    var genres = await GenreService.getAll();
-                    genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
-                    genreDialog.requestFullUpdate();
-                    MessageSnackbar.popup('Das Genre wurde erfolgreich gelöscht.', 'success');
-                } catch (err) {
-                    MessageSnackbar.popup('Ein Fehler ist beim löschen des Genres aufgetreten: ' + err, 'error');
-                    e.preventDefault();
-                }
+        });
+        genreDialog.addEventListener('remove-genre', async (e: CustomEvent<GenreModel>) => {
+            try {
+                await GenreService.removeGenre(e.detail.id);
+                var genres = await GenreService.getAll();
+                genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
+                genreDialog.requestFullUpdate();
+                MessageSnackbar.popup('Das Genre wurde erfolgreich gelöscht.', 'success');
+            } catch (err) {
+                MessageSnackbar.popup('Ein Fehler ist beim löschen des Genres aufgetreten: ' + err, 'error');
+                e.preventDefault();
             }
-        );
+        });
 
         return genreDialog;
     }
 
-    /**
-     * @param {InstrumentModel[] | FilterEntry<string>} instrumentsOrFilter
-     */
     static async startShowingWithInstruments(instrumentsOrFilter: InstrumentModel[] | FilterEntry<string>) {
-        /** @param {InstrumentModel} item */
-        var instrumentToGenre = (item: InstrumentModel, index) => new GenreModel({ id: `${index}`, name: item.name, sectionName: item.type });
+        var instrumentToGenre = (item: InstrumentModel, index: number) =>
+            new GenreModel({ id: `${index}`, name: item.name, sectionName: item.type });
         var genres = Session.instruments.current().map(instrumentToGenre);
 
-        /** @type {Partial<GenreDialogOptions>} */ var options = { genres, allowAdd: true, allowRemove: true };
+        var options: Partial<GenreDialogOptions> = { genres, allowAdd: true, allowRemove: true };
 
         if (instrumentsOrFilter instanceof FilterEntry) {
             options.allowedGenres = genres.filter((x) => instrumentsOrFilter.required.includes(x.name));
@@ -120,87 +106,70 @@ export class GenreDialog extends LitElementBase {
 
         var dialog = GenreDialog.show(options);
 
-        dialog.addEventListener(
-            'add-genre',
-            /** @param {CustomEvent<MediaGenreModel>} e */ async ((e: CustomEvent<MediaGenreModel>)) => {
-                await MusicService.addInstrument(/** @type {InstrumentType} */ e.detail.sectionName, e.detail.name);
-                dialog.options.genres.push(
-                    new MediaGenreModel({
-                        id: e.detail.name,
-                        name: e.detail.name,
-                        section: e.detail.section,
-                        sectionName: e.detail.sectionName,
-                    })
-                );
-                Session.instruments.next(await MusicService.getInstruments());
-                await dialog.requestFullUpdate();
-            }
-        );
-        dialog.addEventListener(
-            'remove-genre',
-            /** @param {CustomEvent<GenreModel>} e */ async ((e: CustomEvent<GenreModel>)) => {
-                await MusicService.removeInstrument(/** @type {InstrumentType} */ e.detail.sectionName, e.detail.name);
-                dialog.options.genres = dialog.options.genres.filter((x) => x.name != e.detail.name);
-                Session.instruments.next(await MusicService.getInstruments());
-                await dialog.requestFullUpdate();
-            }
-        );
+        dialog.addEventListener('add-genre', async (e: CustomEvent<MediaGenreModel>) => {
+            await MusicService.addInstrument(e.detail.sectionName as InstrumentType, e.detail.name);
+            dialog.options.genres.push(
+                new MediaGenreModel({
+                    id: e.detail.name,
+                    name: e.detail.name,
+                    section: e.detail.section,
+                    sectionName: e.detail.sectionName,
+                })
+            );
+            Session.instruments.next(await MusicService.getInstruments());
+            await dialog.requestFullUpdate();
+        });
+        dialog.addEventListener('remove-genre', async (e: CustomEvent<GenreModel>) => {
+            await MusicService.removeInstrument(e.detail.sectionName as InstrumentType, e.detail.name);
+            dialog.options.genres = dialog.options.genres.filter((x) => x.name != e.detail.name);
+            Session.instruments.next(await MusicService.getInstruments());
+            await dialog.requestFullUpdate();
+        });
 
         return dialog;
     }
 
-    /**
-     * @param {Partial<GenreDialogOptions>} options
-     */
     static show(options: Partial<GenreDialogOptions>) {
         var dialog = new GenreDialog();
 
         Object.assign(dialog.options, options);
 
-        PageRouting.container.append(dialog);
+        PageRouting.container!.append(dialog);
         dialog.requestFullUpdate();
 
         return dialog;
     }
 
     get availableSections() {
-        return getAvailableGenreSections(/** @type {MediaGenreModel[]} */ this.options.allowedGenres);
+        return getAvailableGenreSections(this.options.allowedGenres as MediaGenreModel[]);
     }
 
-    /** @returns {Object.<string, MediaGenreModel[]>} */
     get genreDict() {
         return this.options.genres.reduce((prev, current, index, array) => {
             if (!prev[current.sectionName]) prev[current.sectionName] = [];
-            prev[current.sectionName].push(current);
+            prev[current.sectionName].push(current as MediaGenreModel);
 
             return prev;
-        }, {});
+        }, {} as { [key: string]: MediaGenreModel[] });
     }
 
-    constructor() {
-        super();
-        /** @type {Partial<GenreDialogOptions>} */ this.options = {
-            genres: [],
-            allowedGenres: [],
-            forbiddenGenres: [],
-            allowThreeValues: false,
-            ignoredState: CheckboxState.Ignore,
-            allowAdd: false,
-            allowRemove: false,
-        };
+    @property() options: GenreDialogOptions = {
+        genres: [],
+        allowedGenres: [],
+        forbiddenGenres: [],
+        allowThreeValues: false,
+        ignoredState: CheckboxState.Ignore,
+        allowAdd: false,
+        allowRemove: false,
+    };
 
-        this.searchText = '';
-    }
+    searchText = '';
 
     override render() {
-        return renderGenreDialog(this);
+        return renderGenreDialog.call(this);
     }
 
-    /**
-     * @param {{value: CheckboxState}} eventDetail
-     * @param {GenreModel} genre
-     */
-    handleGenreSelection(eventDetail: { value: CheckboxState; }, genre: GenreModel) {
+    handleGenreSelection(eventDetail: { value: CheckboxState }, genre: GenreModel) {
         switch (eventDetail.value) {
             case CheckboxState.Forbid:
                 this.options.forbiddenGenres.push(genre);
@@ -222,9 +191,6 @@ export class GenreDialog extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {Event} e
-     */
     accept(e: Event) {
         e.stopPropagation();
         var result = new GenreDialogResult();
@@ -233,28 +199,18 @@ export class GenreDialog extends LitElementBase {
         this.dispatchEvent(new CustomEvent('accept', { detail: result }));
     }
 
-    /**
-     * @param {GenreModel} genre
-     */
     getValue(genre: GenreModel) {
         if (this.options.allowedGenres.some((x) => x.name == genre.name)) return CheckboxState.Require;
         if (this.options.forbiddenGenres.some((x) => x.name == genre.name)) return CheckboxState.Forbid;
         return CheckboxState.Ignore;
     }
 
-    /**
-     * @param {string} sectionName
-     */
     async addGenre(sectionName: string) {
         var name = await InputDialog.show('Bitte Namen eingeben:');
         if (!name) return;
         this.dispatchEvent(new CustomEvent('add-genre', { detail: { name, sectionName } }));
     }
 
-    /**
-     * @param {Event} event
-     * @param {GenreModel} genre
-     */
     async removeGenre(event: Event, genre: GenreModel) {
         this.dispatchEvent(new CustomEvent('remove-genre', { detail: genre }));
         event.stopPropagation();

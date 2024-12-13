@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Enum } from '../../services/extensions/enum.extensions';
@@ -24,14 +24,10 @@ export class CustomToggle extends LitElementBase {
         };
     }
 
-    constructor() {
-        super();
-
-        /** @type {boolean} */ this.toggled = false;
-        /** @type {CheckboxState} */ this.state = CheckboxState.Forbid;
-        /** @type {boolean} */ this.threeValues = false;
-        this.toggleForward = true;
-    }
+    @property() toggled = false;
+    @property() state = CheckboxState.Forbid;
+    @property() threeValues = false;
+    toggleForward = true;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -47,7 +43,7 @@ export class CustomToggle extends LitElementBase {
     }
 
     override render() {
-        return renderCustomToggle(this);
+        return renderCustomToggle.call(this);
     }
 
     toggleState() {
@@ -55,6 +51,6 @@ export class CustomToggle extends LitElementBase {
         this.state = Enum.nextValue(CheckboxState, this.state);
         if (this.state != prevState) return;
         this.toggleForward = !this.toggleForward;
-        return this.toggleState();
+        this.toggleState();
     }
 }

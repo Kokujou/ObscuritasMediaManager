@@ -9,54 +9,53 @@ import { Enum } from '../../services/extensions/enum.extensions';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page';
 import { MediaDetailPage } from './media-detail-page';
 
-/**
- * @param {MediaDetailPage} detailPage
- */
-export function renderMediaDetailPage(detailPage: MediaDetailPage) {
+export function renderMediaDetailPage(this: MediaDetailPage) {
     return html`
         <img
             id="dummy-image"
-            src="${detailPage.imageUrl}"
-            @load="${() => (detailPage.hasImage = true)}"
-            @error="${() => (detailPage.hasImage = false)}"
+            src="${this.imageUrl}"
+            @load="${() => (this.hasImage = true)}"
+            @error="${() => (this.hasImage = false)}"
         />
         <div
             id="edit-button"
             onclick="this.dispatchEvent(new CustomEvent('toggle'))"
-            @toggle="${(e: Event) => detailPage.changeProperty('complete', !detailPage.updatedMedia.complete)}"
+            @toggle="${(e: Event) => this.changeProperty('complete', !this.updatedMedia.complete)}"
         >
             <custom-toggle
-                .state="${detailPage.updatedMedia.complete ? CheckboxState.Ignore : CheckboxState.Forbid}"
+                .state="${this.updatedMedia.complete ? CheckboxState.Ignore : CheckboxState.Forbid}"
                 id="edit-toggle"
             ></custom-toggle>
-            <div id="toggle-edit-text">${detailPage.updatedMedia.complete ? 'Vollständig' : 'Unvollständig'}</div>
+            <div id="toggle-edit-text">${this.updatedMedia.complete ? 'Vollständig' : 'Unvollständig'}</div>
         </div>
         <page-layout>
             <div id="media-detail-container">
                 <div id="content-panels">
-                    <div id="left-panel" ?disabled="${detailPage.updatedMedia.complete}">
+                    <div id="left-panel" ?disabled="${this.updatedMedia.complete}">
                         <div id="media-image-container">
-                            ${detailPage.hasImage
+                            ${this.hasImage
                                 ? html`<div
                                       id="media-image"
-                                      style="background-image: url('${detailPage.imageUrl}')"
-                                      @click="${() => detailPage.setMediaImage(null)}"
+                                      style="background-image: url('${this.imageUrl}')"
+                                      @click="${() => this.setMediaImage(null)}"
                                   ></div>`
                                 : html`<upload-area
-                                      @imageReceived="${(e: Event) => detailPage.setMediaImage(e.detail.imageData)}"
+                                      @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
+                                          this.setMediaImage(e.detail.imageData)}"
                                   ></upload-area>`}
                         </div>
 
-                        <div id="media-rating" ?disabled="${detailPage.updatedMedia.complete}">
+                        <div id="media-rating" ?disabled="${this.updatedMedia.complete}">
                             <star-rating
                                 max="5"
                                 singleSelect
-                                .values="${createRange(0, detailPage.updatedMedia.rating)}"
-                                @ratingChanged="${(e: Event) => detailPage.changeProperty('rating', e.detail.rating)}"
+                                .values="${createRange(0, this.updatedMedia.rating)}"
+                                @ratingChanged="${(e: CustomEvent<{ rating: number; include: boolean }>) =>
+                                    this.changeProperty('rating', e.detail.rating)}"
                             ></star-rating>
                         </div>
                     </div>
-                    <div id="middle-panel" ?disabled="${detailPage.updatedMedia.complete}">
+                    <div id="middle-panel" ?disabled="${this.updatedMedia.complete}">
                         <div id="content-warning-section" class="property-entry">
                             <div class="property-name">Inhaltswarnungen:</div>
                             <div id="content-warnings">
@@ -64,8 +63,8 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                     (warning) =>
                                         html`<div
                                             class="content-warning-icon-wrapper"
-                                            ?selected="${detailPage.updatedMedia?.contentWarnings?.includes(warning)}"
-                                            @click="${() => detailPage.toggleContentWarning(warning)}"
+                                            ?selected="${this.updatedMedia?.contentWarnings?.includes(warning)}"
+                                            @click="${() => this.toggleContentWarning(warning)}"
                                         >
                                             <div class="content-warning-icon" content-warning="${warning}"></div>
                                             <div class="content-warning-label">${warning}</div>
@@ -75,23 +74,23 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                         </div>
                     </div>
                     <div id="right-panel">
-                        ${detailPage.createNew
+                        ${this.createNew
                             ? ''
                             : html` <div id="navigation">
-                                  ${detailPage.prevMediaId
+                                  ${this.prevMediaId
                                       ? LinkElement.forPage(
                                             MediaDetailPage,
-                                            { mediaId: detailPage.prevMediaId },
+                                            { mediaId: this.prevMediaId },
                                             html`&LeftArrow; Letzter`,
                                             {
                                                 id: 'prev-link',
                                             }
                                         )
                                       : ''}
-                                  ${detailPage.nextMediaId
+                                  ${this.nextMediaId
                                       ? LinkElement.forPage(
                                             MediaDetailPage,
-                                            { mediaId: detailPage.nextMediaId },
+                                            { mediaId: this.nextMediaId },
                                             html`Nächster &RightArrow;`,
                                             {
                                                 id: 'next-link',
@@ -105,107 +104,95 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                 id="popup-icon"
                                 icon="${Icons.Popup}"
                                 tooltip="Auf AniList suchen"
-                                @click="${() => detailPage.openMediaExternal()}"
+                                @click="${() => this.openMediaExternal()}"
                             ></div>
                             <input
-                                ?disabled="${detailPage.updatedMedia.complete}"
+                                ?disabled="${this.updatedMedia.complete}"
                                 type="text"
                                 id="media-name"
-                                @change="${() => detailPage.changeProperty('name', detailPage.nameInputValue)}"
+                                @change="${() => this.changeProperty('name', this.nameInputValue)}"
                                 class="property-value"
-                                .value="${detailPage.updatedMedia.name}"
+                                .value="${this.updatedMedia.name}"
                             />
                         </div>
 
                         <link-element
                             id="trailer-link"
-                            href="https://www.youtube.com/results?search_query=${detailPage.updatedMedia.name}%20trailer"
+                            href="https://www.youtube.com/results?search_query=${this.updatedMedia.name}%20trailer"
                             target="_blank"
                             >Trailer suchen</link-element
                         >
-                        ${detailPage.isJapanese
+                        ${this.isJapanese
                             ? html` <div class="property-entry sub-entry">
                                       <div class="property-name">Romaji:</div>
                                       <input
-                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          ?disabled="${this.updatedMedia.complete}"
                                           type="text"
                                           class="property-value"
-                                          .value="${detailPage.updatedMedia.romajiName}"
+                                          .value="${this.updatedMedia.romajiName ?? ''}"
                                           @change="${(e: Event) =>
-                                              detailPage.changeProperty(
-                                                  'romajiName',
-                                                  (e.currentTarget as HTMLInputElement).value
-                                              )}"
+                                              this.changeProperty('romajiName', (e.currentTarget as HTMLInputElement).value)}"
                                       />
                                   </div>
                                   <div class="property-entry sub-entry">
                                       <div class="property-name">Kanji:</div>
                                       <input
-                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          ?disabled="${this.updatedMedia.complete}"
                                           type="text"
                                           class="property-value"
-                                          .value="${detailPage.updatedMedia.kanjiName}"
+                                          .value="${this.updatedMedia.kanjiName ?? ''}"
                                           @change="${(e: Event) =>
-                                              detailPage.changeProperty(
-                                                  'kanjiName',
-                                                  (e.currentTarget as HTMLInputElement).value
-                                              )}"
+                                              this.changeProperty('kanjiName', (e.currentTarget as HTMLInputElement).value)}"
                                       />
                                   </div>
                                   <div class="property-entry sub-entry">
                                       <div class="property-name">Deutsch:</div>
                                       <input
-                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          ?disabled="${this.updatedMedia.complete}"
                                           type="text"
                                           class="property-value"
-                                          .value="${detailPage.updatedMedia.germanName}"
+                                          .value="${this.updatedMedia.germanName ?? ''}"
                                           @change="${(e: Event) =>
-                                              detailPage.changeProperty(
-                                                  'germanName',
-                                                  (e.currentTarget as HTMLInputElement).value
-                                              )}"
+                                              this.changeProperty('germanName', (e.currentTarget as HTMLInputElement).value)}"
                                       />
                                   </div>
                                   <div class="property-entry sub-entry">
                                       <div class="property-name">Englisch:</div>
                                       <input
-                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          ?disabled="${this.updatedMedia.complete}"
                                           type="text"
                                           class="property-value"
-                                          .value="${detailPage.updatedMedia.englishName}"
+                                          .value="${this.updatedMedia.englishName ?? ''}"
                                           @change="${(e: Event) =>
-                                              detailPage.changeProperty(
-                                                  'englishName',
-                                                  (e.currentTarget as HTMLInputElement).value
-                                              )}"
+                                              this.changeProperty('englishName', (e.currentTarget as HTMLInputElement).value)}"
                                       />
                                   </div>`
                             : ''}
 
                         <div class="separator"></div>
-                        ${renderGenreSection(detailPage)}
+                        ${renderGenreSection.call(this)}
                         <div id="right-panel-top">
                             <div id="right-panel-left-side">
                                 <div class="property-entry">
                                     <div class="property-name">Release:</div>
                                     <input
                                         id="release-input"
-                                        ?disabled="${detailPage.updatedMedia.complete}"
+                                        ?disabled="${this.updatedMedia.complete}"
                                         type="text"
                                         class="property-value"
-                                        .value="${detailPage.updatedMedia.release.toString()}"
-                                        @input="${(e: Event) => detailPage.releaseInput(e.currentTarget as HTMLInputElement)}"
-                                        @change="${(e: Event) => detailPage.releaseChanged(e.currentTarget as HTMLInputElement)}"
+                                        .value="${this.updatedMedia.release.toString()}"
+                                        @input="${(e: Event) => this.releaseInput(e.currentTarget as HTMLInputElement)}"
+                                        @change="${(e: Event) => this.releaseChanged(e.currentTarget as HTMLInputElement)}"
                                     />
                                 </div>
                                 <div class="property-entry">
                                     <div class="property-name">Kategorie:</div>
                                     <drop-down
                                         class="property-value"
-                                        ?disabled="${detailPage.updatedMedia.complete}"
+                                        ?disabled="${this.updatedMedia.complete}"
                                         .options="${DropDownOption.createSimpleArray(
                                             Object.values(MediaCategory),
-                                            detailPage.updatedMedia.type
+                                            this.updatedMedia.type
                                         )}"
                                     ></drop-down>
                                 </div>
@@ -213,38 +200,38 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                     <div class="property-name">Sprache:</div>
                                     <drop-down
                                         class="property-value"
-                                        ?disabled="${detailPage.updatedMedia.complete}"
+                                        ?disabled="${this.updatedMedia.complete}"
                                         .options="${DropDownOption.createSimpleArray(
                                             Object.values(Language),
-                                            detailPage.updatedMedia.language
+                                            this.updatedMedia.language
                                         )}"
-                                        @selectionChange="${(e: Event) =>
-                                            detailPage.changeProperty('language', e.detail.option.value)}"
+                                        @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
+                                            this.changeProperty('language', e.detail.option.value)}"
                                     ></drop-down>
                                 </div>
                                 <div class="property-entry">
                                     <div class="property-name">Status:</div>
                                     <drop-down
                                         class="property-value"
-                                        ?disabled="${detailPage.updatedMedia.complete}"
+                                        ?disabled="${this.updatedMedia.complete}"
                                         .options="${DropDownOption.createSimpleArray(
                                             Object.values(MediaStatus),
-                                            detailPage.updatedMedia.status
+                                            this.updatedMedia.status
                                         )}"
-                                        @selectionChange="${(e: Event) =>
-                                            detailPage.changeProperty('status', e.detail.option.value)}"
+                                        @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
+                                            this.changeProperty('status', e.detail.option.value)}"
                                     ></drop-down>
                                 </div>
                             </div>
-                            <div id="target-group-section" class="property-entry" ?disabled="${detailPage.updatedMedia.complete}">
+                            <div id="target-group-section" class="property-entry" ?disabled="${this.updatedMedia.complete}">
                                 <div class="property-name">Zielgruppe:</div>
                                 <div
                                     id="target-group-icon"
-                                    target-group="${detailPage.updatedMedia.targetGroup}"
+                                    target-group="${this.updatedMedia.targetGroup}"
                                     @click="${() =>
-                                        detailPage.changeProperty(
+                                        this.changeProperty(
                                             'targetGroup',
-                                            Enum.nextValue(TargetGroup, detailPage.updatedMedia.targetGroup, 'None')
+                                            Enum.nextValue(TargetGroup, this.updatedMedia.targetGroup, 'None')
                                         )}"
                                 ></div>
                                 <svg id="target-group-label" viewbox="0 0 100 30">
@@ -256,18 +243,18 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                                         fill="white"
                                         dominant-baseline="central"
                                     >
-                                        ${detailPage.updatedMedia.targetGroup}
+                                        ${this.updatedMedia.targetGroup}
                                     </text>
                                 </svg>
                             </div>
                         </div>
-                        ${detailPage.relatedTracks.length > 0
+                        ${this.relatedTracks.length > 0
                             ? html`
                                   <div id="related-tracks-section" class="property-group">
                                       <div class="property-entry">
                                           <div class="property-name" style="width: unset">Verwandte Songs:</div>
                                       </div>
-                                      ${detailPage.relatedTracks.map(
+                                      ${this.relatedTracks.map(
                                           (track) => html`
                                               <div class="property-entry">
                                                   ♫
@@ -291,19 +278,18 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                         <div class="property-name">Beschreibung:</div>
                     </div>
                     <textarea
-                        ?disabled="${detailPage.updatedMedia.complete}"
+                        ?disabled="${this.updatedMedia.complete}"
                         class="textarea property-value"
                         id="description-input"
                         onclick="this.focus()"
-                        @change="${(e: Event) =>
-                            detailPage.changeProperty('description', (e.currentTarget as HTMLInputElement).value)}"
-                        .value="${detailPage.updatedMedia.description}"
+                        @change="${(e: Event) => this.changeProperty('description', (e.currentTarget as HTMLInputElement).value)}"
+                        .value="${this.updatedMedia.description ?? ''}"
                     ></textarea>
                 </div>
-                ${detailPage.createNew
+                ${this.createNew
                     ? html`
                           <div id="action-row">
-                              <div id="create-entry-link" @click="${() => detailPage.createEntry()}">
+                              <div id="create-entry-link" @click="${() => this.createEntry()}">
                                   <div id="create-entry-icon" icon="${Icons.SaveTick}"></div>
                                   <div id="create-entry-text">Eintrag erstellen</div>
                               </div>
@@ -312,18 +298,13 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
                     : ''}
                 <div id="path-row">
                     <label>Basispfad: </label>
-                    <input
-                        id="path"
-                        type="text"
-                        readonly
-                        value="${detailPage.updatedMedia.rootFolderPath ?? 'Kein Pfad ausgewählt'}"
-                    />
+                    <input id="path" type="text" readonly value="${this.updatedMedia.rootFolderPath ?? 'Kein Pfad ausgewählt'}" />
                     <div
                         id="edit-path-button"
                         icon="${Icons.Edit}"
-                        ?disabled="${detailPage.updatedMedia.complete}"
+                        ?disabled="${this.updatedMedia.complete}"
                         tooltip="PC durchsuchen"
-                        @click="${() => detailPage.changeBasePath()}"
+                        @click="${() => this.changeBasePath()}"
                     ></div>
                 </div>
             </div>
@@ -331,29 +312,26 @@ export function renderMediaDetailPage(detailPage: MediaDetailPage) {
     `;
 }
 
-/**
- * @param {MediaDetailPage} page
- */
-function renderGenreSection(page: MediaDetailPage) {
+function renderGenreSection(this: MediaDetailPage) {
     return html`<div class="property-entry genre-entry">
         <div class="property-name">Genres:</div>
         <div class="property-value">
-            ${Object.entries(groupBy(page.updatedMedia?.genres, 'section'))
+            ${Object.entries(groupBy(this.updatedMedia?.genres ?? [], 'section'))
                 .flatMap((x) => x[1])
                 .map(
                     (x) =>
                         html`<tag-label
-                            ?disabled="${page.updatedMedia.complete}"
+                            ?disabled="${this.updatedMedia.complete}"
                             @removed="${() =>
-                                page.changeProperty(
+                                this.changeProperty(
                                     'genres',
-                                    page.updatedMedia.genres.filter((genre) => genre != x)
+                                    this.updatedMedia.genres.filter((genre) => genre != x)
                                 )}"
                             .text="${x.name}"
                         ></tag-label>`
                 )}
-            ${!page.updatedMedia.complete
-                ? html` <div id="add-genre-button" @click="${() => page.showGenreSelectionDialog()}">+</div> `
+            ${!this.updatedMedia.complete
+                ? html` <div id="add-genre-button" @click="${() => this.showGenreSelectionDialog()}">+</div> `
                 : ''}
         </div>
     </div> `;

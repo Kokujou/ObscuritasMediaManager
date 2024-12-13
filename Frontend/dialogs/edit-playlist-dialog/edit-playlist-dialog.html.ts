@@ -4,10 +4,7 @@ import { Language } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { EditPlaylistDialog } from './edit-playlist-dialog';
 
-/**
- * @param { EditPlaylistDialog } dialog
- */
-export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
+export function renderEditPlaylistDialog(this: EditPlaylistDialog) {
     return html`
         <dialog-base
             showBorder
@@ -21,13 +18,15 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                     <div id="image-data-section">
                         <upload-area
                             id="playlist-image"
-                            @imageReceived="${(e: Event) => dialog.changeProperty('image', e.imageData)}"
+                            @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
+                                this.changeProperty('image', e.detail.imageData)}"
                         ></upload-area>
                         <div id="playlist-rating">
                             <star-rating
                                 max="5"
                                 singleSelect
-                                @selectionChange="${(e: Event) => dialog.changeProperty('rating', e.detail.rating)}"
+                                @selectionChange="${(e: CustomEvent<{ rating: number }>) =>
+                                    this.changeProperty('rating', e.detail.rating)}"
                             ></star-rating>
                         </div>
                     </div>
@@ -36,35 +35,35 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                             <div class="property-label">Name:</div>
                             <input
                                 class="property-value"
-                                .value="${dialog.newPlaylist.name}"
+                                .value="${this.newPlaylist.name}"
                                 oninput="this.dispatchEvent(new Event('change'))"
                                 @change="${(e: Event) =>
-                                    dialog.changeProperty('name', (e.currentTarget as HTMLInputElement).value)}"
+                                    this.changeProperty('name', (e.currentTarget as HTMLInputElement).value)}"
                             />
                         </div>
                         <div id="playlist-author" class="property">
                             <div class="property-label">Autor:</div>
                             <input
                                 class="property-value"
-                                .value="${dialog.newPlaylist.author}"
+                                .value="${this.newPlaylist.author ?? ''}"
                                 oninput="this.dispatchEvent(new Event('change'))"
                                 @change="${(e: Event) =>
-                                    dialog.changeProperty('author', (e.currentTarget as HTMLInputElement).value)}"
+                                    this.changeProperty('author', (e.currentTarget as HTMLInputElement).value)}"
                             />
                         </div>
                         <div id="playlist-genres" class="property">
                             <div class="property-label">Genres:</div>
                             <div class="property-value">
-                                ${dialog.newPlaylist.genres.map(
+                                ${this.newPlaylist.genres.map(
                                     (genre) => html`<tag-label
                                         .text="${genre}"
-                                        @removed="${() => dialog.removeGenre(genre)}"
+                                        @removed="${() => this.removeGenre(genre)}"
                                     ></tag-label>`
                                 )}
                                 <tag-label
                                     createNew
-                                    .autocomplete="${dialog.autocompleteGenres}"
-                                    @tagCreated="${(e: Event) => dialog.addGenre(e.detail.value)}"
+                                    .autocomplete="${this.autocompleteGenres}"
+                                    @tagCreated="${(e: CustomEvent<{ value: any }>) => this.addGenre(e.detail.value)}"
                                 ></tag-label>
                             </div>
                         </div>
@@ -74,9 +73,10 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                                 <drop-down
                                     .options="${DropDownOption.createSimpleArray(
                                         Object.values(Language),
-                                        dialog.newPlaylist.language
+                                        this.newPlaylist.language
                                     )}"
-                                    @selectionChange="${(e: Event) => dialog.changeProperty('language', e.detail.option.value)}"
+                                    @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
+                                        this.changeProperty('language', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                         </div>
@@ -86,23 +86,24 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                                 <drop-down
                                     .options="${DropDownOption.createSimpleArray(
                                         Object.values(Language),
-                                        dialog.newPlaylist.nation
+                                        this.newPlaylist.nation
                                     )}"
-                                    @selectionChange="${(e: Event) => dialog.changeProperty('nation', e.detail.option.value)}"
+                                    @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
+                                        this.changeProperty('nation', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="tracks-section" @dragover="${dialog.handleFilesDragOver}">
-                    ${dialog.draggingFiles
+                <div id="tracks-section" @dragover="${this.handleFilesDragOver}">
+                    ${this.draggingFiles
                         ? html`<div
                               id="drag-info-overlay"
                               @dragleave="${(e: Event) => {
                                   e.preventDefault();
-                                  dialog.draggingFiles = false;
+                                  this.draggingFiles = false;
                               }}"
-                              @drop="${dialog.dropFiles}"
+                              @drop="${this.dropFiles}"
                           ></div>`
                         : ''}
                     <div id="tracks-actions">
@@ -110,19 +111,19 @@ export function renderEditPlaylistDialog(dialog: EditPlaylistDialog) {
                             id="import-icon"
                             class="track-action"
                             icon="${Icons.Import}"
-                            @click="${() => dialog.openImportDialog()}"
+                            @click="${() => this.openImportDialog()}"
                         ></div>
                         <div
                             id="trash-icon"
                             class="track-action"
-                            @click="${() => dialog.clearTracks()}"
+                            @click="${() => this.clearTracks()}"
                             icon="${Icons.Trash}"
                         ></div>
                     </div>
                     <ordered-list
                         id="tracks-container"
-                        .items="${dialog.newPlaylist?.tracks ?? []}"
-                        @items-changed="${(e: Event) => dialog.changeProperty('tracks', e.detail)}"
+                        .items="${this.newPlaylist?.tracks ?? []}"
+                        @items-changed="${(e: CustomEvent<any[]>) => this.changeProperty('tracks', e.detail)}"
                         propertyName="name"
                     ></ordered-list>
                 </div>

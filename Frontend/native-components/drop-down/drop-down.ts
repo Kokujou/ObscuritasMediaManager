@@ -1,11 +1,10 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { LitElementBase } from '../../data/lit-element-base';
 import { DropDownOption } from './drop-down-option';
 import { renderDropDownStyles } from './drop-down.css';
 import { renderDropDown } from './drop-down.html';
 
-/** @enum {string} */
 export const DropDownStyles = { simple: 'simple', solid: 'solid', compact: 'compact' };
 
 @customElement('drop-down')
@@ -41,18 +40,21 @@ export class DropDown extends LitElementBase {
         else return notForbiddenOptions.map((x) => x.text).join(', ');
     }
 
+    @property() maxDisplayDepth = 5;
+    @property() _currentIndex = 0;
+    @property() unsetText = 'Unset';
+    @property() required = false;
+    @property() useSearch = false;
+    @property() useToggle = false;
+    @property() multiselect = false;
+    @property() threeValues = false;
+    @property() searchFilter = '';
+    @property({ type: Array }) options: DropDownOption<any>[] = [];
+
+    @state() showDropDown = false;
+
     constructor() {
         super();
-        this.maxDisplayDepth = 5;
-        this._currentIndex = 0;
-        this.unsetText = 'Unset';
-        this.required = false;
-        this.useSearch = false;
-        this.useToggle = false;
-        this.multiselect = false;
-        this.threeValues = false;
-        this.searchFilter = '';
-        /** @type {DropDownOption[]} */ this.options = [];
         this.addEventListener('click', () => {
             this.clickedOnElement = true;
         });
@@ -64,32 +66,23 @@ export class DropDown extends LitElementBase {
     }
 
     override render() {
-        return renderDropDown(this);
-    }
-
-    scroll(event) {
-        event.preventDefault();
+        return renderDropDown.call(this);
     }
 
     updateSearchFilter() {
-        /** @type {HTMLInputElement} */ var searchBox = this.shadowRoot!.querySelector('#dropdown-search');
+        var searchBox = this.shadowRoot!.querySelector('#dropdown-search') as HTMLInputElement;
         this.searchFilter = searchBox.value;
         this.requestFullUpdate();
     }
 
     resetSearchFilter() {
-        /** @type {HTMLInputElement} */ var searchBox = this.shadowRoot!.querySelector('#dropdown-search');
+        var searchBox = this.shadowRoot!.querySelector('#dropdown-search') as HTMLInputElement;
         this.searchFilter = '';
         searchBox.value = '';
         this.requestFullUpdate();
     }
 
-    /**
-     *
-     * @param {DropDownOption} option
-     * @param {CheckboxState} state
-     */
-    changeOptionState(option: DropDownOption, state: CheckboxState) {
+    changeOptionState(option: DropDownOption<any>, state: CheckboxState) {
         if (state != CheckboxState.Forbid && !this.multiselect) for (let o of this.options) o.state = CheckboxState.Forbid;
         option.state = state;
 

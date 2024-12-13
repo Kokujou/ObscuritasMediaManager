@@ -1,32 +1,29 @@
 import { html } from 'lit-element';
 import { DialogBase } from './dialog-base';
 
-/**
- * @param {DialogBase} dialog
- */
-export function renderDialogBase(dialog: DialogBase) {
+export function renderDialogBase(this: DialogBase) {
     return html`
         <div id="dialog-outer">
-            <div id="dialog-border" ?invisible="${!dialog.properties?.showBorder}">
+            <div id="dialog-border" ?invisible="${!this.properties?.showBorder}">
                 <div id="dialog-container" tabindex="0" autofocus>
-                    <div id="dialog-title">${dialog.caption}</div>
-                    ${dialog.declineActionText ? html` <div id="x-button" @click="${() => dialog.decline()}">&times;</div>` : ''}
-                    ${dialog.properties?.content
-                        ? html`<div id="dialog-text">${dialog.properties.content}</div>`
+                    <div id="dialog-title">${this.caption}</div>
+                    ${this.declineActionText ? html` <div id="x-button" @click="${() => this.decline()}">&times;</div>` : ''}
+                    ${this.properties?.content
+                        ? html`<div id="dialog-text">${this.properties.content}</div>`
                         : html` <div id="dialog-content"><slot></slot></div>`}
 
                     <div id="dialog-actions">
-                        ${dialog.declineActionText
+                        ${this.declineActionText
                             ? html`<border-button
-                                  @click="${() => dialog.decline()}"
-                                  text="${dialog.declineActionText}"
+                                  @click="${() => this.decline()}"
+                                  text="${this.declineActionText}"
                               ></border-button>`
                             : ''}
-                        ${dialog.acceptActionText
+                        ${this.acceptActionText
                             ? html` <border-button
-                                  ?disabled="${!dialog.canAccept}"
-                                  @click="${() => dialog.accept()}"
-                                  text="${dialog.acceptActionText}"
+                                  ?disabled="${!this.canAccept}"
+                                  @click="${() => this.accept()}"
+                                  text="${this.acceptActionText}"
                               ></border-button>`
                             : ''}
                     </div>

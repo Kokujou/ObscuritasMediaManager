@@ -1,3 +1,4 @@
+import { render } from 'lit-element';
 import { customElement, property } from 'lit-element/decorators.js';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
@@ -23,7 +24,6 @@ export class AudioTileBase extends LitElementBase {
 
     constructor() {
         super();
-
         this.subscriptions.push(
             Session.instruments.subscribe(() => this.requestFullUpdate()),
             AudioService.visualizationData.subscribe(async () => {

@@ -1,11 +1,5 @@
 import { css } from 'lit-element';
 
-/**
- * TODO: - change detection - autosave
- * TODO: - isntrument selection
- * TODO: - reset functionality
- */
-
 export function renderMusicPlaylistStyles() {
     return css`
         * {

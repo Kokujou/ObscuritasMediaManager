@@ -1,9 +1,6 @@
 import { html } from 'lit-element';
 import { CustomTooltip } from './custom-tooltip';
 
-/**
- * @param {CustomTooltip} tooltip
- */
-export function renderTooltip(tooltip: CustomTooltip) {
-    return html` <div id="tooltip">${tooltip.text}</div> `;
+export function renderTooltip(this: CustomTooltip) {
+    return html` <div id="tooltip">${this.text}</div> `;
 }

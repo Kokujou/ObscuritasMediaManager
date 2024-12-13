@@ -21,9 +21,6 @@ export function registerTargetGroups() {
     `);
 }
 
-/**
- * @param {TargetGroup} group
- */
 function getTargetGroupIconPath(group: TargetGroup) {
     switch (group) {
         case TargetGroup.Children:

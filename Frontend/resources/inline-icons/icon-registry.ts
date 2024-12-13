@@ -35,51 +35,51 @@ import { playPlaylistIcon } from './playlist-icons/play-playlist-icon.svg';
 import { savePlaylistIcon } from './playlist-icons/save-playlist-icon.svg';
 import { shufflePlaylistIcon } from './playlist-icons/shuffle-playlist-icon.svg';
 
-class IconRegistry {
-    static Cross = crossIcon();
-    static Trash = trashIcon();
-    static Arrow = arrowIcon();
-    static Import = importIcon();
-    static Plus = plusIcon();
-    static Popup = popupIcon();
-    static AddPlaylist = addPlaylistIcon();
-    static BrowsePlaylist = browsePlaylistIcon();
-    static DownloadPlaylist = downloadPlaylistIcon();
-    static PlayPlaylist = playPlaylistIcon();
-    static SavePlaylist = savePlaylistIcon();
-    static ShufflePlaylist = shufflePlaylistIcon();
-    static ChangeVolume = changeVolumeIcon();
-    static FastForward = fastForwardIcon();
-    static IncreaseVolume = increaseVolumeIcon();
-    static Pause = pauseIcon();
-    static Play = playIcon();
-    static Clean = cleanIcon();
-    static Lookup = lookupIcon();
-    static Note = noteIcon();
-    static Revert = revertIcon();
-    static SaveTick = saveTickIcon();
-    static Unset = unsetIcon();
-    static SelectAll = selectAllIcon();
-    static UnselectAll = unselectAllIcon();
-    static Ascending = ascendingIcon();
-    static Descending = descendingIcon();
-    static Speech = speechIcon();
-    static Globus = globusIcon();
-    static Drag = dragIcon();
-    static Drop = dropIcon();
-    static Clipboard = clipboardIcon();
-    static Edit = editIcon();
-    static Repair = repairIcon();
-}
+export const IconRegistry = {
+    Cross: crossIcon(),
+    Trash: trashIcon(),
+    Arrow: arrowIcon(),
+    Import: importIcon(),
+    Plus: plusIcon(),
+    Popup: popupIcon(),
+    AddPlaylist: addPlaylistIcon(),
+    BrowsePlaylist: browsePlaylistIcon(),
+    DownloadPlaylist: downloadPlaylistIcon(),
+    PlayPlaylist: playPlaylistIcon(),
+    SavePlaylist: savePlaylistIcon(),
+    ShufflePlaylist: shufflePlaylistIcon(),
+    ChangeVolume: changeVolumeIcon(),
+    FastForward: fastForwardIcon(),
+    IncreaseVolume: increaseVolumeIcon(),
+    Pause: pauseIcon(),
+    Play: playIcon(),
+    Clean: cleanIcon(),
+    Lookup: lookupIcon(),
+    Note: noteIcon(),
+    Revert: revertIcon(),
+    SaveTick: saveTickIcon(),
+    Unset: unsetIcon(),
+    SelectAll: selectAllIcon(),
+    UnselectAll: unselectAllIcon(),
+    Ascending: ascendingIcon(),
+    Descending: descendingIcon(),
+    Speech: speechIcon(),
+    Globus: globusIcon(),
+    Drag: dragIcon(),
+    Drop: dropIcon(),
+    Clipboard: clipboardIcon(),
+    Edit: editIcon(),
+    Repair: repairIcon(),
+};
 
 export const Icons = {} as typeof IconRegistry;
-Object.keys(IconRegistry).forEach((x) => (Icons[x] = x));
+Object.keys(IconRegistry).forEach((x: keyof typeof IconRegistry) => (Icons[x] = x));
 
 export function registerIcons() {
     return unsafeCSS(
         Object.keys(Icons)
             .map(
-                (selector) =>
+                (selector: keyof typeof Icons) =>
                     `[icon=${selector}] {
                         ${renderMaskImage(IconRegistry[selector])}
                     }`

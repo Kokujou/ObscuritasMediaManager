@@ -1,62 +1,48 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { sortBy } from '../../services/extensions/array.extensions';
 import { cloneElementAsFixed, findElementIndexMatchingCursorY } from '../../services/extensions/document.extensions';
 import { minmax } from '../../services/extensions/math.extensions';
 import { renderPriorityList } from './priority-list.html';
 
-/**
- * @typedef {{order: number}} PriorityListItem
- */
+type PriorityListItem = { order: number };
 
 @customElement('priority-list')
 export class PriorityList extends LitElementBase {
-    static get properties() {
-        return {
-            items: { type: Array, reflect: true },
-            itemRenderer: { type: Object, reflect: true },
-        };
-    }
-
     createRenderRoot() {
         return this;
     }
 
+    @property({ type: Array }) public declare items: any[];
+    @property({ type: Object }) public declare itemRenderer: (item: any) => unknown;
+
+    @state() protected oldEntries: any[] = [];
+    @state() protected declare currentlyDraggedOverItemIndex: number;
+    @state() protected declare currentlyDraggedItemIndex: number;
+    @state() protected declare draggedElement?: HTMLElement;
+
     constructor() {
         super();
 
-        /** @type {PriorityListItem[]} */ this.items;
-        /** @type {(item: PriorityListItem) => TemplateResult} */ this.itemRenderer;
-
-        /** @type {PriorityListItem[]} */ this.oldEntries = [];
-        this.currentlyDraggedOverItemIndex = 0;
-        this.currentlyDraggedItemIndex = 0;
-        this.draggedElement = null;
-        document.addEventListener('dragover', (e: Event) => this.handleItemMove(e), { signal: this.abortController.signal });
-
+        document.addEventListener('dragover', (e) => this.handleItemMove(e), { signal: this.abortController.signal });
         document.addEventListener('dragend', () => this.handleItemDrop(), { signal: this.abortController.signal });
     }
 
     override render() {
-        return renderPriorityList(this);
+        return renderPriorityList.call(this);
     }
 
-    /**
-     *
-     * @param {DragEvent} event
-     * @param {number} index
-     */
     registerDragItem(event: DragEvent, index: number) {
         this.oldEntries = [...this.items];
 
-        event.dataTransfer.setData('text/html', null);
-        event.dataTransfer.setDragImage(new Image(), 0, 0);
+        event.dataTransfer!.setData('text/html', null!);
+        event.dataTransfer!.setDragImage(new Image(), 0, 0);
 
-        /** @type {HTMLElement} */ var selectedElement = this.querySelector(`.item[order='${index}']`);
+        var selectedElement = this.querySelector<HTMLElement>(`.item[order='${index}']`)!;
 
         var clonedElement = cloneElementAsFixed(selectedElement);
         clonedElement.id = 'dragged-element';
-        selectedElement.parentElement.append(clonedElement);
+        selectedElement.parentElement?.append(clonedElement);
         this.draggedElement = clonedElement;
 
         selectedElement.classList.add('overlayed');
@@ -64,12 +50,9 @@ export class PriorityList extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    /**
-     *
-     * @param {DragEvent} event
-     */
     handleItemMove(event: DragEvent) {
-        if (this.currentlyDraggedItemIndex < 0) return;
+        if (this.currentlyDraggedItemIndex < 0 || !this.draggedElement) return;
+
         event.preventDefault();
         var items = this.querySelectorAll('.item');
         var draggedOverIndex = findElementIndexMatchingCursorY(event.pageY, items);
@@ -84,7 +67,7 @@ export class PriorityList extends LitElementBase {
         if (!this.draggedElement) return;
         this.draggedElement.remove();
 
-        var selectedElement = this.querySelector(`.item[order='${this.currentlyDraggedItemIndex}']`);
+        var selectedElement = this.querySelector(`.item[order='${this.currentlyDraggedItemIndex}']`)!;
 
         if (!selectedElement.classList) return;
 
@@ -95,20 +78,12 @@ export class PriorityList extends LitElementBase {
         //    this.notifyListChanged();
     }
 
-    /**
-     *
-     * @param {number} index1
-     * @param {number} index2
-     */
     switchItems(index1: number, index2: number) {
         this.items[index1].order = index2;
         this.items[index2].order = index1;
         this.items = sortBy(this.items, (x) => x.order);
     }
 
-    /**
-     * @param {number} index
-     */
     switchWithDragged(index: number) {
         if (
             this.currentlyDraggedItemIndex < 0 ||
@@ -120,10 +95,14 @@ export class PriorityList extends LitElementBase {
         this.currentlyDraggedOverItemIndex = index;
         this.switchItems(this.currentlyDraggedItemIndex, index);
 
-        var oldSelectedElement = this.querySelector(`.item[order='${this.currentlyDraggedItemIndex}']`);
+        var oldSelectedElement = this.querySelector(`.item[order='${this.currentlyDraggedItemIndex}']`)!;
         oldSelectedElement.classList.remove('overlayed');
 
         this.currentlyDraggedItemIndex = index;
         this.requestFullUpdate();
+    }
+
+    notifyDeleteItem(item: any) {
+        this.dispatchEvent(new CustomEvent('delete-item', { detail: item }));
     }
 }

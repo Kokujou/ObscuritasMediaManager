@@ -1,28 +1,18 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 
-/** @template T */
-export class DropDownOption {
-    /** @type {string} */ text;
-    /** @type {T} */ value;
-    /** @type {CheckboxState} */ state;
-    /** @type {string} */ color;
+export class DropDownOption<T> {
+    text: string;
+    value: T;
+    state: CheckboxState;
+    color: string;
 
-    /**
-     * @template T
-     * @param {Partial<DropDownOption<T>> & {value: T}} obj
-     */
-    static create(obj: Partial<DropDownOption<T>> & { value: T; }) {
+    static create<T>(obj: Partial<DropDownOption<T>> & { value: T }) {
         var newObj = new DropDownOption(obj.value);
         newObj = Object.assign(newObj, obj);
         return newObj;
     }
 
-    /**
-     * @template T
-     * @param {T[]} values
-     * @param {T} defaultValue
-     */
-    static createSimpleArray(values: T[], defaultValue: T) {
+    static createSimpleArray<T>(values: T[], defaultValue: T) {
         return values.map((key) =>
             DropDownOption.create({
                 value: key,
@@ -32,9 +22,6 @@ export class DropDownOption {
         );
     }
 
-    /**
-     * @param {T} value
-     */
     constructor(value: T) {
         this.value = value;
     }

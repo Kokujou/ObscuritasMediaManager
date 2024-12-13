@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { renderBorderButtonStyles } from './border-button.css';
 import { renderBorderButton } from './border-button.html';
@@ -9,17 +9,7 @@ export class BorderButton extends LitElementBase {
         return renderBorderButtonStyles();
     }
 
-    static get properties() {
-        return {
-            text: { type: String, reflect: true },
-            disabled: { type: Boolean, reflect: true },
-        };
-    }
-
-    constructor() {
-        super();
-        /** @type {string} */ this.text;
-    }
+    @property() public declare text: string;
 
     override render() {
         return renderBorderButton(this);

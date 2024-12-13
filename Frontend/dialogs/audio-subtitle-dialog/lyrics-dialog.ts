@@ -61,12 +61,11 @@ export class LyricsDialog extends LitElementBase {
 
     constructor() {
         super();
-
         this.onclick = () => this.fadeAndRemove();
 
         window.addEventListener(
             'keyup',
-            (e: Event) => {
+            (e) => {
                 if (e.key == 'Escape') this.fadeAndRemove();
             },
             { signal: this.abortController.signal }
@@ -80,7 +79,7 @@ export class LyricsDialog extends LitElementBase {
     }
 
     override render() {
-        return renderAudioSubtitleDialog(this);
+        return renderAudioSubtitleDialog.call(this);
     }
 
     async fadeAndRemove() {
@@ -130,7 +129,7 @@ export class LyricsDialog extends LitElementBase {
     updateLyrics(newTitle: string, newLyrics: string) {
         this.lyrics = newLyrics;
         this.title = newTitle;
-        /** @type {HTMLElement} */ var scrollContainer = this.shadowRoot!.querySelector('#lyrics-content-wrapper-2')!;
+        var scrollContainer = this.shadowRoot!.querySelector('#lyrics-content-wrapper-2')!;
         scrollContainer.getAnimations()[0].currentTime = 0;
 
         this.requestFullUpdate();

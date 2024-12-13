@@ -1,16 +1,9 @@
 import { html } from 'lit-element';
 import { LinkElement } from './link-element';
 
-/**
- * @param { LinkElement } linkElement
- */
-export function renderLinkElement(linkElement: LinkElement) {
+export function renderLinkElement(this: LinkElement) {
     return html`
-        <a
-            target="${linkElement.target ?? '_self'}"
-            @click="${(e: Event) => linkElement.handleClick(e)}"
-            href="${linkElement.fullLink}"
-        >
+        <a target="${this.target ?? '_self'}" @click="${(e: Event) => this.handleClick(e)}" href="${this.fullLink}">
             <slot></slot
         ></a>
     `;

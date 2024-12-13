@@ -1,3 +1,4 @@
+import { TemplateResult } from 'lit-element';
 import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { PageRouting } from '../../pages/page-routing/page-routing';
@@ -17,57 +18,43 @@ export class SelectOptionsDialog extends LitElementBase {
         };
     }
 
-    /**
-     * @param {Object.<string,TemplateResult | string>} options
-     */
-    static show(options: { [s: string]: TemplateResult | string; }, multiselect = true) {
+    static show(options: { [s: string]: TemplateResult | string }, multiselect = true) {
         var dialog = new SelectOptionsDialog();
         dialog.options = options;
         dialog.multiselect = multiselect;
         dialog.isComplete = () => true;
 
-        PageRouting.container.append(dialog);
+        PageRouting.container!.append(dialog);
 
         return dialog;
     }
 
-    /**
-     *
-     * @param {()=>boolean} isComplete
-     * @returns
-     */
     static startShowing(isComplete: () => boolean, multiselect = true) {
         var dialog = new SelectOptionsDialog();
         dialog.options = {};
         dialog.multiselect = multiselect;
         dialog.isComplete = isComplete;
 
-        PageRouting.container.append(dialog);
+        PageRouting.container!.append(dialog);
 
         return dialog;
     }
-    /** @type {Object.<string,TemplateResult | string>} */ options = {};
-    /** @type {boolean} */ multiselect = true;
-    /** @type {()=>boolean} */ isComplete = () => false;
+    options: { [key: string]: TemplateResult | string } = {};
+    multiselect = true;
+    isComplete = () => false;
 
     override render() {
-        return renderSelectOptionsDialog(this);
+        return renderSelectOptionsDialog.call(this);
     }
 
-    /** @param {Event} e */
     accept(e: Event) {
         e.stopPropagation();
-        /** @type {NodeListOf<HTMLInputElement>} */ var checkedInputs = this.shadowRoot!.querySelectorAll('input:checked');
+        var checkedInputs = this.shadowRoot!.querySelectorAll('input:checked') as NodeListOf<HTMLInputElement>;
         var selectedIds = [];
         for (var input of checkedInputs) selectedIds.push(input.value);
         this.dispatchEvent(new CustomEvent('accept', { detail: { selected: selectedIds } }));
     }
 
-    /**
-     *
-     * @param {string} key
-     * @param {TemplateResult | string} value
-     */
     addEntry(key: string, value: TemplateResult | string) {
         this.options[key] = value;
         this.requestFullUpdate();

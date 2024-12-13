@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
 import { union } from '../../services/extensions/array.extensions';
@@ -19,9 +19,6 @@ export class OrderedList extends LitElementBase {
         };
     }
 
-    /**
-     * @param {Event} eventTarget
-     */
     static getRowToDropOn(eventTarget: Event) {
         // @ts-ignore
         var targetElement = eventTarget.originalTarget;
@@ -30,18 +27,14 @@ export class OrderedList extends LitElementBase {
         return children.find((x) => x.draggable);
     }
 
-    constructor() {
-        super();
+    @property({ type: Array }) items: any[] = [];
+    @property() propertyName = '';
 
-        /** @type {any[]} */ this.items = [];
-        /** @type {string} */ this.propertyName = '';
+    @state() lastIndex = 0;
+    @state() selectedIndices: number[] = [];
 
-        /** @type {number} */ this.lastIndex = 0;
-        /** @type {number[]} */ this.selectedIndices = [];
-
-        /** @type {HTMLElement} */ this.dragged;
-        /** @type {HTMLElement} */ this.lastHovered;
-    }
+    @state() protected declare dragged: HTMLElement | null;
+    @state() protected declare lastHovered: HTMLElement | null;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -85,10 +78,10 @@ export class OrderedList extends LitElementBase {
             if (!this.lastHovered || !this.dragged) return;
             event.stopPropagation();
 
-            var currentIndex = Number.parseInt(this.dragged.getAttribute('index'));
-            var targetIndex = Number.parseInt(this.lastHovered.getAttribute('index'));
+            var currentIndex = Number.parseInt(this.dragged.getAttribute('index')!);
+            var targetIndex = Number.parseInt(this.lastHovered.getAttribute('index')!);
 
-            if (!this.selectedIndices || !this.selectedIndices.includes(Number.parseInt(this.dragged.getAttribute('index'))))
+            if (!this.selectedIndices || !this.selectedIndices.includes(Number.parseInt(this.dragged.getAttribute('index')!)))
                 this.selectedIndices = [currentIndex];
 
             var draggedItems = this.selectedIndices.sort().map((id) => this.items[id]);
@@ -108,13 +101,9 @@ export class OrderedList extends LitElementBase {
     }
 
     override render() {
-        return renderOrderedList(this);
+        return renderOrderedList.call(this);
     }
 
-    /**
-     * @param {MouseEvent} event
-     * @param {number} index
-     */
     handleRowClick(event: MouseEvent, index: number) {
         var newValues = [index];
 
@@ -127,10 +116,6 @@ export class OrderedList extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {number} a
-     * @param {number} b
-     */
     *getRangeBetween(a: number, b: number) {
         var add = 1;
         if (a > b) add = -1;
@@ -138,9 +123,6 @@ export class OrderedList extends LitElementBase {
         yield current;
     }
 
-    /**
-     * @param {DragEvent} event
-     */
     handleDragLeave(event: DragEvent) {
         if (!this.dragged) return;
         event.stopPropagation();

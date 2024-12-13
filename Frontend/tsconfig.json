@@ -1,11 +1,10 @@
 {
     "buildOptions": {},
     "compilerOptions": {
-        "module": "esnext",
-        "target": "esnext",
-        "checkJs": true,
-        "allowJs": true,
-        "sourceMap": false,
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
+        "module": "ESNext",
+        "target": "ESNext",
+        "sourceMap": true,
         "alwaysStrict": true,
         "forceConsistentCasingInFileNames": true,
         "pretty": true,
@@ -13,7 +12,8 @@
         "experimentalDecorators": true,
         "moduleResolution": "node",
         "noImplicitAny": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "plugins": [{ "name": "ts-lit-plugin" }]
     },
     "include": ["**/*.ts", "**/*.json"],
     "exclude": [

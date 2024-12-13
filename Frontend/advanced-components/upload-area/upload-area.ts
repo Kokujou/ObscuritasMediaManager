@@ -41,10 +41,9 @@ export class UploadArea extends LitElementBase {
         });
     }
 
-    async receivePastedImage(event: Event) {
+    async receivePastedImage(event: ClipboardEvent) {
         event.preventDefault();
-        // @ts-ignore
-        /** @type {DataTransfer} */ var clipboardData = event.clipboardData;
+        var clipboardData = event.clipboardData as DataTransfer;
         await this.processImageDataTransfer(clipboardData);
     }
 
@@ -60,10 +59,9 @@ export class UploadArea extends LitElementBase {
         if (targetElementClasses.contains('focus')) targetElementClasses.remove('focus');
     }
 
-    async receiveDroppedImage(event: Event) {
+    async receiveDroppedImage(event: DragEvent) {
         event.preventDefault();
-        // @ts-ignore
-        /** @type {DataTransfer} */ var dataTransfer = event.dataTransfer;
+        var dataTransfer = event.dataTransfer as DataTransfer;
         await this.processImageDataTransfer(dataTransfer);
         this.dragLeave(event);
     }

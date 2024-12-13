@@ -1,10 +1,7 @@
 import { html } from 'lit-element';
 import { LoadingCircle } from './loading-circle';
 
-/**
- * @param { LoadingCircle } loadingCircle
- */
-export function renderLoadingCircle(loadingCircle: LoadingCircle) {
+export function renderLoadingCircle(this: LoadingCircle) {
     return html`
         <svg width="100%" height="100%">
             <g>

@@ -1,10 +1,10 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { renderGroupedDropdownStyles } from './grouped-dropdown.css';
 import { renderGroupedDropdown } from './grouped-dropdown.html';
 
-/** @typedef { Object.<string, string[]> } DropdownCategories */
-/** @typedef { {value:string, category: keyof DropdownCategories} } GroupedDropdownResult */
+export type DropdownCategories = { [key: string]: string[] };
+export type GroupedDropdownResult = { value: string | null; category: keyof DropdownCategories | null };
 
 @customElement('grouped-dropdown')
 export class GroupedDropdown extends LitElementBase {
@@ -12,37 +12,23 @@ export class GroupedDropdown extends LitElementBase {
         return renderGroupedDropdownStyles();
     }
 
-    static get properties() {
-        return {
-            options: { type: Object, reflect: true },
-            result: { type: Object, reflect: true },
-            maxDisplayDepth: { type: Number, reflect: true },
-
-            showDropDown: { type: Boolean, reflect: false },
-        };
-    }
-
     get results() {
         return Object.entries(this.options)
-            .map((x) => x[1].map((y) => /** @type {GroupedDropdownResult} */ ({ category: x[0], value: y })))
+            .map((x) => x[1].map((y: any) => ({ category: x[0], value: y } as GroupedDropdownResult)))
             .flatMap((x) => x);
     }
 
-    constructor() {
-        super();
-
-        /** @type {DropdownCategories} */ this.options;
-        /** @type {boolean} */ this.showDropDown;
-        /** @type {number} */ this.maxDisplayDepth = 5;
-        /** @type {string} */ this.search = '';
-        this.result = /** @type {GroupedDropdownResult} */ { category: null, value: null };
-    }
+    @property({ type: Object }) options: Object;
+    @property({ type: Boolean }) showDropDown: boolean;
+    @property({ type: Number }) maxDisplayDepth = 5;
+    @property() search = '';
+    result = { category: null, value: null } as GroupedDropdownResult;
+    searchResetCallback = setTimeout(() => (this.search = ''), 1000);
 
     override connectedCallback() {
         super.connectedCallback();
 
-        this.searchResetCallback = setTimeout(() => (this.search = ''), 1000);
-        this.addEventListener('keydown', (e: Event) => {
+        this.addEventListener('keydown', (e) => {
             if (e.key.length == 1) {
                 this.search += e.key;
                 clearTimeout(this.searchResetCallback);
@@ -67,9 +53,6 @@ export class GroupedDropdown extends LitElementBase {
         });
     }
 
-    /**
-     * @param {Map<string,any>} _changedProperties
-     */
     updated(_changedProperties: Map<string, any>) {
         super.updated(_changedProperties);
         if (_changedProperties.has('result')) {
@@ -79,6 +62,6 @@ export class GroupedDropdown extends LitElementBase {
     }
 
     override render() {
-        return renderGroupedDropdown(this);
+        return renderGroupedDropdown.call(this);
     }
 }

@@ -16,7 +16,7 @@ export function renderUploadArea(this: UploadArea) {
             <div
                 id="upload-description"
                 contenteditable="true"
-                @paste="${(e: Event) => this.receivePastedImage(e)} "
+                @paste="${(e: ClipboardEvent) => this.receivePastedImage(e)} "
                 @click=${(e: Event) => this.openImageBrowser(e)}
             >
                 <div id="icon-section">

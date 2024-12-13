@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { renderRangeSliderStyles } from './range-slider.css';
 import { renderRangeSlider } from './range-slider.html';
@@ -18,20 +18,17 @@ export class RangeSlider extends LitElementBase {
         };
     }
 
-    constructor() {
-        super();
-        /** @type {string} */ this.min = '0';
-        /** @type {string} */ this.max = '100';
-        /** @type {string} */ this.value = '10';
-        /** @type {string} */ this.step = '1';
-    }
+    @property() min = '0';
+    @property() max = '100';
+    @property() value = '10';
+    @property() step = '1';
 
     override render() {
-        return renderRangeSlider(this);
+        return renderRangeSlider.call(this);
     }
 
     notifyValueChanged() {
-        /** @type {HTMLInputElement} */ var sliderElement = this.shadowRoot!.querySelector('#slider');
+        var sliderElement = this.shadowRoot!.querySelector('#slider') as HTMLInputElement;
         this.value = sliderElement.value;
         var eventData = { value: this.value };
         this.dispatchEvent(new CustomEvent('valueChanged', { detail: eventData }));

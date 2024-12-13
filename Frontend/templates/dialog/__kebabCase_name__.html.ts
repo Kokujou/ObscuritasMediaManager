@@ -1,10 +1,7 @@
 import { html } from 'lit-element';
 import { {{ pascalCase name }} } from './{{ kebabCase name }}';
 
-/**
- * @param { {{ pascalCase name }} } dialog
- */
-export function render{{ pascalCase name}}(dialog) {
+export function render{{ pascalCase name}}(this: {{ pascalCase name}}) {
     return html`
         <dialog-base
             caption="Your caption"

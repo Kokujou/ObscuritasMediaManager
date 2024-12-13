@@ -4,16 +4,13 @@ import { Icons } from '../../resources/inline-icons/icon-registry';
 import { getPageName } from '../../services/extensions/url.extension';
 import { PlaylistSelectionDialog } from './playlist-selection-dialog';
 
-/**
- * @param { PlaylistSelectionDialog } dialog
- */
-export function renderPlaylistSelectionDialog(dialog: PlaylistSelectionDialog) {
+export function renderPlaylistSelectionDialog(this: PlaylistSelectionDialog) {
     return html`
         <dialog-base
             caption="Playlists"
             acceptActionText="Speichern"
             declineActionText="Abbrechen"
-            ?canAccept="${!!dialog.selectedPlaylist}"
+            ?canAccept="${!!this.selectedPlaylist}"
             showBorder
         >
             <table>
@@ -29,12 +26,12 @@ export function renderPlaylistSelectionDialog(dialog: PlaylistSelectionDialog) {
                     </tr>
                 </thead>
                 <tbody>
-                    ${dialog.playlists.map(
+                    ${this.playlists.map(
                         (playlist) => html`<tr
-                            ?selected="${playlist?.id == dialog.selectedPlaylist?.id}"
+                            ?selected="${playlist?.id == this.selectedPlaylist?.id}"
                             @click="${() => {
-                                dialog.selectedPlaylist = playlist;
-                                dialog.requestFullUpdate();
+                                this.selectedPlaylist = playlist;
+                                this.requestFullUpdate();
                             }}"
                         >
                             <td class="name-column">${playlist.image}</td>
@@ -49,13 +46,11 @@ export function renderPlaylistSelectionDialog(dialog: PlaylistSelectionDialog) {
                                 <div
                                     class="popup-icon"
                                     icon="${Icons.Popup}"
-                                    @click="${
-                                        /** @param {Event} e */ (e: Event) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                            window.open(`./?guid=${playlist.id}#${getPageName(MusicPlaylistPage)}`, '_blank');
-                                        }
-                                    }"
+                                    @click="${(e: Event) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        window.open(`./?guid=${playlist.id}#${getPageName(MusicPlaylistPage)}`, '_blank');
+                                    }}"
                                 ></div>
                             </td>
                         </tr>`

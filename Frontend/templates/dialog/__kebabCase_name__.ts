@@ -15,9 +15,6 @@ export class {{ pascalCase name }} extends LitElementBase
         };
     }
 
-    /**
-     * @returns { {{ pascalCase name }} }
-     */
     static show() {
         var dialog = new {{ pascalCase name }}();
 
@@ -27,10 +24,7 @@ export class {{ pascalCase name }} extends LitElementBase
         return dialog;
     }
 
-    constructor() {
-        super();
-        /** @type {String} */ this.someProperty = '';
-    }
+    @property() someProperty = '';
 
     override render() {
         return render{{ pascalCase name }}(this);

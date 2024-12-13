@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import { CredentialsRequest } from '../../obscuritas-media-manager-backend-client';
@@ -10,7 +10,7 @@ import { renderLoginPage } from './login-page.html';
 
 @customElement('login-page')
 export class LoginPage extends LitElementBase {
-    static isPage = true;
+    static isPage = true as const;
     static pageName = 'Login';
 
     static override get styles() {
@@ -21,12 +21,8 @@ export class LoginPage extends LitElementBase {
         return { username: { type: String, reflect: false }, password: { type: String, reflect: false } };
     }
 
-    constructor() {
-        super();
-
-        this.username = '';
-        this.password = '';
-    }
+    @state() username = '';
+    @state() password = '';
 
     async login() {
         try {
@@ -40,6 +36,6 @@ export class LoginPage extends LitElementBase {
     }
 
     override render() {
-        return renderLoginPage(this);
+        return renderLoginPage.call(this);
     }
 }

@@ -24,6 +24,6 @@ export function renderPartialLoading() {
             }
         </style>
 
-        <div id="wrapper">${html([LoadingScreen.renderLoadingIcon()])}</div>
+        <div id="wrapper">${html([LoadingScreen.renderLoadingIcon()] as any)}</div>
     `;
 }

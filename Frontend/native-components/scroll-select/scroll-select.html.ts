@@ -1,20 +1,17 @@
 import { html } from 'lit-element';
 import { ScrollSelect } from './scroll-select';
 
-/**
- * @param {ScrollSelect} scrollSelect
- */
-export function renderScrollSelect(scrollSelect: ScrollSelect) {
+export function renderScrollSelect(this: ScrollSelect) {
     return html`
-        <div id="scroll-container" @pointerdown="${() => scrollSelect.startDragScrolling()}">
+        <div id="scroll-container" @pointerdown="${() => this.startDragScrolling()}">
             <div id="scroll-items">
                 <div id="item-container">
                     <div class="inner-space">x</div>
-                    ${scrollSelect.options.map(
+                    ${this.options.map(
                         (x) =>
                             html`<div
-                                class="scroll-item ${scrollSelect.options[scrollSelect.currentItemIndex] == x ? 'active' : ''}"
-                                @click="${() => scrollSelect.scrollToItem(x)}"
+                                class="scroll-item ${this.options[this.currentItemIndex] == x ? 'active' : ''}"
+                                @click="${() => this.scrollToItem(x)}"
                             >
                                 ${x}
                             </div>`

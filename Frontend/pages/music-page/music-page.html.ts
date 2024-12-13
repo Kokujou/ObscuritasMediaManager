@@ -1,5 +1,8 @@
 import { html } from 'lit-element';
+import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
+import { SortingProperties } from '../../data/music-sorting-properties';
 import { Session } from '../../data/session';
+import { SortingDirections } from '../../data/sorting-directions';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { AudioService } from '../../services/audio-service';
@@ -8,24 +11,23 @@ import { changePage } from '../../services/extensions/url.extension';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page';
 import { MusicPage } from './music-page';
 
-/**
- * @param {MusicPage} musicPage
- */
-export function renderMusicPage(musicPage: MusicPage) {
+export function renderMusicPage(this: MusicPage) {
     return html`
         <page-layout>
             <div id="music-page">
                 <div id="search-panel-container">
                     <music-filter
-                        .filter="${musicPage.filter}"
-                        .sortingProperty="${musicPage.sortingProperty}"
-                        .sortingDirection="${musicPage.sortingDirection}"
-                        @filterChanged="${(e: Event) => musicPage.updateFilter(e.detail.filter)}"
-                        @sortingUpdated="${(e: Event) => musicPage.updateSorting(e.detail.property, e.detail.direction)}"
+                        .filter="${this.filter}"
+                        .sortingProperty="${this.sortingProperty}"
+                        .sortingDirection="${this.sortingDirection}"
+                        @filterChanged="${(e: CustomEvent<{ filter: MusicFilterOptions }>) => this.updateFilter(e.detail.filter)}"
+                        @sortingUpdated="${(
+                            e: CustomEvent<{ property: SortingProperties; direction: keyof typeof SortingDirections }>
+                        ) => this.updateSorting(e.detail.property, e.detail.direction)}"
                         id="music-filter"
                     ></music-filter>
                     <div id="result-count-label">
-                        ${musicPage.filteredTracks.length} von ${Session.tracks.current().length} Musik-Tracks
+                        ${this.filteredTracks.length} von ${Session.tracks.current().length} Musik-Tracks
                     </div>
                 </div>
                 <div id="result-options-container">
@@ -34,7 +36,7 @@ export function renderMusicPage(musicPage: MusicPage) {
                             <a
                                 id="import-files"
                                 icon="${Icons.Import}"
-                                @click="${() => musicPage.importFolder()}"
+                                @click="${() => this.importFolder()}"
                                 tooltip="Tracks importieren"
                             ></a>
                             <a
@@ -48,7 +50,7 @@ export function renderMusicPage(musicPage: MusicPage) {
                             <a
                                 id="cleanup-tracks"
                                 icon="${Icons.Clean}"
-                                @click="${() => musicPage.cleanupTracks()}"
+                                @click="${() => this.cleanupTracks()}"
                                 tooltip="Defekte Tracks bereinigen"
                             ></a>
                         </div>
@@ -57,25 +59,26 @@ export function renderMusicPage(musicPage: MusicPage) {
                                 id="add-to-playlist"
                                 icon="${Icons.SavePlaylist}"
                                 tooltip="Zu einer Playlist hinzufügen"
-                                @click="${() => musicPage.showPlaylistSelectionDialog()}"
+                                @click="${() => this.showPlaylistSelectionDialog()}"
                             ></a>
                             <a
                                 id="create-playlist"
                                 icon="${Icons.AddPlaylist}"
                                 tooltip="Playlist erstellen"
-                                @click="${() => musicPage.showCreatePlaylistDialog()}"
+                                @click="${() => this.showCreatePlaylistDialog()}"
                             ></a>
                             <a
                                 id="play-playlist"
                                 icon="${Icons.PlayPlaylist}"
                                 tooltip="Ausgewählte Tracks abspielen"
-                                @click="${() => musicPage.playPlaylist()}"
+                                @click="${() => this.playPlaylist()}"
                             ></a>
                         </div>
 
                         <div class="option-section">
                             <range-slider
-                                @valueChanged="${(e: Event) => musicPage.changeVolume(e.detail.value)}"
+                                @valueChanged="${(e: CustomEvent<{ value: string }>) =>
+                                    this.changeVolume(Number.parseInt(e.detail.value))}"
                                 step="1"
                                 min="0"
                                 max="100"
@@ -84,11 +87,7 @@ export function renderMusicPage(musicPage: MusicPage) {
                             </range-slider>
                         </div>
 
-                        <div
-                            id="active-track-warning"
-                            ?invisible="${AudioService.paused}"
-                            @click="${() => musicPage.jumpToActive()}"
-                        >
+                        <div id="active-track-warning" ?invisible="${AudioService.paused}" @click="${() => this.jumpToActive()}">
                             Ein Track wird gerade abgespielt.&nbsp; <u> Klicken Sie hier </u> &nbsp;um zum aktiven Track zu
                             springen.
                         </div>
@@ -97,12 +96,12 @@ export function renderMusicPage(musicPage: MusicPage) {
                 <paginated-scrolling
                     id="search-results-container"
                     scrollTopThreshold="50"
-                    @scrollBottom="${() => musicPage.loadNext()}"
+                    @scrollBottom="${() => this.loadNext()}"
                 >
-                    ${musicPage.loading
+                    ${this.loading
                         ? html`<partial-loading></partial-loading>`
                         : html` <div id="search-results">
-                              ${musicPage.paginatedPlaylists.map(
+                              ${this.paginatedPlaylists.map(
                                   (playlist) =>
                                       html`
                                           <div class="audio-link-container">
@@ -112,33 +111,30 @@ export function renderMusicPage(musicPage: MusicPage) {
                                                   html`
                                                       <playlist-tile
                                                           .playlist="${playlist}"
-                                                          @local-export="${() => musicPage.exportPlaylist('local', playlist)}"
-                                                          @global-export="${() => musicPage.exportPlaylist('global', playlist)}"
-                                                          @remove="${() => musicPage.removePlaylist(playlist)}"
+                                                          @local-export="${() => this.exportPlaylist('local', playlist)}"
+                                                          @global-export="${() => this.exportPlaylist('global', playlist)}"
+                                                          @remove="${() => this.removePlaylist(playlist)}"
                                                       ></playlist-tile>
                                                   `
                                               )}
                                           </div>
                                       `
                               )}
-                              ${musicPage.paginatedTracks.map(
+                              ${this.paginatedTracks.map(
                                   (track) =>
                                       html`
                                           <div
                                               class="audio-link-container"
-                                              @pointerdown="${(e: Event) => musicPage.startSelectionModeTimer(track.hash, e)}"
-                                              @pointerup="${(e: Event) => musicPage.stopSelectionModeTimer(track.hash, e)}"
+                                              @pointerdown="${(e: PointerEvent) => this.startSelectionModeTimer(track.hash, e)}"
+                                              @pointerup="${(e: PointerEvent) => this.stopSelectionModeTimer(track.hash, e)}"
                                           >
-                                              ${musicPage.selectionMode
+                                              ${this.selectionMode
                                                   ? html`<input
                                                         type="checkbox"
                                                         class="audio-select"
-                                                        ?checked="${musicPage.selectedHashes.includes(track.hash)}"
+                                                        ?checked="${this.selectedHashes.includes(track.hash)}"
                                                         @change="${(e: Event) =>
-                                                            musicPage.toggleTrackSelection(
-                                                                e.target as HTMLInputElement,
-                                                                track.hash
-                                                            )}"
+                                                            this.toggleTrackSelection(e.target as HTMLInputElement, track.hash)}"
                                                     />`
                                                   : ''}
                                               ${LinkElement.forPage(
@@ -148,13 +144,13 @@ export function renderMusicPage(musicPage: MusicPage) {
                                                       .track="${track}"
                                                       ?paused="${AudioService.paused ||
                                                       AudioService.currentTrackPath != track.path}"
-                                                      @musicToggled="${() => musicPage.toggleMusic(track)}"
-                                                      @soft-delete="${() => musicPage.softDeleteTrack(track)}"
-                                                      @hard-delete="${() => musicPage.hardDeleteTrack(track)}"
-                                                      @restore="${() => musicPage.undeleteTrack(track)}"
+                                                      @musicToggled="${() => this.toggleMusic(track)}"
+                                                      @soft-delete="${() => this.softDeleteTrack(track)}"
+                                                      @hard-delete="${() => this.hardDeleteTrack(track)}"
+                                                      @restore="${() => this.undeleteTrack(track)}"
                                                       @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
                                                   ></audio-tile>`,
-                                                  { disabled: musicPage.selectionModeTimer == null || musicPage.selectionMode }
+                                                  { disabled: this.selectionModeTimer == null || this.selectionMode }
                                               )}
                                           </div>
                                       `

@@ -3,9 +3,6 @@ import { MediaGenreCategory, MediaGenreModel } from '../../obscuritas-media-mana
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { MediaTile } from './media-tile';
 
-/**
- * @param {MediaTile} this
- */
 export function renderMediaTile(this: MediaTile) {
     return html` <style>
             #this-image {
@@ -40,9 +37,6 @@ export function renderMediaTile(this: MediaTile) {
         <slot></slot>`;
 }
 
-/**
- * @param {MediaTile} this
- */
 function renderImageContainer(this: MediaTile) {
     if (this.hasImage)
         return html`<div id="this-image">
@@ -52,10 +46,6 @@ function renderImageContainer(this: MediaTile) {
     return html` <div id="no-image-icon" icon="${Icons.Cross}"></div> `;
 }
 
-/**
- * @param {MediaGenreModel} genre
- * @param {MediaTile} this
- */
 function renderGenreTag(this: MediaTile, genre: MediaGenreModel | null = null) {
     if (!genre) return;
     return html`<tag-label
@@ -66,9 +56,6 @@ function renderGenreTag(this: MediaTile, genre: MediaGenreModel | null = null) {
     ></tag-label>`;
 }
 
-/**
- * @param {MediaTile} this
- */
 function renderRating(this: MediaTile) {
     var ratingArray = [...Array(5).keys()];
     return ratingArray.map(

@@ -1,9 +1,5 @@
 export class ProperObject {
-    /**
-     * @template T
-     * @param {T} object
-     */
-    static keys(object: T) {
-        return /** @type {(keyof T)[]} */ (Object.keys(object));
+    static keys<T extends Object>(object: T) {
+        return Object.keys(object) as (keyof T)[];
     }
 }

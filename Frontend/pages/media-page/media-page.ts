@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, state } from 'lit-element/decorators';
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter';
 import { InteropCommand } from '../../client-interop/interop-command';
 import { LitElementBase } from '../../data/lit-element-base';
@@ -30,9 +30,7 @@ export class MediaPage extends LitElementBase {
         return renderMediaPageStyles();
     }
 
-    static get isPage() {
-        return true;
-    }
+    static isPage = true as const;
 
     static get pageName() {
         return 'Filme & Serien';
@@ -66,13 +64,11 @@ export class MediaPage extends LitElementBase {
             );
     }
 
-    constructor() {
-        super();
+    @state() genreList: string[] = [];
+    @state() page = 1;
+    @state() loading = true;
 
-        /** @type {string[]} */ this.genreList = [];
-        this.page = 1;
-        this.loading = true;
-    }
+    protected declare filter: MediaFilter;
 
     override async connectedCallback() {
         super.connectedCallback();
@@ -91,13 +87,9 @@ export class MediaPage extends LitElementBase {
     }
 
     override render() {
-        return renderMediaPageTemplate(this);
+        return renderMediaPageTemplate.call(this);
     }
 
-    /**
-     * @param {MediaCategory} category
-     * @param {Language} language
-     */
     async importFolder(category: MediaCategory, language: Language) {
         try {
             await MediaImportService.importMediaCollections(category, language);
@@ -145,9 +137,6 @@ export class MediaPage extends LitElementBase {
         await this.requestFullUpdate();
     }
 
-    /**
-     * @param {PointerEvent} event
-     */
     async requestImportTypeSelection(event: PointerEvent) {
         const tooltipItems = [
             { text: 'Animes Ger Dub', category: MediaCategory.AnimeSeries, language: Language.German },
@@ -157,24 +146,18 @@ export class MediaPage extends LitElementBase {
             { text: 'Realfilmserien', category: MediaCategory.RealSeries, language: Language.German },
             { text: 'J-Dramen', category: MediaCategory.RealSeries, language: Language.Japanese },
         ];
-        /** @type {typeof tooltipItems[0]} */ var selection = await ContextTooltip.spawn(event, tooltipItems);
+        var selection = (await ContextTooltip.spawn(event, tooltipItems)) as (typeof tooltipItems)[0];
 
         if (!selection) return;
 
         await this.importFolder(selection.category, selection.language);
     }
 
-    /**
-     * @template {keyof MediaModel} T
-     * @param {MediaModel} media
-     * @param {T} property
-     * @param {MediaModel[T]} value
-     */
-    async changePropertyOf(media: MediaModel, property: T, value: MediaModel[T]) {
+    async changePropertyOf<T extends keyof MediaModel>(media: MediaModel, property: T, value: MediaModel[T]) {
         try {
             if (typeof media[property] != typeof value) return;
 
-            /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
+            const { oldModel, newModel } = { oldModel: {} as any, newModel: {} as any };
             oldModel[property] = media[property];
             newModel[property] = value;
             await MediaService.updateMedia(media.id, new UpdateRequestOfObject({ oldModel, newModel }));
@@ -187,14 +170,11 @@ export class MediaPage extends LitElementBase {
         }
     }
 
-    async setMediaImage(mediaId, image) {
+    async setMediaImage(mediaId: string, image: string) {
         await MediaService.addMediaImage(image, mediaId);
         await this.requestFullUpdate();
     }
 
-    /**
-     * @param {MediaModel} media
-     */
     async hardDelete(media: MediaModel) {
         try {
             var confirmed = await DialogBase.show('Achtung', {
@@ -212,9 +192,6 @@ export class MediaPage extends LitElementBase {
         }
     }
 
-    /**
-     * @param {MediaModel} media
-     */
     async fullDelete(media: MediaModel) {
         try {
             var confirmed = await DialogBase.show('ACHTUNG - NICHT RÜCKGÄNGIG ZU MACHEN!', {

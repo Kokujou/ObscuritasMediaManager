@@ -15,7 +15,7 @@ export class InputDialog extends LitElementBase {
             var dialog = new InputDialog();
             dialog.resolve = resolve;
             dialog.message = message;
-            PageRouting.container.append(dialog);
+            PageRouting.container!.append(dialog);
             dialog.requestFullUpdate();
             return dialog;
         });

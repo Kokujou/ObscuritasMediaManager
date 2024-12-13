@@ -1,47 +1,46 @@
 import { html } from 'lit-element';
 import { LinkElement } from '../../native-components/link-element/link-element';
+import { GenreModel, MediaGenreModel } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { CreateMediaPage } from '../create-media-page/create-media-page';
 import { MediaDetailPage } from '../media-detail-page/media-detail-page';
 import { MediaPage } from './media-page';
 
-/**
- * @param {MediaPage} page
- */
-export function renderMediaPageTemplate(page: MediaPage) {
+export function renderMediaPageTemplate(this: MediaPage) {
     return html`<page-layout>
         <div id="media-page-container">
-            <media-filter-sidebar id="media-filter" .filter="${page.filter}" @change="${() => page.requestFullUpdate()}">
-                <div slot="footer" id="result-overview">${page.filteredMedia.length} Ergebnisse gefunden</div>
+            <media-filter-sidebar id="media-filter" .filter="${this.filter}" @change="${() => this.requestFullUpdate()}">
+                <div slot="footer" id="result-overview">${this.filteredMedia.length} Ergebnisse gefunden</div>
             </media-filter-sidebar>
             <paginated-scrolling
                 id="results"
                 scrollTopThreshold="50"
                 @scrollBottom="${() => {
-                    page.page++;
-                    page.requestFullUpdate();
+                    this.page++;
+                    this.requestFullUpdate();
                 }}"
             >
-                ${page.loading
+                ${this.loading
                     ? html`<partial-loading></partial-loading>`
                     : html` <div id="result-container">
-                          ${page.paginatedMedia.map((media) =>
+                          ${this.paginatedMedia.map((media) =>
                               LinkElement.forPage(
                                   MediaDetailPage,
                                   { mediaId: media.id },
                                   html`
                                       <media-tile
                                           .media="${media}"
-                                          .autocompleteGenres="${page.genreList}"
-                                          @imageReceived="${(e: Event) => page.setMediaImage(media.id, e.detail.imageData)}"
-                                          @ratingChanged="${(e: Event) =>
-                                              page.changePropertyOf(media, 'rating', e.detail.newRating)}"
-                                          @genresChanged="${(e: Event) =>
-                                              page.changePropertyOf(media, 'genres', e.detail.genres)}"
-                                          @soft-delete="${() => page.changePropertyOf(media, 'deleted', true)}"
-                                          @hard-delete="${() => page.hardDelete(media)}"
-                                          @full-delete="${() => page.fullDelete(media)}"
-                                          @undelete="${() => page.changePropertyOf(media, 'deleted', false)}"
+                                          .autocompleteGenres="${this.genreList}"
+                                          @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
+                                              this.setMediaImage(media.id, e.detail.imageData)}"
+                                          @ratingChanged="${(e: CustomEvent<{ newRating: number }>) =>
+                                              this.changePropertyOf(media, 'rating', e.detail.newRating)}"
+                                          @genresChanged="${(e: CustomEvent<{ genres: GenreModel[] }>) =>
+                                              this.changePropertyOf(media, 'genres', e.detail.genres as MediaGenreModel[])}"
+                                          @soft-delete="${() => this.changePropertyOf(media, 'deleted', true)}"
+                                          @hard-delete="${() => this.hardDelete(media)}"
+                                          @full-delete="${() => this.fullDelete(media)}"
+                                          @undelete="${() => this.changePropertyOf(media, 'deleted', false)}"
                                       ></media-tile>
                                   `
                               )
@@ -66,22 +65,22 @@ export function renderMediaPageTemplate(page: MediaPage) {
                         id="import-media-button"
                         class="option-button"
                         icon="${Icons.Import}"
-                        @pointerover="${(e: Event) => page.requestImportTypeSelection(e)}"
+                        @pointerover="${(e: PointerEvent) => this.requestImportTypeSelection(e)}"
                     ></div>
                     <div
                         id="auto-fill-button"
                         class="option-button"
                         icon="${Icons.Lookup}"
-                        ?disabled="${page.animeToAutoFill.length == 0}"
-                        tooltip="${page.animeToAutoFill.length} Einträge automatisch verfollständigen"
-                        @click="${() => page.autoFillAnime()}"
+                        ?disabled="${this.animeToAutoFill.length == 0}"
+                        tooltip="${this.animeToAutoFill.length} Einträge automatisch verfollständigen"
+                        @click="${() => this.autoFillAnime()}"
                     ></div>
                     <div
                         id="cleanup-button"
                         class="option-button"
                         icon="${Icons.Clean}"
                         tooltip="Einträge bereinigen"
-                        @click="${() => page.cleanupMedia()}"
+                        @click="${() => this.cleanupMedia()}"
                     ></div>
                 </div>
             </div>

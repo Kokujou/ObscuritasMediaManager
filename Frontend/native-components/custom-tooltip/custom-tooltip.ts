@@ -7,8 +7,8 @@ import { renderTooltip } from './custom-tooltip.html';
 
 @customElement('custom-tooltip')
 export class CustomTooltip extends LitElementBase {
-    static timeout;
-    /** @access private @type {CustomTooltip}*/ static currentInstance;
+    static timeout: NodeJS.Timeout;
+    private static currentInstance: CustomTooltip | null = null;
 
     static override get styles() {
         return renderTooltipStyles();
@@ -22,12 +22,7 @@ export class CustomTooltip extends LitElementBase {
         };
     }
 
-    /**
-     * @param {string} text
-     * @param {Event} pointerEvent
-     * @param { 'top' | 'bottom' | 'right' | 'left'  } anchor
-     */
-    static show(text: string, pointerEvent: Event, anchor: 'top' | 'bottom' | 'right' | 'left' = 'top') {
+    static show(text: string | null, pointerEvent: Event, anchor: 'top' | 'bottom' | 'right' | 'left' = 'top') {
         if (!text || text.length < 2) return;
         text = text[0].toUpperCase() + text.substring(1);
         if (CustomTooltip.currentInstance && CustomTooltip.currentInstance.target == pointerEvent.target) {
@@ -40,7 +35,7 @@ export class CustomTooltip extends LitElementBase {
 
         var tooltip = new CustomTooltip();
         tooltip.text = text;
-        tooltip.target = /** @type {HTMLElement} */ pointerEvent.currentTarget;
+        tooltip.target = pointerEvent.currentTarget as HTMLElement;
         tooltip.anchor = anchor;
 
         CustomTooltip.currentInstance = tooltip;
@@ -49,7 +44,7 @@ export class CustomTooltip extends LitElementBase {
         if (DialogBase.instantiated > 0) tooltip.setAttribute('scope', 'dialog');
         else tooltip.setAttribute('scope', 'default');
 
-        var rect = /** @type {HTMLElement} */ tooltip.target.getBoundingClientRect();
+        var rect = tooltip.target.getBoundingClientRect();
         var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         let tooltipTop = scrollTop;
@@ -77,7 +72,7 @@ export class CustomTooltip extends LitElementBase {
         tooltip.style.top = tooltipTop + 'px';
         window.addEventListener('wheel', () => tooltip.remove(), { signal: tooltip.abortController.signal });
         window.addEventListener('click', () => tooltip.remove(), { signal: tooltip.abortController.signal });
-        pointerEvent.target.addEventListener('pointerout', () => tooltip?.remove(), {
+        pointerEvent.target!.addEventListener('pointerout', () => tooltip?.remove(), {
             signal: tooltip.abortController.signal,
         });
     }
@@ -87,16 +82,12 @@ export class CustomTooltip extends LitElementBase {
         CustomTooltip.currentInstance.remove();
     }
 
-    constructor() {
-        super();
-
-        /** @type {string} */ this.text;
-        /** @type {HTMLElement} */ this.target;
-        /** @type {'top' | 'bottom' | 'right' | 'left'} */ this.anchor = 'top';
-    }
+    text: string;
+    target: HTMLElement;
+    anchor = 'top';
 
     override render() {
-        return renderTooltip(this);
+        return renderTooltip.call(this);
     }
 
     remove() {

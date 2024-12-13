@@ -1,13 +1,10 @@
 export class TimeSpan {
-    /** @type {number} */ days = 0;
-    /** @type {number} */ hours = 0;
-    /** @type {number} */ minutes = 0;
-    /** @type {number} */ seconds = 0;
-    /** @type {number} */ milliseconds = 0;
+    days = 0;
+    hours = 0;
+    minutes = 0;
+    seconds = 0;
+    milliseconds = 0;
 
-    /**
-     * @param {string} value
-     */
     static fromString(value: string) {
         var result = new TimeSpan();
         if (!value) return result;
@@ -33,7 +30,7 @@ export class TimeSpan {
         return result;
     }
 
-    static format(input) {
+    static format(input: string) {
         var timespan = TimeSpan.fromString(input);
         var hours = timespan.days * 24 + timespan.hours;
         var result = '';

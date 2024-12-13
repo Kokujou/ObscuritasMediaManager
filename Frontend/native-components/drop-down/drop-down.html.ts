@@ -3,12 +3,9 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { DropDown } from './drop-down';
 import { DropDownOption } from './drop-down-option';
 
-/**
- * @param {DropDown} dropdown
- */
-export function renderDropDown(dropdown: DropDown) {
-    var maxHeight = dropdown.maxDisplayDepth * 40;
-    if (dropdown.useSearch) maxHeight += 50;
+export function renderDropDown(this: DropDown) {
+    var maxHeight = this.maxDisplayDepth * 40;
+    if (this.useSearch) maxHeight += 50;
     return html`
         <style>
             .options {
@@ -16,33 +13,30 @@ export function renderDropDown(dropdown: DropDown) {
             }
         </style>
 
-        ${showDropDown(dropdown)}
+        ${showDropDown.call(this)}
     `;
 }
 
-/**
- * @param {DropDown} dropdown
- */
-function showDropDown(dropdown: DropDown) {
+function showDropDown(this: DropDown) {
     return html`<div
         class="dropdown"
         @click="${() => {
-            dropdown.showDropDown = !dropdown.showDropDown;
-            if (dropdown.useSearch) dropdown.resetSearchFilter();
+            this.showDropDown = !this.showDropDown;
+            if (this.useSearch) this.resetSearchFilter();
         }}"
     >
         <div id="caption-container">
-            ${dropdown.caption} ${dropdown.caption ? '' : html`<div id="empty-text-placeholder">empty</div>`}
+            ${this.caption} ${this.caption ? '' : html`<div id="empty-text-placeholder">empty</div>`}
         </div>
         <div
             class="options"
             @click="${(e: Event) => {
-                if (dropdown.multiselect) e.stopPropagation();
+                if (this.multiselect) e.stopPropagation();
             }}"
-            @scroll="${(e: Event) => dropdown.scroll(e)}"
-            style="display: ${dropdown.showDropDown ? 'block' : 'none'}"
+            @scroll="${(e: Event) => e.preventDefault()}"
+            style="display: ${this.showDropDown ? 'block' : 'none'}"
         >
-            ${dropdown.useSearch
+            ${this.useSearch
                 ? html`
                       <div
                           @click="${(e: Event) => {
@@ -56,53 +50,45 @@ function showDropDown(dropdown: DropDown) {
                               placeholder="Suchtext eingeben..."
                               id="dropdown-search"
                               @input="${(e: Event) => (e.target as HTMLInputElement).dispatchEvent(new Event('change'))}"
-                              @change="${() => dropdown.updateSearchFilter()}"
+                              @change="${() => this.updateSearchFilter()}"
                           />
                       </div>
                   `
                 : ''}
-            ${dropdown.options
-                .filter((x) => x.text.toLocaleLowerCase().match(dropdown.searchFilter.toLocaleLowerCase()))
+            ${this.options
+                .filter((x) => x.text.toLocaleLowerCase().match(this.searchFilter.toLocaleLowerCase()))
                 .map((options) => {
-                    return renderDropDownOption(dropdown, options);
+                    return renderDropDownOption.call(this, options);
                 })}
         </div>
-        <div class="dropdown-icon-container ${dropdown.showDropDown ? 'dropped-down' : ''}">></div>
+        <div class="dropdown-icon-container ${this.showDropDown ? 'dropped-down' : ''}">></div>
     </div> `;
 }
 
-/**
- * @param {DropDown} dropdown
- * @param {DropDownOption} option
- */
-function renderDropDownOption(dropdown: DropDown, option: DropDownOption) {
+function renderDropDownOption(this: DropDown, option: DropDownOption<any>) {
     return html`
         <div
             ?selected="${option.state != CheckboxState.Forbid}"
             class="option"
             @click=${() =>
-                dropdown.changeOptionState(
+                this.changeOptionState(
                     option,
                     option.state == CheckboxState.Ignore ? CheckboxState.Forbid : CheckboxState.Ignore
                 )}
         >
-            ${dropdown.multiselect && dropdown.useToggle ? renderToggle(dropdown, option) : option.text}
+            ${this.multiselect && this.useToggle ? renderToggle.call(this, option) : option.text}
         </div>
     `;
 }
 
-/**
- * @param {DropDown} dropdown
- * @param {DropDownOption} option
- */
-function renderToggle(dropdown: DropDown, option: DropDownOption) {
+function renderToggle(this: DropDown, option: DropDownOption<any>) {
     return html`
         <div class="label">${option.text}</div>
         <custom-toggle
             style="--toggled-color:${option.color || 'unset'}"
             .state="${option.state}"
-            ?threeValues="${dropdown.threeValues}"
-            @toggle="${(e: Event) => dropdown.changeOptionState(option, e.detail)}"
+            ?threeValues="${this.threeValues}"
+            @toggle="${(e: CustomEvent<CheckboxState>) => this.changeOptionState(option, e.detail)}"
         ></custom-toggle>
     `;
 }

@@ -21,7 +21,7 @@ export class PlaylistTile extends LitElementBase {
     }
 
     get conicColorArray() {
-        var allMoodColors = this.moods.filter((x) => !MoodColors.HasNoHue(x));
+        var allMoodColors = this.moods.filter((x) => !MoodColors.HasNoHue(x)) as Mood[];
         if (allMoodColors.length == 0) allMoodColors = this.moods;
         if (allMoodColors.length == 0) allMoodColors = [Mood.Unset];
 
@@ -71,7 +71,7 @@ export class PlaylistTile extends LitElementBase {
 
         this.addEventListener(
             'contextmenu',
-            (e: Event) => {
+            (e) => {
                 e.preventDefault();
                 ContextMenu.popup(
                     [

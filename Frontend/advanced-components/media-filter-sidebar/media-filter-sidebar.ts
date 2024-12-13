@@ -4,19 +4,10 @@ import { FilterEntry } from '../../data/filter-entry';
 import { LitElementBase } from '../../data/lit-element-base';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog';
+import { KeyOfType } from '../../services/object-filter.service';
 import { MediaFilter } from './media-filter';
 import { renderMediaFilterSidebarStyles } from './media-filter-sidebar.css';
 import { renderMediaFilterSidebar } from './media-filter-sidebar.html';
-
-export type FilterEntryKeyOf<T> = { [K in keyof T]: T[K] extends FilterEntry<any> ? K : never }[keyof T];
-
-/**
- * @template T
- * @template {FilterEntryKeyOf<T>} K
- * @typedef {} FilterType
- */
-
-export type FilterType<T, K extends FilterEntryKeyOf<T>> = T[K] extends FilterEntry<infer U> ? U : never;
 
 @customElement('media-filter-sidebar')
 export class MediaFilterSidebar extends LitElementBase {
@@ -41,7 +32,7 @@ export class MediaFilterSidebar extends LitElementBase {
         this.notifyFilterUpdated();
     }
 
-    setFilterProperty<T extends FilterEntryKeyOf<MediaFilter>>(
+    setFilterProperty<T extends KeyOfType<MediaFilter, FilterEntry<any>>>(
         property: T,
         key: keyof MediaFilter[T]['states'] & (string | number | symbol),
         value: CheckboxState
@@ -51,9 +42,9 @@ export class MediaFilterSidebar extends LitElementBase {
         this.changeFilterProperty(property, newFilter);
     }
 
-    setArrayFilter<U extends MediaFilter[T]['_type'], T extends FilterEntryKeyOf<MediaFilter>>(
+    setArrayFilter<U extends MediaFilter[T]['keyType'], T extends KeyOfType<MediaFilter, FilterEntry<any>>>(
         property: T,
-        keys: U | 'all',
+        keys: U[] | 'all',
         value: CheckboxState
     ) {
         var filter = this.filter[property];

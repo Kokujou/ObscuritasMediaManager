@@ -1,9 +1,10 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, state } from 'lit-element/decorators';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
 import { PaginatedScrolling } from '../../advanced-components/paginated-scrolling/paginated-scrolling';
 import { LitElementBase } from '../../data/lit-element-base';
-import { Subscription } from '../../data/observable';
+import { MusicSortingProperties, SortingProperties } from '../../data/music-sorting-properties';
 import { Session } from '../../data/session';
+import { SortingDirections } from '../../data/sorting-directions';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
 import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog';
@@ -25,7 +26,7 @@ import { renderMusicPage } from './music-page.html';
 
 @customElement('music-page')
 export class MusicPage extends LitElementBase {
-    static isPage = true;
+    static isPage = true as const;
     static pageName = 'Musik';
     static icon = noteIcon();
 
@@ -51,34 +52,37 @@ export class MusicPage extends LitElementBase {
 
     get filteredPlaylists() {
         var sorted = MusicFilterService.filterPlaylists(this.playlists, this.filter);
-        if (this.sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[this.sortingProperty]);
+        let sortingProperty = this.sortingProperty;
+        if (sortingProperty in PlaylistModel) sorted = sortBy(sorted, (x) => x[sortingProperty as keyof PlaylistModel]);
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }
 
     get filteredTracks() {
         var sorted = MusicFilterService.filterTracks(Session.tracks.current(), this.filter);
-        if (this.sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[this.sortingProperty]);
+        let sortingProperty = this.sortingProperty;
+        if (sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[sortingProperty]);
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }
 
+    @state() playlists: PlaylistModel[] = [];
+    @state() currentTrack = new MusicModel();
+    @state() filter = new MusicFilterOptions();
+    @state() selectionMode = false;
+    @state() selectedHashes: string[] = [];
+    @state() selectionModeTimer: NodeJS.Timeout | null = null;
+    @state() sortingProperty: SortingProperties = 'unset';
+    @state() sortingDirection: keyof typeof SortingDirections = 'ascending';
+    @state() currentPage = 0;
+    @state() loading = false;
+
+    selectionModeUnset = false;
+    selectionModeSet = false;
+
     constructor() {
         super();
-
-        /** @type {PlaylistModel[]} */ this.playlists = [];
-        /** @type {MusicModel} */ this.currentTrack = new MusicModel();
-        /** @type {MusicFilterOptions} */ this.filter = new MusicFilterOptions();
-        /** @type {Subscription[]} */ this.subcriptions = [];
-        /** @type {boolean} */ this.selectionMode = false;
-        /** @type {string[]} */ this.selectedHashes = [];
-        /** @type {NodeJS.Timeout} */ this.selectionModeTimer = null;
-        /** @type {import('../../data/music-sorting-properties').SortingProperties} */ this.sortingProperty = 'unset';
-        /** @type {import('../../data/sorting-directions').Sortings} */ this.sortingDirection = 'ascending';
-
         this.subscriptions.push(AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
-
-        this.currentPage = 0;
     }
 
     override connectedCallback() {
@@ -86,7 +90,7 @@ export class MusicPage extends LitElementBase {
         var localStorageVolume = localStorage.getItem('volume');
         if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume));
         this.initializeData();
-        this.subcriptions.push(
+        this.subscriptions.push(
             Session.instruments.subscribe(() => {
                 this.initializeData();
                 this.requestFullUpdate();
@@ -139,7 +143,7 @@ export class MusicPage extends LitElementBase {
     override render() {
         document.title = 'Musik';
         if (this.currentTrack?.path && !AudioService.paused) document.title += ` - ${this.currentTrack.displayName}`;
-        return renderMusicPage(this);
+        return renderMusicPage.call(this);
     }
 
     loadNext() {
@@ -147,15 +151,12 @@ export class MusicPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    async changeVolume(newVolume) {
+    async changeVolume(newVolume: number) {
         await AudioService.changeVolume(newVolume / 100);
         localStorage.setItem('volume', newVolume.toString());
         await this.requestFullUpdate();
     }
 
-    /**
-     * @param {MusicModel} track
-     */
     async toggleMusic(track: MusicModel) {
         if (this.selectionMode || this.selectionModeUnset) return;
         await PlayMusicDialog.instance?.close();
@@ -175,7 +176,7 @@ export class MusicPage extends LitElementBase {
     async playPlaylist() {
         var playlistId = '';
         if (this.selectedHashes.length > 0) playlistId = await PlaylistService.createTemporaryPlaylist(this.selectedHashes);
-        else playlistId = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash));
+        else playlistId = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash!));
         changePage(MusicPlaylistPage, { playlistId: playlistId });
     }
 
@@ -183,16 +184,13 @@ export class MusicPage extends LitElementBase {
         await MediaImportService.importAudioFiles();
     }
 
-    /**
-     * @param {MusicFilterOptions} filter
-     */
     updateFilter(filter: MusicFilterOptions) {
         this.filter = filter;
         localStorage.setItem(`music.search`, JSON.stringify(this.filter));
         this.requestFullUpdate();
     }
 
-    updateSorting(sortingProperty, sortingDirection) {
+    updateSorting(sortingProperty: keyof typeof MusicSortingProperties, sortingDirection: keyof typeof SortingDirections) {
         this.sortingProperty = sortingProperty;
         this.sortingDirection = sortingDirection;
         localStorage.setItem(
@@ -207,10 +205,6 @@ export class MusicPage extends LitElementBase {
         if (success) await this.initializeData();
     }
 
-    /**
-     * @param {string} audioHash
-     * @param {PointerEvent} event
-     */
     startSelectionModeTimer(audioHash: string, event: PointerEvent) {
         if (event.button != 0) return;
         if (this.selectionModeUnset) this.selectionModeUnset = false;
@@ -225,10 +219,6 @@ export class MusicPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {string} hash
-     * @param {PointerEvent} event
-     */
     stopSelectionModeTimer(hash: string, event: PointerEvent) {
         if (event.button != 0) return;
         if (this.selectionMode && !this.selectionModeSet) this.toggleTrackSelection(null, hash);
@@ -238,11 +228,7 @@ export class MusicPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {HTMLInputElement} input
-     * @param {string} hash
-     */
-    toggleTrackSelection(input: HTMLInputElement, hash: string) {
+    toggleTrackSelection(input: HTMLInputElement | null, hash: string) {
         if ((!input || input.checked) && !this.selectedHashes.includes(hash)) this.selectedHashes.push(hash);
         else if (!input || !input.checked) this.selectedHashes = this.selectedHashes.filter((x) => x != hash);
         if (this.selectedHashes.length == 0) {
@@ -253,13 +239,14 @@ export class MusicPage extends LitElementBase {
     }
 
     jumpToActive() {
-        /** @type {PaginatedScrolling} */ var parent = this.shadowRoot!.querySelector('paginated-scrolling');
-        var child = this.shadowRoot!.querySelector('audio-tile:not([paused])').parentElement;
-        parent.scrollToChild(child.parentElement);
+        var parent = this.shadowRoot!.querySelector('paginated-scrolling')! as PaginatedScrolling;
+        var child = this.shadowRoot!.querySelector('audio-tile:not([paused])')!.parentElement!;
+        parent.scrollToChild(child.parentElement!);
     }
 
     async showPlaylistSelectionDialog() {
-        /** @type {PlaylistModel} */ var playlist = await PlaylistSelectionDialog.requestPlaylist();
+        var playlist = await PlaylistSelectionDialog.requestPlaylist();
+        if (!playlist) return;
 
         await PlaylistService.addTracksToPlaylist(playlist.id, this.selectedHashes);
         await this.initializeData();
@@ -271,19 +258,11 @@ export class MusicPage extends LitElementBase {
         await this.initializeData();
     }
 
-    /**
-     * @param {'local' | 'global'} mode
-     * @param {MusicModel} track
-     */
     getTrackPath(mode: 'local' | 'global', track: MusicModel) {
         if (mode == 'local') return track.path;
         return `https://${location.hostname}/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
     }
 
-    /**
-     * @param {'local' | 'global'} mode
-     * @param {PlaylistModel} playlist
-     */
     async exportPlaylist(mode: 'local' | 'global', playlist: PlaylistModel) {
         var m3uString = '#EXTM3U\r\n';
         m3uString += playlist.tracks
@@ -300,9 +279,6 @@ export class MusicPage extends LitElementBase {
         link.click();
     }
 
-    /**
-     * @param {PlaylistModel} playlist
-     */
     async removePlaylist(playlist: PlaylistModel) {
         var accpeted = await DialogBase.show('Bist du sicher?', {
             content: `Bist du sicher, dass du die Playlist löschen möchtest?\r\n
@@ -324,12 +300,9 @@ export class MusicPage extends LitElementBase {
         }
     }
 
-    /**
-     * @param {MusicModel} track
-     */
     async softDeleteTrack(track: MusicModel) {
-        var trackHashes = [track.hash];
-        if (this.selectionMode && this.selectedHashes.includes(track.hash)) {
+        var trackHashes = [track.hash!];
+        if (this.selectionMode && this.selectedHashes.includes(track.hash!)) {
             trackHashes = this.selectedHashes;
             var accepted = await DialogBase.show('Bist du sicher?', {
                 content: 'Sie sind dabei mehrere Tracks zu löschen.\r\n Sind Sie sicher?',
@@ -348,9 +321,9 @@ export class MusicPage extends LitElementBase {
         }
     }
 
-    async hardDeleteTrack(track) {
-        var trackHashes = [track.hash];
-        if (this.selectionMode && this.selectedHashes.includes(track.hash)) {
+    async hardDeleteTrack(track: MusicModel) {
+        var trackHashes = [track.hash!];
+        if (this.selectionMode && this.selectedHashes.includes(track.hash!)) {
             trackHashes = this.selectedHashes;
             var accepted = await DialogBase.show('Vorsicht!', {
                 content:
@@ -382,12 +355,9 @@ export class MusicPage extends LitElementBase {
         }
     }
 
-    /**
-     * @param {MusicModel} track
-     */
     async undeleteTrack(track: MusicModel) {
-        var trackHashes = [track.hash];
-        if (this.selectionMode && this.selectedHashes.includes(track.hash)) trackHashes = this.selectedHashes;
+        var trackHashes = [track.hash!];
+        if (this.selectionMode && this.selectedHashes.includes(track.hash!)) trackHashes = this.selectedHashes;
 
         try {
             await MusicService.undeleteTracks(trackHashes);
@@ -398,7 +368,7 @@ export class MusicPage extends LitElementBase {
         }
     }
 
-    async disoverride connectedCallback() {
+    override async disconnectedCallback() {
         await AudioService.reset();
         await super.disconnectedCallback();
     }

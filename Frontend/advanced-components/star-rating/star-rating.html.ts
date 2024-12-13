@@ -2,9 +2,6 @@ import { html } from 'lit-element';
 import { createRange } from '../../services/extensions/array.extensions';
 import { StarRating } from './star-rating';
 
-/**
- * @param { StarRating } this
- */
 export function renderStarRating(this: StarRating) {
     return html`
         ${this.vertical

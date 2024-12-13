@@ -1,5 +1,5 @@
 import { html } from 'lit-element';
-import { customElement } from 'lit-element/decorators.js';
+import { customElement, state } from 'lit-element/decorators.js';
 import { LitElementBase } from '../../data/lit-element-base';
 import { renderObscuritasMediaManager } from './obscuritas-media-manager.html';
 
@@ -43,12 +43,8 @@ export class ObscuritasMediaManager extends LitElementBase {
             .map((resName) => ObscuritasMediaManager.imagePrefix + resName);
     }
 
-    constructor() {
-        super();
-
-        this.initialized = false;
-        this.loadedResourceIndex = 0;
-    }
+    @state() declare initialized: boolean;
+    @state() declare loadedResourceIndex: number;
 
     override render() {
         console.log(this.shadowRoot);
@@ -58,6 +54,6 @@ export class ObscuritasMediaManager extends LitElementBase {
             );
 
         this.initialized = true;
-        return renderObscuritasMediaManager(this);
+        return renderObscuritasMediaManager.call(this);
     }
 }

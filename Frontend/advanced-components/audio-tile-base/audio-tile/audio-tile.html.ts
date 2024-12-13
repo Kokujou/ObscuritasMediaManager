@@ -29,9 +29,6 @@ function renderGenreTags(this: AudioTile) {
     return this.track.genres.map((genre) => html` <tag-label .text="${genre}"></tag-label> `);
 }
 
-/**
- * @param {AudioTile} audioTile
- */
 function renderInstrumentIcons(this: AudioTile) {
     var iconsToDisplay = this.track.instrumentTypes;
     return html`${iconsToDisplay.map((x) => html`<div class="inline-icon" instrument-type="${x}"></div>`)}`;

@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { AudioService } from '../../services/audio-service';
 import { MessageSnackbar } from '../message-snackbar/message-snackbar';
@@ -26,11 +26,7 @@ export class CompactAudioPlayer extends LitElementBase {
         return 0;
     }
 
-    constructor() {
-        super();
-
-        /** @type {string} */ this.path = '';
-    }
+    @property() path = '';
 
     override connectedCallback() {
         super.connectedCallback();
@@ -41,10 +37,10 @@ export class CompactAudioPlayer extends LitElementBase {
     }
 
     override render() {
-        return renderCompactAudioPlayer(this);
+        return renderCompactAudioPlayer.call(this);
     }
 
-    changeTrackPosition(value) {
+    changeTrackPosition(value: string) {
         if (AudioService.duration == Infinity || AudioService.currentTrackPath != this.path) return;
         AudioService.changePosition(Number.parseInt(value));
     }
@@ -61,16 +57,13 @@ export class CompactAudioPlayer extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    /**
-     * @param { number} newVolume
-     */
     async changeVolume(newVolume: number) {
         await AudioService.changeVolume(newVolume / 100);
         localStorage.setItem('volume', newVolume.toString());
         await this.requestFullUpdate();
     }
 
-    async disoverride connectedCallback() {
+    override async disconnectedCallback() {
         await super.disconnectedCallback();
         await AudioService.reset();
     }

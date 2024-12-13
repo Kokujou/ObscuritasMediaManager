@@ -1,7 +1,4 @@
 export class AudioVisualizationService {
-    /**
-     * @param {HTMLMediaElement} mediaElement
-     */
     static getAnalyzerFromAudio(mediaElement: HTMLMediaElement) {
         if (!mediaElement) return null;
 

@@ -1932,7 +1932,7 @@ export class MusicModel implements IMusicModel {
     lyrics!: string | null;
     rating!: number;
     complete!: boolean;
-    hash!: string | null;
+    hash!: string;
     deleted!: boolean;
 
     constructor(data?: Partial<IMusicModel>) {
@@ -2074,7 +2074,7 @@ export interface IMusicModel {
     lyrics: string | null;
     rating: number;
     complete: boolean;
-    hash: string | null;
+    hash: string;
     deleted: boolean;
 }
 

@@ -1,7 +1,7 @@
 import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
-import { Subscription } from '../../data/observable';
 import { Session } from '../../data/session';
+import { Page } from '../../data/util-types';
 import { LoadingScreen } from '../../native-components/loading-screen/loading-screen';
 import { setFavicon } from '../../services/extensions/style.extensions';
 import { changePage, getPageName, queryToObject } from '../../services/extensions/url.extension';
@@ -23,16 +23,15 @@ export class PageRouting extends LitElementBase {
     }
 
     get currentPage() {
-        return window.customElements.get(location.hash.substr(1) + '-page') ?? WelcomePage;
+        return (window.customElements.get(location.hash.substr(1) + '-page') as Page) ?? WelcomePage;
     }
 
     static currentPageInstance: LitElementBase | null = null;
 
+    static instance: PageRouting;
+
     constructor() {
         super();
-
-        /** @type {Subscription[]} */ this.subscriptions = [];
-
         PageRouting.instance = this;
 
         window.addEventListener('hashchange', () => {
@@ -65,18 +64,12 @@ export class PageRouting extends LitElementBase {
         document.querySelector(LoadingScreen.tag)?.remove();
     }
 
-    static instance: PageRouting;
-
     changeHash(newHash: string) {
         var newurl =
             window.location.protocol + '//' + window.location.host + window.location.pathname + location.search + `#${newHash}`;
         window.history.replaceState({ path: newurl }, '', newurl);
     }
 
-    /**
-     * @param {string} newValue
-     * @param {string} oldValue
-     */
     async switchPage(newValue: string, oldValue: string) {
         // @ts-ignore
         if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`))
@@ -85,18 +78,22 @@ export class PageRouting extends LitElementBase {
         var newPage = window.customElements.get(newValue + '-page');
         if (newPage) {
             var pageName = () => PageRouting.currentPageInstance?.tagName.replace('-PAGE', '');
-            var isNewPageLoad = !PageRouting.currentPageInstance || newValue.toLowerCase() != pageName().toLowerCase();
+            var isNewPageLoad = !PageRouting.currentPageInstance || newValue.toLowerCase() != pageName()?.toLowerCase();
             if (isNewPageLoad) {
                 PageRouting.container!.querySelectorAll(':not(slot)').forEach((x) => x.remove());
                 PageRouting.currentPageInstance = new newPage() as LitElementBase;
             }
 
+            if (!PageRouting.currentPageInstance) return;
+
             this.changeHash(newValue);
             var params = queryToObject();
             for (var pair of Object.entries(params)) {
                 try {
+                    //@ts-ignore
                     PageRouting.currentPageInstance[pair[0]] = JSON.parse(pair[1]);
                 } catch {
+                    //@ts-ignore
                     PageRouting.currentPageInstance[pair[0]] = pair[1];
                 }
             }
@@ -108,7 +105,7 @@ export class PageRouting extends LitElementBase {
         changePage(PageRouting.defaultPage);
     }
 
-    loadPageFromHash(e) {
+    loadPageFromHash(e: Event | null) {
         e?.preventDefault();
         var nextPage = this.currentPage;
         var params = queryToObject();
@@ -116,12 +113,12 @@ export class PageRouting extends LitElementBase {
     }
 
     override render() {
-        if ('icon' in this.currentPage) setFavicon(this.currentPage['icon'] as string);
-        return renderPageRouting(this);
+        if (this.currentPage.icon) setFavicon(this.currentPage.icon);
+        return renderPageRouting.call(this);
     }
 
     override disconnectedCallback() {
         super.disconnectedCallback();
-        PageRouting.instance = null;
+        PageRouting.instance = null!;
     }
 }

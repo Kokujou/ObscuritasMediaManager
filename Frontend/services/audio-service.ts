@@ -3,7 +3,11 @@ import { InteropCommand } from '../client-interop/interop-command';
 import { InteropEvent } from '../client-interop/interop-event';
 import { InteropQuery } from '../client-interop/interop-query';
 import { PlaybackState } from '../client-interop/playback-state';
-import { Observable, Subscription } from '../data/observable';
+import { PlaybackStateChangedEvent } from '../client-interop/playback-state-changed-event';
+import { TrackChangedEvent } from '../client-interop/track-changed-event';
+import { TrackPositionChangedEvent } from '../client-interop/track-position-changed-event';
+import { VolumeChangedEvent } from '../client-interop/volume-changed-event';
+import { Observable } from '../data/observable';
 import { ClientInteropService } from './client-interop-service';
 
 export class AudioService {
@@ -18,13 +22,13 @@ export class AudioService {
     static visualizationData = new Observable(new Float32Array());
     static trackPosition = new Observable(0);
     static duration: number | null = null;
-    /** @type {Observable} */ static ended = new Observable(null);
-    /** @type {Observable} */ static changed = new Observable(null);
+    static ended = new Observable<void>(null!);
+    static changed = new Observable<void>(null!);
 
-    /** @type {Subscription} */ static #eventSubscription = ClientInteropService.eventResponse.subscribe((x) => {
+    static #eventSubscription = ClientInteropService.eventResponse.subscribe((x) => {
         switch (x?.event) {
             case InteropEvent.TrackPositionChanged: {
-                let response = /** @type {TrackPositionChangedEvent} */ x;
+                let response = x as TrackPositionChangedEvent;
                 this.paused = false;
                 this.trackPosition.next(response.trackPosition);
                 this.visualizationData.next(new Float32Array(response.visualizationData));
@@ -51,7 +55,7 @@ export class AudioService {
                 break;
             }
             case InteropEvent.TrackChanged: {
-                let response = /** @type {TrackChangedEvent} */ x;
+                let response = x as TrackChangedEvent;
                 this.currentTrackPath = response.trackPath;
                 this.duration = response.duration;
 
@@ -59,14 +63,14 @@ export class AudioService {
                 break;
             }
             case InteropEvent.PlaybackStateChanged: {
-                let response = /** @type {PlaybackStateChangedEvent} */ x;
+                let response = x as PlaybackStateChangedEvent;
                 this.paused = response.playbackState != PlaybackState.Playing;
 
                 this.changed.next();
                 break;
             }
             case InteropEvent.VolumeChanged: {
-                let response = /** @type {VolumeChangedEvent} */ x;
+                let response = x as VolumeChangedEvent;
                 this.#volume = response.volume;
 
                 this.changed.next();
@@ -87,9 +91,6 @@ export class AudioService {
         }
     }
 
-    /**
-     * @param {string} path
-     */
     static async changeTrack(path: string) {
         if (!path) return;
 
@@ -101,9 +102,6 @@ export class AudioService {
         }
     }
 
-    /**
-     * @param {string} trackPath
-     */
     static async play(trackPath: string) {
         try {
             if (AudioService.currentTrackPath != trackPath) await this.changeTrack(trackPath);
@@ -130,9 +128,6 @@ export class AudioService {
         }
     }
 
-    /**
-     * @param {number} value
-     */
     static async changeVolume(value: number) {
         try {
             if (!value) console.trace();
@@ -142,9 +137,6 @@ export class AudioService {
         }
     }
 
-    /**
-     * @param {number} value
-     */
     static async changePosition(value: number) {
         try {
             await ClientInteropService.sendCommand({ command: InteropCommand.ChangeTrackPosition, payload: value });
@@ -155,6 +147,6 @@ export class AudioService {
 }
 
 ClientInteropService.onConnected.subscribe(async () => {
-    var localStorageVolume = localStorage.getItem('volume');
+    var localStorageVolume = localStorage.getItem('volume') ?? '0';
     await AudioService.changeVolume(Number.parseInt(localStorageVolume) / 100);
 });

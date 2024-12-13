@@ -119,13 +119,14 @@ export function renderMusicFilter(this: MusicFilter) {
                 </div>
                 <side-scroller>
                     ${Object.values(Language).map(
-                        (type) =>
+                        (lang: Language) =>
                             html` <tri-value-checkbox
-                                @valueChanged="${(e: CustomEvent) => this.setFilterEntryValue('languages', type, e.detail.value)}"
+                                @valueChanged="${(e: CustomEvent) =>
+                                    this.setFilterEntryValue(this.filter.languages, lang, e.detail.value)}"
                                 class="icon-container"
-                                .value="${this.filter.languages.states[type]}"
+                                .value="${this.filter.languages.states[lang]}"
                             >
-                                <div class="inline-icon " language="${type}"></div>
+                                <div class="inline-icon " language="${lang}"></div>
                             </tri-value-checkbox>`
                     )}
                 </side-scroller>
@@ -154,12 +155,12 @@ export function renderMusicFilter(this: MusicFilter) {
                 </div>
                 <side-scroller>
                     ${Object.values(InstrumentType).map(
-                        (type) =>
+                        (type: InstrumentType) =>
                             html` <tri-value-checkbox
                                 class="icon-container"
                                 allowThreeValues
                                 @valueChanged="${(e: CustomEvent) =>
-                                    this.setFilterEntryValue('instrumentTypes', type, e.detail.value)}"
+                                    this.setFilterEntryValue(this.filter.instrumentTypes, type, e.detail.value)}"
                                 .value="${this.filter.instrumentTypes.states[type]}"
                                 .disabled="${!this.canFilterInstrumentType(type)}"
                             >
@@ -212,7 +213,7 @@ export function renderMusicFilter(this: MusicFilter) {
                     <div class="filter-label">Show undefined:</div>
                     <custom-toggle
                         .state="${this.filter.ratings.states[0]}"
-                        @toggle="${(e: CustomEvent) => this.setFilterEntryValue('ratings', '0', e.detail)}"
+                        @toggle="${(e: CustomEvent) => this.setFilterEntryValue(this.filter.ratings, '0', e.detail)}"
                     ></custom-toggle>
                 </div>
                 <star-rating
@@ -220,8 +221,8 @@ export function renderMusicFilter(this: MusicFilter) {
                     .values="${this.filter.ratings.ignored.map((x) => Number.parseInt(x))}"
                     @ratingChanged="${(e: CustomEvent) =>
                         this.setFilterEntryValue(
-                            'ratings',
-                            `${e.detail.rating}`,
+                            this.filter.ratings,
+                            e.detail.rating,
                             e.detail.include ? CheckboxState.Ignore : CheckboxState.Forbid
                         )}"
                 ></star-rating>
@@ -244,13 +245,13 @@ export function renderMusicFilter(this: MusicFilter) {
                 </div>
                 <drop-down
                     @selectionChange="${(e: CustomEvent) =>
-                        this.setFilterEntryValue('moods', e.detail.option.value, e.detail.option.state)}"
+                        this.setFilterEntryValue(this.filter.moods, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.entries(Mood).map((x) =>
                         DropDownOption.create({
                             value: x[0],
                             text: x[1],
                             color: MoodColors[x[0] as Mood],
-                            state: this.filter.moods.states[x[0]],
+                            state: this.filter.moods.states[x[0] as Mood],
                         })
                     )}"
                     unsetText="Keine Einträge ausgewählt"
@@ -279,9 +280,9 @@ export function renderMusicFilter(this: MusicFilter) {
                 </div>
                 <drop-down
                     @selectionChange="${(e: CustomEvent) =>
-                        this.setFilterEntryValue('genres', e.detail.option.value, e.detail.option.state)}"
+                        this.setFilterEntryValue(this.filter.genres, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.entries(MusicGenre).map((x) =>
-                        DropDownOption.create({ value: x[0], state: this.filter.genres.states[x[0]], text: x[1] })
+                        DropDownOption.create({ value: x[0], state: this.filter.genres.states[x[0] as MusicGenre], text: x[1] })
                     )}"
                     multiselect
                     useToggle
@@ -309,7 +310,7 @@ export function renderMusicFilter(this: MusicFilter) {
                 </div>
                 <drop-down
                     @selectionChange="${(e: CustomEvent) =>
-                        this.setFilterEntryValue('instrumentations', e.detail.option.value, e.detail.option.state)}"
+                        this.setFilterEntryValue(this.filter.instrumentations, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.values(Instrumentation).map((key) =>
                         DropDownOption.create({ value: key, text: key, state: this.filter.instrumentations.states[key] })
                     )}"
@@ -341,7 +342,7 @@ export function renderMusicFilter(this: MusicFilter) {
                             html` <tri-value-checkbox
                                 class="icon-container"
                                 @valueChanged="${(e: CustomEvent) =>
-                                    this.setFilterEntryValue('participants', participants, e.detail.value)}"
+                                    this.setFilterEntryValue(this.filter.participants, participants, e.detail.value)}"
                                 .value="${this.filter.participants.states[participants]}"
                             >
                                 <div class="inline-icon" participants="${participants}"></div>

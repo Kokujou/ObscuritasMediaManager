@@ -3,13 +3,10 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { GenreModel } from '../../obscuritas-media-manager-backend-client';
 import { GenreDialog } from './genre-dialog';
 
-/**
- * @param {GenreDialog} dialog
- */
-export function renderGenreDialog(dialog: GenreDialog) {
-    var filteredSections = Object.keys(dialog.genreDict).filter((section) =>
-        dialog.genreDict[section].some(
-            (genre) => genre.name.toLowerCase().includes(dialog.searchText.toLowerCase()) || dialog.genreDict[section].length == 0
+export function renderGenreDialog(this: GenreDialog) {
+    var filteredSections = Object.keys(this.genreDict).filter((section) =>
+        this.genreDict[section].some(
+            (genre) => genre.name.toLowerCase().includes(this.searchText.toLowerCase()) || this.genreDict[section].length == 0
         )
     );
 
@@ -20,15 +17,15 @@ export function renderGenreDialog(dialog: GenreDialog) {
             caption="Tags auswählen"
             acceptActionText="Speichern"
             declineActionText="Abbrechen"
-            @decline="${() => dialog.remove()}"
-            @accept="${(e: Event) => dialog.accept(e)}"
+            @decline="${() => this.remove()}"
+            @accept="${(e: Event) => this.accept(e)}"
         >
             <div id="dialog-content">
-                ${dialog.options.allowRemove
+                ${this.options.allowRemove
                     ? html` <div id="remove-toggle">
                           <custom-toggle
-                              @toggle="${(e: Event) =>
-                                  dialog.toggleAttribute('editModeEnabled', e.detail == CheckboxState.Ignore)}"
+                              @toggle="${(e: CustomEvent<CheckboxState>) =>
+                                  this.toggleAttribute('editModeEnabled', e.detail == CheckboxState.Ignore)}"
                           ></custom-toggle>
                           <div id="toggle-text">Löschen</div>
                       </div>`
@@ -39,11 +36,11 @@ export function renderGenreDialog(dialog: GenreDialog) {
                     type="text"
                     placeholder="Search"
                     oninput="javascript: this.dispatchEvent(new Event('change'))"
-                    @change="${(e: Event) => (dialog.searchText = (e.currentTarget as HTMLInputElement).value)}"
+                    @change="${(e: Event) => (this.searchText = (e.currentTarget as HTMLInputElement).value)}"
                 />
 
                 <div id="genre-container">
-                    ${filteredSections.map((section) => renderGenreSection(section, dialog.genreDict[section], dialog))}
+                    ${filteredSections.map((section) => renderGenreSection.call(this, section, this.genreDict[section]))}
                     ${filteredSections.length <= 0 ? html`Keine passenden Genres gefunden.` : ''}
                 </div>
             </div>
@@ -51,38 +48,27 @@ export function renderGenreDialog(dialog: GenreDialog) {
     `;
 }
 
-/**
- * @param {string} sectionName
- * @param {GenreModel[]} genres
- * @param {GenreDialog} dialog
- */
-function renderGenreSection(sectionName: string, genres: GenreModel[], dialog: GenreDialog) {
+function renderGenreSection(this: GenreDialog, sectionName: string, genres: GenreModel[]) {
     return html`<div class="genre-section">
         <div class="section-title">${sectionName}</div>
         <div class="genre-list">
             ${genres
-                .filter((x) => x.name.toLowerCase().includes(dialog.searchText.toLowerCase()))
-                .map((genre) => renderGenre(genre, dialog))}
-            ${dialog.options.allowAdd
-                ? html`<div id="add-genre-button" @click="${() => dialog.addGenre(sectionName)}">+</div>`
-                : ''}
+                .filter((x) => x.name.toLowerCase().includes(this.searchText.toLowerCase()))
+                .map((genre) => renderGenre.call(this, genre))}
+            ${this.options.allowAdd ? html`<div id="add-genre-button" @click="${() => this.addGenre(sectionName)}">+</div>` : ''}
         </div>
     </div>`;
 }
 
-/**
- * @param {GenreModel} genre
- * @param {GenreDialog} genreDialog
- */
-function renderGenre(genre: GenreModel, genreDialog: GenreDialog) {
+function renderGenre(this: GenreDialog, genre: GenreModel) {
     return html`<tri-value-checkbox
-        .allowThreeValues="${genreDialog.options.allowThreeValues}"
-        @valueChanged="${(e: Event) => genreDialog.handleGenreSelection(e.detail, genre)}"
-        .value="${genreDialog.getValue(genre)}"
-        .ignoredState="${genreDialog.options.ignoredState}"
+        .allowThreeValues="${this.options.allowThreeValues}"
+        @valueChanged="${(e: CustomEvent<{ value: CheckboxState }>) => this.handleGenreSelection(e.detail, genre)}"
+        .value="${this.getValue(genre)}"
+        .ignoredState="${this.options.ignoredState}"
         class="genre-checkbox"
     >
         ${genre.name}
-        <div class="remove-genre-button" @click="${(e: Event) => genreDialog.removeGenre(e, genre)}"></div>
+        <div class="remove-genre-button" @click="${(e: Event) => this.removeGenre(e, genre)}"></div>
     </tri-value-checkbox> `;
 }

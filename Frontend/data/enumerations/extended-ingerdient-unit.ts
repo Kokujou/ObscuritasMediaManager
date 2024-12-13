@@ -1,7 +1,6 @@
 import { Measurement } from '../../obscuritas-media-manager-backend-client';
 
-/** @type { {[key in Measurement] : string[]} }  */
-export const ExtendedIngredientUnit = {
+export const ExtendedIngredientUnit: { [key in Measurement]: string[] } = {
     Mass: ['Milligram', 'Gram', 'Kilogram'],
     Volume: ['Milliliter', 'Liter'],
     Size: ['Millimeter', 'Centimeter', 'Meter'],

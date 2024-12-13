@@ -23,26 +23,26 @@ export class MediaTile extends LitElementBase {
     override async connectedCallback() {
         super.connectedCallback();
 
-        this.addEventListener('contextmenu', (e: Event) => {
+        this.addEventListener('contextmenu', (e) => {
             e.preventDefault();
-            /** @type {ContextMenuItem[]} */ const contextItems = [];
+            const contextItems: ContextMenuItem[] = [];
 
-            /** @type {ContextMenuItem} */ const softDeleteItem = {
+            const softDeleteItem: ContextMenuItem = {
                 icon: Icons.Trash,
                 text: 'In Papierkorb verschieben',
                 action: () => this.dispatchEvent(new CustomEvent('soft-delete')),
             };
-            /** @type {ContextMenuItem} */ const hardDeleteItem = {
+            const hardDeleteItem: ContextMenuItem = {
                 icon: Icons.Trash,
                 text: 'Aus Datenbank löschen',
                 action: () => this.dispatchEvent(new CustomEvent('hard-delete')),
             };
-            /** @type {ContextMenuItem} */ const fullDeleteItem = {
+            const fullDeleteItem: ContextMenuItem = {
                 icon: Icons.Trash,
                 text: 'Vollständig Löschen',
                 action: () => this.dispatchEvent(new CustomEvent('full-delete')),
             };
-            /** @type {ContextMenuItem} */ const undeleteItem = {
+            const undeleteItem: ContextMenuItem = {
                 icon: Icons.Revert,
                 text: 'Wiederherstellen',
                 action: () => this.dispatchEvent(new CustomEvent('undelete')),

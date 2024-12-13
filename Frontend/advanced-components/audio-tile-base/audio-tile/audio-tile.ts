@@ -18,27 +18,27 @@ export class AudioTile extends LitElementBase {
     override connectedCallback() {
         super.connectedCallback();
 
-        this.addEventListener('contextmenu', (e: Event) => {
+        this.addEventListener('contextmenu', (e) => {
             e.preventDefault();
 
-            /** @type {ContextMenuItem[]} */ var contextMenuItems = [
+            var contextMenuItems: ContextMenuItem[] = [
                 {
                     text: 'Kopieren',
                     action: () => this.dispatchEvent(new CustomEvent('clipboard')),
                     icon: Icons.Clipboard,
                 },
             ];
-            /** @type {ContextMenuItem} */ var softDeleteItem = {
+            var softDeleteItem: ContextMenuItem = {
                 text: 'In Papierkorb verschieben',
                 icon: Icons.Trash,
                 action: () => this.dispatchEvent(new CustomEvent('soft-delete')),
             };
-            /** @type {ContextMenuItem} */ var hardDeleteItem = {
+            var hardDeleteItem: ContextMenuItem = {
                 text: 'Endgültig löschen',
                 icon: Icons.Trash,
                 action: () => this.dispatchEvent(new CustomEvent('hard-delete')),
             };
-            /** @type {ContextMenuItem} */ var restoreItem = {
+            var restoreItem: ContextMenuItem = {
                 text: 'Wiederherstellen',
                 icon: Icons.Revert,
                 action: () => this.dispatchEvent(new CustomEvent('restore')),

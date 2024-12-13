@@ -1,9 +1,10 @@
-import { property } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { TimeSpan } from '../../data/timespan';
 import { renderDurationInputStyles } from './duration-input.css';
 import { renderDurationInput } from './duration-input.html';
 
+@customElement('duration-input')
 export class DurationInput extends LitElementBase {
     static override get styles() {
         return renderDurationInputStyles();

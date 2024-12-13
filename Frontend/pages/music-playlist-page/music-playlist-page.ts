@@ -1,4 +1,6 @@
+import { property, state } from 'lit-element/decorators';
 import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher';
+import { FilesQueryRequest } from '../../client-interop/files-query-request';
 import { InteropQuery } from '../../client-interop/interop-query';
 import { Session } from '../../data/session';
 import { LyricsDialog } from '../../dialogs/audio-subtitle-dialog/lyrics-dialog';
@@ -21,18 +23,11 @@ import { MusicPlaylistPageTemplate } from './music-playlist-page.html';
 
 export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     static pageName = 'music-playlist-page';
-    static isPage = true;
+    static isPage = true as const;
     static icon = noteIcon();
 
     static override get styles() {
         return renderMusicPlaylistStyles();
-    }
-
-    static get properties() {
-        return {
-            hoveredRating: { type: Number, reflect: false },
-            moodToSwitch: { type: String, reflect: true },
-        };
     }
 
     get autocompleteGenres() {
@@ -71,20 +66,17 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     }
 
     get sourceMediaId() {
-        return MediaFilterService.search([...Session.mediaList.current()], this.updatedTrack.source, false)[0]?.id;
+        return MediaFilterService.search([...Session.mediaList.current()], this.updatedTrack.source!, false)[0]?.id;
     }
 
-    constructor() {
-        super();
-        /** @type {number} */ this.trackIndex = 0;
-        /** @type {string} */ this.playlistId = null;
-        /** @type {string} */ this.trackHash = null;
-        /** @type {boolean} */ this.createNew = false;
+    @property() trackIndex = 0;
+    @property() playlistId: string = null!;
+    @property() trackHash: string = null!;
+    @property() createNew = false;
 
-        /** @type {MusicModel} */ this.updatedTrack = null;
-    }
+    @state() updatedTrack: MusicModel = null!;
 
-    async override connectedCallback() {
+    override async connectedCallback() {
         await super.connectedCallback();
 
         this.initializeData();
@@ -102,7 +94,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
             })
         );
 
-        window.addEventListener('hashchange', (e:Event) => {
+        window.addEventListener('hashchange', (e: Event) => {
             PlayMusicDialog.show(this.updatedTrack, AudioService.volume, AudioService.trackPosition.current() ?? 0);
         });
 
@@ -117,7 +109,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
                 genres: [],
             });
         } else if (!this.playlistId) {
-            var currentTrack = await MusicService.get(this.trackHash);
+            var currentTrack = await MusicService.get(this.trackHash!);
             this.playlist = new PlaylistModel({ tracks: [new MusicModel(currentTrack)], isTemporary: true, genres: [] });
             this.trackIndex = 0;
         } else {
@@ -133,13 +125,13 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     }
 
     override render() {
-        if (!this.updatedTrack) return;
+        if (!this.updatedTrack) return null;
         var title = '';
         if (this.createNew) title = 'Neuer Track' + (this.updatedTrack.name ? ` - ${this.updatedTrack.name}` : '');
         else if (this.playlist?.isTemporary || !this.playlist?.name) title = this.updatedTrack?.displayName;
         else title = this.playlist.name + ' - ' + this.updatedTrack.name;
         if (document.title != title) document.title = title;
-        return super.render();
+        return super.render.call(this);
     }
 
     async toggleCurrentTrack() {
@@ -155,9 +147,6 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {number} offset
-     */
     async changeTrackBy(offset: number) {
         var index = this.trackIndex + offset;
         if (index < 0) index = this.playlist.tracks.length - 1;
@@ -165,11 +154,6 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         await this.changeTrack(index);
     }
 
-    /**
-     *
-     * @param {number} index
-     * @returns
-     */
     async changeTrack(index: number) {
         if (this.playlist.tracks.length == 1) return;
         this.trackIndex = index;
@@ -181,24 +165,16 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         await AudioService.play(this.updatedTrack?.path);
     }
 
-    /**
-     * @param { number} newVolume
-     */
     async changeVolume(newVolume: number) {
         await AudioService.changeVolume(newVolume / 100);
         localStorage.setItem('volume', newVolume.toString());
         await this.requestFullUpdate();
     }
 
-    /**
-     * @template {keyof MusicModel} T
-     * @param {T} property
-     * @param {MusicModel[T]} value
-     */
-    async changeProperty(property: T, value: MusicModel[T]) {
+    async changeProperty<T extends keyof MusicModel>(property: T, value: MusicModel[T]) {
         try {
             if (this.updatedTrack.hash) {
-                /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
+                const { oldModel, newModel } = { oldModel: {} as any, newModel: {} as any };
                 oldModel[property] = this.updatedTrack[property];
                 newModel[property] = value;
                 var updated = await MusicService.update(
@@ -220,34 +196,31 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     }
 
     async showLanguageSwitcher() {
-        var parent = this.shadowRoot!.querySelector('#music-player-container');
+        var parent = this.shadowRoot!.querySelector('#music-player-container')!;
         var result = await LanguageSwitcher.spawnAt(parent, this.updatedTrack.language);
         if (!result) return;
         this.changeProperty('language', result);
     }
 
-    changeTrackPosition(value) {
+    changeTrackPosition(value: string) {
         if (AudioService.duration == Infinity) return;
         AudioService.changePosition(Number.parseInt(value));
     }
 
-    /**
-     * @param {MusicGenre} genre
-     */
     addGenre(genre: MusicGenre) {
         if (!genre || !Object.values(MusicGenre).includes(genre)) return;
         var newGenres = this.updatedTrack.genres.concat([genre]);
         this.changeProperty('genres', newGenres);
     }
 
-    removeGenreKey(key) {
+    removeGenreKey(key: MusicGenre) {
         var newGenres = this.updatedTrack.genres.filter((x) => x != key);
         this.changeProperty('genres', newGenres);
     }
 
     async openInstrumentsDialog() {
         var genreDialog = await GenreDialog.startShowingWithInstruments(this.updatedTrack.instruments);
-        genreDialog.addEventListener('accept', (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
+        genreDialog.addEventListener('accept', (e: CustomEvent<GenreDialogResult>) => {
             var instruments = e.detail.acceptedGenres.map((x) => x.name);
             this.changeProperty(
                 'instruments',
@@ -263,15 +236,15 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     }
 
     async toggleComplete() {
-        /** @type {HTMLInputElement}*/ var input = this.shadowRoot!.querySelector('#complete-check');
+        var input = this.shadowRoot!.querySelector('#complete-check')! as HTMLInputElement;
         await this.changeProperty('complete', input.checked);
     }
 
     async changeCurrentTrackPath() {
         var extensions = { 'Audio-Files': AudioFileExtensions };
-        /** @type {string[]} */ var filePaths = await ClientInteropService.executeQuery({
+        var filePaths = await ClientInteropService.executeQuery<string[]>({
             query: InteropQuery.RequestFiles,
-            payload: /** @type {FilesQueryRequest} */ { multiselect: false, nameExtensionMap: extensions },
+            payload: { multiselect: false, nameExtensionMap: extensions } as FilesQueryRequest,
         });
         if (!filePaths || filePaths.length != 1) return;
 
@@ -306,12 +279,12 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         this.requestFullUpdate();
     }
 
-    switchSelectedMood(mood) {
+    switchSelectedMood(mood: ('mood1' | 'mood2') & keyof MusicModel) {
         this.moodToSwitch = mood;
         this.requestFullUpdate();
     }
 
-    async disoverride connectedCallback() {
+    override async disconnectedCallback() {
         await super.disconnectedCallback();
         await AudioService.reset();
     }

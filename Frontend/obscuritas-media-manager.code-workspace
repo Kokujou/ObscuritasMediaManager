@@ -21,7 +21,8 @@
             "**/node_modules": true,
             "**/bower_components": true,
             "**/*.code-search": true,
-            "obscuritas-media-manager-backend-client.*": true
+            "obscuritas-media-manager-backend-client.*": true,
+            "**/client-interop/**": false
         },
         "typescript.enablePromptUseWorkspaceTsdk": true,
         "typescript.tsserver.watchOptions": {
@@ -31,7 +32,7 @@
         "files.watcherInclude": ["**/*.ts"],
         "typescript.tsdk": "node_modules\\typescript\\lib",
         "typescript.preferences.importModuleSpecifierEnding": "minimal",
-        "typescript.tsserver.experimental.enableProjectDiagnostics": true
+        "typescript.tsserver.experimental.enableProjectDiagnostics": false
     },
     "tasks": {
         "version": "2.0.0",
@@ -50,7 +51,7 @@
                     "revealProblems": "never",
                     "showReuseMessage": false
                 },
-                "problemMatcher": "$tsc-watch",
+                "problemMatcher": "$ts-webpack-watch",
                 "isBackground": true,
                 "runOptions": {
                     "runOn": "folderOpen"

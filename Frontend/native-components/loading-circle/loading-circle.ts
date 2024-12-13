@@ -10,6 +10,6 @@ export class LoadingCircle extends LitElementBase {
     }
 
     override render() {
-        return renderLoadingCircle(this);
+        return renderLoadingCircle.call(this);
     }
 }

@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Mood } from '../../obscuritas-media-manager-backend-client';
 import { getTargetScrollPosition, scrollIntoParentViewY } from '../../services/extensions/document.extensions';
@@ -18,21 +18,18 @@ export class ScrollSelect extends LitElementBase {
         };
     }
 
-    /** @returns {HTMLElement} */
     get scrollContainer() {
-        var container = this.shadowRoot!.getElementById('scroll-items');
+        var container = this.shadowRoot!.querySelector<HTMLElement>('#scroll-items')!;
         return container;
     }
 
     get scrollItemsContainer() {
-        var container = this.shadowRoot!.getElementById('item-container');
+        var container = this.shadowRoot!.querySelector<HTMLElement>('#item-container')!;
         return container;
     }
 
     get scrollChildren() {
-        return [...this.shadowRoot!.querySelectorAll('#item-container > *:not(.inner-space)')].map(
-            /** @param {HTMLElement} x */ (x: HTMLElement) => x
-        );
+        return [...this.shadowRoot!.querySelectorAll<HTMLElement>('#item-container > *:not(.inner-space)')];
     }
 
     get canScrollUp() {
@@ -43,21 +40,18 @@ export class ScrollSelect extends LitElementBase {
         return this.currentItemIndex < this.children.length - 1;
     }
 
-    constructor() {
-        super();
-        /** @type {string[]} */ this.options = [];
-        /** @type {Mood} */ this.value = Mood.Unset;
-        /** @type {number} */ this.currentItemIndex = 0;
-        /** @type {boolean} */ this.mouseDown = false;
-        /** @type {number} */ this.mouseStartY = 0;
+    @property() options = [];
+    @property() value = Mood.Unset;
 
-        document.addEventListener('pointermove', (e: Event) => this.onPointerMove(e));
+    @state() protected declare currentItemIndex: number;
+    @state() protected declare mouseDown: boolean;
+    @state() protected declare mouseStartY: number;
+
+    override connectedCallback() {
+        document.addEventListener('pointermove', (e) => this.onPointerMove(e));
         document.addEventListener('pointerup', () => this.onPointerUp());
     }
 
-    /**
-     * @param {Map<any, any>} _changedProperties
-     */
     updated(_changedProperties: Map<any, any>) {
         super.updated(_changedProperties);
 
@@ -68,7 +62,7 @@ export class ScrollSelect extends LitElementBase {
     }
 
     override render() {
-        return renderScrollSelect(this);
+        return renderScrollSelect.call(this);
     }
 
     scrollToTop() {
@@ -83,7 +77,7 @@ export class ScrollSelect extends LitElementBase {
         this.notifyValueChanged();
     }
 
-    scrollToItem(value) {
+    scrollToItem(value: string) {
         var index = this.options.findIndex((x) => x == value);
         this.currentItemIndex = index;
         this.notifyValueChanged();
@@ -92,14 +86,11 @@ export class ScrollSelect extends LitElementBase {
     startDragScrolling() {
         this.mouseDown = true;
         var element = this.scrollChildren[this.currentItemIndex];
-        this.mouseStartY = getTargetScrollPosition(element, element.parentElement, this.scrollContainer).top;
+        this.mouseStartY = getTargetScrollPosition(element, element.parentElement!, this.scrollContainer).top;
         this.scrollItemsContainer.classList.toggle('user-interaction', true);
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {PointerEvent} e
-     */
     onPointerMove(e: PointerEvent) {
         if (!this.mouseDown) return;
         var deltaY = e.movementY;
@@ -114,7 +105,7 @@ export class ScrollSelect extends LitElementBase {
         var currentScrollTop = this.mouseStartY;
         this.scrollItemsContainer.classList.toggle('user-interaction', false);
         this.scrollChildren.forEach((item, index) => {
-            var targetTop = getTargetScrollPosition(item, item.parentElement, this.scrollContainer).top;
+            var targetTop = getTargetScrollPosition(item, item.parentElement!, this.scrollContainer).top;
             if (currentScrollTop > targetTop - item.offsetHeight / 2 && currentScrollTop < targetTop + item.offsetHeight / 2) {
                 this.currentItemIndex = index;
             }
@@ -126,7 +117,7 @@ export class ScrollSelect extends LitElementBase {
     notifyValueChanged() {
         var element = this.scrollChildren[this.currentItemIndex];
         setTimeout(() => {
-            scrollIntoParentViewY(element, element.parentElement, this.scrollContainer);
+            scrollIntoParentViewY(element, element.parentElement!, this.scrollContainer);
         }, 100);
 
         this.dispatchEvent(new CustomEvent('valueChanged', { detail: { value: this.options[this.currentItemIndex] } }));

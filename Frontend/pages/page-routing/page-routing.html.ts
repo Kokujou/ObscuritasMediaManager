@@ -2,10 +2,7 @@ import { html } from 'lit-element';
 import { getScaleFactorX, getScaleFactorY, viewportHeight, viewportWidth } from '../../services/extensions/document.extensions';
 import { PageRouting } from './page-routing';
 
-/**
- * @param {PageRouting} routing
- */
-export function renderPageRouting(routing: PageRouting) {
+export function renderPageRouting(this: PageRouting) {
     var scaleX = getScaleFactorX();
     var scaleY = getScaleFactorY();
     return html`<style>

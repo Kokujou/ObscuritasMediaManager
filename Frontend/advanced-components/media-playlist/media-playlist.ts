@@ -64,7 +64,7 @@ export class MediaPlaylist extends LitElementBase {
         await playlistScrollContainer?.requestFullUpdate();
 
         setTimeout(() => {
-            /** @type {HTMLElement | null | undefined} */ var child = this.shadowRoot?.querySelector('.playlist-entry[active]');
+            var child = this.shadowRoot?.querySelector('.playlist-entry[active]') as HTMLElement;
             if (!child) return;
             playlistScrollContainer?.scrollToChild(child);
         }, 100);

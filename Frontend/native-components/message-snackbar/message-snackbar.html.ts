@@ -1,12 +1,9 @@
 import { html } from 'lit-element';
 import { MessageSnackbar } from './message-snackbar';
 
-/**
- * @param { MessageSnackbar } messageSnackbar
- */
-export function renderMessageSnackbar(messageSnackbar: MessageSnackbar) {
+export function renderMessageSnackbar(this: MessageSnackbar) {
     return html`
-        <div id="message-text">${messageSnackbar.message}</div>
-        <div id="x-button" @click="${() => messageSnackbar.dismiss()}">&times;</div>
+        <div id="message-text">${this.message}</div>
+        <div id="x-button" @click="${() => this.dismiss()}">&times;</div>
     `;
 }

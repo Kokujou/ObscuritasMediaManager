@@ -1,9 +1,6 @@
 import { html } from 'lit-element';
 import { BorderButton } from './border-button';
 
-/**
- * @param {BorderButton} borderButton
- */
 export function renderBorderButton(borderButton: BorderButton) {
     return html`
         <div id="button-container">

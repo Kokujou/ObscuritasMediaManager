@@ -1,24 +1,22 @@
+import { TemplateResult } from 'lit-element';
 import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { ModelCreationState } from '../../obscuritas-media-manager-backend-client';
 import { renderEntityStatusDialogStyles } from './entity-status-dialog.css';
 import { renderEntityStatusDialog } from './entity-status-dialog.html';
 
-/**
- * @typedef {Object} EntityStatusEntry
- * @prop {string | TemplateResult} text
- * @prop {ModelCreationState} status
- */
+export class EntityStatusEntry {
+    text: string | TemplateResult;
+    status: ModelCreationState;
+}
+
 @customElement('entity-status-dialog')
 export class EntityStatusDialog extends LitElementBase {
     static override get styles() {
         return renderEntityStatusDialogStyles();
     }
 
-    /**
-     * @param {((dialog: EntityStatusDialog) => boolean)} isComplete
-     */
-    static show(isComplete: ((dialog: EntityStatusDialog) => boolean)) {
+    static show(isComplete: (dialog: EntityStatusDialog) => boolean) {
         var dialog = new EntityStatusDialog();
         dialog.isComplete = isComplete;
 
@@ -28,23 +26,17 @@ export class EntityStatusDialog extends LitElementBase {
         return dialog;
     }
 
-    constructor() {
-        super();
-        /** @type {EntityStatusEntry[]} */ this.entries = [];
-        /** @type {(dialog: EntityStatusDialog) => boolean } */ this.isComplete = () => false;
-    }
+    entries: EntityStatusEntry[] = [];
+    isComplete = (dialog: EntityStatusDialog) => false;
 
     override render() {
-        return renderEntityStatusDialog(this);
+        return renderEntityStatusDialog.call(this);
     }
 
-    /**
-     * @param {EntityStatusEntry} entry,
-     */
     async addEntry(entry: EntityStatusEntry) {
         this.entries.push(entry);
 
         await this.requestFullUpdate();
-        this.shadowRoot!.querySelector('#entries').scrollTop = 50000;
+        this.shadowRoot!.querySelector('#entries')!.scrollTop = 50000;
     }
 }

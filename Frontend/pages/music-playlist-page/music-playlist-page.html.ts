@@ -21,19 +21,16 @@ import { MusicPlaylistPage } from './music-playlist-page';
 
 @customElement('music-playlist-page')
 export class MusicPlaylistPageTemplate extends LitElementBase {
-    /** @protected @type {PlaylistModel} */ playlist = new PlaylistModel({ tracks: [] });
-    /** @protected @type {MusicModel} */ currentTrack = new MusicModel();
-    /** @protected @type {MusicModel} */ updatedTrack = new MusicModel();
-    /** @protected @type {number} */ currentVolume = 0.1;
-    /** @protected @type {number} */ maxPlaylistItems = 20;
-    /** @protected @type {number} */ hoveredRating = 0;
-    /** @protected @type {keyof MusicModel & ('mood1' | 'mood2')} */ moodToSwitch = 'mood1';
-    /** @type {boolean} */ loop = false;
+    protected playlist = new PlaylistModel({ tracks: [] });
+    protected currentTrack = new MusicModel();
+    protected updatedTrack = new MusicModel();
+    protected currentVolume = 0.1;
+    protected maxPlaylistItems = 20;
+    protected hoveredRating = 0;
+    protected moodToSwitch: 'mood1' | 'mood2' = 'mood1';
+    protected loop = false;
 
-    /**
-     * @this MusicPlaylistPage
-     */
-    override render() {
+    override render(this: MusicPlaylistPage) {
         var mood2 = this.updatedTrack.mood2 == Mood.Unset ? this.updatedTrack.mood1 : this.updatedTrack.mood2;
         return html`
             <style>
@@ -84,7 +81,8 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                     id="mood-container"
                                     .options="${Object.values(Mood)}"
                                     .value="${this.updatedTrack[this.moodToSwitch]}"
-                                    @valueChanged="${(e: Event) => this.changeProperty(this.moodToSwitch, e.detail.value)}"
+                                    @valueChanged="${(e: CustomEvent<{ value: Mood }>) =>
+                                        this.changeProperty(this.moodToSwitch, e.detail.value)}"
                                 >
                                 </scroll-select>
                             </div>
@@ -107,7 +105,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                         'instrumentation',
                                         Enum.nextValue(Instrumentation, this.updatedTrack.instrumentation, 'Unset')
                                     )}"
-                                @changeRating="${(e: Event) => this.changeProperty('rating', e.detail)}"
+                                @changeRating="${(e: CustomEvent) => this.changeProperty('rating', e.detail)}"
                                 @changeInstruemnts="${() => this.openInstrumentsDialog()}"
                             ></audio-tile-base>
                             <div id="show-lyrics-link" @click="${() => this.showLyrics()}">Show Lyrics</div>
@@ -135,7 +133,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                     id="audio-author"
                                     class="editable-label"
                                     ?disabled="${this.updatedTrack.complete}"
-                                    .value="${this.updatedTrack.author}"
+                                    .value="${this.updatedTrack.author ?? ''}"
                                     oninput="this.dispatchEvent(new Event('change'))"
                                     tooltip="Autor"
                                     @change="${(e: Event) =>
@@ -146,7 +144,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                     ? LinkElement.forPage(
                                           MediaDetailPage,
                                           { mediaId: this.sourceMediaId },
-                                          this.updatedTrack.source,
+                                          this.updatedTrack.source!,
                                           { target: '_blank' }
                                       )
                                     : this.renderSourceInput()}
@@ -165,14 +163,14 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                     : html` <tag-label
                                           createNew
                                           .autocomplete="${this.autocompleteGenres}"
-                                          @tagCreated="${(e: Event) => this.addGenre(e.detail.value)}"
+                                          @tagCreated="${(e: CustomEvent) => this.addGenre(e.detail.value)}"
                                       ></tag-label>`}
                             </div>
                             <div id="track-position-container">
                                 <div id="track-position-label">${this.currentTrackPositionText}</div>
                                 <range-slider
                                     id="track-position"
-                                    @valueChanged="${(e: Event) => this.changeTrackPosition(e.detail.value)}"
+                                    @valueChanged="${(e: CustomEvent) => this.changeTrackPosition(e.detail.value)}"
                                     .value="${this.currentTrackPosition.toString()}"
                                     min="0"
                                     .max="${this.currentTrackDuration.toString()}"
@@ -215,7 +213,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                                         min="0"
                                         max="100"
                                         .value="${`${AudioService.volume * 100}`}"
-                                        @valueChanged="${(e: Event) => this.changeVolume(e.detail.value)}"
+                                        @valueChanged="${(e: CustomEvent) => this.changeVolume(e.detail.value)}"
                                     ></range-slider>
                                 </div>
                             </div>
@@ -254,7 +252,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
                         <media-playlist
                             .items="${this.playlist.tracks.map((x) => x.displayName)}"
                             .index="${this.trackIndex}"
-                            @indexChanged="${(e: Event) => this.changeTrack(e.detail.index)}"
+                            @indexChanged="${(e: CustomEvent) => this.changeTrack(e.detail.index)}"
                             @randomize="${() => this.randomize()}"
                         ></media-playlist>
                     </div>
@@ -263,10 +261,7 @@ export class MusicPlaylistPageTemplate extends LitElementBase {
         `;
     }
 
-    /**
-     * @this MusicPlaylistPage
-     */
-    renderSourceInput() {
+    renderSourceInput(this: MusicPlaylistPage) {
         return html` <input
                 type="text"
                 id="audio-source"

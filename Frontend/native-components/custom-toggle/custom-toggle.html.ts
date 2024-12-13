@@ -1,9 +1,6 @@
 import { html } from 'lit-element';
 import { CustomToggle } from './custom-toggle';
 
-/**
- * @param { CustomToggle } customToggle
- */
-export function renderCustomToggle(customToggle: CustomToggle) {
+export function renderCustomToggle(this: CustomToggle) {
     return html` <div id="slider"></div> `;
 }

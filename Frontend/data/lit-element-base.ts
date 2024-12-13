@@ -23,13 +23,14 @@ export class LitElementBase extends LitElement {
 
     constructor() {
         super();
+
         this.shadowRoot?.adoptedStyleSheets?.push(...LitElementBase.baseStyles);
     }
 
     async requestFullUpdate() {
         //@ts-ignore
         await super.requestUpdate(undefined);
-        this.shadowRoot!.querySelectorAll('*').forEach((x) => {
+        this.shadowRoot?.querySelectorAll('*').forEach((x) => {
             if (x instanceof LitElementBase) x.requestFullUpdate();
         });
     }
@@ -40,16 +41,19 @@ export class LitElementBase extends LitElement {
         this.attachTooltips();
     }
 
+    protected override render(): unknown | null {
+        return null;
+    }
+
     redispatchEvent(event: Event, target: HTMLElement | null = null) {
         target ??= this;
         target.dispatchEvent(new Event(event.type, { bubbles: true, composed: true }));
     }
 
     attachTooltips() {
-        var elementsWithTooltips = this.shadowRoot!.querySelectorAll('*[tooltip]');
-        for (var element of elementsWithTooltips) {
+        this.shadowRoot!.querySelectorAll('*[tooltip]')!.forEach((element) => {
             if (!this.elementsWithTooltips.includes(element)) this.attachTooltip(element);
-        }
+        });
     }
 
     attachTooltip(element: Element) {

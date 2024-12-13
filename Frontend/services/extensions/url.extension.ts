@@ -1,9 +1,10 @@
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
+import { Page } from '../../data/util-types';
 import { pascalToKeabCase } from './convention.extension';
 import { setFavicon } from './style.extensions';
 
-/** @param {string} query */ export function getQueryValue(query: string) {
+export function getQueryValue(query: string) {
     var queries = location.search.substr(1).split('&');
     var desiredQuery = queries.find((x) => x.split('=')[0] == query);
 
@@ -11,18 +12,13 @@ import { setFavicon } from './style.extensions';
     return decodeURIComponent(desiredQuery.split('=')[1]);
 }
 
-/**
- * @template T
- * @typedef {{ [K in keyof T]: T[K] extends Function ? never : K }[keyof T]} NonMethodKeys
- */
+export type NonMethodKeys<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
 
-/**
- * @template {import('../../custom-elements').Page} T
- * @template {Omit<InstanceType<T>, keyof LitElementBase>} U
- * @param {T} target
- * @param {Partial<Pick<U, NonMethodKeys<U>>>} [params]
- */
-export function changePage(target: T, params: Partial<Pick<U, NonMethodKeys<U>>> = {}, reflectInHistory = true) {
+export function changePage<T extends Page, U extends Omit<InstanceType<T>, keyof LitElementBase> | null>(
+    target: T,
+    params: Partial<Pick<U, NonMethodKeys<U>>> = {},
+    reflectInHistory = true
+) {
     setFavicon('');
     var newUrl = new URL(location.href);
     newUrl.search = '';
@@ -36,9 +32,8 @@ export function changePage(target: T, params: Partial<Pick<U, NonMethodKeys<U>>>
     Session.currentPage.next(getPageName(target));
 }
 
-/** @returns {any} */
 export function queryToObject() {
-    var result = {};
+    var result = {} as { [key: string]: any };
     if (location.search) {
         var params = location.search.slice(1).split('&');
         for (var param of params) {
@@ -50,8 +45,7 @@ export function queryToObject() {
     return result;
 }
 
-/** @param  {import('../../custom-elements').Page} component */
-export function getPageName(component: import('../../custom-elements').Page) {
+export function getPageName(component: Page) {
     var componentName = pascalToKeabCase(component.name);
     return componentName.replace('-page', '');
 }

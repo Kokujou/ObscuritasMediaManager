@@ -1,21 +1,20 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { PageRouting } from '../../pages/page-routing/page-routing';
 import { renderDialogBaseStyles } from './dialog-base.css';
 import { renderDialogBase } from './dialog-base.html';
 
-/**
- * @typedef {Object} DialogProperties
- * @prop {string} content
- * @prop {string} acceptActionText
- * @prop {string} declineActionText
- * @prop {number} width
- * @prop {number} height
- * @prop {boolean} showBorder
- * @prop {boolean} noImplicitAccept
- * @prop {boolean} noImplicitDecline
- */
+export class DialogProperties {
+    content: string;
+    acceptActionText: string;
+    declineActionText: string;
+    width: number;
+    height: number;
+    showBorder: boolean;
+    noImplicitAccept: boolean;
+    noImplicitDecline: boolean;
+}
 
 @customElement('dialog-base')
 export class DialogBase extends LitElementBase {
@@ -25,21 +24,6 @@ export class DialogBase extends LitElementBase {
         return renderDialogBaseStyles();
     }
 
-    static get properties() {
-        return {
-            caption: { type: String, reflect: true },
-            acceptActionText: { type: String, reflect: true },
-            declineActionText: { type: String, reflect: true },
-            canAccept: { type: Boolean, reflect: true },
-            showBorder: { type: Boolean, reflect: true },
-        };
-    }
-
-    /**
-     * @param {string} caption
-     * @param {Partial<DialogProperties>} properties
-     * @returns {Promise<boolean>}
-     */
     static show(caption: string, properties: Partial<DialogProperties>) {
         var dialog = new DialogBase();
         dialog.caption = caption;
@@ -48,10 +32,10 @@ export class DialogBase extends LitElementBase {
         dialog.canAccept = true;
         dialog.properties = properties;
 
-        PageRouting.container.appendChild(dialog);
+        PageRouting.container!.appendChild(dialog);
         dialog.requestFullUpdate();
 
-        return new Promise((resolve) => {
+        return new Promise<boolean>((resolve) => {
             dialog.addEventListener('accept', () => {
                 dialog.remove();
                 resolve(true);
@@ -64,14 +48,14 @@ export class DialogBase extends LitElementBase {
         });
     }
 
+    @property() caption: string;
+    @property() acceptActionText?: string;
+    @property() declineActionText?: string;
+    @property() properties: Partial<DialogProperties>;
+    @property() canAccept: boolean;
+
     constructor() {
         super();
-
-        /** @type {string} */ this.caption;
-        /** @type {string} */ this.acceptActionText;
-        /** @type {string} */ this.declineActionText;
-        /** @type {Partial<DialogProperties>} */ this.properties;
-        /** @type {Boolean} */ this.canAccept;
         DialogBase.instantiated++;
     }
 
@@ -82,7 +66,7 @@ export class DialogBase extends LitElementBase {
         this.focus();
         this.addEventListener(
             'keyup',
-            (e: Event) => {
+            (e: KeyboardEvent) => {
                 if (e.key == 'Escape' && !this.properties?.noImplicitDecline) this.decline();
                 if (e.key == 'Enter' && !this.properties?.noImplicitAccept) this.accept();
             },
@@ -96,7 +80,7 @@ export class DialogBase extends LitElementBase {
     }
 
     override render() {
-        return renderDialogBase(this);
+        return renderDialogBase.call(this);
     }
 
     accept() {

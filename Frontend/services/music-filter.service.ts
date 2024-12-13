@@ -4,10 +4,6 @@ import { Mood, MusicModel, PlaylistModel } from '../obscuritas-media-manager-bac
 import { ObjectFilterService } from './object-filter.service';
 
 export class MusicFilterService {
-    /**
-     * @param {PlaylistModel[]} playlists
-     * @param {MusicFilterOptions} filter
-     */
     static filterPlaylists(playlists: PlaylistModel[], filter: MusicFilterOptions) {
         if (filter.showPlaylists == CheckboxState.Forbid || filter.showDeleted == CheckboxState.Require) return [];
 
@@ -31,10 +27,6 @@ export class MusicFilterService {
         return filteredPlaylists;
     }
 
-    /**
-     * @param {MusicModel[]} tracks
-     * @param {MusicFilterOptions} filter
-     */
     static filterTracks(tracks: MusicModel[], filter: MusicFilterOptions) {
         if (filter.showPlaylists == CheckboxState.Require) return [];
         var filteredTracks = [...tracks];
@@ -56,10 +48,6 @@ export class MusicFilterService {
         return filteredTracks;
     }
 
-    /**
-     * @param {MusicModel[]} list
-     * @param {string} search
-     */
     static search(list: MusicModel[], search: string) {
         ObjectFilterService.applyMultiPropertySearch(list, search, 'name', 'author', 'source', 'path');
         return list;

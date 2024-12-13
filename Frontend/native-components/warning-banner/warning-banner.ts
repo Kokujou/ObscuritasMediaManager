@@ -1,3 +1,4 @@
+import { TemplateResult } from 'lit-element';
 import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { renderWarningBannerStyles } from './warning-banner.css';
@@ -16,11 +17,8 @@ export class WarningBanner extends LitElementBase {
         };
     }
 
-    /** @type {WarningBanner} */ static instance;
+    static instance: WarningBanner | null;
 
-    /**
-     * @param {TemplateResult} inner
-     */
     static spawn(inner: TemplateResult) {
         if (this.instance) return;
         var banner = new WarningBanner();
@@ -35,18 +33,14 @@ export class WarningBanner extends LitElementBase {
         this.instance?.remove();
     }
 
-    constructor() {
-        super();
-
-        /** @type {boolean} */ this.dismissed;
-        /** @type {TemplateResult} */ this.inner;
-    }
+    dismissed: boolean;
+    inner: TemplateResult | string;
 
     override render() {
-        return renderWarningBanner(this);
+        return renderWarningBanner.call(this);
     }
 
-    disoverride connectedCallback() {
+    override disconnectedCallback() {
         super.disconnectedCallback();
         WarningBanner.instance = null;
     }

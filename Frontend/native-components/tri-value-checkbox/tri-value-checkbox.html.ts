@@ -1,12 +1,9 @@
 import { html } from 'lit-element';
 import { TriValueCheckbox } from './tri-value-checkbox';
 
-/**
- * @param {TriValueCheckbox} checkbox
- */
-export function renderTriValueCheckboxStyles(checkbox: TriValueCheckbox) {
+export function renderTriValueCheckboxStyles(this: TriValueCheckbox) {
     return html`
-        <div class="checkbox " @click="${() => checkbox.nextState()}">
+        <div class="checkbox " @click="${() => this.nextState()}">
             <slot></slot>
         </div>
     `;

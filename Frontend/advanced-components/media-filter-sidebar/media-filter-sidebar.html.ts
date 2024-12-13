@@ -146,13 +146,17 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                     <custom-toggle
                         id="undefined-rating-toggle"
                         .state="${this.filter.ratings.states[0]}"
-                        @toggle="${(e: CustomEvent) => this.setFilterProperty('ratings', '0', e.detail)}"
+                        @toggle="${(e: CustomEvent) => this.setFilterProperty('ratings', 0, e.detail)}"
                     ></custom-toggle>
                 </div>
                 <star-rating
                     max="5"
                     .values="${Object.keys(this.filter.ratings.states)
-                        .filter((x) => this.filter.ratings.states[x] == CheckboxState.Require)
+                        .filter(
+                            (x) =>
+                                this.filter.ratings.states[<keyof MediaFilter['ratings']['states']>(<unknown>x)] ==
+                                CheckboxState.Require
+                        )
                         .map((x) => Number.parseInt(x))}"
                     @ratingChanged="${(e: CustomEvent) =>
                         this.setFilterProperty(

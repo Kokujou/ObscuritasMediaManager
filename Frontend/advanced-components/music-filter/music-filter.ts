@@ -1,5 +1,6 @@
 import { customElement } from 'lit-element/decorators';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
+import { FilterEntry } from '../../data/filter-entry';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MusicSortingProperties, SortingProperties } from '../../data/music-sorting-properties';
 import { Session } from '../../data/session';
@@ -7,7 +8,7 @@ import { SortingDirections } from '../../data/sorting-directions';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog';
 import { InstrumentType, MusicModel } from '../../obscuritas-media-manager-backend-client';
-import { FilterEntryKeyOf } from '../media-filter-sidebar/media-filter-sidebar';
+import { KeyOfType } from '../../services/object-filter.service';
 import { MusicFilterOptions } from './music-filter-options';
 import { renderMusicFilterStyles } from './music-filter.css';
 import { renderMusicFilter } from './music-filter.html';
@@ -32,8 +33,6 @@ export class MusicFilter extends LitElementBase {
 
     constructor() {
         super();
-        SortingDirections;
-
         if (
             !Object.keys(MusicSortingProperties).every((property) =>
                 Object.keys(new MusicModel()).concat(['unset']).includes(property)
@@ -67,13 +66,17 @@ export class MusicFilter extends LitElementBase {
         return renderMusicFilter.call(this);
     }
 
-    setFilterEntryValue(filter: FilterEntryKeyOf<MusicFilterOptions>, enumKey: string, state: CheckboxState) {
-        this.filter[filter].states[enumKey] = state;
+    setFilterEntryValue<T extends string | number | symbol>(
+        filter: FilterEntry<T>,
+        enumKey: keyof FilterEntry<T>['states'],
+        state: CheckboxState
+    ) {
+        filter.states[enumKey] = state;
         this.requestFullUpdate();
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
 
-    setfilterEntry<T extends Exclude<keyof MusicFilterOptions, FilterEntryKeyOf<MusicFilterOptions>>>(
+    setfilterEntry<T extends Exclude<keyof MusicFilterOptions, KeyOfType<MusicFilterOptions, FilterEntry<any>>>>(
         filter: T,
         state: MusicFilterOptions[T]
     ) {
@@ -82,8 +85,8 @@ export class MusicFilter extends LitElementBase {
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
 
-    setArrayFilter(filter: FilterEntryKeyOf<MusicFilterOptions>, value: CheckboxState) {
-        for (var key in this.filter[filter].states) this.filter[filter].states[key] = value;
+    setArrayFilter<T extends KeyOfType<MusicFilterOptions, FilterEntry<any>>>(filter: T, value: CheckboxState) {
+        for (var key in this.filter[filter].states) (this.filter[filter] as FilterEntry<any>).states[key as any] = value;
         this.requestFullUpdate();
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
@@ -104,9 +107,13 @@ export class MusicFilter extends LitElementBase {
         );
     }
 
-    handleDropdownChange(filter: FilterEntryKeyOf<MusicFilterOptions>, selectedValues: string[]) {
+    handleDropdownChange<T extends KeyOfType<MusicFilterOptions, FilterEntry<any>>>(filter: T, selectedValues: string[]) {
         Object.keys(this.filter[filter].states).forEach((key) => {
-            this.setFilterEntryValue(filter, key, selectedValues.includes(key) ? CheckboxState.Ignore : CheckboxState.Forbid);
+            this.setFilterEntryValue(
+                this.filter[filter],
+                key,
+                selectedValues.includes(key) ? CheckboxState.Ignore : CheckboxState.Forbid
+            );
         });
     }
 
@@ -119,7 +126,7 @@ export class MusicFilter extends LitElementBase {
             }
             for (var allowed of e.detail.acceptedGenres) {
                 this.filter.instruments.states[allowed.name] = CheckboxState.Require;
-                this.filter.instrumentTypes.states[allowed.sectionName] = CheckboxState.Require;
+                this.filter.instrumentTypes.states[allowed.sectionName as InstrumentType] = CheckboxState.Require;
             }
             for (var forbidden of e.detail.forbiddenGenres) {
                 this.filter.instruments.states[forbidden.name] = CheckboxState.Forbid;

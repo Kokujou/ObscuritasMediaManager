@@ -5,23 +5,13 @@ import { renderCreateMediaPage } from './create-media-page.html';
 
 @customElement('create-media-page')
 export class CreateMediaPage extends LitElementBase {
-    static get isPage() {
-        return true;
-    }
+    static isPage = true as const;
 
     static override get styles() {
         return renderCreateMediaPageStyles();
     }
 
-    static get properties() {
-        return {};
-    }
-
-    constructor() {
-        super();
-    }
-
     override render() {
-        return renderCreateMediaPage(this);
+        return renderCreateMediaPage.call(this);
     }
 }

@@ -15,11 +15,7 @@ export class {{ pascalCase name }} extends LitElementBase {
         };
     }
 
-    constructor() {
-        super();
-
-        /** @type {string} */ this.someProperty;
-    }
+    @property() someProperty: string;
 
     override render() {
         return render{{ pascalCase name }}(this);

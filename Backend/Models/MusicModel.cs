@@ -53,7 +53,7 @@ public class MusicModel
     [MaxLength(255)] public string? Lyrics { get; set; }
     public byte Rating { get; set; }
     public bool Complete { get; set; }
-    [MaxLength(255)] [Key] public string? Hash { get; set; }
+    [MaxLength(255)][Key] public string Hash { get; set; } = null!;
     [JsonIgnore] [IgnoreDataMember] public long FileBytes { get; set; }
     public bool Deleted { get; set; }
 

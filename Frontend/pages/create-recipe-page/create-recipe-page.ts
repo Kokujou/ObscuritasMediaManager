@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import { IngredientModel, Language, Measurement, RecipeModel } from '../../obscuritas-media-manager-backend-client';
@@ -10,7 +10,7 @@ import { renderCreateRecipePage } from './create-recipe-page.html';
 
 @customElement('create-recipe-page')
 export class CreateRecipePage extends LitElementBase {
-    static isPage = true;
+    static isPage = true as const;
     static pageName = 'Rezept erstellen';
 
     static override get styles() {
@@ -40,20 +40,16 @@ export class CreateRecipePage extends LitElementBase {
         return defaultIngredient;
     }
 
-    constructor() {
-        super();
-
-        /** @type {string} */ this.recipeId = null;
-        /** @type {RecipeModel} */ this.recipe = new RecipeModel();
-        this.recipe.id = crypto.randomUUID();
-        this.recipe.title = 'Rezepttitel';
-        this.recipe.ingredients = [];
-        this.recipe.nation = Language.Unset;
-        this.recipe.difficulty = 0;
-        this.recipe.rating = 0;
-        this.recipe.formattedText = 'Dein Rezept-Text';
-        this.recipe.ingredients.push(this.emptyGroup);
-    }
+    @property() recipeId = null;
+    @property() recipe = new RecipeModel({
+        id: crypto.randomUUID(),
+        title: 'Rezepttitel',
+        nation: Language.Unset,
+        difficulty: 0,
+        rating: 0,
+        formattedText: 'Dein Rezept-Text',
+        ingredients: [this.emptyGroup],
+    });
 
     override async connectedCallback() {
         super.connectedCallback();
@@ -66,12 +62,9 @@ export class CreateRecipePage extends LitElementBase {
     }
 
     override render() {
-        return renderCreateRecipePage(this);
+        return renderCreateRecipePage.call(this);
     }
 
-    /**
-     * @param {Event} event
-     */
     addGroup(event: Event) {
         event.stopPropagation();
         event.preventDefault();
@@ -79,10 +72,6 @@ export class CreateRecipePage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {string} group
-     * @param {Event} event
-     */
     addIngredient(group: string, event: Event) {
         event.stopPropagation();
         event.preventDefault();
@@ -101,46 +90,27 @@ export class CreateRecipePage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    /**
-     *
-     * @param {keyof import('../../obscuritas-media-manager-backend-client').IRecipeModel} property
-     * @param {string} value
-     */
-    changeProperty(property: keyof import('../../obscuritas-media-manager-backend-client').IRecipeModel, value: string) {
-        /** @type {any} */ this.recipe[property] = value;
+    changeProperty<T extends keyof RecipeModel>(property: T, value: RecipeModel[T]) {
+        this.recipe[property] = value;
         this.requestFullUpdate();
     }
 
-    /**
-     *
-     * @param { IngredientModel[] } affectedIngredients
-     * @param {string} newName
-     */
     renameGroup(affectedIngredients: IngredientModel[], newName: string) {
         for (var ingredient of affectedIngredients) ingredient.groupName = newName;
 
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {string} imageData
-     */
     notifyImageAdded(imageData: string) {
         this.recipe.imageUrl = imageData;
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {IngredientModel} ingredient
-     */
     removeItem(ingredient: IngredientModel) {
         this.recipe.ingredients = this.recipe.ingredients.filter((x) => x.id != ingredient.id);
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {SubmitEvent} event
-     */
     async submit(event: SubmitEvent) {
         event.preventDefault();
         event.stopPropagation();

@@ -11,10 +11,10 @@ import {
 } from '../../obscuritas-media-manager-backend-client';
 
 export class MusicFilterOptions {
-    /** @type {string} */ search = '';
-    /** @type {CheckboxState} */ showComplete = CheckboxState.Ignore;
-    /** @type {CheckboxState} */ showPlaylists = CheckboxState.Ignore;
-    /** @type {CheckboxState} */ showDeleted = CheckboxState.Forbid;
+    search = '';
+    showComplete = CheckboxState.Ignore;
+    showPlaylists = CheckboxState.Ignore;
+    showDeleted = CheckboxState.Forbid;
 
     languages = new FilterEntry(Object.values(Language), CheckboxState.Require);
     ratings = new FilterEntry(['0', '1', '2', '3', '4', '5'], CheckboxState.Ignore);

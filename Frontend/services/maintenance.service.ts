@@ -8,9 +8,6 @@ import { MediaDetailPage } from '../pages/media-detail-page/media-detail-page';
 import { CleanupService, MediaService, MusicService } from './backend.services';
 
 export class MaintenanceService {
-    /**
-     * @returns {Promise<boolean>}
-     */
     static cleanMedia() {
         return new Promise(async (resolve) => {
             var complete = false;
@@ -76,18 +73,12 @@ export class MaintenanceService {
         });
     }
 
-    /**
-     * @returns {Promise<boolean>}
-     */
     static repairMedia() {
-        return new Promise(async (resolve) => {});
+        return new Promise<boolean>(async (resolve) => {});
     }
 
-    /**
-     * @returns {Promise<boolean>}
-     */
     static cleanAudioTracks() {
-        return new Promise(async (resolve) => {
+        return new Promise<boolean>(async (resolve) => {
             var brokenTracks = (await CleanupService.getBrokenAudioTracks()).map((x) => new MusicModel(x));
 
             if (brokenTracks.length <= 0) {
@@ -103,14 +94,14 @@ export class MaintenanceService {
                 brokenTracks.reduce((prev, curr) => {
                     prev[curr.hash] = curr.displayName;
                     return prev;
-                }, {})
+                }, {} as { [key: string]: string })
             );
 
             dialog.addEventListener('decline', () => {
                 dialog.remove();
                 resolve(false);
             });
-            dialog.addEventListener('accept', async (e: Event) => {
+            dialog.addEventListener('accept', async (e: CustomEvent<{ selected: string[] }>) => {
                 try {
                     var accpeted = await DialogBase.show('Achtung!!', {
                         content:
@@ -125,7 +116,7 @@ export class MaintenanceService {
                         return dialog.remove();
                     }
 
-                    var selected = /** @type {CustomEvent<{selected: string[]}>} */ e.detail.selected;
+                    var selected = e.detail.selected;
                     await MusicService.hardDeleteTracks(selected);
                     dialog.remove();
                     resolve(true);

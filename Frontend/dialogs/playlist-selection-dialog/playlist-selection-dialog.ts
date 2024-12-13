@@ -17,9 +17,6 @@ export class PlaylistSelectionDialog extends LitElementBase {
         };
     }
 
-    /**
-     * @returns {Promise<PlaylistModel>}
-     */
     static async requestPlaylist() {
         var dialog = new PlaylistSelectionDialog();
 
@@ -28,9 +25,9 @@ export class PlaylistSelectionDialog extends LitElementBase {
         document.body.append(dialog);
         dialog.requestFullUpdate();
 
-        return new Promise((resolve) => {
+        return new Promise<PlaylistModel | null>((resolve) => {
             dialog.addEventListener('accept', (x) => {
-                resolve(dialog.selectedPlaylist);
+                resolve(dialog.selectedPlaylist!);
             });
 
             dialog.addEventListener('decline', (x) => {
@@ -40,13 +37,10 @@ export class PlaylistSelectionDialog extends LitElementBase {
         });
     }
 
-    constructor() {
-        super();
-        /** @type {PlaylistModel[]} */ this.playlists = [];
-        /** @type {PlaylistModel} */ this.selectedPlaylist = null;
-    }
+    playlists: PlaylistModel[] = [];
+    selectedPlaylist: PlaylistModel | null = null;
 
     override render() {
-        return renderPlaylistSelectionDialog(this);
+        return renderPlaylistSelectionDialog.call(this);
     }
 }

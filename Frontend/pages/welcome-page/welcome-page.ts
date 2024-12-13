@@ -5,15 +5,11 @@ import { renderWelcomePage } from './welcome-page.html';
 
 @customElement('welcome-page')
 export class WelcomePage extends LitElementBase {
-    static isPage = true;
+    static isPage = true as const;
     static pageName = 'Willkommen';
 
     static override get styles() {
         return renderWelcomePageStyles();
-    }
-
-    static get properties() {
-        return {};
     }
 
     override render() {

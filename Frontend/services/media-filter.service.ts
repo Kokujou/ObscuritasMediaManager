@@ -5,10 +5,6 @@ import { sortBy } from './extensions/array.extensions';
 import { ObjectFilterService } from './object-filter.service';
 
 export class MediaFilterService {
-    /**
-     * @param {MediaModel[]} result
-     * @param {MediaFilter} filter
-     */
     static filter(result: MediaModel[], filter: MediaFilter) {
         if (filter.search) this.search(result, filter.search ?? '', true);
         ObjectFilterService.applyPropertyFilter(result, filter.ratings, 'rating');
@@ -23,16 +19,12 @@ export class MediaFilterService {
         ObjectFilterService.applyValueFilter(result, filter.complete, 'complete');
 
         if (!filter.sortingProperty) return result;
-        var sorted = sortBy(result, (x) => x[filter.sortingProperty]);
+        var property = filter.sortingProperty;
+        var sorted = sortBy(result, (x) => x[property]);
         if (!filter.sortingDirection || filter.sortingDirection == 'ascending') return sorted;
         else return sorted.reverse();
     }
 
-    /**
-     * @param {MediaModel[]} list
-     * @param {string} search
-     * @param {boolean} includeDescription
-     */
     static search(list: MediaModel[], search: string, includeDescription: boolean) {
         ObjectFilterService.applyMultiPropertySearch(
             list,

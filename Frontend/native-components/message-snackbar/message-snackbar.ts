@@ -1,10 +1,10 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { PageRouting } from '../../pages/page-routing/page-routing';
 import { renderMessageSnackbarStyles } from './message-snackbar.css';
 import { renderMessageSnackbar } from './message-snackbar.html';
 
-/** @typedef {'error' | 'warning' | 'info' | 'success'} MessageType */
+type MessageType = 'error' | 'warning' | 'info' | 'success';
 
 @customElement('message-snackbar')
 export class MessageSnackbar extends LitElementBase {
@@ -18,10 +18,6 @@ export class MessageSnackbar extends LitElementBase {
 
     static maxInstances = 4;
 
-    /**
-     * @param {string} message
-     * @param {MessageType} messageType
-     */
     static async popup(message: string, messageType: MessageType) {
         var snackbar = new MessageSnackbar();
         snackbar.message = message;
@@ -36,10 +32,9 @@ export class MessageSnackbar extends LitElementBase {
     }
 
     static recalculateHeights() {
-        /** @type {NodeListOf<MessageSnackbar>} */ var snackbars =
-            PageRouting.instance.shadowRoot!.querySelectorAll('message-snackbar');
+        var snackbars = PageRouting.instance.shadowRoot!.querySelectorAll('message-snackbar') as NodeListOf<MessageSnackbar>;
 
-        /** @type {MessageSnackbar} */ var previous = null;
+        var previous: MessageSnackbar | null = null;
         for (var snackbar of snackbars) {
             if (!previous) snackbar.style.top = '20px';
             else snackbar.style.top = `${previous.top + previous.getBoundingClientRect().height + 20}px`;
@@ -69,16 +64,12 @@ export class MessageSnackbar extends LitElementBase {
         }
     }
 
-    constructor() {
-        super();
-
-        /** @type {string} */ this.message;
-        /** @type {MessageType} */ this.messageType;
-    }
+    @property() declare message: string;
+    @property() declare messageType: string;
 
     override render() {
         this.style.backgroundColor = this.backgroundColor;
-        return renderMessageSnackbar(this);
+        return renderMessageSnackbar.call(this);
     }
 
     dismiss() {

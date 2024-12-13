@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { RecipeModel } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
@@ -7,23 +7,14 @@ import { renderRecipesPage } from './recipes-page.html';
 
 @customElement('recipes-page')
 export class RecipesPage extends LitElementBase {
-    static isPage = true;
+    static isPage = true as const;
     static pageName = 'Rezepte';
 
     static override get styles() {
         return renderRecipesPageStyles();
     }
 
-    static get properties() {
-        return {
-            someProperty: { type: String, reflect: true },
-        };
-    }
-
-    constructor() {
-        super();
-        /** @type {RecipeModel[]} */ this.recipes = [];
-    }
+    @state() protected declare recipes: RecipeModel[];
 
     override async connectedCallback() {
         super.connectedCallback();
@@ -32,7 +23,7 @@ export class RecipesPage extends LitElementBase {
     }
 
     override render() {
-        return renderRecipesPage(this);
+        return renderRecipesPage.call(this);
     }
 
     loadMoreItems() {}

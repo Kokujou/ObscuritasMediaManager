@@ -1,10 +1,7 @@
 import { html } from 'lit-element';
 import { SelectOptionsDialog } from './select-options-dialog';
 
-/**
- * @param { SelectOptionsDialog } dialog
- */
-export function renderSelectOptionsDialog(dialog: SelectOptionsDialog) {
+export function renderSelectOptionsDialog(this: SelectOptionsDialog) {
     return html`
         <dialog-base
             showBorder
@@ -12,19 +9,19 @@ export function renderSelectOptionsDialog(dialog: SelectOptionsDialog) {
             caption="Make your choice"
             acceptActionText="Auswählen"
             declineActionText="Abbrechen"
-            ?canAccept="${dialog.isComplete()}"
-            @accept="${(e: Event) => dialog.accept(e)}"
+            ?canAccept="${this.isComplete()}"
+            @accept="${(e: Event) => this.accept(e)}"
         >
             <div id="content">
                 <div id="items">
-                    ${Object.keys(dialog.options).map(
+                    ${Object.keys(this.options).map(
                         (key) =>
                             html`<div class="option">
-                                <input id="${key}" type="${dialog.multiselect ? 'checkbox' : 'radio'}" .value="${key}" checked />
-                                <label for="${key}">${dialog.options[key]}</label>
+                                <input id="${key}" type="${this.multiselect ? 'checkbox' : 'radio'}" .value="${key}" checked />
+                                <label for="${key}">${this.options[key]}</label>
                             </div>`
                     )}
-                    ${!dialog.isComplete() ? html`<loading-circle></loading-circle>` : ''}
+                    ${!this.isComplete() ? html`<loading-circle></loading-circle>` : ''}
                 </div>
             </div>
         </dialog-base>

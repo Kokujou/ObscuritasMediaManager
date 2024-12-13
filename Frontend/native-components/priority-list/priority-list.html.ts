@@ -3,10 +3,7 @@ import { Icons } from '../../resources/inline-icons/icon-registry';
 import { sortBy } from '../../services/extensions/array.extensions';
 import { PriorityList } from './priority-list';
 
-/**
- * @param { PriorityList } priorityList
- */
-export function renderPriorityList(priorityList: PriorityList) {
+export function renderPriorityList(this: PriorityList) {
     return html` <style>
             .item {
                 position: relative;
@@ -49,7 +46,7 @@ export function renderPriorityList(priorityList: PriorityList) {
             }
         </style>
 
-        ${sortBy(priorityList.items, (x) => x.order).map((item, index) => {
+        ${sortBy(this.items, (x) => x.order).map((item, index) => {
             item.order = index;
             return html`
                 <div class="item" order="${index}">
@@ -57,14 +54,10 @@ export function renderPriorityList(priorityList: PriorityList) {
                         class="move-icon icon"
                         icon="${Icons.Drag}"
                         draggable="true"
-                        @dragstart="${(e: Event) => priorityList.registerDragItem(e, index)}"
+                        @dragstart="${(e: DragEvent) => this.registerDragItem(e, index)}"
                     ></div>
-                    ${priorityList.itemRenderer(item)}
-                    <div
-                        class="icon"
-                        icon="${Icons.Trash}"
-                        @click="${() => priorityList.dispatchEvent(new CustomEvent('delete-item', { detail: item }))}"
-                    ></div>
+                    ${this.itemRenderer(item)}
+                    <div class="icon" icon="${Icons.Trash}" @click="${() => this.notifyDeleteItem(item)}"></div>
                 </div>
             `;
         })}`;

@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, state } from 'lit-element/decorators';
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter';
 import { InteropQuery } from '../../client-interop/interop-query';
 import { LitElementBase } from '../../data/lit-element-base';
@@ -10,6 +10,7 @@ import {
     ContentWarning,
     MediaCategory,
     MediaCreationRequest,
+    MediaGenreModel,
     MediaModel,
     ModelCreationState,
     MusicModel,
@@ -26,32 +27,19 @@ import { renderMediaDetailPage } from './media-detail-page.html';
 @customElement('media-detail-page')
 export class MediaDetailPage extends LitElementBase {
     static get isPage() {
-        return true;
+        return true as const;
     }
 
     static override get styles() {
         return renderMediaDetailPageStyles();
     }
 
-    static get properties() {
-        return {
-            createNew: { type: Boolean, reflect: true },
-
-            newGenre: { type: Boolean, reflect: false },
-            hoveredRating: { type: Number, reflect: false },
-            selectedSeason: { type: Number, reflect: false },
-            hasImage: { type: Boolean, reflect: false },
-            imageRevision: { type: Number, reflect: false },
-        };
-    }
-
     get nameInputValue() {
-        return /** @type {HTMLInputElement} */ this.shadowRoot!.querySelector('#media-name').value;
+        return (this.shadowRoot!.querySelector('#media-name') as HTMLInputElement)?.value;
     }
 
-    /** @returns {HTMLElement} */
     get seasonScrollContainer() {
-        var element = this.shadowRoot!.getElementById('season-inner');
+        var element = this.shadowRoot!.querySelector<HTMLElement>('#season-inner')!;
 
         if (element) return element;
         return undefined;
@@ -78,27 +66,28 @@ export class MediaDetailPage extends LitElementBase {
         return type == MediaCategory.AnimeMovies || type == MediaCategory.AnimeSeries || type == MediaCategory.JDrama;
     }
 
-    constructor() {
-        super();
+    @state() public declare mediaId: string;
 
-        /** @type {string} */ this.mediaId = null;
-        /** @type {MediaModel} */ this.updatedMedia = null;
-        /** @type {string[]} */ this.mediaIds = [];
-        /** @type {boolean} */ this.createNew = false;
-        /** @type {boolean} */ this.hasImage = false;
-        /** @type {MusicModel[]} */ this.relatedTracks = [];
-        /** @type {number} */ this.imageRevision = Date.now();
-        this.hoveredRating = 0;
-        this.selectedSeason = 0;
-    }
+    @state() protected declare updatedMedia: MediaModel;
+    @state() protected declare mediaIds: string[];
+    @state() protected declare hasImage: boolean;
+    @state() protected declare relatedTracks: MusicModel[];
+    @state() protected declare imageRevision: number;
+    @state() protected declare hoveredRating: number;
+    @state() protected declare selectedSeason: number;
+    @state() protected declare createNew: boolean;
 
     override async connectedCallback() {
+        this.imageRevision = Date.now();
+        this.mediaIds = [];
+        this.relatedTracks = [];
         if (this.createNew) this.updatedMedia = await MediaService.getDefault();
 
         super.connectedCallback();
+
         this.subscriptions.push(
             Session.mediaList.subscribe((newList) => {
-                var filter = MediaFilter.fromJSON(localStorage.getItem(`media.search`));
+                var filter = MediaFilter.fromJSON(localStorage.getItem(`media.search`) ?? '');
                 this.mediaIds = MediaFilterService.filter([...newList], filter).map((x) => x.id);
             })
         );
@@ -106,16 +95,13 @@ export class MediaDetailPage extends LitElementBase {
     }
 
     override render() {
-        if (!this.updatedMedia) return;
+        if (!this.updatedMedia) return null;
 
         document.title = this.updatedMedia.name;
 
-        return renderMediaDetailPage(this);
+        return renderMediaDetailPage.call(this);
     }
 
-    /**
-     * @param {Map<keyof MediaDetailPage, any>} _changedProperties
-     */
     async updated(_changedProperties: Map<keyof MediaDetailPage, any>) {
         super.updated(_changedProperties);
         if (this.mediaId != this.updatedMedia?.id && !this.createNew) {
@@ -123,7 +109,7 @@ export class MediaDetailPage extends LitElementBase {
             this.relatedTracks = Session.tracks
                 .current()
                 .filter((x) => x.source && x.source.length > 2)
-                .filter((x) => MediaFilterService.search([this.updatedMedia], x.source, false).length > 0);
+                .filter((x) => MediaFilterService.search([this.updatedMedia], x.source!, false).length > 0);
 
             this.requestFullUpdate();
             document.title = this.updatedMedia.name;
@@ -134,26 +120,21 @@ export class MediaDetailPage extends LitElementBase {
     async showGenreSelectionDialog() {
         var genreDialog = await GenreDialog.startShowingWithGenres(this.updatedMedia.genres);
 
-        genreDialog.addEventListener('accept', async (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
-            await this.changeProperty('genres', /** @type {MediaGenreModel[]} */ e.detail.acceptedGenres);
+        genreDialog.addEventListener('accept', async (e: CustomEvent<GenreDialogResult>) => {
+            await this.changeProperty('genres', e.detail.acceptedGenres as MediaGenreModel[]);
             genreDialog.remove();
         });
     }
 
-    /**
-     * @template {keyof MediaModel} T
-     * @param {T} property
-     * @param {MediaModel[T]} value
-     */
-    async changeProperty(property: T, value: MediaModel[T]) {
+    async changeProperty<T extends keyof MediaModel>(property: T, value: MediaModel[T]) {
         try {
-            /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
+            const { oldModel, newModel } = { oldModel: {} as any, newModel: {} as any };
             oldModel[property] = this.updatedMedia[property];
             newModel[property] = value;
 
             if (!this.createNew) {
                 await MediaService.updateMedia(this.updatedMedia.id, new UpdateRequestOfObject({ oldModel, newModel }));
-                Session.mediaList.current().find((x) => x.id == this.updatedMedia.id)[property] = value;
+                Session.mediaList.current().find((x) => x.id == this.updatedMedia.id)![property] = value;
                 Session.mediaList.refresh();
             }
 
@@ -164,16 +145,13 @@ export class MediaDetailPage extends LitElementBase {
         }
     }
 
-    async setMediaImage(image) {
+    async setMediaImage(image: string | null) {
         if (!image) await MediaService.deleteMediaImage(this.updatedMedia.id);
         else await MediaService.addMediaImage(image, this.updatedMedia.id);
         this.imageRevision = Date.now();
         await this.requestFullUpdate();
     }
 
-    /**
-     * @param {HTMLInputElement} inputElement
-     */
     async releaseChanged(inputElement: HTMLInputElement) {
         var numberValue = Number.parseInt(inputElement.value);
         var maxYears = new Date().getFullYear() + 2;
@@ -183,17 +161,11 @@ export class MediaDetailPage extends LitElementBase {
         await this.changeProperty('release', numberValue);
     }
 
-    /**
-     * @param {HTMLInputElement} inputElement
-     */
     releaseInput(inputElement: HTMLInputElement) {
         var numberValue = Number.parseInt(inputElement.value);
         if (`${numberValue}` != inputElement.value) inputElement.value = `${numberValue}`;
     }
 
-    /**
-     * @param {ContentWarning} warning
-     */
     async toggleContentWarning(warning: ContentWarning) {
         if (!this.updatedMedia.contentWarnings.includes(warning))
             return await this.changeProperty('contentWarnings', this.updatedMedia.contentWarnings.concat(warning));
@@ -205,7 +177,10 @@ export class MediaDetailPage extends LitElementBase {
     }
 
     async changeBasePath() {
-        var folderPath = await ClientInteropService.executeQuery({ query: InteropQuery.RequestFolderPath, payload: null });
+        var folderPath = await ClientInteropService.executeQuery<string>({
+            query: InteropQuery.RequestFolderPath,
+            payload: null,
+        });
         if (!folderPath) return;
         await this.changeProperty('rootFolderPath', folderPath);
     }

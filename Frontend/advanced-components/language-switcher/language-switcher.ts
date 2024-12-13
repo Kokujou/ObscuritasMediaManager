@@ -32,11 +32,11 @@ export class LanguageSwitcher extends LitElementBase {
 
     override connectedCallback() {
         super.connectedCallback();
-        document.addEventListener('keyup', (e: Event) => {
+        document.addEventListener('keyup', (e: KeyboardEvent) => {
             if (e.key == 'Escape') this.destroy();
         });
 
-        document.addEventListener('wheel', (e: Event) => this.scrollWheel(e));
+        document.addEventListener('wheel', (e: WheelEvent) => this.scrollWheel(e));
     }
 
     override render() {
@@ -58,8 +58,7 @@ export class LanguageSwitcher extends LitElementBase {
     }
 
     scrollWheel(event: WheelEvent) {
-        if (!('wheelDelta' in event) || typeof event.wheelDelta != 'number') return;
-        var direction = event.wheelDelta < 0 ? ('up' as const) : ('down' as const);
+        var direction = (event as WheelEvent & { wheelDelta: number }).wheelDelta < 0 ? ('up' as const) : ('down' as const);
         var parentRect = this.shadowRoot?.querySelector('#language-switcher-overlay')?.getBoundingClientRect();
         if (!parentRect) return;
         return this.move(direction);

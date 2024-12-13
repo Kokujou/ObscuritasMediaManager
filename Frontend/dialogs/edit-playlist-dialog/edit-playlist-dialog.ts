@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
@@ -34,10 +34,10 @@ export class EditPlaylistDialog extends LitElementBase {
         dialog.oldPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist))) ?? new PlaylistModel();
         dialog.newPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist))) ?? new PlaylistModel();
 
-        PageRouting.container.append(dialog);
+        PageRouting.container!.append(dialog);
         dialog.requestFullUpdate();
 
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
             dialog.addEventListener('accept', async () => {
                 try {
                     if (dialog.newPlaylist.id)
@@ -71,38 +71,24 @@ export class EditPlaylistDialog extends LitElementBase {
         return Object.values(MusicGenre).filter((genre) => !this.newPlaylist.genres.some((x) => MusicGenre[x] == genre));
     }
 
-    constructor() {
-        super();
-        /** @type {PlaylistModel} */ this.oldPlaylist = new PlaylistModel();
-        /** @type {PlaylistModel} */ this.newPlaylist = new PlaylistModel();
-        /** @type {boolean} */ this.draggingFiles;
-    }
+    @property() oldPlaylist = new PlaylistModel();
+    @property() newPlaylist = new PlaylistModel();
+    @property() draggingFiles: boolean;
 
     override render() {
-        return renderEditPlaylistDialog(this);
+        return renderEditPlaylistDialog.call(this);
     }
 
-    /**
-     * @template {keyof PlaylistModel} T
-     * @param {T} propertyName
-     * @param {PlaylistModel[T]} value
-     */
-    changeProperty(propertyName: T, value: PlaylistModel[T]) {
+    changeProperty<T extends keyof PlaylistModel>(propertyName: T, value: PlaylistModel[T]) {
         this.newPlaylist[propertyName] = value;
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {MusicGenre} genre
-     */
     addGenre(genre: MusicGenre) {
         if (!genre || !Object.values(MusicGenre).includes(genre)) return;
         this.changeProperty('genres', this.newPlaylist.genres.concat(genre));
     }
 
-    /**
-     * @param {MusicGenre} genre
-     */
     removeGenre(genre: MusicGenre) {
         this.changeProperty(
             'genres',
@@ -126,25 +112,18 @@ export class EditPlaylistDialog extends LitElementBase {
 
     async openImportDialog() {}
 
-    /**
-     * @param {DragEvent} event
-     */
     handleFilesDragOver(event: DragEvent) {
-        if (!event.dataTransfer.types.includes('Files')) return;
+        if (!event.dataTransfer!.types.includes('Files')) return;
         event.preventDefault();
         this.draggingFiles = true;
         this.requestFullUpdate();
     }
 
-    /**
-     * @param {DragEvent} event
-     */
     async dropFiles(event: DragEvent) {}
 
-    /** @param {MusicModel} track */
     async updateTrackPlaylistProperties(track: MusicModel) {
-        /** @type {MusicModel} */ var updatedTrack = {};
-        if (this.newPlaylist.author?.length > 1) updatedTrack.author = this.newPlaylist.author;
+        var updatedTrack = {} as MusicModel;
+        if (this.newPlaylist.author?.length ?? 0 > 1) updatedTrack.author = this.newPlaylist.author;
         if (this.newPlaylist.language != Language.Unset) updatedTrack.language = this.newPlaylist.language;
 
         try {
@@ -158,7 +137,7 @@ export class EditPlaylistDialog extends LitElementBase {
                 updatedTrack.genres = updatedTrack.genres.filter((genre) => !removedGenres.includes(genre));
             updatedTrack.genres = distinct(updatedTrack.genres);
 
-            await MusicService.update(track.hash, new UpdateRequestOfObject({ oldModel: track, newModel: updatedTrack }));
+            await MusicService.update(track.hash!, new UpdateRequestOfObject({ oldModel: track, newModel: updatedTrack }));
         } catch (err) {
             console.error(`error updating track ${track.name} to fit playlist properties`, err);
         }

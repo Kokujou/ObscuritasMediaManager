@@ -26,7 +26,7 @@ export class PaginatedScrolling extends LitElementBase {
     }
 
     onScroll() {
-        /** @type {HTMLElement} */ var scrollContainer = this.shadowRoot!.querySelector<HTMLElement>('.scroll-container')!;
+        var scrollContainer = this.shadowRoot!.querySelector<HTMLElement>('.scroll-container')!;
         var scrollMax = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
         if (scrollContainer.scrollTop >= scrollMax - this.scrollTopThreshold) this.requestAdditionalContent();
     }
@@ -39,7 +39,7 @@ export class PaginatedScrolling extends LitElementBase {
     }
 
     childVisible(child: HTMLElement) {
-        /** @type {HTMLElement} */ var scrollContainer = this.shadowRoot!.querySelector<HTMLElement>('.scroll-container')!;
+        var scrollContainer = this.shadowRoot!.querySelector<HTMLElement>('.scroll-container')!;
         if (
             child.offsetTop - child.offsetHeight / 2 > scrollContainer.scrollTop &&
             child.offsetTop + child.offsetHeight * 1.5 < scrollContainer.scrollTop + scrollContainer.offsetHeight

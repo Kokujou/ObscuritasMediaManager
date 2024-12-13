@@ -1,32 +1,33 @@
 import { CheckboxState } from './enumerations/checkbox-state';
 
-export class FilterEntry<U> {
+export class FilterEntry<T extends string | number | symbol> {
     get required() {
         return Object.entries(this.states)
             .filter((x) => x[1] == CheckboxState.Require)
-            .map((x) => x[0] as U);
+            .map((x) => x[0] as T);
     }
 
     get ignored() {
         return Object.entries(this.states)
             .filter((x) => x[1] == CheckboxState.Ignore)
-            .map((x) => x[0] as U);
+            .map((x) => x[0] as T);
     }
 
     get forbidden() {
         return Object.entries(this.states)
             .filter((x) => x[1] == CheckboxState.Forbid)
-            .map((x) => x[0] as U);
+            .map((x) => x[0] as T);
     }
 
-    states: { [key: string | number]: CheckboxState };
+    states: Record<T, CheckboxState>;
+    keyType: T;
 
-    constructor(type: (string | number)[], defaultValue = CheckboxState.Ignore) {
+    constructor(type: T[], defaultValue = CheckboxState.Ignore) {
         this.states = {} as any;
         for (var key of type) this.states[key] = defaultValue;
     }
 
-    setKey(key: string, value: CheckboxState) {
+    setKey(key: T, value: CheckboxState) {
         this.states[key] = value;
     }
 }

@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
-import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
+import { Page } from '../../data/util-types';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { getPageName } from '../../services/extensions/url.extension';
 import { MediaPage } from '../media-page/media-page';
@@ -52,11 +52,7 @@ function renderNavigation() {
     </div>`;
 }
 
-/**
- * @template {typeof LitElementBase & {isPage: boolean, pageName: string}} T
- * @param {T} element
- */
-function renderNavItem(element: T) {
+function renderNavItem<T extends Page>(element: T) {
     var active = Session.currentPage.current() == getPageName(element);
     return LinkElement.forPage(element, null, html`${element.pageName}`, { class: active ? 'active' : 'normal' });
 }

@@ -6,16 +6,12 @@ export class AuthenticatedRequestService {
         return 'authentication';
     }
 
-    /**
-     * @param {RequestInfo} url
-     * @param {RequestInit} requestInit
-     * @returns {Promise<Response>}
-     */
     async fetch(url: RequestInfo, requestInit: RequestInit) {
+        var response: Response | null = null;
         try {
             requestInit.mode = 'cors';
             requestInit.signal = null;
-            var response = await window.fetch(url, requestInit);
+            response = await window.fetch(url, requestInit);
 
             if (response.status == 401) {
                 changePage(LoginPage);

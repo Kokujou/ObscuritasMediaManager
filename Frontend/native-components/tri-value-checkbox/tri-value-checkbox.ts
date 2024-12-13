@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Enum } from '../../services/extensions/enum.extensions';
@@ -20,19 +20,16 @@ export class TriValueCheckbox extends LitElementBase {
         };
     }
 
-    constructor() {
-        super();
-        /** @type {CheckboxState} */ this.value = CheckboxState.Ignore;
-        /** @type {boolean} */ this.allowThreeValues = false;
-        /** @type {boolean} */ this.disabled = false;
-        /** @type {CheckboxState} */ this.ignoredState = CheckboxState.Ignore;
-    }
+    @property() value = CheckboxState.Ignore;
+    @property() allowThreeValues = false;
+    @property() disabled = false;
+    @property() ignoredState = CheckboxState.Ignore;
 
     override render() {
-        return renderTriValueCheckboxStyles(this);
+        return renderTriValueCheckboxStyles.call(this);
     }
 
-    firstUpdated(_changedProperties) {
+    firstUpdated(_changedProperties: Map<any, any>) {
         super.firstUpdated(_changedProperties);
         if (!this.allowThreeValues && this.value == this.ignoredState) this.value = CheckboxState.Require;
     }

@@ -1,4 +1,5 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./all-entries.ts":
@@ -7,7 +8,6 @@
   \************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_todo_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo.ts */ "./todo.ts");
@@ -114,12 +114,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_html_ts__WEBPACK_IMPORTED_MODULE_100__ = __webpack_require__(/*! ./pages/obscuritas-media-manager/obscuritas-media-manager.html.ts */ "./pages/obscuritas-media-manager/obscuritas-media-manager.html.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_css_ts__WEBPACK_IMPORTED_MODULE_101__ = __webpack_require__(/*! ./pages/obscuritas-media-manager/obscuritas-media-manager.css.ts */ "./pages/obscuritas-media-manager/obscuritas-media-manager.css.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_ts__WEBPACK_IMPORTED_MODULE_102__ = __webpack_require__(/*! ./pages/music-playlist-page/music-playlist-page.ts */ "./pages/music-playlist-page/music-playlist-page.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_ts__WEBPACK_IMPORTED_MODULE_102___default = /*#__PURE__*/__webpack_require__.n(J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_ts__WEBPACK_IMPORTED_MODULE_102__);
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_html_ts__WEBPACK_IMPORTED_MODULE_103__ = __webpack_require__(/*! ./pages/music-playlist-page/music-playlist-page.html.ts */ "./pages/music-playlist-page/music-playlist-page.html.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_css_ts__WEBPACK_IMPORTED_MODULE_104__ = __webpack_require__(/*! ./pages/music-playlist-page/music-playlist-page.css.ts */ "./pages/music-playlist-page/music-playlist-page.css.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_audio_file_extensions_ts__WEBPACK_IMPORTED_MODULE_105__ = __webpack_require__(/*! ./pages/music-playlist-page/audio-file-extensions.ts */ "./pages/music-playlist-page/audio-file-extensions.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_ts__WEBPACK_IMPORTED_MODULE_106__ = __webpack_require__(/*! ./pages/music-page/music-page.ts */ "./pages/music-page/music-page.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_ts__WEBPACK_IMPORTED_MODULE_106___default = /*#__PURE__*/__webpack_require__.n(J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_ts__WEBPACK_IMPORTED_MODULE_106__);
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_html_ts__WEBPACK_IMPORTED_MODULE_107__ = __webpack_require__(/*! ./pages/music-page/music-page.html.ts */ "./pages/music-page/music-page.html.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_css_ts__WEBPACK_IMPORTED_MODULE_108__ = __webpack_require__(/*! ./pages/music-page/music-page.css.ts */ "./pages/music-page/music-page.css.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_ts__WEBPACK_IMPORTED_MODULE_109__ = __webpack_require__(/*! ./pages/media-page/media-page.ts */ "./pages/media-page/media-page.ts");
@@ -198,7 +196,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_html_ts__WEBPACK_IMPORTED_MODULE_182__ = __webpack_require__(/*! ./native-components/context-menu/context-menu.html.ts */ "./native-components/context-menu/context-menu.html.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_css_ts__WEBPACK_IMPORTED_MODULE_183__ = __webpack_require__(/*! ./native-components/context-menu/context-menu.css.ts */ "./native-components/context-menu/context-menu.css.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_ts__WEBPACK_IMPORTED_MODULE_184__ = __webpack_require__(/*! ./native-components/compact-audio-player/compact-audio-player.ts */ "./native-components/compact-audio-player/compact-audio-player.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_ts__WEBPACK_IMPORTED_MODULE_184___default = /*#__PURE__*/__webpack_require__.n(J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_ts__WEBPACK_IMPORTED_MODULE_184__);
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_html_ts__WEBPACK_IMPORTED_MODULE_185__ = __webpack_require__(/*! ./native-components/compact-audio-player/compact-audio-player.html.ts */ "./native-components/compact-audio-player/compact-audio-player.html.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_css_ts__WEBPACK_IMPORTED_MODULE_186__ = __webpack_require__(/*! ./native-components/compact-audio-player/compact-audio-player.css.ts */ "./native-components/compact-audio-player/compact-audio-player.css.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_border_button_border_button_ts__WEBPACK_IMPORTED_MODULE_187__ = __webpack_require__(/*! ./native-components/border-button/border-button.ts */ "./native-components/border-button/border-button.ts");
@@ -211,7 +208,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_html_ts__WEBPACK_IMPORTED_MODULE_194__ = __webpack_require__(/*! ./dialogs/playlist-selection-dialog/playlist-selection-dialog.html.ts */ "./dialogs/playlist-selection-dialog/playlist-selection-dialog.html.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_css_ts__WEBPACK_IMPORTED_MODULE_195__ = __webpack_require__(/*! ./dialogs/playlist-selection-dialog/playlist-selection-dialog.css.ts */ "./dialogs/playlist-selection-dialog/playlist-selection-dialog.css.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_ts__WEBPACK_IMPORTED_MODULE_196__ = __webpack_require__(/*! ./dialogs/play-music-dialog/play-music-dialog.ts */ "./dialogs/play-music-dialog/play-music-dialog.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_ts__WEBPACK_IMPORTED_MODULE_196___default = /*#__PURE__*/__webpack_require__.n(J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_ts__WEBPACK_IMPORTED_MODULE_196__);
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_html_ts__WEBPACK_IMPORTED_MODULE_197__ = __webpack_require__(/*! ./dialogs/play-music-dialog/play-music-dialog.html.ts */ "./dialogs/play-music-dialog/play-music-dialog.html.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_css_ts__WEBPACK_IMPORTED_MODULE_198__ = __webpack_require__(/*! ./dialogs/play-music-dialog/play-music-dialog.css.ts */ "./dialogs/play-music-dialog/play-music-dialog.css.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_ts__WEBPACK_IMPORTED_MODULE_199__ = __webpack_require__(/*! ./dialogs/input-dialog/input-dialog.ts */ "./dialogs/input-dialog/input-dialog.ts");
@@ -234,86 +230,88 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_ts__WEBPACK_IMPORTED_MODULE_216__ = __webpack_require__(/*! ./dialogs/audio-subtitle-dialog/lyrics-dialog.ts */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_html_ts__WEBPACK_IMPORTED_MODULE_217__ = __webpack_require__(/*! ./dialogs/audio-subtitle-dialog/lyrics-dialog.html.ts */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.html.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_css_ts__WEBPACK_IMPORTED_MODULE_218__ = __webpack_require__(/*! ./dialogs/audio-subtitle-dialog/lyrics-dialog.css.ts */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_timespan_ts__WEBPACK_IMPORTED_MODULE_219__ = __webpack_require__(/*! ./data/timespan.ts */ "./data/timespan.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_sorting_directions_ts__WEBPACK_IMPORTED_MODULE_220__ = __webpack_require__(/*! ./data/sorting-directions.ts */ "./data/sorting-directions.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_221__ = __webpack_require__(/*! ./data/session.ts */ "./data/session.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_proper_object_ts__WEBPACK_IMPORTED_MODULE_222__ = __webpack_require__(/*! ./data/proper-object.ts */ "./data/proper-object.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_observable_ts__WEBPACK_IMPORTED_MODULE_223__ = __webpack_require__(/*! ./data/observable.ts */ "./data/observable.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_music_sorting_properties_ts__WEBPACK_IMPORTED_MODULE_224__ = __webpack_require__(/*! ./data/music-sorting-properties.ts */ "./data/music-sorting-properties.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_lit_element_base_ts__WEBPACK_IMPORTED_MODULE_225__ = __webpack_require__(/*! ./data/lit-element-base.ts */ "./data/lit-element-base.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_filter_entry_ts__WEBPACK_IMPORTED_MODULE_226__ = __webpack_require__(/*! ./data/filter-entry.ts */ "./data/filter-entry.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_participants_ts__WEBPACK_IMPORTED_MODULE_227__ = __webpack_require__(/*! ./data/enumerations/participants.ts */ "./data/enumerations/participants.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_nation_ts__WEBPACK_IMPORTED_MODULE_228__ = __webpack_require__(/*! ./data/enumerations/nation.ts */ "./data/enumerations/nation.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_mood_ts__WEBPACK_IMPORTED_MODULE_229__ = __webpack_require__(/*! ./data/enumerations/mood.ts */ "./data/enumerations/mood.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_instrument_types_ts__WEBPACK_IMPORTED_MODULE_230__ = __webpack_require__(/*! ./data/enumerations/instrument-types.ts */ "./data/enumerations/instrument-types.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_extended_ingerdient_unit_ts__WEBPACK_IMPORTED_MODULE_231__ = __webpack_require__(/*! ./data/enumerations/extended-ingerdient-unit.ts */ "./data/enumerations/extended-ingerdient-unit.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_checkbox_state_ts__WEBPACK_IMPORTED_MODULE_232__ = __webpack_require__(/*! ./data/enumerations/checkbox-state.ts */ "./data/enumerations/checkbox-state.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_volume_changed_event_ts__WEBPACK_IMPORTED_MODULE_233__ = __webpack_require__(/*! ./client-interop/volume-changed-event.ts */ "./client-interop/volume-changed-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_position_changed_event_ts__WEBPACK_IMPORTED_MODULE_234__ = __webpack_require__(/*! ./client-interop/track-position-changed-event.ts */ "./client-interop/track-position-changed-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_ended_event_ts__WEBPACK_IMPORTED_MODULE_235__ = __webpack_require__(/*! ./client-interop/track-ended-event.ts */ "./client-interop/track-ended-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_changed_event_ts__WEBPACK_IMPORTED_MODULE_236__ = __webpack_require__(/*! ./client-interop/track-changed-event.ts */ "./client-interop/track-changed-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_response_status_ts__WEBPACK_IMPORTED_MODULE_237__ = __webpack_require__(/*! ./client-interop/response-status.ts */ "./client-interop/response-status.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_playback_state_ts__WEBPACK_IMPORTED_MODULE_238__ = __webpack_require__(/*! ./client-interop/playback-state.ts */ "./client-interop/playback-state.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_playback_state_changed_event_ts__WEBPACK_IMPORTED_MODULE_239__ = __webpack_require__(/*! ./client-interop/playback-state-changed-event.ts */ "./client-interop/playback-state-changed-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_ts__WEBPACK_IMPORTED_MODULE_240__ = __webpack_require__(/*! ./client-interop/interop-query.ts */ "./client-interop/interop-query.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_response_ts__WEBPACK_IMPORTED_MODULE_241__ = __webpack_require__(/*! ./client-interop/interop-query-response.ts */ "./client-interop/interop-query-response.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_request_ts__WEBPACK_IMPORTED_MODULE_242__ = __webpack_require__(/*! ./client-interop/interop-query-request.ts */ "./client-interop/interop-query-request.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_event_ts__WEBPACK_IMPORTED_MODULE_243__ = __webpack_require__(/*! ./client-interop/interop-event.ts */ "./client-interop/interop-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_ts__WEBPACK_IMPORTED_MODULE_244__ = __webpack_require__(/*! ./client-interop/interop-command.ts */ "./client-interop/interop-command.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_response_ts__WEBPACK_IMPORTED_MODULE_245__ = __webpack_require__(/*! ./client-interop/interop-command-response.ts */ "./client-interop/interop-command-response.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_request_ts__WEBPACK_IMPORTED_MODULE_246__ = __webpack_require__(/*! ./client-interop/interop-command-request.ts */ "./client-interop/interop-command-request.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_i_interop_event_ts__WEBPACK_IMPORTED_MODULE_247__ = __webpack_require__(/*! ./client-interop/i-interop-event.ts */ "./client-interop/i-interop-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_files_query_request_ts__WEBPACK_IMPORTED_MODULE_248__ = __webpack_require__(/*! ./client-interop/files-query-request.ts */ "./client-interop/files-query-request.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_connected_event_ts__WEBPACK_IMPORTED_MODULE_249__ = __webpack_require__(/*! ./client-interop/connected-event.ts */ "./client-interop/connected-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_250__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.ts */ "./advanced-components/upload-area/upload-area.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_html_ts__WEBPACK_IMPORTED_MODULE_251__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.html.ts */ "./advanced-components/upload-area/upload-area.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_css_ts__WEBPACK_IMPORTED_MODULE_252__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.css.ts */ "./advanced-components/upload-area/upload-area.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_images_drop_icon_svg_ts__WEBPACK_IMPORTED_MODULE_253__ = __webpack_require__(/*! ./advanced-components/upload-area/images/drop-icon.svg.ts */ "./advanced-components/upload-area/images/drop-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_images_clipboard_icon_svg_ts__WEBPACK_IMPORTED_MODULE_254__ = __webpack_require__(/*! ./advanced-components/upload-area/images/clipboard-icon.svg.ts */ "./advanced-components/upload-area/images/clipboard-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_ts__WEBPACK_IMPORTED_MODULE_255__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.ts */ "./advanced-components/star-rating/star-rating.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_stories_example_ts__WEBPACK_IMPORTED_MODULE_256__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.stories.example.ts */ "./advanced-components/star-rating/star-rating.stories.example.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_html_ts__WEBPACK_IMPORTED_MODULE_257__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.html.ts */ "./advanced-components/star-rating/star-rating.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_css_ts__WEBPACK_IMPORTED_MODULE_258__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.css.ts */ "./advanced-components/star-rating/star-rating.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_ts__WEBPACK_IMPORTED_MODULE_259__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.ts */ "./advanced-components/recipe-tile/recipe-tile.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_html_ts__WEBPACK_IMPORTED_MODULE_260__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.html.ts */ "./advanced-components/recipe-tile/recipe-tile.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_css_ts__WEBPACK_IMPORTED_MODULE_261__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.css.ts */ "./advanced-components/recipe-tile/recipe-tile.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_262__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.ts */ "./advanced-components/playlist-tile/playlist-tile.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_html_ts__WEBPACK_IMPORTED_MODULE_263__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.html.ts */ "./advanced-components/playlist-tile/playlist-tile.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_css_ts__WEBPACK_IMPORTED_MODULE_264__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.css.ts */ "./advanced-components/playlist-tile/playlist-tile.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_ts__WEBPACK_IMPORTED_MODULE_265__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_html_ts__WEBPACK_IMPORTED_MODULE_266__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.html.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_css_ts__WEBPACK_IMPORTED_MODULE_267__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.css.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_268__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.ts */ "./advanced-components/music-filter/music-filter.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_html_ts__WEBPACK_IMPORTED_MODULE_269__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.html.ts */ "./advanced-components/music-filter/music-filter.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_css_ts__WEBPACK_IMPORTED_MODULE_270__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.css.ts */ "./advanced-components/music-filter/music-filter.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_271__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter-options.ts */ "./advanced-components/music-filter/music-filter-options.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_272__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.ts */ "./advanced-components/media-tile/media-tile.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_html_ts__WEBPACK_IMPORTED_MODULE_273__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.html.ts */ "./advanced-components/media-tile/media-tile.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_css_ts__WEBPACK_IMPORTED_MODULE_274__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.css.ts */ "./advanced-components/media-tile/media-tile.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_ts__WEBPACK_IMPORTED_MODULE_275__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.ts */ "./advanced-components/media-playlist/media-playlist.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_html_ts__WEBPACK_IMPORTED_MODULE_276__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.html.ts */ "./advanced-components/media-playlist/media-playlist.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_css_ts__WEBPACK_IMPORTED_MODULE_277__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.css.ts */ "./advanced-components/media-playlist/media-playlist.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_ts__WEBPACK_IMPORTED_MODULE_278__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter.ts */ "./advanced-components/media-filter-sidebar/media-filter.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_ts__WEBPACK_IMPORTED_MODULE_279__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_html_ts__WEBPACK_IMPORTED_MODULE_280__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.html.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_css_ts__WEBPACK_IMPORTED_MODULE_281__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.css.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_ts__WEBPACK_IMPORTED_MODULE_282__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.ts */ "./advanced-components/language-switcher/language-switcher.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_html_ts__WEBPACK_IMPORTED_MODULE_283__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.html.ts */ "./advanced-components/language-switcher/language-switcher.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_css_ts__WEBPACK_IMPORTED_MODULE_284__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.css.ts */ "./advanced-components/language-switcher/language-switcher.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_ts__WEBPACK_IMPORTED_MODULE_285__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.ts */ "./advanced-components/image-tile/image-tile.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_html_ts__WEBPACK_IMPORTED_MODULE_286__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.html.ts */ "./advanced-components/image-tile/image-tile.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_css_ts__WEBPACK_IMPORTED_MODULE_287__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.css.ts */ "./advanced-components/image-tile/image-tile.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_ts__WEBPACK_IMPORTED_MODULE_288__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.ts */ "./advanced-components/duration-input/duration-input.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_html_ts__WEBPACK_IMPORTED_MODULE_289__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.html.ts */ "./advanced-components/duration-input/duration-input.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_css_ts__WEBPACK_IMPORTED_MODULE_290__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.css.ts */ "./advanced-components/duration-input/duration-input.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_291__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.ts */ "./advanced-components/audio-tile-base/audio-tile-base.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_292__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.html.ts */ "./advanced-components/audio-tile-base/audio-tile-base.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_css_ts__WEBPACK_IMPORTED_MODULE_293__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.css.ts */ "./advanced-components/audio-tile-base/audio-tile-base.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_294__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_html_ts__WEBPACK_IMPORTED_MODULE_295__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.html.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_css_ts__WEBPACK_IMPORTED_MODULE_296__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.css.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.css.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_all_entries_ts__WEBPACK_IMPORTED_MODULE_2__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_media_import_service_ts__WEBPACK_IMPORTED_MODULE_5__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_maintenance_service_ts__WEBPACK_IMPORTED_MODULE_7__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_clipboard_service_ts__WEBPACK_IMPORTED_MODULE_8__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_client_interop_service_ts__WEBPACK_IMPORTED_MODULE_9__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_backend_services_ts__WEBPACK_IMPORTED_MODULE_10__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_authenticated_request_service_ts__WEBPACK_IMPORTED_MODULE_11__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_audio_service_ts__WEBPACK_IMPORTED_MODULE_13__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_url_extension_ts__WEBPACK_IMPORTED_MODULE_14__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_file_extension_ts__WEBPACK_IMPORTED_MODULE_19__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_ts__WEBPACK_IMPORTED_MODULE_87__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_html_ts__WEBPACK_IMPORTED_MODULE_88__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_ts__WEBPACK_IMPORTED_MODULE_90__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_html_ts__WEBPACK_IMPORTED_MODULE_91__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_ts__WEBPACK_IMPORTED_MODULE_93__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_ts__WEBPACK_IMPORTED_MODULE_96__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_html_ts__WEBPACK_IMPORTED_MODULE_97__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_html_ts__WEBPACK_IMPORTED_MODULE_103__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_html_ts__WEBPACK_IMPORTED_MODULE_107__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_ts__WEBPACK_IMPORTED_MODULE_109__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_html_ts__WEBPACK_IMPORTED_MODULE_110__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_ts__WEBPACK_IMPORTED_MODULE_112__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_113__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_ts__WEBPACK_IMPORTED_MODULE_117__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_create_recipe_page_create_recipe_page_ts__WEBPACK_IMPORTED_MODULE_120__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_ts__WEBPACK_IMPORTED_MODULE_152__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_ts__WEBPACK_IMPORTED_MODULE_155__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_ts__WEBPACK_IMPORTED_MODULE_162__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_ts__WEBPACK_IMPORTED_MODULE_172__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_ts__WEBPACK_IMPORTED_MODULE_178__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_ts__WEBPACK_IMPORTED_MODULE_181__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_html_ts__WEBPACK_IMPORTED_MODULE_185__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_ts__WEBPACK_IMPORTED_MODULE_190__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_ts__WEBPACK_IMPORTED_MODULE_193__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_html_ts__WEBPACK_IMPORTED_MODULE_194__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_html_ts__WEBPACK_IMPORTED_MODULE_197__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_ts__WEBPACK_IMPORTED_MODULE_199__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_ts__WEBPACK_IMPORTED_MODULE_209__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_ts__WEBPACK_IMPORTED_MODULE_213__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_ts__WEBPACK_IMPORTED_MODULE_216__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_html_ts__WEBPACK_IMPORTED_MODULE_217__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_221__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_250__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_262__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_268__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_271__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_272__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_291__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_292__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_294__]);
-([J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_all_entries_ts__WEBPACK_IMPORTED_MODULE_2__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_media_import_service_ts__WEBPACK_IMPORTED_MODULE_5__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_maintenance_service_ts__WEBPACK_IMPORTED_MODULE_7__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_clipboard_service_ts__WEBPACK_IMPORTED_MODULE_8__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_client_interop_service_ts__WEBPACK_IMPORTED_MODULE_9__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_backend_services_ts__WEBPACK_IMPORTED_MODULE_10__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_authenticated_request_service_ts__WEBPACK_IMPORTED_MODULE_11__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_audio_service_ts__WEBPACK_IMPORTED_MODULE_13__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_url_extension_ts__WEBPACK_IMPORTED_MODULE_14__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_file_extension_ts__WEBPACK_IMPORTED_MODULE_19__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_ts__WEBPACK_IMPORTED_MODULE_87__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_html_ts__WEBPACK_IMPORTED_MODULE_88__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_ts__WEBPACK_IMPORTED_MODULE_90__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_html_ts__WEBPACK_IMPORTED_MODULE_91__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_ts__WEBPACK_IMPORTED_MODULE_93__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_ts__WEBPACK_IMPORTED_MODULE_96__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_html_ts__WEBPACK_IMPORTED_MODULE_97__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_html_ts__WEBPACK_IMPORTED_MODULE_103__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_html_ts__WEBPACK_IMPORTED_MODULE_107__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_ts__WEBPACK_IMPORTED_MODULE_109__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_html_ts__WEBPACK_IMPORTED_MODULE_110__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_ts__WEBPACK_IMPORTED_MODULE_112__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_113__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_ts__WEBPACK_IMPORTED_MODULE_117__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_create_recipe_page_create_recipe_page_ts__WEBPACK_IMPORTED_MODULE_120__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_ts__WEBPACK_IMPORTED_MODULE_152__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_ts__WEBPACK_IMPORTED_MODULE_155__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_ts__WEBPACK_IMPORTED_MODULE_162__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_ts__WEBPACK_IMPORTED_MODULE_172__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_ts__WEBPACK_IMPORTED_MODULE_178__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_ts__WEBPACK_IMPORTED_MODULE_181__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_html_ts__WEBPACK_IMPORTED_MODULE_185__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_ts__WEBPACK_IMPORTED_MODULE_190__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_ts__WEBPACK_IMPORTED_MODULE_193__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_html_ts__WEBPACK_IMPORTED_MODULE_194__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_html_ts__WEBPACK_IMPORTED_MODULE_197__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_ts__WEBPACK_IMPORTED_MODULE_199__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_ts__WEBPACK_IMPORTED_MODULE_209__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_ts__WEBPACK_IMPORTED_MODULE_213__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_ts__WEBPACK_IMPORTED_MODULE_216__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_html_ts__WEBPACK_IMPORTED_MODULE_217__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_221__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_250__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_262__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_268__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_271__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_272__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_291__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_292__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_294__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_util_types_ts__WEBPACK_IMPORTED_MODULE_219__ = __webpack_require__(/*! ./data/util-types.ts */ "./data/util-types.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_timespan_ts__WEBPACK_IMPORTED_MODULE_220__ = __webpack_require__(/*! ./data/timespan.ts */ "./data/timespan.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_sorting_directions_ts__WEBPACK_IMPORTED_MODULE_221__ = __webpack_require__(/*! ./data/sorting-directions.ts */ "./data/sorting-directions.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_222__ = __webpack_require__(/*! ./data/session.ts */ "./data/session.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_proper_object_ts__WEBPACK_IMPORTED_MODULE_223__ = __webpack_require__(/*! ./data/proper-object.ts */ "./data/proper-object.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_observable_ts__WEBPACK_IMPORTED_MODULE_224__ = __webpack_require__(/*! ./data/observable.ts */ "./data/observable.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_music_sorting_properties_ts__WEBPACK_IMPORTED_MODULE_225__ = __webpack_require__(/*! ./data/music-sorting-properties.ts */ "./data/music-sorting-properties.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_lit_element_base_ts__WEBPACK_IMPORTED_MODULE_226__ = __webpack_require__(/*! ./data/lit-element-base.ts */ "./data/lit-element-base.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_filter_entry_ts__WEBPACK_IMPORTED_MODULE_227__ = __webpack_require__(/*! ./data/filter-entry.ts */ "./data/filter-entry.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_participants_ts__WEBPACK_IMPORTED_MODULE_228__ = __webpack_require__(/*! ./data/enumerations/participants.ts */ "./data/enumerations/participants.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_nation_ts__WEBPACK_IMPORTED_MODULE_229__ = __webpack_require__(/*! ./data/enumerations/nation.ts */ "./data/enumerations/nation.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_mood_ts__WEBPACK_IMPORTED_MODULE_230__ = __webpack_require__(/*! ./data/enumerations/mood.ts */ "./data/enumerations/mood.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_instrument_types_ts__WEBPACK_IMPORTED_MODULE_231__ = __webpack_require__(/*! ./data/enumerations/instrument-types.ts */ "./data/enumerations/instrument-types.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_extended_ingerdient_unit_ts__WEBPACK_IMPORTED_MODULE_232__ = __webpack_require__(/*! ./data/enumerations/extended-ingerdient-unit.ts */ "./data/enumerations/extended-ingerdient-unit.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_checkbox_state_ts__WEBPACK_IMPORTED_MODULE_233__ = __webpack_require__(/*! ./data/enumerations/checkbox-state.ts */ "./data/enumerations/checkbox-state.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_volume_changed_event_ts__WEBPACK_IMPORTED_MODULE_234__ = __webpack_require__(/*! ./client-interop/volume-changed-event.ts */ "./client-interop/volume-changed-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_position_changed_event_ts__WEBPACK_IMPORTED_MODULE_235__ = __webpack_require__(/*! ./client-interop/track-position-changed-event.ts */ "./client-interop/track-position-changed-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_ended_event_ts__WEBPACK_IMPORTED_MODULE_236__ = __webpack_require__(/*! ./client-interop/track-ended-event.ts */ "./client-interop/track-ended-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_changed_event_ts__WEBPACK_IMPORTED_MODULE_237__ = __webpack_require__(/*! ./client-interop/track-changed-event.ts */ "./client-interop/track-changed-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_response_status_ts__WEBPACK_IMPORTED_MODULE_238__ = __webpack_require__(/*! ./client-interop/response-status.ts */ "./client-interop/response-status.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_playback_state_ts__WEBPACK_IMPORTED_MODULE_239__ = __webpack_require__(/*! ./client-interop/playback-state.ts */ "./client-interop/playback-state.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_playback_state_changed_event_ts__WEBPACK_IMPORTED_MODULE_240__ = __webpack_require__(/*! ./client-interop/playback-state-changed-event.ts */ "./client-interop/playback-state-changed-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_ts__WEBPACK_IMPORTED_MODULE_241__ = __webpack_require__(/*! ./client-interop/interop-query.ts */ "./client-interop/interop-query.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_response_ts__WEBPACK_IMPORTED_MODULE_242__ = __webpack_require__(/*! ./client-interop/interop-query-response.ts */ "./client-interop/interop-query-response.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_request_ts__WEBPACK_IMPORTED_MODULE_243__ = __webpack_require__(/*! ./client-interop/interop-query-request.ts */ "./client-interop/interop-query-request.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_event_ts__WEBPACK_IMPORTED_MODULE_244__ = __webpack_require__(/*! ./client-interop/interop-event.ts */ "./client-interop/interop-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_ts__WEBPACK_IMPORTED_MODULE_245__ = __webpack_require__(/*! ./client-interop/interop-command.ts */ "./client-interop/interop-command.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_response_ts__WEBPACK_IMPORTED_MODULE_246__ = __webpack_require__(/*! ./client-interop/interop-command-response.ts */ "./client-interop/interop-command-response.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_request_ts__WEBPACK_IMPORTED_MODULE_247__ = __webpack_require__(/*! ./client-interop/interop-command-request.ts */ "./client-interop/interop-command-request.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_i_interop_event_ts__WEBPACK_IMPORTED_MODULE_248__ = __webpack_require__(/*! ./client-interop/i-interop-event.ts */ "./client-interop/i-interop-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_files_query_request_ts__WEBPACK_IMPORTED_MODULE_249__ = __webpack_require__(/*! ./client-interop/files-query-request.ts */ "./client-interop/files-query-request.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_connected_event_ts__WEBPACK_IMPORTED_MODULE_250__ = __webpack_require__(/*! ./client-interop/connected-event.ts */ "./client-interop/connected-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_251__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.ts */ "./advanced-components/upload-area/upload-area.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_html_ts__WEBPACK_IMPORTED_MODULE_252__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.html.ts */ "./advanced-components/upload-area/upload-area.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_css_ts__WEBPACK_IMPORTED_MODULE_253__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.css.ts */ "./advanced-components/upload-area/upload-area.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_images_drop_icon_svg_ts__WEBPACK_IMPORTED_MODULE_254__ = __webpack_require__(/*! ./advanced-components/upload-area/images/drop-icon.svg.ts */ "./advanced-components/upload-area/images/drop-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_images_clipboard_icon_svg_ts__WEBPACK_IMPORTED_MODULE_255__ = __webpack_require__(/*! ./advanced-components/upload-area/images/clipboard-icon.svg.ts */ "./advanced-components/upload-area/images/clipboard-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_ts__WEBPACK_IMPORTED_MODULE_256__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.ts */ "./advanced-components/star-rating/star-rating.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_stories_example_ts__WEBPACK_IMPORTED_MODULE_257__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.stories.example.ts */ "./advanced-components/star-rating/star-rating.stories.example.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_html_ts__WEBPACK_IMPORTED_MODULE_258__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.html.ts */ "./advanced-components/star-rating/star-rating.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_css_ts__WEBPACK_IMPORTED_MODULE_259__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.css.ts */ "./advanced-components/star-rating/star-rating.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_ts__WEBPACK_IMPORTED_MODULE_260__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.ts */ "./advanced-components/recipe-tile/recipe-tile.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_html_ts__WEBPACK_IMPORTED_MODULE_261__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.html.ts */ "./advanced-components/recipe-tile/recipe-tile.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_css_ts__WEBPACK_IMPORTED_MODULE_262__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.css.ts */ "./advanced-components/recipe-tile/recipe-tile.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_263__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.ts */ "./advanced-components/playlist-tile/playlist-tile.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_html_ts__WEBPACK_IMPORTED_MODULE_264__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.html.ts */ "./advanced-components/playlist-tile/playlist-tile.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_css_ts__WEBPACK_IMPORTED_MODULE_265__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.css.ts */ "./advanced-components/playlist-tile/playlist-tile.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_ts__WEBPACK_IMPORTED_MODULE_266__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_html_ts__WEBPACK_IMPORTED_MODULE_267__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.html.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_css_ts__WEBPACK_IMPORTED_MODULE_268__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.css.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_269__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.ts */ "./advanced-components/music-filter/music-filter.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_html_ts__WEBPACK_IMPORTED_MODULE_270__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.html.ts */ "./advanced-components/music-filter/music-filter.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_css_ts__WEBPACK_IMPORTED_MODULE_271__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.css.ts */ "./advanced-components/music-filter/music-filter.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_272__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter-options.ts */ "./advanced-components/music-filter/music-filter-options.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_273__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.ts */ "./advanced-components/media-tile/media-tile.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_html_ts__WEBPACK_IMPORTED_MODULE_274__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.html.ts */ "./advanced-components/media-tile/media-tile.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_css_ts__WEBPACK_IMPORTED_MODULE_275__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.css.ts */ "./advanced-components/media-tile/media-tile.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_ts__WEBPACK_IMPORTED_MODULE_276__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.ts */ "./advanced-components/media-playlist/media-playlist.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_html_ts__WEBPACK_IMPORTED_MODULE_277__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.html.ts */ "./advanced-components/media-playlist/media-playlist.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_css_ts__WEBPACK_IMPORTED_MODULE_278__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.css.ts */ "./advanced-components/media-playlist/media-playlist.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_ts__WEBPACK_IMPORTED_MODULE_279__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter.ts */ "./advanced-components/media-filter-sidebar/media-filter.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_ts__WEBPACK_IMPORTED_MODULE_280__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_html_ts__WEBPACK_IMPORTED_MODULE_281__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.html.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_css_ts__WEBPACK_IMPORTED_MODULE_282__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.css.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_ts__WEBPACK_IMPORTED_MODULE_283__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.ts */ "./advanced-components/language-switcher/language-switcher.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_html_ts__WEBPACK_IMPORTED_MODULE_284__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.html.ts */ "./advanced-components/language-switcher/language-switcher.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_css_ts__WEBPACK_IMPORTED_MODULE_285__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.css.ts */ "./advanced-components/language-switcher/language-switcher.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_ts__WEBPACK_IMPORTED_MODULE_286__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.ts */ "./advanced-components/image-tile/image-tile.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_html_ts__WEBPACK_IMPORTED_MODULE_287__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.html.ts */ "./advanced-components/image-tile/image-tile.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_css_ts__WEBPACK_IMPORTED_MODULE_288__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.css.ts */ "./advanced-components/image-tile/image-tile.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_ts__WEBPACK_IMPORTED_MODULE_289__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.ts */ "./advanced-components/duration-input/duration-input.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_html_ts__WEBPACK_IMPORTED_MODULE_290__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.html.ts */ "./advanced-components/duration-input/duration-input.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_css_ts__WEBPACK_IMPORTED_MODULE_291__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.css.ts */ "./advanced-components/duration-input/duration-input.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_292__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.ts */ "./advanced-components/audio-tile-base/audio-tile-base.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_293__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.html.ts */ "./advanced-components/audio-tile-base/audio-tile-base.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_css_ts__WEBPACK_IMPORTED_MODULE_294__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.css.ts */ "./advanced-components/audio-tile-base/audio-tile-base.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_295__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_html_ts__WEBPACK_IMPORTED_MODULE_296__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.html.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_css_ts__WEBPACK_IMPORTED_MODULE_297__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.css.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.css.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_all_entries_ts__WEBPACK_IMPORTED_MODULE_2__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_media_import_service_ts__WEBPACK_IMPORTED_MODULE_5__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_maintenance_service_ts__WEBPACK_IMPORTED_MODULE_7__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_clipboard_service_ts__WEBPACK_IMPORTED_MODULE_8__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_client_interop_service_ts__WEBPACK_IMPORTED_MODULE_9__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_backend_services_ts__WEBPACK_IMPORTED_MODULE_10__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_authenticated_request_service_ts__WEBPACK_IMPORTED_MODULE_11__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_audio_service_ts__WEBPACK_IMPORTED_MODULE_13__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_url_extension_ts__WEBPACK_IMPORTED_MODULE_14__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_file_extension_ts__WEBPACK_IMPORTED_MODULE_19__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_ts__WEBPACK_IMPORTED_MODULE_87__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_html_ts__WEBPACK_IMPORTED_MODULE_88__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_ts__WEBPACK_IMPORTED_MODULE_90__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_html_ts__WEBPACK_IMPORTED_MODULE_91__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_ts__WEBPACK_IMPORTED_MODULE_93__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_ts__WEBPACK_IMPORTED_MODULE_96__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_html_ts__WEBPACK_IMPORTED_MODULE_97__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_ts__WEBPACK_IMPORTED_MODULE_102__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_html_ts__WEBPACK_IMPORTED_MODULE_103__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_ts__WEBPACK_IMPORTED_MODULE_106__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_html_ts__WEBPACK_IMPORTED_MODULE_107__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_ts__WEBPACK_IMPORTED_MODULE_109__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_html_ts__WEBPACK_IMPORTED_MODULE_110__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_ts__WEBPACK_IMPORTED_MODULE_112__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_113__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_ts__WEBPACK_IMPORTED_MODULE_117__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_create_recipe_page_create_recipe_page_ts__WEBPACK_IMPORTED_MODULE_120__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_ts__WEBPACK_IMPORTED_MODULE_152__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_ts__WEBPACK_IMPORTED_MODULE_155__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_ts__WEBPACK_IMPORTED_MODULE_162__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_ts__WEBPACK_IMPORTED_MODULE_172__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_ts__WEBPACK_IMPORTED_MODULE_178__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_ts__WEBPACK_IMPORTED_MODULE_181__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_ts__WEBPACK_IMPORTED_MODULE_184__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_html_ts__WEBPACK_IMPORTED_MODULE_185__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_ts__WEBPACK_IMPORTED_MODULE_190__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_ts__WEBPACK_IMPORTED_MODULE_193__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_html_ts__WEBPACK_IMPORTED_MODULE_194__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_ts__WEBPACK_IMPORTED_MODULE_196__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_html_ts__WEBPACK_IMPORTED_MODULE_197__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_css_ts__WEBPACK_IMPORTED_MODULE_198__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_ts__WEBPACK_IMPORTED_MODULE_199__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_ts__WEBPACK_IMPORTED_MODULE_203__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_ts__WEBPACK_IMPORTED_MODULE_209__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_ts__WEBPACK_IMPORTED_MODULE_213__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_ts__WEBPACK_IMPORTED_MODULE_216__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_html_ts__WEBPACK_IMPORTED_MODULE_217__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_222__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_251__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_263__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_269__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_272__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_273__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_ts__WEBPACK_IMPORTED_MODULE_280__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_292__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_293__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_295__]);
+([J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_all_entries_ts__WEBPACK_IMPORTED_MODULE_2__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_media_import_service_ts__WEBPACK_IMPORTED_MODULE_5__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_maintenance_service_ts__WEBPACK_IMPORTED_MODULE_7__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_clipboard_service_ts__WEBPACK_IMPORTED_MODULE_8__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_client_interop_service_ts__WEBPACK_IMPORTED_MODULE_9__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_backend_services_ts__WEBPACK_IMPORTED_MODULE_10__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_authenticated_request_service_ts__WEBPACK_IMPORTED_MODULE_11__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_audio_service_ts__WEBPACK_IMPORTED_MODULE_13__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_url_extension_ts__WEBPACK_IMPORTED_MODULE_14__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_file_extension_ts__WEBPACK_IMPORTED_MODULE_19__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_ts__WEBPACK_IMPORTED_MODULE_87__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_html_ts__WEBPACK_IMPORTED_MODULE_88__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_ts__WEBPACK_IMPORTED_MODULE_90__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_html_ts__WEBPACK_IMPORTED_MODULE_91__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_ts__WEBPACK_IMPORTED_MODULE_93__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_ts__WEBPACK_IMPORTED_MODULE_96__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_html_ts__WEBPACK_IMPORTED_MODULE_97__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_ts__WEBPACK_IMPORTED_MODULE_102__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_html_ts__WEBPACK_IMPORTED_MODULE_103__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_ts__WEBPACK_IMPORTED_MODULE_106__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_html_ts__WEBPACK_IMPORTED_MODULE_107__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_ts__WEBPACK_IMPORTED_MODULE_109__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_html_ts__WEBPACK_IMPORTED_MODULE_110__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_ts__WEBPACK_IMPORTED_MODULE_112__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_113__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_ts__WEBPACK_IMPORTED_MODULE_117__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_create_recipe_page_create_recipe_page_ts__WEBPACK_IMPORTED_MODULE_120__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_ts__WEBPACK_IMPORTED_MODULE_152__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_ts__WEBPACK_IMPORTED_MODULE_155__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_ts__WEBPACK_IMPORTED_MODULE_162__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_ts__WEBPACK_IMPORTED_MODULE_172__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_ts__WEBPACK_IMPORTED_MODULE_178__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_ts__WEBPACK_IMPORTED_MODULE_181__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_ts__WEBPACK_IMPORTED_MODULE_184__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_html_ts__WEBPACK_IMPORTED_MODULE_185__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_ts__WEBPACK_IMPORTED_MODULE_190__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_ts__WEBPACK_IMPORTED_MODULE_193__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_html_ts__WEBPACK_IMPORTED_MODULE_194__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_ts__WEBPACK_IMPORTED_MODULE_196__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_html_ts__WEBPACK_IMPORTED_MODULE_197__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_css_ts__WEBPACK_IMPORTED_MODULE_198__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_ts__WEBPACK_IMPORTED_MODULE_199__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_ts__WEBPACK_IMPORTED_MODULE_203__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_ts__WEBPACK_IMPORTED_MODULE_209__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_ts__WEBPACK_IMPORTED_MODULE_213__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_ts__WEBPACK_IMPORTED_MODULE_216__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_html_ts__WEBPACK_IMPORTED_MODULE_217__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_222__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_251__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_263__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_269__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_272__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_273__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_ts__WEBPACK_IMPORTED_MODULE_280__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_292__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_293__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_295__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -623,7 +621,6 @@ __webpack_async_result__();
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderAudioTileBaseStyles: () => (/* binding */ renderAudioTileBaseStyles)
@@ -780,7 +777,6 @@ function renderAudioTileBaseStyles() {
   \*********************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -876,7 +872,6 @@ __webpack_async_result__();
   \****************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -984,7 +979,6 @@ __webpack_async_result__();
   \**************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderAudioTileStyles: () => (/* binding */ renderAudioTileStyles)
@@ -1084,7 +1078,6 @@ function renderAudioTileStyles() {
   \***************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderAudioTile: () => (/* binding */ renderAudioTile)
@@ -1119,9 +1112,6 @@ function renderAudioTile() {
 function renderGenreTags() {
     return this.track.genres.map((genre) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <tag-label .text="${genre}"></tag-label> `);
 }
-/**
- * @param {AudioTile} audioTile
- */
 function renderInstrumentIcons() {
     var iconsToDisplay = this.track.instrumentTypes;
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `${iconsToDisplay.map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="inline-icon" instrument-type="${x}"></div>`)}`;
@@ -1136,7 +1126,6 @@ function renderInstrumentIcons() {
   \**********************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -1174,24 +1163,24 @@ let AudioTile = class AudioTile extends _data_lit_element_base__WEBPACK_IMPORTED
         super.connectedCallback();
         this.addEventListener('contextmenu', (e) => {
             e.preventDefault();
-            /** @type {ContextMenuItem[]} */ var contextMenuItems = [
+            var contextMenuItems = [
                 {
                     text: 'Kopieren',
                     action: () => this.dispatchEvent(new CustomEvent('clipboard')),
                     icon: _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_4__.Icons.Clipboard,
                 },
             ];
-            /** @type {ContextMenuItem} */ var softDeleteItem = {
+            var softDeleteItem = {
                 text: 'In Papierkorb verschieben',
                 icon: _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_4__.Icons.Trash,
                 action: () => this.dispatchEvent(new CustomEvent('soft-delete')),
             };
-            /** @type {ContextMenuItem} */ var hardDeleteItem = {
+            var hardDeleteItem = {
                 text: 'Endgültig löschen',
                 icon: _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_4__.Icons.Trash,
                 action: () => this.dispatchEvent(new CustomEvent('hard-delete')),
             };
-            /** @type {ContextMenuItem} */ var restoreItem = {
+            var restoreItem = {
                 text: 'Wiederherstellen',
                 icon: _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_4__.Icons.Revert,
                 action: () => this.dispatchEvent(new CustomEvent('restore')),
@@ -1232,7 +1221,6 @@ __webpack_async_result__();
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderDurationInputStyles: () => (/* binding */ renderDurationInputStyles)
@@ -1277,7 +1265,6 @@ function renderDurationInputStyles() {
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderDurationInput: () => (/* binding */ renderDurationInput)
@@ -1322,7 +1309,6 @@ function renderBoundInput(property, max) {
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   DurationInput: () => (/* binding */ DurationInput)
@@ -1343,7 +1329,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-class DurationInput extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
+let DurationInput = class DurationInput extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
     static get styles() {
         return (0,_duration_input_css__WEBPACK_IMPORTED_MODULE_3__.renderDurationInputStyles)();
     }
@@ -1367,10 +1353,14 @@ class DurationInput extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.
     render() {
         return _duration_input_html__WEBPACK_IMPORTED_MODULE_4__.renderDurationInput.call(this);
     }
-}
+};
 __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Object })
 ], DurationInput.prototype, "timespan", void 0);
+DurationInput = __decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('duration-input')
+], DurationInput);
+
 
 
 /***/ }),
@@ -1381,7 +1371,6 @@ __decorate([
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderWebcomponentTemplateStyles: () => (/* binding */ renderWebcomponentTemplateStyles)
@@ -1435,7 +1424,6 @@ function renderWebcomponentTemplateStyles() {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderWebcomponentTemplate: () => (/* binding */ renderWebcomponentTemplate)
@@ -1462,7 +1450,6 @@ function renderWebcomponentTemplate(imageTile) {
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ImageTile: () => (/* binding */ ImageTile)
@@ -1511,7 +1498,6 @@ ImageTile = __decorate([
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderLanguageSwitcherStyles: () => (/* binding */ renderLanguageSwitcherStyles)
@@ -1613,7 +1599,6 @@ function renderLanguageSwitcherStyles() {
   \*************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderLanguageSwitcher: () => (/* binding */ renderLanguageSwitcher)
@@ -1673,7 +1658,6 @@ function renderLanguageWheel(size) {
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   LanguageSwitcher: () => (/* binding */ LanguageSwitcher)
@@ -1746,8 +1730,6 @@ let LanguageSwitcher = class LanguageSwitcher extends _data_lit_element_base__WE
         this.requestFullUpdate();
     }
     scrollWheel(event) {
-        if (!('wheelDelta' in event) || typeof event.wheelDelta != 'number')
-            return;
         var direction = event.wheelDelta < 0 ? 'up' : 'down';
         var parentRect = this.shadowRoot?.querySelector('#language-switcher-overlay')?.getBoundingClientRect();
         if (!parentRect)
@@ -1783,7 +1765,6 @@ LanguageSwitcher = LanguageSwitcher_1 = __decorate([
   \******************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMediaFilterSidebarStyles: () => (/* binding */ renderMediaFilterSidebarStyles)
@@ -1951,7 +1932,6 @@ function renderMediaFilterSidebarStyles() {
   \*******************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMediaFilterSidebar: () => (/* binding */ renderMediaFilterSidebar)
@@ -2100,13 +2080,14 @@ function renderMediaFilterSidebar() {
                     <custom-toggle
                         id="undefined-rating-toggle"
                         .state="${this.filter.ratings.states[0]}"
-                        @toggle="${(e) => this.setFilterProperty('ratings', '0', e.detail)}"
+                        @toggle="${(e) => this.setFilterProperty('ratings', 0, e.detail)}"
                     ></custom-toggle>
                 </div>
                 <star-rating
                     max="5"
                     .values="${Object.keys(this.filter.ratings.states)
-        .filter((x) => this.filter.ratings.states[x] == _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Require)
+        .filter((x) => this.filter.ratings.states[x] ==
+        _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Require)
         .map((x) => Number.parseInt(x))}"
                     @ratingChanged="${(e) => this.setFilterProperty('ratings', e.detail.rating, e.detail.include ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Require : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid)}"
                 ></star-rating>
@@ -2196,9 +2177,9 @@ function renderMediaFilterSidebar() {
 /*!**************************************************************************!*\
   !*** ./advanced-components/media-filter-sidebar/media-filter-sidebar.ts ***!
   \**************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   MediaFilterSidebar: () => (/* binding */ MediaFilterSidebar)
@@ -2210,6 +2191,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _media_filter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./media-filter */ "./advanced-components/media-filter-sidebar/media-filter.ts");
 /* harmony import */ var _media_filter_sidebar_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./media-filter-sidebar.css */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.css.ts");
 /* harmony import */ var _media_filter_sidebar_html__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./media-filter-sidebar.html */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.html.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_3__]);
+_dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_3__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2288,6 +2271,8 @@ MediaFilterSidebar = __decorate([
 ], MediaFilterSidebar);
 
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -2297,7 +2282,6 @@ MediaFilterSidebar = __decorate([
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   MediaFilter: () => (/* binding */ MediaFilter)
@@ -2351,7 +2335,6 @@ class MediaFilter {
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMediaPlaylistStyles: () => (/* binding */ renderMediaPlaylistStyles)
@@ -2439,7 +2422,6 @@ function renderMediaPlaylistStyles() {
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMediaPlaylist: () => (/* binding */ renderMediaPlaylist)
@@ -2495,7 +2477,6 @@ function renderMediaPlaylist() {
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   MediaPlaylist: () => (/* binding */ MediaPlaylist)
@@ -2565,7 +2546,7 @@ let MediaPlaylist = class MediaPlaylist extends _data_lit_element_base__WEBPACK_
         var playlistScrollContainer = this.shadowRoot?.querySelector('#playlist-item-container');
         await playlistScrollContainer?.requestFullUpdate();
         setTimeout(() => {
-            /** @type {HTMLElement | null | undefined} */ var child = this.shadowRoot?.querySelector('.playlist-entry[active]');
+            var child = this.shadowRoot?.querySelector('.playlist-entry[active]');
             if (!child)
                 return;
             playlistScrollContainer?.scrollToChild(child);
@@ -2592,7 +2573,6 @@ MediaPlaylist = __decorate([
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMediaTileStyles: () => (/* binding */ renderMediaTileStyles)
@@ -2737,7 +2717,6 @@ function renderMediaTileStyles() {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMediaTile: () => (/* binding */ renderMediaTile)
@@ -2748,9 +2727,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/**
- * @param {MediaTile} this
- */
 function renderMediaTile() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <style>
             #this-image {
@@ -2784,9 +2760,6 @@ function renderMediaTile() {
         : ''}
         <slot></slot>`;
 }
-/**
- * @param {MediaTile} this
- */
 function renderImageContainer() {
     if (this.hasImage)
         return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="this-image">
@@ -2794,10 +2767,6 @@ function renderImageContainer() {
         </div>`;
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="no-image-icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_2__.Icons.Cross}"></div> `;
 }
-/**
- * @param {MediaGenreModel} genre
- * @param {MediaTile} this
- */
 function renderGenreTag(genre = null) {
     if (!genre)
         return;
@@ -2808,9 +2777,6 @@ function renderGenreTag(genre = null) {
         text="${genre?.name}"
     ></tag-label>`;
 }
-/**
- * @param {MediaTile} this
- */
 function renderRating() {
     var ratingArray = [...Array(5).keys()];
     return ratingArray.map((rating) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
@@ -2834,7 +2800,6 @@ function renderRating() {
   \******************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -2876,23 +2841,23 @@ let MediaTile = class MediaTile extends _data_lit_element_base__WEBPACK_IMPORTED
         super.connectedCallback();
         this.addEventListener('contextmenu', (e) => {
             e.preventDefault();
-            /** @type {ContextMenuItem[]} */ const contextItems = [];
-            /** @type {ContextMenuItem} */ const softDeleteItem = {
+            const contextItems = [];
+            const softDeleteItem = {
                 icon: _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_4__.Icons.Trash,
                 text: 'In Papierkorb verschieben',
                 action: () => this.dispatchEvent(new CustomEvent('soft-delete')),
             };
-            /** @type {ContextMenuItem} */ const hardDeleteItem = {
+            const hardDeleteItem = {
                 icon: _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_4__.Icons.Trash,
                 text: 'Aus Datenbank löschen',
                 action: () => this.dispatchEvent(new CustomEvent('hard-delete')),
             };
-            /** @type {ContextMenuItem} */ const fullDeleteItem = {
+            const fullDeleteItem = {
                 icon: _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_4__.Icons.Trash,
                 text: 'Vollständig Löschen',
                 action: () => this.dispatchEvent(new CustomEvent('full-delete')),
             };
-            /** @type {ContextMenuItem} */ const undeleteItem = {
+            const undeleteItem = {
                 icon: _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_4__.Icons.Revert,
                 text: 'Wiederherstellen',
                 action: () => this.dispatchEvent(new CustomEvent('undelete')),
@@ -2966,7 +2931,6 @@ __webpack_async_result__();
   \******************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -2983,10 +2947,10 @@ _data_session__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.the
 
 
 class MusicFilterOptions {
-    /** @type {string} */ search = '';
-    /** @type {CheckboxState} */ showComplete = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Ignore;
-    /** @type {CheckboxState} */ showPlaylists = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Ignore;
-    /** @type {CheckboxState} */ showDeleted = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Forbid;
+    search = '';
+    showComplete = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Ignore;
+    showPlaylists = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Ignore;
+    showDeleted = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Forbid;
     languages = new _data_filter_entry__WEBPACK_IMPORTED_MODULE_1__.FilterEntry(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.Language), _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Require);
     ratings = new _data_filter_entry__WEBPACK_IMPORTED_MODULE_1__.FilterEntry(['0', '1', '2', '3', '4', '5'], _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Ignore);
     instrumentTypes = new _data_filter_entry__WEBPACK_IMPORTED_MODULE_1__.FilterEntry(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.InstrumentType));
@@ -3015,7 +2979,6 @@ __webpack_async_result__();
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMusicFilterStyles: () => (/* binding */ renderMusicFilterStyles)
@@ -3226,7 +3189,6 @@ function renderMusicFilterStyles() {
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMusicFilter: () => (/* binding */ renderMusicFilter)
@@ -3346,12 +3308,12 @@ function renderMusicFilter() {
                     ></div>
                 </div>
                 <side-scroller>
-                    ${Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Language).map((type) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <tri-value-checkbox
-                                @valueChanged="${(e) => this.setFilterEntryValue('languages', type, e.detail.value)}"
+                    ${Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Language).map((lang) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <tri-value-checkbox
+                                @valueChanged="${(e) => this.setFilterEntryValue(this.filter.languages, lang, e.detail.value)}"
                                 class="icon-container"
-                                .value="${this.filter.languages.states[type]}"
+                                .value="${this.filter.languages.states[lang]}"
                             >
-                                <div class="inline-icon " language="${type}"></div>
+                                <div class="inline-icon " language="${lang}"></div>
                             </tri-value-checkbox>`)}
                 </side-scroller>
             </div>
@@ -3381,7 +3343,7 @@ function renderMusicFilter() {
                     ${Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.InstrumentType).map((type) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <tri-value-checkbox
                                 class="icon-container"
                                 allowThreeValues
-                                @valueChanged="${(e) => this.setFilterEntryValue('instrumentTypes', type, e.detail.value)}"
+                                @valueChanged="${(e) => this.setFilterEntryValue(this.filter.instrumentTypes, type, e.detail.value)}"
                                 .value="${this.filter.instrumentTypes.states[type]}"
                                 .disabled="${!this.canFilterInstrumentType(type)}"
                             >
@@ -3433,13 +3395,13 @@ function renderMusicFilter() {
                     <div class="filter-label">Show undefined:</div>
                     <custom-toggle
                         .state="${this.filter.ratings.states[0]}"
-                        @toggle="${(e) => this.setFilterEntryValue('ratings', '0', e.detail)}"
+                        @toggle="${(e) => this.setFilterEntryValue(this.filter.ratings, '0', e.detail)}"
                     ></custom-toggle>
                 </div>
                 <star-rating
                     max="5"
                     .values="${this.filter.ratings.ignored.map((x) => Number.parseInt(x))}"
-                    @ratingChanged="${(e) => this.setFilterEntryValue('ratings', `${e.detail.rating}`, e.detail.include ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid)}"
+                    @ratingChanged="${(e) => this.setFilterEntryValue(this.filter.ratings, e.detail.rating, e.detail.include ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid)}"
                 ></star-rating>
             </div>
             <div id="mood-filter" class="filter">
@@ -3459,7 +3421,7 @@ function renderMusicFilter() {
                     ></div>
                 </div>
                 <drop-down
-                    @selectionChange="${(e) => this.setFilterEntryValue('moods', e.detail.option.value, e.detail.option.state)}"
+                    @selectionChange="${(e) => this.setFilterEntryValue(this.filter.moods, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.entries(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Mood).map((x) => _native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_4__.DropDownOption.create({
         value: x[0],
         text: x[1],
@@ -3491,7 +3453,7 @@ function renderMusicFilter() {
                     ></div>
                 </div>
                 <drop-down
-                    @selectionChange="${(e) => this.setFilterEntryValue('genres', e.detail.option.value, e.detail.option.state)}"
+                    @selectionChange="${(e) => this.setFilterEntryValue(this.filter.genres, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.entries(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.MusicGenre).map((x) => _native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_4__.DropDownOption.create({ value: x[0], state: this.filter.genres.states[x[0]], text: x[1] }))}"
                     multiselect
                     useToggle
@@ -3518,7 +3480,7 @@ function renderMusicFilter() {
                     ></div>
                 </div>
                 <drop-down
-                    @selectionChange="${(e) => this.setFilterEntryValue('instrumentations', e.detail.option.value, e.detail.option.state)}"
+                    @selectionChange="${(e) => this.setFilterEntryValue(this.filter.instrumentations, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Instrumentation).map((key) => _native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_4__.DropDownOption.create({ value: key, text: key, state: this.filter.instrumentations.states[key] }))}"
                     useToggle
                     multiselect
@@ -3545,7 +3507,7 @@ function renderMusicFilter() {
                 <side-scroller>
                     ${Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Participants).map((participants) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <tri-value-checkbox
                                 class="icon-container"
-                                @valueChanged="${(e) => this.setFilterEntryValue('participants', participants, e.detail.value)}"
+                                @valueChanged="${(e) => this.setFilterEntryValue(this.filter.participants, participants, e.detail.value)}"
                                 .value="${this.filter.participants.states[participants]}"
                             >
                                 <div class="inline-icon" participants="${participants}"></div>
@@ -3565,7 +3527,6 @@ function renderMusicFilter() {
   \**********************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -3576,14 +3537,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_lit_element_base__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data/lit-element-base */ "./data/lit-element-base.ts");
 /* harmony import */ var _data_music_sorting_properties__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../data/music-sorting-properties */ "./data/music-sorting-properties.ts");
 /* harmony import */ var _data_session__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../data/session */ "./data/session.ts");
-/* harmony import */ var _data_sorting_directions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../data/sorting-directions */ "./data/sorting-directions.ts");
-/* harmony import */ var _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../dialogs/genre-dialog/genre-dialog */ "./dialogs/genre-dialog/genre-dialog.ts");
-/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
-/* harmony import */ var _music_filter_options__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./music-filter-options */ "./advanced-components/music-filter/music-filter-options.ts");
-/* harmony import */ var _music_filter_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./music-filter.css */ "./advanced-components/music-filter/music-filter.css.ts");
-/* harmony import */ var _music_filter_html__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./music-filter.html */ "./advanced-components/music-filter/music-filter.html.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_4__, _music_filter_options__WEBPACK_IMPORTED_MODULE_8__]);
-([_data_session__WEBPACK_IMPORTED_MODULE_4__, _music_filter_options__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../dialogs/genre-dialog/genre-dialog */ "./dialogs/genre-dialog/genre-dialog.ts");
+/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
+/* harmony import */ var _music_filter_options__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./music-filter-options */ "./advanced-components/music-filter/music-filter-options.ts");
+/* harmony import */ var _music_filter_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./music-filter.css */ "./advanced-components/music-filter/music-filter.css.ts");
+/* harmony import */ var _music_filter_html__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./music-filter.html */ "./advanced-components/music-filter/music-filter.html.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_4__, _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_5__, _music_filter_options__WEBPACK_IMPORTED_MODULE_7__]);
+([_data_session__WEBPACK_IMPORTED_MODULE_4__, _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_5__, _music_filter_options__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3600,10 +3560,9 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-
 let MusicFilter = class MusicFilter extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_2__.LitElementBase {
     static get styles() {
-        return (0,_music_filter_css__WEBPACK_IMPORTED_MODULE_9__.renderMusicFilterStyles)();
+        return (0,_music_filter_css__WEBPACK_IMPORTED_MODULE_8__.renderMusicFilterStyles)();
     }
     static get properties() {
         return {
@@ -3612,14 +3571,13 @@ let MusicFilter = class MusicFilter extends _data_lit_element_base__WEBPACK_IMPO
             sortingDirection: { type: String, reflect: true },
         };
     }
-    filter = new _music_filter_options__WEBPACK_IMPORTED_MODULE_8__.MusicFilterOptions();
+    filter = new _music_filter_options__WEBPACK_IMPORTED_MODULE_7__.MusicFilterOptions();
     sortingProperty = 'unset';
     sortingDirection = 'ascending';
     constructor() {
         super();
-        _data_sorting_directions__WEBPACK_IMPORTED_MODULE_5__.SortingDirections;
-        if (!Object.keys(_data_music_sorting_properties__WEBPACK_IMPORTED_MODULE_3__.MusicSortingProperties).every((property) => Object.keys(new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_7__.MusicModel()).concat(['unset']).includes(property))) {
-            var missingProperties = Object.keys(_data_music_sorting_properties__WEBPACK_IMPORTED_MODULE_3__.MusicSortingProperties).filter((property) => Object.keys(new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_7__.MusicModel()).concat(['unset']));
+        if (!Object.keys(_data_music_sorting_properties__WEBPACK_IMPORTED_MODULE_3__.MusicSortingProperties).every((property) => Object.keys(new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MusicModel()).concat(['unset']).includes(property))) {
+            var missingProperties = Object.keys(_data_music_sorting_properties__WEBPACK_IMPORTED_MODULE_3__.MusicSortingProperties).filter((property) => Object.keys(new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MusicModel()).concat(['unset']));
             alert("mismatch in sorting properties, the object might've changed:" + missingProperties);
             throw new Error("mismatch in sorting properties, the object might've changed" + missingProperties);
         }
@@ -3637,10 +3595,10 @@ let MusicFilter = class MusicFilter extends _data_lit_element_base__WEBPACK_IMPO
         }));
     }
     render() {
-        return _music_filter_html__WEBPACK_IMPORTED_MODULE_10__.renderMusicFilter.call(this);
+        return _music_filter_html__WEBPACK_IMPORTED_MODULE_9__.renderMusicFilter.call(this);
     }
     setFilterEntryValue(filter, enumKey, state) {
-        this.filter[filter].states[enumKey] = state;
+        filter.states[enumKey] = state;
         this.requestFullUpdate();
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
@@ -3656,7 +3614,7 @@ let MusicFilter = class MusicFilter extends _data_lit_element_base__WEBPACK_IMPO
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
     }
     resetAllFilters() {
-        this.filter = new _music_filter_options__WEBPACK_IMPORTED_MODULE_8__.MusicFilterOptions();
+        this.filter = new _music_filter_options__WEBPACK_IMPORTED_MODULE_7__.MusicFilterOptions();
         this.sortingDirection = 'ascending';
         this.sortingProperty = 'unset';
         this.requestFullUpdate();
@@ -3670,11 +3628,11 @@ let MusicFilter = class MusicFilter extends _data_lit_element_base__WEBPACK_IMPO
     }
     handleDropdownChange(filter, selectedValues) {
         Object.keys(this.filter[filter].states).forEach((key) => {
-            this.setFilterEntryValue(filter, key, selectedValues.includes(key) ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid);
+            this.setFilterEntryValue(this.filter[filter], key, selectedValues.includes(key) ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid);
         });
     }
     async showInstrumentFilterPopup() {
-        var genreDialog = await _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_6__.GenreDialog.startShowingWithInstruments(this.filter.instruments);
+        var genreDialog = await _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_5__.GenreDialog.startShowingWithInstruments(this.filter.instruments);
         genreDialog.addEventListener('accept', (e) => {
             for (var key of Object.keys(this.filter.instruments.states)) {
                 this.filter.instruments.states[key] = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore;
@@ -3730,7 +3688,6 @@ __webpack_async_result__();
   \****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderPaginatedScrollingStyles: () => (/* binding */ renderPaginatedScrollingStyles)
@@ -3769,7 +3726,6 @@ function renderPaginatedScrollingStyles() {
   \*****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderPaginatedScrolling: () => (/* binding */ renderPaginatedScrolling)
@@ -3793,7 +3749,6 @@ function renderPaginatedScrolling() {
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PaginatedScrolling: () => (/* binding */ PaginatedScrolling)
@@ -3829,7 +3784,7 @@ let PaginatedScrolling = class PaginatedScrolling extends _data_lit_element_base
         this.shadowRoot.querySelector('.scroll-container').scrollTo({ top: 0, behavior: 'smooth' });
     }
     onScroll() {
-        /** @type {HTMLElement} */ var scrollContainer = this.shadowRoot.querySelector('.scroll-container');
+        var scrollContainer = this.shadowRoot.querySelector('.scroll-container');
         var scrollMax = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
         if (scrollContainer.scrollTop >= scrollMax - this.scrollTopThreshold)
             this.requestAdditionalContent();
@@ -3841,7 +3796,7 @@ let PaginatedScrolling = class PaginatedScrolling extends _data_lit_element_base
         });
     }
     childVisible(child) {
-        /** @type {HTMLElement} */ var scrollContainer = this.shadowRoot.querySelector('.scroll-container');
+        var scrollContainer = this.shadowRoot.querySelector('.scroll-container');
         if (child.offsetTop - child.offsetHeight / 2 > scrollContainer.scrollTop &&
             child.offsetTop + child.offsetHeight * 1.5 < scrollContainer.scrollTop + scrollContainer.offsetHeight)
             return true;
@@ -3868,7 +3823,6 @@ PaginatedScrolling = __decorate([
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderPlaylistTileStyles: () => (/* binding */ renderPlaylistTileStyles)
@@ -4088,7 +4042,6 @@ function renderPlaylistTileStyles() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderPlaylistTile: () => (/* binding */ renderPlaylistTile)
@@ -4181,7 +4134,6 @@ function renderGenreTags() {
   \************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -4308,7 +4260,6 @@ __webpack_async_result__();
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderRecipeTileStyles: () => (/* binding */ renderRecipeTileStyles)
@@ -4398,7 +4349,6 @@ function renderRecipeTileStyles() {
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderRecipeTile: () => (/* binding */ renderRecipeTile)
@@ -4447,7 +4397,6 @@ function renderRecipeTile() {
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   RecipeTile: () => (/* binding */ RecipeTile)
@@ -4492,7 +4441,6 @@ RecipeTile = __decorate([
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderStarRatingStyles: () => (/* binding */ renderStarRatingStyles)
@@ -4541,7 +4489,6 @@ function renderStarRatingStyles() {
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderStarRating: () => (/* binding */ renderStarRating)
@@ -4550,9 +4497,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/extensions/array.extensions */ "./services/extensions/array.extensions.ts");
 
 
-/**
- * @param { StarRating } this
- */
 function renderStarRating() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         ${this.vertical
@@ -4586,7 +4530,6 @@ function renderStarRating() {
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   StarRatingExample: () => (/* binding */ StarRatingExample)
@@ -4606,7 +4549,6 @@ const StarRatingExample = () => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   StarRating: () => (/* binding */ StarRating)
@@ -4696,7 +4638,6 @@ StarRating = __decorate([
   \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   clipboardIcon: () => (/* binding */ clipboardIcon)
@@ -4718,7 +4659,6 @@ function clipboardIcon() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   dropIcon: () => (/* binding */ dropIcon)
@@ -4741,7 +4681,6 @@ function dropIcon() {
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderUploadAreaStyles: () => (/* binding */ renderUploadAreaStyles)
@@ -4862,7 +4801,6 @@ function renderUploadAreaStyles() {
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderUploadArea: () => (/* binding */ renderUploadArea)
@@ -4910,7 +4848,6 @@ function renderUploadArea() {
   \********************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -4967,8 +4904,7 @@ let UploadArea = class UploadArea extends _data_lit_element_base__WEBPACK_IMPORT
     }
     async receivePastedImage(event) {
         event.preventDefault();
-        // @ts-ignore
-        /** @type {DataTransfer} */ var clipboardData = event.clipboardData;
+        var clipboardData = event.clipboardData;
         await this.processImageDataTransfer(clipboardData);
     }
     dragOver(event) {
@@ -4985,8 +4921,7 @@ let UploadArea = class UploadArea extends _data_lit_element_base__WEBPACK_IMPORT
     }
     async receiveDroppedImage(event) {
         event.preventDefault();
-        // @ts-ignore
-        /** @type {DataTransfer} */ var dataTransfer = event.dataTransfer;
+        var dataTransfer = event.dataTransfer;
         await this.processImageDataTransfer(dataTransfer);
         this.dragLeave(event);
     }
@@ -5022,7 +4957,6 @@ __webpack_async_result__();
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ConnectedEvent: () => (/* binding */ ConnectedEvent)
@@ -5050,7 +4984,6 @@ class ConnectedEvent {
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   FilesQueryRequest: () => (/* binding */ FilesQueryRequest)
@@ -5073,7 +5006,6 @@ class FilesQueryRequest {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /**
  * This is a TypeGen auto-generated file.
@@ -5090,7 +5022,6 @@ __webpack_require__.r(__webpack_exports__);
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   InteropCommandRequest: () => (/* binding */ InteropCommandRequest)
@@ -5114,7 +5045,6 @@ class InteropCommandRequest {
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   InteropCommandResponse: () => (/* binding */ InteropCommandResponse)
@@ -5139,7 +5069,6 @@ class InteropCommandResponse {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   InteropCommand: () => (/* binding */ InteropCommand)
@@ -5168,7 +5097,6 @@ var InteropCommand;
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   InteropEvent: () => (/* binding */ InteropEvent)
@@ -5196,7 +5124,6 @@ var InteropEvent;
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   InteropQueryRequest: () => (/* binding */ InteropQueryRequest)
@@ -5220,7 +5147,6 @@ class InteropQueryRequest {
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   InteropQueryResponse: () => (/* binding */ InteropQueryResponse)
@@ -5247,7 +5173,6 @@ class InteropQueryResponse {
   \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   InteropQuery: () => (/* binding */ InteropQuery)
@@ -5274,7 +5199,6 @@ var InteropQuery;
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PlaybackStateChangedEvent: () => (/* binding */ PlaybackStateChangedEvent)
@@ -5297,7 +5221,6 @@ class PlaybackStateChangedEvent {
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PlaybackState: () => (/* binding */ PlaybackState)
@@ -5322,7 +5245,6 @@ var PlaybackState;
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ResponseStatus: () => (/* binding */ ResponseStatus)
@@ -5346,7 +5268,6 @@ var ResponseStatus;
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   TrackChangedEvent: () => (/* binding */ TrackChangedEvent)
@@ -5370,7 +5291,6 @@ class TrackChangedEvent {
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   TrackEndedEvent: () => (/* binding */ TrackEndedEvent)
@@ -5392,7 +5312,6 @@ class TrackEndedEvent {
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   TrackPositionChangedEvent: () => (/* binding */ TrackPositionChangedEvent)
@@ -5416,7 +5335,6 @@ class TrackPositionChangedEvent {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   VolumeChangedEvent: () => (/* binding */ VolumeChangedEvent)
@@ -5439,7 +5357,6 @@ class VolumeChangedEvent {
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CheckboxState: () => (/* binding */ CheckboxState)
@@ -5460,12 +5377,10 @@ var CheckboxState;
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ExtendedIngredientUnit: () => (/* binding */ ExtendedIngredientUnit)
 /* harmony export */ });
-/** @type { {[key in Measurement] : string[]} }  */
 const ExtendedIngredientUnit = {
     Mass: ['Milligram', 'Gram', 'Kilogram'],
     Volume: ['Milliliter', 'Liter'],
@@ -5484,7 +5399,6 @@ const ExtendedIngredientUnit = {
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderInstrumentTypeIcons: () => (/* binding */ renderInstrumentTypeIcons)
@@ -5568,7 +5482,6 @@ function renderInstrumentTypeIcons() {
   \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   MoodColors: () => (/* binding */ MoodColors),
@@ -5606,7 +5519,6 @@ function getMoodFontColor(mood) {
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderLanguageFlags: () => (/* binding */ renderLanguageFlags)
@@ -5696,7 +5608,6 @@ function renderLanguageFlags() {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderParticipantCountIcon: () => (/* binding */ renderParticipantCountIcon)
@@ -5751,7 +5662,6 @@ function renderParticipantCountIcon() {
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   FilterEntry: () => (/* binding */ FilterEntry)
@@ -5775,6 +5685,7 @@ class FilterEntry {
             .map((x) => x[0]);
     }
     states;
+    keyType;
     constructor(type, defaultValue = _enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Ignore) {
         this.states = {};
         for (var key of type)
@@ -5794,7 +5705,6 @@ class FilterEntry {
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   LitElementBase: () => (/* binding */ LitElementBase)
@@ -5832,7 +5742,7 @@ class LitElementBase extends lit_element__WEBPACK_IMPORTED_MODULE_0__.LitElement
     async requestFullUpdate() {
         //@ts-ignore
         await super.requestUpdate(undefined);
-        this.shadowRoot.querySelectorAll('*').forEach((x) => {
+        this.shadowRoot?.querySelectorAll('*').forEach((x) => {
             if (x instanceof LitElementBase)
                 x.requestFullUpdate();
         });
@@ -5841,16 +5751,18 @@ class LitElementBase extends lit_element__WEBPACK_IMPORTED_MODULE_0__.LitElement
         super.updated(_changedProperties);
         this.attachTooltips();
     }
+    render() {
+        return null;
+    }
     redispatchEvent(event, target = null) {
         target ??= this;
         target.dispatchEvent(new Event(event.type, { bubbles: true, composed: true }));
     }
     attachTooltips() {
-        var elementsWithTooltips = this.shadowRoot.querySelectorAll('*[tooltip]');
-        for (var element of elementsWithTooltips) {
+        this.shadowRoot.querySelectorAll('*[tooltip]').forEach((element) => {
             if (!this.elementsWithTooltips.includes(element))
                 this.attachTooltip(element);
-        }
+        });
     }
     attachTooltip(element) {
         var CustomTooltip = window.customElements.get('custom-tooltip');
@@ -5874,7 +5786,6 @@ class LitElementBase extends lit_element__WEBPACK_IMPORTED_MODULE_0__.LitElement
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   MusicSortingProperties: () => (/* binding */ MusicSortingProperties)
@@ -5901,7 +5812,6 @@ var MusicSortingProperties;
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Observable: () => (/* binding */ Observable),
@@ -5965,18 +5875,13 @@ class Subscription {
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ProperObject: () => (/* binding */ ProperObject)
 /* harmony export */ });
 class ProperObject {
-    /**
-     * @template T
-     * @param {T} object
-     */
     static keys(object) {
-        return /** @type {(keyof T)[]} */ (Object.keys(object));
+        return Object.keys(object);
     }
 }
 
@@ -5989,7 +5894,6 @@ class ProperObject {
   \*************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -6038,7 +5942,6 @@ __webpack_async_result__();
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SortingDirections: () => (/* binding */ SortingDirections)
@@ -6058,20 +5961,16 @@ var SortingDirections;
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   TimeSpan: () => (/* binding */ TimeSpan)
 /* harmony export */ });
 class TimeSpan {
-    /** @type {number} */ days = 0;
-    /** @type {number} */ hours = 0;
-    /** @type {number} */ minutes = 0;
-    /** @type {number} */ seconds = 0;
-    /** @type {number} */ milliseconds = 0;
-    /**
-     * @param {string} value
-     */
+    days = 0;
+    hours = 0;
+    minutes = 0;
+    seconds = 0;
+    milliseconds = 0;
     static fromString(value) {
         var result = new TimeSpan();
         if (!value)
@@ -6122,13 +6021,24 @@ class TimeSpan {
 
 /***/ }),
 
+/***/ "./data/util-types.ts":
+/*!****************************!*\
+  !*** ./data/util-types.ts ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+
+
+
+/***/ }),
+
 /***/ "./dialogs/audio-subtitle-dialog/lyrics-dialog.css.ts":
 /*!************************************************************!*\
   !*** ./dialogs/audio-subtitle-dialog/lyrics-dialog.css.ts ***!
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderAudioSubtitleDialogStyles: () => (/* binding */ renderAudioSubtitleDialogStyles)
@@ -6323,7 +6233,6 @@ function renderAudioSubtitleDialogStyles() {
   \*************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -6337,34 +6246,26 @@ _services_audio_service__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependen
 
 
 
-/**
- * @param { LyricsDialog } dialog
- */
-function renderAudioSubtitleDialog(dialog) {
+function renderAudioSubtitleDialog() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div id="lyrics-wrapper" @click="${(e) => e.stopPropagation()}">
             <div id="lyrics-content-wrapper">
                 <div id="lyrics-content-wrapper-2">
-                    <h3>${dialog.title}</h3>
-                    ${dialog.lyricsLines.map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="line">${x}</div>`)}
+                    <h3>${this.title}</h3>
+                    ${this.lyricsLines.map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="line">${x}</div>`)}
                 </div>
             </div>
             <div id="audio-controls">
                 <div
                     id="save-lyrics-button"
                     class="link"
-                    @click="${() => dialog.notifyLyricsSaved()}"
-                    ?disabled="${dialog.lyricsOffset < 0}"
+                    @click="${() => this.notifyLyricsSaved()}"
+                    ?disabled="${this.lyricsOffset < 0}"
                 >
                     <div class="icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.SaveTick}"></div>
                     Lyrics Speichern
                 </div>
-                <div
-                    id="next-lyrics-button"
-                    class="link"
-                    @click="${() => dialog.requestNewLyrics()}"
-                    ?disabled="${!dialog.canNext}"
-                >
+                <div id="next-lyrics-button" class="link" @click="${() => this.requestNewLyrics()}" ?disabled="${!this.canNext}">
                     <div class="icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Cross}"></div>
                     Neue Lyrics Laden
                 </div>
@@ -6375,16 +6276,16 @@ function renderAudioSubtitleDialog(dialog) {
                     id="scroll-up-button"
                     class="icon"
                     icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.FastForward}"
-                    @pointerdown="${(e) => dialog.startScrolling('up')}"
+                    @pointerdown="${(e) => this.startScrolling('up')}"
                 ></div>
-                ${dialog.scrollingPaused || _services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.paused
-        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Play}" @click="${dialog.togglePlay}"></div>`
-        : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div class="icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Pause}" @click="${dialog.togglePlay}"></div>`}
+                ${this.scrollingPaused || _services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.paused
+        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Play}" @click="${this.togglePlay}"></div>`
+        : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div class="icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Pause}" @click="${this.togglePlay}"></div>`}
                 <div
                     class="icon"
                     id="scroll-down-button"
                     icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.FastForward}"
-                    @pointerdown="${(e) => dialog.startScrolling('down')}"
+                    @pointerdown="${(e) => this.startScrolling('down')}"
                 ></div>
             </div>
         </div>
@@ -6402,7 +6303,6 @@ __webpack_async_result__();
   \********************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -6490,7 +6390,7 @@ let LyricsDialog = LyricsDialog_1 = class LyricsDialog extends _data_lit_element
         _data_session__WEBPACK_IMPORTED_MODULE_2__.Session.currentPage.subscribe((x) => this.fadeAndRemove());
     }
     render() {
-        return (0,_lyrics_dialog_html__WEBPACK_IMPORTED_MODULE_8__.renderAudioSubtitleDialog)(this);
+        return _lyrics_dialog_html__WEBPACK_IMPORTED_MODULE_8__.renderAudioSubtitleDialog.call(this);
     }
     async fadeAndRemove() {
         this.setAttribute('removed', '');
@@ -6536,7 +6436,7 @@ let LyricsDialog = LyricsDialog_1 = class LyricsDialog extends _data_lit_element
     updateLyrics(newTitle, newLyrics) {
         this.lyrics = newLyrics;
         this.title = newTitle;
-        /** @type {HTMLElement} */ var scrollContainer = this.shadowRoot.querySelector('#lyrics-content-wrapper-2');
+        var scrollContainer = this.shadowRoot.querySelector('#lyrics-content-wrapper-2');
         scrollContainer.getAnimations()[0].currentTime = 0;
         this.requestFullUpdate();
     }
@@ -6578,7 +6478,6 @@ __webpack_async_result__();
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderDialogBaseStyles: () => (/* binding */ renderDialogBaseStyles)
@@ -6674,39 +6573,35 @@ function renderDialogBaseStyles() {
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderDialogBase: () => (/* binding */ renderDialogBase)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param {DialogBase} dialog
- */
-function renderDialogBase(dialog) {
+function renderDialogBase() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div id="dialog-outer">
-            <div id="dialog-border" ?invisible="${!dialog.properties?.showBorder}">
+            <div id="dialog-border" ?invisible="${!this.properties?.showBorder}">
                 <div id="dialog-container" tabindex="0" autofocus>
-                    <div id="dialog-title">${dialog.caption}</div>
-                    ${dialog.declineActionText ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="x-button" @click="${() => dialog.decline()}">&times;</div>` : ''}
-                    ${dialog.properties?.content
-        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="dialog-text">${dialog.properties.content}</div>`
+                    <div id="dialog-title">${this.caption}</div>
+                    ${this.declineActionText ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="x-button" @click="${() => this.decline()}">&times;</div>` : ''}
+                    ${this.properties?.content
+        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="dialog-text">${this.properties.content}</div>`
         : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="dialog-content"><slot></slot></div>`}
 
                     <div id="dialog-actions">
-                        ${dialog.declineActionText
+                        ${this.declineActionText
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<border-button
-                                  @click="${() => dialog.decline()}"
-                                  text="${dialog.declineActionText}"
+                                  @click="${() => this.decline()}"
+                                  text="${this.declineActionText}"
                               ></border-button>`
         : ''}
-                        ${dialog.acceptActionText
+                        ${this.acceptActionText
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <border-button
-                                  ?disabled="${!dialog.canAccept}"
-                                  @click="${() => dialog.accept()}"
-                                  text="${dialog.acceptActionText}"
+                                  ?disabled="${!this.canAccept}"
+                                  @click="${() => this.accept()}"
+                                  text="${this.acceptActionText}"
                               ></border-button>`
         : ''}
                     </div>
@@ -6725,11 +6620,11 @@ function renderDialogBase(dialog) {
   \********************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   DialogBase: () => (/* binding */ DialogBase)
+/* harmony export */   DialogBase: () => (/* binding */ DialogBase),
+/* harmony export */   DialogProperties: () => (/* binding */ DialogProperties)
 /* harmony export */ });
 /* harmony import */ var lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element/decorators */ "./node_modules/lit-element/decorators.js");
 /* harmony import */ var _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/lit-element-base */ "./data/lit-element-base.ts");
@@ -6752,37 +6647,22 @@ var DialogBase_1;
 
 
 
-/**
- * @typedef {Object} DialogProperties
- * @prop {string} content
- * @prop {string} acceptActionText
- * @prop {string} declineActionText
- * @prop {number} width
- * @prop {number} height
- * @prop {boolean} showBorder
- * @prop {boolean} noImplicitAccept
- * @prop {boolean} noImplicitDecline
- */
+class DialogProperties {
+    content;
+    acceptActionText;
+    declineActionText;
+    width;
+    height;
+    showBorder;
+    noImplicitAccept;
+    noImplicitDecline;
+}
 let DialogBase = class DialogBase extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
     static { DialogBase_1 = this; }
     static instantiated = 0;
     static get styles() {
         return (0,_dialog_base_css__WEBPACK_IMPORTED_MODULE_4__.renderDialogBaseStyles)();
     }
-    static get properties() {
-        return {
-            caption: { type: String, reflect: true },
-            acceptActionText: { type: String, reflect: true },
-            declineActionText: { type: String, reflect: true },
-            canAccept: { type: Boolean, reflect: true },
-            showBorder: { type: Boolean, reflect: true },
-        };
-    }
-    /**
-     * @param {string} caption
-     * @param {Partial<DialogProperties>} properties
-     * @returns {Promise<boolean>}
-     */
     static show(caption, properties) {
         var dialog = new DialogBase_1();
         dialog.caption = caption;
@@ -6803,13 +6683,13 @@ let DialogBase = class DialogBase extends _data_lit_element_base__WEBPACK_IMPORT
             });
         });
     }
+    caption;
+    acceptActionText;
+    declineActionText;
+    properties;
+    canAccept;
     constructor() {
         super();
-        /** @type {string} */ this.caption;
-        /** @type {string} */ this.acceptActionText;
-        /** @type {string} */ this.declineActionText;
-        /** @type {Partial<DialogProperties>} */ this.properties;
-        /** @type {Boolean} */ this.canAccept;
         DialogBase_1.instantiated++;
     }
     connectedCallback() {
@@ -6828,7 +6708,7 @@ let DialogBase = class DialogBase extends _data_lit_element_base__WEBPACK_IMPORT
         }));
     }
     render() {
-        return (0,_dialog_base_html__WEBPACK_IMPORTED_MODULE_5__.renderDialogBase)(this);
+        return _dialog_base_html__WEBPACK_IMPORTED_MODULE_5__.renderDialogBase.call(this);
     }
     accept() {
         if (!this.canAccept || !this.acceptActionText)
@@ -6841,6 +6721,21 @@ let DialogBase = class DialogBase extends _data_lit_element_base__WEBPACK_IMPORT
         this.dispatchEvent(new CustomEvent('decline', { composed: true, bubbles: true }));
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DialogBase.prototype, "caption", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DialogBase.prototype, "acceptActionText", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DialogBase.prototype, "declineActionText", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DialogBase.prototype, "properties", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DialogBase.prototype, "canAccept", void 0);
 DialogBase = DialogBase_1 = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('dialog-base')
 ], DialogBase);
@@ -6857,7 +6752,6 @@ __webpack_async_result__();
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   GenreDialogResult: () => (/* binding */ GenreDialogResult)
@@ -6876,7 +6770,6 @@ class GenreDialogResult {
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderEditPlaylistDialogStyles: () => (/* binding */ renderEditPlaylistDialogStyles)
@@ -7015,7 +6908,6 @@ function renderEditPlaylistDialogStyles() {
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderEditPlaylistDialog: () => (/* binding */ renderEditPlaylistDialog)
@@ -7028,10 +6920,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/**
- * @param { EditPlaylistDialog } dialog
- */
-function renderEditPlaylistDialog(dialog) {
+function renderEditPlaylistDialog() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <dialog-base
             showBorder
@@ -7045,13 +6934,13 @@ function renderEditPlaylistDialog(dialog) {
                     <div id="image-data-section">
                         <upload-area
                             id="playlist-image"
-                            @imageReceived="${(e) => dialog.changeProperty('image', e.imageData)}"
+                            @imageReceived="${(e) => this.changeProperty('image', e.detail.imageData)}"
                         ></upload-area>
                         <div id="playlist-rating">
                             <star-rating
                                 max="5"
                                 singleSelect
-                                @selectionChange="${(e) => dialog.changeProperty('rating', e.detail.rating)}"
+                                @selectionChange="${(e) => this.changeProperty('rating', e.detail.rating)}"
                             ></star-rating>
                         </div>
                     </div>
@@ -7060,31 +6949,31 @@ function renderEditPlaylistDialog(dialog) {
                             <div class="property-label">Name:</div>
                             <input
                                 class="property-value"
-                                .value="${dialog.newPlaylist.name}"
+                                .value="${this.newPlaylist.name}"
                                 oninput="this.dispatchEvent(new Event('change'))"
-                                @change="${(e) => dialog.changeProperty('name', e.currentTarget.value)}"
+                                @change="${(e) => this.changeProperty('name', e.currentTarget.value)}"
                             />
                         </div>
                         <div id="playlist-author" class="property">
                             <div class="property-label">Autor:</div>
                             <input
                                 class="property-value"
-                                .value="${dialog.newPlaylist.author}"
+                                .value="${this.newPlaylist.author ?? ''}"
                                 oninput="this.dispatchEvent(new Event('change'))"
-                                @change="${(e) => dialog.changeProperty('author', e.currentTarget.value)}"
+                                @change="${(e) => this.changeProperty('author', e.currentTarget.value)}"
                             />
                         </div>
                         <div id="playlist-genres" class="property">
                             <div class="property-label">Genres:</div>
                             <div class="property-value">
-                                ${dialog.newPlaylist.genres.map((genre) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<tag-label
+                                ${this.newPlaylist.genres.map((genre) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<tag-label
                                         .text="${genre}"
-                                        @removed="${() => dialog.removeGenre(genre)}"
+                                        @removed="${() => this.removeGenre(genre)}"
                                     ></tag-label>`)}
                                 <tag-label
                                     createNew
-                                    .autocomplete="${dialog.autocompleteGenres}"
-                                    @tagCreated="${(e) => dialog.addGenre(e.detail.value)}"
+                                    .autocomplete="${this.autocompleteGenres}"
+                                    @tagCreated="${(e) => this.addGenre(e.detail.value)}"
                                 ></tag-label>
                             </div>
                         </div>
@@ -7092,8 +6981,8 @@ function renderEditPlaylistDialog(dialog) {
                             <div class="property-label">Sprache:</div>
                             <div class="property-value">
                                 <drop-down
-                                    .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_1__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_2__.Language), dialog.newPlaylist.language)}"
-                                    @selectionChange="${(e) => dialog.changeProperty('language', e.detail.option.value)}"
+                                    .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_1__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_2__.Language), this.newPlaylist.language)}"
+                                    @selectionChange="${(e) => this.changeProperty('language', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                         </div>
@@ -7101,22 +6990,22 @@ function renderEditPlaylistDialog(dialog) {
                             <div class="property-label">Nation:</div>
                             <div class="property-value">
                                 <drop-down
-                                    .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_1__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_2__.Language), dialog.newPlaylist.nation)}"
-                                    @selectionChange="${(e) => dialog.changeProperty('nation', e.detail.option.value)}"
+                                    .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_1__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_2__.Language), this.newPlaylist.nation)}"
+                                    @selectionChange="${(e) => this.changeProperty('nation', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="tracks-section" @dragover="${dialog.handleFilesDragOver}">
-                    ${dialog.draggingFiles
+                <div id="tracks-section" @dragover="${this.handleFilesDragOver}">
+                    ${this.draggingFiles
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
                               id="drag-info-overlay"
                               @dragleave="${(e) => {
             e.preventDefault();
-            dialog.draggingFiles = false;
+            this.draggingFiles = false;
         }}"
-                              @drop="${dialog.dropFiles}"
+                              @drop="${this.dropFiles}"
                           ></div>`
         : ''}
                     <div id="tracks-actions">
@@ -7124,19 +7013,19 @@ function renderEditPlaylistDialog(dialog) {
                             id="import-icon"
                             class="track-action"
                             icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_3__.Icons.Import}"
-                            @click="${() => dialog.openImportDialog()}"
+                            @click="${() => this.openImportDialog()}"
                         ></div>
                         <div
                             id="trash-icon"
                             class="track-action"
-                            @click="${() => dialog.clearTracks()}"
+                            @click="${() => this.clearTracks()}"
                             icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_3__.Icons.Trash}"
                         ></div>
                     </div>
                     <ordered-list
                         id="tracks-container"
-                        .items="${dialog.newPlaylist?.tracks ?? []}"
-                        @items-changed="${(e) => dialog.changeProperty('tracks', e.detail)}"
+                        .items="${this.newPlaylist?.tracks ?? []}"
+                        @items-changed="${(e) => this.changeProperty('tracks', e.detail)}"
                         propertyName="name"
                     ></ordered-list>
                 </div>
@@ -7154,7 +7043,6 @@ function renderEditPlaylistDialog(dialog) {
   \**************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -7234,35 +7122,21 @@ let EditPlaylistDialog = EditPlaylistDialog_1 = class EditPlaylistDialog extends
     get autocompleteGenres() {
         return Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.MusicGenre).filter((genre) => !this.newPlaylist.genres.some((x) => _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.MusicGenre[x] == genre));
     }
-    constructor() {
-        super();
-        /** @type {PlaylistModel} */ this.oldPlaylist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.PlaylistModel();
-        /** @type {PlaylistModel} */ this.newPlaylist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.PlaylistModel();
-        /** @type {boolean} */ this.draggingFiles;
-    }
+    oldPlaylist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.PlaylistModel();
+    newPlaylist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.PlaylistModel();
+    draggingFiles;
     render() {
-        return (0,_edit_playlist_dialog_html__WEBPACK_IMPORTED_MODULE_9__.renderEditPlaylistDialog)(this);
+        return _edit_playlist_dialog_html__WEBPACK_IMPORTED_MODULE_9__.renderEditPlaylistDialog.call(this);
     }
-    /**
-     * @template {keyof PlaylistModel} T
-     * @param {T} propertyName
-     * @param {PlaylistModel[T]} value
-     */
     changeProperty(propertyName, value) {
         this.newPlaylist[propertyName] = value;
         this.requestFullUpdate();
     }
-    /**
-     * @param {MusicGenre} genre
-     */
     addGenre(genre) {
         if (!genre || !Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.MusicGenre).includes(genre))
             return;
         this.changeProperty('genres', this.newPlaylist.genres.concat(genre));
     }
-    /**
-     * @param {MusicGenre} genre
-     */
     removeGenre(genre) {
         this.changeProperty('genres', this.newPlaylist.genres.filter((x) => x != genre));
     }
@@ -7278,9 +7152,6 @@ let EditPlaylistDialog = EditPlaylistDialog_1 = class EditPlaylistDialog extends
         this.requestFullUpdate();
     }
     async openImportDialog() { }
-    /**
-     * @param {DragEvent} event
-     */
     handleFilesDragOver(event) {
         if (!event.dataTransfer.types.includes('Files'))
             return;
@@ -7288,14 +7159,10 @@ let EditPlaylistDialog = EditPlaylistDialog_1 = class EditPlaylistDialog extends
         this.draggingFiles = true;
         this.requestFullUpdate();
     }
-    /**
-     * @param {DragEvent} event
-     */
     async dropFiles(event) { }
-    /** @param {MusicModel} track */
     async updateTrackPlaylistProperties(track) {
-        /** @type {MusicModel} */ var updatedTrack = {};
-        if (this.newPlaylist.author?.length > 1)
+        var updatedTrack = {};
+        if (this.newPlaylist.author?.length ?? 0 > 1)
             updatedTrack.author = this.newPlaylist.author;
         if (this.newPlaylist.language != _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.Language.Unset)
             updatedTrack.language = this.newPlaylist.language;
@@ -7317,6 +7184,15 @@ let EditPlaylistDialog = EditPlaylistDialog_1 = class EditPlaylistDialog extends
         }
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], EditPlaylistDialog.prototype, "oldPlaylist", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], EditPlaylistDialog.prototype, "newPlaylist", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], EditPlaylistDialog.prototype, "draggingFiles", void 0);
 EditPlaylistDialog = EditPlaylistDialog_1 = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('edit-playlist-dialog')
 ], EditPlaylistDialog);
@@ -7333,7 +7209,6 @@ __webpack_async_result__();
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderEntityStatusDialogStyles: () => (/* binding */ renderEntityStatusDialogStyles)
@@ -7408,7 +7283,6 @@ function renderEntityStatusDialogStyles() {
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderEntityStatusDialog: () => (/* binding */ renderEntityStatusDialog)
@@ -7417,18 +7291,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
 
 
-/**
- * @param { EntityStatusDialog } dialog
- */
-function renderEntityStatusDialog(dialog) {
+function renderEntityStatusDialog() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-        <dialog-base caption="Fortschritt" acceptActionText="Weiter" ?canAccept="${dialog.isComplete(dialog)}" showBorder>
+        <dialog-base caption="Fortschritt" acceptActionText="Weiter" ?canAccept="${this.isComplete(this)}" showBorder>
             <div id="entries">
-                ${dialog.entries.map((entry) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="entry" status="${entry.status}">
+                ${this.entries.map((entry) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="entry" status="${entry.status}">
                         <div class="entry-text">${entry.text}</div>
                         <div class="entry-status">${entry.status == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_1__.ModelCreationState.Loading ? null : entry.status}</div>
                     </div>`)}
-                ${!dialog.isComplete(dialog)
+                ${!this.isComplete(this)
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <loading-circle id="entries-loading-indication" class="entry"></loading-circle> `
         : ''}
             </div>
@@ -7445,10 +7316,10 @@ function renderEntityStatusDialog(dialog) {
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   EntityStatusDialog: () => (/* binding */ EntityStatusDialog)
+/* harmony export */   EntityStatusDialog: () => (/* binding */ EntityStatusDialog),
+/* harmony export */   EntityStatusEntry: () => (/* binding */ EntityStatusEntry)
 /* harmony export */ });
 /* harmony import */ var lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element/decorators */ "./node_modules/lit-element/decorators.js");
 /* harmony import */ var _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/lit-element-base */ "./data/lit-element-base.ts");
@@ -7465,18 +7336,14 @@ var EntityStatusDialog_1;
 
 
 
-/**
- * @typedef {Object} EntityStatusEntry
- * @prop {string | TemplateResult} text
- * @prop {ModelCreationState} status
- */
+class EntityStatusEntry {
+    text;
+    status;
+}
 let EntityStatusDialog = EntityStatusDialog_1 = class EntityStatusDialog extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
     static get styles() {
         return (0,_entity_status_dialog_css__WEBPACK_IMPORTED_MODULE_2__.renderEntityStatusDialogStyles)();
     }
-    /**
-     * @param {((dialog: EntityStatusDialog) => boolean)} isComplete
-     */
     static show(isComplete) {
         var dialog = new EntityStatusDialog_1();
         dialog.isComplete = isComplete;
@@ -7484,17 +7351,11 @@ let EntityStatusDialog = EntityStatusDialog_1 = class EntityStatusDialog extends
         dialog.requestFullUpdate();
         return dialog;
     }
-    constructor() {
-        super();
-        /** @type {EntityStatusEntry[]} */ this.entries = [];
-        /** @type {(dialog: EntityStatusDialog) => boolean } */ this.isComplete = () => false;
-    }
+    entries = [];
+    isComplete = (dialog) => false;
     render() {
-        return (0,_entity_status_dialog_html__WEBPACK_IMPORTED_MODULE_3__.renderEntityStatusDialog)(this);
+        return _entity_status_dialog_html__WEBPACK_IMPORTED_MODULE_3__.renderEntityStatusDialog.call(this);
     }
-    /**
-     * @param {EntityStatusEntry} entry,
-     */
     async addEntry(entry) {
         this.entries.push(entry);
         await this.requestFullUpdate();
@@ -7515,7 +7376,6 @@ EntityStatusDialog = EntityStatusDialog_1 = __decorate([
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderGenreDialogStyles: () => (/* binding */ renderGenreDialogStyles)
@@ -7681,7 +7541,6 @@ function renderGenreDialogStyles() {
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderGenreDialog: () => (/* binding */ renderGenreDialog)
@@ -7690,11 +7549,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/enumerations/checkbox-state */ "./data/enumerations/checkbox-state.ts");
 
 
-/**
- * @param {GenreDialog} dialog
- */
-function renderGenreDialog(dialog) {
-    var filteredSections = Object.keys(dialog.genreDict).filter((section) => dialog.genreDict[section].some((genre) => genre.name.toLowerCase().includes(dialog.searchText.toLowerCase()) || dialog.genreDict[section].length == 0));
+function renderGenreDialog() {
+    var filteredSections = Object.keys(this.genreDict).filter((section) => this.genreDict[section].some((genre) => genre.name.toLowerCase().includes(this.searchText.toLowerCase()) || this.genreDict[section].length == 0));
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <dialog-base
             showBorder
@@ -7702,14 +7558,14 @@ function renderGenreDialog(dialog) {
             caption="Tags auswählen"
             acceptActionText="Speichern"
             declineActionText="Abbrechen"
-            @decline="${() => dialog.remove()}"
-            @accept="${(e) => dialog.accept(e)}"
+            @decline="${() => this.remove()}"
+            @accept="${(e) => this.accept(e)}"
         >
             <div id="dialog-content">
-                ${dialog.options.allowRemove
+                ${this.options.allowRemove
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="remove-toggle">
                           <custom-toggle
-                              @toggle="${(e) => dialog.toggleAttribute('editModeEnabled', e.detail == _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore)}"
+                              @toggle="${(e) => this.toggleAttribute('editModeEnabled', e.detail == _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore)}"
                           ></custom-toggle>
                           <div id="toggle-text">Löschen</div>
                       </div>`
@@ -7720,49 +7576,38 @@ function renderGenreDialog(dialog) {
                     type="text"
                     placeholder="Search"
                     oninput="javascript: this.dispatchEvent(new Event('change'))"
-                    @change="${(e) => (dialog.searchText = e.currentTarget.value)}"
+                    @change="${(e) => (this.searchText = e.currentTarget.value)}"
                 />
 
                 <div id="genre-container">
-                    ${filteredSections.map((section) => renderGenreSection(section, dialog.genreDict[section], dialog))}
+                    ${filteredSections.map((section) => renderGenreSection.call(this, section, this.genreDict[section]))}
                     ${filteredSections.length <= 0 ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `Keine passenden Genres gefunden.` : ''}
                 </div>
             </div>
         </dialog-base>
     `;
 }
-/**
- * @param {string} sectionName
- * @param {GenreModel[]} genres
- * @param {GenreDialog} dialog
- */
-function renderGenreSection(sectionName, genres, dialog) {
+function renderGenreSection(sectionName, genres) {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="genre-section">
         <div class="section-title">${sectionName}</div>
         <div class="genre-list">
             ${genres
-        .filter((x) => x.name.toLowerCase().includes(dialog.searchText.toLowerCase()))
-        .map((genre) => renderGenre(genre, dialog))}
-            ${dialog.options.allowAdd
-        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="add-genre-button" @click="${() => dialog.addGenre(sectionName)}">+</div>`
-        : ''}
+        .filter((x) => x.name.toLowerCase().includes(this.searchText.toLowerCase()))
+        .map((genre) => renderGenre.call(this, genre))}
+            ${this.options.allowAdd ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="add-genre-button" @click="${() => this.addGenre(sectionName)}">+</div>` : ''}
         </div>
     </div>`;
 }
-/**
- * @param {GenreModel} genre
- * @param {GenreDialog} genreDialog
- */
-function renderGenre(genre, genreDialog) {
+function renderGenre(genre) {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<tri-value-checkbox
-        .allowThreeValues="${genreDialog.options.allowThreeValues}"
-        @valueChanged="${(e) => genreDialog.handleGenreSelection(e.detail, genre)}"
-        .value="${genreDialog.getValue(genre)}"
-        .ignoredState="${genreDialog.options.ignoredState}"
+        .allowThreeValues="${this.options.allowThreeValues}"
+        @valueChanged="${(e) => this.handleGenreSelection(e.detail, genre)}"
+        .value="${this.getValue(genre)}"
+        .ignoredState="${this.options.ignoredState}"
         class="genre-checkbox"
     >
         ${genre.name}
-        <div class="remove-genre-button" @click="${(e) => genreDialog.removeGenre(e, genre)}"></div>
+        <div class="remove-genre-button" @click="${(e) => this.removeGenre(e, genre)}"></div>
     </tri-value-checkbox> `;
 }
 
@@ -7773,9 +7618,237 @@ function renderGenre(genre, genreDialog) {
 /*!**********************************************!*\
   !*** ./dialogs/genre-dialog/genre-dialog.ts ***!
   \**********************************************/
-/***/ (() => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module parse failed: Unexpected token (65:72)\nFile was processed with these loaders:\n * ./node_modules/ts-loader/index.js\nYou may need an additional loader to handle the result of these loaders.\n|         });\n|         genreDialog.addEventListener('add-genre', \n>         /** @param {CustomEvent<{name, sectionName}>} e */ async((e) => ), {\n|             try: {\n|                 var: mediaGenres = /** @type {MediaGenreModel[]} */ genreDialog.options.genres,");
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   GenreDialog: () => (/* binding */ GenreDialog),
+/* harmony export */   GenreDialogOptions: () => (/* binding */ GenreDialogOptions)
+/* harmony export */ });
+/* harmony import */ var lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element/decorators */ "./node_modules/lit-element/decorators.js");
+/* harmony import */ var _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/enumerations/checkbox-state */ "./data/enumerations/checkbox-state.ts");
+/* harmony import */ var _data_filter_entry__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data/filter-entry */ "./data/filter-entry.ts");
+/* harmony import */ var _data_lit_element_base__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../data/lit-element-base */ "./data/lit-element-base.ts");
+/* harmony import */ var _data_session__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../data/session */ "./data/session.ts");
+/* harmony import */ var _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../native-components/message-snackbar/message-snackbar */ "./native-components/message-snackbar/message-snackbar.ts");
+/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
+/* harmony import */ var _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../pages/page-routing/page-routing */ "./pages/page-routing/page-routing.ts");
+/* harmony import */ var _services_backend_services__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/backend.services */ "./services/backend.services.ts");
+/* harmony import */ var _dialog_result_genre_dialog_result__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../dialog-result/genre-dialog.result */ "./dialogs/dialog-result/genre-dialog.result.ts");
+/* harmony import */ var _input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../input-dialog/input-dialog */ "./dialogs/input-dialog/input-dialog.ts");
+/* harmony import */ var _genre_dialog_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./genre-dialog.css */ "./dialogs/genre-dialog/genre-dialog.css.ts");
+/* harmony import */ var _genre_dialog_html__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./genre-dialog.html */ "./dialogs/genre-dialog/genre-dialog.html.ts");
+/* harmony import */ var _media_genres__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./media-genres */ "./dialogs/genre-dialog/media-genres.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_4__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__, _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_7__, _services_backend_services__WEBPACK_IMPORTED_MODULE_8__, _input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_10__]);
+([_data_session__WEBPACK_IMPORTED_MODULE_4__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__, _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_7__, _services_backend_services__WEBPACK_IMPORTED_MODULE_8__, _input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_10__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var GenreDialog_1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class GenreDialogOptions {
+    genres = [];
+    allowedGenres = [];
+    forbiddenGenres = [];
+    allowThreeValues;
+    allowAdd;
+    allowRemove;
+    ignoredState;
+}
+let GenreDialog = GenreDialog_1 = class GenreDialog extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_3__.LitElementBase {
+    static get properties() {
+        return {
+            searchText: { type: String },
+        };
+    }
+    static get styles() {
+        return (0,_genre_dialog_css__WEBPACK_IMPORTED_MODULE_11__.renderGenreDialogStyles)();
+    }
+    static async startShowingWithGenres(genresOrFilter) {
+        var genres = await _services_backend_services__WEBPACK_IMPORTED_MODULE_8__.GenreService.getAll();
+        var options = { genres, allowAdd: true, allowRemove: true };
+        if (genresOrFilter instanceof _data_filter_entry__WEBPACK_IMPORTED_MODULE_2__.FilterEntry) {
+            options.allowedGenres = genres.filter((x) => genresOrFilter.required.includes(x.id));
+            options.forbiddenGenres = genres.filter((x) => genresOrFilter.forbidden.includes(x.id));
+            options.allowThreeValues = true;
+        }
+        else {
+            options.allowedGenres = genresOrFilter;
+            options.ignoredState = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid;
+        }
+        var genreDialog = GenreDialog_1.show(options);
+        genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
+        genreDialog.addEventListener('selection-changed', async (e) => {
+            var mediaGenres = await _services_backend_services__WEBPACK_IMPORTED_MODULE_8__.GenreService.getAll();
+            genreDialog.options.genres = mediaGenres.filter((x) => genreDialog.availableSections.includes(x.section));
+            genreDialog.requestFullUpdate();
+        });
+        genreDialog.addEventListener('add-genre', async (e) => {
+            try {
+                var mediaGenres = genreDialog.options.genres;
+                var sectionCategory = mediaGenres.find((x) => x.sectionName == e.detail.sectionName).section;
+                await _services_backend_services__WEBPACK_IMPORTED_MODULE_8__.GenreService.addGenre(sectionCategory, e.detail.name);
+                var genres = await _services_backend_services__WEBPACK_IMPORTED_MODULE_8__.GenreService.getAll();
+                genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
+                genreDialog.requestFullUpdate();
+                _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__.MessageSnackbar.popup('Das Genre wurde erfolgreich hinzugefügt.', 'success');
+            }
+            catch (err) {
+                _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__.MessageSnackbar.popup('Ein Fehler ist beim hinzufügen des Genres aufgetreten: ' + err, 'error');
+                e.preventDefault();
+            }
+        });
+        genreDialog.addEventListener('remove-genre', async (e) => {
+            try {
+                await _services_backend_services__WEBPACK_IMPORTED_MODULE_8__.GenreService.removeGenre(e.detail.id);
+                var genres = await _services_backend_services__WEBPACK_IMPORTED_MODULE_8__.GenreService.getAll();
+                genreDialog.options.genres = genres.filter((x) => genreDialog.availableSections.includes(x.section));
+                genreDialog.requestFullUpdate();
+                _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__.MessageSnackbar.popup('Das Genre wurde erfolgreich gelöscht.', 'success');
+            }
+            catch (err) {
+                _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__.MessageSnackbar.popup('Ein Fehler ist beim löschen des Genres aufgetreten: ' + err, 'error');
+                e.preventDefault();
+            }
+        });
+        return genreDialog;
+    }
+    static async startShowingWithInstruments(instrumentsOrFilter) {
+        var instrumentToGenre = (item, index) => new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.GenreModel({ id: `${index}`, name: item.name, sectionName: item.type });
+        var genres = _data_session__WEBPACK_IMPORTED_MODULE_4__.Session.instruments.current().map(instrumentToGenre);
+        var options = { genres, allowAdd: true, allowRemove: true };
+        if (instrumentsOrFilter instanceof _data_filter_entry__WEBPACK_IMPORTED_MODULE_2__.FilterEntry) {
+            options.allowedGenres = genres.filter((x) => instrumentsOrFilter.required.includes(x.name));
+            options.forbiddenGenres = genres.filter((x) => instrumentsOrFilter.forbidden.includes(x.name));
+            options.allowThreeValues = true;
+        }
+        else {
+            options.allowedGenres = instrumentsOrFilter.map(instrumentToGenre);
+            options.ignoredState = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid;
+        }
+        var dialog = GenreDialog_1.show(options);
+        dialog.addEventListener('add-genre', async (e) => {
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_8__.MusicService.addInstrument(e.detail.sectionName, e.detail.name);
+            dialog.options.genres.push(new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MediaGenreModel({
+                id: e.detail.name,
+                name: e.detail.name,
+                section: e.detail.section,
+                sectionName: e.detail.sectionName,
+            }));
+            _data_session__WEBPACK_IMPORTED_MODULE_4__.Session.instruments.next(await _services_backend_services__WEBPACK_IMPORTED_MODULE_8__.MusicService.getInstruments());
+            await dialog.requestFullUpdate();
+        });
+        dialog.addEventListener('remove-genre', async (e) => {
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_8__.MusicService.removeInstrument(e.detail.sectionName, e.detail.name);
+            dialog.options.genres = dialog.options.genres.filter((x) => x.name != e.detail.name);
+            _data_session__WEBPACK_IMPORTED_MODULE_4__.Session.instruments.next(await _services_backend_services__WEBPACK_IMPORTED_MODULE_8__.MusicService.getInstruments());
+            await dialog.requestFullUpdate();
+        });
+        return dialog;
+    }
+    static show(options) {
+        var dialog = new GenreDialog_1();
+        Object.assign(dialog.options, options);
+        _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_7__.PageRouting.container.append(dialog);
+        dialog.requestFullUpdate();
+        return dialog;
+    }
+    get availableSections() {
+        return (0,_media_genres__WEBPACK_IMPORTED_MODULE_13__.getAvailableGenreSections)(this.options.allowedGenres);
+    }
+    get genreDict() {
+        return this.options.genres.reduce((prev, current, index, array) => {
+            if (!prev[current.sectionName])
+                prev[current.sectionName] = [];
+            prev[current.sectionName].push(current);
+            return prev;
+        }, {});
+    }
+    options = {
+        genres: [],
+        allowedGenres: [],
+        forbiddenGenres: [],
+        allowThreeValues: false,
+        ignoredState: _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore,
+        allowAdd: false,
+        allowRemove: false,
+    };
+    searchText = '';
+    render() {
+        return _genre_dialog_html__WEBPACK_IMPORTED_MODULE_12__.renderGenreDialog.call(this);
+    }
+    handleGenreSelection(eventDetail, genre) {
+        switch (eventDetail.value) {
+            case _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid:
+                this.options.forbiddenGenres.push(genre);
+                this.options.allowedGenres = this.options.allowedGenres.filter((x) => x.name != genre.name);
+                break;
+            case _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore:
+                this.options.forbiddenGenres = this.options.forbiddenGenres.filter((x) => x.name != genre.name);
+                this.options.allowedGenres = this.options.allowedGenres.filter((x) => x.name != genre.name);
+                break;
+            case _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Require:
+                this.options.allowedGenres.push(genre);
+                this.options.forbiddenGenres = this.options.forbiddenGenres.filter((x) => x.name != genre.name);
+                break;
+            default:
+                throw new Error('unsupported tri-value-checkbox value');
+        }
+        this.dispatchEvent(new CustomEvent('selection-changed'));
+        this.requestFullUpdate();
+    }
+    accept(e) {
+        e.stopPropagation();
+        var result = new _dialog_result_genre_dialog_result__WEBPACK_IMPORTED_MODULE_9__.GenreDialogResult();
+        result.acceptedGenres = this.options.allowedGenres;
+        result.forbiddenGenres = this.options.forbiddenGenres;
+        this.dispatchEvent(new CustomEvent('accept', { detail: result }));
+    }
+    getValue(genre) {
+        if (this.options.allowedGenres.some((x) => x.name == genre.name))
+            return _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Require;
+        if (this.options.forbiddenGenres.some((x) => x.name == genre.name))
+            return _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid;
+        return _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore;
+    }
+    async addGenre(sectionName) {
+        var name = await _input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_10__.InputDialog.show('Bitte Namen eingeben:');
+        if (!name)
+            return;
+        this.dispatchEvent(new CustomEvent('add-genre', { detail: { name, sectionName } }));
+    }
+    async removeGenre(event, genre) {
+        this.dispatchEvent(new CustomEvent('remove-genre', { detail: genre }));
+        event.stopPropagation();
+    }
+};
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], GenreDialog.prototype, "options", void 0);
+GenreDialog = GenreDialog_1 = __decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('genre-dialog')
+], GenreDialog);
+
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -7785,7 +7858,6 @@ throw new Error("Module parse failed: Unexpected token (65:72)\nFile was process
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getAvailableGenreSections: () => (/* binding */ getAvailableGenreSections)
@@ -7811,9 +7883,6 @@ const MainGenreConditions = {
     Fantasy: [_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_0__.MediaGenreCategory.Beings],
     Romance: [_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_0__.MediaGenreCategory.Relationship],
 };
-/**
- * @param {MediaGenreModel[]} selectedGenres
- */
 function getAvailableGenreSections(selectedGenres) {
     var baseSections = MandatoryGenres.concat(selectedGenres.map((x) => x.section));
     var selectedMainGenres = selectedGenres.filter((x) => x.section == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_0__.MediaGenreCategory.MainGenre);
@@ -7831,7 +7900,6 @@ function getAvailableGenreSections(selectedGenres) {
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderInputDialogStyles: () => (/* binding */ renderInputDialogStyles)
@@ -7871,7 +7939,6 @@ function renderInputDialogStyles() {
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderInputDialog: () => (/* binding */ renderInputDialog)
@@ -7904,7 +7971,6 @@ function renderInputDialog() {
   \**********************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -7970,16 +8036,17 @@ __webpack_async_result__();
 /*!************************************************************!*\
   !*** ./dialogs/play-music-dialog/play-music-dialog.css.ts ***!
   \************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderPlayMusicDialogStyles: () => (/* binding */ renderPlayMusicDialogStyles)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 /* harmony import */ var _play_music_dialog__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./play-music-dialog */ "./dialogs/play-music-dialog/play-music-dialog.ts");
-/* harmony import */ var _play_music_dialog__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_play_music_dialog__WEBPACK_IMPORTED_MODULE_1__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_play_music_dialog__WEBPACK_IMPORTED_MODULE_1__]);
+_play_music_dialog__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
 function renderPlayMusicDialogStyles() {
@@ -8047,6 +8114,8 @@ function renderPlayMusicDialogStyles() {
     `;
 }
 
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -8056,7 +8125,6 @@ function renderPlayMusicDialogStyles() {
   \*************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -8072,23 +8140,20 @@ _services_audio_service__WEBPACK_IMPORTED_MODULE_3__ = (__webpack_async_dependen
 
 
 
-/**
- * @param { PlayMusicDialog } dialog
- */
-function renderPlayMusicDialog(dialog) {
+function renderPlayMusicDialog() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <style>
             :host {
-                --primary-color: ${_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_1__.MoodColors[dialog.currentTrack.mood1] ?? '#ddd'};
-                --secondary-color: ${_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_1__.MoodColors[dialog.currentTrack.mood2 ?? dialog.currentTrack.mood1] ?? '#ddd'};
-                --font-color: ${(0,_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_1__.getMoodFontColor)(dialog.currentTrack.mood1)};
+                --primary-color: ${_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_1__.MoodColors[this.currentTrack.mood1] ?? '#ddd'};
+                --secondary-color: ${_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_1__.MoodColors[this.currentTrack.mood2 ?? this.currentTrack.mood1] ?? '#ddd'};
+                --font-color: ${(0,_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_1__.getMoodFontColor)(this.currentTrack.mood1)};
             }
         </style>
-        <div id="player" @click="${() => dialog.toggle()}">
-            <div id="close-button" @click="${() => dialog.close()}">&times;</div>
+        <div id="player" @click="${() => this.toggle()}">
+            <div id="close-button" @click="${() => this.close()}">&times;</div>
             <div id="play-button" icon="${_services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.paused ? _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_2__.Icons.Play : _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_2__.Icons.Pause}"></div>
         </div>
-        <div id="title">${dialog.currentTrack.displayName}</div>
+        <div id="title">${this.currentTrack?.displayName}</div>
 
         <range-slider
             id="position-slider"
@@ -8096,7 +8161,7 @@ function renderPlayMusicDialog(dialog) {
             .value="${(_services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.trackPosition || 0).toString()}"
             .max="${Math.floor(_services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.duration || 100).toString()}"
             steps="1000"
-            @valueChanged="${(e) => dialog.changeTrackPosition(e.detail.value)}"
+            @valueChanged="${(e) => this.changeTrackPosition(e.detail.value)}"
         ></range-slider>
     `;
 }
@@ -8110,9 +8175,106 @@ __webpack_async_result__();
 /*!********************************************************!*\
   !*** ./dialogs/play-music-dialog/play-music-dialog.ts ***!
   \********************************************************/
-/***/ (() => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module parse failed: Unexpected token (80:21)\nFile was processed with these loaders:\n * ./node_modules/ts-loader/index.js\nYou may need an additional loader to handle the result of these loaders.\n|         this.remove();\n|     }\n>     async disoverride;\n|     connectedCallback() {\n|         await super.disconnectedCallback();");
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PlayMusicDialog: () => (/* binding */ PlayMusicDialog)
+/* harmony export */ });
+/* harmony import */ var lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element/decorators */ "./node_modules/lit-element/decorators.js");
+/* harmony import */ var _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/lit-element-base */ "./data/lit-element-base.ts");
+/* harmony import */ var _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../pages/page-routing/page-routing */ "./pages/page-routing/page-routing.ts");
+/* harmony import */ var _services_audio_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/audio-service */ "./services/audio-service.ts");
+/* harmony import */ var _services_extensions_animation_extension__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/extensions/animation.extension */ "./services/extensions/animation.extension.ts");
+/* harmony import */ var _play_music_dialog_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./play-music-dialog.css */ "./dialogs/play-music-dialog/play-music-dialog.css.ts");
+/* harmony import */ var _play_music_dialog_html__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./play-music-dialog.html */ "./dialogs/play-music-dialog/play-music-dialog.html.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_2__, _services_audio_service__WEBPACK_IMPORTED_MODULE_3__, _play_music_dialog_css__WEBPACK_IMPORTED_MODULE_5__, _play_music_dialog_html__WEBPACK_IMPORTED_MODULE_6__]);
+([_pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_2__, _services_audio_service__WEBPACK_IMPORTED_MODULE_3__, _play_music_dialog_css__WEBPACK_IMPORTED_MODULE_5__, _play_music_dialog_html__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var PlayMusicDialog_1;
+
+
+
+
+
+
+
+let PlayMusicDialog = class PlayMusicDialog extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
+    static { PlayMusicDialog_1 = this; }
+    static instance;
+    static FadeDuration = 0.5;
+    static get styles() {
+        return (0,_play_music_dialog_css__WEBPACK_IMPORTED_MODULE_5__.renderPlayMusicDialogStyles)();
+    }
+    static show(track, initialVolume, startPosition) {
+        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.paused ||
+            _services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.trackPosition.current() <= 0 ||
+            location.hash == '#music' ||
+            location.hash == '#music-playlist' ||
+            !track?.path)
+            return;
+        if (this.instance) {
+            this.instance.reinitialize(track, initialVolume, startPosition);
+            return;
+        }
+        var dialog = new PlayMusicDialog_1();
+        _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_2__.PageRouting.container.append(dialog);
+        dialog.reinitialize(track, initialVolume, startPosition);
+        this.instance = dialog;
+        return dialog;
+    }
+    currentTrack = null;
+    async reinitialize(track, initialVolume, startPosition) {
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.changeTrack(track?.path);
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.changeVolume(initialVolume);
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.changePosition(startPosition);
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.play(track?.path);
+        this.currentTrack = track;
+        await this.requestFullUpdate();
+        this.subscriptions.push(_services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
+    }
+    render() {
+        return _play_music_dialog_html__WEBPACK_IMPORTED_MODULE_6__.renderPlayMusicDialog.call(this);
+    }
+    async toggle() {
+        if (!this.currentTrack)
+            return;
+        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.paused)
+            await _services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.play(this.currentTrack.path);
+        else
+            await _services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.pause();
+    }
+    changeTrackPosition(value) {
+        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.duration == Infinity)
+            return;
+        _services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.trackPosition.next(value);
+        this.requestFullUpdate();
+    }
+    async close() {
+        this.setAttribute('closing', '');
+        await this.requestFullUpdate();
+        await (0,_services_extensions_animation_extension__WEBPACK_IMPORTED_MODULE_4__.waitForSeconds)(PlayMusicDialog_1.FadeDuration);
+        this.remove();
+    }
+    async disconnectedCallback() {
+        await super.disconnectedCallback();
+        PlayMusicDialog_1.instance = null;
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_3__.AudioService.reset();
+    }
+};
+PlayMusicDialog = PlayMusicDialog_1 = __decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('play-music-dialog')
+], PlayMusicDialog);
+
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -8122,7 +8284,6 @@ throw new Error("Module parse failed: Unexpected token (80:21)\nFile was process
   \****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderPlaylistSelectionDialogStyles: () => (/* binding */ renderPlaylistSelectionDialogStyles)
@@ -8192,7 +8353,6 @@ function renderPlaylistSelectionDialogStyles() {
   \*****************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -8200,25 +8360,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 /* harmony import */ var _pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../pages/music-playlist-page/music-playlist-page */ "./pages/music-playlist-page/music-playlist-page.ts");
-/* harmony import */ var _pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../resources/inline-icons/icon-registry */ "./resources/inline-icons/icon-registry.ts");
 /* harmony import */ var _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/extensions/url.extension */ "./services/extensions/url.extension.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__]);
-_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_1__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__]);
+([_pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_1__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
 
-/**
- * @param { PlaylistSelectionDialog } dialog
- */
-function renderPlaylistSelectionDialog(dialog) {
+function renderPlaylistSelectionDialog() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <dialog-base
             caption="Playlists"
             acceptActionText="Speichern"
             declineActionText="Abbrechen"
-            ?canAccept="${!!dialog.selectedPlaylist}"
+            ?canAccept="${!!this.selectedPlaylist}"
             showBorder
         >
             <table>
@@ -8234,11 +8390,11 @@ function renderPlaylistSelectionDialog(dialog) {
                     </tr>
                 </thead>
                 <tbody>
-                    ${dialog.playlists.map((playlist) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<tr
-                            ?selected="${playlist?.id == dialog.selectedPlaylist?.id}"
+                    ${this.playlists.map((playlist) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<tr
+                            ?selected="${playlist?.id == this.selectedPlaylist?.id}"
                             @click="${() => {
-        dialog.selectedPlaylist = playlist;
-        dialog.requestFullUpdate();
+        this.selectedPlaylist = playlist;
+        this.requestFullUpdate();
     }}"
                         >
                             <td class="name-column">${playlist.image}</td>
@@ -8253,8 +8409,7 @@ function renderPlaylistSelectionDialog(dialog) {
                                 <div
                                     class="popup-icon"
                                     icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_2__.Icons.Popup}"
-                                    @click="${
-    /** @param {Event} e */ (e) => {
+                                    @click="${(e) => {
         e.preventDefault();
         e.stopPropagation();
         window.open(`./?guid=${playlist.id}#${(0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__.getPageName)(_pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_1__.MusicPlaylistPage)}`, '_blank');
@@ -8279,7 +8434,6 @@ __webpack_async_result__();
   \************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -8313,9 +8467,6 @@ let PlaylistSelectionDialog = PlaylistSelectionDialog_1 = class PlaylistSelectio
             someProperty: { type: String, reflect: false },
         };
     }
-    /**
-     * @returns {Promise<PlaylistModel>}
-     */
     static async requestPlaylist() {
         var dialog = new PlaylistSelectionDialog_1();
         dialog.playlists = await _services_backend_services__WEBPACK_IMPORTED_MODULE_2__.PlaylistService.listPlaylists();
@@ -8331,13 +8482,10 @@ let PlaylistSelectionDialog = PlaylistSelectionDialog_1 = class PlaylistSelectio
             });
         });
     }
-    constructor() {
-        super();
-        /** @type {PlaylistModel[]} */ this.playlists = [];
-        /** @type {PlaylistModel} */ this.selectedPlaylist = null;
-    }
+    playlists = [];
+    selectedPlaylist = null;
     render() {
-        return (0,_playlist_selection_dialog_html__WEBPACK_IMPORTED_MODULE_4__.renderPlaylistSelectionDialog)(this);
+        return _playlist_selection_dialog_html__WEBPACK_IMPORTED_MODULE_4__.renderPlaylistSelectionDialog.call(this);
     }
 };
 PlaylistSelectionDialog = PlaylistSelectionDialog_1 = __decorate([
@@ -8356,7 +8504,6 @@ __webpack_async_result__();
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderSelectOptionsDialogStyles: () => (/* binding */ renderSelectOptionsDialogStyles)
@@ -8408,17 +8555,13 @@ function renderSelectOptionsDialogStyles() {
   \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderSelectOptionsDialog: () => (/* binding */ renderSelectOptionsDialog)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { SelectOptionsDialog } dialog
- */
-function renderSelectOptionsDialog(dialog) {
+function renderSelectOptionsDialog() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <dialog-base
             showBorder
@@ -8426,16 +8569,16 @@ function renderSelectOptionsDialog(dialog) {
             caption="Make your choice"
             acceptActionText="Auswählen"
             declineActionText="Abbrechen"
-            ?canAccept="${dialog.isComplete()}"
-            @accept="${(e) => dialog.accept(e)}"
+            ?canAccept="${this.isComplete()}"
+            @accept="${(e) => this.accept(e)}"
         >
             <div id="content">
                 <div id="items">
-                    ${Object.keys(dialog.options).map((key) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="option">
-                                <input id="${key}" type="${dialog.multiselect ? 'checkbox' : 'radio'}" .value="${key}" checked />
-                                <label for="${key}">${dialog.options[key]}</label>
+                    ${Object.keys(this.options).map((key) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="option">
+                                <input id="${key}" type="${this.multiselect ? 'checkbox' : 'radio'}" .value="${key}" checked />
+                                <label for="${key}">${this.options[key]}</label>
                             </div>`)}
-                    ${!dialog.isComplete() ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<loading-circle></loading-circle>` : ''}
+                    ${!this.isComplete() ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<loading-circle></loading-circle>` : ''}
                 </div>
             </div>
         </dialog-base>
@@ -8451,7 +8594,6 @@ function renderSelectOptionsDialog(dialog) {
   \****************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -8486,9 +8628,6 @@ let SelectOptionsDialog = SelectOptionsDialog_1 = class SelectOptionsDialog exte
             multiselect: { type: Boolean, reflect: true },
         };
     }
-    /**
-     * @param {Object.<string,TemplateResult | string>} options
-     */
     static show(options, multiselect = true) {
         var dialog = new SelectOptionsDialog_1();
         dialog.options = options;
@@ -8497,11 +8636,6 @@ let SelectOptionsDialog = SelectOptionsDialog_1 = class SelectOptionsDialog exte
         _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_2__.PageRouting.container.append(dialog);
         return dialog;
     }
-    /**
-     *
-     * @param {()=>boolean} isComplete
-     * @returns
-     */
     static startShowing(isComplete, multiselect = true) {
         var dialog = new SelectOptionsDialog_1();
         dialog.options = {};
@@ -8510,26 +8644,20 @@ let SelectOptionsDialog = SelectOptionsDialog_1 = class SelectOptionsDialog exte
         _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_2__.PageRouting.container.append(dialog);
         return dialog;
     }
-    /** @type {Object.<string,TemplateResult | string>} */ options = {};
-    /** @type {boolean} */ multiselect = true;
-    /** @type {()=>boolean} */ isComplete = () => false;
+    options = {};
+    multiselect = true;
+    isComplete = () => false;
     render() {
-        return (0,_select_options_dialog_html__WEBPACK_IMPORTED_MODULE_4__.renderSelectOptionsDialog)(this);
+        return _select_options_dialog_html__WEBPACK_IMPORTED_MODULE_4__.renderSelectOptionsDialog.call(this);
     }
-    /** @param {Event} e */
     accept(e) {
         e.stopPropagation();
-        /** @type {NodeListOf<HTMLInputElement>} */ var checkedInputs = this.shadowRoot.querySelectorAll('input:checked');
+        var checkedInputs = this.shadowRoot.querySelectorAll('input:checked');
         var selectedIds = [];
         for (var input of checkedInputs)
             selectedIds.push(input.value);
         this.dispatchEvent(new CustomEvent('accept', { detail: { selected: selectedIds } }));
     }
-    /**
-     *
-     * @param {string} key
-     * @param {TemplateResult | string} value
-     */
     addEntry(key, value) {
         this.options[key] = value;
         this.requestFullUpdate();
@@ -8551,7 +8679,6 @@ __webpack_async_result__();
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderBorderButtonStyles: () => (/* binding */ renderBorderButtonStyles)
@@ -8667,16 +8794,12 @@ function renderBorderButtonStyles() {
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderBorderButton: () => (/* binding */ renderBorderButton)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param {BorderButton} borderButton
- */
 function renderBorderButton(borderButton) {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div id="button-container">
@@ -8698,7 +8821,6 @@ function renderBorderButton(borderButton) {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   BorderButton: () => (/* binding */ BorderButton)
@@ -8721,20 +8843,13 @@ let BorderButton = class BorderButton extends _data_lit_element_base__WEBPACK_IM
     static get styles() {
         return (0,_border_button_css__WEBPACK_IMPORTED_MODULE_2__.renderBorderButtonStyles)();
     }
-    static get properties() {
-        return {
-            text: { type: String, reflect: true },
-            disabled: { type: Boolean, reflect: true },
-        };
-    }
-    constructor() {
-        super();
-        /** @type {string} */ this.text;
-    }
     render() {
         return (0,_border_button_html__WEBPACK_IMPORTED_MODULE_3__.renderBorderButton)(this);
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], BorderButton.prototype, "text", void 0);
 BorderButton = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('border-button')
 ], BorderButton);
@@ -8749,7 +8864,6 @@ BorderButton = __decorate([
   \****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderCompactAudioPlayerStyles: () => (/* binding */ renderCompactAudioPlayerStyles)
@@ -8809,7 +8923,6 @@ function renderCompactAudioPlayerStyles() {
   \*****************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -8823,24 +8936,21 @@ _services_audio_service__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependen
 
 
 
-/**
- * @param { CompactAudioPlayer } player
- */
-function renderCompactAudioPlayer(player) {
+function renderCompactAudioPlayer() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div
             id="toggle-button"
-            icon="${_services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.currentTrackPath == player.path && !_services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.paused ? _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Pause : _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Play}"
+            icon="${_services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.currentTrackPath == this.path && !_services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.paused ? _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Pause : _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Play}"
             class="button"
-            @click="${() => player.toggleCurrentTrack()}"
+            @click="${() => this.toggleCurrentTrack()}"
         ></div>
         <div id="position-container">
             <range-slider
                 id="track-position-input"
-                @valueChanged="${(e) => player.changeTrackPosition(e.detail.value)}"
-                .value="${player.currentTrackPosition.toString()}"
+                @valueChanged="${(e) => this.changeTrackPosition(e.detail.value)}"
+                .value="${this.currentTrackPosition.toString()}"
                 min="0"
-                .max="${player.currentTrackDuration.toString()}"
+                .max="${this.currentTrackDuration.toString()}"
                 steps="1000"
             ></range-slider>
         </div>
@@ -8853,7 +8963,7 @@ function renderCompactAudioPlayer(player) {
                     min="0"
                     max="100"
                     .value="${`${_services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.volume * 100}`}"
-                    @valueChanged="${(e) => player.changeVolume(e.detail.value)}"
+                    @valueChanged="${(e) => this.changeVolume(Number.parseInt(e.detail.value))}"
                 ></range-slider>
             </div>
         </div>
@@ -8869,9 +8979,98 @@ __webpack_async_result__();
 /*!************************************************************************!*\
   !*** ./native-components/compact-audio-player/compact-audio-player.ts ***!
   \************************************************************************/
-/***/ (() => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module parse failed: Unexpected token (69:21)\nFile was processed with these loaders:\n * ./node_modules/ts-loader/index.js\nYou may need an additional loader to handle the result of these loaders.\n|         await this.requestFullUpdate();\n|     }\n>     async disoverride;\n|     connectedCallback() {\n|         await super.disconnectedCallback();");
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CompactAudioPlayer: () => (/* binding */ CompactAudioPlayer)
+/* harmony export */ });
+/* harmony import */ var lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element/decorators */ "./node_modules/lit-element/decorators.js");
+/* harmony import */ var _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/lit-element-base */ "./data/lit-element-base.ts");
+/* harmony import */ var _services_audio_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/audio-service */ "./services/audio-service.ts");
+/* harmony import */ var _message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../message-snackbar/message-snackbar */ "./native-components/message-snackbar/message-snackbar.ts");
+/* harmony import */ var _compact_audio_player_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./compact-audio-player.css */ "./native-components/compact-audio-player/compact-audio-player.css.ts");
+/* harmony import */ var _compact_audio_player_html__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./compact-audio-player.html */ "./native-components/compact-audio-player/compact-audio-player.html.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_services_audio_service__WEBPACK_IMPORTED_MODULE_2__, _message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_3__, _compact_audio_player_html__WEBPACK_IMPORTED_MODULE_5__]);
+([_services_audio_service__WEBPACK_IMPORTED_MODULE_2__, _message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_3__, _compact_audio_player_html__WEBPACK_IMPORTED_MODULE_5__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+let CompactAudioPlayer = class CompactAudioPlayer extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
+    static get styles() {
+        return (0,_compact_audio_player_css__WEBPACK_IMPORTED_MODULE_4__.renderCompactAudioPlayerStyles)();
+    }
+    static get properties() {
+        return {
+            path: { type: String, reflect: false },
+        };
+    }
+    get currentTrackPosition() {
+        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.currentTrackPath == this.path)
+            return _services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.trackPosition.current();
+        return 0;
+    }
+    get currentTrackDuration() {
+        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.currentTrackPath == this.path)
+            return _services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.duration ?? 0;
+        return 0;
+    }
+    path = '';
+    connectedCallback() {
+        super.connectedCallback();
+        this.subscriptions.push(_services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.changed.subscribe((x) => this.requestFullUpdate()), _services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.trackPosition.subscribe((x) => this.requestFullUpdate()));
+    }
+    render() {
+        return _compact_audio_player_html__WEBPACK_IMPORTED_MODULE_5__.renderCompactAudioPlayer.call(this);
+    }
+    changeTrackPosition(value) {
+        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.duration == Infinity || _services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.currentTrackPath != this.path)
+            return;
+        _services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.changePosition(Number.parseInt(value));
+    }
+    async toggleCurrentTrack() {
+        try {
+            if (_services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.paused)
+                await _services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.play(this.path);
+            else
+                await _services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.pause();
+        }
+        catch (ex) {
+            console.error(ex);
+            _message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_3__.MessageSnackbar.popup('An error occurred while toggling the current track.', 'error');
+        }
+        this.requestFullUpdate();
+    }
+    async changeVolume(newVolume) {
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.changeVolume(newVolume / 100);
+        localStorage.setItem('volume', newVolume.toString());
+        await this.requestFullUpdate();
+    }
+    async disconnectedCallback() {
+        await super.disconnectedCallback();
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_2__.AudioService.reset();
+    }
+};
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], CompactAudioPlayer.prototype, "path", void 0);
+CompactAudioPlayer = __decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('compact-audio-player')
+], CompactAudioPlayer);
+
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -8881,7 +9080,6 @@ throw new Error("Module parse failed: Unexpected token (69:21)\nFile was process
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderContextMenuStyles: () => (/* binding */ renderContextMenuStyles)
@@ -8937,16 +9135,12 @@ function renderContextMenuStyles() {
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderContextMenu: () => (/* binding */ renderContextMenu)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { ContextMenu } contextMenu
- */
 function renderContextMenu(contextMenu) {
     return contextMenu.items.map((item) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="item-wrapper" @click="${() => contextMenu.triggerAction(item)}">
             <div class="item-icon" icon="${item.icon}"></div>
@@ -8963,7 +9157,6 @@ function renderContextMenu(contextMenu) {
   \********************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -8984,46 +9177,37 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var ContextMenu_1;
 
 
 
 
 
 
-let ContextMenuItem = class ContextMenuItem {
-    /** @type {string} */ text;
-    /** @type {string} */ icon;
-    /** @type {()=>void} */ action;
-};
-ContextMenuItem = __decorate([
-    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('context-menu')
-], ContextMenuItem);
-
-class ContextMenu extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
-    /** @type {ContextMenu} */ static instance = null;
+class ContextMenuItem {
+    text;
+    icon;
+    action;
+}
+let ContextMenu = class ContextMenu extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
+    static { ContextMenu_1 = this; }
+    static instance = null;
     static get styles() {
         return (0,_context_menu_css__WEBPACK_IMPORTED_MODULE_4__.renderContextMenuStyles)();
     }
-    /**
-     * @param {ContextMenuItem[]} items
-     * @param {PointerEvent | MouseEvent} pointerEvent
-     */
     static popup(items, pointerEvent) {
-        if (ContextMenu.instance)
-            ContextMenu.instance.remove();
-        var menu = new ContextMenu();
+        if (ContextMenu_1.instance)
+            ContextMenu_1.instance.remove();
+        var menu = new ContextMenu_1();
         pointerEvent.stopPropagation();
         menu.items = items;
         menu.style.top = pointerEvent.pageY / (0,_services_extensions_document_extensions__WEBPACK_IMPORTED_MODULE_3__.getScaleFactorY)() + 'px';
         menu.style.left = pointerEvent.pageX / (0,_services_extensions_document_extensions__WEBPACK_IMPORTED_MODULE_3__.getScaleFactorX)() + 'px';
         _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_2__.PageRouting.container.append(menu);
-        ContextMenu.instance = menu;
+        ContextMenu_1.instance = menu;
         menu.requestFullUpdate();
     }
-    constructor() {
-        super();
-        /** @type {ContextMenuItem[]} */ this.items = [];
-    }
+    items = [];
     connectedCallback() {
         super.connectedCallback();
         document.addEventListener('wheel', (e) => {
@@ -9036,19 +9220,22 @@ class ContextMenu extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.Li
     render() {
         return (0,_context_menu_html__WEBPACK_IMPORTED_MODULE_5__.renderContextMenu)(this);
     }
-    /**
-     * @param {ContextMenuItem} item
-     */
     triggerAction(item) {
         item.action();
         this.remove();
     }
-    disoverride;
-    connectedCallback() {
+    disconnectedCallback() {
         super.disconnectedCallback();
-        ContextMenu.instance = null;
+        ContextMenu_1.instance = null;
     }
-}
+};
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Array })
+], ContextMenu.prototype, "items", void 0);
+ContextMenu = ContextMenu_1 = __decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('context-menu')
+], ContextMenu);
+
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
@@ -9061,7 +9248,6 @@ __webpack_async_result__();
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderContextTooltipStyles: () => (/* binding */ renderContextTooltipStyles)
@@ -9137,18 +9323,14 @@ function renderContextTooltipStyles() {
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderContextTooltip: () => (/* binding */ renderContextTooltip)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { ContextTooltip } tooltip
- */
-function renderContextTooltip(tooltip) {
-    return tooltip.items.map((item) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="item" @click="${() => tooltip.resolve(item)}">${item.text}</div>`);
+function renderContextTooltip() {
+    return this.items.map((item) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="item" @click="${() => this.resolve(item)}">${item.text}</div>`);
 }
 
 
@@ -9160,7 +9342,6 @@ function renderContextTooltip(tooltip) {
   \**************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -9185,27 +9366,19 @@ var ContextTooltip_1;
 
 
 
-/**
- * @typedef {Object} ContextTooltipItem
- * @prop {string} text
- */
 let ContextTooltip = class ContextTooltip extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
     static { ContextTooltip_1 = this; }
     static currentInstance = null;
     static get styles() {
         return (0,_context_tooltip_css__WEBPACK_IMPORTED_MODULE_3__.renderContextTooltipStyles)();
     }
-    /**
-     * @param {PointerEvent} event
-     * @param {ContextTooltipItem[]} items
-     */
     static spawn(event, items) {
         var tooltip = new ContextTooltip_1();
         tooltip.items = items;
         if (ContextTooltip_1.currentInstance)
             return;
         ContextTooltip_1.currentInstance = tooltip;
-        var rect = /** @type {HTMLElement} */ event.currentTarget.getBoundingClientRect();
+        var rect = event.currentTarget.getBoundingClientRect();
         var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         let tooltipTop = scrollTop + rect.top - 55;
@@ -9226,13 +9399,12 @@ let ContextTooltip = class ContextTooltip extends _data_lit_element_base__WEBPAC
             });
         });
     }
-    /** @type {ContextTooltipItem[]} */ items = [];
-    /** @type {(any)=>void} */ resolve;
+    items = [];
+    resolve;
     render() {
-        return (0,_context_tooltip_html__WEBPACK_IMPORTED_MODULE_4__.renderContextTooltip)(this);
+        return _context_tooltip_html__WEBPACK_IMPORTED_MODULE_4__.renderContextTooltip.call(this);
     }
-    disoverride;
-    connectedCallback() {
+    disconnectedCallback() {
         super.disconnectedCallback();
         ContextTooltip_1.currentInstance = null;
     }
@@ -9253,7 +9425,6 @@ __webpack_async_result__();
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderCustomToggleStyles: () => (/* binding */ renderCustomToggleStyles)
@@ -9327,17 +9498,13 @@ function renderCustomToggleStyles() {
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderCustomToggle: () => (/* binding */ renderCustomToggle)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { CustomToggle } customToggle
- */
-function renderCustomToggle(customToggle) {
+function renderCustomToggle() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="slider"></div> `;
 }
 
@@ -9350,7 +9517,6 @@ function renderCustomToggle(customToggle) {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CustomToggle: () => (/* binding */ CustomToggle)
@@ -9389,13 +9555,10 @@ let CustomToggle = class CustomToggle extends _data_lit_element_base__WEBPACK_IM
             threeValues: { type: Boolean, reflect: true },
         };
     }
-    constructor() {
-        super();
-        /** @type {boolean} */ this.toggled = false;
-        /** @type {CheckboxState} */ this.state = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid;
-        /** @type {boolean} */ this.threeValues = false;
-        this.toggleForward = true;
-    }
+    toggled = false;
+    state = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid;
+    threeValues = false;
+    toggleForward = true;
     connectedCallback() {
         super.connectedCallback();
         this.onclick = (e) => {
@@ -9410,7 +9573,7 @@ let CustomToggle = class CustomToggle extends _data_lit_element_base__WEBPACK_IM
         };
     }
     render() {
-        return (0,_custom_toggle_html__WEBPACK_IMPORTED_MODULE_5__.renderCustomToggle)(this);
+        return _custom_toggle_html__WEBPACK_IMPORTED_MODULE_5__.renderCustomToggle.call(this);
     }
     toggleState() {
         var prevState = this.state;
@@ -9418,9 +9581,18 @@ let CustomToggle = class CustomToggle extends _data_lit_element_base__WEBPACK_IM
         if (this.state != prevState)
             return;
         this.toggleForward = !this.toggleForward;
-        return this.toggleState();
+        this.toggleState();
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], CustomToggle.prototype, "toggled", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], CustomToggle.prototype, "state", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], CustomToggle.prototype, "threeValues", void 0);
 CustomToggle = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('custom-toggle')
 ], CustomToggle);
@@ -9435,7 +9607,6 @@ CustomToggle = __decorate([
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderTooltipStyles: () => (/* binding */ renderTooltipStyles),
@@ -9502,18 +9673,14 @@ function renderTooltipStyles() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderTooltip: () => (/* binding */ renderTooltip)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param {CustomTooltip} tooltip
- */
-function renderTooltip(tooltip) {
-    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="tooltip">${tooltip.text}</div> `;
+function renderTooltip() {
+    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="tooltip">${this.text}</div> `;
 }
 
 
@@ -9525,7 +9692,6 @@ function renderTooltip(tooltip) {
   \************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -9555,7 +9721,7 @@ var CustomTooltip_1;
 let CustomTooltip = class CustomTooltip extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
     static { CustomTooltip_1 = this; }
     static timeout;
-    /** @access private @type {CustomTooltip}*/ static currentInstance;
+    static currentInstance = null;
     static get styles() {
         return (0,_custom_tooltip_css__WEBPACK_IMPORTED_MODULE_4__.renderTooltipStyles)();
     }
@@ -9566,11 +9732,6 @@ let CustomTooltip = class CustomTooltip extends _data_lit_element_base__WEBPACK_
             anchor: { type: String, reflect: true },
         };
     }
-    /**
-     * @param {string} text
-     * @param {Event} pointerEvent
-     * @param { 'top' | 'bottom' | 'right' | 'left'  } anchor
-     */
     static show(text, pointerEvent, anchor = 'top') {
         if (!text || text.length < 2)
             return;
@@ -9585,7 +9746,7 @@ let CustomTooltip = class CustomTooltip extends _data_lit_element_base__WEBPACK_
         }
         var tooltip = new CustomTooltip_1();
         tooltip.text = text;
-        tooltip.target = /** @type {HTMLElement} */ pointerEvent.currentTarget;
+        tooltip.target = pointerEvent.currentTarget;
         tooltip.anchor = anchor;
         CustomTooltip_1.currentInstance = tooltip;
         _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_3__.PageRouting.instance.shadowRoot.appendChild(CustomTooltip_1.currentInstance);
@@ -9593,7 +9754,7 @@ let CustomTooltip = class CustomTooltip extends _data_lit_element_base__WEBPACK_
             tooltip.setAttribute('scope', 'dialog');
         else
             tooltip.setAttribute('scope', 'default');
-        var rect = /** @type {HTMLElement} */ tooltip.target.getBoundingClientRect();
+        var rect = tooltip.target.getBoundingClientRect();
         var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         let tooltipTop = scrollTop;
@@ -9629,14 +9790,11 @@ let CustomTooltip = class CustomTooltip extends _data_lit_element_base__WEBPACK_
             return;
         CustomTooltip_1.currentInstance.remove();
     }
-    constructor() {
-        super();
-        /** @type {string} */ this.text;
-        /** @type {HTMLElement} */ this.target;
-        /** @type {'top' | 'bottom' | 'right' | 'left'} */ this.anchor = 'top';
-    }
+    text;
+    target;
+    anchor = 'top';
     render() {
-        return (0,_custom_tooltip_html__WEBPACK_IMPORTED_MODULE_5__.renderTooltip)(this);
+        return _custom_tooltip_html__WEBPACK_IMPORTED_MODULE_5__.renderTooltip.call(this);
     }
     remove() {
         this.toggleAttribute('removed', true);
@@ -9662,33 +9820,22 @@ __webpack_async_result__();
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   DropDownOption: () => (/* binding */ DropDownOption)
 /* harmony export */ });
 /* harmony import */ var _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../data/enumerations/checkbox-state */ "./data/enumerations/checkbox-state.ts");
 
-/** @template T */
 class DropDownOption {
-    /** @type {string} */ text;
-    /** @type {T} */ value;
-    /** @type {CheckboxState} */ state;
-    /** @type {string} */ color;
-    /**
-     * @template T
-     * @param {Partial<DropDownOption<T>> & {value: T}} obj
-     */
+    text;
+    value;
+    state;
+    color;
     static create(obj) {
         var newObj = new DropDownOption(obj.value);
         newObj = Object.assign(newObj, obj);
         return newObj;
     }
-    /**
-     * @template T
-     * @param {T[]} values
-     * @param {T} defaultValue
-     */
     static createSimpleArray(values, defaultValue) {
         return values.map((key) => DropDownOption.create({
             value: key,
@@ -9696,9 +9843,6 @@ class DropDownOption {
             state: key == defaultValue ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Ignore : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Forbid,
         }));
     }
-    /**
-     * @param {T} value
-     */
     constructor(value) {
         this.value = value;
     }
@@ -9713,7 +9857,6 @@ class DropDownOption {
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderDropDownStyles: () => (/* binding */ renderDropDownStyles)
@@ -9866,7 +10009,6 @@ function renderDropDownStyles() {
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderDropDown: () => (/* binding */ renderDropDown)
@@ -9875,12 +10017,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/enumerations/checkbox-state */ "./data/enumerations/checkbox-state.ts");
 
 
-/**
- * @param {DropDown} dropdown
- */
-function renderDropDown(dropdown) {
-    var maxHeight = dropdown.maxDisplayDepth * 40;
-    if (dropdown.useSearch)
+function renderDropDown() {
+    var maxHeight = this.maxDisplayDepth * 40;
+    if (this.useSearch)
         maxHeight += 50;
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <style>
@@ -9889,34 +10028,31 @@ function renderDropDown(dropdown) {
             }
         </style>
 
-        ${showDropDown(dropdown)}
+        ${showDropDown.call(this)}
     `;
 }
-/**
- * @param {DropDown} dropdown
- */
-function showDropDown(dropdown) {
+function showDropDown() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
         class="dropdown"
         @click="${() => {
-        dropdown.showDropDown = !dropdown.showDropDown;
-        if (dropdown.useSearch)
-            dropdown.resetSearchFilter();
+        this.showDropDown = !this.showDropDown;
+        if (this.useSearch)
+            this.resetSearchFilter();
     }}"
     >
         <div id="caption-container">
-            ${dropdown.caption} ${dropdown.caption ? '' : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="empty-text-placeholder">empty</div>`}
+            ${this.caption} ${this.caption ? '' : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="empty-text-placeholder">empty</div>`}
         </div>
         <div
             class="options"
             @click="${(e) => {
-        if (dropdown.multiselect)
+        if (this.multiselect)
             e.stopPropagation();
     }}"
-            @scroll="${(e) => dropdown.scroll(e)}"
-            style="display: ${dropdown.showDropDown ? 'block' : 'none'}"
+            @scroll="${(e) => e.preventDefault()}"
+            style="display: ${this.showDropDown ? 'block' : 'none'}"
         >
-            ${dropdown.useSearch
+            ${this.useSearch
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                       <div
                           @click="${(e) => {
@@ -9930,47 +10066,39 @@ function showDropDown(dropdown) {
                               placeholder="Suchtext eingeben..."
                               id="dropdown-search"
                               @input="${(e) => e.target.dispatchEvent(new Event('change'))}"
-                              @change="${() => dropdown.updateSearchFilter()}"
+                              @change="${() => this.updateSearchFilter()}"
                           />
                       </div>
                   `
         : ''}
-            ${dropdown.options
-        .filter((x) => x.text.toLocaleLowerCase().match(dropdown.searchFilter.toLocaleLowerCase()))
+            ${this.options
+        .filter((x) => x.text.toLocaleLowerCase().match(this.searchFilter.toLocaleLowerCase()))
         .map((options) => {
-        return renderDropDownOption(dropdown, options);
+        return renderDropDownOption.call(this, options);
     })}
         </div>
-        <div class="dropdown-icon-container ${dropdown.showDropDown ? 'dropped-down' : ''}">></div>
+        <div class="dropdown-icon-container ${this.showDropDown ? 'dropped-down' : ''}">></div>
     </div> `;
 }
-/**
- * @param {DropDown} dropdown
- * @param {DropDownOption} option
- */
-function renderDropDownOption(dropdown, option) {
+function renderDropDownOption(option) {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div
             ?selected="${option.state != _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid}"
             class="option"
-            @click=${() => dropdown.changeOptionState(option, option.state == _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore)}
+            @click=${() => this.changeOptionState(option, option.state == _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore)}
         >
-            ${dropdown.multiselect && dropdown.useToggle ? renderToggle(dropdown, option) : option.text}
+            ${this.multiselect && this.useToggle ? renderToggle.call(this, option) : option.text}
         </div>
     `;
 }
-/**
- * @param {DropDown} dropdown
- * @param {DropDownOption} option
- */
-function renderToggle(dropdown, option) {
+function renderToggle(option) {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div class="label">${option.text}</div>
         <custom-toggle
             style="--toggled-color:${option.color || 'unset'}"
             .state="${option.state}"
-            ?threeValues="${dropdown.threeValues}"
-            @toggle="${(e) => dropdown.changeOptionState(option, e.detail)}"
+            ?threeValues="${this.threeValues}"
+            @toggle="${(e) => this.changeOptionState(option, e.detail)}"
         ></custom-toggle>
     `;
 }
@@ -9984,7 +10112,6 @@ function renderToggle(dropdown, option) {
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   DropDown: () => (/* binding */ DropDown),
@@ -10006,7 +10133,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-/** @enum {string} */
 const DropDownStyles = { simple: 'simple', solid: 'solid', compact: 'compact' };
 let DropDown = class DropDown extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_2__.LitElementBase {
     static defaultstyle = DropDownStyles.simple;
@@ -10038,18 +10164,19 @@ let DropDown = class DropDown extends _data_lit_element_base__WEBPACK_IMPORTED_M
         else
             return notForbiddenOptions.map((x) => x.text).join(', ');
     }
+    maxDisplayDepth = 5;
+    _currentIndex = 0;
+    unsetText = 'Unset';
+    required = false;
+    useSearch = false;
+    useToggle = false;
+    multiselect = false;
+    threeValues = false;
+    searchFilter = '';
+    options = [];
+    showDropDown = false;
     constructor() {
         super();
-        this.maxDisplayDepth = 5;
-        this._currentIndex = 0;
-        this.unsetText = 'Unset';
-        this.required = false;
-        this.useSearch = false;
-        this.useToggle = false;
-        this.multiselect = false;
-        this.threeValues = false;
-        this.searchFilter = '';
-        /** @type {DropDownOption[]} */ this.options = [];
         this.addEventListener('click', () => {
             this.clickedOnElement = true;
         });
@@ -10061,27 +10188,19 @@ let DropDown = class DropDown extends _data_lit_element_base__WEBPACK_IMPORTED_M
         });
     }
     render() {
-        return (0,_drop_down_html__WEBPACK_IMPORTED_MODULE_4__.renderDropDown)(this);
-    }
-    scroll(event) {
-        event.preventDefault();
+        return _drop_down_html__WEBPACK_IMPORTED_MODULE_4__.renderDropDown.call(this);
     }
     updateSearchFilter() {
-        /** @type {HTMLInputElement} */ var searchBox = this.shadowRoot.querySelector('#dropdown-search');
+        var searchBox = this.shadowRoot.querySelector('#dropdown-search');
         this.searchFilter = searchBox.value;
         this.requestFullUpdate();
     }
     resetSearchFilter() {
-        /** @type {HTMLInputElement} */ var searchBox = this.shadowRoot.querySelector('#dropdown-search');
+        var searchBox = this.shadowRoot.querySelector('#dropdown-search');
         this.searchFilter = '';
         searchBox.value = '';
         this.requestFullUpdate();
     }
-    /**
-     *
-     * @param {DropDownOption} option
-     * @param {CheckboxState} state
-     */
     changeOptionState(option, state) {
         if (state != _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid && !this.multiselect)
             for (let o of this.options)
@@ -10092,6 +10211,39 @@ let DropDown = class DropDown extends _data_lit_element_base__WEBPACK_IMPORTED_M
         this.requestFullUpdate();
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DropDown.prototype, "maxDisplayDepth", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DropDown.prototype, "_currentIndex", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DropDown.prototype, "unsetText", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DropDown.prototype, "required", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DropDown.prototype, "useSearch", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DropDown.prototype, "useToggle", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DropDown.prototype, "multiselect", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DropDown.prototype, "threeValues", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], DropDown.prototype, "searchFilter", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Array })
+], DropDown.prototype, "options", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], DropDown.prototype, "showDropDown", void 0);
 DropDown = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('drop-down')
 ], DropDown);
@@ -10106,7 +10258,6 @@ DropDown = __decorate([
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderGroupedDropdownStyles: () => (/* binding */ renderGroupedDropdownStyles)
@@ -10242,18 +10393,14 @@ function renderGroupedDropdownStyles() {
   \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderGroupedDropdown: () => (/* binding */ renderGroupedDropdown)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { GroupedDropdown } dropdown
- */
-function renderGroupedDropdown(dropdown) {
-    var maxHeight = dropdown.maxDisplayDepth * 40;
+function renderGroupedDropdown() {
+    var maxHeight = this.maxDisplayDepth * 40;
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <style>
             .options {
@@ -10263,50 +10410,39 @@ function renderGroupedDropdown(dropdown) {
         <div
             class="dropdown"
             @click="${() => {
-        dropdown.showDropDown = !dropdown.showDropDown;
+        this.showDropDown = !this.showDropDown;
     }}"
         >
             <div id="caption-container">
-                ${dropdown.result.value} ${dropdown.result.value ? '' : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="empty-text-placeholder">empty</div>`}
+                ${this.result.value} ${this.result.value ? '' : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="empty-text-placeholder">empty</div>`}
             </div>
             <div
                 class="options"
                 tabindex="-1"
-                @scroll="${(e) => dropdown.scroll(e)}"
-                style="display: ${dropdown.showDropDown ? 'block' : 'none'}"
+                @scroll="${(e) => e.preventDefault()}"
+                style="display: ${this.showDropDown ? 'block' : 'none'}"
             >
-                ${Object.entries(dropdown.options).map((section) => {
-        return renderDropdownSection(dropdown, section[0], section[1]);
+                ${Object.entries(this.options).map((section) => {
+        return renderDropdownSection.call(this, section[0], section[1]);
     })}
             </div>
-            <div class="dropdown-icon-container ${dropdown.showDropDown ? 'dropped-down' : ''}">></div>
+            <div class="dropdown-icon-container ${this.showDropDown ? 'dropped-down' : ''}">></div>
         </div>
     `;
 }
-/**
- *
- * @param {GroupedDropdown} dropdown
- * @param {string} section
- * @param {string[]} values
- * @returns
- */
-function renderDropdownSection(dropdown, section, values) {
+function renderDropdownSection(section, values) {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div class="dropdown-section">
         <div class="section-title">${section}</div>
-        ${values.map((value) => renderDropDownOption(dropdown, { category: section, value }))}
+        ${values.map((value) => renderDropDownOption.call(this, { category: section, value }))}
     </div>`;
 }
-/**
- * @param {GroupedDropdown} dropdown
- * @param {import('./grouped-dropdown').GroupedDropdownResult} value
- */
-function renderDropDownOption(dropdown, value) {
+function renderDropDownOption(value) {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div
-            ?selected="${dropdown.result.value == value.value}"
+            ?selected="${this.result.value == value.value}"
             class="option"
             .value="${value}"
-            @click=${() => (dropdown.result = value)}
+            @click=${() => (this.result = value)}
         >
             ${value.value}
         </div>
@@ -10322,7 +10458,6 @@ function renderDropDownOption(dropdown, value) {
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   GroupedDropdown: () => (/* binding */ GroupedDropdown)
@@ -10341,36 +10476,23 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-/** @typedef { Object.<string, string[]> } DropdownCategories */
-/** @typedef { {value:string, category: keyof DropdownCategories} } GroupedDropdownResult */
 let GroupedDropdown = class GroupedDropdown extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
     static get styles() {
         return (0,_grouped_dropdown_css__WEBPACK_IMPORTED_MODULE_2__.renderGroupedDropdownStyles)();
     }
-    static get properties() {
-        return {
-            options: { type: Object, reflect: true },
-            result: { type: Object, reflect: true },
-            maxDisplayDepth: { type: Number, reflect: true },
-            showDropDown: { type: Boolean, reflect: false },
-        };
-    }
     get results() {
         return Object.entries(this.options)
-            .map((x) => x[1].map((y) => /** @type {GroupedDropdownResult} */ ({ category: x[0], value: y })))
+            .map((x) => x[1].map((y) => ({ category: x[0], value: y })))
             .flatMap((x) => x);
     }
-    constructor() {
-        super();
-        /** @type {DropdownCategories} */ this.options;
-        /** @type {boolean} */ this.showDropDown;
-        /** @type {number} */ this.maxDisplayDepth = 5;
-        /** @type {string} */ this.search = '';
-        this.result = /** @type {GroupedDropdownResult} */ { category: null, value: null };
-    }
+    options;
+    showDropDown;
+    maxDisplayDepth = 5;
+    search = '';
+    result = { category: null, value: null };
+    searchResetCallback = setTimeout(() => (this.search = ''), 1000);
     connectedCallback() {
         super.connectedCallback();
-        this.searchResetCallback = setTimeout(() => (this.search = ''), 1000);
         this.addEventListener('keydown', (e) => {
             if (e.key.length == 1) {
                 this.search += e.key;
@@ -10394,9 +10516,6 @@ let GroupedDropdown = class GroupedDropdown extends _data_lit_element_base__WEBP
             this.result = this.results[index];
         });
     }
-    /**
-     * @param {Map<string,any>} _changedProperties
-     */
     updated(_changedProperties) {
         super.updated(_changedProperties);
         if (_changedProperties.has('result')) {
@@ -10405,9 +10524,21 @@ let GroupedDropdown = class GroupedDropdown extends _data_lit_element_base__WEBP
         }
     }
     render() {
-        return (0,_grouped_dropdown_html__WEBPACK_IMPORTED_MODULE_3__.renderGroupedDropdown)(this);
+        return _grouped_dropdown_html__WEBPACK_IMPORTED_MODULE_3__.renderGroupedDropdown.call(this);
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Object })
+], GroupedDropdown.prototype, "options", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Boolean })
+], GroupedDropdown.prototype, "showDropDown", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Number })
+], GroupedDropdown.prototype, "maxDisplayDepth", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], GroupedDropdown.prototype, "search", void 0);
 GroupedDropdown = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('grouped-dropdown')
 ], GroupedDropdown);
@@ -10422,7 +10553,6 @@ GroupedDropdown = __decorate([
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderLinkElementStyles: () => (/* binding */ renderLinkElementStyles)
@@ -10455,23 +10585,15 @@ function renderLinkElementStyles() {
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderLinkElement: () => (/* binding */ renderLinkElement)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { LinkElement } linkElement
- */
-function renderLinkElement(linkElement) {
+function renderLinkElement() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-        <a
-            target="${linkElement.target ?? '_self'}"
-            @click="${(e) => linkElement.handleClick(e)}"
-            href="${linkElement.fullLink}"
-        >
+        <a target="${this.target ?? '_self'}" @click="${(e) => this.handleClick(e)}" href="${this.fullLink}">
             <slot></slot
         ></a>
     `;
@@ -10486,7 +10608,6 @@ function renderLinkElement(linkElement) {
   \********************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -10517,25 +10638,6 @@ let LinkElement = LinkElement_1 = class LinkElement extends _data_lit_element_ba
     static get styles() {
         return (0,_link_element_css__WEBPACK_IMPORTED_MODULE_4__.renderLinkElementStyles)();
     }
-    static get properties() {
-        return {
-            href: { type: String, reflect: true },
-            id: { type: String, reflect: true },
-            target: { type: String, reflect: true },
-            page: { type: Object, reflect: true },
-            params: { type: Object, reflect: true },
-            disabled: { type: Boolean, reflect: true },
-            class: { type: String, reflect: true },
-        };
-    }
-    /**
-     * @template {import('../../custom-elements').Page} T
-     * @template {Omit<InstanceType<T>, keyof LitElementBase>} U
-     * @param {T} page
-     * @param {Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>>} params
-     * @param {TemplateResult | string} inner
-     * @param {Partial<Record<keyof LinkElement.properties, any>>} options
-     */
     static forPage(page, params, inner, options = {}) {
         return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<link-element
             id="${options.id}"
@@ -10548,12 +10650,6 @@ let LinkElement = LinkElement_1 = class LinkElement extends _data_lit_element_ba
             ${inner}
         </link-element>`;
     }
-    /**
-     * @template {import('../../custom-elements').Page} T
-     * @template {Omit<InstanceType<T>, keyof LitElementBase>} U
-     * @param {T} page
-     * @param {Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>>} params
-     */
     static getLinkFor(page, params) {
         var link = '';
         if (params)
@@ -10567,23 +10663,16 @@ let LinkElement = LinkElement_1 = class LinkElement extends _data_lit_element_ba
     get fullLink() {
         if (this.href)
             return this.href;
-        var link = this.href ?? '';
         return LinkElement_1.getLinkFor(this.page, this.params);
     }
-    constructor() {
-        super();
-        this.href = null;
-        this.target = null;
-        /** @type {import('../../custom-elements').Page} */ this.page = null;
-        /** @type {Object.<string, any>} */ this.params = null;
-        this.disabled = false;
-    }
+    href = undefined;
+    target = undefined;
+    page = undefined;
+    params = null;
+    disabled = false;
     render() {
-        return (0,_link_element_html__WEBPACK_IMPORTED_MODULE_5__.renderLinkElement)(this);
+        return _link_element_html__WEBPACK_IMPORTED_MODULE_5__.renderLinkElement.call(this);
     }
-    /**
-     * @param {Event} event
-     */
     handleClick(event) {
         if (this.target == '_blank')
             return;
@@ -10592,11 +10681,26 @@ let LinkElement = LinkElement_1 = class LinkElement extends _data_lit_element_ba
             return;
         if (this.href)
             location.assign(this.fullLink);
-        else
+        else if (this.page)
             (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__.changePage)(this.page, this.params);
         return false;
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_1__.property)()
+], LinkElement.prototype, "href", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_1__.property)()
+], LinkElement.prototype, "target", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Object })
+], LinkElement.prototype, "page", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_1__.property)()
+], LinkElement.prototype, "params", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_1__.property)({ type: Boolean })
+], LinkElement.prototype, "disabled", void 0);
 LinkElement = LinkElement_1 = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_1__.customElement)('link-element')
 ], LinkElement);
@@ -10613,7 +10717,6 @@ __webpack_async_result__();
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderLoadingCircleStyles: () => (/* binding */ renderLoadingCircleStyles)
@@ -10658,17 +10761,13 @@ function renderLoadingCircleStyles() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderLoadingCircle: () => (/* binding */ renderLoadingCircle)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { LoadingCircle } loadingCircle
- */
-function renderLoadingCircle(loadingCircle) {
+function renderLoadingCircle() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <svg width="100%" height="100%">
             <g>
@@ -10687,7 +10786,6 @@ function renderLoadingCircle(loadingCircle) {
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   LoadingCircle: () => (/* binding */ LoadingCircle)
@@ -10711,7 +10809,7 @@ let LoadingCircle = class LoadingCircle extends _data_lit_element_base__WEBPACK_
         return (0,_loading_circle_css__WEBPACK_IMPORTED_MODULE_2__.renderLoadingCircleStyles)();
     }
     render() {
-        return (0,_loading_circle_html__WEBPACK_IMPORTED_MODULE_3__.renderLoadingCircle)(this);
+        return _loading_circle_html__WEBPACK_IMPORTED_MODULE_3__.renderLoadingCircle.call(this);
     }
 };
 LoadingCircle = __decorate([
@@ -10728,7 +10826,6 @@ LoadingCircle = __decorate([
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   LoadingScreen: () => (/* binding */ LoadingScreen)
@@ -10801,7 +10898,6 @@ if (!window.customElements.get(LoadingScreen.tag)) {
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMessageSnackbarStyles: () => (/* binding */ renderMessageSnackbarStyles)
@@ -10842,20 +10938,16 @@ function renderMessageSnackbarStyles() {
   \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMessageSnackbar: () => (/* binding */ renderMessageSnackbar)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { MessageSnackbar } messageSnackbar
- */
-function renderMessageSnackbar(messageSnackbar) {
+function renderMessageSnackbar() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-        <div id="message-text">${messageSnackbar.message}</div>
-        <div id="x-button" @click="${() => messageSnackbar.dismiss()}">&times;</div>
+        <div id="message-text">${this.message}</div>
+        <div id="x-button" @click="${() => this.dismiss()}">&times;</div>
     `;
 }
 
@@ -10868,7 +10960,6 @@ function renderMessageSnackbar(messageSnackbar) {
   \****************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -10893,7 +10984,6 @@ var MessageSnackbar_1;
 
 
 
-/** @typedef {'error' | 'warning' | 'info' | 'success'} MessageType */
 let MessageSnackbar = class MessageSnackbar extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
     static { MessageSnackbar_1 = this; }
     static get styles() {
@@ -10903,10 +10993,6 @@ let MessageSnackbar = class MessageSnackbar extends _data_lit_element_base__WEBP
         return { messageType: { type: String, reflect: true } };
     }
     static maxInstances = 4;
-    /**
-     * @param {string} message
-     * @param {MessageType} messageType
-     */
     static async popup(message, messageType) {
         var snackbar = new MessageSnackbar_1();
         snackbar.message = message;
@@ -10919,8 +11005,8 @@ let MessageSnackbar = class MessageSnackbar extends _data_lit_element_base__WEBP
         }, 5000);
     }
     static recalculateHeights() {
-        /** @type {NodeListOf<MessageSnackbar>} */ var snackbars = _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_2__.PageRouting.instance.shadowRoot.querySelectorAll('message-snackbar');
-        /** @type {MessageSnackbar} */ var previous = null;
+        var snackbars = _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_2__.PageRouting.instance.shadowRoot.querySelectorAll('message-snackbar');
+        var previous = null;
         for (var snackbar of snackbars) {
             if (!previous)
                 snackbar.style.top = '20px';
@@ -10948,14 +11034,9 @@ let MessageSnackbar = class MessageSnackbar extends _data_lit_element_base__WEBP
                 throw Error('not implemented');
         }
     }
-    constructor() {
-        super();
-        /** @type {string} */ this.message;
-        /** @type {MessageType} */ this.messageType;
-    }
     render() {
         this.style.backgroundColor = this.backgroundColor;
-        return (0,_message_snackbar_html__WEBPACK_IMPORTED_MODULE_4__.renderMessageSnackbar)(this);
+        return _message_snackbar_html__WEBPACK_IMPORTED_MODULE_4__.renderMessageSnackbar.call(this);
     }
     dismiss() {
         var animation = this.animate([
@@ -10968,6 +11049,12 @@ let MessageSnackbar = class MessageSnackbar extends _data_lit_element_base__WEBP
         };
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], MessageSnackbar.prototype, "message", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], MessageSnackbar.prototype, "messageType", void 0);
 MessageSnackbar = MessageSnackbar_1 = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('message-snackbar')
 ], MessageSnackbar);
@@ -10984,7 +11071,6 @@ __webpack_async_result__();
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderOrderedListStyles: () => (/* binding */ renderOrderedListStyles)
@@ -11042,38 +11128,34 @@ function renderOrderedListStyles() {
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderOrderedList: () => (/* binding */ renderOrderedList)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { OrderedList } list
- */
-function renderOrderedList(list) {
+function renderOrderedList() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-        <div id="list" @dragleave="${list.handleDragLeave}">
-            ${list.items.map((item, index) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
+        <div id="list" @dragleave="${this.handleDragLeave}">
+            ${this.items.map((item, index) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
                     class="row"
                     index="${index}"
-                    ?dragTarget="${index.toString() == list.lastHovered?.getAttribute('index')}"
-                    ?active="${list.selectedIndices.includes(index)}"
-                    @click="${(e) => list.handleRowClick(e, index)}"
+                    ?dragTarget="${index.toString() == this.lastHovered?.getAttribute('index')}"
+                    ?active="${this.selectedIndices.includes(index)}"
+                    @click="${(e) => this.handleRowClick(e, index)}"
                     @dragover="${(e) => {
-        if (!list.dragged)
+        if (!this.dragged)
             return;
         e.stopPropagation();
         e.preventDefault();
-        list.lastHovered = e.currentTarget;
-        list.requestFullUpdate();
+        this.lastHovered = e.currentTarget;
+        this.requestFullUpdate();
     }}"
-                    @dragstart="${(e) => (list.dragged = e.currentTarget)}"
+                    @dragstart="${(e) => (this.dragged = e.currentTarget)}"
                     draggable="true"
                 >
                     <div class="index-column column">${index + 1}</div>
-                    <div class="value-column column">${item[list.propertyName]}</div>
+                    <div class="value-column column">${item[this.propertyName]}</div>
                 </div>`)}
         </div>
     `;
@@ -11088,7 +11170,6 @@ function renderOrderedList(list) {
   \********************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -11126,9 +11207,6 @@ let OrderedList = class OrderedList extends _data_lit_element_base__WEBPACK_IMPO
             propertyName: { type: String, reflect: true },
         };
     }
-    /**
-     * @param {Event} eventTarget
-     */
     static getRowToDropOn(eventTarget) {
         // @ts-ignore
         var targetElement = eventTarget.originalTarget;
@@ -11137,15 +11215,10 @@ let OrderedList = class OrderedList extends _data_lit_element_base__WEBPACK_IMPO
         var children = (0,_services_extensions_document_extensions__WEBPACK_IMPORTED_MODULE_4__.getAllElementsRecurse)(targetElement);
         return children.find((x) => x.draggable);
     }
-    constructor() {
-        super();
-        /** @type {any[]} */ this.items = [];
-        /** @type {string} */ this.propertyName = '';
-        /** @type {number} */ this.lastIndex = 0;
-        /** @type {number[]} */ this.selectedIndices = [];
-        /** @type {HTMLElement} */ this.dragged;
-        /** @type {HTMLElement} */ this.lastHovered;
-    }
+    items = [];
+    propertyName = '';
+    lastIndex = 0;
+    selectedIndices = [];
     connectedCallback() {
         super.connectedCallback();
         this.tabIndex = 0;
@@ -11203,12 +11276,8 @@ let OrderedList = class OrderedList extends _data_lit_element_base__WEBPACK_IMPO
         });
     }
     render() {
-        return (0,_ordered_list_html__WEBPACK_IMPORTED_MODULE_6__.renderOrderedList)(this);
+        return _ordered_list_html__WEBPACK_IMPORTED_MODULE_6__.renderOrderedList.call(this);
     }
-    /**
-     * @param {MouseEvent} event
-     * @param {number} index
-     */
     handleRowClick(event, index) {
         var newValues = [index];
         if (event.shiftKey)
@@ -11221,10 +11290,6 @@ let OrderedList = class OrderedList extends _data_lit_element_base__WEBPACK_IMPO
             this.selectedIndices = newValues;
         this.requestFullUpdate();
     }
-    /**
-     * @param {number} a
-     * @param {number} b
-     */
     *getRangeBetween(a, b) {
         var add = 1;
         if (a > b)
@@ -11233,15 +11298,30 @@ let OrderedList = class OrderedList extends _data_lit_element_base__WEBPACK_IMPO
             yield current;
         yield current;
     }
-    /**
-     * @param {DragEvent} event
-     */
     handleDragLeave(event) {
         if (!this.dragged)
             return;
         event.stopPropagation();
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Array })
+], OrderedList.prototype, "items", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], OrderedList.prototype, "propertyName", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], OrderedList.prototype, "lastIndex", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], OrderedList.prototype, "selectedIndices", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], OrderedList.prototype, "dragged", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], OrderedList.prototype, "lastHovered", void 0);
 OrderedList = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('ordered-list')
 ], OrderedList);
@@ -11258,7 +11338,6 @@ __webpack_async_result__();
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderPartialLoading: () => (/* binding */ renderPartialLoading)
@@ -11303,7 +11382,6 @@ function renderPartialLoading() {
   \******************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PartialLoadingExample: () => (/* binding */ PartialLoadingExample)
@@ -11323,7 +11401,6 @@ const PartialLoadingExample = () => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PartialLoading: () => (/* binding */ PartialLoading)
@@ -11341,19 +11418,13 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 let PartialLoading = class PartialLoading extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
-    static get properties() {
-        return {
-            hideText: { type: Boolean, reflect: true },
-        };
-    }
-    constructor() {
-        super();
-        /** @type {boolean} */ this.hideText;
-    }
     render() {
         return (0,_partial_loading_html__WEBPACK_IMPORTED_MODULE_2__.renderPartialLoading)();
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Boolean })
+], PartialLoading.prototype, "hideText", void 0);
 PartialLoading = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('partial-loading')
 ], PartialLoading);
@@ -11368,7 +11439,6 @@ PartialLoading = __decorate([
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderPriorityList: () => (/* binding */ renderPriorityList)
@@ -11379,10 +11449,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/**
- * @param { PriorityList } priorityList
- */
-function renderPriorityList(priorityList) {
+function renderPriorityList() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <style>
             .item {
                 position: relative;
@@ -11425,7 +11492,7 @@ function renderPriorityList(priorityList) {
             }
         </style>
 
-        ${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_2__.sortBy)(priorityList.items, (x) => x.order).map((item, index) => {
+        ${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_2__.sortBy)(this.items, (x) => x.order).map((item, index) => {
         item.order = index;
         return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                 <div class="item" order="${index}">
@@ -11433,14 +11500,10 @@ function renderPriorityList(priorityList) {
                         class="move-icon icon"
                         icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Drag}"
                         draggable="true"
-                        @dragstart="${(e) => priorityList.registerDragItem(e, index)}"
+                        @dragstart="${(e) => this.registerDragItem(e, index)}"
                     ></div>
-                    ${priorityList.itemRenderer(item)}
-                    <div
-                        class="icon"
-                        icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Trash}"
-                        @click="${() => priorityList.dispatchEvent(new CustomEvent('delete-item', { detail: item }))}"
-                    ></div>
+                    ${this.itemRenderer(item)}
+                    <div class="icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_1__.Icons.Trash}" @click="${() => this.notifyDeleteItem(item)}"></div>
                 </div>
             `;
     })}`;
@@ -11455,7 +11518,6 @@ function renderPriorityList(priorityList) {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   PriorityList: () => (/* binding */ PriorityList)
@@ -11478,57 +11540,34 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-/**
- * @typedef {{order: number}} PriorityListItem
- */
 let PriorityList = class PriorityList extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
-    static get properties() {
-        return {
-            items: { type: Array, reflect: true },
-            itemRenderer: { type: Object, reflect: true },
-        };
-    }
     createRenderRoot() {
         return this;
     }
+    oldEntries = [];
     constructor() {
         super();
-        /** @type {PriorityListItem[]} */ this.items;
-        /** @type {(item: PriorityListItem) => TemplateResult} */ this.itemRenderer;
-        /** @type {PriorityListItem[]} */ this.oldEntries = [];
-        this.currentlyDraggedOverItemIndex = 0;
-        this.currentlyDraggedItemIndex = 0;
-        this.draggedElement = null;
         document.addEventListener('dragover', (e) => this.handleItemMove(e), { signal: this.abortController.signal });
         document.addEventListener('dragend', () => this.handleItemDrop(), { signal: this.abortController.signal });
     }
     render() {
-        return (0,_priority_list_html__WEBPACK_IMPORTED_MODULE_5__.renderPriorityList)(this);
+        return _priority_list_html__WEBPACK_IMPORTED_MODULE_5__.renderPriorityList.call(this);
     }
-    /**
-     *
-     * @param {DragEvent} event
-     * @param {number} index
-     */
     registerDragItem(event, index) {
         this.oldEntries = [...this.items];
         event.dataTransfer.setData('text/html', null);
         event.dataTransfer.setDragImage(new Image(), 0, 0);
-        /** @type {HTMLElement} */ var selectedElement = this.querySelector(`.item[order='${index}']`);
+        var selectedElement = this.querySelector(`.item[order='${index}']`);
         var clonedElement = (0,_services_extensions_document_extensions__WEBPACK_IMPORTED_MODULE_3__.cloneElementAsFixed)(selectedElement);
         clonedElement.id = 'dragged-element';
-        selectedElement.parentElement.append(clonedElement);
+        selectedElement.parentElement?.append(clonedElement);
         this.draggedElement = clonedElement;
         selectedElement.classList.add('overlayed');
         this.currentlyDraggedItemIndex = index;
         this.requestFullUpdate();
     }
-    /**
-     *
-     * @param {DragEvent} event
-     */
     handleItemMove(event) {
-        if (this.currentlyDraggedItemIndex < 0)
+        if (this.currentlyDraggedItemIndex < 0 || !this.draggedElement)
             return;
         event.preventDefault();
         var items = this.querySelectorAll('.item');
@@ -11549,19 +11588,11 @@ let PriorityList = class PriorityList extends _data_lit_element_base__WEBPACK_IM
         this.currentlyDraggedOverItemIndex = -1;
         //    this.notifyListChanged();
     }
-    /**
-     *
-     * @param {number} index1
-     * @param {number} index2
-     */
     switchItems(index1, index2) {
         this.items[index1].order = index2;
         this.items[index2].order = index1;
         this.items = (0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_2__.sortBy)(this.items, (x) => x.order);
     }
-    /**
-     * @param {number} index
-     */
     switchWithDragged(index) {
         if (this.currentlyDraggedItemIndex < 0 ||
             index < 0 ||
@@ -11575,7 +11606,28 @@ let PriorityList = class PriorityList extends _data_lit_element_base__WEBPACK_IM
         this.currentlyDraggedItemIndex = index;
         this.requestFullUpdate();
     }
+    notifyDeleteItem(item) {
+        this.dispatchEvent(new CustomEvent('delete-item', { detail: item }));
+    }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Array })
+], PriorityList.prototype, "items", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Object })
+], PriorityList.prototype, "itemRenderer", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], PriorityList.prototype, "oldEntries", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], PriorityList.prototype, "currentlyDraggedOverItemIndex", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], PriorityList.prototype, "currentlyDraggedItemIndex", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], PriorityList.prototype, "draggedElement", void 0);
 PriorityList = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('priority-list')
 ], PriorityList);
@@ -11590,7 +11642,6 @@ PriorityList = __decorate([
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderRangeSelectorStyles: () => (/* binding */ renderRangeSelectorStyles)
@@ -11660,34 +11711,30 @@ function renderRangeSelectorStyles() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderRangeSelector: () => (/* binding */ renderRangeSelector)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { RangeSelector } selector
- */
-function renderRangeSelector(selector) {
+function renderRangeSelector() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div id="container">
             <div id="range-graph">
-                <div id="range-hover" style="left: ${selector.leftPercent}%; right: ${100 - selector.rightPercent}%">
-                    <div id="range-tooltip">${selector.left} - ${selector.right}</div>
+                <div id="range-hover" style="left: ${this.leftPercent}%; right: ${100 - this.rightPercent}%">
+                    <div id="range-tooltip">${this.left} - ${this.right}</div>
                 </div>
                 <div
                     id="left-slider"
                     class="slider"
-                    style="left: ${selector.leftPercent}%"
-                    @pointerdown="${() => (selector.draggingLeft = true)}"
+                    style="left: ${this.leftPercent}%"
+                    @pointerdown="${() => (this.draggingLeft = true)}"
                 ></div>
                 <div
                     id="right-slider"
                     class="slider"
-                    style="left: ${selector.rightPercent}%"
-                    @pointerdown="${() => (selector.draggingRight = true)}"
+                    style="left: ${this.rightPercent}%"
+                    @pointerdown="${() => (this.draggingRight = true)}"
                 ></div>
             </div>
         </div>
@@ -11703,7 +11750,6 @@ function renderRangeSelector(selector) {
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   RangeSelector: () => (/* binding */ RangeSelector)
@@ -11740,25 +11786,12 @@ let RangeSelector = class RangeSelector extends _data_lit_element_base__WEBPACK_
         var max = this.max - this.min;
         return (right / max) * 100;
     }
-    static get properties() {
-        return {
-            min: { type: Number, reflect: true },
-            max: { type: Number, reflect: true },
-            left: { type: Number, reflect: true },
-            right: { type: Number, reflect: true },
-            draggingLeft: { type: Boolean, reflect: false, attribute: false },
-            draggingRight: { type: Boolean, reflect: false, attribute: false },
-        };
-    }
-    constructor() {
-        super();
-        /** @type {number} */ this.min;
-        /** @type {number} */ this.max;
-        /** @type {number} */ this.left;
-        /** @type {number} */ this.right;
-        /** @type {boolean} */ this.draggingLeft;
-        /** @type {boolean} */ this.draggingRight;
-    }
+    min;
+    max;
+    left;
+    right;
+    draggingLeft;
+    draggingRight;
     connectedCallback() {
         super.connectedCallback();
         window.addEventListener('pointermove', (e) => {
@@ -11767,7 +11800,7 @@ let RangeSelector = class RangeSelector extends _data_lit_element_base__WEBPACK_
             if (this.draggingRight)
                 return this.changeRightByMouse(e);
         }, { signal: this.abortController.signal });
-        window.addEventListener('pointerup', (e) => {
+        window.addEventListener('pointerup', () => {
             this.draggingLeft = false;
             this.draggingRight = false;
             this.dispatchEvent(new CustomEvent('range-changed', { detail: { left: this.left, right: this.right } }));
@@ -11776,29 +11809,20 @@ let RangeSelector = class RangeSelector extends _data_lit_element_base__WEBPACK_
     render() {
         this.left ??= this.min;
         this.right ??= this.max;
-        return (0,_range_selector_html__WEBPACK_IMPORTED_MODULE_3__.renderRangeSelector)(this);
+        return _range_selector_html__WEBPACK_IMPORTED_MODULE_3__.renderRangeSelector.call(this);
     }
-    /**
-     * @param {MouseEvent} event
-     */
     changeLeftByMouse(event) {
         var targetValue = this.getValueForMousePosition(event);
         if (targetValue < this.right)
             this.left = targetValue;
     }
-    /**
-     * @param {MouseEvent} event
-     */
     changeRightByMouse(event) {
         var targetValue = this.getValueForMousePosition(event);
         if (this.left < targetValue)
             this.right = targetValue;
     }
-    /**
-     * @param {MouseEvent} event
-     */
     getValueForMousePosition(event) {
-        /** @type {HTMLElement} */ var target = this.shadowRoot.querySelector('#container');
+        var target = this.shadowRoot.querySelector('#container');
         var rect = target.getBoundingClientRect();
         var rangeAvailable = (this.max - this.min) / 100;
         var relativeLeft = event.screenX - rect.left;
@@ -11812,6 +11836,24 @@ let RangeSelector = class RangeSelector extends _data_lit_element_base__WEBPACK_
             return targetValue;
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Number })
+], RangeSelector.prototype, "min", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Number })
+], RangeSelector.prototype, "max", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Number })
+], RangeSelector.prototype, "left", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Number })
+], RangeSelector.prototype, "right", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], RangeSelector.prototype, "draggingLeft", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], RangeSelector.prototype, "draggingRight", void 0);
 RangeSelector = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('range-selector')
 ], RangeSelector);
@@ -11826,7 +11868,6 @@ RangeSelector = __decorate([
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderRangeSliderStyles: () => (/* binding */ renderRangeSliderStyles)
@@ -11871,27 +11912,23 @@ function renderRangeSliderStyles() {
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderRangeSlider: () => (/* binding */ renderRangeSlider)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param {RangeSlider} slider
- */
-function renderRangeSlider(slider) {
+function renderRangeSlider() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <input
             id="slider"
             type="range"
             @input="${(e) => e.target.dispatchEvent(new Event('change'))}"
-            @change="${() => slider.notifyValueChanged()}"
-            .step="${slider.step}"
-            .min="${slider.min}"
-            .max="${slider.max}"
-            .value="${slider.value}"
+            @change="${() => this.notifyValueChanged()}"
+            .step="${this.step}"
+            .min="${this.min}"
+            .max="${this.max}"
+            .value="${this.value}"
         />
     `;
 }
@@ -11905,7 +11942,6 @@ function renderRangeSlider(slider) {
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   RangeSlider: () => (/* binding */ RangeSlider)
@@ -11936,23 +11972,32 @@ let RangeSlider = class RangeSlider extends _data_lit_element_base__WEBPACK_IMPO
             step: { type: String, reflect: true },
         };
     }
-    constructor() {
-        super();
-        /** @type {string} */ this.min = '0';
-        /** @type {string} */ this.max = '100';
-        /** @type {string} */ this.value = '10';
-        /** @type {string} */ this.step = '1';
-    }
+    min = '0';
+    max = '100';
+    value = '10';
+    step = '1';
     render() {
-        return (0,_range_slider_html__WEBPACK_IMPORTED_MODULE_3__.renderRangeSlider)(this);
+        return _range_slider_html__WEBPACK_IMPORTED_MODULE_3__.renderRangeSlider.call(this);
     }
     notifyValueChanged() {
-        /** @type {HTMLInputElement} */ var sliderElement = this.shadowRoot.querySelector('#slider');
+        var sliderElement = this.shadowRoot.querySelector('#slider');
         this.value = sliderElement.value;
         var eventData = { value: this.value };
         this.dispatchEvent(new CustomEvent('valueChanged', { detail: eventData }));
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], RangeSlider.prototype, "min", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], RangeSlider.prototype, "max", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], RangeSlider.prototype, "value", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], RangeSlider.prototype, "step", void 0);
 RangeSlider = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('range-slider')
 ], RangeSlider);
@@ -11967,7 +12012,6 @@ RangeSlider = __decorate([
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderScrollSelectStyles: () => (/* binding */ renderScrollSelectStyles)
@@ -12047,25 +12091,21 @@ function renderScrollSelectStyles() {
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderScrollSelect: () => (/* binding */ renderScrollSelect)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param {ScrollSelect} scrollSelect
- */
-function renderScrollSelect(scrollSelect) {
+function renderScrollSelect() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-        <div id="scroll-container" @pointerdown="${() => scrollSelect.startDragScrolling()}">
+        <div id="scroll-container" @pointerdown="${() => this.startDragScrolling()}">
             <div id="scroll-items">
                 <div id="item-container">
                     <div class="inner-space">x</div>
-                    ${scrollSelect.options.map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
-                                class="scroll-item ${scrollSelect.options[scrollSelect.currentItemIndex] == x ? 'active' : ''}"
-                                @click="${() => scrollSelect.scrollToItem(x)}"
+                    ${this.options.map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
+                                class="scroll-item ${this.options[this.currentItemIndex] == x ? 'active' : ''}"
+                                @click="${() => this.scrollToItem(x)}"
                             >
                                 ${x}
                             </div>`)}
@@ -12087,7 +12127,6 @@ function renderScrollSelect(scrollSelect) {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ScrollSelect: () => (/* binding */ ScrollSelect)
@@ -12120,18 +12159,16 @@ let ScrollSelect = class ScrollSelect extends _data_lit_element_base__WEBPACK_IM
             value: { type: String, reflect: true },
         };
     }
-    /** @returns {HTMLElement} */
     get scrollContainer() {
-        var container = this.shadowRoot.getElementById('scroll-items');
+        var container = this.shadowRoot.querySelector('#scroll-items');
         return container;
     }
     get scrollItemsContainer() {
-        var container = this.shadowRoot.getElementById('item-container');
+        var container = this.shadowRoot.querySelector('#item-container');
         return container;
     }
     get scrollChildren() {
-        return [...this.shadowRoot.querySelectorAll('#item-container > *:not(.inner-space)')].map(
-        /** @param {HTMLElement} x */ (x) => x);
+        return [...this.shadowRoot.querySelectorAll('#item-container > *:not(.inner-space)')];
     }
     get canScrollUp() {
         return this.currentItemIndex > 0;
@@ -12139,19 +12176,12 @@ let ScrollSelect = class ScrollSelect extends _data_lit_element_base__WEBPACK_IM
     get canScrollBottom() {
         return this.currentItemIndex < this.children.length - 1;
     }
-    constructor() {
-        super();
-        /** @type {string[]} */ this.options = [];
-        /** @type {Mood} */ this.value = _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_2__.Mood.Unset;
-        /** @type {number} */ this.currentItemIndex = 0;
-        /** @type {boolean} */ this.mouseDown = false;
-        /** @type {number} */ this.mouseStartY = 0;
+    options = [];
+    value = _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_2__.Mood.Unset;
+    connectedCallback() {
         document.addEventListener('pointermove', (e) => this.onPointerMove(e));
         document.addEventListener('pointerup', () => this.onPointerUp());
     }
-    /**
-     * @param {Map<any, any>} _changedProperties
-     */
     updated(_changedProperties) {
         super.updated(_changedProperties);
         if (!_changedProperties.has('value') || !this.value)
@@ -12160,7 +12190,7 @@ let ScrollSelect = class ScrollSelect extends _data_lit_element_base__WEBPACK_IM
         this.notifyValueChanged();
     }
     render() {
-        return (0,_scroll_select_html__WEBPACK_IMPORTED_MODULE_5__.renderScrollSelect)(this);
+        return _scroll_select_html__WEBPACK_IMPORTED_MODULE_5__.renderScrollSelect.call(this);
     }
     scrollToTop() {
         if (this.currentItemIndex <= 0)
@@ -12186,9 +12216,6 @@ let ScrollSelect = class ScrollSelect extends _data_lit_element_base__WEBPACK_IM
         this.scrollItemsContainer.classList.toggle('user-interaction', true);
         this.requestFullUpdate();
     }
-    /**
-     * @param {PointerEvent} e
-     */
     onPointerMove(e) {
         if (!this.mouseDown)
             return;
@@ -12219,6 +12246,21 @@ let ScrollSelect = class ScrollSelect extends _data_lit_element_base__WEBPACK_IM
         this.requestFullUpdate();
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], ScrollSelect.prototype, "options", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], ScrollSelect.prototype, "value", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], ScrollSelect.prototype, "currentItemIndex", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], ScrollSelect.prototype, "mouseDown", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], ScrollSelect.prototype, "mouseStartY", void 0);
 ScrollSelect = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('scroll-select')
 ], ScrollSelect);
@@ -12233,7 +12275,6 @@ ScrollSelect = __decorate([
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderSideScrollerStyles: () => (/* binding */ renderSideScrollerStyles)
@@ -12306,37 +12347,29 @@ function renderSideScrollerStyles() {
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderSideScroller: () => (/* binding */ renderSideScroller)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param {SideScroller} sideScroller
- */
-function renderSideScroller(sideScroller) {
+function renderSideScroller() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div id="scroll-container">
-            <a
-                class="arrow-link ${sideScroller.canScrollLeft ? '' : 'disabled'}"
-                id="left-arrow"
-                @click="${() => sideScroller.scrollToLeft()}"
-            >
+            <a class="arrow-link ${this.canScrollLeft ? '' : 'disabled'}" id="left-arrow" @click="${() => this.scrollToLeft()}">
                 ◀
             </a>
             <div id="content-container" @mousedown="${(e) => e.preventDefault()}">
                 <div id="item-container">
                     <div class="inner-space" id="left-space"></div>
-                    <slot @slotchange="${() => sideScroller.requestFullUpdate()}"></slot>
+                    <slot @slotchange="${() => this.requestFullUpdate()}"></slot>
                     <div class="inner-space" id="right-space"></div>
                 </div>
             </div>
             <a
-                class="arrow-link ${sideScroller.canScrollRight ? '' : 'disabled'}"
+                class="arrow-link ${this.canScrollRight ? '' : 'disabled'}"
                 id="right-arrow"
-                @click="${() => sideScroller.scrollToRight()}"
+                @click="${() => this.scrollToRight()}"
             >
                 ▶
             </a>
@@ -12353,7 +12386,6 @@ function renderSideScroller(sideScroller) {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SideScroller: () => (/* binding */ SideScroller)
@@ -12381,22 +12413,18 @@ let SideScroller = class SideScroller extends _data_lit_element_base__WEBPACK_IM
     static get properties() {
         return {};
     }
-    /** @returns {HTMLElement} */
     get scrollContainer() {
-        var container = this.shadowRoot.getElementById('content-container');
+        var container = this.shadowRoot.querySelector('#content-container');
         return container;
     }
-    /** @returns {HTMLElement} */
     get scrollItemcontainer() {
-        var container = this.shadowRoot.getElementById('item-container');
+        var container = this.shadowRoot.querySelector('#item-container');
         return container;
     }
     get scrollChildren() {
-        return this.shadowRoot
-            .querySelector('slot')
+        return this.shadowRoot.querySelector('slot')
             .assignedElements()
-            .filter((x) => x.className != 'inner-space')
-            .map(/** @param {HTMLElement} x */ (x) => x);
+            .filter((x) => x.className != 'inner-space');
     }
     get canScrollLeft() {
         return this.currentItemIndex > 0;
@@ -12404,10 +12432,7 @@ let SideScroller = class SideScroller extends _data_lit_element_base__WEBPACK_IM
     get canScrollRight() {
         return this.currentItemIndex < this.children.length - 1;
     }
-    constructor() {
-        super();
-        this.currentItemIndex = -1;
-    }
+    currentItemIndex = -1;
     updated(_changedProperties) {
         super.updated(_changedProperties);
         setTimeout(() => {
@@ -12420,7 +12445,7 @@ let SideScroller = class SideScroller extends _data_lit_element_base__WEBPACK_IM
         }, 100);
     }
     render() {
-        return (0,_side_scroller_html__WEBPACK_IMPORTED_MODULE_4__.renderSideScroller)(this);
+        return _side_scroller_html__WEBPACK_IMPORTED_MODULE_4__.renderSideScroller.call(this);
     }
     scrollToLeft() {
         if (this.currentItemIndex <= 0)
@@ -12440,6 +12465,9 @@ let SideScroller = class SideScroller extends _data_lit_element_base__WEBPACK_IM
         this.requestFullUpdate();
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], SideScroller.prototype, "currentItemIndex", void 0);
 SideScroller = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('side-scroller')
 ], SideScroller);
@@ -12454,7 +12482,6 @@ SideScroller = __decorate([
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderTagLabelStyles: () => (/* binding */ renderTagLabelStyles)
@@ -12587,53 +12614,46 @@ function renderTagLabelStyles() {
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderTagLabel: () => (/* binding */ renderTagLabel)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param {TagLabel} tagLabel
- */
-function renderTagLabel(tagLabel) {
+function renderTagLabel() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div id="label-container" @click="${(e) => e.stopPropagation()}">
-            ${tagLabel.createNew ? renderNewLabelForm(tagLabel) : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="label-text">${tagLabel.text}</div>`}
-            <div id="x-button" @click="${(e) => tagLabel.notifyRemoved(e)}">&times;</div>
+            ${this.createNew ? renderNewLabelForm.call(this) : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="label-text">${this.text}</div>`}
+            <div id="x-button" @click="${(e) => this.notifyRemoved(e)}">&times;</div>
         </div>
     `;
 }
-/**
- * @param {TagLabel} tagLabel
- */
-function renderNewLabelForm(tagLabel) {
+function renderNewLabelForm() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<form id="new-label-form" action="javascript:void(0)">
         <input
             id="new-tag-input"
-            @keydown="${(e) => tagLabel.handleInput(e)}"
-            @input="${() => tagLabel.requestFullUpdate()}"
-            @focus="${() => (tagLabel.showAutocomplete = true)}"
-            @focusout="${() => (tagLabel.showAutocomplete = false)}"
+            @keydown="${(e) => this.handleInput(e)}"
+            @input="${() => this.requestFullUpdate()}"
+            @focus="${() => (this.showAutocomplete = true)}"
+            @focusout="${() => (this.showAutocomplete = false)}"
             type="text"
             autocomplete="off"
         />
 
-        <div id="autocomplete-list" class="${tagLabel.showAutocomplete ? '' : 'hidden'}">
-            ${tagLabel.autocompleteItems.map((x, index) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
-                    class="autocomplete-item ${tagLabel.autofillIndex == index ? 'active' : ''}"
+        <div id="autocomplete-list" class="${this.showAutocomplete ? '' : 'hidden'}">
+            ${this.autocompleteItems.map((x, index) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
+                    class="autocomplete-item ${this.autofillIndex == index ? 'active' : ''}"
                     @pointerover="${() => {
-        tagLabel.autofillIndex = index;
-        tagLabel.requestFullUpdate();
+        this.autofillIndex = index;
+        this.requestFullUpdate();
     }}"
-                    @pointerdown="${() => tagLabel.setSearchText(x)}"
+                    @pointerdown="${() => this.setSearchText(x)}"
                 >
                     ${x}
                 </div> `)}
         </div>
         <div id="invisible-text">
-            ${ /** @type {HTMLInputElement} */tagLabel.shadowRoot.querySelector('#new-tag-input')?.value.replaceAll(' ', '\xA0')}
+            ${this.shadowRoot.querySelector('#new-tag-input')?.value.replaceAll(' ', '\xA0')}
         </div>
     </form>`;
 }
@@ -12647,7 +12667,6 @@ function renderNewLabelForm(tagLabel) {
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   TagLabel: () => (/* binding */ TagLabel)
@@ -12670,51 +12689,35 @@ let TagLabel = class TagLabel extends _data_lit_element_base__WEBPACK_IMPORTED_M
     static get styles() {
         return (0,_tag_label_css__WEBPACK_IMPORTED_MODULE_2__.renderTagLabelStyles)();
     }
-    static get properties() {
-        return {
-            text: { type: String, reflect: true },
-            createNew: { type: Boolean, reflect: true },
-            autocomplete: { type: Array, reflect: true },
-            disabled: { type: Boolean, reflect: true },
-            showAutocomplete: { type: Boolean, reflect: false },
-        };
-    }
     get selectedElement() {
-        /** @type {NodeListOf<HTMLElement>} */ var elements = this.shadowRoot.querySelectorAll('#autocomplete-list .autocomplete-item');
+        var elements = this.shadowRoot.querySelectorAll('#autocomplete-list .autocomplete-item');
         if (elements[this.autofillIndex])
             return elements[this.autofillIndex];
         return null;
     }
     get autocompleteItems() {
-        /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#new-tag-input');
+        var input = this.shadowRoot.querySelector('#new-tag-input');
         if (!input)
             return [];
         var searchText = input.value;
         return this.autocomplete.filter((x) => x.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
     }
-    constructor() {
-        super();
-        /** @type {string} */ this.text;
-        /** @type {boolean} */ this.createNew = false;
-        /** @type {boolean} */ this.disabled = false;
-        /** @type {string[]} */ this.autocomplete = [];
-        /** @type {number} */ this.autofillIndex = -1;
-        /** @type {boolean} */ this.showAutocomplete = false;
-    }
+    text;
+    createNew = false;
+    disabled = false;
+    autocomplete = [];
+    autofillIndex = -1;
+    showAutocomplete = false;
     render() {
-        return (0,_tag_label_html__WEBPACK_IMPORTED_MODULE_3__.renderTagLabel)(this);
+        return _tag_label_html__WEBPACK_IMPORTED_MODULE_3__.renderTagLabel.call(this);
     }
-    /**
-     * @param {Event} e
-     */
     notifyRemoved(e) {
         this.dispatchEvent(new CustomEvent('removed'));
     }
     notifyTagCreated() {
-        /** @type {HTMLInputElement} */ var tagInput = this.shadowRoot.querySelector('#new-tag-input');
+        var tagInput = this.shadowRoot.querySelector('#new-tag-input');
         this.dispatchEvent(new CustomEvent('tagCreated', { detail: { value: tagInput.value } }));
     }
-    /**@param {KeyboardEvent} event */
     handleInput(event) {
         if (event.key == 'ArrowDown') {
             this.autofillIndex++;
@@ -12723,9 +12726,10 @@ let TagLabel = class TagLabel extends _data_lit_element_base__WEBPACK_IMPORTED_M
             var selectedElement = this.selectedElement;
             if (!selectedElement)
                 return;
-            if (selectedElement.offsetTop >= selectedElement.parentElement.offsetHeight + selectedElement.parentElement.scrollTop)
-                selectedElement.parentElement.scrollTo({
-                    top: selectedElement.offsetTop + selectedElement.offsetHeight - selectedElement.parentElement.offsetHeight,
+            var selectedParent = selectedElement.parentElement;
+            if (selectedElement.offsetTop >= selectedParent.offsetHeight + selectedParent.scrollTop)
+                selectedParent.scrollTo({
+                    top: selectedElement.offsetTop + selectedElement.offsetHeight - selectedParent.offsetHeight,
                 });
         }
         else if (event.key == 'ArrowUp') {
@@ -12735,8 +12739,9 @@ let TagLabel = class TagLabel extends _data_lit_element_base__WEBPACK_IMPORTED_M
             var selectedElement = this.selectedElement;
             if (!selectedElement)
                 return;
-            if (selectedElement.offsetTop <= selectedElement.parentElement.scrollTop)
-                selectedElement.parentElement.scrollTo({ top: selectedElement.offsetTop });
+            var selectedParent = selectedElement.parentElement;
+            if (selectedElement.offsetTop <= selectedParent.scrollTop)
+                selectedParent.scrollTo({ top: selectedElement.offsetTop });
         }
         else if (event.key == 'Enter' || event.key == 'Tab')
             this.setSearchText(this.autocompleteItems[this.autofillIndex > 0 ? this.autofillIndex : 0]);
@@ -12744,19 +12749,38 @@ let TagLabel = class TagLabel extends _data_lit_element_base__WEBPACK_IMPORTED_M
         var selectedElement = this.selectedElement;
         if (!selectedElement)
             return;
+        var selectedParent = selectedElement.parentElement;
         if (selectedElement.offsetTop == 0)
-            selectedElement.parentElement.scrollTo({ top: 0 });
-        if (selectedElement.offsetTop + selectedElement.offsetHeight == selectedElement.parentElement.scrollHeight)
-            selectedElement.parentElement.scrollTo({ top: selectedElement.parentElement.scrollHeight });
+            selectedParent.scrollTo({ top: 0 });
+        if (selectedElement.offsetTop + selectedElement.offsetHeight == selectedParent.scrollHeight)
+            selectedParent.scrollTo({ top: selectedParent.scrollHeight });
     }
     setSearchText(text) {
-        /** @type {HTMLInputElement} */ var input = this.shadowRoot.querySelector('#new-tag-input');
+        var input = this.shadowRoot.querySelector('#new-tag-input');
         input.value = text;
         this.requestFullUpdate();
         this.notifyTagCreated();
         input.value = '';
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], TagLabel.prototype, "text", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Boolean })
+], TagLabel.prototype, "createNew", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Boolean })
+], TagLabel.prototype, "disabled", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Array })
+], TagLabel.prototype, "autocomplete", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], TagLabel.prototype, "autofillIndex", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], TagLabel.prototype, "showAutocomplete", void 0);
 TagLabel = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('tag-label')
 ], TagLabel);
@@ -12771,7 +12795,6 @@ TagLabel = __decorate([
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderTriValueCheckbox: () => (/* binding */ renderTriValueCheckbox)
@@ -12845,19 +12868,15 @@ function renderTriValueCheckbox() {
   \*************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderTriValueCheckboxStyles: () => (/* binding */ renderTriValueCheckboxStyles)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param {TriValueCheckbox} checkbox
- */
-function renderTriValueCheckboxStyles(checkbox) {
+function renderTriValueCheckboxStyles() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-        <div class="checkbox " @click="${() => checkbox.nextState()}">
+        <div class="checkbox " @click="${() => this.nextState()}">
             <slot></slot>
         </div>
     `;
@@ -12872,7 +12891,6 @@ function renderTriValueCheckboxStyles(checkbox) {
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   TriValueCheckbox: () => (/* binding */ TriValueCheckbox)
@@ -12907,15 +12925,12 @@ let TriValueCheckbox = class TriValueCheckbox extends _data_lit_element_base__WE
             ignoredState: { type: String, reflect: true },
         };
     }
-    constructor() {
-        super();
-        /** @type {CheckboxState} */ this.value = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore;
-        /** @type {boolean} */ this.allowThreeValues = false;
-        /** @type {boolean} */ this.disabled = false;
-        /** @type {CheckboxState} */ this.ignoredState = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore;
-    }
+    value = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore;
+    allowThreeValues = false;
+    disabled = false;
+    ignoredState = _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore;
     render() {
-        return (0,_tri_value_checkbox_html__WEBPACK_IMPORTED_MODULE_5__.renderTriValueCheckboxStyles)(this);
+        return _tri_value_checkbox_html__WEBPACK_IMPORTED_MODULE_5__.renderTriValueCheckboxStyles.call(this);
     }
     firstUpdated(_changedProperties) {
         super.firstUpdated(_changedProperties);
@@ -12929,6 +12944,18 @@ let TriValueCheckbox = class TriValueCheckbox extends _data_lit_element_base__WE
         this.dispatchEvent(new CustomEvent('valueChanged', { detail: { value: this.value } }));
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], TriValueCheckbox.prototype, "value", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], TriValueCheckbox.prototype, "allowThreeValues", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], TriValueCheckbox.prototype, "disabled", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], TriValueCheckbox.prototype, "ignoredState", void 0);
 TriValueCheckbox = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('tri-value-checkbox')
 ], TriValueCheckbox);
@@ -12943,7 +12970,6 @@ TriValueCheckbox = __decorate([
   \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderWarningBannerStyles: () => (/* binding */ renderWarningBannerStyles)
@@ -13005,19 +13031,15 @@ function renderWarningBannerStyles() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderWarningBanner: () => (/* binding */ renderWarningBanner)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { WarningBanner } warningBanner
- */
-function renderWarningBanner(warningBanner) {
-    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `${warningBanner.inner}
-        <div class="banner-x-button" @click="${() => (warningBanner.dismissed = true)}">&times;</div> `;
+function renderWarningBanner() {
+    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `${this.inner}
+        <div class="banner-x-button" @click="${() => (this.dismissed = true)}">&times;</div> `;
 }
 
 
@@ -13029,7 +13051,6 @@ function renderWarningBanner(warningBanner) {
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   WarningBanner: () => (/* binding */ WarningBanner)
@@ -13060,10 +13081,7 @@ let WarningBanner = class WarningBanner extends _data_lit_element_base__WEBPACK_
             inner: { type: Object, reflect: true },
         };
     }
-    /** @type {WarningBanner} */ static instance;
-    /**
-     * @param {TemplateResult} inner
-     */
+    static instance;
     static spawn(inner) {
         if (this.instance)
             return;
@@ -13076,16 +13094,12 @@ let WarningBanner = class WarningBanner extends _data_lit_element_base__WEBPACK_
     static remove() {
         this.instance?.remove();
     }
-    constructor() {
-        super();
-        /** @type {boolean} */ this.dismissed;
-        /** @type {TemplateResult} */ this.inner;
-    }
+    dismissed;
+    inner;
     render() {
-        return (0,_warning_banner_html__WEBPACK_IMPORTED_MODULE_3__.renderWarningBanner)(this);
+        return _warning_banner_html__WEBPACK_IMPORTED_MODULE_3__.renderWarningBanner.call(this);
     }
-    disoverride;
-    connectedCallback() {
+    disconnectedCallback() {
         super.disconnectedCallback();
         WarningBanner_1.instance = null;
     }
@@ -13104,7 +13118,6 @@ WarningBanner = WarningBanner_1 = __decorate([
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CleanupClient: () => (/* binding */ CleanupClient),
@@ -16171,7 +16184,6 @@ function throwException(message, status, response, headers, result) {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderCreateMediaPageStyles: () => (/* binding */ renderCreateMediaPageStyles)
@@ -16191,17 +16203,13 @@ function renderCreateMediaPageStyles() {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderCreateMediaPage: () => (/* binding */ renderCreateMediaPage)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { CreateMediaPage } createMediaPage
- */
-function renderCreateMediaPage(createMediaPage) {
+function renderCreateMediaPage() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <media-detail-page createNew editMode></media-detail-page> `;
 }
 
@@ -16214,7 +16222,6 @@ function renderCreateMediaPage(createMediaPage) {
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CreateMediaPage: () => (/* binding */ CreateMediaPage)
@@ -16234,20 +16241,12 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 let CreateMediaPage = class CreateMediaPage extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
-    static get isPage() {
-        return true;
-    }
+    static isPage = true;
     static get styles() {
         return (0,_create_media_page_css__WEBPACK_IMPORTED_MODULE_2__.renderCreateMediaPageStyles)();
     }
-    static get properties() {
-        return {};
-    }
-    constructor() {
-        super();
-    }
     render() {
-        return (0,_create_media_page_html__WEBPACK_IMPORTED_MODULE_3__.renderCreateMediaPage)(this);
+        return _create_media_page_html__WEBPACK_IMPORTED_MODULE_3__.renderCreateMediaPage.call(this);
     }
 };
 CreateMediaPage = __decorate([
@@ -16264,7 +16263,6 @@ CreateMediaPage = __decorate([
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderCreateRecipePageStyles: () => (/* binding */ renderCreateRecipePageStyles)
@@ -16520,7 +16518,6 @@ function renderCreateRecipePageStyles() {
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderCreateRecipePage: () => (/* binding */ renderCreateRecipePage)
@@ -16537,37 +16534,34 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/**
- * @param { CreateRecipePage } page
- */
-function renderCreateRecipePage(page) {
+function renderCreateRecipePage() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <page-layout>
             <div id="page-container">
-                <form id="create-recipe-form" @submit="${(e) => page.submit(e)}">
+                <form id="create-recipe-form" @submit="${(e) => this.submit(e)}">
                     <div id="image-ingredients-container">
                         <div id="ingredient-container">
                             <input
                                 type="text"
                                 id="title"
-                                .value="${page.recipe.title}"
+                                .value="${this.recipe.title}"
                                 onclick="javascript:this.select()"
                                 @input="${(e) => handleLabelInput(e)}"
-                                @change="${(e) => page.changeProperty('title', e.detail.value)}"
+                                @change="${(e) => this.changeProperty('title', e.target.value)}"
                             />
-                            ${Object.entries((0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_5__.groupBy)(page.recipe.ingredients, 'groupName')).map((group) => renderIngredientGroup(group, page))}
-                            <button tabindex="0" id="add-group-link" @click="${(e) => page.addGroup(e)}">
+                            ${Object.entries((0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_5__.groupBy)(this.recipe.ingredients, 'groupName')).map((group) => renderIngredientGroup.call(this, group))}
+                            <button tabindex="0" id="add-group-link" @click="${(e) => this.addGroup(e)}">
                                 + Gruppe hinzufügen
                             </button>
                         </div>
                         <div id="image-container">
                             <div
                                 id="image"
-                                ?set="${page.recipe.imageUrl}"
-                                style="background-image: url('${page.recipe.imageUrl}')"
+                                ?set="${this.recipe.imageUrl}"
+                                style="background-image: url('${this.recipe.imageUrl}')"
                             >
                                 <upload-area
-                                    @imageReceived="${(e) => page.notifyImageAdded(e.detail.imageData)}"
+                                    @imageReceived="${(e) => this.notifyImageAdded(e.detail.imageData)}"
                                 ></upload-area>
                             </div>
 
@@ -16575,8 +16569,8 @@ function renderCreateRecipePage(page) {
                                 id="rating"
                                 max="5"
                                 singleSelect
-                                .values="${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_5__.createRange)(0, page.recipe.rating)}"
-                                @ratingChanged="${(e) => page.changeProperty('rating', e.detail.rating)}"
+                                .values="${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_5__.createRange)(0, this.recipe.rating)}"
+                                @ratingChanged="${(e) => this.changeProperty('rating', e.detail.rating)}"
                             ></star-rating>
                             <star-rating
                                 vertical
@@ -16584,10 +16578,10 @@ function renderCreateRecipePage(page) {
                                 id="difficulty"
                                 max="5"
                                 singleSelect
-                                .values="${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_5__.createRange)(0, page.recipe.difficulty)}"
-                                @ratingChanged="${(e) => page.changeProperty('difficulty', e.detail.rating)}"
+                                .values="${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_5__.createRange)(0, this.recipe.difficulty)}"
+                                @ratingChanged="${(e) => this.changeProperty('difficulty', e.detail.rating)}"
                             ></star-rating>
-                            <div id="nation-icon" nation="${page.recipe.nation}"></div>
+                            <div id="nation-icon" nation="${this.recipe.nation}"></div>
                         </div>
                     </div>
 
@@ -16598,8 +16592,8 @@ function renderCreateRecipePage(page) {
                                 <drop-down
                                     id="course"
                                     tabindex="0"
-                                    .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_3__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Course), page.recipe.course)}"
-                                    @selectionChange="${(e) => page.changeProperty('course', e.detail.option.value)}"
+                                    .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_3__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Course), this.recipe.course)}"
+                                    @selectionChange="${(e) => this.changeProperty('course', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                             <div class="description-input">
@@ -16607,8 +16601,8 @@ function renderCreateRecipePage(page) {
                                 <drop-down
                                     id="main-ingredient"
                                     tabindex="0"
-                                    .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_3__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Ingredient), page.recipe.mainIngredient)}"
-                                    @selectionChange="${(e) => page.changeProperty('mainIngredient', e.detail.option.value)}"
+                                    .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_3__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Ingredient), this.recipe.mainIngredient)}"
+                                    @selectionChange="${(e) => this.changeProperty('mainIngredient', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                             <div class="description-input">
@@ -16616,8 +16610,8 @@ function renderCreateRecipePage(page) {
                                 <drop-down
                                     id="technique"
                                     tabindex="0"
-                                    .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_3__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.CookingTechnique), page.recipe.technique)}"
-                                    @selectionChange="${(e) => page.changeProperty('technique', e.detail.option.value)}"
+                                    .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_3__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.CookingTechnique), this.recipe.technique)}"
+                                    @selectionChange="${(e) => this.changeProperty('technique', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                         </div>
@@ -16626,16 +16620,16 @@ function renderCreateRecipePage(page) {
                                 <div class="input-title">Vorbereitungsdauer:</div>
                                 <duration-input
                                     id="preparation-time"
-                                    .timespan="${_data_timespan__WEBPACK_IMPORTED_MODULE_2__.TimeSpan.fromString(page.recipe.preparationTime)}"
-                                    @duration-changed="${(e) => page.changeProperty('preparationTime', e.detail)}"
+                                    .timespan="${_data_timespan__WEBPACK_IMPORTED_MODULE_2__.TimeSpan.fromString(this.recipe.preparationTime)}"
+                                    @duration-changed="${(e) => this.changeProperty('preparationTime', e.detail)}"
                                 ></duration-input>
                             </div>
                             <div class="description-input">
                                 <div class="input-title">Kochdauer:</div>
                                 <duration-input
                                     id="cooking-time"
-                                    .timespan="${_data_timespan__WEBPACK_IMPORTED_MODULE_2__.TimeSpan.fromString(page.recipe.cookingTime)}"
-                                    @duration-changed="${(e) => page.changeProperty('cookingTime', e.detail)}"
+                                    .timespan="${_data_timespan__WEBPACK_IMPORTED_MODULE_2__.TimeSpan.fromString(this.recipe.cookingTime)}"
+                                    @duration-changed="${(e) => this.changeProperty('cookingTime', e.detail)}"
                                 ></duration-input>
                             </div>
                             <div class="description-input">
@@ -16643,8 +16637,8 @@ function renderCreateRecipePage(page) {
                                 <duration-input
                                     disabled
                                     id="total-time"
-                                    .timespan="${_data_timespan__WEBPACK_IMPORTED_MODULE_2__.TimeSpan.fromString(page.recipe.totalTime)}"
-                                    @duration-changed="${(e) => page.changeProperty('totalTime', e.detail)}"
+                                    .timespan="${_data_timespan__WEBPACK_IMPORTED_MODULE_2__.TimeSpan.fromString(this.recipe.totalTime)}"
+                                    @duration-changed="${(e) => this.changeProperty('totalTime', e.detail)}"
                                 ></duration-input>
                             </div>
                         </div>
@@ -16652,12 +16646,12 @@ function renderCreateRecipePage(page) {
                     <textarea
                         id="recipe-text"
                         oninput="this.dispatchEvent(new Event('change'))"
-                        @change="${(e) => page.changeProperty('formattedText', e.target.value)}"
-                        .value="${page.recipe.formattedText}"
+                        @change="${(e) => this.changeProperty('formattedText', e.target.value)}"
+                        .value="${this.recipe.formattedText ?? ''}"
                     >
                     </textarea>
                     <div id="action-area">
-                        <input type="button" value="Abbrechen" @click="${() => page.abort()}" />
+                        <input type="button" value="Abbrechen" @click="${() => this.abort()}" />
                         <input type="submit" value="Erstellen" />
                     </div>
                 </form>
@@ -16665,11 +16659,7 @@ function renderCreateRecipePage(page) {
         </page-layout>
     `;
 }
-/**
- * @param {[name: string, ingredients: IngredientModel[]]} group
- * @param {CreateRecipePage} page
- */
-function renderIngredientGroup(group, page) {
+function renderIngredientGroup(group) {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div id="${group[0]}" class="ingredient-group">
             <input
@@ -16678,23 +16668,20 @@ function renderIngredientGroup(group, page) {
                 .value="${group[0]}"
                 onclick="javascript:this.select()"
                 @input="${(e) => handleLabelInput(e)}"
-                @change="${(e) => page.renameGroup(group[1], e.detail.value)}"
+                @change="${(e) => this.renameGroup(group[1], e.target.value)}"
             />
             <priority-list
                 .items="${group[1]}"
                 .itemRenderer="${renderIngredient}"
-                @delete-item="${(e) => page.removeItem(e.detail)}"
+                @delete-item="${(e) => this.removeItem(e.detail)}"
             >
             </priority-list>
-            <button tabindex="0" id="add-ingredient-link" @click="${(e) => page.addIngredient(group[0], e)}">
+            <button tabindex="0" id="add-ingredient-link" @click="${(e) => this.addIngredient(group[0], e)}">
                 + Zutat hinzufügen
             </button>
         </div>
     `;
 }
-/**
- * @param {IngredientModel} ingredient
- */
 function renderIngredient(ingredient) {
     var unit = ingredient['unit'] ?? _data_enumerations_extended_ingerdient_unit__WEBPACK_IMPORTED_MODULE_1__.ExtendedIngredientUnit[ingredient.measurement][0];
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div class="ingredient">
@@ -16713,7 +16700,7 @@ function renderIngredient(ingredient) {
             .result="${{ category: ingredient.measurement, value: unit }}"
             .options="${_data_enumerations_extended_ingerdient_unit__WEBPACK_IMPORTED_MODULE_1__.ExtendedIngredientUnit}"
             class="ingredient-unit"
-            @change="${(e) => ([ingredient.measurement, ingredient['unit']] = [e.detail.category, e.detail.value])}"
+            @selectionChange="${(e) => ([ingredient.measurement, ingredient['unit']] = [e.detail.category, e.detail.value])}"
         ></grouped-dropdown>
         <input
             type="text"
@@ -16721,22 +16708,18 @@ function renderIngredient(ingredient) {
             .value="${ingredient.name}"
             onclick="javascript:this.select()"
             @input="${(e) => handleLabelInput(e)}"
-            @change="${(e) => (ingredient.name = e.detail.value)}"
+            @change="${(e) => (ingredient.name = e.target.value)}"
         />
         <input
             type="text"
             class="ingredient-description"
-            .value="${ingredient.description}"
+            .value="${ingredient.description ?? ''}"
             onclick="javascript:this.select()"
             @input="${(e) => handleLabelInput(e)}"
-            @change="${(e) => (ingredient.description = e.detail.value)}"
+            @change="${(e) => (ingredient.description = e.target.value)}"
         />
     </div>`;
 }
-/**
- * @param {KeyboardEvent} e
- * @param {RegExp} [supportedCharacters]
- */
 function handleLabelInput(e, supportedCharacters) {
     if (!supportedCharacters || e.key.length != 1 || e.key.match(supportedCharacters))
         return;
@@ -16754,7 +16737,6 @@ function handleLabelInput(e, supportedCharacters) {
   \********************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -16811,19 +16793,16 @@ let CreateRecipePage = class CreateRecipePage extends _data_lit_element_base__WE
         }
         return defaultIngredient;
     }
-    constructor() {
-        super();
-        /** @type {string} */ this.recipeId = null;
-        /** @type {RecipeModel} */ this.recipe = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.RecipeModel();
-        this.recipe.id = crypto.randomUUID();
-        this.recipe.title = 'Rezepttitel';
-        this.recipe.ingredients = [];
-        this.recipe.nation = _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.Language.Unset;
-        this.recipe.difficulty = 0;
-        this.recipe.rating = 0;
-        this.recipe.formattedText = 'Dein Rezept-Text';
-        this.recipe.ingredients.push(this.emptyGroup);
-    }
+    recipeId = null;
+    recipe = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.RecipeModel({
+        id: crypto.randomUUID(),
+        title: 'Rezepttitel',
+        nation: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.Language.Unset,
+        difficulty: 0,
+        rating: 0,
+        formattedText: 'Dein Rezept-Text',
+        ingredients: [this.emptyGroup],
+    });
     async connectedCallback() {
         super.connectedCallback();
         var requestedRecipeId = (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_5__.getQueryValue)('recipe');
@@ -16833,21 +16812,14 @@ let CreateRecipePage = class CreateRecipePage extends _data_lit_element_base__WE
         }
     }
     render() {
-        return (0,_create_recipe_page_html__WEBPACK_IMPORTED_MODULE_8__.renderCreateRecipePage)(this);
+        return _create_recipe_page_html__WEBPACK_IMPORTED_MODULE_8__.renderCreateRecipePage.call(this);
     }
-    /**
-     * @param {Event} event
-     */
     addGroup(event) {
         event.stopPropagation();
         event.preventDefault();
         this.recipe.ingredients.push(this.emptyGroup);
         this.requestFullUpdate();
     }
-    /**
-     * @param {string} group
-     * @param {Event} event
-     */
     addIngredient(group, event) {
         event.stopPropagation();
         event.preventDefault();
@@ -16863,42 +16835,23 @@ let CreateRecipePage = class CreateRecipePage extends _data_lit_element_base__WE
         }));
         this.requestFullUpdate();
     }
-    /**
-     *
-     * @param {keyof import('../../obscuritas-media-manager-backend-client').IRecipeModel} property
-     * @param {string} value
-     */
     changeProperty(property, value) {
-        /** @type {any} */ this.recipe[property] = value;
+        this.recipe[property] = value;
         this.requestFullUpdate();
     }
-    /**
-     *
-     * @param { IngredientModel[] } affectedIngredients
-     * @param {string} newName
-     */
     renameGroup(affectedIngredients, newName) {
         for (var ingredient of affectedIngredients)
             ingredient.groupName = newName;
         this.requestFullUpdate();
     }
-    /**
-     * @param {string} imageData
-     */
     notifyImageAdded(imageData) {
         this.recipe.imageUrl = imageData;
         this.requestFullUpdate();
     }
-    /**
-     * @param {IngredientModel} ingredient
-     */
     removeItem(ingredient) {
         this.recipe.ingredients = this.recipe.ingredients.filter((x) => x.id != ingredient.id);
         this.requestFullUpdate();
     }
-    /**
-     * @param {SubmitEvent} event
-     */
     async submit(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -16916,6 +16869,12 @@ let CreateRecipePage = class CreateRecipePage extends _data_lit_element_base__WE
         history.back();
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], CreateRecipePage.prototype, "recipeId", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], CreateRecipePage.prototype, "recipe", void 0);
 CreateRecipePage = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('create-recipe-page')
 ], CreateRecipePage);
@@ -16932,7 +16891,6 @@ __webpack_async_result__();
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderLoginPageStyles: () => (/* binding */ renderLoginPageStyles)
@@ -17017,41 +16975,37 @@ function renderLoginPageStyles() {
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderLoginPage: () => (/* binding */ renderLoginPage)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param { LoginPage } loginPage
- */
-function renderLoginPage(loginPage) {
+function renderLoginPage() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div id="page-container">
-            <form id="login-form" action="javascript:void(0)" @submit="${() => loginPage.login()}">
+            <form id="login-form" action="javascript:void(0)" @submit="${() => this.login()}">
                 <div id="username-container" class="floating-container">
-                    <label for="username" ?float="${loginPage.username.length > 0}">Benutzername</label>
+                    <label for="username" ?float="${this.username.length > 0}">Benutzername</label>
                     <input
                         required
                         id="username"
                         type="text"
                         autocomplete="username"
                         oninput="javascript:this.dispatchEvent(new Event('change'))"
-                        @change="${(e) => (loginPage.username = e.target.value)}"
+                        @change="${(e) => (this.username = e.target.value)}"
                     />
                 </div>
 
                 <div id="password-container" class="floating-container">
-                    <label for="password" ?float="${loginPage.password.length > 0}">Passwort</label>
+                    <label for="password" ?float="${this.password.length > 0}">Passwort</label>
                     <input
                         required
                         id="password"
                         type="password"
                         autocomplete="current-password"
                         oninput="javascript:this.dispatchEvent(new Event('change'))"
-                        @change="${(e) => (loginPage.password = e.target.value)}"
+                        @change="${(e) => (this.password = e.target.value)}"
                     />
                 </div>
 
@@ -17070,7 +17024,6 @@ function renderLoginPage(loginPage) {
   \****************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -17111,11 +17064,8 @@ let LoginPage = class LoginPage extends _data_lit_element_base__WEBPACK_IMPORTED
     static get properties() {
         return { username: { type: String, reflect: false }, password: { type: String, reflect: false } };
     }
-    constructor() {
-        super();
-        this.username = '';
-        this.password = '';
-    }
+    username = '';
+    password = '';
     async login() {
         try {
             var request = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_3__.CredentialsRequest({ username: this.username, password: this.password });
@@ -17129,9 +17079,15 @@ let LoginPage = class LoginPage extends _data_lit_element_base__WEBPACK_IMPORTED
         }
     }
     render() {
-        return (0,_login_page_html__WEBPACK_IMPORTED_MODULE_8__.renderLoginPage)(this);
+        return _login_page_html__WEBPACK_IMPORTED_MODULE_8__.renderLoginPage.call(this);
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], LoginPage.prototype, "username", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], LoginPage.prototype, "password", void 0);
 LoginPage = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('login-page')
 ], LoginPage);
@@ -17148,7 +17104,6 @@ __webpack_async_result__();
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   editIcon: () => (/* binding */ editIcon)
@@ -17172,7 +17127,6 @@ function editIcon() {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   trashIcon: () => (/* binding */ trashIcon)
@@ -17194,7 +17148,6 @@ function trashIcon() {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMediaDetailPageStyles: () => (/* binding */ renderMediaDetailPageStyles)
@@ -17707,7 +17660,6 @@ function renderMediaDetailPageStyles() {
   \***********************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -17722,10 +17674,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/extensions/array.extensions */ "./services/extensions/array.extensions.ts");
 /* harmony import */ var _services_extensions_enum_extensions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/extensions/enum.extensions */ "./services/extensions/enum.extensions.ts");
 /* harmony import */ var _music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../music-playlist-page/music-playlist-page */ "./pages/music-playlist-page/music-playlist-page.ts");
-/* harmony import */ var _music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _media_detail_page__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./media-detail-page */ "./pages/media-detail-page/media-detail-page.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__, _media_detail_page__WEBPACK_IMPORTED_MODULE_9__]);
-([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__, _media_detail_page__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__, _music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_8__, _media_detail_page__WEBPACK_IMPORTED_MODULE_9__]);
+([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__, _music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_8__, _media_detail_page__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -17736,61 +17687,58 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_nat
 
 
 
-/**
- * @param {MediaDetailPage} detailPage
- */
-function renderMediaDetailPage(detailPage) {
+function renderMediaDetailPage() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <img
             id="dummy-image"
-            src="${detailPage.imageUrl}"
-            @load="${() => (detailPage.hasImage = true)}"
-            @error="${() => (detailPage.hasImage = false)}"
+            src="${this.imageUrl}"
+            @load="${() => (this.hasImage = true)}"
+            @error="${() => (this.hasImage = false)}"
         />
         <div
             id="edit-button"
             onclick="this.dispatchEvent(new CustomEvent('toggle'))"
-            @toggle="${(e) => detailPage.changeProperty('complete', !detailPage.updatedMedia.complete)}"
+            @toggle="${(e) => this.changeProperty('complete', !this.updatedMedia.complete)}"
         >
             <custom-toggle
-                .state="${detailPage.updatedMedia.complete ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid}"
+                .state="${this.updatedMedia.complete ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid}"
                 id="edit-toggle"
             ></custom-toggle>
-            <div id="toggle-edit-text">${detailPage.updatedMedia.complete ? 'Vollständig' : 'Unvollständig'}</div>
+            <div id="toggle-edit-text">${this.updatedMedia.complete ? 'Vollständig' : 'Unvollständig'}</div>
         </div>
         <page-layout>
             <div id="media-detail-container">
                 <div id="content-panels">
-                    <div id="left-panel" ?disabled="${detailPage.updatedMedia.complete}">
+                    <div id="left-panel" ?disabled="${this.updatedMedia.complete}">
                         <div id="media-image-container">
-                            ${detailPage.hasImage
+                            ${this.hasImage
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
                                       id="media-image"
-                                      style="background-image: url('${detailPage.imageUrl}')"
-                                      @click="${() => detailPage.setMediaImage(null)}"
+                                      style="background-image: url('${this.imageUrl}')"
+                                      @click="${() => this.setMediaImage(null)}"
                                   ></div>`
         : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<upload-area
-                                      @imageReceived="${(e) => detailPage.setMediaImage(e.detail.imageData)}"
+                                      @imageReceived="${(e) => this.setMediaImage(e.detail.imageData)}"
                                   ></upload-area>`}
                         </div>
 
-                        <div id="media-rating" ?disabled="${detailPage.updatedMedia.complete}">
+                        <div id="media-rating" ?disabled="${this.updatedMedia.complete}">
                             <star-rating
                                 max="5"
                                 singleSelect
-                                .values="${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_6__.createRange)(0, detailPage.updatedMedia.rating)}"
-                                @ratingChanged="${(e) => detailPage.changeProperty('rating', e.detail.rating)}"
+                                .values="${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_6__.createRange)(0, this.updatedMedia.rating)}"
+                                @ratingChanged="${(e) => this.changeProperty('rating', e.detail.rating)}"
                             ></star-rating>
                         </div>
                     </div>
-                    <div id="middle-panel" ?disabled="${detailPage.updatedMedia.complete}">
+                    <div id="middle-panel" ?disabled="${this.updatedMedia.complete}">
                         <div id="content-warning-section" class="property-entry">
                             <div class="property-name">Inhaltswarnungen:</div>
                             <div id="content-warnings">
                                 ${Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.ContentWarning).map((warning) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
                                             class="content-warning-icon-wrapper"
-                                            ?selected="${detailPage.updatedMedia?.contentWarnings?.includes(warning)}"
-                                            @click="${() => detailPage.toggleContentWarning(warning)}"
+                                            ?selected="${this.updatedMedia?.contentWarnings?.includes(warning)}"
+                                            @click="${() => this.toggleContentWarning(warning)}"
                                         >
                                             <div class="content-warning-icon" content-warning="${warning}"></div>
                                             <div class="content-warning-label">${warning}</div>
@@ -17799,16 +17747,16 @@ function renderMediaDetailPage(detailPage) {
                         </div>
                     </div>
                     <div id="right-panel">
-                        ${detailPage.createNew
+                        ${this.createNew
         ? ''
         : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="navigation">
-                                  ${detailPage.prevMediaId
-            ? _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_media_detail_page__WEBPACK_IMPORTED_MODULE_9__.MediaDetailPage, { mediaId: detailPage.prevMediaId }, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `&LeftArrow; Letzter`, {
+                                  ${this.prevMediaId
+            ? _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_media_detail_page__WEBPACK_IMPORTED_MODULE_9__.MediaDetailPage, { mediaId: this.prevMediaId }, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `&LeftArrow; Letzter`, {
                 id: 'prev-link',
             })
             : ''}
-                                  ${detailPage.nextMediaId
-            ? _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_media_detail_page__WEBPACK_IMPORTED_MODULE_9__.MediaDetailPage, { mediaId: detailPage.nextMediaId }, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `Nächster &RightArrow;`, {
+                                  ${this.nextMediaId
+            ? _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_media_detail_page__WEBPACK_IMPORTED_MODULE_9__.MediaDetailPage, { mediaId: this.nextMediaId }, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `Nächster &RightArrow;`, {
                 id: 'next-link',
             })
             : ''}
@@ -17819,116 +17767,116 @@ function renderMediaDetailPage(detailPage) {
                                 id="popup-icon"
                                 icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.Popup}"
                                 tooltip="Auf AniList suchen"
-                                @click="${() => detailPage.openMediaExternal()}"
+                                @click="${() => this.openMediaExternal()}"
                             ></div>
                             <input
-                                ?disabled="${detailPage.updatedMedia.complete}"
+                                ?disabled="${this.updatedMedia.complete}"
                                 type="text"
                                 id="media-name"
-                                @change="${() => detailPage.changeProperty('name', detailPage.nameInputValue)}"
+                                @change="${() => this.changeProperty('name', this.nameInputValue)}"
                                 class="property-value"
-                                .value="${detailPage.updatedMedia.name}"
+                                .value="${this.updatedMedia.name}"
                             />
                         </div>
 
                         <link-element
                             id="trailer-link"
-                            href="https://www.youtube.com/results?search_query=${detailPage.updatedMedia.name}%20trailer"
+                            href="https://www.youtube.com/results?search_query=${this.updatedMedia.name}%20trailer"
                             target="_blank"
                             >Trailer suchen</link-element
                         >
-                        ${detailPage.isJapanese
+                        ${this.isJapanese
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div class="property-entry sub-entry">
                                       <div class="property-name">Romaji:</div>
                                       <input
-                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          ?disabled="${this.updatedMedia.complete}"
                                           type="text"
                                           class="property-value"
-                                          .value="${detailPage.updatedMedia.romajiName}"
-                                          @change="${(e) => detailPage.changeProperty('romajiName', e.currentTarget.value)}"
+                                          .value="${this.updatedMedia.romajiName ?? ''}"
+                                          @change="${(e) => this.changeProperty('romajiName', e.currentTarget.value)}"
                                       />
                                   </div>
                                   <div class="property-entry sub-entry">
                                       <div class="property-name">Kanji:</div>
                                       <input
-                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          ?disabled="${this.updatedMedia.complete}"
                                           type="text"
                                           class="property-value"
-                                          .value="${detailPage.updatedMedia.kanjiName}"
-                                          @change="${(e) => detailPage.changeProperty('kanjiName', e.currentTarget.value)}"
+                                          .value="${this.updatedMedia.kanjiName ?? ''}"
+                                          @change="${(e) => this.changeProperty('kanjiName', e.currentTarget.value)}"
                                       />
                                   </div>
                                   <div class="property-entry sub-entry">
                                       <div class="property-name">Deutsch:</div>
                                       <input
-                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          ?disabled="${this.updatedMedia.complete}"
                                           type="text"
                                           class="property-value"
-                                          .value="${detailPage.updatedMedia.germanName}"
-                                          @change="${(e) => detailPage.changeProperty('germanName', e.currentTarget.value)}"
+                                          .value="${this.updatedMedia.germanName ?? ''}"
+                                          @change="${(e) => this.changeProperty('germanName', e.currentTarget.value)}"
                                       />
                                   </div>
                                   <div class="property-entry sub-entry">
                                       <div class="property-name">Englisch:</div>
                                       <input
-                                          ?disabled="${detailPage.updatedMedia.complete}"
+                                          ?disabled="${this.updatedMedia.complete}"
                                           type="text"
                                           class="property-value"
-                                          .value="${detailPage.updatedMedia.englishName}"
-                                          @change="${(e) => detailPage.changeProperty('englishName', e.currentTarget.value)}"
+                                          .value="${this.updatedMedia.englishName ?? ''}"
+                                          @change="${(e) => this.changeProperty('englishName', e.currentTarget.value)}"
                                       />
                                   </div>`
         : ''}
 
                         <div class="separator"></div>
-                        ${renderGenreSection(detailPage)}
+                        ${renderGenreSection.call(this)}
                         <div id="right-panel-top">
                             <div id="right-panel-left-side">
                                 <div class="property-entry">
                                     <div class="property-name">Release:</div>
                                     <input
                                         id="release-input"
-                                        ?disabled="${detailPage.updatedMedia.complete}"
+                                        ?disabled="${this.updatedMedia.complete}"
                                         type="text"
                                         class="property-value"
-                                        .value="${detailPage.updatedMedia.release.toString()}"
-                                        @input="${(e) => detailPage.releaseInput(e.currentTarget)}"
-                                        @change="${(e) => detailPage.releaseChanged(e.currentTarget)}"
+                                        .value="${this.updatedMedia.release.toString()}"
+                                        @input="${(e) => this.releaseInput(e.currentTarget)}"
+                                        @change="${(e) => this.releaseChanged(e.currentTarget)}"
                                     />
                                 </div>
                                 <div class="property-entry">
                                     <div class="property-name">Kategorie:</div>
                                     <drop-down
                                         class="property-value"
-                                        ?disabled="${detailPage.updatedMedia.complete}"
-                                        .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_2__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.MediaCategory), detailPage.updatedMedia.type)}"
+                                        ?disabled="${this.updatedMedia.complete}"
+                                        .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_2__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.MediaCategory), this.updatedMedia.type)}"
                                     ></drop-down>
                                 </div>
                                 <div class="property-entry">
                                     <div class="property-name">Sprache:</div>
                                     <drop-down
                                         class="property-value"
-                                        ?disabled="${detailPage.updatedMedia.complete}"
-                                        .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_2__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Language), detailPage.updatedMedia.language)}"
-                                        @selectionChange="${(e) => detailPage.changeProperty('language', e.detail.option.value)}"
+                                        ?disabled="${this.updatedMedia.complete}"
+                                        .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_2__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Language), this.updatedMedia.language)}"
+                                        @selectionChange="${(e) => this.changeProperty('language', e.detail.option.value)}"
                                     ></drop-down>
                                 </div>
                                 <div class="property-entry">
                                     <div class="property-name">Status:</div>
                                     <drop-down
                                         class="property-value"
-                                        ?disabled="${detailPage.updatedMedia.complete}"
-                                        .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_2__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.MediaStatus), detailPage.updatedMedia.status)}"
-                                        @selectionChange="${(e) => detailPage.changeProperty('status', e.detail.option.value)}"
+                                        ?disabled="${this.updatedMedia.complete}"
+                                        .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_2__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.MediaStatus), this.updatedMedia.status)}"
+                                        @selectionChange="${(e) => this.changeProperty('status', e.detail.option.value)}"
                                     ></drop-down>
                                 </div>
                             </div>
-                            <div id="target-group-section" class="property-entry" ?disabled="${detailPage.updatedMedia.complete}">
+                            <div id="target-group-section" class="property-entry" ?disabled="${this.updatedMedia.complete}">
                                 <div class="property-name">Zielgruppe:</div>
                                 <div
                                     id="target-group-icon"
-                                    target-group="${detailPage.updatedMedia.targetGroup}"
-                                    @click="${() => detailPage.changeProperty('targetGroup', _services_extensions_enum_extensions__WEBPACK_IMPORTED_MODULE_7__.Enum.nextValue(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.TargetGroup, detailPage.updatedMedia.targetGroup, 'None'))}"
+                                    target-group="${this.updatedMedia.targetGroup}"
+                                    @click="${() => this.changeProperty('targetGroup', _services_extensions_enum_extensions__WEBPACK_IMPORTED_MODULE_7__.Enum.nextValue(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.TargetGroup, this.updatedMedia.targetGroup, 'None'))}"
                                 ></div>
                                 <svg id="target-group-label" viewbox="0 0 100 30">
                                     <text
@@ -17939,18 +17887,18 @@ function renderMediaDetailPage(detailPage) {
                                         fill="white"
                                         dominant-baseline="central"
                                     >
-                                        ${detailPage.updatedMedia.targetGroup}
+                                        ${this.updatedMedia.targetGroup}
                                     </text>
                                 </svg>
                             </div>
                         </div>
-                        ${detailPage.relatedTracks.length > 0
+                        ${this.relatedTracks.length > 0
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                                   <div id="related-tracks-section" class="property-group">
                                       <div class="property-entry">
                                           <div class="property-name" style="width: unset">Verwandte Songs:</div>
                                       </div>
-                                      ${detailPage.relatedTracks.map((track) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+                                      ${this.relatedTracks.map((track) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                                               <div class="property-entry">
                                                   ♫
                                                   ${_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_8__.MusicPlaylistPage, { trackHash: track.hash }, track.name, { class: 'track-name' })}
@@ -17967,18 +17915,18 @@ function renderMediaDetailPage(detailPage) {
                         <div class="property-name">Beschreibung:</div>
                     </div>
                     <textarea
-                        ?disabled="${detailPage.updatedMedia.complete}"
+                        ?disabled="${this.updatedMedia.complete}"
                         class="textarea property-value"
                         id="description-input"
                         onclick="this.focus()"
-                        @change="${(e) => detailPage.changeProperty('description', e.currentTarget.value)}"
-                        .value="${detailPage.updatedMedia.description}"
+                        @change="${(e) => this.changeProperty('description', e.currentTarget.value)}"
+                        .value="${this.updatedMedia.description ?? ''}"
                     ></textarea>
                 </div>
-                ${detailPage.createNew
+                ${this.createNew
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                           <div id="action-row">
-                              <div id="create-entry-link" @click="${() => detailPage.createEntry()}">
+                              <div id="create-entry-link" @click="${() => this.createEntry()}">
                                   <div id="create-entry-icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.SaveTick}"></div>
                                   <div id="create-entry-text">Eintrag erstellen</div>
                               </div>
@@ -17987,40 +17935,32 @@ function renderMediaDetailPage(detailPage) {
         : ''}
                 <div id="path-row">
                     <label>Basispfad: </label>
-                    <input
-                        id="path"
-                        type="text"
-                        readonly
-                        value="${detailPage.updatedMedia.rootFolderPath ?? 'Kein Pfad ausgewählt'}"
-                    />
+                    <input id="path" type="text" readonly value="${this.updatedMedia.rootFolderPath ?? 'Kein Pfad ausgewählt'}" />
                     <div
                         id="edit-path-button"
                         icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.Edit}"
-                        ?disabled="${detailPage.updatedMedia.complete}"
+                        ?disabled="${this.updatedMedia.complete}"
                         tooltip="PC durchsuchen"
-                        @click="${() => detailPage.changeBasePath()}"
+                        @click="${() => this.changeBasePath()}"
                     ></div>
                 </div>
             </div>
         </page-layout>
     `;
 }
-/**
- * @param {MediaDetailPage} page
- */
-function renderGenreSection(page) {
+function renderGenreSection() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div class="property-entry genre-entry">
         <div class="property-name">Genres:</div>
         <div class="property-value">
-            ${Object.entries((0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_6__.groupBy)(page.updatedMedia?.genres, 'section'))
+            ${Object.entries((0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_6__.groupBy)(this.updatedMedia?.genres ?? [], 'section'))
         .flatMap((x) => x[1])
         .map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<tag-label
-                            ?disabled="${page.updatedMedia.complete}"
-                            @removed="${() => page.changeProperty('genres', page.updatedMedia.genres.filter((genre) => genre != x))}"
+                            ?disabled="${this.updatedMedia.complete}"
+                            @removed="${() => this.changeProperty('genres', this.updatedMedia.genres.filter((genre) => genre != x))}"
                             .text="${x.name}"
                         ></tag-label>`)}
-            ${!page.updatedMedia.complete
-        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="add-genre-button" @click="${() => page.showGenreSelectionDialog()}">+</div> `
+            ${!this.updatedMedia.complete
+        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="add-genre-button" @click="${() => this.showGenreSelectionDialog()}">+</div> `
         : ''}
         </div>
     </div> `;
@@ -18037,7 +17977,6 @@ __webpack_async_result__();
   \******************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -18058,8 +17997,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_media_filter_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../services/media-filter.service */ "./services/media-filter.service.ts");
 /* harmony import */ var _media_detail_page_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./media-detail-page.css */ "./pages/media-detail-page/media-detail-page.css.ts");
 /* harmony import */ var _media_detail_page_html__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./media-detail-page.html */ "./pages/media-detail-page/media-detail-page.html.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_4__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_6__, _services_backend_services__WEBPACK_IMPORTED_MODULE_8__, _services_client_interop_service__WEBPACK_IMPORTED_MODULE_9__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_11__, _media_detail_page_html__WEBPACK_IMPORTED_MODULE_14__]);
-([_data_session__WEBPACK_IMPORTED_MODULE_4__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_6__, _services_backend_services__WEBPACK_IMPORTED_MODULE_8__, _services_client_interop_service__WEBPACK_IMPORTED_MODULE_9__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_11__, _media_detail_page_html__WEBPACK_IMPORTED_MODULE_14__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_4__, _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_5__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_6__, _services_backend_services__WEBPACK_IMPORTED_MODULE_8__, _services_client_interop_service__WEBPACK_IMPORTED_MODULE_9__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_11__, _media_detail_page_html__WEBPACK_IMPORTED_MODULE_14__]);
+([_data_session__WEBPACK_IMPORTED_MODULE_4__, _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_5__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_6__, _services_backend_services__WEBPACK_IMPORTED_MODULE_8__, _services_client_interop_service__WEBPACK_IMPORTED_MODULE_9__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_11__, _media_detail_page_html__WEBPACK_IMPORTED_MODULE_14__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18089,22 +18028,11 @@ let MediaDetailPage = MediaDetailPage_1 = class MediaDetailPage extends _data_li
     static get styles() {
         return (0,_media_detail_page_css__WEBPACK_IMPORTED_MODULE_13__.renderMediaDetailPageStyles)();
     }
-    static get properties() {
-        return {
-            createNew: { type: Boolean, reflect: true },
-            newGenre: { type: Boolean, reflect: false },
-            hoveredRating: { type: Number, reflect: false },
-            selectedSeason: { type: Number, reflect: false },
-            hasImage: { type: Boolean, reflect: false },
-            imageRevision: { type: Number, reflect: false },
-        };
-    }
     get nameInputValue() {
-        return /** @type {HTMLInputElement} */ this.shadowRoot.querySelector('#media-name').value;
+        return this.shadowRoot.querySelector('#media-name')?.value;
     }
-    /** @returns {HTMLElement} */
     get seasonScrollContainer() {
-        var element = this.shadowRoot.getElementById('season-inner');
+        var element = this.shadowRoot.querySelector('#season-inner');
         if (element)
             return element;
         return undefined;
@@ -18128,37 +18056,25 @@ let MediaDetailPage = MediaDetailPage_1 = class MediaDetailPage extends _data_li
         var type = this.updatedMedia.type;
         return type == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_7__.MediaCategory.AnimeMovies || type == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_7__.MediaCategory.AnimeSeries || type == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_7__.MediaCategory.JDrama;
     }
-    constructor() {
-        super();
-        /** @type {string} */ this.mediaId = null;
-        /** @type {MediaModel} */ this.updatedMedia = null;
-        /** @type {string[]} */ this.mediaIds = [];
-        /** @type {boolean} */ this.createNew = false;
-        /** @type {boolean} */ this.hasImage = false;
-        /** @type {MusicModel[]} */ this.relatedTracks = [];
-        /** @type {number} */ this.imageRevision = Date.now();
-        this.hoveredRating = 0;
-        this.selectedSeason = 0;
-    }
     async connectedCallback() {
+        this.imageRevision = Date.now();
+        this.mediaIds = [];
+        this.relatedTracks = [];
         if (this.createNew)
             this.updatedMedia = await _services_backend_services__WEBPACK_IMPORTED_MODULE_8__.MediaService.getDefault();
         super.connectedCallback();
         this.subscriptions.push(_data_session__WEBPACK_IMPORTED_MODULE_4__.Session.mediaList.subscribe((newList) => {
-            var filter = _advanced_components_media_filter_sidebar_media_filter__WEBPACK_IMPORTED_MODULE_1__.MediaFilter.fromJSON(localStorage.getItem(`media.search`));
+            var filter = _advanced_components_media_filter_sidebar_media_filter__WEBPACK_IMPORTED_MODULE_1__.MediaFilter.fromJSON(localStorage.getItem(`media.search`) ?? '');
             this.mediaIds = _services_media_filter_service__WEBPACK_IMPORTED_MODULE_12__.MediaFilterService.filter([...newList], filter).map((x) => x.id);
         }));
         _data_session__WEBPACK_IMPORTED_MODULE_4__.Session.mediaList.refresh();
     }
     render() {
         if (!this.updatedMedia)
-            return;
+            return null;
         document.title = this.updatedMedia.name;
-        return (0,_media_detail_page_html__WEBPACK_IMPORTED_MODULE_14__.renderMediaDetailPage)(this);
+        return _media_detail_page_html__WEBPACK_IMPORTED_MODULE_14__.renderMediaDetailPage.call(this);
     }
-    /**
-     * @param {Map<keyof MediaDetailPage, any>} _changedProperties
-     */
     async updated(_changedProperties) {
         super.updated(_changedProperties);
         if (this.mediaId != this.updatedMedia?.id && !this.createNew) {
@@ -18174,19 +18090,14 @@ let MediaDetailPage = MediaDetailPage_1 = class MediaDetailPage extends _data_li
     }
     async showGenreSelectionDialog() {
         var genreDialog = await _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_5__.GenreDialog.startShowingWithGenres(this.updatedMedia.genres);
-        genreDialog.addEventListener('accept', async (/** @type {CustomEvent<GenreDialogResult>} */ e) => {
-            await this.changeProperty('genres', /** @type {MediaGenreModel[]} */ e.detail.acceptedGenres);
+        genreDialog.addEventListener('accept', async (e) => {
+            await this.changeProperty('genres', e.detail.acceptedGenres);
             genreDialog.remove();
         });
     }
-    /**
-     * @template {keyof MediaModel} T
-     * @param {T} property
-     * @param {MediaModel[T]} value
-     */
     async changeProperty(property, value) {
         try {
-            /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
+            const { oldModel, newModel } = { oldModel: {}, newModel: {} };
             oldModel[property] = this.updatedMedia[property];
             newModel[property] = value;
             if (!this.createNew) {
@@ -18209,9 +18120,6 @@ let MediaDetailPage = MediaDetailPage_1 = class MediaDetailPage extends _data_li
         this.imageRevision = Date.now();
         await this.requestFullUpdate();
     }
-    /**
-     * @param {HTMLInputElement} inputElement
-     */
     async releaseChanged(inputElement) {
         var numberValue = Number.parseInt(inputElement.value);
         var maxYears = new Date().getFullYear() + 2;
@@ -18223,24 +18131,21 @@ let MediaDetailPage = MediaDetailPage_1 = class MediaDetailPage extends _data_li
             inputElement.value = `${numberValue}`;
         await this.changeProperty('release', numberValue);
     }
-    /**
-     * @param {HTMLInputElement} inputElement
-     */
     releaseInput(inputElement) {
         var numberValue = Number.parseInt(inputElement.value);
         if (`${numberValue}` != inputElement.value)
             inputElement.value = `${numberValue}`;
     }
-    /**
-     * @param {ContentWarning} warning
-     */
     async toggleContentWarning(warning) {
         if (!this.updatedMedia.contentWarnings.includes(warning))
             return await this.changeProperty('contentWarnings', this.updatedMedia.contentWarnings.concat(warning));
         return await this.changeProperty('contentWarnings', this.updatedMedia.contentWarnings.filter((x) => x != warning));
     }
     async changeBasePath() {
-        var folderPath = await _services_client_interop_service__WEBPACK_IMPORTED_MODULE_9__.ClientInteropService.executeQuery({ query: _client_interop_interop_query__WEBPACK_IMPORTED_MODULE_2__.InteropQuery.RequestFolderPath, payload: null });
+        var folderPath = await _services_client_interop_service__WEBPACK_IMPORTED_MODULE_9__.ClientInteropService.executeQuery({
+            query: _client_interop_interop_query__WEBPACK_IMPORTED_MODULE_2__.InteropQuery.RequestFolderPath,
+            payload: null,
+        });
         if (!folderPath)
             return;
         await this.changeProperty('rootFolderPath', folderPath);
@@ -18272,6 +18177,33 @@ let MediaDetailPage = MediaDetailPage_1 = class MediaDetailPage extends _data_li
             window.open(`https://www.imdb.com/find/?q=${this.updatedMedia.name}&ref_=nv_sr_sm`);
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaDetailPage.prototype, "mediaId", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaDetailPage.prototype, "updatedMedia", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaDetailPage.prototype, "mediaIds", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaDetailPage.prototype, "hasImage", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaDetailPage.prototype, "relatedTracks", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaDetailPage.prototype, "imageRevision", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaDetailPage.prototype, "hoveredRating", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaDetailPage.prototype, "selectedSeason", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaDetailPage.prototype, "createNew", void 0);
 MediaDetailPage = MediaDetailPage_1 = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('media-detail-page')
 ], MediaDetailPage);
@@ -18288,7 +18220,6 @@ __webpack_async_result__();
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMediaPageStyles: () => (/* binding */ renderMediaPageStyles)
@@ -18411,7 +18342,6 @@ function renderMediaPageStyles() {
   \*********************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -18429,37 +18359,34 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_nat
 
 
 
-/**
- * @param {MediaPage} page
- */
-function renderMediaPageTemplate(page) {
+function renderMediaPageTemplate() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<page-layout>
         <div id="media-page-container">
-            <media-filter-sidebar id="media-filter" .filter="${page.filter}" @change="${() => page.requestFullUpdate()}">
-                <div slot="footer" id="result-overview">${page.filteredMedia.length} Ergebnisse gefunden</div>
+            <media-filter-sidebar id="media-filter" .filter="${this.filter}" @change="${() => this.requestFullUpdate()}">
+                <div slot="footer" id="result-overview">${this.filteredMedia.length} Ergebnisse gefunden</div>
             </media-filter-sidebar>
             <paginated-scrolling
                 id="results"
                 scrollTopThreshold="50"
                 @scrollBottom="${() => {
-        page.page++;
-        page.requestFullUpdate();
+        this.page++;
+        this.requestFullUpdate();
     }}"
             >
-                ${page.loading
+                ${this.loading
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<partial-loading></partial-loading>`
         : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="result-container">
-                          ${page.paginatedMedia.map((media) => _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__.LinkElement.forPage(_media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_4__.MediaDetailPage, { mediaId: media.id }, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+                          ${this.paginatedMedia.map((media) => _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__.LinkElement.forPage(_media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_4__.MediaDetailPage, { mediaId: media.id }, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                                       <media-tile
                                           .media="${media}"
-                                          .autocompleteGenres="${page.genreList}"
-                                          @imageReceived="${(e) => page.setMediaImage(media.id, e.detail.imageData)}"
-                                          @ratingChanged="${(e) => page.changePropertyOf(media, 'rating', e.detail.newRating)}"
-                                          @genresChanged="${(e) => page.changePropertyOf(media, 'genres', e.detail.genres)}"
-                                          @soft-delete="${() => page.changePropertyOf(media, 'deleted', true)}"
-                                          @hard-delete="${() => page.hardDelete(media)}"
-                                          @full-delete="${() => page.fullDelete(media)}"
-                                          @undelete="${() => page.changePropertyOf(media, 'deleted', false)}"
+                                          .autocompleteGenres="${this.genreList}"
+                                          @imageReceived="${(e) => this.setMediaImage(media.id, e.detail.imageData)}"
+                                          @ratingChanged="${(e) => this.changePropertyOf(media, 'rating', e.detail.newRating)}"
+                                          @genresChanged="${(e) => this.changePropertyOf(media, 'genres', e.detail.genres)}"
+                                          @soft-delete="${() => this.changePropertyOf(media, 'deleted', true)}"
+                                          @hard-delete="${() => this.hardDelete(media)}"
+                                          @full-delete="${() => this.fullDelete(media)}"
+                                          @undelete="${() => this.changePropertyOf(media, 'deleted', false)}"
                                       ></media-tile>
                                   `))}
                       </div>`}
@@ -18478,22 +18405,22 @@ function renderMediaPageTemplate(page) {
                         id="import-media-button"
                         class="option-button"
                         icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_2__.Icons.Import}"
-                        @pointerover="${(e) => page.requestImportTypeSelection(e)}"
+                        @pointerover="${(e) => this.requestImportTypeSelection(e)}"
                     ></div>
                     <div
                         id="auto-fill-button"
                         class="option-button"
                         icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_2__.Icons.Lookup}"
-                        ?disabled="${page.animeToAutoFill.length == 0}"
-                        tooltip="${page.animeToAutoFill.length} Einträge automatisch verfollständigen"
-                        @click="${() => page.autoFillAnime()}"
+                        ?disabled="${this.animeToAutoFill.length == 0}"
+                        tooltip="${this.animeToAutoFill.length} Einträge automatisch verfollständigen"
+                        @click="${() => this.autoFillAnime()}"
                     ></div>
                     <div
                         id="cleanup-button"
                         class="option-button"
                         icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_2__.Icons.Clean}"
                         tooltip="Einträge bereinigen"
-                        @click="${() => page.cleanupMedia()}"
+                        @click="${() => this.cleanupMedia()}"
                     ></div>
                 </div>
             </div>
@@ -18512,7 +18439,6 @@ __webpack_async_result__();
   \****************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -18565,13 +18491,12 @@ var MediaPage_1;
 
 
 
-let MediaPage = MediaPage_1 = class MediaPage extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_3__.LitElementBase {
+let MediaPage = class MediaPage extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_3__.LitElementBase {
+    static { MediaPage_1 = this; }
     static get styles() {
         return (0,_media_page_css__WEBPACK_IMPORTED_MODULE_17__.renderMediaPageStyles)();
     }
-    static get isPage() {
-        return true;
-    }
+    static isPage = true;
     static get pageName() {
         return 'Filme & Serien';
     }
@@ -18596,12 +18521,9 @@ let MediaPage = MediaPage_1 = class MediaPage extends _data_lit_element_base__WE
             (x.kanjiName?.length ?? 0) < 5 ||
             x.release <= 1900);
     }
-    constructor() {
-        super();
-        /** @type {string[]} */ this.genreList = [];
-        this.page = 1;
-        this.loading = true;
-    }
+    genreList = [];
+    page = 1;
+    loading = true;
     async connectedCallback() {
         super.connectedCallback();
         document.title = MediaPage_1.pageName;
@@ -18616,12 +18538,8 @@ let MediaPage = MediaPage_1 = class MediaPage extends _data_lit_element_base__WE
         await this.requestFullUpdate();
     }
     render() {
-        return (0,_media_page_html__WEBPACK_IMPORTED_MODULE_18__.renderMediaPageTemplate)(this);
+        return _media_page_html__WEBPACK_IMPORTED_MODULE_18__.renderMediaPageTemplate.call(this);
     }
-    /**
-     * @param {MediaCategory} category
-     * @param {Language} language
-     */
     async importFolder(category, language) {
         try {
             await _services_media_import_service__WEBPACK_IMPORTED_MODULE_15__.MediaImportService.importMediaCollections(category, language);
@@ -18667,9 +18585,6 @@ let MediaPage = MediaPage_1 = class MediaPage extends _data_lit_element_base__WE
         _data_session__WEBPACK_IMPORTED_MODULE_4__.Session.mediaList.next(await _services_backend_services__WEBPACK_IMPORTED_MODULE_11__.MediaService.getAll());
         await this.requestFullUpdate();
     }
-    /**
-     * @param {PointerEvent} event
-     */
     async requestImportTypeSelection(event) {
         const tooltipItems = [
             { text: 'Animes Ger Dub', category: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MediaCategory.AnimeSeries, language: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.Language.German },
@@ -18679,22 +18594,16 @@ let MediaPage = MediaPage_1 = class MediaPage extends _data_lit_element_base__WE
             { text: 'Realfilmserien', category: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MediaCategory.RealSeries, language: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.Language.German },
             { text: 'J-Dramen', category: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MediaCategory.RealSeries, language: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.Language.Japanese },
         ];
-        /** @type {typeof tooltipItems[0]} */ var selection = await _native_components_context_tooltip_context_tooltip__WEBPACK_IMPORTED_MODULE_7__.ContextTooltip.spawn(event, tooltipItems);
+        var selection = (await _native_components_context_tooltip_context_tooltip__WEBPACK_IMPORTED_MODULE_7__.ContextTooltip.spawn(event, tooltipItems));
         if (!selection)
             return;
         await this.importFolder(selection.category, selection.language);
     }
-    /**
-     * @template {keyof MediaModel} T
-     * @param {MediaModel} media
-     * @param {T} property
-     * @param {MediaModel[T]} value
-     */
     async changePropertyOf(media, property, value) {
         try {
             if (typeof media[property] != typeof value)
                 return;
-            /** @type {any} */ const { oldModel, newModel } = { oldModel: {}, newModel: {} };
+            const { oldModel, newModel } = { oldModel: {}, newModel: {} };
             oldModel[property] = media[property];
             newModel[property] = value;
             await _services_backend_services__WEBPACK_IMPORTED_MODULE_11__.MediaService.updateMedia(media.id, new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.UpdateRequestOfObject({ oldModel, newModel }));
@@ -18711,9 +18620,6 @@ let MediaPage = MediaPage_1 = class MediaPage extends _data_lit_element_base__WE
         await _services_backend_services__WEBPACK_IMPORTED_MODULE_11__.MediaService.addMediaImage(image, mediaId);
         await this.requestFullUpdate();
     }
-    /**
-     * @param {MediaModel} media
-     */
     async hardDelete(media) {
         try {
             var confirmed = await _dialogs_dialog_base_dialog_base__WEBPACK_IMPORTED_MODULE_5__.DialogBase.show('Achtung', {
@@ -18731,9 +18637,6 @@ let MediaPage = MediaPage_1 = class MediaPage extends _data_lit_element_base__WE
             _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup('Ein Fehler ist beim löschen des Eintrags aufgetreten: ' + err, 'error');
         }
     }
-    /**
-     * @param {MediaModel} media
-     */
     async fullDelete(media) {
         try {
             var confirmed = await _dialogs_dialog_base_dialog_base__WEBPACK_IMPORTED_MODULE_5__.DialogBase.show('ACHTUNG - NICHT RÜCKGÄNGIG ZU MACHEN!', {
@@ -18752,6 +18655,15 @@ let MediaPage = MediaPage_1 = class MediaPage extends _data_lit_element_base__WE
         }
     }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaPage.prototype, "genreList", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaPage.prototype, "page", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MediaPage.prototype, "loading", void 0);
 MediaPage = MediaPage_1 = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('media-page')
 ], MediaPage);
@@ -18768,7 +18680,6 @@ __webpack_async_result__();
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMusicPageStyles: () => (/* binding */ renderMusicPageStyles)
@@ -18958,7 +18869,6 @@ function renderResultOptionsBar() {
   \*********************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -18972,9 +18882,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_clipboard_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/clipboard.service */ "./services/clipboard.service.ts");
 /* harmony import */ var _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/extensions/url.extension */ "./services/extensions/url.extension.ts");
 /* harmony import */ var _music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../music-playlist-page/music-playlist-page */ "./pages/music-playlist-page/music-playlist-page.ts");
-/* harmony import */ var _music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_7__);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_audio_service__WEBPACK_IMPORTED_MODULE_4__, _services_clipboard_service__WEBPACK_IMPORTED_MODULE_5__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_6__]);
-([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_audio_service__WEBPACK_IMPORTED_MODULE_4__, _services_clipboard_service__WEBPACK_IMPORTED_MODULE_5__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_audio_service__WEBPACK_IMPORTED_MODULE_4__, _services_clipboard_service__WEBPACK_IMPORTED_MODULE_5__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_6__, _music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_7__]);
+([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_audio_service__WEBPACK_IMPORTED_MODULE_4__, _services_clipboard_service__WEBPACK_IMPORTED_MODULE_5__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_6__, _music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -18983,24 +18892,21 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_dat
 
 
 
-/**
- * @param {MusicPage} musicPage
- */
-function renderMusicPage(musicPage) {
+function renderMusicPage() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <page-layout>
             <div id="music-page">
                 <div id="search-panel-container">
                     <music-filter
-                        .filter="${musicPage.filter}"
-                        .sortingProperty="${musicPage.sortingProperty}"
-                        .sortingDirection="${musicPage.sortingDirection}"
-                        @filterChanged="${(e) => musicPage.updateFilter(e.detail.filter)}"
-                        @sortingUpdated="${(e) => musicPage.updateSorting(e.detail.property, e.detail.direction)}"
+                        .filter="${this.filter}"
+                        .sortingProperty="${this.sortingProperty}"
+                        .sortingDirection="${this.sortingDirection}"
+                        @filterChanged="${(e) => this.updateFilter(e.detail.filter)}"
+                        @sortingUpdated="${(e) => this.updateSorting(e.detail.property, e.detail.direction)}"
                         id="music-filter"
                     ></music-filter>
                     <div id="result-count-label">
-                        ${musicPage.filteredTracks.length} von ${_data_session__WEBPACK_IMPORTED_MODULE_1__.Session.tracks.current().length} Musik-Tracks
+                        ${this.filteredTracks.length} von ${_data_session__WEBPACK_IMPORTED_MODULE_1__.Session.tracks.current().length} Musik-Tracks
                     </div>
                 </div>
                 <div id="result-options-container">
@@ -19009,7 +18915,7 @@ function renderMusicPage(musicPage) {
                             <a
                                 id="import-files"
                                 icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_3__.Icons.Import}"
-                                @click="${() => musicPage.importFolder()}"
+                                @click="${() => this.importFolder()}"
                                 tooltip="Tracks importieren"
                             ></a>
                             <a
@@ -19023,7 +18929,7 @@ function renderMusicPage(musicPage) {
                             <a
                                 id="cleanup-tracks"
                                 icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_3__.Icons.Clean}"
-                                @click="${() => musicPage.cleanupTracks()}"
+                                @click="${() => this.cleanupTracks()}"
                                 tooltip="Defekte Tracks bereinigen"
                             ></a>
                         </div>
@@ -19032,25 +18938,25 @@ function renderMusicPage(musicPage) {
                                 id="add-to-playlist"
                                 icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_3__.Icons.SavePlaylist}"
                                 tooltip="Zu einer Playlist hinzufügen"
-                                @click="${() => musicPage.showPlaylistSelectionDialog()}"
+                                @click="${() => this.showPlaylistSelectionDialog()}"
                             ></a>
                             <a
                                 id="create-playlist"
                                 icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_3__.Icons.AddPlaylist}"
                                 tooltip="Playlist erstellen"
-                                @click="${() => musicPage.showCreatePlaylistDialog()}"
+                                @click="${() => this.showCreatePlaylistDialog()}"
                             ></a>
                             <a
                                 id="play-playlist"
                                 icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_3__.Icons.PlayPlaylist}"
                                 tooltip="Ausgewählte Tracks abspielen"
-                                @click="${() => musicPage.playPlaylist()}"
+                                @click="${() => this.playPlaylist()}"
                             ></a>
                         </div>
 
                         <div class="option-section">
                             <range-slider
-                                @valueChanged="${(e) => musicPage.changeVolume(e.detail.value)}"
+                                @valueChanged="${(e) => this.changeVolume(Number.parseInt(e.detail.value))}"
                                 step="1"
                                 min="0"
                                 max="100"
@@ -19059,11 +18965,7 @@ function renderMusicPage(musicPage) {
                             </range-slider>
                         </div>
 
-                        <div
-                            id="active-track-warning"
-                            ?invisible="${_services_audio_service__WEBPACK_IMPORTED_MODULE_4__.AudioService.paused}"
-                            @click="${() => musicPage.jumpToActive()}"
-                        >
+                        <div id="active-track-warning" ?invisible="${_services_audio_service__WEBPACK_IMPORTED_MODULE_4__.AudioService.paused}" @click="${() => this.jumpToActive()}">
                             Ein Track wird gerade abgespielt.&nbsp; <u> Klicken Sie hier </u> &nbsp;um zum aktiven Track zu
                             springen.
                         </div>
@@ -19072,47 +18974,47 @@ function renderMusicPage(musicPage) {
                 <paginated-scrolling
                     id="search-results-container"
                     scrollTopThreshold="50"
-                    @scrollBottom="${() => musicPage.loadNext()}"
+                    @scrollBottom="${() => this.loadNext()}"
                 >
-                    ${musicPage.loading
+                    ${this.loading
         ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<partial-loading></partial-loading>`
         : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="search-results">
-                              ${musicPage.paginatedPlaylists.map((playlist) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+                              ${this.paginatedPlaylists.map((playlist) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                                           <div class="audio-link-container">
                                               ${_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__.LinkElement.forPage(_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_7__.MusicPlaylistPage, { playlistId: playlist.id }, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                                                       <playlist-tile
                                                           .playlist="${playlist}"
-                                                          @local-export="${() => musicPage.exportPlaylist('local', playlist)}"
-                                                          @global-export="${() => musicPage.exportPlaylist('global', playlist)}"
-                                                          @remove="${() => musicPage.removePlaylist(playlist)}"
+                                                          @local-export="${() => this.exportPlaylist('local', playlist)}"
+                                                          @global-export="${() => this.exportPlaylist('global', playlist)}"
+                                                          @remove="${() => this.removePlaylist(playlist)}"
                                                       ></playlist-tile>
                                                   `)}
                                           </div>
                                       `)}
-                              ${musicPage.paginatedTracks.map((track) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+                              ${this.paginatedTracks.map((track) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                                           <div
                                               class="audio-link-container"
-                                              @pointerdown="${(e) => musicPage.startSelectionModeTimer(track.hash, e)}"
-                                              @pointerup="${(e) => musicPage.stopSelectionModeTimer(track.hash, e)}"
+                                              @pointerdown="${(e) => this.startSelectionModeTimer(track.hash, e)}"
+                                              @pointerup="${(e) => this.stopSelectionModeTimer(track.hash, e)}"
                                           >
-                                              ${musicPage.selectionMode
+                                              ${this.selectionMode
             ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<input
                                                         type="checkbox"
                                                         class="audio-select"
-                                                        ?checked="${musicPage.selectedHashes.includes(track.hash)}"
-                                                        @change="${(e) => musicPage.toggleTrackSelection(e.target, track.hash)}"
+                                                        ?checked="${this.selectedHashes.includes(track.hash)}"
+                                                        @change="${(e) => this.toggleTrackSelection(e.target, track.hash)}"
                                                     />`
             : ''}
                                               ${_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__.LinkElement.forPage(_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_7__.MusicPlaylistPage, { trackHash: track.hash }, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <audio-tile
                                                       .track="${track}"
                                                       ?paused="${_services_audio_service__WEBPACK_IMPORTED_MODULE_4__.AudioService.paused ||
             _services_audio_service__WEBPACK_IMPORTED_MODULE_4__.AudioService.currentTrackPath != track.path}"
-                                                      @musicToggled="${() => musicPage.toggleMusic(track)}"
-                                                      @soft-delete="${() => musicPage.softDeleteTrack(track)}"
-                                                      @hard-delete="${() => musicPage.hardDeleteTrack(track)}"
-                                                      @restore="${() => musicPage.undeleteTrack(track)}"
+                                                      @musicToggled="${() => this.toggleMusic(track)}"
+                                                      @soft-delete="${() => this.softDeleteTrack(track)}"
+                                                      @hard-delete="${() => this.hardDeleteTrack(track)}"
+                                                      @restore="${() => this.undeleteTrack(track)}"
                                                       @clipboard="${() => _services_clipboard_service__WEBPACK_IMPORTED_MODULE_5__.ClipboardService.copyAudioToClipboard(track)}"
-                                                  ></audio-tile>`, { disabled: musicPage.selectionModeTimer == null || musicPage.selectionMode })}
+                                                  ></audio-tile>`, { disabled: this.selectionModeTimer == null || this.selectionMode })}
                                           </div>
                                       `)}
                           </div>`}
@@ -19131,9 +19033,428 @@ __webpack_async_result__();
 /*!****************************************!*\
   !*** ./pages/music-page/music-page.ts ***!
   \****************************************/
-/***/ (() => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module parse failed: Unexpected token (379:21)\nFile was processed with these loaders:\n * ./node_modules/ts-loader/index.js\nYou may need an additional loader to handle the result of these loaders.\n|         }\n|     }\n>     async disoverride;\n|     connectedCallback() {\n|         await AudioService.reset();");
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MusicPage: () => (/* binding */ MusicPage)
+/* harmony export */ });
+/* harmony import */ var lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element/decorators */ "./node_modules/lit-element/decorators.js");
+/* harmony import */ var _advanced_components_music_filter_music_filter_options__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../advanced-components/music-filter/music-filter-options */ "./advanced-components/music-filter/music-filter-options.ts");
+/* harmony import */ var _data_lit_element_base__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data/lit-element-base */ "./data/lit-element-base.ts");
+/* harmony import */ var _data_session__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../data/session */ "./data/session.ts");
+/* harmony import */ var _dialogs_dialog_base_dialog_base__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../dialogs/dialog-base/dialog-base */ "./dialogs/dialog-base/dialog-base.ts");
+/* harmony import */ var _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../dialogs/edit-playlist-dialog/edit-playlist-dialog */ "./dialogs/edit-playlist-dialog/edit-playlist-dialog.ts");
+/* harmony import */ var _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../dialogs/play-music-dialog/play-music-dialog */ "./dialogs/play-music-dialog/play-music-dialog.ts");
+/* harmony import */ var _dialogs_playlist_selection_dialog_playlist_selection_dialog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../dialogs/playlist-selection-dialog/playlist-selection-dialog */ "./dialogs/playlist-selection-dialog/playlist-selection-dialog.ts");
+/* harmony import */ var _native_components_context_menu_context_menu__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../native-components/context-menu/context-menu */ "./native-components/context-menu/context-menu.ts");
+/* harmony import */ var _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../native-components/message-snackbar/message-snackbar */ "./native-components/message-snackbar/message-snackbar.ts");
+/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
+/* harmony import */ var _resources_inline_icons_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../resources/inline-icons/general/note-icon.svg */ "./resources/inline-icons/general/note-icon.svg.ts");
+/* harmony import */ var _services_audio_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../services/audio-service */ "./services/audio-service.ts");
+/* harmony import */ var _services_backend_services__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../services/backend.services */ "./services/backend.services.ts");
+/* harmony import */ var _services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../services/extensions/array.extensions */ "./services/extensions/array.extensions.ts");
+/* harmony import */ var _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../services/extensions/url.extension */ "./services/extensions/url.extension.ts");
+/* harmony import */ var _services_maintenance_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../services/maintenance.service */ "./services/maintenance.service.ts");
+/* harmony import */ var _services_media_import_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../services/media-import.service */ "./services/media-import.service.ts");
+/* harmony import */ var _services_music_filter_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../services/music-filter.service */ "./services/music-filter.service.ts");
+/* harmony import */ var _music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../music-playlist-page/music-playlist-page */ "./pages/music-playlist-page/music-playlist-page.ts");
+/* harmony import */ var _music_page_css__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./music-page.css */ "./pages/music-page/music-page.css.ts");
+/* harmony import */ var _music_page_html__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./music-page.html */ "./pages/music-page/music-page.html.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_advanced_components_music_filter_music_filter_options__WEBPACK_IMPORTED_MODULE_1__, _data_session__WEBPACK_IMPORTED_MODULE_3__, _dialogs_dialog_base_dialog_base__WEBPACK_IMPORTED_MODULE_4__, _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__, _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_6__, _dialogs_playlist_selection_dialog_playlist_selection_dialog__WEBPACK_IMPORTED_MODULE_7__, _native_components_context_menu_context_menu__WEBPACK_IMPORTED_MODULE_8__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__, _services_audio_service__WEBPACK_IMPORTED_MODULE_12__, _services_backend_services__WEBPACK_IMPORTED_MODULE_13__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__, _services_maintenance_service__WEBPACK_IMPORTED_MODULE_16__, _services_media_import_service__WEBPACK_IMPORTED_MODULE_17__, _music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_19__, _music_page_html__WEBPACK_IMPORTED_MODULE_21__]);
+([_advanced_components_music_filter_music_filter_options__WEBPACK_IMPORTED_MODULE_1__, _data_session__WEBPACK_IMPORTED_MODULE_3__, _dialogs_dialog_base_dialog_base__WEBPACK_IMPORTED_MODULE_4__, _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__, _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_6__, _dialogs_playlist_selection_dialog_playlist_selection_dialog__WEBPACK_IMPORTED_MODULE_7__, _native_components_context_menu_context_menu__WEBPACK_IMPORTED_MODULE_8__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__, _services_audio_service__WEBPACK_IMPORTED_MODULE_12__, _services_backend_services__WEBPACK_IMPORTED_MODULE_13__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__, _services_maintenance_service__WEBPACK_IMPORTED_MODULE_16__, _services_media_import_service__WEBPACK_IMPORTED_MODULE_17__, _music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_19__, _music_page_html__WEBPACK_IMPORTED_MODULE_21__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let MusicPage = class MusicPage extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_2__.LitElementBase {
+    static isPage = true;
+    static pageName = 'Musik';
+    static icon = (0,_resources_inline_icons_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_11__.noteIcon)();
+    static get styles() {
+        return (0,_music_page_css__WEBPACK_IMPORTED_MODULE_20__.renderMusicPageStyles)();
+    }
+    static get properties() {
+        return {
+            deletionMode: { type: Boolean, reflect: true },
+        };
+    }
+    get paginatedPlaylists() {
+        return this.filteredPlaylists.slice(0, 6 + 3 * this.currentPage);
+    }
+    get paginatedTracks() {
+        var pageSize = 6 + 3 * this.currentPage - this.filteredPlaylists.length;
+        if (pageSize < 0)
+            pageSize = 0;
+        return this.filteredTracks.slice(0, pageSize);
+    }
+    get filteredPlaylists() {
+        var sorted = _services_music_filter_service__WEBPACK_IMPORTED_MODULE_18__.MusicFilterService.filterPlaylists(this.playlists, this.filter);
+        let sortingProperty = this.sortingProperty;
+        if (sortingProperty in _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.PlaylistModel)
+            sorted = (0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_14__.sortBy)(sorted, (x) => x[sortingProperty]);
+        if (this.sortingDirection == 'ascending')
+            return sorted;
+        return sorted.reverse();
+    }
+    get filteredTracks() {
+        var sorted = _services_music_filter_service__WEBPACK_IMPORTED_MODULE_18__.MusicFilterService.filterTracks(_data_session__WEBPACK_IMPORTED_MODULE_3__.Session.tracks.current(), this.filter);
+        let sortingProperty = this.sortingProperty;
+        if (sortingProperty != 'unset')
+            sorted = (0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_14__.sortBy)(sorted, (x) => x[sortingProperty]);
+        if (this.sortingDirection == 'ascending')
+            return sorted;
+        return sorted.reverse();
+    }
+    playlists = [];
+    currentTrack = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MusicModel();
+    filter = new _advanced_components_music_filter_music_filter_options__WEBPACK_IMPORTED_MODULE_1__.MusicFilterOptions();
+    selectionMode = false;
+    selectedHashes = [];
+    selectionModeTimer = null;
+    sortingProperty = 'unset';
+    sortingDirection = 'ascending';
+    currentPage = 0;
+    loading = false;
+    selectionModeUnset = false;
+    selectionModeSet = false;
+    constructor() {
+        super();
+        this.subscriptions.push(_services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        var localStorageVolume = localStorage.getItem('volume');
+        if (localStorageVolume)
+            this.changeVolume(Number.parseInt(localStorageVolume));
+        this.initializeData();
+        this.subscriptions.push(_data_session__WEBPACK_IMPORTED_MODULE_3__.Session.instruments.subscribe(() => {
+            this.initializeData();
+            this.requestFullUpdate();
+        }), _data_session__WEBPACK_IMPORTED_MODULE_3__.Session.currentPage.subscribe((nextPage) => {
+            if (!_services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService ||
+                _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.paused ||
+                _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.trackPosition.current() <= 0 ||
+                nextPage == 'music' ||
+                nextPage == 'music-playlist')
+                return;
+            _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_6__.PlayMusicDialog.show(this.currentTrack, _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.volume, _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.trackPosition.current());
+        }));
+        this.addEventListener('click', () => {
+            if (!this.selectionMode || _native_components_context_menu_context_menu__WEBPACK_IMPORTED_MODULE_8__.ContextMenu.instance)
+                return;
+            this.selectionMode = false;
+            this.selectedHashes = [];
+            this.requestFullUpdate();
+        });
+    }
+    async initializeData() {
+        this.loading = true;
+        await this.requestFullUpdate();
+        try {
+            this.playlists = await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.PlaylistService.listPlaylists();
+        }
+        catch (err) {
+            console.error(err);
+        }
+        var localSearchString = localStorage.getItem(`music.search`);
+        if (localSearchString)
+            this.filter = _advanced_components_music_filter_music_filter_options__WEBPACK_IMPORTED_MODULE_1__.MusicFilterOptions.fromJSON(localSearchString);
+        localSearchString = localStorage.getItem(`music.sorting`);
+        if (localSearchString) {
+            var object = JSON.parse(localSearchString);
+            this.sortingProperty = object.property;
+            this.sortingDirection = object.direction;
+        }
+        this.loading = false;
+        await this.requestFullUpdate();
+    }
+    render() {
+        document.title = 'Musik';
+        if (this.currentTrack?.path && !_services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.paused)
+            document.title += ` - ${this.currentTrack.displayName}`;
+        return _music_page_html__WEBPACK_IMPORTED_MODULE_21__.renderMusicPage.call(this);
+    }
+    loadNext() {
+        this.currentPage++;
+        this.requestFullUpdate();
+    }
+    async changeVolume(newVolume) {
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.changeVolume(newVolume / 100);
+        localStorage.setItem('volume', newVolume.toString());
+        await this.requestFullUpdate();
+    }
+    async toggleMusic(track) {
+        if (this.selectionMode || this.selectionModeUnset)
+            return;
+        await _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_6__.PlayMusicDialog.instance?.close();
+        if (this.currentTrack.hash != track.hash) {
+            this.currentTrack = track;
+            await _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.play(track?.path);
+            await this.requestFullUpdate();
+            return;
+        }
+        if (!_services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.paused)
+            await _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.pause();
+        else if (_services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.paused)
+            await _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.play(track?.path);
+        await this.requestFullUpdate();
+    }
+    async playPlaylist() {
+        var playlistId = '';
+        if (this.selectedHashes.length > 0)
+            playlistId = await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.PlaylistService.createTemporaryPlaylist(this.selectedHashes);
+        else
+            playlistId = await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash));
+        (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__.changePage)(_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_19__.MusicPlaylistPage, { playlistId: playlistId });
+    }
+    async importFolder() {
+        await _services_media_import_service__WEBPACK_IMPORTED_MODULE_17__.MediaImportService.importAudioFiles();
+    }
+    updateFilter(filter) {
+        this.filter = filter;
+        localStorage.setItem(`music.search`, JSON.stringify(this.filter));
+        this.requestFullUpdate();
+    }
+    updateSorting(sortingProperty, sortingDirection) {
+        this.sortingProperty = sortingProperty;
+        this.sortingDirection = sortingDirection;
+        localStorage.setItem(`music.sorting`, JSON.stringify({ property: this.sortingProperty, direction: this.sortingDirection }));
+        this.requestFullUpdate();
+    }
+    async cleanupTracks() {
+        var success = await _services_maintenance_service__WEBPACK_IMPORTED_MODULE_16__.MaintenanceService.cleanAudioTracks();
+        if (success)
+            await this.initializeData();
+    }
+    startSelectionModeTimer(audioHash, event) {
+        if (event.button != 0)
+            return;
+        if (this.selectionModeUnset)
+            this.selectionModeUnset = false;
+        if (this.selectionMode)
+            return;
+        this.selectionModeTimer = setTimeout(() => {
+            this.selectionModeTimer = null;
+            this.selectionMode = true;
+            this.selectionModeSet = true;
+            this.selectedHashes.push(audioHash);
+            this.requestFullUpdate();
+        }, 500);
+        this.requestFullUpdate();
+    }
+    stopSelectionModeTimer(hash, event) {
+        if (event.button != 0)
+            return;
+        if (this.selectionMode && !this.selectionModeSet)
+            this.toggleTrackSelection(null, hash);
+        this.selectionModeSet = false;
+        if (!this.selectionModeTimer)
+            return;
+        clearTimeout(this.selectionModeTimer);
+        this.requestFullUpdate();
+    }
+    toggleTrackSelection(input, hash) {
+        if ((!input || input.checked) && !this.selectedHashes.includes(hash))
+            this.selectedHashes.push(hash);
+        else if (!input || !input.checked)
+            this.selectedHashes = this.selectedHashes.filter((x) => x != hash);
+        if (this.selectedHashes.length == 0) {
+            this.selectionMode = false;
+            this.selectionModeUnset = true;
+        }
+        this.requestFullUpdate();
+    }
+    jumpToActive() {
+        var parent = this.shadowRoot.querySelector('paginated-scrolling');
+        var child = this.shadowRoot.querySelector('audio-tile:not([paused])').parentElement;
+        parent.scrollToChild(child.parentElement);
+    }
+    async showPlaylistSelectionDialog() {
+        var playlist = await _dialogs_playlist_selection_dialog_playlist_selection_dialog__WEBPACK_IMPORTED_MODULE_7__.PlaylistSelectionDialog.requestPlaylist();
+        if (!playlist)
+            return;
+        await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.PlaylistService.addTracksToPlaylist(playlist.id, this.selectedHashes);
+        await this.initializeData();
+    }
+    async showCreatePlaylistDialog() {
+        var dummyPlaylist = await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.PlaylistService.getDummyPlaylist();
+        await _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__.EditPlaylistDialog.show(dummyPlaylist);
+        await this.initializeData();
+    }
+    getTrackPath(mode, track) {
+        if (mode == 'local')
+            return track.path;
+        return `https://${location.hostname}/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(track.path)}`;
+    }
+    async exportPlaylist(mode, playlist) {
+        var m3uString = '#EXTM3U\r\n';
+        m3uString += playlist.tracks
+            .map((track) => `#EXTINF:-1, ${track.displayName.replaceAll('\n', '')}\r\n${this.getTrackPath(mode, track)}`)
+            .join('\r\n');
+        var blob = new Blob([m3uString], { type: 'audio/x-mpegurl' });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = `${playlist.name}.m3u`;
+        document.body.appendChild(link);
+        link.click();
+    }
+    async removePlaylist(playlist) {
+        var accpeted = await _dialogs_dialog_base_dialog_base__WEBPACK_IMPORTED_MODULE_4__.DialogBase.show('Bist du sicher?', {
+            content: `Bist du sicher, dass du die Playlist löschen möchtest?\r\n
+                Diese Aktion kann nicht rückgängig gemacht werden!`,
+            acceptActionText: 'Ja',
+            declineActionText: 'Nein',
+            noImplicitAccept: true,
+            showBorder: true,
+        });
+        if (!accpeted)
+            return;
+        try {
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.PlaylistService.deletePlaylist(playlist.id);
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup('Die Playlist wurde erfolgreich gelöscht', 'success');
+            await this.initializeData();
+        }
+        catch (err) {
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup(`Ein Fehler ist beim Löschen der Playlist aufgetreten: \r\n ${err}`, 'error');
+        }
+    }
+    async softDeleteTrack(track) {
+        var trackHashes = [track.hash];
+        if (this.selectionMode && this.selectedHashes.includes(track.hash)) {
+            trackHashes = this.selectedHashes;
+            var accepted = await _dialogs_dialog_base_dialog_base__WEBPACK_IMPORTED_MODULE_4__.DialogBase.show('Bist du sicher?', {
+                content: 'Sie sind dabei mehrere Tracks zu löschen.\r\n Sind Sie sicher?',
+                acceptActionText: 'Ja',
+                declineActionText: 'Nein',
+            });
+            if (!accepted)
+                return;
+        }
+        try {
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.MusicService.softDeleteTracks(trackHashes);
+            await this.initializeData();
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup('Tracks erfolgreich gelöscht.', 'success');
+        }
+        catch (err) {
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup(`Ein Fehler ist beim Löschen aufgetreten: \r\n ${err}.`, 'error');
+        }
+    }
+    async hardDeleteTrack(track) {
+        var trackHashes = [track.hash];
+        if (this.selectionMode && this.selectedHashes.includes(track.hash)) {
+            trackHashes = this.selectedHashes;
+            var accepted = await _dialogs_dialog_base_dialog_base__WEBPACK_IMPORTED_MODULE_4__.DialogBase.show('Vorsicht!', {
+                content: 'Sie sind dabei mehrere Tracks permanent zu löschen.\r\n' +
+                    'Diese Aktion kann nicht rückgängig gemacht werden!\r\n' +
+                    'Sind Sie sicher?',
+                acceptActionText: 'Ja',
+                declineActionText: 'Nein',
+            });
+            if (!accepted)
+                return;
+        }
+        else {
+            var accepted = await _dialogs_dialog_base_dialog_base__WEBPACK_IMPORTED_MODULE_4__.DialogBase.show('Vorsicht!', {
+                content: 'Sie sind dabei einen Track permanent zu löschen.\r\n' +
+                    'Diese Aktion kann nicht rückgängig gemacht werden!\r\n' +
+                    'Sind Sie sicher?',
+                acceptActionText: 'Ja',
+                declineActionText: 'Nein',
+            });
+            if (!accepted)
+                return;
+        }
+        try {
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.MusicService.hardDeleteTracks(trackHashes);
+            await this.initializeData();
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup('Tracks erfolgreich permanent gelöscht.', 'success');
+        }
+        catch (err) {
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup(`Ein Fehler ist beim permanenten Löschen aufgetreten: \r\n ${err}.`, 'error');
+        }
+    }
+    async undeleteTrack(track) {
+        var trackHashes = [track.hash];
+        if (this.selectionMode && this.selectedHashes.includes(track.hash))
+            trackHashes = this.selectedHashes;
+        try {
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.MusicService.undeleteTracks(trackHashes);
+            await this.initializeData();
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup('Die Track(s) wurden erfolgreich wiederhergestellt', 'success');
+        }
+        catch (err) {
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup('Ein Fehler ist beim wiederherstellen der Track(s) aufgetreten: \r\n' + err, 'error');
+        }
+    }
+    async disconnectedCallback() {
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.reset();
+        await super.disconnectedCallback();
+    }
+};
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MusicPage.prototype, "playlists", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MusicPage.prototype, "currentTrack", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MusicPage.prototype, "filter", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MusicPage.prototype, "selectionMode", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MusicPage.prototype, "selectedHashes", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MusicPage.prototype, "selectionModeTimer", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MusicPage.prototype, "sortingProperty", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MusicPage.prototype, "sortingDirection", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MusicPage.prototype, "currentPage", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MusicPage.prototype, "loading", void 0);
+MusicPage = __decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('music-page')
+], MusicPage);
+
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -19143,7 +19464,6 @@ throw new Error("Module parse failed: Unexpected token (379:21)\nFile was proces
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   AudioFileExtensions: () => (/* binding */ AudioFileExtensions)
@@ -19201,18 +19521,12 @@ const AudioFileExtensions = [
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderMusicPlaylistStyles: () => (/* binding */ renderMusicPlaylistStyles)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * TODO: - change detection - autosave
- * TODO: - isntrument selection
- * TODO: - reset functionality
- */
 function renderMusicPlaylistStyles() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.css) `
         * {
@@ -19579,7 +19893,6 @@ function renderAudioPlayerIcons() {
   \***************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -19618,17 +19931,14 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 let MusicPlaylistPageTemplate = class MusicPlaylistPageTemplate extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_3__.LitElementBase {
-    /** @protected @type {PlaylistModel} */ playlist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.PlaylistModel({ tracks: [] });
-    /** @protected @type {MusicModel} */ currentTrack = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MusicModel();
-    /** @protected @type {MusicModel} */ updatedTrack = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MusicModel();
-    /** @protected @type {number} */ currentVolume = 0.1;
-    /** @protected @type {number} */ maxPlaylistItems = 20;
-    /** @protected @type {number} */ hoveredRating = 0;
-    /** @protected @type {keyof MusicModel & ('mood1' | 'mood2')} */ moodToSwitch = 'mood1';
-    /** @type {boolean} */ loop = false;
-    /**
-     * @this MusicPlaylistPage
-     */
+    playlist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.PlaylistModel({ tracks: [] });
+    currentTrack = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MusicModel();
+    updatedTrack = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MusicModel();
+    currentVolume = 0.1;
+    maxPlaylistItems = 20;
+    hoveredRating = 0;
+    moodToSwitch = 'mood1';
+    loop = false;
     render() {
         var mood2 = this.updatedTrack.mood2 == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Mood.Unset ? this.updatedTrack.mood1 : this.updatedTrack.mood2;
         return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
@@ -19722,7 +20032,7 @@ let MusicPlaylistPageTemplate = class MusicPlaylistPageTemplate extends _data_li
                                     id="audio-author"
                                     class="editable-label"
                                     ?disabled="${this.updatedTrack.complete}"
-                                    .value="${this.updatedTrack.author}"
+                                    .value="${this.updatedTrack.author ?? ''}"
                                     oninput="this.dispatchEvent(new Event('change'))"
                                     tooltip="Autor"
                                     @change="${(e) => this.changeProperty('author', e.currentTarget.value)}"
@@ -19840,9 +20150,6 @@ let MusicPlaylistPageTemplate = class MusicPlaylistPageTemplate extends _data_li
             </page-layout>
         `;
     }
-    /**
-     * @this MusicPlaylistPage
-     */
     renderSourceInput() {
         return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <input
                 type="text"
@@ -19877,9 +20184,317 @@ __webpack_async_result__();
 /*!**********************************************************!*\
   !*** ./pages/music-playlist-page/music-playlist-page.ts ***!
   \**********************************************************/
-/***/ (() => {
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module parse failed: Unexpected token (281:21)\nFile was processed with these loaders:\n * ./node_modules/ts-loader/index.js\nYou may need an additional loader to handle the result of these loaders.\n|         this.requestFullUpdate();\n|     }\n>     async disoverride;\n|     connectedCallback() {\n|         await super.disconnectedCallback();");
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MusicPlaylistPage: () => (/* binding */ MusicPlaylistPage)
+/* harmony export */ });
+/* harmony import */ var lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element/decorators */ "./node_modules/lit-element/decorators.js");
+/* harmony import */ var _advanced_components_language_switcher_language_switcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../advanced-components/language-switcher/language-switcher */ "./advanced-components/language-switcher/language-switcher.ts");
+/* harmony import */ var _client_interop_interop_query__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../client-interop/interop-query */ "./client-interop/interop-query.ts");
+/* harmony import */ var _data_session__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../data/session */ "./data/session.ts");
+/* harmony import */ var _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../dialogs/audio-subtitle-dialog/lyrics-dialog */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.ts");
+/* harmony import */ var _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../dialogs/edit-playlist-dialog/edit-playlist-dialog */ "./dialogs/edit-playlist-dialog/edit-playlist-dialog.ts");
+/* harmony import */ var _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../dialogs/genre-dialog/genre-dialog */ "./dialogs/genre-dialog/genre-dialog.ts");
+/* harmony import */ var _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../dialogs/play-music-dialog/play-music-dialog */ "./dialogs/play-music-dialog/play-music-dialog.ts");
+/* harmony import */ var _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../native-components/message-snackbar/message-snackbar */ "./native-components/message-snackbar/message-snackbar.ts");
+/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
+/* harmony import */ var _resources_inline_icons_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../resources/inline-icons/general/note-icon.svg */ "./resources/inline-icons/general/note-icon.svg.ts");
+/* harmony import */ var _services_audio_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../services/audio-service */ "./services/audio-service.ts");
+/* harmony import */ var _services_backend_services__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../services/backend.services */ "./services/backend.services.ts");
+/* harmony import */ var _services_client_interop_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../services/client-interop-service */ "./services/client-interop-service.ts");
+/* harmony import */ var _services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../services/extensions/array.extensions */ "./services/extensions/array.extensions.ts");
+/* harmony import */ var _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../services/extensions/url.extension */ "./services/extensions/url.extension.ts");
+/* harmony import */ var _services_media_filter_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../services/media-filter.service */ "./services/media-filter.service.ts");
+/* harmony import */ var _audio_file_extensions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./audio-file-extensions */ "./pages/music-playlist-page/audio-file-extensions.ts");
+/* harmony import */ var _music_playlist_page_css__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./music-playlist-page.css */ "./pages/music-playlist-page/music-playlist-page.css.ts");
+/* harmony import */ var _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./music-playlist-page.html */ "./pages/music-playlist-page/music-playlist-page.html.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_3__, _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_4__, _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__, _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_6__, _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_7__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__, _services_backend_services__WEBPACK_IMPORTED_MODULE_12__, _services_client_interop_service__WEBPACK_IMPORTED_MODULE_13__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__, _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_19__]);
+([_data_session__WEBPACK_IMPORTED_MODULE_3__, _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_4__, _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__, _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_6__, _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_7__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__, _services_backend_services__WEBPACK_IMPORTED_MODULE_12__, _services_client_interop_service__WEBPACK_IMPORTED_MODULE_13__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__, _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_19__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_19__.MusicPlaylistPageTemplate {
+    static pageName = 'music-playlist-page';
+    static isPage = true;
+    static icon = (0,_resources_inline_icons_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_10__.noteIcon)();
+    static get styles() {
+        return (0,_music_playlist_page_css__WEBPACK_IMPORTED_MODULE_18__.renderMusicPlaylistStyles)();
+    }
+    get autocompleteGenres() {
+        return Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicGenre).filter((genre) => !this.updatedTrack.genres?.some((x) => _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicGenre[x] == genre) && genre != _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicGenre.Unset);
+    }
+    get audioSource() {
+        if (!this.updatedTrack?.path)
+            return;
+        return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.updatedTrack?.path)}`;
+    }
+    get currentTrackPosition() {
+        return _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.trackPosition.current();
+    }
+    get currentTrackDuration() {
+        return _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.duration ?? 0;
+    }
+    get currentTrackPositionText() {
+        var position = this.currentTrackPosition / 1000;
+        var minutes = Math.floor(position / 60);
+        var seconds = Math.floor(position - minutes * 60);
+        return `${Math.floor(minutes).toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    get currentTrackDurationText() {
+        var duration = this.currentTrackDuration / 1000;
+        var minutes = Math.floor(duration / 60);
+        var seconds = Math.floor(duration - minutes * 60);
+        return `${Math.floor(minutes).toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    get sourceMediaId() {
+        return _services_media_filter_service__WEBPACK_IMPORTED_MODULE_16__.MediaFilterService.search([..._data_session__WEBPACK_IMPORTED_MODULE_3__.Session.mediaList.current()], this.updatedTrack.source, false)[0]?.id;
+    }
+    trackIndex = 0;
+    playlistId = null;
+    trackHash = null;
+    createNew = false;
+    updatedTrack = null;
+    async connectedCallback() {
+        await super.connectedCallback();
+        this.initializeData();
+        this.subscriptions.push(_data_session__WEBPACK_IMPORTED_MODULE_3__.Session.currentPage.subscribe((nextPage) => {
+            _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_7__.PlayMusicDialog.show(this.updatedTrack, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.volume, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.trackPosition.current());
+        }), _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.ended.subscribe(() => {
+            console.log('track ended', new Date().toTimeString());
+            if (this.trackIndex + 1 >= this.playlist.tracks.length && !this.loop)
+                return;
+            this.changeTrackBy(1);
+        }), _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changed.subscribe(() => {
+            this.requestFullUpdate();
+        }));
+        window.addEventListener('hashchange', (e) => {
+            _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_7__.PlayMusicDialog.show(this.updatedTrack, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.volume, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.trackPosition.current() ?? 0);
+        });
+        this.subscriptions.push(_services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
+    }
+    async initializeData() {
+        if (this.createNew) {
+            this.playlist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.PlaylistModel({
+                tracks: [await _services_backend_services__WEBPACK_IMPORTED_MODULE_12__.MusicService.getDefault()],
+                isTemporary: true,
+                genres: [],
+            });
+        }
+        else if (!this.playlistId) {
+            var currentTrack = await _services_backend_services__WEBPACK_IMPORTED_MODULE_12__.MusicService.get(this.trackHash);
+            this.playlist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.PlaylistModel({ tracks: [new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicModel(currentTrack)], isTemporary: true, genres: [] });
+            this.trackIndex = 0;
+        }
+        else {
+            this.playlist = await _services_backend_services__WEBPACK_IMPORTED_MODULE_12__.PlaylistService.getPlaylist(this.playlistId);
+            this.playlist.tracks = this.playlist.tracks.map((x) => new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicModel(x));
+            this.trackIndex = this.trackIndex;
+        }
+        this.updatedTrack = Object.assign(new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicModel(), this.playlist.tracks[this.trackIndex]);
+        _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changeTrack(this.updatedTrack?.path);
+        await this.requestFullUpdate();
+    }
+    render() {
+        if (!this.updatedTrack)
+            return null;
+        var title = '';
+        if (this.createNew)
+            title = 'Neuer Track' + (this.updatedTrack.name ? ` - ${this.updatedTrack.name}` : '');
+        else if (this.playlist?.isTemporary || !this.playlist?.name)
+            title = this.updatedTrack?.displayName;
+        else
+            title = this.playlist.name + ' - ' + this.updatedTrack.name;
+        if (document.title != title)
+            document.title = title;
+        return super.render.call(this);
+    }
+    async toggleCurrentTrack() {
+        if (!this.updatedTrack.path)
+            return await _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__.MessageSnackbar.popup('Kein Pfad ausgewählt', 'error');
+        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.currentTrackPath != this.updatedTrack.path)
+            await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changeTrack(this.updatedTrack?.path);
+        try {
+            if (_services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.paused)
+                await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.play(this.updatedTrack.path);
+            else
+                await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.pause();
+        }
+        catch {
+            await this.changeTrackBy(1);
+        }
+        this.requestFullUpdate();
+    }
+    async changeTrackBy(offset) {
+        var index = this.trackIndex + offset;
+        if (index < 0)
+            index = this.playlist.tracks.length - 1;
+        if (index >= this.playlist.tracks.length)
+            index = 0;
+        await this.changeTrack(index);
+    }
+    async changeTrack(index) {
+        if (this.playlist.tracks.length == 1)
+            return;
+        this.trackIndex = index;
+        this.updatedTrack = Object.assign(new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicModel(), this.playlist.tracks[this.trackIndex]);
+        (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__.changePage)(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.trackIndex }, false);
+        await this.requestFullUpdate();
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.play(this.updatedTrack?.path);
+    }
+    async changeVolume(newVolume) {
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changeVolume(newVolume / 100);
+        localStorage.setItem('volume', newVolume.toString());
+        await this.requestFullUpdate();
+    }
+    async changeProperty(property, value) {
+        try {
+            if (this.updatedTrack.hash) {
+                const { oldModel, newModel } = { oldModel: {}, newModel: {} };
+                oldModel[property] = this.updatedTrack[property];
+                newModel[property] = value;
+                var updated = await _services_backend_services__WEBPACK_IMPORTED_MODULE_12__.MusicService.update(this.updatedTrack.hash, new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.UpdateRequestOfObject({ oldModel, newModel }));
+                this.updatedTrack = updated;
+                this.playlist.tracks[this.trackIndex] = updated;
+            }
+            else {
+                this.updatedTrack[property] = value;
+                this.playlist.tracks[this.trackIndex][property] = value;
+                if (property == 'instruments') {
+                    this.updatedTrack.instrumentNames = this.updatedTrack.instruments.map((x) => x.name);
+                    this.updatedTrack.instrumentTypes = (0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_14__.distinct)(this.updatedTrack.instruments.map((x) => x.type));
+                }
+            }
+            await this.requestFullUpdate();
+        }
+        catch (err) { }
+    }
+    async showLanguageSwitcher() {
+        var parent = this.shadowRoot.querySelector('#music-player-container');
+        var result = await _advanced_components_language_switcher_language_switcher__WEBPACK_IMPORTED_MODULE_1__.LanguageSwitcher.spawnAt(parent, this.updatedTrack.language);
+        if (!result)
+            return;
+        this.changeProperty('language', result);
+    }
+    changeTrackPosition(value) {
+        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.duration == Infinity)
+            return;
+        _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changePosition(Number.parseInt(value));
+    }
+    addGenre(genre) {
+        if (!genre || !Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicGenre).includes(genre))
+            return;
+        var newGenres = this.updatedTrack.genres.concat([genre]);
+        this.changeProperty('genres', newGenres);
+    }
+    removeGenreKey(key) {
+        var newGenres = this.updatedTrack.genres.filter((x) => x != key);
+        this.changeProperty('genres', newGenres);
+    }
+    async openInstrumentsDialog() {
+        var genreDialog = await _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_6__.GenreDialog.startShowingWithInstruments(this.updatedTrack.instruments);
+        genreDialog.addEventListener('accept', (e) => {
+            var instruments = e.detail.acceptedGenres.map((x) => x.name);
+            this.changeProperty('instruments', _data_session__WEBPACK_IMPORTED_MODULE_3__.Session.instruments.current().filter((i) => instruments.includes(i.name)));
+            genreDialog.remove();
+        });
+    }
+    async openEditPlaylistDialog() {
+        await _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__.EditPlaylistDialog.show(this.playlist);
+        await this.initializeData();
+    }
+    async toggleComplete() {
+        var input = this.shadowRoot.querySelector('#complete-check');
+        await this.changeProperty('complete', input.checked);
+    }
+    async changeCurrentTrackPath() {
+        var extensions = { 'Audio-Files': _audio_file_extensions__WEBPACK_IMPORTED_MODULE_17__.AudioFileExtensions };
+        var filePaths = await _services_client_interop_service__WEBPACK_IMPORTED_MODULE_13__.ClientInteropService.executeQuery({
+            query: _client_interop_interop_query__WEBPACK_IMPORTED_MODULE_2__.InteropQuery.RequestFiles,
+            payload: { multiselect: false, nameExtensionMap: extensions },
+        });
+        if (!filePaths || filePaths.length != 1)
+            return;
+        this.changeProperty('path', filePaths[0]);
+        this.requestFullUpdate();
+        _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changeTrack(this.updatedTrack?.path);
+    }
+    randomize() {
+        this.playlist.tracks = (0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_14__.randomizeArray)(this.playlist.tracks);
+        this.changeTrack(0);
+        this.requestFullUpdate();
+    }
+    async showLyrics() {
+        try {
+            var dialog = await _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_4__.LyricsDialog.startShowing(this.updatedTrack);
+            dialog.addEventListener('lyrics-saved', async () => {
+                await this.changeProperty('lyrics', dialog.lyrics);
+                _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__.MessageSnackbar.popup('The lyrics have been successfully saved', 'success');
+                await dialog.requestFullUpdate();
+            });
+        }
+        catch {
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__.MessageSnackbar.popup('Es konnten leider keine passenden Lyrics gefunden werden.', 'error');
+        }
+    }
+    async createTrack() {
+        var trackHash = await _services_backend_services__WEBPACK_IMPORTED_MODULE_12__.MusicService.createMusicTrack(this.updatedTrack);
+        (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__.changePage)(MusicPlaylistPage, { trackHash });
+        this.createNew = false;
+        this.requestFullUpdate();
+    }
+    switchSelectedMood(mood) {
+        this.moodToSwitch = mood;
+        this.requestFullUpdate();
+    }
+    async disconnectedCallback() {
+        await super.disconnectedCallback();
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.reset();
+    }
+}
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], MusicPlaylistPage.prototype, "trackIndex", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], MusicPlaylistPage.prototype, "playlistId", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], MusicPlaylistPage.prototype, "trackHash", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+], MusicPlaylistPage.prototype, "createNew", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], MusicPlaylistPage.prototype, "updatedTrack", void 0);
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -19889,7 +20504,6 @@ throw new Error("Module parse failed: Unexpected token (281:21)\nFile was proces
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderObscuritasMediaManagerStyles: () => (/* binding */ renderObscuritasMediaManagerStyles)
@@ -19924,23 +20538,16 @@ function renderObscuritasMediaManagerStyles() {
   \*************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderObscuritasMediaManager: () => (/* binding */ renderObscuritasMediaManager)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 
-/**
- * @param {ObscuritasMediaManager} mediaManager
- */
-function renderObscuritasMediaManager(mediaManager) {
-    if (!mediaManager.initialized)
+function renderObscuritasMediaManager() {
+    if (!this.initialized)
         return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ``;
-    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<page-routing
-        defaultFragment="welcome"
-        id="${mediaManager.initialized ? 'active' : 'inactive'}"
-    ></page-routing> `;
+    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<page-routing defaultFragment="welcome" id="${this.initialized ? 'active' : 'inactive'}"></page-routing> `;
 }
 
 
@@ -19952,7 +20559,6 @@ function renderObscuritasMediaManager(mediaManager) {
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ObscuritasMediaManager: () => (/* binding */ ObscuritasMediaManager)
@@ -20006,19 +20612,20 @@ let ObscuritasMediaManager = class ObscuritasMediaManager extends _data_lit_elem
             .slice(0, this.loadedResourceIndex + 1)
             .map((resName) => ObscuritasMediaManager_1.imagePrefix + resName);
     }
-    constructor() {
-        super();
-        this.initialized = false;
-        this.loadedResourceIndex = 0;
-    }
     render() {
         console.log(this.shadowRoot);
         if (this.loadedResourceIndex < ObscuritasMediaManager_1.resourceList.length)
             return this.currentResources.map((resUrl) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<img invisible src="${resUrl}" @load="${() => this.loadedResourceIndex++}" />`);
         this.initialized = true;
-        return (0,_obscuritas_media_manager_html__WEBPACK_IMPORTED_MODULE_3__.renderObscuritasMediaManager)(this);
+        return _obscuritas_media_manager_html__WEBPACK_IMPORTED_MODULE_3__.renderObscuritasMediaManager.call(this);
     }
 };
+__decorate([
+    (0,lit_element_decorators_js__WEBPACK_IMPORTED_MODULE_1__.state)()
+], ObscuritasMediaManager.prototype, "initialized", void 0);
+__decorate([
+    (0,lit_element_decorators_js__WEBPACK_IMPORTED_MODULE_1__.state)()
+], ObscuritasMediaManager.prototype, "loadedResourceIndex", void 0);
 ObscuritasMediaManager = ObscuritasMediaManager_1 = __decorate([
     (0,lit_element_decorators_js__WEBPACK_IMPORTED_MODULE_1__.customElement)('obscuritas-media-manager')
 ], ObscuritasMediaManager);
@@ -20033,7 +20640,6 @@ ObscuritasMediaManager = ObscuritasMediaManager_1 = __decorate([
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderWebcomponentTemplateStyles: () => (/* binding */ renderWebcomponentTemplateStyles)
@@ -20260,7 +20866,6 @@ function renderNavigationStyles() {
   \***********************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -20272,11 +20877,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/extensions/url.extension */ "./services/extensions/url.extension.ts");
 /* harmony import */ var _media_page_media_page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../media-page/media-page */ "./pages/media-page/media-page.ts");
 /* harmony import */ var _music_page_music_page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../music-page/music-page */ "./pages/music-page/music-page.ts");
-/* harmony import */ var _music_page_music_page__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_music_page_music_page__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../recipes-page/recipes-page */ "./pages/recipes-page/recipes-page.ts");
 /* harmony import */ var _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../welcome-page/welcome-page */ "./pages/welcome-page/welcome-page.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_4__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__, _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__]);
-([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_4__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__, _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_4__, _music_page_music_page__WEBPACK_IMPORTED_MODULE_5__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__, _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__]);
+([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_4__, _music_page_music_page__WEBPACK_IMPORTED_MODULE_5__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__, _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -20326,10 +20930,6 @@ function renderNavigation() {
         </div>
     </div>`;
 }
-/**
- * @template {typeof LitElementBase & {isPage: boolean, pageName: string}} T
- * @param {T} element
- */
 function renderNavItem(element) {
     var active = _data_session__WEBPACK_IMPORTED_MODULE_1__.Session.currentPage.current() == (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__.getPageName)(element);
     return _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__.LinkElement.forPage(element, null, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `${element.pageName}`, { class: active ? 'active' : 'normal' });
@@ -20346,7 +20946,6 @@ __webpack_async_result__();
   \******************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -20423,7 +21022,6 @@ __webpack_async_result__();
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderPageRoutingStyles: () => (/* binding */ renderPageRoutingStyles)
@@ -20480,7 +21078,6 @@ function renderPageRoutingStyles() {
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderPageRouting: () => (/* binding */ renderPageRouting)
@@ -20489,10 +21086,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_extensions_document_extensions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/extensions/document.extensions */ "./services/extensions/document.extensions.ts");
 
 
-/**
- * @param {PageRouting} routing
- */
-function renderPageRouting(routing) {
+function renderPageRouting() {
     var scaleX = (0,_services_extensions_document_extensions__WEBPACK_IMPORTED_MODULE_1__.getScaleFactorX)();
     var scaleY = (0,_services_extensions_document_extensions__WEBPACK_IMPORTED_MODULE_1__.getScaleFactorY)();
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<style>
@@ -20528,7 +21122,6 @@ function renderPageRouting(routing) {
   \********************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -20576,9 +21169,9 @@ let PageRouting = class PageRouting extends _data_lit_element_base__WEBPACK_IMPO
         return window.customElements.get(location.hash.substr(1) + '-page') ?? _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_6__.WelcomePage;
     }
     static currentPageInstance = null;
+    static instance;
     constructor() {
         super();
-        /** @type {Subscription[]} */ this.subscriptions = [];
         PageRouting_1.instance = this;
         window.addEventListener('hashchange', () => {
             this.loadPageFromHash(null);
@@ -20604,15 +21197,10 @@ let PageRouting = class PageRouting extends _data_lit_element_base__WEBPACK_IMPO
         _data_session__WEBPACK_IMPORTED_MODULE_2__.Session.currentPage.next((0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_5__.getPageName)(this.currentPage));
         document.querySelector(_native_components_loading_screen_loading_screen__WEBPACK_IMPORTED_MODULE_3__.LoadingScreen.tag)?.remove();
     }
-    static instance;
     changeHash(newHash) {
         var newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + location.search + `#${newHash}`;
         window.history.replaceState({ path: newurl }, '', newurl);
     }
-    /**
-     * @param {string} newValue
-     * @param {string} oldValue
-     */
     async switchPage(newValue, oldValue) {
         // @ts-ignore
         if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`))
@@ -20620,18 +21208,22 @@ let PageRouting = class PageRouting extends _data_lit_element_base__WEBPACK_IMPO
         var newPage = window.customElements.get(newValue + '-page');
         if (newPage) {
             var pageName = () => PageRouting_1.currentPageInstance?.tagName.replace('-PAGE', '');
-            var isNewPageLoad = !PageRouting_1.currentPageInstance || newValue.toLowerCase() != pageName().toLowerCase();
+            var isNewPageLoad = !PageRouting_1.currentPageInstance || newValue.toLowerCase() != pageName()?.toLowerCase();
             if (isNewPageLoad) {
                 PageRouting_1.container.querySelectorAll(':not(slot)').forEach((x) => x.remove());
                 PageRouting_1.currentPageInstance = new newPage();
             }
+            if (!PageRouting_1.currentPageInstance)
+                return;
             this.changeHash(newValue);
             var params = (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_5__.queryToObject)();
             for (var pair of Object.entries(params)) {
                 try {
+                    //@ts-ignore
                     PageRouting_1.currentPageInstance[pair[0]] = JSON.parse(pair[1]);
                 }
                 catch {
+                    //@ts-ignore
                     PageRouting_1.currentPageInstance[pair[0]] = pair[1];
                 }
             }
@@ -20650,9 +21242,9 @@ let PageRouting = class PageRouting extends _data_lit_element_base__WEBPACK_IMPO
             (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_5__.changePage)(nextPage, params);
     }
     render() {
-        if ('icon' in this.currentPage)
-            (0,_services_extensions_style_extensions__WEBPACK_IMPORTED_MODULE_4__.setFavicon)(this.currentPage['icon']);
-        return (0,_page_routing_html__WEBPACK_IMPORTED_MODULE_8__.renderPageRouting)(this);
+        if (this.currentPage.icon)
+            (0,_services_extensions_style_extensions__WEBPACK_IMPORTED_MODULE_4__.setFavicon)(this.currentPage.icon);
+        return _page_routing_html__WEBPACK_IMPORTED_MODULE_8__.renderPageRouting.call(this);
     }
     disconnectedCallback() {
         super.disconnectedCallback();
@@ -20675,7 +21267,6 @@ __webpack_async_result__();
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderRecipesPageStyles: () => (/* binding */ renderRecipesPageStyles)
@@ -20739,7 +21330,6 @@ function renderRecipesPageStyles() {
   \*************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -20755,18 +21345,11 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ser
 
 
 
-/**
- * @param { RecipesPage } recipesPage
- */
-function renderRecipesPage(recipesPage) {
+function renderRecipesPage() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <page-layout>
             <div id="filter-area"></div>
-            <paginated-scrolling
-                id="recipes-content"
-                scrollTopThreshold="20"
-                @scrollBottom="${() => recipesPage.loadMoreItems()}"
-            >
+            <paginated-scrolling id="recipes-content" scrollTopThreshold="20" @scrollBottom="${() => this.loadMoreItems()}">
                 <div id="items">
                     <div
                         id="add-recipe-icon"
@@ -20774,7 +21357,7 @@ function renderRecipesPage(recipesPage) {
                         class="recipe-tile"
                         @click="${() => (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_2__.changePage)(_create_recipe_page_create_recipe_page__WEBPACK_IMPORTED_MODULE_3__.CreateRecipePage)}"
                     ></div>
-                    ${recipesPage.recipes.map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+                    ${this.recipes.map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                                 <recipe-tile
                                     class="recipe-tile"
                                     .recipe="${x}"
@@ -20800,7 +21383,6 @@ __webpack_async_result__();
   \********************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -20830,25 +21412,19 @@ let RecipesPage = class RecipesPage extends _data_lit_element_base__WEBPACK_IMPO
     static get styles() {
         return (0,_recipes_page_css__WEBPACK_IMPORTED_MODULE_3__.renderRecipesPageStyles)();
     }
-    static get properties() {
-        return {
-            someProperty: { type: String, reflect: true },
-        };
-    }
-    constructor() {
-        super();
-        /** @type {RecipeModel[]} */ this.recipes = [];
-    }
     async connectedCallback() {
         super.connectedCallback();
         this.recipes = await _services_backend_services__WEBPACK_IMPORTED_MODULE_2__.RecipeService.getAllRecipes();
         this.requestFullUpdate();
     }
     render() {
-        return (0,_recipes_page_html__WEBPACK_IMPORTED_MODULE_4__.renderRecipesPage)(this);
+        return _recipes_page_html__WEBPACK_IMPORTED_MODULE_4__.renderRecipesPage.call(this);
     }
     loadMoreItems() { }
 };
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], RecipesPage.prototype, "recipes", void 0);
 RecipesPage = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('recipes-page')
 ], RecipesPage);
@@ -20865,7 +21441,6 @@ __webpack_async_result__();
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderWelcomePageStyles: () => (/* binding */ renderWelcomePageStyles)
@@ -20923,7 +21498,6 @@ function renderWelcomePageStyles() {
   \*************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -20933,10 +21507,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../native-components/link-element/link-element */ "./native-components/link-element/link-element.ts");
 /* harmony import */ var _media_page_media_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../media-page/media-page */ "./pages/media-page/media-page.ts");
 /* harmony import */ var _music_page_music_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../music-page/music-page */ "./pages/music-page/music-page.ts");
-/* harmony import */ var _music_page_music_page__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_music_page_music_page__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../recipes-page/recipes-page */ "./pages/recipes-page/recipes-page.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_2__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_4__]);
-([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_2__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_4__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_2__, _music_page_music_page__WEBPACK_IMPORTED_MODULE_3__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_4__]);
+([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_2__, _music_page_music_page__WEBPACK_IMPORTED_MODULE_3__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_4__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -20971,7 +21544,6 @@ __webpack_async_result__();
   \********************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -20999,9 +21571,6 @@ let WelcomePage = class WelcomePage extends _data_lit_element_base__WEBPACK_IMPO
     static get styles() {
         return (0,_welcome_page_css__WEBPACK_IMPORTED_MODULE_2__.renderWelcomePageStyles)();
     }
-    static get properties() {
-        return {};
-    }
     render() {
         return (0,_welcome_page_html__WEBPACK_IMPORTED_MODULE_3__.renderWelcomePage)();
     }
@@ -21022,7 +21591,6 @@ __webpack_async_result__();
   \***********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   registerContentWarnings: () => (/* binding */ registerContentWarnings)
@@ -21044,9 +21612,6 @@ function registerContentWarnings() {
                     `)
         .join(''));
 }
-/**
- * @param {ContentWarning} warning
- */
 function getContentWarningIconPath(warning) {
     switch (warning) {
         case _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_1__.ContentWarning.Violence:
@@ -21075,7 +21640,6 @@ function getContentWarningIconPath(warning) {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   registerTargetGroups: () => (/* binding */ registerTargetGroups)
@@ -21103,9 +21667,6 @@ function registerTargetGroups() {
         .join('\n\n')}
     `);
 }
-/**
- * @param {TargetGroup} group
- */
 function getTargetGroupIconPath(group) {
     switch (group) {
         case _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_1__.TargetGroup.Children:
@@ -21132,7 +21693,6 @@ function getTargetGroupIconPath(group) {
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   arrowIcon: () => (/* binding */ arrowIcon)
@@ -21154,7 +21714,6 @@ function arrowIcon() {
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ascendingIcon: () => (/* binding */ ascendingIcon)
@@ -21175,7 +21734,6 @@ function ascendingIcon() {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   cleanIcon: () => (/* binding */ cleanIcon)
@@ -21214,7 +21772,6 @@ function cleanIcon() {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   crossIcon: () => (/* binding */ crossIcon)
@@ -21235,7 +21792,6 @@ function crossIcon() {
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   descendingIcon: () => (/* binding */ descendingIcon)
@@ -21256,7 +21812,6 @@ function descendingIcon() {
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   dragIcon: () => (/* binding */ dragIcon)
@@ -21277,7 +21832,6 @@ function dragIcon() {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   globusIcon: () => (/* binding */ globusIcon)
@@ -21299,7 +21853,6 @@ function globusIcon() {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   importIcon: () => (/* binding */ importIcon)
@@ -21321,7 +21874,6 @@ function importIcon() {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   lookupIcon: () => (/* binding */ lookupIcon)
@@ -21344,7 +21896,6 @@ function lookupIcon() {
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   noteIcon: () => (/* binding */ noteIcon)
@@ -21366,7 +21917,6 @@ function noteIcon() {
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   plusIcon: () => (/* binding */ plusIcon)
@@ -21387,7 +21937,6 @@ function plusIcon(hidestyle = false) {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   popupIcon: () => (/* binding */ popupIcon)
@@ -21409,7 +21958,6 @@ function popupIcon() {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   repairIcon: () => (/* binding */ repairIcon)
@@ -21430,7 +21978,6 @@ function repairIcon() {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   revertIcon: () => (/* binding */ revertIcon)
@@ -21455,7 +22002,6 @@ function revertIcon() {
   \**************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   saveTickIcon: () => (/* binding */ saveTickIcon)
@@ -21477,7 +22023,6 @@ function saveTickIcon() {
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   selectAllIcon: () => (/* binding */ selectAllIcon)
@@ -21498,7 +22043,6 @@ function selectAllIcon() {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   speechIcon: () => (/* binding */ speechIcon)
@@ -21521,7 +22065,6 @@ function speechIcon() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   unselectAllIcon: () => (/* binding */ unselectAllIcon)
@@ -21543,7 +22086,6 @@ function unselectAllIcon() {
   \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   unsetIcon: () => (/* binding */ unsetIcon)
@@ -21567,9 +22109,9 @@ function unsetIcon() {
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   IconRegistry: () => (/* binding */ IconRegistry),
 /* harmony export */   Icons: () => (/* binding */ Icons),
 /* harmony export */   registerIcons: () => (/* binding */ registerIcons)
 /* harmony export */ });
@@ -21645,42 +22187,42 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class IconRegistry {
-    static Cross = (0,_general_cross_icon_svg__WEBPACK_IMPORTED_MODULE_9__.crossIcon)();
-    static Trash = (0,_pages_media_detail_page_images_trash_icon_svg__WEBPACK_IMPORTED_MODULE_4__.trashIcon)();
-    static Arrow = (0,_general_arrow_svg__WEBPACK_IMPORTED_MODULE_6__.arrowIcon)();
-    static Import = (0,_general_import_icon_svg__WEBPACK_IMPORTED_MODULE_13__.importIcon)();
-    static Plus = (0,_general_plus_icon_svg__WEBPACK_IMPORTED_MODULE_16__.plusIcon)();
-    static Popup = (0,_general_popup_icon_svg__WEBPACK_IMPORTED_MODULE_17__.popupIcon)();
-    static AddPlaylist = (0,_playlist_icons_add_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_30__.addPlaylistIcon)();
-    static BrowsePlaylist = (0,_playlist_icons_browse_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_31__.browsePlaylistIcon)();
-    static DownloadPlaylist = (0,_playlist_icons_download_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_32__.downloadPlaylistIcon)();
-    static PlayPlaylist = (0,_playlist_icons_play_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_33__.playPlaylistIcon)();
-    static SavePlaylist = (0,_playlist_icons_save_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_34__.savePlaylistIcon)();
-    static ShufflePlaylist = (0,_playlist_icons_shuffle_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_35__.shufflePlaylistIcon)();
-    static ChangeVolume = (0,_music_player_icons_change_volume_icon_svg__WEBPACK_IMPORTED_MODULE_25__.changeVolumeIcon)();
-    static FastForward = (0,_music_player_icons_fast_forward_icon_svg__WEBPACK_IMPORTED_MODULE_26__.fastForwardIcon)();
-    static IncreaseVolume = (0,_music_player_icons_increase_volume_icon_svg__WEBPACK_IMPORTED_MODULE_27__.increaseVolumeIcon)();
-    static Pause = (0,_music_player_icons_pause_icon_svg__WEBPACK_IMPORTED_MODULE_28__.pauseIcon)();
-    static Play = (0,_music_player_icons_play_icon_svg__WEBPACK_IMPORTED_MODULE_29__.playIcon)();
-    static Clean = (0,_general_clean_icon_svg__WEBPACK_IMPORTED_MODULE_8__.cleanIcon)();
-    static Lookup = (0,_general_lookup_icon_svg__WEBPACK_IMPORTED_MODULE_14__.lookupIcon)();
-    static Note = (0,_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_15__.noteIcon)();
-    static Revert = (0,_general_revert_icon_svg__WEBPACK_IMPORTED_MODULE_19__.revertIcon)();
-    static SaveTick = (0,_general_save_tick_icon_svg__WEBPACK_IMPORTED_MODULE_20__.saveTickIcon)();
-    static Unset = (0,_general_unset_icon_svg__WEBPACK_IMPORTED_MODULE_24__.unsetIcon)();
-    static SelectAll = (0,_general_select_all_icon_svg__WEBPACK_IMPORTED_MODULE_21__.selectAllIcon)();
-    static UnselectAll = (0,_general_unselect_all_icon_svg__WEBPACK_IMPORTED_MODULE_23__.unselectAllIcon)();
-    static Ascending = (0,_general_ascending_icon_svg__WEBPACK_IMPORTED_MODULE_7__.ascendingIcon)();
-    static Descending = (0,_general_descending_icon_svg__WEBPACK_IMPORTED_MODULE_10__.descendingIcon)();
-    static Speech = (0,_general_speech_icon_svg__WEBPACK_IMPORTED_MODULE_22__.speechIcon)();
-    static Globus = (0,_general_globus_icon_svg__WEBPACK_IMPORTED_MODULE_12__.globusIcon)();
-    static Drag = (0,_general_drag_icon_svg__WEBPACK_IMPORTED_MODULE_11__.dragIcon)();
-    static Drop = (0,_advanced_components_upload_area_images_drop_icon_svg__WEBPACK_IMPORTED_MODULE_2__.dropIcon)();
-    static Clipboard = (0,_advanced_components_upload_area_images_clipboard_icon_svg__WEBPACK_IMPORTED_MODULE_1__.clipboardIcon)();
-    static Edit = (0,_pages_media_detail_page_images_edit_icon_svg__WEBPACK_IMPORTED_MODULE_3__.editIcon)();
-    static Repair = (0,_general_repair_icon_svg__WEBPACK_IMPORTED_MODULE_18__.repairIcon)();
-}
+const IconRegistry = {
+    Cross: (0,_general_cross_icon_svg__WEBPACK_IMPORTED_MODULE_9__.crossIcon)(),
+    Trash: (0,_pages_media_detail_page_images_trash_icon_svg__WEBPACK_IMPORTED_MODULE_4__.trashIcon)(),
+    Arrow: (0,_general_arrow_svg__WEBPACK_IMPORTED_MODULE_6__.arrowIcon)(),
+    Import: (0,_general_import_icon_svg__WEBPACK_IMPORTED_MODULE_13__.importIcon)(),
+    Plus: (0,_general_plus_icon_svg__WEBPACK_IMPORTED_MODULE_16__.plusIcon)(),
+    Popup: (0,_general_popup_icon_svg__WEBPACK_IMPORTED_MODULE_17__.popupIcon)(),
+    AddPlaylist: (0,_playlist_icons_add_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_30__.addPlaylistIcon)(),
+    BrowsePlaylist: (0,_playlist_icons_browse_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_31__.browsePlaylistIcon)(),
+    DownloadPlaylist: (0,_playlist_icons_download_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_32__.downloadPlaylistIcon)(),
+    PlayPlaylist: (0,_playlist_icons_play_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_33__.playPlaylistIcon)(),
+    SavePlaylist: (0,_playlist_icons_save_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_34__.savePlaylistIcon)(),
+    ShufflePlaylist: (0,_playlist_icons_shuffle_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_35__.shufflePlaylistIcon)(),
+    ChangeVolume: (0,_music_player_icons_change_volume_icon_svg__WEBPACK_IMPORTED_MODULE_25__.changeVolumeIcon)(),
+    FastForward: (0,_music_player_icons_fast_forward_icon_svg__WEBPACK_IMPORTED_MODULE_26__.fastForwardIcon)(),
+    IncreaseVolume: (0,_music_player_icons_increase_volume_icon_svg__WEBPACK_IMPORTED_MODULE_27__.increaseVolumeIcon)(),
+    Pause: (0,_music_player_icons_pause_icon_svg__WEBPACK_IMPORTED_MODULE_28__.pauseIcon)(),
+    Play: (0,_music_player_icons_play_icon_svg__WEBPACK_IMPORTED_MODULE_29__.playIcon)(),
+    Clean: (0,_general_clean_icon_svg__WEBPACK_IMPORTED_MODULE_8__.cleanIcon)(),
+    Lookup: (0,_general_lookup_icon_svg__WEBPACK_IMPORTED_MODULE_14__.lookupIcon)(),
+    Note: (0,_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_15__.noteIcon)(),
+    Revert: (0,_general_revert_icon_svg__WEBPACK_IMPORTED_MODULE_19__.revertIcon)(),
+    SaveTick: (0,_general_save_tick_icon_svg__WEBPACK_IMPORTED_MODULE_20__.saveTickIcon)(),
+    Unset: (0,_general_unset_icon_svg__WEBPACK_IMPORTED_MODULE_24__.unsetIcon)(),
+    SelectAll: (0,_general_select_all_icon_svg__WEBPACK_IMPORTED_MODULE_21__.selectAllIcon)(),
+    UnselectAll: (0,_general_unselect_all_icon_svg__WEBPACK_IMPORTED_MODULE_23__.unselectAllIcon)(),
+    Ascending: (0,_general_ascending_icon_svg__WEBPACK_IMPORTED_MODULE_7__.ascendingIcon)(),
+    Descending: (0,_general_descending_icon_svg__WEBPACK_IMPORTED_MODULE_10__.descendingIcon)(),
+    Speech: (0,_general_speech_icon_svg__WEBPACK_IMPORTED_MODULE_22__.speechIcon)(),
+    Globus: (0,_general_globus_icon_svg__WEBPACK_IMPORTED_MODULE_12__.globusIcon)(),
+    Drag: (0,_general_drag_icon_svg__WEBPACK_IMPORTED_MODULE_11__.dragIcon)(),
+    Drop: (0,_advanced_components_upload_area_images_drop_icon_svg__WEBPACK_IMPORTED_MODULE_2__.dropIcon)(),
+    Clipboard: (0,_advanced_components_upload_area_images_clipboard_icon_svg__WEBPACK_IMPORTED_MODULE_1__.clipboardIcon)(),
+    Edit: (0,_pages_media_detail_page_images_edit_icon_svg__WEBPACK_IMPORTED_MODULE_3__.editIcon)(),
+    Repair: (0,_general_repair_icon_svg__WEBPACK_IMPORTED_MODULE_18__.repairIcon)(),
+};
 const Icons = {};
 Object.keys(IconRegistry).forEach((x) => (Icons[x] = x));
 function registerIcons() {
@@ -21700,7 +22242,6 @@ function registerIcons() {
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   brassIcon: () => (/* binding */ brassIcon)
@@ -21728,7 +22269,6 @@ function brassIcon() {
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   electronicIcon: () => (/* binding */ electronicIcon)
@@ -21751,7 +22291,6 @@ function electronicIcon() {
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   humanBodyIcon: () => (/* binding */ humanBodyIcon)
@@ -21773,7 +22312,6 @@ function humanBodyIcon() {
   \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   keyboardIcon: () => (/* binding */ keyboardIcon)
@@ -21795,7 +22333,6 @@ function keyboardIcon() {
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   microphoneIcon: () => (/* binding */ microphoneIcon)
@@ -21813,7 +22350,6 @@ function microphoneIcon() {
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   miscIcon: () => (/* binding */ miscIcon)
@@ -21863,7 +22399,6 @@ function miscIcon() {
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   percussionIcon: () => (/* binding */ percussionIcon)
@@ -21885,7 +22420,6 @@ function percussionIcon() {
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   stringsIcon: () => (/* binding */ stringsIcon)
@@ -21907,7 +22441,6 @@ function stringsIcon() {
   \***********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   woodWindIcon: () => (/* binding */ woodWindIcon)
@@ -21929,7 +22462,6 @@ function woodWindIcon() {
   \****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   orchestraIcon: () => (/* binding */ orchestraIcon)
@@ -21951,7 +22483,6 @@ function orchestraIcon() {
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   africaFlag: () => (/* binding */ africaFlag)
@@ -21977,7 +22508,6 @@ function africaFlag() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   chinaFlag: () => (/* binding */ chinaFlag)
@@ -22007,7 +22537,6 @@ function chinaFlag() {
   \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   englishFlag: () => (/* binding */ englishFlag)
@@ -22041,7 +22570,6 @@ function englishFlag() {
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   germanFlag: () => (/* binding */ germanFlag)
@@ -22065,7 +22593,6 @@ function germanFlag() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   italyFlag: () => (/* binding */ italyFlag)
@@ -22089,7 +22616,6 @@ function italyFlag() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   japanFlag: () => (/* binding */ japanFlag)
@@ -22115,7 +22641,6 @@ function japanFlag() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   koreaFlag: () => (/* binding */ koreaFlag)
@@ -22150,7 +22675,6 @@ function koreaFlag() {
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   noLanguageIcon: () => (/* binding */ noLanguageIcon)
@@ -22173,7 +22697,6 @@ function noLanguageIcon() {
   \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   russiaFlag: () => (/* binding */ russiaFlag)
@@ -22197,7 +22720,6 @@ function russiaFlag() {
   \*************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   southAmericaFlag: () => (/* binding */ southAmericaFlag)
@@ -22304,7 +22826,6 @@ function southAmericaFlag() {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   spainFlag: () => (/* binding */ spainFlag)
@@ -22327,7 +22848,6 @@ function spainFlag() {
   \*****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   changeVolumeIcon: () => (/* binding */ changeVolumeIcon)
@@ -22351,7 +22871,6 @@ function changeVolumeIcon() {
   \****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   fastForwardIcon: () => (/* binding */ fastForwardIcon)
@@ -22376,7 +22895,6 @@ function fastForwardIcon() {
   \*******************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   increaseVolumeIcon: () => (/* binding */ increaseVolumeIcon)
@@ -22398,7 +22916,6 @@ function increaseVolumeIcon() {
   \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   pauseIcon: () => (/* binding */ pauseIcon)
@@ -22421,7 +22938,6 @@ function pauseIcon() {
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   playIcon: () => (/* binding */ playIcon)
@@ -22447,7 +22963,6 @@ function playIcon() {
   \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   largeGroupIcon: () => (/* binding */ largeGroupIcon)
@@ -22469,7 +22984,6 @@ function largeGroupIcon() {
   \**************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   largeOrchestraIcon: () => (/* binding */ largeOrchestraIcon)
@@ -22491,7 +23005,6 @@ function largeOrchestraIcon() {
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   singlePersonIcon: () => (/* binding */ singlePersonIcon)
@@ -22513,7 +23026,6 @@ function singlePersonIcon() {
   \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   smalLGroupIcon: () => (/* binding */ smalLGroupIcon)
@@ -22535,7 +23047,6 @@ function smalLGroupIcon() {
   \**************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   smallOrchestraIcon: () => (/* binding */ smallOrchestraIcon)
@@ -22557,7 +23068,6 @@ function smallOrchestraIcon() {
   \************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addPlaylistIcon: () => (/* binding */ addPlaylistIcon)
@@ -22582,7 +23092,6 @@ function addPlaylistIcon() {
   \***************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   browsePlaylistIcon: () => (/* binding */ browsePlaylistIcon)
@@ -22607,7 +23116,6 @@ function browsePlaylistIcon() {
   \*****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   downloadPlaylistIcon: () => (/* binding */ downloadPlaylistIcon)
@@ -22634,7 +23142,6 @@ function downloadPlaylistIcon() {
   \*************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   playPlaylistIcon: () => (/* binding */ playPlaylistIcon)
@@ -22660,7 +23167,6 @@ function playPlaylistIcon() {
   \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   playlistIcon: () => (/* binding */ playlistIcon)
@@ -22688,7 +23194,6 @@ function playlistIcon() {
   \*************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   savePlaylistIcon: () => (/* binding */ savePlaylistIcon)
@@ -22719,7 +23224,6 @@ function savePlaylistIcon() {
   \****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   shufflePlaylistIcon: () => (/* binding */ shufflePlaylistIcon)
@@ -22742,7 +23246,6 @@ function shufflePlaylistIcon() {
   \***********************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -22772,12 +23275,12 @@ class AudioService {
     static visualizationData = new _data_observable__WEBPACK_IMPORTED_MODULE_4__.Observable(new Float32Array());
     static trackPosition = new _data_observable__WEBPACK_IMPORTED_MODULE_4__.Observable(0);
     static duration = null;
-    /** @type {Observable} */ static ended = new _data_observable__WEBPACK_IMPORTED_MODULE_4__.Observable(null);
-    /** @type {Observable} */ static changed = new _data_observable__WEBPACK_IMPORTED_MODULE_4__.Observable(null);
-    /** @type {Subscription} */ static #eventSubscription = _client_interop_service__WEBPACK_IMPORTED_MODULE_5__.ClientInteropService.eventResponse.subscribe((x) => {
+    static ended = new _data_observable__WEBPACK_IMPORTED_MODULE_4__.Observable(null);
+    static changed = new _data_observable__WEBPACK_IMPORTED_MODULE_4__.Observable(null);
+    static #eventSubscription = _client_interop_service__WEBPACK_IMPORTED_MODULE_5__.ClientInteropService.eventResponse.subscribe((x) => {
         switch (x?.event) {
             case _client_interop_interop_event__WEBPACK_IMPORTED_MODULE_1__.InteropEvent.TrackPositionChanged: {
-                let response = /** @type {TrackPositionChangedEvent} */ x;
+                let response = x;
                 this.paused = false;
                 this.trackPosition.next(response.trackPosition);
                 this.visualizationData.next(new Float32Array(response.visualizationData));
@@ -22801,20 +23304,20 @@ class AudioService {
                 break;
             }
             case _client_interop_interop_event__WEBPACK_IMPORTED_MODULE_1__.InteropEvent.TrackChanged: {
-                let response = /** @type {TrackChangedEvent} */ x;
+                let response = x;
                 this.currentTrackPath = response.trackPath;
                 this.duration = response.duration;
                 this.changed.next();
                 break;
             }
             case _client_interop_interop_event__WEBPACK_IMPORTED_MODULE_1__.InteropEvent.PlaybackStateChanged: {
-                let response = /** @type {PlaybackStateChangedEvent} */ x;
+                let response = x;
                 this.paused = response.playbackState != _client_interop_playback_state__WEBPACK_IMPORTED_MODULE_3__.PlaybackState.Playing;
                 this.changed.next();
                 break;
             }
             case _client_interop_interop_event__WEBPACK_IMPORTED_MODULE_1__.InteropEvent.VolumeChanged: {
-                let response = /** @type {VolumeChangedEvent} */ x;
+                let response = x;
                 this.#volume = response.volume;
                 this.changed.next();
                 break;
@@ -22833,9 +23336,6 @@ class AudioService {
             console.error('reinitializing track failed:', err);
         }
     }
-    /**
-     * @param {string} path
-     */
     static async changeTrack(path) {
         if (!path)
             return;
@@ -22848,9 +23348,6 @@ class AudioService {
             console.error('initializing track failed:', err);
         }
     }
-    /**
-     * @param {string} trackPath
-     */
     static async play(trackPath) {
         try {
             if (AudioService.currentTrackPath != trackPath)
@@ -22878,9 +23375,6 @@ class AudioService {
             console.error('resetting audio failed:', err);
         }
     }
-    /**
-     * @param {number} value
-     */
     static async changeVolume(value) {
         try {
             if (!value)
@@ -22891,9 +23385,6 @@ class AudioService {
             console.error('changing volume failed:', err);
         }
     }
-    /**
-     * @param {number} value
-     */
     static async changePosition(value) {
         try {
             await _client_interop_service__WEBPACK_IMPORTED_MODULE_5__.ClientInteropService.sendCommand({ command: _client_interop_interop_command__WEBPACK_IMPORTED_MODULE_0__.InteropCommand.ChangeTrackPosition, payload: value });
@@ -22904,7 +23395,7 @@ class AudioService {
     }
 }
 _client_interop_service__WEBPACK_IMPORTED_MODULE_5__.ClientInteropService.onConnected.subscribe(async () => {
-    var localStorageVolume = localStorage.getItem('volume');
+    var localStorageVolume = localStorage.getItem('volume') ?? '0';
     await AudioService.changeVolume(Number.parseInt(localStorageVolume) / 100);
 });
 
@@ -22919,15 +23410,11 @@ __webpack_async_result__();
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   AudioVisualizationService: () => (/* binding */ AudioVisualizationService)
 /* harmony export */ });
 class AudioVisualizationService {
-    /**
-     * @param {HTMLMediaElement} mediaElement
-     */
     static getAnalyzerFromAudio(mediaElement) {
         if (!mediaElement)
             return null;
@@ -22949,7 +23436,6 @@ class AudioVisualizationService {
   \***************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -22965,16 +23451,12 @@ class AuthenticatedRequestService {
     static get AuthHeaderStorageKey() {
         return 'authentication';
     }
-    /**
-     * @param {RequestInfo} url
-     * @param {RequestInit} requestInit
-     * @returns {Promise<Response>}
-     */
     async fetch(url, requestInit) {
+        var response = null;
         try {
             requestInit.mode = 'cors';
             requestInit.signal = null;
-            var response = await window.fetch(url, requestInit);
+            response = await window.fetch(url, requestInit);
             if (response.status == 401) {
                 (0,_extensions_url_extension__WEBPACK_IMPORTED_MODULE_1__.changePage)(_pages_login_page_login_page__WEBPACK_IMPORTED_MODULE_0__.LoginPage);
             }
@@ -23000,7 +23482,6 @@ __webpack_async_result__();
   \**************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -23046,7 +23527,6 @@ __webpack_async_result__();
   \********************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -23069,18 +23549,15 @@ class ClientInteropService {
     static commandResponse = new _data_observable__WEBPACK_IMPORTED_MODULE_1__.Observable(null);
     static queryResponse = new _data_observable__WEBPACK_IMPORTED_MODULE_1__.Observable(null);
     static eventResponse = new _data_observable__WEBPACK_IMPORTED_MODULE_1__.Observable(null);
-    /** @type {Observable<number>} */ static failCounter = new _data_observable__WEBPACK_IMPORTED_MODULE_1__.Observable(0);
+    static failCounter = new _data_observable__WEBPACK_IMPORTED_MODULE_1__.Observable(0);
     static onConnected = new _data_observable__WEBPACK_IMPORTED_MODULE_1__.Observable(null);
-    /**
-     * @param {Omit<InteropCommandRequest, 'ticks'>} command
-     */
     static sendCommand(command) {
         if (this.socket?.readyState != WebSocket.OPEN) {
             console.warn('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.');
             return;
         }
         return new Promise(async (resolve, reject) => {
-            /** @type {InteropCommandRequest} */ var request = {
+            var request = {
                 ...command,
                 ticks: Date.now(),
             };
@@ -23098,16 +23575,13 @@ class ClientInteropService {
             });
         });
     }
-    /**
-     * @param {Omit<InteropQueryRequest, 'ticks'>} query
-     */
     static executeQuery(query) {
         if (this.socket?.readyState != WebSocket.OPEN) {
             console.warn('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.');
             return;
         }
         return new Promise(async (resolve, reject) => {
-            /** @type {InteropQueryRequest} */ var request = {
+            var request = {
                 ...query,
                 ticks: Date.now(),
             };
@@ -23125,10 +23599,6 @@ class ClientInteropService {
             });
         });
     }
-    /**
-     * @prop {number} duration
-     * @prop {Observable<number>} position
-     */
     static async startConnection() {
         setTimeout(() => {
             if (!this.socket || this.socket.readyState != WebSocket.OPEN)
@@ -23142,11 +23612,11 @@ class ClientInteropService {
         _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_2__.MessageSnackbar.popup('Websocket Verbindung zum Client Interop erfolgreich', 'success');
         this.socket.onmessage = async (e) => {
             var deserialized = JSON.parse(e.data);
-            if ( /** @type {InteropCommandResponse} */deserialized.command != undefined)
+            if (deserialized.command != undefined)
                 this.commandResponse.next(deserialized);
-            if ( /** @type {InteropQueryRequest} */deserialized.query != undefined)
+            if (deserialized.query != undefined)
                 this.queryResponse.next(deserialized);
-            if ( /** @type {import('../client-interop/i-interop-event').IInteropEvent} */deserialized.event != undefined)
+            if (deserialized.event != undefined)
                 this.eventResponse.next(deserialized);
         };
         this.socket.onclose = async (e) => {
@@ -23176,7 +23646,6 @@ __webpack_async_result__();
   \***************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -23189,7 +23658,6 @@ _client_interop_service__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependen
 
 
 class ClipboardService {
-    /** @param {MusicModel} track */
     static async copyAudioToClipboard(track) {
         await _client_interop_service__WEBPACK_IMPORTED_MODULE_1__.ClientInteropService.sendCommand({ command: _client_interop_interop_command__WEBPACK_IMPORTED_MODULE_0__.InteropCommand.CopyAudioToClipboard, payload: track.path });
     }
@@ -23206,7 +23674,6 @@ __webpack_async_result__();
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   setAbortableInterval: () => (/* binding */ setAbortableInterval),
@@ -23219,11 +23686,6 @@ function waitForSeconds(seconds) {
 function waitForAnimation() {
     return new Promise(requestAnimationFrame);
 }
-/**
- * @param {number} duration
- * @param {()=> void} action
- * @param {AbortSignal} signal
- */
 function setAbortableInterval(duration, action, signal) {
     let interval = setInterval(action, duration);
     signal.onabort = () => clearInterval(interval);
@@ -23238,7 +23700,6 @@ function setAbortableInterval(duration, action, signal) {
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createRange: () => (/* binding */ createRange),
@@ -23249,9 +23710,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   sortBy: () => (/* binding */ sortBy),
 /* harmony export */   union: () => (/* binding */ union)
 /* harmony export */ });
-/**
- * @param {any[]} array
- */
 function randomizeArray(array) {
     var resultList = [];
     while (array.length > 0) {
@@ -23260,47 +23718,26 @@ function randomizeArray(array) {
     }
     return resultList;
 }
-/**
- * @template T
- * @param {T[]} array
- * @param {(item: T)=> any} selector
- */
 function sortBy(array, selector) {
     return array.sort((a, b) => (selector(a) > selector(b) ? 1 : selector(a) === selector(b) ? 0 : -1));
 }
-/**
- * @template T
- * @param {T[]} array
- * @param {T} selectedEntry
- * @param {T} targetEntry
- */
 function getDistance(array, selectedEntry, targetEntry) {
     var selectedIndex = array.indexOf(selectedEntry);
     var targetIndex = array.indexOf(targetEntry);
     return targetIndex - selectedIndex;
 }
-/**
- * @template T
- * @param {T[]} array
- * @param {keyof T} key
- * @returns { { [key:string] : T[] } }
- */
 function groupBy(array, key) {
     if (!array)
         return {};
     return array.reduce(function (rv, x) {
         (rv[x[key]] = rv[x[key]] || []).push(x);
         return rv;
-    }, /** @type {any} */ ({}));
+    }, {});
 }
 function createRange(from, to) {
     var diff = to - from;
     return [...new Array(diff + 1).keys()].map((x) => x + from);
 }
-/**
- * @template T
- * @param  {...T[]} params
- */
 function union(...params) {
     if (params.length == 0)
         return [];
@@ -23308,10 +23745,6 @@ function union(...params) {
         return params[0];
     return Array.from(new Set(params.flatMap((x) => x)));
 }
-/**
- * @template T
- * @param {T[]} array
- */
 function distinct(array) {
     return array.filter((value, index) => array.indexOf(value) === index);
 }
@@ -23325,12 +23758,10 @@ function distinct(array) {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   playAudio: () => (/* binding */ playAudio)
 /* harmony export */ });
-/** @param {HTMLAudioElement} audioElement */
 function playAudio(audioElement) {
     return new Promise(async (resolve) => {
         var controller = new AbortController();
@@ -23354,12 +23785,10 @@ function playAudio(audioElement) {
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   pascalToKeabCase: () => (/* binding */ pascalToKeabCase)
 /* harmony export */ });
-/** @param {string} input */
 function pascalToKeabCase(input) {
     var output = input[0].toLowerCase();
     for (var char of input.substring(1)) {
@@ -23379,7 +23808,6 @@ function pascalToKeabCase(input) {
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   newGuid: () => (/* binding */ newGuid)
@@ -23398,7 +23826,6 @@ function newGuid() {
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   cloneElementAsFixed: () => (/* binding */ cloneElementAsFixed),
@@ -23427,55 +23854,31 @@ function getScaleFactorY() {
 }
 const viewportWidth = 1920;
 const viewportHeight = 900;
-/**
- * @param {HTMLElement} element
- * @param {HTMLElement} parent
- * @param {HTMLElement} elementContainer
- */
 function scrollIntoParentViewX(element, elementContainer, parent) {
     var targetLeft = element.offsetLeft + elementContainer.offsetLeft - parent.offsetWidth / 2 - element.offsetWidth / 2;
     elementContainer.style.transform = `translateX(${-targetLeft}px)`;
 }
-/**
- * @param {HTMLElement} element
- * @param {HTMLElement} parent
- * @param {HTMLElement} elementContainer
- */
 function scrollIntoParentViewY(element, elementContainer, parent, max = null, min = null) {
     var targetTop = element.offsetTop + elementContainer.offsetTop - parent.offsetHeight / 2 + element.offsetHeight / 2;
     elementContainer.style.transform = `translateY(${-targetTop}px)`;
 }
-/**
- * @param {HTMLElement} element
- * @param {HTMLElement} parent
- * @param {HTMLElement} elementContainer
- */
 function getTargetScrollPosition(element, elementContainer, parent) {
     var targetLeft = element.offsetLeft + elementContainer.offsetLeft - parent.offsetWidth / 2 - element.offsetWidth / 2;
     var targetTop = element.offsetTop + elementContainer.offsetTop - parent.offsetHeight / 2 + element.offsetHeight / 2;
     return { left: -targetLeft, top: -targetTop };
 }
-/**
- * @param {boolean} selectFolders
- * @returns {Promise<File[]>}
- */
 function openFileDialog(selectFolders = false) {
     return new Promise((resolve) => {
-        /** @type {HTMLInputElement} */ var fileInput = document.createElement('input');
+        var fileInput = document.createElement('input');
         fileInput.type = 'file';
         if (selectFolders)
             fileInput.setAttribute('webkitdirectory', '');
-        fileInput.onchange = (e) => {
-            resolve(Array.from(fileInput.files));
-        };
+        fileInput.onchange = () => resolve(Array.from(fileInput.files));
         fileInput.click();
         fileInput.focus();
     });
 }
 const focusableElements = ['a', 'input', 'button'];
-/**
- * @param {Element} currentElement
- */
 function getNextFocusableElement(currentElement) {
     var allElements = getAllElementsRecurse(document.body);
     var elementChildren = [
@@ -23483,26 +23886,19 @@ function getNextFocusableElement(currentElement) {
         ...(currentElement.shadowRoot.querySelectorAll('*') ?? []),
     ];
     var nextElements = allElements
-        .slice(allElements.indexOf(/** @type {HTMLElement} */ currentElement) + 1)
+        .slice(allElements.indexOf(currentElement) + 1)
         .filter((x) => !elementChildren.includes(x));
     return nextElements.find((x) => focusableElements.includes(x.tagName) || x.hasAttribute('tabindex'));
 }
-/**
- * @param {HTMLElement} start
- * @param {HTMLElement[]} array
- */
 function getAllElementsRecurse(start, array = []) {
     array.push(start);
     var children = [...(start.children ?? []), ...(start.shadowRoot?.children ?? [])];
     for (var child of children)
-        getAllElementsRecurse(/** @type {HTMLElement} */ child, array);
+        getAllElementsRecurse(child, array);
     return array;
 }
-/**
- * @param {HTMLElement} element
- */
 function cloneElementAsFixed(element) {
-    var clonedElement = /** @type {HTMLElement} */ element.cloneNode(true);
+    var clonedElement = element.cloneNode(true);
     var elementBoundingRect = element.getBoundingClientRect();
     clonedElement.style.left = elementBoundingRect.left + 'px';
     clonedElement.style.top = elementBoundingRect.top + 5 + 'px';
@@ -23510,10 +23906,6 @@ function cloneElementAsFixed(element) {
     clonedElement.style.pointerEvents = 'none';
     return clonedElement;
 }
-/**
- * @param {number} cursorY
- * @param {NodeListOf<Element>} elements
- */
 function findElementIndexMatchingCursorY(cursorY, elements) {
     for (const [index, element] of elements.entries()) {
         var boundingRect = element.getBoundingClientRect();
@@ -23534,17 +23926,11 @@ function findElementIndexMatchingCursorY(cursorY, elements) {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Enum: () => (/* binding */ Enum)
 /* harmony export */ });
 class Enum {
-    /**
-     * @template {Object.<string, any>} TEnum
-     * @param {TEnum} enumType
-     * @param {(keyof TEnum)[]} excludes
-     */
     static nextValue(enumType, currentValue, ...excludes) {
         var entries = Object.entries(enumType).filter((x) => !excludes.includes(x[0]));
         if (!currentValue)
@@ -23565,11 +23951,9 @@ class Enum {
   \***********************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   analyzeMediaFile: () => (/* binding */ analyzeMediaFile),
 /* harmony export */   fileToDataUrl: () => (/* binding */ fileToDataUrl),
 /* harmony export */   importDroppedFiles: () => (/* binding */ importDroppedFiles)
 /* harmony export */ });
@@ -23606,27 +23990,6 @@ async function importDroppedFiles(files) {
     else
         return { files, basePath };
 }
-function analyzeMediaFile(file, basePath) {
-    var streamingEntry = {};
-    // @ts-ignore
-    var fileLevels = file.webkitRelativePath.split('/');
-    // @ts-ignore
-    streamingEntry.src = `${basePath}\\${file.webkitRelativePath}`;
-    streamingEntry.season = 'Staffel 1';
-    if (fileLevels.length == 4) {
-        streamingEntry.season = fileLevels[2];
-        streamingEntry.name = fileLevels[1];
-    }
-    else if (fileLevels.length == 3)
-        streamingEntry.name = fileLevels[1];
-    else {
-        // @ts-ignore
-        var error = `the depth of the selected folder must be between 3 and 4 (root -> media -> (season) -> episode). file: ${file.webkitRelativePath}`;
-        console.error(error);
-        throw new Error(error);
-    }
-    return streamingEntry;
-}
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
@@ -23639,14 +24002,10 @@ __webpack_async_result__();
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   isNumberKey: () => (/* binding */ isNumberKey)
 /* harmony export */ });
-/**
- * @param {KeyboardEvent} event
- */
 function isNumberKey(event) {
     if (Number.parseInt(event.key) >= 0 || event.key.length > 1) {
         event.returnValue = true;
@@ -23665,7 +24024,6 @@ function isNumberKey(event) {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   colorCodeToNumber: () => (/* binding */ colorCodeToNumber),
@@ -23705,26 +24063,14 @@ function decToHex(number, digits) {
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getKeyFor: () => (/* binding */ getKeyFor),
 /* harmony export */   nameof: () => (/* binding */ nameof)
 /* harmony export */ });
-/**
- * @template T
- * @param {T} target
- * @param {any} value
- * @returns {keyof T}
- */
 function getKeyFor(target, value) {
-    return /** @type {(keyof T)[]} */ (Object.keys(target)).find((key) => target[key] == value);
+    return Object.keys(target).find((key) => target[key] == value);
 }
-/**
- * @template {function} T
- * @param {T} object
- * @param {keyof T["prototype"] & string} property
- */
 function nameof(object, property) {
     return property;
 }
@@ -23738,7 +24084,6 @@ function nameof(object, property) {
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   renderBackgroundImage: () => (/* binding */ renderBackgroundImage),
@@ -23759,12 +24104,8 @@ function renderBackgroundImage(image) {
     background: url('data:image/svg+xml;base64, ${btoa(image)}') no-repeat center center / 100% 100%;
 `);
 }
-/**
- * @param {string} icon
- * @param {'icon' | 'image' | 'url'} mode
- */
 function setFavicon(icon, mode = 'icon') {
-    /** @type {HTMLLinkElement} */ var link = document.querySelector("link[rel~='icon']");
+    var link = document.querySelector("link[rel~='icon']");
     if (!link) {
         link = document.createElement('link');
         link.rel = 'icon';
@@ -23792,7 +24133,7 @@ function rgbHexToHsv(color) {
     const g = parseInt(hex.substring(2, 4), 16) / 255;
     const b = parseInt(hex.substring(4, 6), 16) / 255;
     var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, v = max;
+    var h = max, s = max, v = max;
     var d = max - min;
     s = max == 0 ? 0 : d / max;
     if (max == min) {
@@ -23827,7 +24168,6 @@ function rgbHexToHsv(color) {
   \**********************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -23844,23 +24184,13 @@ _data_session__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.the
 
 
 
-/** @param {string} query */ function getQueryValue(query) {
+function getQueryValue(query) {
     var queries = location.search.substr(1).split('&');
     var desiredQuery = queries.find((x) => x.split('=')[0] == query);
     if (!desiredQuery)
         return undefined;
     return decodeURIComponent(desiredQuery.split('=')[1]);
 }
-/**
- * @template T
- * @typedef {{ [K in keyof T]: T[K] extends Function ? never : K }[keyof T]} NonMethodKeys
- */
-/**
- * @template {import('../../custom-elements').Page} T
- * @template {Omit<InstanceType<T>, keyof LitElementBase>} U
- * @param {T} target
- * @param {Partial<Pick<U, NonMethodKeys<U>>>} [params]
- */
 function changePage(target, params = {}, reflectInHistory = true) {
     (0,_style_extensions__WEBPACK_IMPORTED_MODULE_2__.setFavicon)('');
     var newUrl = new URL(location.href);
@@ -23876,7 +24206,6 @@ function changePage(target, params = {}, reflectInHistory = true) {
         history.replaceState(null, '', newUrl);
     _data_session__WEBPACK_IMPORTED_MODULE_0__.Session.currentPage.next(getPageName(target));
 }
-/** @returns {any} */
 function queryToObject() {
     var result = {};
     if (location.search) {
@@ -23888,7 +24217,6 @@ function queryToObject() {
     }
     return result;
 }
-/** @param  {import('../../custom-elements').Page} component */
 function getPageName(component) {
     var componentName = (0,_convention_extension__WEBPACK_IMPORTED_MODULE_1__.pascalToKeabCase)(component.name);
     return componentName.replace('-page', '');
@@ -23905,7 +24233,6 @@ __webpack_async_result__();
   \*****************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -23930,9 +24257,6 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_dat
 
 
 class MaintenanceService {
-    /**
-     * @returns {Promise<boolean>}
-     */
     static cleanMedia() {
         return new Promise(async (resolve) => {
             var complete = false;
@@ -23989,15 +24313,9 @@ class MaintenanceService {
             selectionDialog.requestFullUpdate();
         });
     }
-    /**
-     * @returns {Promise<boolean>}
-     */
     static repairMedia() {
         return new Promise(async (resolve) => { });
     }
-    /**
-     * @returns {Promise<boolean>}
-     */
     static cleanAudioTracks() {
         return new Promise(async (resolve) => {
             var brokenTracks = (await _backend_services__WEBPACK_IMPORTED_MODULE_7__.CleanupService.getBrokenAudioTracks()).map((x) => new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.MusicModel(x));
@@ -24029,7 +24347,7 @@ class MaintenanceService {
                         resolve(false);
                         return dialog.remove();
                     }
-                    var selected = /** @type {CustomEvent<{selected: string[]}>} */ e.detail.selected;
+                    var selected = e.detail.selected;
                     await _backend_services__WEBPACK_IMPORTED_MODULE_7__.MusicService.hardDeleteTracks(selected);
                     dialog.remove();
                     resolve(true);
@@ -24053,7 +24371,6 @@ __webpack_async_result__();
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   MediaFilterService: () => (/* binding */ MediaFilterService)
@@ -24065,10 +24382,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class MediaFilterService {
-    /**
-     * @param {MediaModel[]} result
-     * @param {MediaFilter} filter
-     */
     static filter(result, filter) {
         if (filter.search)
             this.search(result, filter.search ?? '', true);
@@ -24084,17 +24397,13 @@ class MediaFilterService {
         _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyValueFilter(result, filter.complete, 'complete');
         if (!filter.sortingProperty)
             return result;
-        var sorted = (0,_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_1__.sortBy)(result, (x) => x[filter.sortingProperty]);
+        var property = filter.sortingProperty;
+        var sorted = (0,_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_1__.sortBy)(result, (x) => x[property]);
         if (!filter.sortingDirection || filter.sortingDirection == 'ascending')
             return sorted;
         else
             return sorted.reverse();
     }
-    /**
-     * @param {MediaModel[]} list
-     * @param {string} search
-     * @param {boolean} includeDescription
-     */
     static search(list, search, includeDescription) {
         _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyMultiPropertySearch(list, search ?? '', 'name', 'kanjiName', 'romajiName', 'germanName', 'englishName', includeDescription ? 'description' : 'name');
         return list;
@@ -24110,7 +24419,6 @@ class MediaFilterService {
   \******************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -24123,12 +24431,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
 /* harmony import */ var _pages_media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pages/media-detail-page/media-detail-page */ "./pages/media-detail-page/media-detail-page.ts");
 /* harmony import */ var _pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../pages/music-playlist-page/music-playlist-page */ "./pages/music-playlist-page/music-playlist-page.ts");
-/* harmony import */ var _pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _backend_services__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./backend.services */ "./services/backend.services.ts");
 /* harmony import */ var _client_interop_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./client-interop-service */ "./services/client-interop-service.ts");
 /* harmony import */ var _extensions_url_extension__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./extensions/url.extension */ "./services/extensions/url.extension.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__, _pages_media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_5__, _backend_services__WEBPACK_IMPORTED_MODULE_7__, _client_interop_service__WEBPACK_IMPORTED_MODULE_8__, _extensions_url_extension__WEBPACK_IMPORTED_MODULE_9__]);
-([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__, _pages_media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_5__, _backend_services__WEBPACK_IMPORTED_MODULE_7__, _client_interop_service__WEBPACK_IMPORTED_MODULE_8__, _extensions_url_extension__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__, _pages_media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_5__, _pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_6__, _backend_services__WEBPACK_IMPORTED_MODULE_7__, _client_interop_service__WEBPACK_IMPORTED_MODULE_8__, _extensions_url_extension__WEBPACK_IMPORTED_MODULE_9__]);
+([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__, _pages_media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_5__, _pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_6__, _backend_services__WEBPACK_IMPORTED_MODULE_7__, _client_interop_service__WEBPACK_IMPORTED_MODULE_8__, _extensions_url_extension__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -24141,24 +24448,27 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_nat
 
 class MediaImportService {
     static async importAudioFiles() {
-        /** @type {string[]} */ var filePaths = await _client_interop_service__WEBPACK_IMPORTED_MODULE_8__.ClientInteropService.executeQuery({
+        const filePaths = await _client_interop_service__WEBPACK_IMPORTED_MODULE_8__.ClientInteropService.executeQuery({
             query: _client_interop_interop_query__WEBPACK_IMPORTED_MODULE_1__.InteropQuery.RequestFolderContent,
             payload: null,
         });
         if (!filePaths)
             return;
         var dialog = _dialogs_entity_status_dialog_entity_status_dialog__WEBPACK_IMPORTED_MODULE_2__.EntityStatusDialog.show((x) => x.entries.length == filePaths.length);
-        /** @type {string[]} */ var affectedTrackHashs = [];
-        for (let path of filePaths)
+        var affectedTrackHashs = [];
+        for (let path of filePaths) {
+            var name = path.split('\\').at(-1);
             _backend_services__WEBPACK_IMPORTED_MODULE_7__.MusicService.createMusicTrackFromPath(path).then((result) => {
-                var name = path.split('\\').at(-1);
                 dialog.addEntry({
-                    text: _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_6__.MusicPlaylistPage, { trackHash: result.key }, name),
+                    text: result.key
+                        ? _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_6__.MusicPlaylistPage, { trackHash: result.key }, name ?? path)
+                        : name ?? path,
                     status: result.value,
                 });
                 if (result.value == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.ModelCreationState.Success || result.value == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.ModelCreationState.Updated)
                     affectedTrackHashs.push(result.key);
             });
+        }
         dialog.addEventListener('accept', async () => {
             dialog.remove();
             if (affectedTrackHashs.length <= 0)
@@ -24167,14 +24477,9 @@ class MediaImportService {
             (0,_extensions_url_extension__WEBPACK_IMPORTED_MODULE_9__.changePage)(_pages_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_6__.MusicPlaylistPage, { playlistId });
         });
     }
-    /**
-     *
-     * @param {MediaCategory} category
-     * @param {Language} language
-     */
     static importMediaCollections(category, language) {
         return new Promise(async (resolve) => {
-            /** @type {string[]} */ var mediaPaths = await _client_interop_service__WEBPACK_IMPORTED_MODULE_8__.ClientInteropService.executeQuery({
+            var mediaPaths = await _client_interop_service__WEBPACK_IMPORTED_MODULE_8__.ClientInteropService.executeQuery({
                 query: _client_interop_interop_query__WEBPACK_IMPORTED_MODULE_1__.InteropQuery.RequestSubFolders,
                 payload: null,
             });
@@ -24206,9 +24511,6 @@ class MediaImportService {
             });
         });
     }
-    /**
-     * @param {Response} response
-     */
     static async *fetchAndProcessData(response) {
         response.body.getReader({ mode: 'byob' });
         const reader = response.body.getReader();
@@ -24249,7 +24551,6 @@ __webpack_async_result__();
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   MusicFilterService: () => (/* binding */ MusicFilterService)
@@ -24261,10 +24562,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class MusicFilterService {
-    /**
-     * @param {PlaylistModel[]} playlists
-     * @param {MusicFilterOptions} filter
-     */
     static filterPlaylists(playlists, filter) {
         if (filter.showPlaylists == _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Forbid || filter.showDeleted == _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Require)
             return [];
@@ -24279,10 +24576,6 @@ class MusicFilterService {
             (track.mood2 != _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_1__.Mood.Unset && forbiddenMoods.includes(track.mood2))) && requiredMoods.every((mood) => x.tracks.some((track) => track.mood1 == mood || track.mood2 == mood)));
         return filteredPlaylists;
     }
-    /**
-     * @param {MusicModel[]} tracks
-     * @param {MusicFilterOptions} filter
-     */
     static filterTracks(tracks, filter) {
         if (filter.showPlaylists == _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_0__.CheckboxState.Require)
             return [];
@@ -24301,10 +24594,6 @@ class MusicFilterService {
         _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyMultiPropertyFilter(filteredTracks, filter.moods, (item) => [item.mood1].concat(item.mood2 == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_1__.Mood.Unset ? [] : item.mood2));
         return filteredTracks;
     }
-    /**
-     * @param {MusicModel[]} list
-     * @param {string} search
-     */
     static search(list, search) {
         _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyMultiPropertySearch(list, search, 'name', 'author', 'source', 'path');
         return list;
@@ -24320,7 +24609,6 @@ class MusicFilterService {
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ObjectFilterService: () => (/* binding */ ObjectFilterService)
@@ -24369,7 +24657,7 @@ class ObjectFilterService {
         return list.filter((item) => forcedValues.includes(`${item[filterProperty]}`));
     }
     static applyMultiPropertySearch(list, search, ...properties) {
-        var results = list.filter((item) => properties.some((prop) => (item[prop] ?? '').toString().toLowerCase().trim().includes(search.toLowerCase().trim())));
+        var results = list.filter((item) => properties.some((prop) => `${item[prop] ?? ''}`.toLowerCase().trim().includes(search.toLowerCase().trim())));
         list.length = 0;
         list.push(...results);
     }
@@ -24404,7 +24692,6 @@ class ObjectFilterService {
   \*****************/
 /***/ (() => {
 
-"use strict";
 
 /**
  * Running tasks:
@@ -24460,7 +24747,6 @@ class ObjectFilterService {
   \*******************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CSSResult: () => (/* binding */ CSSResult),
@@ -24612,7 +24898,6 @@ const getCompatibleStyle = supportsAdoptingStyleSheets ||
   \***************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   desc: () => (/* binding */ desc)
@@ -24658,7 +24943,6 @@ const desc = (obj, name, descriptor) => {
   \*************************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   customElement: () => (/* binding */ customElement)
@@ -24702,7 +24986,6 @@ const customElement = (tagName) => (classOrTarget, context) => {
   \************************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   eventOptions: () => (/* binding */ eventOptions)
@@ -24761,7 +25044,6 @@ function eventOptions(options) {
   \*******************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   property: () => (/* binding */ property),
@@ -24915,7 +25197,6 @@ function property(options) {
   \********************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   queryAll: () => (/* binding */ queryAll)
@@ -24974,7 +25255,6 @@ function queryAll(selector) {
   \**********************************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   queryAssignedElements: () => (/* binding */ queryAssignedElements)
@@ -25040,7 +25320,6 @@ function queryAssignedElements(options) {
   \*******************************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   queryAssignedNodes: () => (/* binding */ queryAssignedNodes)
@@ -25101,7 +25380,6 @@ function queryAssignedNodes(options) {
   \**********************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   queryAsync: () => (/* binding */ queryAsync)
@@ -25170,7 +25448,6 @@ function queryAsync(selector) {
   \****************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   query: () => (/* binding */ query)
@@ -25300,7 +25577,6 @@ function query(selector, cache) {
   \****************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   state: () => (/* binding */ state)
@@ -25348,7 +25624,6 @@ function state(options) {
   \****************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CSSResult: () => (/* reexport safe */ _css_tag_js__WEBPACK_IMPORTED_MODULE_0__.CSSResult),
@@ -26448,7 +26723,6 @@ if (DEV_MODE && global.reactiveElementVersions.length > 1) {
   \************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   customElement: () => (/* reexport safe */ _lit_reactive_element_decorators_custom_element_js__WEBPACK_IMPORTED_MODULE_0__.customElement),
@@ -26483,7 +26757,6 @@ __webpack_require__.r(__webpack_exports__);
   \************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   customElement: () => (/* reexport safe */ _lit_reactive_element_decorators_custom_element_js__WEBPACK_IMPORTED_MODULE_0__.customElement),
@@ -26530,7 +26803,6 @@ __webpack_require__.r(__webpack_exports__);
   \*******************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CSSResult: () => (/* reexport safe */ _lit_reactive_element__WEBPACK_IMPORTED_MODULE_0__.CSSResult),
@@ -26573,7 +26845,6 @@ __webpack_require__.r(__webpack_exports__);
   \*************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CSSResult: () => (/* reexport safe */ _lit_reactive_element__WEBPACK_IMPORTED_MODULE_0__.CSSResult),
@@ -26838,7 +27109,6 @@ if (DEV_MODE && globalThis.litElementVersions.length > 1) {
   \********************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   _$LH: () => (/* binding */ _$LH),

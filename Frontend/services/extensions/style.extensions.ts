@@ -1,24 +1,20 @@
 import { unsafeCSS } from 'lit-element';
 
-export function renderMaskImage(image) {
+export function renderMaskImage(image: string) {
     return unsafeCSS(`
             mask: url('data:image/svg+xml;base64, ${btoa(image)}') no-repeat center center / 100% 100%;
             -webkit-mask: url('data:image/svg+xml;base64, ${btoa(image)}') no-repeat center center / 100% 100%;
     `);
 }
 
-export function renderBackgroundImage(image) {
+export function renderBackgroundImage(image: string) {
     return unsafeCSS(`
     background: url('data:image/svg+xml;base64, ${btoa(image)}') no-repeat center center / 100% 100%;
 `);
 }
 
-/**
- * @param {string} icon
- * @param {'icon' | 'image' | 'url'} mode
- */
 export function setFavicon(icon: string, mode: 'icon' | 'image' | 'url' = 'icon') {
-    /** @type {HTMLLinkElement} */ var link = document.querySelector("link[rel~='icon']");
+    var link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
 
     if (!link) {
         link = document.createElement('link');
@@ -41,7 +37,7 @@ export function setFavicon(icon: string, mode: 'icon' | 'image' | 'url' = 'icon'
     }
 }
 
-export function rgbHexToHsv(color) {
+export function rgbHexToHsv(color: string) {
     // Remove # from the color code
     const hex = color.slice(1);
 
@@ -52,8 +48,8 @@ export function rgbHexToHsv(color) {
 
     var max = Math.max(r, g, b),
         min = Math.min(r, g, b);
-    var h,
-        s,
+    var h = max,
+        s = max,
         v = max;
 
     var d = max - min;

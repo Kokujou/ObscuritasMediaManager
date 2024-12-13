@@ -1,6 +1,7 @@
-import { html } from 'lit-element';
-import { customElement } from 'lit-element/decorators';
+import { html, TemplateResult } from 'lit-element';
+import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { Page } from '../../data/util-types';
 import { changePage, getPageName } from '../../services/extensions/url.extension';
 import { renderLinkElementStyles } from './link-element.css';
 import { renderLinkElement } from './link-element.html';
@@ -11,30 +12,15 @@ export class LinkElement extends LitElementBase {
         return renderLinkElementStyles();
     }
 
-    static get properties() {
-        return {
-            href: { type: String, reflect: true },
-            id: { type: String, reflect: true },
-            target: { type: String, reflect: true },
-            page: { type: Object, reflect: true },
-            params: { type: Object, reflect: true },
-            disabled: { type: Boolean, reflect: true },
-            class: { type: String, reflect: true },
-        };
-    }
-
-    /**
-     * @template {import('../../custom-elements').Page} T
-     * @template {Omit<InstanceType<T>, keyof LitElementBase>} U
-     * @param {T} page
-     * @param {Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>>} params
-     * @param {TemplateResult | string} inner
-     * @param {Partial<Record<keyof LinkElement.properties, any>>} options
-     */
-    static forPage(page: T, params: Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>>, inner: TemplateResult | string, options: Partial<Record<keyof LinkElement.properties, any>> = {}) {
+    static forPage<T extends Page, U extends Omit<InstanceType<T>, keyof LitElementBase>>(
+        page: T,
+        params: Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>> | null,
+        inner: TemplateResult | string,
+        options: Partial<Record<keyof typeof LinkElement.properties, any>> = {}
+    ) {
         return html`<link-element
             id="${options.id}"
-            .page="${page}"
+            .page="${page as any}"
             .params="${params}"
             ?disabled="${options.disabled}"
             .target="${options.target}"
@@ -44,13 +30,10 @@ export class LinkElement extends LitElementBase {
         </link-element>`;
     }
 
-    /**
-     * @template {import('../../custom-elements').Page} T
-     * @template {Omit<InstanceType<T>, keyof LitElementBase>} U
-     * @param {T} page
-     * @param {Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>>} params
-     */
-    static getLinkFor(page: T, params: Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>>) {
+    static getLinkFor<T extends Page, U extends Omit<InstanceType<T>, keyof LitElementBase> | undefined>(
+        page: T | undefined,
+        params: Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>>
+    ) {
         var link = '';
         if (params)
             link += `?${Object.entries(params)
@@ -62,34 +45,26 @@ export class LinkElement extends LitElementBase {
 
     get fullLink() {
         if (this.href) return this.href;
-        var link = this.href ?? '';
         return LinkElement.getLinkFor(this.page, this.params);
     }
 
-    constructor() {
-        super();
-
-        this.href = null;
-        this.target = null;
-        /** @type {import('../../custom-elements').Page} */ this.page = null;
-        /** @type {Object.<string, any>} */ this.params = null;
-        this.disabled = false;
-    }
+    @property() href?: string = undefined;
+    @property() target?: string = undefined;
+    @property({ type: Object }) page?: Page = undefined;
+    @property() params: any = null;
+    @property({ type: Boolean }) disabled = false;
 
     override render() {
-        return renderLinkElement(this);
+        return renderLinkElement.call(this);
     }
 
-    /**
-     * @param {Event} event
-     */
     handleClick(event: Event) {
         if (this.target == '_blank') return;
         event.preventDefault();
         if (this.disabled) return;
 
         if (this.href) location.assign(this.fullLink);
-        else changePage(this.page, this.params);
+        else if (this.page) changePage(this.page, this.params);
 
         return false;
     }

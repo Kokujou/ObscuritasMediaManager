@@ -1,4 +1,4 @@
-const html = (strings, ...values) => {
+const html = (strings: TemplateStringsArray, ...values: any[]) => {
     var resultString = '';
     if (strings.length % 2 != 0 && strings.length != 1)
         throw new Error(`string array length must be dividable by 2, but is ${strings.length}`);
@@ -19,7 +19,6 @@ export class LoadingScreen extends HTMLElement {
 
     constructor() {
         super();
-
         var shadow = this.attachShadow({ mode: 'open' });
         shadow.innerHTML = `<style>@import "./native-components/loading-screen/loading-screen.css";</style>`;
         shadow.innerHTML += LoadingScreen.renderLoadingScreen();

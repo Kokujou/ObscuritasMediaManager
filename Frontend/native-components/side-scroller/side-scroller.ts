@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { scrollIntoParentViewX } from '../../services/extensions/document.extensions';
 import { renderSideScrollerStyles } from './side-scroller.css';
@@ -14,24 +14,20 @@ export class SideScroller extends LitElementBase {
         return {};
     }
 
-    /** @returns {HTMLElement} */
     get scrollContainer() {
-        var container = this.shadowRoot!.getElementById('content-container');
+        var container = this.shadowRoot!.querySelector<HTMLElement>('#content-container')!;
         return container;
     }
 
-    /** @returns {HTMLElement} */
     get scrollItemcontainer() {
-        var container = this.shadowRoot!.getElementById('item-container');
+        var container = this.shadowRoot!.querySelector<HTMLElement>('#item-container')!;
         return container;
     }
 
     get scrollChildren() {
-        return this.shadowRoot
-            .querySelector('slot')
+        return this.shadowRoot!.querySelector('slot')!
             .assignedElements()
-            .filter((x) => x.className != 'inner-space')
-            .map(/** @param {HTMLElement} x */ (x: HTMLElement) => x);
+            .filter((x) => x.className != 'inner-space') as HTMLElement[];
     }
 
     get canScrollLeft() {
@@ -42,13 +38,9 @@ export class SideScroller extends LitElementBase {
         return this.currentItemIndex < this.children.length - 1;
     }
 
-    constructor() {
-        super();
+    @state() currentItemIndex = -1;
 
-        this.currentItemIndex = -1;
-    }
-
-    updated(_changedProperties) {
+    updated(_changedProperties: Map<any, any>) {
         super.updated(_changedProperties);
         setTimeout(() => {
             this.requestFullUpdate();
@@ -60,7 +52,7 @@ export class SideScroller extends LitElementBase {
     }
 
     override render() {
-        return renderSideScroller(this);
+        return renderSideScroller.call(this);
     }
 
     scrollToLeft() {

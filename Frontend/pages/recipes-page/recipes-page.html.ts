@@ -4,18 +4,11 @@ import { changePage } from '../../services/extensions/url.extension';
 import { CreateRecipePage } from '../create-recipe-page/create-recipe-page';
 import { RecipesPage } from './recipes-page';
 
-/**
- * @param { RecipesPage } recipesPage
- */
-export function renderRecipesPage(recipesPage: RecipesPage) {
+export function renderRecipesPage(this: RecipesPage) {
     return html`
         <page-layout>
             <div id="filter-area"></div>
-            <paginated-scrolling
-                id="recipes-content"
-                scrollTopThreshold="20"
-                @scrollBottom="${() => recipesPage.loadMoreItems()}"
-            >
+            <paginated-scrolling id="recipes-content" scrollTopThreshold="20" @scrollBottom="${() => this.loadMoreItems()}">
                 <div id="items">
                     <div
                         id="add-recipe-icon"
@@ -23,7 +16,7 @@ export function renderRecipesPage(recipesPage: RecipesPage) {
                         class="recipe-tile"
                         @click="${() => changePage(CreateRecipePage)}"
                     ></div>
-                    ${recipesPage.recipes.map(
+                    ${this.recipes.map(
                         (x) =>
                             html`
                                 <recipe-tile

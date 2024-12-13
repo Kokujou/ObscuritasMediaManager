@@ -12,7 +12,7 @@ const MandatoryGenres = [
     MediaGenreCategory.Style,
 ];
 
-const MainGenreConditions = {
+const MainGenreConditions: { [key: string]: MediaGenreCategory[] } = {
     'Slice of Life': [MediaGenreCategory.Art, MediaGenreCategory.JobsOrHobbies, MediaGenreCategory.School],
     Sport: [MediaGenreCategory.Sports],
     Action: [MediaGenreCategory.Battle],
@@ -20,9 +20,6 @@ const MainGenreConditions = {
     Romance: [MediaGenreCategory.Relationship],
 };
 
-/**
- * @param {MediaGenreModel[]} selectedGenres
- */
 export function getAvailableGenreSections(selectedGenres: MediaGenreModel[]) {
     var baseSections = MandatoryGenres.concat(selectedGenres.map((x) => x.section));
     var selectedMainGenres = selectedGenres.filter((x) => x.section == MediaGenreCategory.MainGenre);

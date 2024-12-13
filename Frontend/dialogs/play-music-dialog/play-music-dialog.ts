@@ -9,19 +9,13 @@ import { renderPlayMusicDialog } from './play-music-dialog.html';
 
 @customElement('play-music-dialog')
 export class PlayMusicDialog extends LitElementBase {
-    /** @type {PlayMusicDialog} */ static instance;
+    static instance: PlayMusicDialog | null;
     static FadeDuration = 0.5;
 
     static override get styles() {
         return renderPlayMusicDialogStyles();
     }
 
-    /**
-     * @returns { PlayMusicDialog }
-     * @param { MusicModel } track
-     * @param {number} initialVolume
-     * @param {number} startPosition
-     */
     static show(track: MusicModel, initialVolume: number, startPosition: number) {
         if (
             AudioService.paused ||
@@ -38,18 +32,15 @@ export class PlayMusicDialog extends LitElementBase {
         }
 
         var dialog = new PlayMusicDialog();
-        PageRouting.container.append(dialog);
+        PageRouting.container!.append(dialog);
         dialog.reinitialize(track, initialVolume, startPosition);
         this.instance = dialog;
 
         return dialog;
     }
 
-    /**
-     * @param { MusicModel } track
-     * @param {number} initialVolume
-     * @param {number} startPosition
-     */
+    currentTrack: MusicModel | null = null;
+
     async reinitialize(track: MusicModel, initialVolume: number, startPosition: number) {
         await AudioService.changeTrack(track?.path);
         await AudioService.changeVolume(initialVolume);
@@ -62,17 +53,18 @@ export class PlayMusicDialog extends LitElementBase {
     }
 
     override render() {
-        return renderPlayMusicDialog(this);
+        return renderPlayMusicDialog.call(this);
     }
 
     async toggle() {
+        if (!this.currentTrack) return;
         if (AudioService.paused) await AudioService.play(this.currentTrack.path);
         else await AudioService.pause();
     }
 
-    changeTrackPosition(value) {
+    changeTrackPosition(value: number) {
         if (AudioService.duration == Infinity) return;
-        AudioService.trackPosition = value;
+        AudioService.trackPosition.next(value);
         this.requestFullUpdate();
     }
 
@@ -83,7 +75,7 @@ export class PlayMusicDialog extends LitElementBase {
         this.remove();
     }
 
-    async disoverride connectedCallback() {
+    override async disconnectedCallback() {
         await super.disconnectedCallback();
         PlayMusicDialog.instance = null;
         await AudioService.reset();
