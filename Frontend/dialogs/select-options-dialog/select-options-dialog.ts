@@ -11,13 +11,6 @@ export class SelectOptionsDialog extends LitElementBase {
         return renderSelectOptionsDialogStyles();
     }
 
-    static get properties() {
-        return {
-            options: { type: Object, reflect: true },
-            multiselect: { type: Boolean, reflect: true },
-        };
-    }
-
     static show(options: { [s: string]: TemplateResult | string }, multiselect = true) {
         var dialog = new SelectOptionsDialog();
         dialog.options = options;

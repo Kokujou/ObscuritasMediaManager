@@ -40,16 +40,21 @@ export class CreateRecipePage extends LitElementBase {
         return defaultIngredient;
     }
 
-    @property() recipeId = null;
-    @property() recipe = new RecipeModel({
-        id: crypto.randomUUID(),
-        title: 'Rezepttitel',
-        nation: Language.Unset,
-        difficulty: 0,
-        rating: 0,
-        formattedText: 'Dein Rezept-Text',
-        ingredients: [this.emptyGroup],
-    });
+    @property() public declare recipeId: string;
+    @property({ type: Object }) public declare recipe: RecipeModel;
+
+    constructor() {
+        super();
+        this.recipe = new RecipeModel({
+            id: crypto.randomUUID(),
+            title: 'Rezepttitel',
+            nation: Language.Unset,
+            difficulty: 0,
+            rating: 0,
+            formattedText: 'Dein Rezept-Text',
+            ingredients: [this.emptyGroup],
+        });
+    }
 
     override async connectedCallback() {
         super.connectedCallback();

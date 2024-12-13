@@ -1,4 +1,4 @@
-import { customElement, property } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { renderGroupedDropdownStyles } from './grouped-dropdown.css';
 import { renderGroupedDropdown } from './grouped-dropdown.html';
@@ -18,12 +18,19 @@ export class GroupedDropdown extends LitElementBase {
             .flatMap((x) => x);
     }
 
-    @property({ type: Object }) options: Object;
-    @property({ type: Boolean }) showDropDown: boolean;
-    @property({ type: Number }) maxDisplayDepth = 5;
-    @property() search = '';
+    @property({ type: Object }) public declare options: Object;
+    @property({ type: Number }) public declare maxDisplayDepth: number;
+
+    @state() public declare showDropDown: boolean;
+    @state() protected declare search: string;
+
     result = { category: null, value: null } as GroupedDropdownResult;
     searchResetCallback = setTimeout(() => (this.search = ''), 1000);
+
+    constructor() {
+        super();
+        this.maxDisplayDepth = 5;
+    }
 
     override connectedCallback() {
         super.connectedCallback();

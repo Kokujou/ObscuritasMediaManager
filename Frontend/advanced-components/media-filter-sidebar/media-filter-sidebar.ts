@@ -15,13 +15,12 @@ export class MediaFilterSidebar extends LitElementBase {
         return renderMediaFilterSidebarStyles();
     }
 
-    static get properties() {
-        return {
-            filter: { type: Object, reflect: true },
-        };
-    }
+    @property({ type: Object }) public declare filter: MediaFilter;
 
-    @property({ type: Object }) filter = new MediaFilter([]);
+    constructor() {
+        super();
+        this.filter = new MediaFilter([]);
+    }
 
     override render() {
         return renderMediaFilterSidebar.call(this);

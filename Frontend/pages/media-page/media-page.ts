@@ -64,14 +64,22 @@ export class MediaPage extends LitElementBase {
             );
     }
 
-    @state() genreList: string[] = [];
-    @state() page = 1;
-    @state() loading = true;
+    @state() protected declare genreList: string[];
+    @state() protected declare page: number;
+    @state() protected declare loading: boolean;
 
     protected declare filter: MediaFilter;
 
+    constructor() {
+        super();
+        this.loading = true;
+        this.page = 1;
+        this.genreList = [];
+    }
+
     override async connectedCallback() {
         super.connectedCallback();
+
         document.title = MediaPage.pageName;
         var genres = await GenreService.getAll();
         this.genreList = genres.map((x) => x.name);

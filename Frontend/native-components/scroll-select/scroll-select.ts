@@ -11,13 +11,6 @@ export class ScrollSelect extends LitElementBase {
         return renderScrollSelectStyles();
     }
 
-    static get properties() {
-        return {
-            options: { type: Array, reflect: true },
-            value: { type: String, reflect: true },
-        };
-    }
-
     get scrollContainer() {
         var container = this.shadowRoot!.querySelector<HTMLElement>('#scroll-items')!;
         return container;
@@ -40,14 +33,22 @@ export class ScrollSelect extends LitElementBase {
         return this.currentItemIndex < this.children.length - 1;
     }
 
-    @property() options = [];
-    @property() value = Mood.Unset;
+    @property({ type: Array }) public declare options: string[];
+    @property() public declare value: string;
 
     @state() protected declare currentItemIndex: number;
     @state() protected declare mouseDown: boolean;
     @state() protected declare mouseStartY: number;
 
+    constructor() {
+        super();
+        this.value = Mood.Unset;
+        this.options = [];
+    }
+
     override connectedCallback() {
+        super.connectedCallback();
+
         document.addEventListener('pointermove', (e) => this.onPointerMove(e));
         document.addEventListener('pointerup', () => this.onPointerUp());
     }

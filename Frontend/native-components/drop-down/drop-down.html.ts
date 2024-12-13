@@ -56,7 +56,7 @@ function showDropDown(this: DropDown) {
                   `
                 : ''}
             ${this.options
-                .filter((x) => x.text.toLocaleLowerCase().match(this.searchFilter.toLocaleLowerCase()))
+                .filter((x) => x.text.toLocaleLowerCase().match(this.searchFilter?.toLocaleLowerCase()))
                 .map((options) => {
                     return renderDropDownOption.call(this, options);
                 })}

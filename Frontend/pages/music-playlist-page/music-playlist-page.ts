@@ -69,12 +69,12 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         return MediaFilterService.search([...Session.mediaList.current()], this.updatedTrack.source!, false)[0]?.id;
     }
 
-    @property() trackIndex = 0;
-    @property() playlistId: string = null!;
-    @property() trackHash: string = null!;
-    @property() createNew = false;
+    @property({ type: Number }) public declare trackIndex: number;
+    @property() public declare playlistId: string;
+    @property() public declare trackHash: string;
+    @property({ type: Boolean, reflect: true }) public declare createNew: boolean;
 
-    @state() updatedTrack: MusicModel = null!;
+    @state() protected declare updatedTrack: MusicModel;
 
     override async connectedCallback() {
         await super.connectedCallback();
@@ -85,7 +85,6 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
                 PlayMusicDialog.show(this.updatedTrack, AudioService.volume, AudioService.trackPosition.current());
             }),
             AudioService.ended.subscribe(() => {
-                console.log('track ended', new Date().toTimeString());
                 if (this.trackIndex + 1 >= this.playlist.tracks.length && !this.loop) return;
                 this.changeTrackBy(1);
             }),

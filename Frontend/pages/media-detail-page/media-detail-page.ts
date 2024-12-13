@@ -77,10 +77,14 @@ export class MediaDetailPage extends LitElementBase {
     @state() protected declare selectedSeason: number;
     @state() protected declare createNew: boolean;
 
-    override async connectedCallback() {
+    constructor() {
+        super();
         this.imageRevision = Date.now();
         this.mediaIds = [];
         this.relatedTracks = [];
+    }
+
+    override async connectedCallback() {
         if (this.createNew) this.updatedMedia = await MediaService.getDefault();
 
         super.connectedCallback();

@@ -25,7 +25,9 @@ module.exports = {
                 use: [
                     {
                         loader: 'ts-loader',
-                        options: {},
+                        options: {
+                            transpileOnly: true,
+                        },
                     },
                 ],
                 exclude: [/node_modules/, /dist/, /all-entries.ts/],

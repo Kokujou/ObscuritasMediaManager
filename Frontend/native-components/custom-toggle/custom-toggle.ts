@@ -16,18 +16,15 @@ export class CustomToggle extends LitElementBase {
         return renderCustomToggleStyles();
     }
 
-    static get properties() {
-        return {
-            toggled: { type: Boolean, reflect: true },
-            state: { type: String, reflect: true },
-            threeValues: { type: Boolean, reflect: true },
-        };
-    }
-
-    @property() toggled = false;
-    @property() state = CheckboxState.Forbid;
-    @property() threeValues = false;
+    @property({ reflect: true }) public declare state: CheckboxState;
+    @property({ type: Boolean, reflect: true }) public declare threeValues: boolean;
+    @property({ type: Boolean, reflect: true }) public declare toggled: boolean;
     toggleForward = true;
+
+    constructor() {
+        super();
+        this.state = CheckboxState.Forbid;
+    }
 
     override connectedCallback() {
         super.connectedCallback();

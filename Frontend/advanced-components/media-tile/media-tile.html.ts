@@ -5,7 +5,7 @@ import { MediaTile } from './media-tile';
 
 export function renderMediaTile(this: MediaTile) {
     return html` <style>
-            #this-image {
+            #tile-image {
                 background-image: url('./Backend/api/media/${this.media.id}/image?rev=${this.imageRevision}');
             }
         </style>
@@ -17,7 +17,7 @@ export function renderMediaTile(this: MediaTile) {
             @error="${() => (this.hasImage = false)}"
         />
 
-        <div id="this-container">
+        <div id="tile-container">
             ${this.displayStyle == 'simple' ? '' : html`<div id="rating-container">${renderRating.call(this)}</div>`} <br />
             ${renderImageContainer.call(this)}
             ${this.displayStyle == 'solid'
@@ -39,7 +39,7 @@ export function renderMediaTile(this: MediaTile) {
 
 function renderImageContainer(this: MediaTile) {
     if (this.hasImage)
-        return html`<div id="this-image">
+        return html`<div id="tile-image">
             <div class="status-icon ${this.media.status}"></div>
         </div>`;
 
@@ -49,7 +49,7 @@ function renderImageContainer(this: MediaTile) {
 function renderGenreTag(this: MediaTile, genre: MediaGenreModel | null = null) {
     if (!genre) return;
     return html`<tag-label
-        .autocomplete="${this.autocompleteGenres}"
+        .autocomplete="${this.autocompleteGenres ?? []}"
         @tagCreated="${() => this.addGenre(genre)}"
         disabled
         text="${genre?.name}"

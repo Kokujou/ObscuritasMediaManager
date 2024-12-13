@@ -21,10 +21,11 @@ export class LitElementBase extends LitElement {
     abortController = new AbortController();
     protected elementsWithTooltips: Element[] = [];
 
-    constructor() {
-        super();
+    override connectedCallback() {
+        super.connectedCallback();
 
-        this.shadowRoot?.adoptedStyleSheets?.push(...LitElementBase.baseStyles);
+        if (this.shadowRoot?.adoptedStyleSheets)
+            this.shadowRoot.adoptedStyleSheets = LitElementBase.baseStyles.concat(this.shadowRoot.adoptedStyleSheets);
     }
 
     async requestFullUpdate() {

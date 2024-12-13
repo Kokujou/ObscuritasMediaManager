@@ -12,13 +12,20 @@ export class MediaTile extends LitElementBase {
         return renderMediaTileStyles();
     }
 
-    @property() displayStyle = 'solid';
-    @property({ type: Object }) media = new MediaModel();
-    @property({ type: Array }) autocompleteGenres: string[] = [];
+    @property() public declare displayStyle: string;
+    @property({ type: Object }) public declare media: MediaModel;
+    @property({ type: Array }) public declare autocompleteGenres: string[] | undefined;
 
-    @state() imageRevision = Date.now();
-    @state() hoveredRating = 0;
-    @state() hasImage = false;
+    @state() protected declare imageRevision: number;
+    @state() protected declare hoveredRating: number;
+    @state() protected declare hasImage: boolean;
+
+    constructor() {
+        super();
+        this.displayStyle = 'solid';
+        this.imageRevision = Date.now();
+        this.media = new MediaModel();
+    }
 
     override async connectedCallback() {
         super.connectedCallback();

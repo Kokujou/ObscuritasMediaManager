@@ -10,13 +10,6 @@ export class WarningBanner extends LitElementBase {
         return renderWarningBannerStyles();
     }
 
-    static get properties() {
-        return {
-            dismissed: { type: Boolean, reflect: true },
-            inner: { type: Object, reflect: true },
-        };
-    }
-
     static instance: WarningBanner | null;
 
     static spawn(inner: TemplateResult) {

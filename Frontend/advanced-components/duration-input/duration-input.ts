@@ -10,7 +10,12 @@ export class DurationInput extends LitElementBase {
         return renderDurationInputStyles();
     }
 
-    @property({ type: Object }) timespan = new TimeSpan();
+    @property({ type: Object }) public declare timespan: TimeSpan;
+
+    constructor() {
+        super();
+        this.timespan = new TimeSpan();
+    }
 
     handleKeyDown(event: KeyboardEvent) {
         if (event.key.length == 1 && !Number.parseInt(event.key)) {

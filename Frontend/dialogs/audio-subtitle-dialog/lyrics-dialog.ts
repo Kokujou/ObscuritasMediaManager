@@ -40,7 +40,6 @@ export class LyricsDialog extends LitElementBase {
 
         AudioService.changed.subscribe(() => {
             scrollContainer.style.animationDuration = (AudioService.duration ?? 30) + 'ms';
-            console.log(AudioService.duration, scrollContainer);
             dialog.requestFullUpdate();
         });
 
@@ -51,16 +50,18 @@ export class LyricsDialog extends LitElementBase {
         return this.lyrics.split('\n');
     }
 
-    @state() lyrics: string;
-    @state() canNext = true;
-    @state() scrollingPaused = false;
-    @state() lyricsOffset = -1;
-    @state() extendedScrollY = 0;
-    @state() scrollInterval: NodeJS.Timeout;
-    @state() track = new MusicModel();
+    @state() public declare lyrics: string;
+    @state() protected declare canNext: boolean;
+    @state() protected declare scrollingPaused: boolean;
+    @state() protected declare lyricsOffset: number;
+    @state() protected declare extendedScrollY: number;
+    @state() protected declare scrollInterval: NodeJS.Timeout;
+    @state() protected declare track: MusicModel;
 
     constructor() {
         super();
+        this.canNext = true;
+        this.track = new MusicModel();
         this.onclick = () => this.fadeAndRemove();
 
         window.addEventListener(

@@ -48,11 +48,11 @@ export class DialogBase extends LitElementBase {
         });
     }
 
-    @property() caption: string;
-    @property() acceptActionText?: string;
-    @property() declineActionText?: string;
-    @property() properties: Partial<DialogProperties>;
-    @property() canAccept: boolean;
+    @property() public declare caption: string;
+    @property() public declare acceptActionText?: string;
+    @property() public declare declineActionText?: string;
+    @property({ type: Object }) public declare properties: Partial<DialogProperties>;
+    @property({ type: Boolean, reflect: true }) public declare canAccept: boolean;
 
     constructor() {
         super();

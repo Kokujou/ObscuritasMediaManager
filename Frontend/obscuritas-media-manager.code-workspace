@@ -25,12 +25,7 @@
             "**/client-interop/**": false
         },
         "typescript.enablePromptUseWorkspaceTsdk": true,
-        "typescript.tsserver.watchOptions": {
-            "watchDirectory": "fixedPollingInterval",
-            "watchFile": "fixedPollingInterval"
-        },
         "files.watcherInclude": ["**/*.ts"],
-        "typescript.tsdk": "node_modules\\typescript\\lib",
         "typescript.preferences.importModuleSpecifierEnding": "minimal",
         "typescript.tsserver.experimental.enableProjectDiagnostics": false
     },

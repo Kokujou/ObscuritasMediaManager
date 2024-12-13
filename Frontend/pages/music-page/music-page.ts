@@ -34,12 +34,6 @@ export class MusicPage extends LitElementBase {
         return renderMusicPageStyles();
     }
 
-    static get properties() {
-        return {
-            deletionMode: { type: Boolean, reflect: true },
-        };
-    }
-
     get paginatedPlaylists() {
         return this.filteredPlaylists.slice(0, 6 + 3 * this.currentPage);
     }
@@ -66,22 +60,31 @@ export class MusicPage extends LitElementBase {
         return sorted.reverse();
     }
 
-    @state() playlists: PlaylistModel[] = [];
-    @state() currentTrack = new MusicModel();
-    @state() filter = new MusicFilterOptions();
-    @state() selectionMode = false;
-    @state() selectedHashes: string[] = [];
-    @state() selectionModeTimer: NodeJS.Timeout | null = null;
-    @state() sortingProperty: SortingProperties = 'unset';
-    @state() sortingDirection: keyof typeof SortingDirections = 'ascending';
-    @state() currentPage = 0;
-    @state() loading = false;
+    @state() protected declare playlists: PlaylistModel[];
+    @state() protected declare currentTrack;
+    @state() protected declare filter;
+    @state() protected declare selectedHashes: string[];
+    @state() protected declare sortingProperty: SortingProperties;
+    @state() protected declare sortingDirection: keyof typeof SortingDirections;
+    @state() protected declare selectionModeTimer: NodeJS.Timeout | null;
+    @state() protected declare currentPage: number;
+    @state() protected declare selectionMode: boolean;
+    @state() protected declare loading: boolean;
 
     selectionModeUnset = false;
     selectionModeSet = false;
 
     constructor() {
         super();
+
+        this.playlists = [];
+        this.currentTrack = new MusicModel();
+        this.filter = new MusicFilterOptions();
+        this.selectedHashes = [];
+        this.sortingProperty = 'unset';
+        this.sortingDirection = 'ascending';
+        this.currentPage = 1;
+
         this.subscriptions.push(AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
     }
 

@@ -11,12 +11,6 @@ export class PlaylistSelectionDialog extends LitElementBase {
         return renderPlaylistSelectionDialogStyles();
     }
 
-    static get properties() {
-        return {
-            someProperty: { type: String, reflect: false },
-        };
-    }
-
     static async requestPlaylist() {
         var dialog = new PlaylistSelectionDialog();
 

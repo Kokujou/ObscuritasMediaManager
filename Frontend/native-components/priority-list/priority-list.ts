@@ -16,13 +16,14 @@ export class PriorityList extends LitElementBase {
     @property({ type: Array }) public declare items: any[];
     @property({ type: Object }) public declare itemRenderer: (item: any) => unknown;
 
-    @state() protected oldEntries: any[] = [];
+    @state() protected declare oldEntries: any[];
     @state() protected declare currentlyDraggedOverItemIndex: number;
     @state() protected declare currentlyDraggedItemIndex: number;
     @state() protected declare draggedElement?: HTMLElement;
 
     constructor() {
         super();
+        this.oldEntries = [];
 
         document.addEventListener('dragover', (e) => this.handleItemMove(e), { signal: this.abortController.signal });
         document.addEventListener('dragend', () => this.handleItemDrop(), { signal: this.abortController.signal });

@@ -11,12 +11,6 @@ export class CompactAudioPlayer extends LitElementBase {
         return renderCompactAudioPlayerStyles();
     }
 
-    static get properties() {
-        return {
-            path: { type: String, reflect: false },
-        };
-    }
-
     get currentTrackPosition() {
         if (AudioService.currentTrackPath == this.path) return AudioService.trackPosition.current();
         return 0;
@@ -26,7 +20,7 @@ export class CompactAudioPlayer extends LitElementBase {
         return 0;
     }
 
-    @property() path = '';
+    @property() public declare path: string;
 
     override connectedCallback() {
         super.connectedCallback();

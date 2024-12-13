@@ -1,5 +1,4 @@
-import { render } from 'lit-element';
-import { customElement, property } from 'lit-element/decorators.js';
+import { customElement, property, state } from 'lit-element/decorators.js';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { MusicModel } from '../../obscuritas-media-manager-backend-client';
@@ -13,10 +12,11 @@ export class AudioTileBase extends LitElementBase {
         return renderAudioTileBaseStyles();
     }
 
-    @property({ type: Boolean }) protected disabled = false;
-    @property({ type: Boolean }) protected paused = false;
-    @property({ type: Object }) protected track = new MusicModel();
-    @property({ type: Number }) protected hoveredRating = 0;
+    @property({ type: Boolean, reflect: true }) public declare disabled: boolean;
+    @property({ type: Boolean, reflect: true }) public declare paused: boolean;
+    @property({ type: Object }) public declare track: MusicModel;
+
+    @state() protected declare hoveredRating: number;
 
     protected animating = false;
     protected canvas: HTMLCanvasElement | null = null;
@@ -24,6 +24,7 @@ export class AudioTileBase extends LitElementBase {
 
     constructor() {
         super();
+        this.track = new MusicModel();
         this.subscriptions.push(
             Session.instruments.subscribe(() => this.requestFullUpdate()),
             AudioService.visualizationData.subscribe(async () => {

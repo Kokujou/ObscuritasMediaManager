@@ -12,8 +12,14 @@ export class AudioTile extends LitElementBase {
         return renderAudioTileStyles();
     }
 
-    @property({ type: Object }) protected track = new MusicModel();
-    @property({ type: Boolean }) protected paused = true;
+    @property({ type: Object }) public declare track: MusicModel;
+    @property({ type: Boolean, reflect: true }) public declare paused: boolean;
+
+    constructor() {
+        super();
+        this.paused = true;
+        this.track = new MusicModel();
+    }
 
     override connectedCallback() {
         super.connectedCallback();

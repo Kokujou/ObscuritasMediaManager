@@ -9,13 +9,7 @@ export class PaginatedScrolling extends LitElementBase {
         return renderPaginatedScrollingStyles();
     }
 
-    static get properties() {
-        return {
-            scrollTopThreshold: { type: Number, reflect: true },
-        };
-    }
-
-    @property({ type: Number }) scrollTopThreshold = 0;
+    @property({ type: Number }) public declare scrollTopThreshold: number;
 
     override render() {
         return renderPaginatedScrolling.call(this);

@@ -12,12 +12,6 @@ export class PageLayout extends LitElementBase {
         return renderPageLayoutStyles();
     }
 
-    static get properties() {
-        return {
-            clientInteropSocketFailed: { type: Boolean, reflect: true },
-        };
-    }
-
     override render() {
         return renderPageLayout();
     }

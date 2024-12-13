@@ -1,4 +1,4 @@
-import { customElement, property } from 'lit-element/decorators';
+import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { PageRouting } from '../../pages/page-routing/page-routing';
 import { getScaleFactorX, getScaleFactorY } from '../../services/extensions/document.extensions';
@@ -32,7 +32,7 @@ export class ContextMenu extends LitElementBase {
         menu.requestFullUpdate();
     }
 
-    @property({ type: Array }) items: ContextMenuItem[] = [];
+    items: ContextMenuItem[] = [];
 
     override connectedCallback() {
         super.connectedCallback();

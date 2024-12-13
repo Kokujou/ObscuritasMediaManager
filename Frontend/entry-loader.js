@@ -10,8 +10,6 @@ module.exports = function loader() {
         })
         .map((x) => `import ${JSON.stringify(x)}`);
 
-    console.log(files);
-
     this.addContextDependency(dir);
     return files.join('\n');
 };

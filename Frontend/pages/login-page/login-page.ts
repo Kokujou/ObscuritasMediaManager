@@ -17,12 +17,8 @@ export class LoginPage extends LitElementBase {
         return renderLoginPageStyles();
     }
 
-    static get properties() {
-        return { username: { type: String, reflect: false }, password: { type: String, reflect: false } };
-    }
-
-    @state() username = '';
-    @state() password = '';
+    @state() protected declare username: string;
+    @state() protected declare password: string;
 
     async login() {
         try {

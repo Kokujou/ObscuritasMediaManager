@@ -22,12 +22,18 @@ export class TagLabel extends LitElementBase {
         return this.autocomplete.filter((x) => x.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
     }
 
-    @property() text: string;
-    @property({ type: Boolean }) createNew = false;
-    @property({ type: Boolean }) disabled = false;
-    @property({ type: Array }) autocomplete: string[] = [];
-    @state() autofillIndex = -1;
-    @state() showAutocomplete = false;
+    @property() public declare text: string;
+    @property({ type: Boolean, reflect: true }) public declare createNew: boolean;
+    @property({ type: Boolean, reflect: true }) public declare disabled: boolean;
+    @property({ type: Array }) public declare autocomplete: string[];
+
+    @state() protected declare autofillIndex: number;
+    @state() protected declare showAutocomplete: boolean;
+
+    constructor() {
+        super();
+        this.autocomplete = [];
+    }
 
     override render() {
         return renderTagLabel.call(this);

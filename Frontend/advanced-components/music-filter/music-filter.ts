@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { FilterEntry } from '../../data/filter-entry';
 import { LitElementBase } from '../../data/lit-element-base';
@@ -19,20 +19,15 @@ export class MusicFilter extends LitElementBase {
         return renderMusicFilterStyles();
     }
 
-    static get properties() {
-        return {
-            filter: { type: Object, reflect: true },
-            sortingProperty: { type: String, reflect: true },
-            sortingDirection: { type: String, reflect: true },
-        };
-    }
-
-    filter = new MusicFilterOptions();
-    sortingProperty: SortingProperties = 'unset';
-    sortingDirection: keyof typeof SortingDirections = 'ascending';
+    @property({ type: Object }) public declare filter;
+    @property() public declare sortingProperty: SortingProperties;
+    @property() public declare sortingDirection: keyof typeof SortingDirections;
 
     constructor() {
         super();
+        this.filter = new MusicFilterOptions();
+        this.sortingProperty = 'unset';
+        this.sortingDirection = 'ascending';
         if (
             !Object.keys(MusicSortingProperties).every((property) =>
                 Object.keys(new MusicModel()).concat(['unset']).includes(property)

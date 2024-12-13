@@ -1,4 +1,4 @@
-import { customElement, property } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { FilterEntry } from '../../data/filter-entry';
 import { LitElementBase } from '../../data/lit-element-base';
@@ -25,12 +25,6 @@ export class GenreDialogOptions {
 
 @customElement('genre-dialog')
 export class GenreDialog extends LitElementBase {
-    static get properties() {
-        return {
-            searchText: { type: String },
-        };
-    }
-
     static override get styles() {
         return renderGenreDialogStyles();
     }
@@ -153,17 +147,21 @@ export class GenreDialog extends LitElementBase {
         }, {} as { [key: string]: MediaGenreModel[] });
     }
 
-    @property() options: GenreDialogOptions = {
-        genres: [],
-        allowedGenres: [],
-        forbiddenGenres: [],
-        allowThreeValues: false,
-        ignoredState: CheckboxState.Ignore,
-        allowAdd: false,
-        allowRemove: false,
-    };
+    @property({ type: Object }) public declare options: GenreDialogOptions;
+    @state() protected declare searchText: string;
 
-    searchText = '';
+    constructor() {
+        super();
+        this.options = {
+            genres: [],
+            allowedGenres: [],
+            forbiddenGenres: [],
+            allowThreeValues: false,
+            ignoredState: CheckboxState.Ignore,
+            allowAdd: false,
+            allowRemove: false,
+        };
+    }
 
     override render() {
         return renderGenreDialog.call(this);

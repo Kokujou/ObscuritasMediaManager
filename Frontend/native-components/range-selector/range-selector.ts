@@ -23,13 +23,13 @@ export class RangeSelector extends LitElementBase {
         return (right / max) * 100;
     }
 
-    @property({ type: Number }) min: number;
-    @property({ type: Number }) max: number;
-    @property({ type: Number }) left: number;
-    @property({ type: Number }) right: number;
+    @property({ type: Number }) public declare min: number;
+    @property({ type: Number }) public declare max: number;
+    @property({ type: Number }) public declare left: number;
+    @property({ type: Number }) public declare right: number;
 
-    @state() draggingLeft: boolean;
-    @state() draggingRight: boolean;
+    @state() protected declare draggingLeft: boolean;
+    @state() protected declare draggingRight: boolean;
 
     override connectedCallback() {
         super.connectedCallback();

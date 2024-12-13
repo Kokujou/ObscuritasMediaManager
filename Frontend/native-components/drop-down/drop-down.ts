@@ -17,22 +17,6 @@ export class DropDown extends LitElementBase {
         return renderDropDownStyles();
     }
 
-    static get properties() {
-        return {
-            options: { type: Array, reflect: true },
-            unsetText: { type: String, reflect: true },
-            maxDisplayDepth: { type: Number, reflect: true },
-            required: { type: Boolean, reflect: true },
-            threeValues: { type: Boolean, reflect: true },
-            multiselect: { type: Boolean, reflect: true },
-            useSearch: { type: Boolean, reflect: true },
-            useToggle: { type: Boolean, reflect: true },
-            disabled: { type: Boolean, reflect: true },
-            colors: { type: Object, reflect: true },
-            showDropDown: { type: Boolean, reflect: false },
-        };
-    }
-
     get caption() {
         var notForbiddenOptions = this.options.filter((x) => x.state != CheckboxState.Forbid);
         if (!this.multiselect) return notForbiddenOptions[0]?.text ?? this.unsetText;
@@ -40,21 +24,24 @@ export class DropDown extends LitElementBase {
         else return notForbiddenOptions.map((x) => x.text).join(', ');
     }
 
-    @property() maxDisplayDepth = 5;
-    @property() _currentIndex = 0;
-    @property() unsetText = 'Unset';
-    @property() required = false;
-    @property() useSearch = false;
-    @property() useToggle = false;
-    @property() multiselect = false;
-    @property() threeValues = false;
-    @property() searchFilter = '';
-    @property({ type: Array }) options: DropDownOption<any>[] = [];
+    @property() public declare unsetText: string;
+    @property() public declare searchFilter: string;
+    @property({ type: Number }) public declare maxDisplayDepth: number;
+    @property({ type: Number }) public declare _currentIndex: number;
+    @property({ type: Boolean, reflect: true }) public declare required: boolean;
+    @property({ type: Boolean, reflect: true }) public declare useSearch: boolean;
+    @property({ type: Boolean, reflect: true }) public declare useToggle: boolean;
+    @property({ type: Boolean, reflect: true }) public declare multiselect: boolean;
+    @property({ type: Boolean, reflect: true }) public declare threeValues: boolean;
+    @property({ type: Array }) public declare options: DropDownOption<any>[];
 
-    @state() showDropDown = false;
+    @state() protected declare showDropDown: boolean;
 
     constructor() {
         super();
+        this.unsetText = 'Unset';
+        this.maxDisplayDepth = 5;
+        this.options = [];
         this.addEventListener('click', () => {
             this.clickedOnElement = true;
         });

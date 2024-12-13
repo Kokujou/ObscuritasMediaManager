@@ -10,7 +10,7 @@ export class RecipeTile extends LitElementBase {
         return renderRecipeTileStyles();
     }
 
-    @property({ type: Object }) recipe: RecipeModel;
+    @property({ type: Object }) public declare recipe: RecipeModel;
 
     override render() {
         return renderRecipeTile.call(this);

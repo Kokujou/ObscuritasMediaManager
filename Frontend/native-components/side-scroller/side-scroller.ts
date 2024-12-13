@@ -10,10 +10,6 @@ export class SideScroller extends LitElementBase {
         return renderSideScrollerStyles();
     }
 
-    static get properties() {
-        return {};
-    }
-
     get scrollContainer() {
         var container = this.shadowRoot!.querySelector<HTMLElement>('#content-container')!;
         return container;
@@ -38,7 +34,7 @@ export class SideScroller extends LitElementBase {
         return this.currentItemIndex < this.children.length - 1;
     }
 
-    @state() currentItemIndex = -1;
+    @state() protected declare currentItemIndex: number;
 
     updated(_changedProperties: Map<any, any>) {
         super.updated(_changedProperties);

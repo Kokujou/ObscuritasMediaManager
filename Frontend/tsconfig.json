@@ -17,9 +17,7 @@
     },
     "include": ["**/*.ts", "**/*.json"],
     "exclude": [
-        "**/*.bundled.js",
-        "**/exports.js",
-        "**/rollup.config.js",
+        "**/webpack.config.js",
         "<node_internals>/**/*.js",
         "**/templates/**",
         "**/node_modules/**",

@@ -11,19 +11,16 @@ export class TriValueCheckbox extends LitElementBase {
         return renderTriValueCheckbox();
     }
 
-    static get properties() {
-        return {
-            value: { type: String, reflect: true },
-            allowThreeValues: { type: Boolean, reflect: true },
-            disabled: { type: Boolean, reflect: true },
-            ignoredState: { type: String, reflect: true },
-        };
-    }
+    @property({ reflect: true }) public declare value: CheckboxState;
+    @property({ type: Boolean, reflect: true }) public declare allowThreeValues: boolean;
+    @property({ type: Boolean, reflect: true }) public declare disabled: boolean;
+    @property() public declare ignoredState: CheckboxState;
 
-    @property() value = CheckboxState.Ignore;
-    @property() allowThreeValues = false;
-    @property() disabled = false;
-    @property() ignoredState = CheckboxState.Ignore;
+    constructor() {
+        super();
+        this.ignoredState = CheckboxState.Ignore;
+        this.value = CheckboxState.Ignore;
+    }
 
     override render() {
         return renderTriValueCheckboxStyles.call(this);

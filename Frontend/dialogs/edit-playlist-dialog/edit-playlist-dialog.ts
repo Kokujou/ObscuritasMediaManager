@@ -22,12 +22,6 @@ export class EditPlaylistDialog extends LitElementBase {
         return renderEditPlaylistDialogStyles();
     }
 
-    static get properties() {
-        return {
-            draggingFiles: { type: Boolean, reflect: false },
-        };
-    }
-
     static show(playlist: PlaylistModel) {
         var dialog = new EditPlaylistDialog();
         playlist.genres ??= [];
@@ -71,9 +65,15 @@ export class EditPlaylistDialog extends LitElementBase {
         return Object.values(MusicGenre).filter((genre) => !this.newPlaylist.genres.some((x) => MusicGenre[x] == genre));
     }
 
-    @property() oldPlaylist = new PlaylistModel();
-    @property() newPlaylist = new PlaylistModel();
-    @property() draggingFiles: boolean;
+    @property({ type: Object }) public declare oldPlaylist;
+    @property({ type: Object }) public declare newPlaylist;
+    @property({ type: Boolean, reflect: true }) public declare draggingFiles: boolean;
+
+    constructor() {
+        super();
+        this.oldPlaylist = new PlaylistModel();
+        this.newPlaylist = new PlaylistModel();
+    }
 
     override render() {
         return renderEditPlaylistDialog.call(this);

@@ -9,25 +9,17 @@ export class StarRating extends LitElementBase {
         return renderStarRatingStyles();
     }
 
-    static get properties() {
-        return {
-            max: { type: Number, reflect: true },
-            values: { type: Array, reflect: true },
-            singleSelect: { type: Boolean, reflect: true },
-            vertical: { type: Boolean, reflect: true },
-            swords: { type: Boolean, reflect: true },
+    @property({ type: Number }) public declare max: number;
+    @property({ type: Array }) public declare values: number[];
+    @property({ type: Boolean, reflect: true }) public declare singleSelect: boolean;
+    @property({ type: Boolean, reflect: true }) public declare vertical: boolean;
+    @property({ type: Boolean, reflect: true }) public declare swords: boolean;
+    @state() protected declare hoveredRating: number;
 
-            hoveredRating: { type: Number, reflect: false },
-        };
+    constructor() {
+        super();
+        this.values = [];
     }
-
-    @property({ type: Number }) max: number;
-    @property({ type: Array }) values: number[] = [];
-    @property({ type: Boolean }) singleSelect = false;
-    @property({ type: Boolean }) vertical = false;
-    @property({ type: Boolean }) swords = false;
-
-    @state() hoveredRating = 0;
 
     override render() {
         return renderStarRating.call(this);

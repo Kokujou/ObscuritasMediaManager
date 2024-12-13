@@ -48,11 +48,11 @@ export class LinkElement extends LitElementBase {
         return LinkElement.getLinkFor(this.page, this.params);
     }
 
-    @property() href?: string = undefined;
-    @property() target?: string = undefined;
-    @property({ type: Object }) page?: Page = undefined;
-    @property() params: any = null;
-    @property({ type: Boolean }) disabled = false;
+    @property() public declare href?: string;
+    @property() public declare target?: string;
+    @property({ type: Object }) public declare page?: Page;
+    @property({ type: Object }) public declare params: any;
+    @property({ type: Boolean, reflect: true }) public declare disabled: boolean;
 
     override render() {
         return renderLinkElement.call(this);

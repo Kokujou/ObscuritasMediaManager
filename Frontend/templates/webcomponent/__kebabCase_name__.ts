@@ -9,13 +9,7 @@ export class {{ pascalCase name }} extends LitElementBase {
         return render{{ pascalCase name }}Styles();
     }
 
-    static get properties() {
-        return {
-            someProperty: { type: String, reflect: true },
-        };
-    }
-
-    @property() someProperty: string;
+    @property() public declare someProperty: string;
 
     override render() {
         return render{{ pascalCase name }}(this);

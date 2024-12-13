@@ -14,14 +14,6 @@ export class CustomTooltip extends LitElementBase {
         return renderTooltipStyles();
     }
 
-    static get properties() {
-        return {
-            text: { type: String, reflect: true },
-            scope: { type: String, reflect: true },
-            anchor: { type: String, reflect: true },
-        };
-    }
-
     static show(text: string | null, pointerEvent: Event, anchor: 'top' | 'bottom' | 'right' | 'left' = 'top') {
         if (!text || text.length < 2) return;
         text = text[0].toUpperCase() + text.substring(1);

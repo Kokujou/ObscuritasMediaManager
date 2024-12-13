@@ -25,10 +25,15 @@ export class LanguageSwitcher extends LitElementBase {
         });
     }
 
-    @property() protected language = Language.Unset;
+    @property({ reflect: true }) public declare language: Language;
 
     protected languageRotationOffset = 0;
     protected resolve = (lang: Language) => {};
+
+    constructor() {
+        super();
+        this.language = Language.Unset;
+    }
 
     override connectedCallback() {
         super.connectedCallback();

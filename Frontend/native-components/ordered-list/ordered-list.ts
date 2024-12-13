@@ -12,13 +12,6 @@ export class OrderedList extends LitElementBase {
         return renderOrderedListStyles();
     }
 
-    static get properties() {
-        return {
-            items: { type: Array, reflect: true },
-            propertyName: { type: String, reflect: true },
-        };
-    }
-
     static getRowToDropOn(eventTarget: Event) {
         // @ts-ignore
         var targetElement = eventTarget.originalTarget;
@@ -27,17 +20,24 @@ export class OrderedList extends LitElementBase {
         return children.find((x) => x.draggable);
     }
 
-    @property({ type: Array }) items: any[] = [];
-    @property() propertyName = '';
+    @property({ type: Array }) items: any[];
+    @property() public declare propertyName: string;
 
-    @state() lastIndex = 0;
-    @state() selectedIndices: number[] = [];
+    @state() protected declare lastIndex: number;
+    @state() protected declare selectedIndices: number[];
 
     @state() protected declare dragged: HTMLElement | null;
     @state() protected declare lastHovered: HTMLElement | null;
 
+    constructor() {
+        super();
+        this.items = [];
+        this.selectedIndices = [];
+    }
+
     override connectedCallback() {
         super.connectedCallback();
+
         this.tabIndex = 0;
         this.focus();
 

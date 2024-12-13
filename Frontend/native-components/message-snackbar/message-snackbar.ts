@@ -1,4 +1,4 @@
-import { customElement, property } from 'lit-element/decorators';
+import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { PageRouting } from '../../pages/page-routing/page-routing';
 import { renderMessageSnackbarStyles } from './message-snackbar.css';
@@ -10,10 +10,6 @@ type MessageType = 'error' | 'warning' | 'info' | 'success';
 export class MessageSnackbar extends LitElementBase {
     static override get styles() {
         return renderMessageSnackbarStyles();
-    }
-
-    static get properties() {
-        return { messageType: { type: String, reflect: true } };
     }
 
     static maxInstances = 4;
@@ -64,8 +60,8 @@ export class MessageSnackbar extends LitElementBase {
         }
     }
 
-    @property() declare message: string;
-    @property() declare messageType: string;
+    public declare message: string;
+    public declare messageType: string;
 
     override render() {
         this.style.backgroundColor = this.backgroundColor;

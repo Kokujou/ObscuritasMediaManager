@@ -9,12 +9,6 @@ export class {{ pascalCase name }} extends LitElementBase
         return render{{ pascalCase name }}Styles();
     }
 
-    static get properties() {
-        return {
-            someProperty: { type: String, reflect: false },
-        };
-    }
-
     static show() {
         var dialog = new {{ pascalCase name }}();
 
@@ -24,7 +18,7 @@ export class {{ pascalCase name }} extends LitElementBase
         return dialog;
     }
 
-    @property() someProperty = '';
+    @property() public declare someProperty: string;
 
     override render() {
         return render{{ pascalCase name }}(this);
