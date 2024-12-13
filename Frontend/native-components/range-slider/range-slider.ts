@@ -9,17 +9,20 @@ export class RangeSlider extends LitElementBase {
         return renderRangeSliderStyles();
     }
 
-    @property() public declare min: string;
-    @property() public declare max: string;
-    @property() public declare value: string;
-    @property() public declare step: string;
+    @property({ reflect: true }) public declare min: string;
+    @property({ reflect: true }) public declare max: string;
+    @property({ reflect: true }) public declare value: string;
+    @property({ reflect: true }) public declare step: string;
 
-    override render() {
+    constructor() {
+        super();
         this.min = '0';
         this.max = '100';
         this.value = '10';
         this.step = '1';
+    }
 
+    override render() {
         return renderRangeSlider.call(this);
     }
 

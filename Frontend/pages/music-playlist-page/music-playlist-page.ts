@@ -1,7 +1,8 @@
-import { property, state } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher';
 import { FilesQueryRequest } from '../../client-interop/files-query-request';
 import { InteropQuery } from '../../client-interop/interop-query';
+import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { LyricsDialog } from '../../dialogs/audio-subtitle-dialog/lyrics-dialog';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result';
@@ -19,9 +20,10 @@ import { changePage } from '../../services/extensions/url.extension';
 import { MediaFilterService } from '../../services/media-filter.service';
 import { AudioFileExtensions } from './audio-file-extensions';
 import { renderMusicPlaylistStyles } from './music-playlist-page.css';
-import { MusicPlaylistPageTemplate } from './music-playlist-page.html';
+import { renderMusicPlaylistPage } from './music-playlist-page.html';
 
-export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
+@customElement('music-playlist-page')
+export class MusicPlaylistPage extends LitElementBase {
     static pageName = 'music-playlist-page';
     static isPage = true as const;
     static icon = noteIcon();
@@ -75,6 +77,14 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
     @property({ type: Boolean, reflect: true }) public declare createNew: boolean;
 
     @state() protected declare updatedTrack: MusicModel;
+
+    protected playlist = new PlaylistModel({ tracks: [] });
+    protected currentTrack = new MusicModel();
+    protected currentVolume = 0.1;
+    protected maxPlaylistItems = 20;
+    protected hoveredRating = 0;
+    protected moodToSwitch: 'mood1' | 'mood2' = 'mood1';
+    protected loop = false;
 
     override async connectedCallback() {
         await super.connectedCallback();
@@ -130,7 +140,7 @@ export class MusicPlaylistPage extends MusicPlaylistPageTemplate {
         else if (this.playlist?.isTemporary || !this.playlist?.name) title = this.updatedTrack?.displayName;
         else title = this.playlist.name + ' - ' + this.updatedTrack.name;
         if (document.title != title) document.title = title;
-        return super.render.call(this);
+        return renderMusicPlaylistPage.call(this);
     }
 
     async toggleCurrentTrack() {

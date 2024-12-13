@@ -152,6 +152,7 @@ export class GenreDialog extends LitElementBase {
 
     constructor() {
         super();
+        this.searchText = '';
         this.options = {
             genres: [],
             allowedGenres: [],

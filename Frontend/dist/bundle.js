@@ -4810,7 +4810,7 @@ function renderUploadArea() {
             <div
                 id="upload-description"
                 contenteditable="true"
-                @paste="${(e) => this.receivePastedImage(e)} "
+                @paste="${(e) => this.receivePastedImage(e)}"
                 @click=${(e) => this.openImageBrowser(e)}
             >
                 <div id="icon-section">
@@ -7752,6 +7752,7 @@ let GenreDialog = GenreDialog_1 = class GenreDialog extends _data_lit_element_ba
     }
     constructor() {
         super();
+        this.searchText = '';
         this.options = {
             genres: [],
             allowedGenres: [],
@@ -11860,11 +11861,14 @@ let RangeSlider = class RangeSlider extends _data_lit_element_base__WEBPACK_IMPO
     static get styles() {
         return (0,_range_slider_css__WEBPACK_IMPORTED_MODULE_2__.renderRangeSliderStyles)();
     }
-    render() {
+    constructor() {
+        super();
         this.min = '0';
         this.max = '100';
         this.value = '10';
         this.step = '1';
+    }
+    render() {
         return _range_slider_html__WEBPACK_IMPORTED_MODULE_3__.renderRangeSlider.call(this);
     }
     notifyValueChanged() {
@@ -11875,16 +11879,16 @@ let RangeSlider = class RangeSlider extends _data_lit_element_base__WEBPACK_IMPO
     }
 };
 __decorate([
-    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ reflect: true })
 ], RangeSlider.prototype, "min", void 0);
 __decorate([
-    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ reflect: true })
 ], RangeSlider.prototype, "max", void 0);
 __decorate([
-    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ reflect: true })
 ], RangeSlider.prototype, "value", void 0);
 __decorate([
-    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ reflect: true })
 ], RangeSlider.prototype, "step", void 0);
 RangeSlider = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('range-slider')
@@ -19758,28 +19762,21 @@ function renderAudioPlayerIcons() {
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   MusicPlaylistPageTemplate: () => (/* binding */ MusicPlaylistPageTemplate)
+/* harmony export */   renderMusicPlaylistPage: () => (/* binding */ renderMusicPlaylistPage),
+/* harmony export */   renderSourceInput: () => (/* binding */ renderSourceInput)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
-/* harmony import */ var lit_element_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lit-element/decorators */ "./node_modules/lit-element/decorators.js");
-/* harmony import */ var _data_enumerations_mood__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data/enumerations/mood */ "./data/enumerations/mood.ts");
-/* harmony import */ var _data_lit_element_base__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../data/lit-element-base */ "./data/lit-element-base.ts");
-/* harmony import */ var _data_session__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../data/session */ "./data/session.ts");
-/* harmony import */ var _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../native-components/link-element/link-element */ "./native-components/link-element/link-element.ts");
-/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
-/* harmony import */ var _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../resources/inline-icons/icon-registry */ "./resources/inline-icons/icon-registry.ts");
-/* harmony import */ var _services_audio_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/audio-service */ "./services/audio-service.ts");
-/* harmony import */ var _services_clipboard_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../services/clipboard.service */ "./services/clipboard.service.ts");
-/* harmony import */ var _services_extensions_enum_extensions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../services/extensions/enum.extensions */ "./services/extensions/enum.extensions.ts");
-/* harmony import */ var _media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../media-detail-page/media-detail-page */ "./pages/media-detail-page/media-detail-page.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_4__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_5__, _services_audio_service__WEBPACK_IMPORTED_MODULE_8__, _services_clipboard_service__WEBPACK_IMPORTED_MODULE_9__, _media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_11__]);
-([_data_session__WEBPACK_IMPORTED_MODULE_4__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_5__, _services_audio_service__WEBPACK_IMPORTED_MODULE_8__, _services_clipboard_service__WEBPACK_IMPORTED_MODULE_9__, _media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_11__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+/* harmony import */ var _data_enumerations_mood__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/enumerations/mood */ "./data/enumerations/mood.ts");
+/* harmony import */ var _data_session__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data/session */ "./data/session.ts");
+/* harmony import */ var _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../native-components/link-element/link-element */ "./native-components/link-element/link-element.ts");
+/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
+/* harmony import */ var _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../resources/inline-icons/icon-registry */ "./resources/inline-icons/icon-registry.ts");
+/* harmony import */ var _services_audio_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/audio-service */ "./services/audio-service.ts");
+/* harmony import */ var _services_clipboard_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/clipboard.service */ "./services/clipboard.service.ts");
+/* harmony import */ var _services_extensions_enum_extensions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/extensions/enum.extensions */ "./services/extensions/enum.extensions.ts");
+/* harmony import */ var _media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../media-detail-page/media-detail-page */ "./pages/media-detail-page/media-detail-page.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_2__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__, _services_audio_service__WEBPACK_IMPORTED_MODULE_6__, _services_clipboard_service__WEBPACK_IMPORTED_MODULE_7__, _media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_9__]);
+([_data_session__WEBPACK_IMPORTED_MODULE_2__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__, _services_audio_service__WEBPACK_IMPORTED_MODULE_6__, _services_clipboard_service__WEBPACK_IMPORTED_MODULE_7__, _media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -19790,252 +19787,236 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-
-
-let MusicPlaylistPageTemplate = class MusicPlaylistPageTemplate extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_3__.LitElementBase {
-    playlist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.PlaylistModel({ tracks: [] });
-    currentTrack = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MusicModel();
-    updatedTrack = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MusicModel();
-    currentVolume = 0.1;
-    maxPlaylistItems = 20;
-    hoveredRating = 0;
-    moodToSwitch = 'mood1';
-    loop = false;
-    render() {
-        var mood2 = this.updatedTrack.mood2 == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Mood.Unset ? this.updatedTrack.mood1 : this.updatedTrack.mood2;
-        return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-            <style>
-                :host {
-                    --primary-color: ${_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_2__.MoodColors[this.updatedTrack.mood1 ?? _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Mood.Unset]};
-                    --secondary-color: ${_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_2__.MoodColors[mood2 ?? _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Mood.Unset]};
-                    --font-color: ${(0,_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_2__.getMoodFontColor)(this.updatedTrack.mood1 ?? _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Mood.Unset)};
-                    --secondary-font-color: ${(0,_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_2__.getMoodFontColor)(mood2 ?? _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Mood.Unset)};
-                }
-            </style>
-            ${this.moodToSwitch == 'mood1'
-            ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-                      <style>
-                          #mood-switcher {
-                              background: linear-gradient(var(--primary-color) 0% 100%);
-                              border: 2px solid var(--primary-color);
-                          }
-                      </style>
-                  `
-            : this.moodToSwitch == 'mood2'
-                ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<style>
+function renderMusicPlaylistPage() {
+    var mood2 = this.updatedTrack.mood2 == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Mood.Unset ? this.updatedTrack.mood1 : this.updatedTrack.mood2;
+    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+        <style>
+            :host {
+                --primary-color: ${_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_1__.MoodColors[this.updatedTrack.mood1 ?? _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Mood.Unset]};
+                --secondary-color: ${_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_1__.MoodColors[mood2 ?? _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Mood.Unset]};
+                --font-color: ${(0,_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_1__.getMoodFontColor)(this.updatedTrack.mood1 ?? _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Mood.Unset)};
+                --secondary-font-color: ${(0,_data_enumerations_mood__WEBPACK_IMPORTED_MODULE_1__.getMoodFontColor)(mood2 ?? _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Mood.Unset)};
+            }
+        </style>
+        ${this.moodToSwitch == 'mood1'
+        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+                  <style>
                       #mood-switcher {
-                          background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
-                          border: 2px solid var(--secondary-color);
+                          background: linear-gradient(var(--primary-color) 0% 100%);
+                          border: 2px solid var(--primary-color);
                       }
-                  </style>`
-                : ''};
+                  </style>
+              `
+        : this.moodToSwitch == 'mood2'
+            ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<style>
+                  #mood-switcher {
+                      background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
+                      border: 2px solid var(--secondary-color);
+                  }
+              </style>`
+            : ''};
 
-            <page-layout>
-                <div id="music-player-container">
-                    <div id="complete-checkbox">
-                        <label for="complete-check" class="label">Complete:</label>
-                        <input
-                            type="checkbox"
-                            id="complete-check"
-                            .checked="${this.updatedTrack.complete}"
-                            @change="${() => this.toggleComplete()}"
-                        />
-                    </div>
-                    <div id="current-track-container">
-                        <div id="mood-switcher-container" ?disabled="${this.updatedTrack.complete}">
-                            <div id="mood-tabs">
-                                <div id="first-mood" class="mood-tab" @click="${() => this.switchSelectedMood('mood1')}"></div>
-                                <div id="second-mood" class="mood-tab" @click="${() => this.switchSelectedMood('mood2')}"></div>
-                            </div>
-                            <div id="mood-switcher" ?disabled="${this.updatedTrack.complete}">
-                                <scroll-select
-                                    id="mood-container"
-                                    .options="${Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Mood)}"
-                                    .value="${this.updatedTrack[this.moodToSwitch]}"
-                                    @valueChanged="${(e) => this.changeProperty(this.moodToSwitch, e.detail.value)}"
-                                >
-                                </scroll-select>
-                            </div>
+        <page-layout>
+            <div id="music-player-container">
+                <div id="complete-checkbox">
+                    <label for="complete-check" class="label">Complete:</label>
+                    <input
+                        type="checkbox"
+                        id="complete-check"
+                        .checked="${this.updatedTrack.complete}"
+                        @change="${() => this.toggleComplete()}"
+                    />
+                </div>
+                <div id="current-track-container">
+                    <div id="mood-switcher-container" ?disabled="${this.updatedTrack.complete}">
+                        <div id="mood-tabs">
+                            <div id="first-mood" class="mood-tab" @click="${() => this.switchSelectedMood('mood1')}"></div>
+                            <div id="second-mood" class="mood-tab" @click="${() => this.switchSelectedMood('mood2')}"></div>
                         </div>
+                        <div id="mood-switcher" ?disabled="${this.updatedTrack.complete}">
+                            <scroll-select
+                                id="mood-container"
+                                .options="${Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Mood)}"
+                                .value="${this.updatedTrack[this.moodToSwitch]}"
+                                @valueChanged="${(e) => this.changeProperty(this.moodToSwitch, e.detail.value)}"
+                            >
+                            </scroll-select>
+                        </div>
+                    </div>
 
-                        <div id="audio-tile-container">
-                            <audio-tile-base
+                    <div id="audio-tile-container">
+                        <audio-tile-base
+                            ?disabled="${this.updatedTrack.complete}"
+                            .track="${new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.MusicModel(this.updatedTrack)}"
+                            ?paused="${_services_audio_service__WEBPACK_IMPORTED_MODULE_6__.AudioService.paused || _services_audio_service__WEBPACK_IMPORTED_MODULE_6__.AudioService.currentTrackPath != this.updatedTrack.path}"
+                            @imageClicked="${() => this.toggleCurrentTrack()}"
+                            @changeLanguage="${() => this.showLanguageSwitcher()}"
+                            @nextParticipants="${() => this.changeProperty('participants', _services_extensions_enum_extensions__WEBPACK_IMPORTED_MODULE_8__.Enum.nextValue(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Participants, this.updatedTrack.participants, 'Unset'))}"
+                            @nextInstrumentation="${() => this.changeProperty('instrumentation', _services_extensions_enum_extensions__WEBPACK_IMPORTED_MODULE_8__.Enum.nextValue(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.Instrumentation, this.updatedTrack.instrumentation, 'Unset'))}"
+                            @changeRating="${(e) => this.changeProperty('rating', e.detail)}"
+                            @changeInstruemnts="${() => this.openInstrumentsDialog()}"
+                        ></audio-tile-base>
+                        <div id="show-lyrics-link" @click="${() => this.showLyrics()}">Show Lyrics</div>
+                    </div>
+                    <div id="audio-control-container">
+                        ${this.updatedTrack.complete
+        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="audio-title">${this.updatedTrack.name}</div>`
+        : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+                                  <input
+                                      type="text"
+                                      id="audio-title"
+                                      class="editable-label"
+                                      tooltip="Name"
+                                      ?disabled="${this.updatedTrack.complete}"
+                                      .value="${this.updatedTrack.name}"
+                                      oninput="this.dispatchEvent(new Event('change'))"
+                                      @change="${(e) => this.changeProperty('name', e.currentTarget.value)}"
+                                  />
+                              `}
+
+                        <div id="audio-subtitle">
+                            <input
+                                type="text"
+                                id="audio-author"
+                                class="editable-label"
                                 ?disabled="${this.updatedTrack.complete}"
-                                .track="${new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MusicModel(this.updatedTrack)}"
-                                ?paused="${_services_audio_service__WEBPACK_IMPORTED_MODULE_8__.AudioService.paused || _services_audio_service__WEBPACK_IMPORTED_MODULE_8__.AudioService.currentTrackPath != this.updatedTrack.path}"
-                                @imageClicked="${() => this.toggleCurrentTrack()}"
-                                @changeLanguage="${() => this.showLanguageSwitcher()}"
-                                @nextParticipants="${() => this.changeProperty('participants', _services_extensions_enum_extensions__WEBPACK_IMPORTED_MODULE_10__.Enum.nextValue(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Participants, this.updatedTrack.participants, 'Unset'))}"
-                                @nextInstrumentation="${() => this.changeProperty('instrumentation', _services_extensions_enum_extensions__WEBPACK_IMPORTED_MODULE_10__.Enum.nextValue(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Instrumentation, this.updatedTrack.instrumentation, 'Unset'))}"
-                                @changeRating="${(e) => this.changeProperty('rating', e.detail)}"
-                                @changeInstruemnts="${() => this.openInstrumentsDialog()}"
-                            ></audio-tile-base>
-                            <div id="show-lyrics-link" @click="${() => this.showLyrics()}">Show Lyrics</div>
+                                .value="${this.updatedTrack.author ?? ''}"
+                                oninput="this.dispatchEvent(new Event('change'))"
+                                tooltip="Autor"
+                                @change="${(e) => this.changeProperty('author', e.currentTarget.value)}"
+                            />
+                            <div id="subtitle-separator">-</div>
+                            ${this.updatedTrack?.complete && this.sourceMediaId
+        ? _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_9__.MediaDetailPage, { mediaId: this.sourceMediaId }, this.updatedTrack.source, { target: '_blank' })
+        : renderSourceInput.call(this)}
                         </div>
-                        <div id="audio-control-container">
+                        <div id="genre-section">
+                            ${this.updatedTrack.genres?.map((genreKey) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<tag-label
+                                        .text="${_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_4__.MusicGenre[genreKey]}"
+                                        ?disabled="${this.updatedTrack.complete}"
+                                        @removed="${() => this.removeGenreKey(genreKey)}"
+                                    ></tag-label>`)}
                             ${this.updatedTrack.complete
-            ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="audio-title">${this.updatedTrack.name}</div>`
-            : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-                                      <input
-                                          type="text"
-                                          id="audio-title"
-                                          class="editable-label"
-                                          tooltip="Name"
-                                          ?disabled="${this.updatedTrack.complete}"
-                                          .value="${this.updatedTrack.name}"
-                                          oninput="this.dispatchEvent(new Event('change'))"
-                                          @change="${(e) => this.changeProperty('name', e.currentTarget.value)}"
-                                      />
-                                  `}
+        ? ''
+        : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <tag-label
+                                      createNew
+                                      .autocomplete="${this.autocompleteGenres}"
+                                      @tagCreated="${(e) => this.addGenre(e.detail.value)}"
+                                  ></tag-label>`}
+                        </div>
+                        <div id="track-position-container">
+                            <div id="track-position-label">${this.currentTrackPositionText}</div>
+                            <range-slider
+                                id="track-position"
+                                @valueChanged="${(e) => this.changeTrackPosition(e.detail.value)}"
+                                .value="${this.currentTrackPosition.toString()}"
+                                min="0"
+                                .max="${this.currentTrackDuration.toString()}"
+                                steps="1000"
+                            ></range-slider>
+                            <div id="track-position-label">${this.currentTrackDurationText}</div>
+                        </div>
+                        <div id="audio-controls">
+                            <div
+                                id="copy-track-button"
+                                icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.Clipboard}"
+                                class="audio-icon"
+                                tooltip="In Zwischenablage kopieren"
+                                @click="${() => _services_clipboard_service__WEBPACK_IMPORTED_MODULE_7__.ClipboardService.copyAudioToClipboard(this.updatedTrack)}"
+                            ></div>
+                            <div
+                                id="previous-track-button"
+                                icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.FastForward}"
+                                @click="${() => this.changeTrackBy(-1)}"
+                                class="audio-icon"
+                            ></div>
+                            <div
+                                id="toggle-track-button"
+                                @click="${() => this.toggleCurrentTrack()}"
+                                icon="${_services_audio_service__WEBPACK_IMPORTED_MODULE_6__.AudioService.paused ? _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.Play : _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.Pause}"
+                                class="audio-icon"
+                            ></div>
+                            <div
+                                id="next-track-button"
+                                icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.FastForward}"
+                                @click="${() => this.changeTrackBy(1)}"
+                                class="audio-icon"
+                            ></div>
 
-                            <div id="audio-subtitle">
-                                <input
-                                    type="text"
-                                    id="audio-author"
-                                    class="editable-label"
-                                    ?disabled="${this.updatedTrack.complete}"
-                                    .value="${this.updatedTrack.author ?? ''}"
-                                    oninput="this.dispatchEvent(new Event('change'))"
-                                    tooltip="Autor"
-                                    @change="${(e) => this.changeProperty('author', e.currentTarget.value)}"
-                                />
-                                <div id="subtitle-separator">-</div>
-                                ${this.updatedTrack?.complete && this.sourceMediaId
-            ? _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_5__.LinkElement.forPage(_media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_11__.MediaDetailPage, { mediaId: this.sourceMediaId }, this.updatedTrack.source, { target: '_blank' })
-            : this.renderSourceInput()}
-                            </div>
-                            <div id="genre-section">
-                                ${this.updatedTrack.genres?.map((genreKey) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<tag-label
-                                            .text="${_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MusicGenre[genreKey]}"
-                                            ?disabled="${this.updatedTrack.complete}"
-                                            @removed="${() => this.removeGenreKey(genreKey)}"
-                                        ></tag-label>`)}
-                                ${this.updatedTrack.complete
-            ? ''
-            : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <tag-label
-                                          createNew
-                                          .autocomplete="${this.autocompleteGenres}"
-                                          @tagCreated="${(e) => this.addGenre(e.detail.value)}"
-                                      ></tag-label>`}
-                            </div>
-                            <div id="track-position-container">
-                                <div id="track-position-label">${this.currentTrackPositionText}</div>
+                            <div id="change-volume-container">
+                                <div id="change-volume-button" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.ChangeVolume}" class="audio-icon"></div>
                                 <range-slider
-                                    id="track-position"
-                                    @valueChanged="${(e) => this.changeTrackPosition(e.detail.value)}"
-                                    .value="${this.currentTrackPosition.toString()}"
+                                    id="change-volume"
+                                    step="1"
                                     min="0"
-                                    .max="${this.currentTrackDuration.toString()}"
-                                    steps="1000"
+                                    max="100"
+                                    .value="${`${_services_audio_service__WEBPACK_IMPORTED_MODULE_6__.AudioService.volume * 100}`}"
+                                    @valueChanged="${(e) => this.changeVolume(e.detail.value)}"
                                 ></range-slider>
-                                <div id="track-position-label">${this.currentTrackDurationText}</div>
-                            </div>
-                            <div id="audio-controls">
-                                <div
-                                    id="copy-track-button"
-                                    icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.Icons.Clipboard}"
-                                    class="audio-icon"
-                                    tooltip="In Zwischenablage kopieren"
-                                    @click="${() => _services_clipboard_service__WEBPACK_IMPORTED_MODULE_9__.ClipboardService.copyAudioToClipboard(this.updatedTrack)}"
-                                ></div>
-                                <div
-                                    id="previous-track-button"
-                                    icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.Icons.FastForward}"
-                                    @click="${() => this.changeTrackBy(-1)}"
-                                    class="audio-icon"
-                                ></div>
-                                <div
-                                    id="toggle-track-button"
-                                    @click="${() => this.toggleCurrentTrack()}"
-                                    icon="${_services_audio_service__WEBPACK_IMPORTED_MODULE_8__.AudioService.paused ? _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.Icons.Play : _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.Icons.Pause}"
-                                    class="audio-icon"
-                                ></div>
-                                <div
-                                    id="next-track-button"
-                                    icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.Icons.FastForward}"
-                                    @click="${() => this.changeTrackBy(1)}"
-                                    class="audio-icon"
-                                ></div>
-
-                                <div id="change-volume-container">
-                                    <div id="change-volume-button" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.Icons.ChangeVolume}" class="audio-icon"></div>
-                                    <range-slider
-                                        id="change-volume"
-                                        step="1"
-                                        min="0"
-                                        max="100"
-                                        .value="${`${_services_audio_service__WEBPACK_IMPORTED_MODULE_8__.AudioService.volume * 100}`}"
-                                        @valueChanged="${(e) => this.changeVolume(e.detail.value)}"
-                                    ></range-slider>
-                                </div>
-                            </div>
-                            <div id="change-path-container">
-                                <input disabled id="path-input" .value="${'file:\\\\\\' + this.updatedTrack.path}" />
-                                ${this.updatedTrack.complete
-            ? ''
-            : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
-                                          id="change-path-button"
-                                          class="inline-icon"
-                                          icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.Icons.Edit}"
-                                          @click="${this.changeCurrentTrackPath}"
-                                      ></div>`}
                             </div>
                         </div>
-                    </div>
-                    ${this.createNew
-            ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="edit-playlist-link" @click="${() => this.createTrack()}">
-                              <div id="create-track-icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.Icons.SaveTick}"></div>
-                              <div id="edit-playlist-text">Track erstellen</div>
-                          </div>`
-            : this.playlist.isTemporary
-                ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-                              <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
-                                  <div id="edit-playlist-icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.Icons.Edit}"></div>
-                                  <div id="edit-playlist-text">Zu Playlist befördern</div>
-                              </div>
-                          `
-                : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-                              <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
-                                  <div id="edit-playlist-icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.Icons.SaveTick}"></div>
-                                  <div id="edit-playlist-text">Playlist bearbeiten</div>
-                              </div>
-                          `}
-                    <div id="media-playlist-container">
-                        <media-playlist
-                            .items="${this.playlist.tracks.map((x) => x.displayName)}"
-                            .index="${this.trackIndex}"
-                            @indexChanged="${(e) => this.changeTrack(e.detail.index)}"
-                            @randomize="${() => this.randomize()}"
-                        ></media-playlist>
+                        <div id="change-path-container">
+                            <input disabled id="path-input" .value="${'file:\\\\\\' + this.updatedTrack.path}" />
+                            ${this.updatedTrack.complete
+        ? ''
+        : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div
+                                      id="change-path-button"
+                                      class="inline-icon"
+                                      icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.Edit}"
+                                      @click="${this.changeCurrentTrackPath}"
+                                  ></div>`}
+                        </div>
                     </div>
                 </div>
-            </page-layout>
-        `;
-    }
-    renderSourceInput() {
-        return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <input
-                type="text"
-                id="audio-source"
-                class="editable-label"
-                tooltip="Quelle"
-                .value="${this.updatedTrack.source || '---'}"
-                ?disabled="${this.updatedTrack.complete}"
-                ?hoverable="${this.sourceMediaId && this.updatedTrack.complete}"
-                oninput="this.dispatchEvent(new Event('change'))"
-                list="media-list"
-                style="text-overflow: ellipsis"
-                @change="${(e) => this.changeProperty('source', e.currentTarget.value)}"
-                @click="${(e) => e.preventDefault()}"
-            />
-            <datalist id="media-list">
-                ${_data_session__WEBPACK_IMPORTED_MODULE_4__.Session.mediaList.current().map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<option value="${x.name}"></option>`)}
-            </datalist>`;
-    }
-};
-MusicPlaylistPageTemplate = __decorate([
-    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_1__.customElement)('music-playlist-page')
-], MusicPlaylistPageTemplate);
-
+                ${this.createNew
+        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div id="edit-playlist-link" @click="${() => this.createTrack()}">
+                          <div id="create-track-icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.SaveTick}"></div>
+                          <div id="edit-playlist-text">Track erstellen</div>
+                      </div>`
+        : this.playlist.isTemporary
+            ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+                          <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
+                              <div id="edit-playlist-icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.Edit}"></div>
+                              <div id="edit-playlist-text">Zu Playlist befördern</div>
+                          </div>
+                      `
+            : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+                          <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
+                              <div id="edit-playlist-icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_5__.Icons.SaveTick}"></div>
+                              <div id="edit-playlist-text">Playlist bearbeiten</div>
+                          </div>
+                      `}
+                <div id="media-playlist-container">
+                    <media-playlist
+                        .items="${this.playlist.tracks.map((x) => x.displayName)}"
+                        .index="${this.trackIndex}"
+                        @indexChanged="${(e) => this.changeTrack(e.detail.index)}"
+                        @randomize="${() => this.randomize()}"
+                    ></media-playlist>
+                </div>
+            </div>
+        </page-layout>
+    `;
+}
+function renderSourceInput() {
+    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <input
+            type="text"
+            id="audio-source"
+            class="editable-label"
+            tooltip="Quelle"
+            .value="${this.updatedTrack.source || '---'}"
+            ?disabled="${this.updatedTrack.complete}"
+            ?hoverable="${this.sourceMediaId && this.updatedTrack.complete}"
+            oninput="this.dispatchEvent(new Event('change'))"
+            list="media-list"
+            style="text-overflow: ellipsis"
+            @change="${(e) => this.changeProperty('source', e.currentTarget.value)}"
+            @click="${(e) => e.preventDefault()}"
+        />
+        <datalist id="media-list">
+            ${_data_session__WEBPACK_IMPORTED_MODULE_2__.Session.mediaList.current().map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<option value="${x.name}"></option>`)}
+        </datalist>`;
+}
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
@@ -20056,31 +20037,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element/decorators */ "./node_modules/lit-element/decorators.js");
 /* harmony import */ var _advanced_components_language_switcher_language_switcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../advanced-components/language-switcher/language-switcher */ "./advanced-components/language-switcher/language-switcher.ts");
 /* harmony import */ var _client_interop_interop_query__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../client-interop/interop-query */ "./client-interop/interop-query.ts");
-/* harmony import */ var _data_session__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../data/session */ "./data/session.ts");
-/* harmony import */ var _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../dialogs/audio-subtitle-dialog/lyrics-dialog */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.ts");
-/* harmony import */ var _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../dialogs/edit-playlist-dialog/edit-playlist-dialog */ "./dialogs/edit-playlist-dialog/edit-playlist-dialog.ts");
-/* harmony import */ var _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../dialogs/genre-dialog/genre-dialog */ "./dialogs/genre-dialog/genre-dialog.ts");
-/* harmony import */ var _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../dialogs/play-music-dialog/play-music-dialog */ "./dialogs/play-music-dialog/play-music-dialog.ts");
-/* harmony import */ var _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../native-components/message-snackbar/message-snackbar */ "./native-components/message-snackbar/message-snackbar.ts");
-/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
-/* harmony import */ var _resources_inline_icons_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../resources/inline-icons/general/note-icon.svg */ "./resources/inline-icons/general/note-icon.svg.ts");
-/* harmony import */ var _services_audio_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../services/audio-service */ "./services/audio-service.ts");
-/* harmony import */ var _services_backend_services__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../services/backend.services */ "./services/backend.services.ts");
-/* harmony import */ var _services_client_interop_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../services/client-interop-service */ "./services/client-interop-service.ts");
-/* harmony import */ var _services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../services/extensions/array.extensions */ "./services/extensions/array.extensions.ts");
-/* harmony import */ var _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../services/extensions/url.extension */ "./services/extensions/url.extension.ts");
-/* harmony import */ var _services_media_filter_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../services/media-filter.service */ "./services/media-filter.service.ts");
-/* harmony import */ var _audio_file_extensions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./audio-file-extensions */ "./pages/music-playlist-page/audio-file-extensions.ts");
-/* harmony import */ var _music_playlist_page_css__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./music-playlist-page.css */ "./pages/music-playlist-page/music-playlist-page.css.ts");
-/* harmony import */ var _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./music-playlist-page.html */ "./pages/music-playlist-page/music-playlist-page.html.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_3__, _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_4__, _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__, _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_6__, _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_7__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__, _services_backend_services__WEBPACK_IMPORTED_MODULE_12__, _services_client_interop_service__WEBPACK_IMPORTED_MODULE_13__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__, _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_19__]);
-([_data_session__WEBPACK_IMPORTED_MODULE_3__, _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_4__, _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__, _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_6__, _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_7__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__, _services_backend_services__WEBPACK_IMPORTED_MODULE_12__, _services_client_interop_service__WEBPACK_IMPORTED_MODULE_13__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__, _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_19__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _data_lit_element_base__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../data/lit-element-base */ "./data/lit-element-base.ts");
+/* harmony import */ var _data_session__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../data/session */ "./data/session.ts");
+/* harmony import */ var _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../dialogs/audio-subtitle-dialog/lyrics-dialog */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.ts");
+/* harmony import */ var _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../dialogs/edit-playlist-dialog/edit-playlist-dialog */ "./dialogs/edit-playlist-dialog/edit-playlist-dialog.ts");
+/* harmony import */ var _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../dialogs/genre-dialog/genre-dialog */ "./dialogs/genre-dialog/genre-dialog.ts");
+/* harmony import */ var _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../dialogs/play-music-dialog/play-music-dialog */ "./dialogs/play-music-dialog/play-music-dialog.ts");
+/* harmony import */ var _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../native-components/message-snackbar/message-snackbar */ "./native-components/message-snackbar/message-snackbar.ts");
+/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
+/* harmony import */ var _resources_inline_icons_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../resources/inline-icons/general/note-icon.svg */ "./resources/inline-icons/general/note-icon.svg.ts");
+/* harmony import */ var _services_audio_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../services/audio-service */ "./services/audio-service.ts");
+/* harmony import */ var _services_backend_services__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../services/backend.services */ "./services/backend.services.ts");
+/* harmony import */ var _services_client_interop_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../services/client-interop-service */ "./services/client-interop-service.ts");
+/* harmony import */ var _services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../services/extensions/array.extensions */ "./services/extensions/array.extensions.ts");
+/* harmony import */ var _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../services/extensions/url.extension */ "./services/extensions/url.extension.ts");
+/* harmony import */ var _services_media_filter_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../services/media-filter.service */ "./services/media-filter.service.ts");
+/* harmony import */ var _audio_file_extensions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./audio-file-extensions */ "./pages/music-playlist-page/audio-file-extensions.ts");
+/* harmony import */ var _music_playlist_page_css__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./music-playlist-page.css */ "./pages/music-playlist-page/music-playlist-page.css.ts");
+/* harmony import */ var _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./music-playlist-page.html */ "./pages/music-playlist-page/music-playlist-page.html.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_4__, _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_5__, _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_6__, _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_7__, _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_8__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__, _services_audio_service__WEBPACK_IMPORTED_MODULE_12__, _services_backend_services__WEBPACK_IMPORTED_MODULE_13__, _services_client_interop_service__WEBPACK_IMPORTED_MODULE_14__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_16__, _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_20__]);
+([_data_session__WEBPACK_IMPORTED_MODULE_4__, _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_5__, _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_6__, _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_7__, _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_8__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__, _services_audio_service__WEBPACK_IMPORTED_MODULE_12__, _services_backend_services__WEBPACK_IMPORTED_MODULE_13__, _services_client_interop_service__WEBPACK_IMPORTED_MODULE_14__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_16__, _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_20__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var MusicPlaylistPage_1;
 
 
 
@@ -20101,15 +20084,17 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_19__.MusicPlaylistPageTemplate {
+
+let MusicPlaylistPage = class MusicPlaylistPage extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_3__.LitElementBase {
+    static { MusicPlaylistPage_1 = this; }
     static pageName = 'music-playlist-page';
     static isPage = true;
-    static icon = (0,_resources_inline_icons_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_10__.noteIcon)();
+    static icon = (0,_resources_inline_icons_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_11__.noteIcon)();
     static get styles() {
-        return (0,_music_playlist_page_css__WEBPACK_IMPORTED_MODULE_18__.renderMusicPlaylistStyles)();
+        return (0,_music_playlist_page_css__WEBPACK_IMPORTED_MODULE_19__.renderMusicPlaylistStyles)();
     }
     get autocompleteGenres() {
-        return Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicGenre).filter((genre) => !this.updatedTrack.genres?.some((x) => _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicGenre[x] == genre) && genre != _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicGenre.Unset);
+        return Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MusicGenre).filter((genre) => !this.updatedTrack.genres?.some((x) => _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MusicGenre[x] == genre) && genre != _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MusicGenre.Unset);
     }
     get audioSource() {
         if (!this.updatedTrack?.path)
@@ -20117,10 +20102,10 @@ class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODU
         return `/ObscuritasMediaManager/api/file/audio?audioPath=${encodeURIComponent(this.updatedTrack?.path)}`;
     }
     get currentTrackPosition() {
-        return _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.trackPosition.current();
+        return _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.trackPosition.current();
     }
     get currentTrackDuration() {
-        return _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.duration ?? 0;
+        return _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.duration ?? 0;
     }
     get currentTrackPositionText() {
         var position = this.currentTrackPosition / 1000;
@@ -20135,45 +20120,52 @@ class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODU
         return `${Math.floor(minutes).toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
     get sourceMediaId() {
-        return _services_media_filter_service__WEBPACK_IMPORTED_MODULE_16__.MediaFilterService.search([..._data_session__WEBPACK_IMPORTED_MODULE_3__.Session.mediaList.current()], this.updatedTrack.source, false)[0]?.id;
+        return _services_media_filter_service__WEBPACK_IMPORTED_MODULE_17__.MediaFilterService.search([..._data_session__WEBPACK_IMPORTED_MODULE_4__.Session.mediaList.current()], this.updatedTrack.source, false)[0]?.id;
     }
+    playlist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.PlaylistModel({ tracks: [] });
+    currentTrack = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MusicModel();
+    currentVolume = 0.1;
+    maxPlaylistItems = 20;
+    hoveredRating = 0;
+    moodToSwitch = 'mood1';
+    loop = false;
     async connectedCallback() {
         await super.connectedCallback();
         this.initializeData();
-        this.subscriptions.push(_data_session__WEBPACK_IMPORTED_MODULE_3__.Session.currentPage.subscribe((nextPage) => {
-            _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_7__.PlayMusicDialog.show(this.updatedTrack, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.volume, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.trackPosition.current());
-        }), _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.ended.subscribe(() => {
+        this.subscriptions.push(_data_session__WEBPACK_IMPORTED_MODULE_4__.Session.currentPage.subscribe((nextPage) => {
+            _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_8__.PlayMusicDialog.show(this.updatedTrack, _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.volume, _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.trackPosition.current());
+        }), _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.ended.subscribe(() => {
             if (this.trackIndex + 1 >= this.playlist.tracks.length && !this.loop)
                 return;
             this.changeTrackBy(1);
-        }), _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changed.subscribe(() => {
+        }), _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.changed.subscribe(() => {
             this.requestFullUpdate();
         }));
         window.addEventListener('hashchange', (e) => {
-            _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_7__.PlayMusicDialog.show(this.updatedTrack, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.volume, _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.trackPosition.current() ?? 0);
+            _dialogs_play_music_dialog_play_music_dialog__WEBPACK_IMPORTED_MODULE_8__.PlayMusicDialog.show(this.updatedTrack, _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.volume, _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.trackPosition.current() ?? 0);
         });
-        this.subscriptions.push(_services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
+        this.subscriptions.push(_services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
     }
     async initializeData() {
         if (this.createNew) {
-            this.playlist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.PlaylistModel({
-                tracks: [await _services_backend_services__WEBPACK_IMPORTED_MODULE_12__.MusicService.getDefault()],
+            this.playlist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.PlaylistModel({
+                tracks: [await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.MusicService.getDefault()],
                 isTemporary: true,
                 genres: [],
             });
         }
         else if (!this.playlistId) {
-            var currentTrack = await _services_backend_services__WEBPACK_IMPORTED_MODULE_12__.MusicService.get(this.trackHash);
-            this.playlist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.PlaylistModel({ tracks: [new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicModel(currentTrack)], isTemporary: true, genres: [] });
+            var currentTrack = await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.MusicService.get(this.trackHash);
+            this.playlist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.PlaylistModel({ tracks: [new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MusicModel(currentTrack)], isTemporary: true, genres: [] });
             this.trackIndex = 0;
         }
         else {
-            this.playlist = await _services_backend_services__WEBPACK_IMPORTED_MODULE_12__.PlaylistService.getPlaylist(this.playlistId);
-            this.playlist.tracks = this.playlist.tracks.map((x) => new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicModel(x));
+            this.playlist = await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.PlaylistService.getPlaylist(this.playlistId);
+            this.playlist.tracks = this.playlist.tracks.map((x) => new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MusicModel(x));
             this.trackIndex = this.trackIndex;
         }
-        this.updatedTrack = Object.assign(new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicModel(), this.playlist.tracks[this.trackIndex]);
-        _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changeTrack(this.updatedTrack?.path);
+        this.updatedTrack = Object.assign(new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MusicModel(), this.playlist.tracks[this.trackIndex]);
+        _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.changeTrack(this.updatedTrack?.path);
         await this.requestFullUpdate();
     }
     render() {
@@ -20188,18 +20180,18 @@ class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODU
             title = this.playlist.name + ' - ' + this.updatedTrack.name;
         if (document.title != title)
             document.title = title;
-        return super.render.call(this);
+        return _music_playlist_page_html__WEBPACK_IMPORTED_MODULE_20__.renderMusicPlaylistPage.call(this);
     }
     async toggleCurrentTrack() {
         if (!this.updatedTrack.path)
-            return await _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__.MessageSnackbar.popup('Kein Pfad ausgewählt', 'error');
-        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.currentTrackPath != this.updatedTrack.path)
-            await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changeTrack(this.updatedTrack?.path);
+            return await _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup('Kein Pfad ausgewählt', 'error');
+        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.currentTrackPath != this.updatedTrack.path)
+            await _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.changeTrack(this.updatedTrack?.path);
         try {
-            if (_services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.paused)
-                await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.play(this.updatedTrack.path);
+            if (_services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.paused)
+                await _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.play(this.updatedTrack.path);
             else
-                await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.pause();
+                await _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.pause();
         }
         catch {
             await this.changeTrackBy(1);
@@ -20218,13 +20210,13 @@ class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODU
         if (this.playlist.tracks.length == 1)
             return;
         this.trackIndex = index;
-        this.updatedTrack = Object.assign(new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicModel(), this.playlist.tracks[this.trackIndex]);
-        (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__.changePage)(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.trackIndex }, false);
+        this.updatedTrack = Object.assign(new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MusicModel(), this.playlist.tracks[this.trackIndex]);
+        (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_16__.changePage)(MusicPlaylistPage_1, { playlistId: this.playlist.id, trackIndex: this.trackIndex }, false);
         await this.requestFullUpdate();
-        await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.play(this.updatedTrack?.path);
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.play(this.updatedTrack?.path);
     }
     async changeVolume(newVolume) {
-        await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changeVolume(newVolume / 100);
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.changeVolume(newVolume / 100);
         localStorage.setItem('volume', newVolume.toString());
         await this.requestFullUpdate();
     }
@@ -20234,7 +20226,7 @@ class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODU
                 const { oldModel, newModel } = { oldModel: {}, newModel: {} };
                 oldModel[property] = this.updatedTrack[property];
                 newModel[property] = value;
-                var updated = await _services_backend_services__WEBPACK_IMPORTED_MODULE_12__.MusicService.update(this.updatedTrack.hash, new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.UpdateRequestOfObject({ oldModel, newModel }));
+                var updated = await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.MusicService.update(this.updatedTrack.hash, new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.UpdateRequestOfObject({ oldModel, newModel }));
                 this.updatedTrack = updated;
                 this.playlist.tracks[this.trackIndex] = updated;
             }
@@ -20243,7 +20235,7 @@ class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODU
                 this.playlist.tracks[this.trackIndex][property] = value;
                 if (property == 'instruments') {
                     this.updatedTrack.instrumentNames = this.updatedTrack.instruments.map((x) => x.name);
-                    this.updatedTrack.instrumentTypes = (0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_14__.distinct)(this.updatedTrack.instruments.map((x) => x.type));
+                    this.updatedTrack.instrumentTypes = (0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_15__.distinct)(this.updatedTrack.instruments.map((x) => x.type));
                 }
             }
             await this.requestFullUpdate();
@@ -20258,12 +20250,12 @@ class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODU
         this.changeProperty('language', result);
     }
     changeTrackPosition(value) {
-        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.duration == Infinity)
+        if (_services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.duration == Infinity)
             return;
-        _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changePosition(Number.parseInt(value));
+        _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.changePosition(Number.parseInt(value));
     }
     addGenre(genre) {
-        if (!genre || !Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_9__.MusicGenre).includes(genre))
+        if (!genre || !Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MusicGenre).includes(genre))
             return;
         var newGenres = this.updatedTrack.genres.concat([genre]);
         this.changeProperty('genres', newGenres);
@@ -20273,15 +20265,15 @@ class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODU
         this.changeProperty('genres', newGenres);
     }
     async openInstrumentsDialog() {
-        var genreDialog = await _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_6__.GenreDialog.startShowingWithInstruments(this.updatedTrack.instruments);
+        var genreDialog = await _dialogs_genre_dialog_genre_dialog__WEBPACK_IMPORTED_MODULE_7__.GenreDialog.startShowingWithInstruments(this.updatedTrack.instruments);
         genreDialog.addEventListener('accept', (e) => {
             var instruments = e.detail.acceptedGenres.map((x) => x.name);
-            this.changeProperty('instruments', _data_session__WEBPACK_IMPORTED_MODULE_3__.Session.instruments.current().filter((i) => instruments.includes(i.name)));
+            this.changeProperty('instruments', _data_session__WEBPACK_IMPORTED_MODULE_4__.Session.instruments.current().filter((i) => instruments.includes(i.name)));
             genreDialog.remove();
         });
     }
     async openEditPlaylistDialog() {
-        await _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_5__.EditPlaylistDialog.show(this.playlist);
+        await _dialogs_edit_playlist_dialog_edit_playlist_dialog__WEBPACK_IMPORTED_MODULE_6__.EditPlaylistDialog.show(this.playlist);
         await this.initializeData();
     }
     async toggleComplete() {
@@ -20289,8 +20281,8 @@ class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODU
         await this.changeProperty('complete', input.checked);
     }
     async changeCurrentTrackPath() {
-        var extensions = { 'Audio-Files': _audio_file_extensions__WEBPACK_IMPORTED_MODULE_17__.AudioFileExtensions };
-        var filePaths = await _services_client_interop_service__WEBPACK_IMPORTED_MODULE_13__.ClientInteropService.executeQuery({
+        var extensions = { 'Audio-Files': _audio_file_extensions__WEBPACK_IMPORTED_MODULE_18__.AudioFileExtensions };
+        var filePaths = await _services_client_interop_service__WEBPACK_IMPORTED_MODULE_14__.ClientInteropService.executeQuery({
             query: _client_interop_interop_query__WEBPACK_IMPORTED_MODULE_2__.InteropQuery.RequestFiles,
             payload: { multiselect: false, nameExtensionMap: extensions },
         });
@@ -20298,29 +20290,29 @@ class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODU
             return;
         this.changeProperty('path', filePaths[0]);
         this.requestFullUpdate();
-        _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.changeTrack(this.updatedTrack?.path);
+        _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.changeTrack(this.updatedTrack?.path);
     }
     randomize() {
-        this.playlist.tracks = (0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_14__.randomizeArray)(this.playlist.tracks);
+        this.playlist.tracks = (0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_15__.randomizeArray)(this.playlist.tracks);
         this.changeTrack(0);
         this.requestFullUpdate();
     }
     async showLyrics() {
         try {
-            var dialog = await _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_4__.LyricsDialog.startShowing(this.updatedTrack);
+            var dialog = await _dialogs_audio_subtitle_dialog_lyrics_dialog__WEBPACK_IMPORTED_MODULE_5__.LyricsDialog.startShowing(this.updatedTrack);
             dialog.addEventListener('lyrics-saved', async () => {
                 await this.changeProperty('lyrics', dialog.lyrics);
-                _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__.MessageSnackbar.popup('The lyrics have been successfully saved', 'success');
+                _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup('The lyrics have been successfully saved', 'success');
                 await dialog.requestFullUpdate();
             });
         }
         catch {
-            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_8__.MessageSnackbar.popup('Es konnten leider keine passenden Lyrics gefunden werden.', 'error');
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_9__.MessageSnackbar.popup('Es konnten leider keine passenden Lyrics gefunden werden.', 'error');
         }
     }
     async createTrack() {
-        var trackHash = await _services_backend_services__WEBPACK_IMPORTED_MODULE_12__.MusicService.createMusicTrack(this.updatedTrack);
-        (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_15__.changePage)(MusicPlaylistPage, { trackHash });
+        var trackHash = await _services_backend_services__WEBPACK_IMPORTED_MODULE_13__.MusicService.createMusicTrack(this.updatedTrack);
+        (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_16__.changePage)(MusicPlaylistPage_1, { trackHash });
         this.createNew = false;
         this.requestFullUpdate();
     }
@@ -20330,9 +20322,9 @@ class MusicPlaylistPage extends _music_playlist_page_html__WEBPACK_IMPORTED_MODU
     }
     async disconnectedCallback() {
         await super.disconnectedCallback();
-        await _services_audio_service__WEBPACK_IMPORTED_MODULE_11__.AudioService.reset();
+        await _services_audio_service__WEBPACK_IMPORTED_MODULE_12__.AudioService.reset();
     }
-}
+};
 __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Number })
 ], MusicPlaylistPage.prototype, "trackIndex", void 0);
@@ -20348,6 +20340,10 @@ __decorate([
 __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
 ], MusicPlaylistPage.prototype, "updatedTrack", void 0);
+MusicPlaylistPage = MusicPlaylistPage_1 = __decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('music-playlist-page')
+], MusicPlaylistPage);
+
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
@@ -21209,7 +21205,7 @@ function renderRecipesPage() {
                         class="recipe-tile"
                         @click="${() => (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_2__.changePage)(_create_recipe_page_create_recipe_page__WEBPACK_IMPORTED_MODULE_3__.CreateRecipePage)}"
                     ></div>
-                    ${this.recipes.map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+                    ${this.recipes?.map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                                 <recipe-tile
                                     class="recipe-tile"
                                     .recipe="${x}"

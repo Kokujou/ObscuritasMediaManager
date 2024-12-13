@@ -14,7 +14,7 @@ export class RecipesPage extends LitElementBase {
         return renderRecipesPageStyles();
     }
 
-    @state() protected declare recipes: RecipeModel[];
+    @state() protected declare recipes: RecipeModel[] | undefined;
 
     override async connectedCallback() {
         super.connectedCallback();

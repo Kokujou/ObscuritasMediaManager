@@ -16,7 +16,7 @@ export function renderRecipesPage(this: RecipesPage) {
                         class="recipe-tile"
                         @click="${() => changePage(CreateRecipePage)}"
                     ></div>
-                    ${this.recipes.map(
+                    ${this.recipes?.map(
                         (x) =>
                             html`
                                 <recipe-tile
