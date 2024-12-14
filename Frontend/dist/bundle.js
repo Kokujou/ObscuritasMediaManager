@@ -16673,14 +16673,14 @@ let CreateRecipePage = class CreateRecipePage extends _data_lit_element_base__WE
             difficulty: 0,
             rating: 0,
             formattedText: 'Dein Rezept-Text',
-            ingredients: [this.emptyGroup],
+            ingredients: [],
         });
+        this.recipe.ingredients = [this.emptyGroup];
     }
     async connectedCallback() {
         super.connectedCallback();
-        var requestedRecipeId = (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_5__.getQueryValue)('recipe');
-        if (requestedRecipeId) {
-            this.recipe = await _services_backend_services__WEBPACK_IMPORTED_MODULE_4__.RecipeService.getRecipe(requestedRecipeId);
+        if (this.recipeId) {
+            this.recipe = await _services_backend_services__WEBPACK_IMPORTED_MODULE_4__.RecipeService.getRecipe(this.recipeId);
             await this.requestFullUpdate();
         }
     }

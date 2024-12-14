@@ -52,16 +52,16 @@ export class CreateRecipePage extends LitElementBase {
             difficulty: 0,
             rating: 0,
             formattedText: 'Dein Rezept-Text',
-            ingredients: [this.emptyGroup],
+            ingredients: [],
         });
+        this.recipe.ingredients = [this.emptyGroup];
     }
 
     override async connectedCallback() {
         super.connectedCallback();
 
-        var requestedRecipeId = getQueryValue('recipe');
-        if (requestedRecipeId) {
-            this.recipe = await RecipeService.getRecipe(requestedRecipeId);
+        if (this.recipeId) {
+            this.recipe = await RecipeService.getRecipe(this.recipeId);
             await this.requestFullUpdate();
         }
     }
