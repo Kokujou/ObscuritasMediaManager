@@ -11,6 +11,7 @@ export function renderLinkElementStyles() {
 
             display: flex;
             align-items: center;
+            justify-content: inherit;
             min-width: 100%;
             min-height: inherit;
         }

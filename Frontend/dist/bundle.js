@@ -11248,6 +11248,7 @@ function renderLinkElementStyles() {
 
             display: flex;
             align-items: center;
+            justify-content: inherit;
             min-width: 100%;
             min-height: inherit;
         }
@@ -11323,7 +11324,7 @@ let LinkElement = LinkElement_1 = class LinkElement extends _data_lit_element_ba
             .params="${params}"
             ?disabled="${options.disabled}"
             .target="${options.target}"
-            .class="${options.class}"
+            class="${options.className}"
         >
             ${inner}
         </link-element>`;
@@ -18661,7 +18662,7 @@ function renderMediaDetailPage() {
                                       ${this.relatedTracks.map((track) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
                                               <div class="property-entry">
                                                   ♫
-                                                  ${_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_8__.MusicPlaylistPage, { trackHash: track.hash }, track.name, { class: 'track-name' })}
+                                                  ${_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_music_playlist_page_music_playlist_page__WEBPACK_IMPORTED_MODULE_8__.MusicPlaylistPage, { trackHash: track.hash }, track.name, { className: 'track-name' })}
                                                   <compact-audio-player .path="${track?.path}"></compact-audio-player>
                                               </div>
                                           `)}
@@ -20455,11 +20456,13 @@ function renderMusicPlaylistStyles() {
             font-size: 24px;
             display: flex;
             flex-direction: row;
-            min-width: 300px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
         }
 
         #audio-subtitle > * {
-            flex: auto;
+            width: 100%;
             margin-top: -10px !important;
         }
 
@@ -20467,6 +20470,12 @@ function renderMusicPlaylistStyles() {
             margin: 0 20px;
             display: flex;
             align-items: center;
+            justify-content: center;
+            width: unset;
+        }
+
+        .media-link {
+            text-align: center;
             justify-content: center;
         }
 
@@ -20573,7 +20582,6 @@ function renderMusicPlaylistStyles() {
             font: inherit;
             color: inherit;
             background: none;
-            min-width: 300px;
             text-align: center;
         }
 
@@ -20779,7 +20787,7 @@ function renderMusicPlaylistPage() {
                             />
                             <div id="subtitle-separator">-</div>
                             ${this.updatedTrack?.complete && this.sourceMediaId
-        ? _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_9__.MediaDetailPage, { mediaId: this.sourceMediaId }, this.updatedTrack.source, { target: '_blank' })
+        ? _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_3__.LinkElement.forPage(_media_detail_page_media_detail_page__WEBPACK_IMPORTED_MODULE_9__.MediaDetailPage, { mediaId: this.sourceMediaId }, this.updatedTrack.source, { target: '_blank', className: 'media-link' })
         : renderSourceInput.call(this)}
                         </div>
                         <div id="genre-section">
@@ -21012,7 +21020,7 @@ let MusicPlaylistPage = class MusicPlaylistPage extends _data_lit_element_base__
         return `${Math.floor(minutes).toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
     get sourceMediaId() {
-        return _services_media_filter_service__WEBPACK_IMPORTED_MODULE_17__.MediaFilterService.search([..._data_session__WEBPACK_IMPORTED_MODULE_4__.Session.mediaList.current()], this.updatedTrack.source, false)[0]?.id;
+        return _services_media_filter_service__WEBPACK_IMPORTED_MODULE_17__.MediaFilterService.find(_data_session__WEBPACK_IMPORTED_MODULE_4__.Session.mediaList.current(), this.updatedTrack.source, false)?.id;
     }
     playlist = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.PlaylistModel({ tracks: [] });
     currentTrack = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_10__.MusicModel();
@@ -21021,6 +21029,10 @@ let MusicPlaylistPage = class MusicPlaylistPage extends _data_lit_element_base__
     hoveredRating = 0;
     moodToSwitch = 'mood1';
     loop = false;
+    constructor() {
+        super();
+        this.trackIndex = 0;
+    }
     async connectedCallback() {
         await super.connectedCallback();
         this.initializeData();
@@ -21658,7 +21670,7 @@ function renderNavigation() {
                 <div id="nav-section">
                     <div class="nav-section-links">
                         ${_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__.LinkElement.forPage(_welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__.WelcomePage, null, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `Start`, {
-        class: (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__.getPageName)(_welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__.WelcomePage) == _data_session__WEBPACK_IMPORTED_MODULE_1__.Session.currentPage.current() ? 'active' : 'normal',
+        className: (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__.getPageName)(_welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__.WelcomePage) == _data_session__WEBPACK_IMPORTED_MODULE_1__.Session.currentPage.current() ? 'active' : 'normal',
     })}
                     </div>
                 </div>
@@ -21677,7 +21689,7 @@ function renderNavigation() {
 }
 function renderNavItem(element) {
     var active = _data_session__WEBPACK_IMPORTED_MODULE_1__.Session.currentPage.current() == (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__.getPageName)(element);
-    return _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__.LinkElement.forPage(element, null, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `${element.pageName}`, { class: active ? 'active' : 'normal' });
+    return _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__.LinkElement.forPage(element, null, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `${element.pageName}`, { className: active ? 'active' : 'normal' });
 }
 
 __webpack_async_result__();
@@ -25184,7 +25196,7 @@ __webpack_require__.r(__webpack_exports__);
 class MediaFilterService {
     static filter(result, filter) {
         if (filter.search)
-            this.search(result, filter.search ?? '', true);
+            _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyMultiPropertySearch(result, filter.search ?? '', 'name', 'kanjiName', 'romajiName', 'germanName', 'englishName', 'description');
         _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyPropertyFilter(result, filter.ratings, 'rating');
         _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyArrayFilter(result, filter.genres, 'genres', (x) => x.id);
         _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyPropertyFilter(result, filter.status, 'status');
@@ -25207,6 +25219,9 @@ class MediaFilterService {
     static search(list, search, includeDescription) {
         _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyMultiPropertySearch(list, search ?? '', 'name', 'kanjiName', 'romajiName', 'germanName', 'englishName', includeDescription ? 'description' : 'name');
         return list;
+    }
+    static find(list, search, includeDescription) {
+        return _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.findByProperties(list, search ?? '', 'name', 'kanjiName', 'romajiName', 'germanName', 'englishName');
     }
 }
 
@@ -25381,7 +25396,7 @@ class MusicFilterService {
             return [];
         var filteredTracks = [...tracks];
         if (filter.search)
-            this.search(filteredTracks, filter.search ?? '');
+            _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyMultiPropertySearch(filteredTracks, filter.search ?? '', 'name', 'author', 'source', 'path');
         _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyArrayFilter(filteredTracks, filter.instrumentTypes, 'instrumentTypes');
         _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyArrayFilter(filteredTracks, filter.instruments, 'instruments', (x) => x.name);
         _object_filter_service__WEBPACK_IMPORTED_MODULE_2__.ObjectFilterService.applyArrayFilter(filteredTracks, filter.genres, 'genres');
@@ -25460,6 +25475,9 @@ class ObjectFilterService {
         var results = list.filter((item) => properties.some((prop) => `${item[prop] ?? ''}`.toLowerCase().trim().includes(search.toLowerCase().trim())));
         list.length = 0;
         list.push(...results);
+    }
+    static findByProperties(list, search, ...properties) {
+        return list.find((item) => properties.some((prop) => item[prop] && search && `${item[prop]}`.toLowerCase().trim() == search.toLowerCase().trim()));
     }
     static applyRangeFilter(list, filter, property) {
         if (!filter.max || filter == undefined || filter == null)

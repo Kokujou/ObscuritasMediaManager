@@ -68,7 +68,7 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     get sourceMediaId() {
-        return MediaFilterService.search([...Session.mediaList.current()], this.updatedTrack.source!, false)[0]?.id;
+        return MediaFilterService.find(Session.mediaList.current(), this.updatedTrack.source!, false)?.id;
     }
 
     @property({ type: Number }) public declare trackIndex: number;
@@ -85,6 +85,11 @@ export class MusicPlaylistPage extends LitElementBase {
     protected hoveredRating = 0;
     protected moodToSwitch: 'mood1' | 'mood2' = 'mood1';
     protected loop = false;
+
+    constructor() {
+        super();
+        this.trackIndex = 0;
+    }
 
     override async connectedCallback() {
         await super.connectedCallback();

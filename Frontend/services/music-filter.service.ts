@@ -31,7 +31,8 @@ export class MusicFilterService {
         if (filter.showPlaylists == CheckboxState.Require) return [];
         var filteredTracks = [...tracks];
 
-        if (filter.search) this.search(filteredTracks, filter.search ?? '');
+        if (filter.search)
+            ObjectFilterService.applyMultiPropertySearch(filteredTracks, filter.search ?? '', 'name', 'author', 'source', 'path');
         ObjectFilterService.applyArrayFilter(filteredTracks, filter.instrumentTypes, 'instrumentTypes');
         ObjectFilterService.applyArrayFilter(filteredTracks, filter.instruments, 'instruments', (x) => x.name);
         ObjectFilterService.applyArrayFilter(filteredTracks, filter.genres, 'genres');

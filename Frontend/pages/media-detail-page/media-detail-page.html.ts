@@ -262,7 +262,7 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                                                       MusicPlaylistPage,
                                                       { trackHash: track.hash },
                                                       track.name,
-                                                      { class: 'track-name' }
+                                                      { className: 'track-name' }
                                                   )}
                                                   <compact-audio-player .path="${track?.path}"></compact-audio-player>
                                               </div>

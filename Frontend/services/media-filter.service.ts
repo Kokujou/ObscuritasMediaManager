@@ -6,7 +6,17 @@ import { ObjectFilterService } from './object-filter.service';
 
 export class MediaFilterService {
     static filter(result: MediaModel[], filter: MediaFilter) {
-        if (filter.search) this.search(result, filter.search ?? '', true);
+        if (filter.search)
+            ObjectFilterService.applyMultiPropertySearch(
+                result,
+                filter.search ?? '',
+                'name',
+                'kanjiName',
+                'romajiName',
+                'germanName',
+                'englishName',
+                'description'
+            );
         ObjectFilterService.applyPropertyFilter(result, filter.ratings, 'rating');
         ObjectFilterService.applyArrayFilter(result, filter.genres, 'genres', (x) => x.id);
         ObjectFilterService.applyPropertyFilter(result, filter.status, 'status');
@@ -37,5 +47,17 @@ export class MediaFilterService {
             includeDescription ? 'description' : 'name'
         );
         return list;
+    }
+
+    static find(list: MediaModel[], search: string, includeDescription: boolean) {
+        return ObjectFilterService.findByProperties(
+            list,
+            search ?? '',
+            'name',
+            'kanjiName',
+            'romajiName',
+            'germanName',
+            'englishName'
+        );
     }
 }

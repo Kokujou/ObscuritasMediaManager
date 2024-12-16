@@ -34,7 +34,7 @@ function renderNavigation() {
                 <div id="nav-section">
                     <div class="nav-section-links">
                         ${LinkElement.forPage(WelcomePage, null, html`Start`, {
-                            class: getPageName(WelcomePage) == Session.currentPage.current() ? 'active' : 'normal',
+                            className: getPageName(WelcomePage) == Session.currentPage.current() ? 'active' : 'normal',
                         })}
                     </div>
                 </div>
@@ -54,5 +54,5 @@ function renderNavigation() {
 
 function renderNavItem<T extends Page>(element: T) {
     var active = Session.currentPage.current() == getPageName(element);
-    return LinkElement.forPage(element, null, html`${element.pageName}`, { class: active ? 'active' : 'normal' });
+    return LinkElement.forPage(element, null, html`${element.pageName}`, { className: active ? 'active' : 'normal' });
 }

@@ -125,7 +125,7 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                                       MediaDetailPage,
                                       { mediaId: this.sourceMediaId },
                                       this.updatedTrack.source!,
-                                      { target: '_blank' }
+                                      { target: '_blank', className: 'media-link' }
                                   )
                                 : renderSourceInput.call(this)}
                         </div>

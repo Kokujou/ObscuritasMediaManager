@@ -170,11 +170,13 @@ export function renderMusicPlaylistStyles() {
             font-size: 24px;
             display: flex;
             flex-direction: row;
-            min-width: 300px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
         }
 
         #audio-subtitle > * {
-            flex: auto;
+            width: 100%;
             margin-top: -10px !important;
         }
 
@@ -182,6 +184,12 @@ export function renderMusicPlaylistStyles() {
             margin: 0 20px;
             display: flex;
             align-items: center;
+            justify-content: center;
+            width: unset;
+        }
+
+        .media-link {
+            text-align: center;
             justify-content: center;
         }
 
@@ -288,7 +296,6 @@ export function renderMusicPlaylistStyles() {
             font: inherit;
             color: inherit;
             background: none;
-            min-width: 300px;
             text-align: center;
         }
 

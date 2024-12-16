@@ -71,6 +71,12 @@ export class ObjectFilterService {
         list.push(...results);
     }
 
+    static findByProperties<T>(list: T[], search: string, ...properties: (keyof T)[]) {
+        return list.find((item) =>
+            properties.some((prop) => item[prop] && search && `${item[prop]}`.toLowerCase().trim() == search.toLowerCase().trim())
+        );
+    }
+
     static applyRangeFilter<U>(list: U[], filter: { min: number | null; max: number | null }, property: keyof U) {
         if (!filter.max || filter == undefined || filter == null) return list;
         //@ts-ignore

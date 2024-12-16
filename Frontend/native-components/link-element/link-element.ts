@@ -16,7 +16,7 @@ export class LinkElement extends LitElementBase {
         page: T,
         params: Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>> | null,
         inner: TemplateResult | string,
-        options: Partial<Record<keyof typeof LinkElement.properties, any>> = {}
+        options: Partial<Record<keyof LinkElement, any>> = {}
     ) {
         return html`<link-element
             id="${options.id}"
@@ -24,7 +24,7 @@ export class LinkElement extends LitElementBase {
             .params="${params}"
             ?disabled="${options.disabled}"
             .target="${options.target}"
-            .class="${options.class}"
+            class="${options.className}"
         >
             ${inner}
         </link-element>`;
