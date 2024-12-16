@@ -61,8 +61,8 @@ export class MusicPage extends LitElementBase {
     }
 
     @state() protected declare playlists: PlaylistModel[];
-    @state() protected declare currentTrack;
-    @state() protected declare filter;
+    @state() protected declare currentTrack: MusicModel;
+    @state() protected declare filter: MusicFilterOptions;
     @state() protected declare selectedHashes: string[];
     @state() protected declare sortingProperty: SortingProperties;
     @state() protected declare sortingDirection: keyof typeof SortingDirections;

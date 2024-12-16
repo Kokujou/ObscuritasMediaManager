@@ -19,7 +19,7 @@ export class MusicFilter extends LitElementBase {
         return renderMusicFilterStyles();
     }
 
-    @property({ type: Object }) public declare filter;
+    @property({ type: Object }) public declare filter: MusicFilterOptions;
     @property() public declare sortingProperty: SortingProperties;
     @property() public declare sortingDirection: keyof typeof SortingDirections;
 

@@ -17,11 +17,21 @@ export class DropDown extends LitElementBase {
         return renderDropDownStyles();
     }
 
+    private _caption: string | undefined;
+
+    @property()
     get caption() {
         var notForbiddenOptions = this.options.filter((x) => x.state != CheckboxState.Forbid);
+        if (this._caption)
+            return this._caption + (notForbiddenOptions.length > 0 ? ` (${notForbiddenOptions.length} ausgewählt)` : '');
+
         if (!this.multiselect) return notForbiddenOptions[0]?.text ?? this.unsetText;
         else if (notForbiddenOptions.length == 0) return this.unsetText;
         else return notForbiddenOptions.map((x) => x.text).join(', ');
+    }
+
+    set caption(value: string) {
+        this._caption = value;
     }
 
     @property() public declare unsetText: string;

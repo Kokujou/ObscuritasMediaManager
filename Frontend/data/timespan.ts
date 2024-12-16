@@ -1,10 +1,4 @@
 export class TimeSpan {
-    days = 0;
-    hours = 0;
-    minutes = 0;
-    seconds = 0;
-    milliseconds = 0;
-
     static fromString(value: string) {
         var result = new TimeSpan();
         if (!value) return result;
@@ -37,6 +31,40 @@ export class TimeSpan {
         if (hours) result += hours + ' Std. ';
         if (timespan.minutes) result += timespan.minutes + ' Min.';
         return result;
+    }
+
+    days = 0;
+    hours = 0;
+    minutes = 0;
+    seconds = 0;
+    milliseconds = 0;
+
+    biggerThan(timespan: TimeSpan) {
+        return this.compareTo(timespan) > 0;
+    }
+
+    smallerThan(timespan: TimeSpan) {
+        return this.compareTo(timespan) < 0;
+    }
+
+    equals(timespan: TimeSpan) {
+        return this.compareTo(timespan) == 0;
+    }
+
+    compareTo(timespan: TimeSpan) {
+        if (this.days > timespan.days) return 1;
+        if (this.hours > timespan.hours) return 1;
+        if (this.minutes > timespan.minutes) return 1;
+        if (this.seconds > timespan.seconds) return 1;
+        if (this.milliseconds > timespan.milliseconds) return 1;
+
+        if (this.days < timespan.days) return -1;
+        if (this.hours < timespan.hours) return -1;
+        if (this.minutes < timespan.minutes) return -1;
+        if (this.seconds < timespan.seconds) return -1;
+        if (this.milliseconds < timespan.milliseconds) return -1;
+
+        return 0;
     }
 
     toString() {

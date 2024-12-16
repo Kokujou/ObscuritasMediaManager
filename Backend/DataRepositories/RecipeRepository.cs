@@ -31,4 +31,9 @@ public class RecipeRepository(DatabaseContext databaseContext)
         databaseContext.Update(recipe);
         await databaseContext.SaveChangesAsync();
     }
+
+    public IQueryable<string> GetCookware(string search)
+    {
+        return databaseContext.Cookware.Select(x => x.Name).Distinct();
+    }
 }

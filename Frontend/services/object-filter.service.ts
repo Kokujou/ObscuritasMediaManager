@@ -72,7 +72,7 @@ export class ObjectFilterService {
     }
 
     static applyRangeFilter<U>(list: U[], filter: { min: number | null; max: number | null }, property: keyof U) {
-        if (!filter.max || !filter.min) return list;
+        if (!filter.max || filter == undefined || filter == null) return list;
         //@ts-ignore
         var results = list.filter((x) => x[property] >= filter.min && x[property] <= filter.max);
         list.length = 0;

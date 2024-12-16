@@ -30,7 +30,8 @@ export class DurationInput extends LitElementBase {
 
     handleValueChange(property: keyof TimeSpan, element: HTMLInputElement) {
         if (property == 'toString') return;
-        this.timespan[property] = Number.parseInt(element.value);
+        if (typeof this.timespan[property] != 'number') return;
+        this.timespan[property] = Number.parseInt(element.value) as any;
         this.dispatchEvent(new CustomEvent('duration-changed', { detail: this.timespan.toString() }));
     }
 

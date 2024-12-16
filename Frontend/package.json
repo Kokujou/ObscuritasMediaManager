@@ -9,13 +9,10 @@
         "ts-migrate-plugins": "^0.1.35"
     },
     "devDependencies": {
-        "@open-wc/demoing-storybook": "^2.4.7",
-        "@types/node": "^22.10.2",
         "glob": "^11.0.0",
         "html-webpack-plugin": "^5.6.3",
         "ts-lit-plugin": "^2.0.2",
         "ts-loader": "^9.5.1",
-        "ts-migrate": "^0.1.35",
         "typescript": "^5.7.2",
         "webpack": "^5.97.1",
         "webpack-cli": "^5.1.4"

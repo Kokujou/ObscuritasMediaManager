@@ -14,6 +14,8 @@ public class RecipeModel
         var entity = builder.Entity<RecipeModel>();
         entity.HasMany(x => x.Ingredients).WithOne().HasForeignKey(x => x.RecipeId).HasPrincipalKey(x => x.Id);
         entity.Navigation(x => x.Ingredients).AutoInclude();
+        entity.HasMany(x => x.Cookware).WithOne().HasForeignKey(x => x.RecipeId).HasPrincipalKey(x => x.Id);
+        entity.Navigation(x => x.Cookware).AutoInclude();
     }
 
     public Guid Id { get; set; }
@@ -29,5 +31,9 @@ public class RecipeModel
     public TimeSpan CookingTime { get; set; }
     public TimeSpan TotalTime => PreparationTime + CookingTime;
     public IEnumerable<IngredientModel> Ingredients { get; set; } = [];
+    public IEnumerable<CookwareModel> Cookware { get; set; } = [];
     [MaxLength(9999)] public string? FormattedText { get; set; }
+
+    public IEnumerable<string> IngredientNames => Ingredients.Select(x => x.Name);
+    public IEnumerable<string> CookwareNames => Cookware.Select(x => x.Name);
 }

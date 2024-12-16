@@ -2,20 +2,18 @@ import { css } from 'lit-element';
 
 export function renderRecipesPageStyles() {
     return css`
-        page-layout {
+        #page {
             position: absolute;
             inset: 0;
 
             display: flex;
-            flex-direction: column;
-        }
-
-        #filter-area {
+            flex-direction: row;
+            align-items: flex-start;
         }
 
         paginated-scrolling {
-            position: absolute;
-            inset: 0;
+            flex: auto;
+            align-self: stretch;
 
             overflow-y: auto;
             overflow-x: hidden;
@@ -25,25 +23,43 @@ export function renderRecipesPageStyles() {
         }
 
         #items {
-            margin: 100px 50px 0 50px;
+            margin: 50px;
             display: flex;
             flex-direction: row;
-            gap: 20px;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+
+        .recipe-tile {
+            --recipe-tile-width: 300px;
+            --recipe-tile-min-height: 300px;
+            --font-size: 30px;
+
+            cursor: pointer;
+        }
+
+        #search-panel-container {
+            width: 400px;
+            max-height: 100%;
+            padding: 0 20px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background-color: var(--accent-color);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        recipe-filter {
+            width: 400px;
         }
 
         #add-recipe-icon {
             background: gray;
             box-sizing: border-box;
-        }
-
-        .recipe-tile {
-            min-width: 300px;
-            width: 300px;
-            min-height: 300px;
-            height: 300px;
-            --font-size: 30px;
-
-            cursor: pointer;
         }
     `;
 }

@@ -36,7 +36,7 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                     id="delete-toggle"
                     .state="${this.filter.deleted}"
                     threeValues
-                    @toggle="${(e: CustomEvent) => this.changeFilterProperty('deleted', e.detail)}"
+                    @toggle="${(e: CustomEvent<CheckboxState>) => this.changeFilterProperty('deleted', e.detail)}"
                 ></custom-toggle>
             </div>
             <div id="deleted" class="filter-entry">
@@ -45,7 +45,7 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                     id="complete-toggle"
                     .state="${this.filter.complete}"
                     threeValues
-                    @toggle="${(e: CustomEvent) => this.changeFilterProperty('complete', e.detail)}"
+                    @toggle="${(e: CustomEvent<CheckboxState>) => this.changeFilterProperty('complete', e.detail)}"
                 ></custom-toggle>
             </div>
             <div id="sorting" class="filter-entry" complex>
@@ -64,7 +64,7 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                         )}"
                         unsetText="Keine Sortierung"
                         maxDisplayDepth="5"
-                        @selectionChange="${(e: CustomEvent) =>
+                        @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
                             this.changeFilterProperty('sortingProperty', e.detail.option.value.property)}"
                     >
                     </drop-down>
@@ -133,7 +133,7 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                     useToggle
                     multiselect
                     maxDisplayDepth="5"
-                    @selectionChange="${(e: CustomEvent) =>
+                    @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
                         this.setFilterProperty('category', e.detail.option.value, e.detail.option.state)}"
                 ></drop-down>
             </div>
@@ -146,7 +146,7 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                     <custom-toggle
                         id="undefined-rating-toggle"
                         .state="${this.filter.ratings.states[0]}"
-                        @toggle="${(e: CustomEvent) => this.setFilterProperty('ratings', 0, e.detail)}"
+                        @toggle="${(e: CustomEvent<CheckboxState>) => this.setFilterProperty('ratings', 0, e.detail)}"
                     ></custom-toggle>
                 </div>
                 <star-rating

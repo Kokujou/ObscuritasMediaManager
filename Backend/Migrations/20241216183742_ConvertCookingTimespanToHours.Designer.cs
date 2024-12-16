@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -10,9 +11,11 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 namespace ObscuritasMediaManager.Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241216183742_ConvertCookingTimespanToHours")]
+    partial class ConvertCookingTimespanToHours
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
@@ -389,8 +392,8 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("CookingTime")
-                        .HasColumnType("TEXT");
+                    b.Property<float>("CookingHours")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("Course")
                         .IsRequired()
@@ -415,8 +418,8 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("PreparationTime")
-                        .HasColumnType("TEXT");
+                    b.Property<float>("PreparationHours")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("Rating")
                         .HasColumnType("INTEGER");

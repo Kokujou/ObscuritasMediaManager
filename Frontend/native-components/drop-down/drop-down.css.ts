@@ -42,7 +42,7 @@ export function renderDropDownStyles() {
             min-width: 0;
             overflow: hidden;
             text-overflow: ellipsis;
-            padding: 0 20px;
+            padding: 0 10px;
         }
 
         .dropdown-icon-container {
@@ -75,28 +75,14 @@ export function renderDropDownStyles() {
             height: 100%;
         }
 
-        #dropdown-search {
-            width: 100%;
-            margin-top: 15px;
-            margin-bottom: 15px;
-
-            outline: none;
-            background-color: transparent;
-            border: none;
-            padding: 10px 0;
-            border-bottom: 1px solid lightgray;
-
-            font: inherit;
-            color: inherit;
-            padding: 5px 0;
-            font-weight: normal;
-        }
-
         .options {
             position: absolute;
             top: 100%;
+            width: var(--option-width, 100%);
 
-            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
 
             color: var(--font-color);
             border: none;
@@ -108,24 +94,49 @@ export function renderDropDownStyles() {
             z-index: 10;
         }
 
+        .options:not([visible]) {
+            max-height: 0;
+        }
+
+        #dropdown-search {
+            width: calc(100% - 30px);
+            padding: 5px 10px;
+            margin: 15px;
+            margin-bottom: 5px;
+            box-sizing: padding-box;
+
+            outline: none;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid lightgray;
+
+            font: inherit;
+            color: inherit;
+            font-weight: normal;
+        }
+
         .option {
+            line-height: 40px;
+            padding: 0 20px;
+
             font-weight: 400;
             text-transform: capitalize;
-
-            padding: 0 35px;
-            width: calc(100% - 70px);
-            height: 40px;
 
             white-space: nowrap;
 
             display: inline-flex;
             align-items: center;
+            justify-content: space-between;
             gap: 10px;
         }
 
         .label {
             text-transform: capitalize;
             flex: auto;
+        }
+
+        custom-toggle {
+            margin: 10px 0;
         }
 
         .option:hover,

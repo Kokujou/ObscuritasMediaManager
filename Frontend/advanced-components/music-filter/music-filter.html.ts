@@ -38,7 +38,7 @@ export function renderMusicFilter(this: MusicFilter) {
                     id="show-complete-toggle"
                     .state="${this.filter.showComplete}"
                     threeValues
-                    @toggle="${(e: CustomEvent) => this.setfilterEntry('showComplete', e.detail)}"
+                    @toggle="${(e: CustomEvent<CheckboxState>) => this.setfilterEntry('showComplete', e.detail)}"
                 ></custom-toggle>
             </div>
             <div id="show-playlists-filter" class="filter" simple>
@@ -47,7 +47,7 @@ export function renderMusicFilter(this: MusicFilter) {
                     id="show-playlists-toggle"
                     .state="${this.filter.showPlaylists}"
                     threeValues
-                    @toggle="${(e: CustomEvent) => this.setfilterEntry('showPlaylists', e.detail)}"
+                    @toggle="${(e: CustomEvent<CheckboxState>) => this.setfilterEntry('showPlaylists', e.detail)}"
                 ></custom-toggle>
             </div>
             <div id="show-deleted-filter" class="filter" simple>
@@ -56,7 +56,7 @@ export function renderMusicFilter(this: MusicFilter) {
                     id="show-deleted-toggle"
                     .state="${this.filter.showDeleted}"
                     threeValues
-                    @toggle="${(e: CustomEvent) => this.setfilterEntry('showDeleted', e.detail)}"
+                    @toggle="${(e: CustomEvent<CheckboxState>) => this.setfilterEntry('showDeleted', e.detail)}"
                 ></custom-toggle>
             </div>
             <div id="mood-filter" class="filter">
@@ -80,7 +80,8 @@ export function renderMusicFilter(this: MusicFilter) {
                         )}"
                         unsetText="Keine Sortierung"
                         maxDisplayDepth="5"
-                        @selectionChange="${(e: CustomEvent) => this.changeSorting(e.detail.option.value)}"
+                        @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
+                            this.changeSorting(e.detail.option.value)}"
                     >
                     </drop-down>
                     <div
@@ -213,7 +214,8 @@ export function renderMusicFilter(this: MusicFilter) {
                     <div class="filter-label">Show undefined:</div>
                     <custom-toggle
                         .state="${this.filter.ratings.states[0]}"
-                        @toggle="${(e: CustomEvent) => this.setFilterEntryValue(this.filter.ratings, '0', e.detail)}"
+                        @toggle="${(e: CustomEvent<CheckboxState>) =>
+                            this.setFilterEntryValue(this.filter.ratings, '0', e.detail)}"
                     ></custom-toggle>
                 </div>
                 <star-rating
@@ -244,7 +246,7 @@ export function renderMusicFilter(this: MusicFilter) {
                     ></div>
                 </div>
                 <drop-down
-                    @selectionChange="${(e: CustomEvent) =>
+                    @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
                         this.setFilterEntryValue(this.filter.moods, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.entries(Mood).map((x) =>
                         DropDownOption.create({
@@ -264,7 +266,7 @@ export function renderMusicFilter(this: MusicFilter) {
             </div>
             <div id="genre-filter" class="filter">
                 <div class="filter-heading">
-                    <div class="heading-label">genres:</div>
+                    <div class="heading-label">Genres:</div>
                     <div
                         class="icon-button"
                         icon="${Icons.SelectAll}"
@@ -279,7 +281,7 @@ export function renderMusicFilter(this: MusicFilter) {
                     ></div>
                 </div>
                 <drop-down
-                    @selectionChange="${(e: CustomEvent) =>
+                    @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
                         this.setFilterEntryValue(this.filter.genres, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.entries(MusicGenre).map((x) =>
                         DropDownOption.create({ value: x[0], state: this.filter.genres.states[x[0] as MusicGenre], text: x[1] })
@@ -309,7 +311,7 @@ export function renderMusicFilter(this: MusicFilter) {
                     ></div>
                 </div>
                 <drop-down
-                    @selectionChange="${(e: CustomEvent) =>
+                    @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
                         this.setFilterEntryValue(this.filter.instrumentations, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.values(Instrumentation).map((key) =>
                         DropDownOption.create({ value: key, text: key, state: this.filter.instrumentations.states[key] })

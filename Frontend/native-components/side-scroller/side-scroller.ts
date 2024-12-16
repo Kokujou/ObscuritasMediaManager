@@ -36,6 +36,11 @@ export class SideScroller extends LitElementBase {
 
     @state() protected declare currentItemIndex: number;
 
+    constructor() {
+        super();
+        this.currentItemIndex = 0;
+    }
+
     updated(_changedProperties: Map<any, any>) {
         super.updated(_changedProperties);
         setTimeout(() => {

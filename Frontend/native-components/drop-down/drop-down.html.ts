@@ -4,7 +4,7 @@ import { DropDown } from './drop-down';
 import { DropDownOption } from './drop-down-option';
 
 export function renderDropDown(this: DropDown) {
-    var maxHeight = this.maxDisplayDepth * 40;
+    var maxHeight = this.maxDisplayDepth * 60;
     if (this.useSearch) maxHeight += 50;
     return html`
         <style>
@@ -23,6 +23,7 @@ function showDropDown(this: DropDown) {
         @click="${() => {
             this.showDropDown = !this.showDropDown;
             if (this.useSearch) this.resetSearchFilter();
+            this.shadowRoot!.querySelector('.options')!.scrollTop = 0;
         }}"
     >
         <div id="caption-container">
@@ -30,11 +31,11 @@ function showDropDown(this: DropDown) {
         </div>
         <div
             class="options"
+            ?visible="${this.showDropDown}"
             @click="${(e: Event) => {
                 if (this.multiselect) e.stopPropagation();
             }}"
             @scroll="${(e: Event) => e.preventDefault()}"
-            style="display: ${this.showDropDown ? 'block' : 'none'}"
         >
             ${this.useSearch
                 ? html`

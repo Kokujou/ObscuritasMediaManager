@@ -7,8 +7,8 @@ export function renderRecipeTileStyles() {
 
         #image-container {
             position: relative;
-            width: 100%;
-            height: 100%;
+            width: var(--recipe-tile-width);
+            min-height: var(--recipe-tile-min-height);
         }
 
         #image {

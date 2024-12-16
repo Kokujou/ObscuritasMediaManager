@@ -42,4 +42,10 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
 
         await recipeRepository.UpdateRecipe(recipe);
     }
+
+    [HttpPost("cookware/search")]
+    public IQueryable<string> SearchCookwareAsync([FromBody] string search)
+    {
+        return recipeRepository.GetCookware(search);
+    }
 }

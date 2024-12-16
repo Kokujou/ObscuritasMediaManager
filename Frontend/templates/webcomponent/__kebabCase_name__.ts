@@ -1,4 +1,5 @@
-import { session } from '../../data/session';
+import { Session } from '../../data/session';
+import { customElement, property } from 'lit-element/decorators';
 import { render{{ pascalCase name }} } from './{{ kebabCase name }}.html';
 import { render{{ pascalCase name }}Styles } from './{{ kebabCase name }}.css';
 import { LitElementBase } from '../../data/lit-element-base';
@@ -12,6 +13,6 @@ export class {{ pascalCase name }} extends LitElementBase {
     @property() public declare someProperty: string;
 
     override render() {
-        return render{{ pascalCase name }}(this);
+        return render{{ pascalCase name }}.call(this);
     }
 }
