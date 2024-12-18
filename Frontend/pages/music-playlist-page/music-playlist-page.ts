@@ -24,7 +24,6 @@ import { renderMusicPlaylistPage } from './music-playlist-page.html';
 
 @customElement('music-playlist-page')
 export class MusicPlaylistPage extends LitElementBase {
-    static pageName = 'music-playlist-page';
     static isPage = true as const;
     static icon = noteIcon();
 

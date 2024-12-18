@@ -11,7 +11,6 @@ import { renderCreateRecipePage } from './create-recipe-page.html';
 @customElement('create-recipe-page')
 export class CreateRecipePage extends LitElementBase {
     static isPage = true as const;
-    static pageName = 'Rezept erstellen';
 
     static override get styles() {
         return renderCreateRecipePageStyles();

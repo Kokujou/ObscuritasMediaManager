@@ -198,7 +198,7 @@ function renderNavigationStyles() {
 
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: stretch;
 
             border-bottom: 2px solid transparent;
         }

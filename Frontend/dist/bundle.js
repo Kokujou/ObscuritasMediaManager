@@ -4637,7 +4637,7 @@ function renderRecipeFilter() {
                         @click="${() => this.setArrayFilter('nations', _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid)}"
                     ></div>
                 </div>
-                <side-scrol ler>
+                <side-scroller>
                     ${Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Language).map((lang) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <tri-value-checkbox
                                 @valueChanged="${(e) => this.setFilterEntryValue(this.filter.nations, lang, e.detail.value)}"
                                 class="icon-container"
@@ -4645,7 +4645,7 @@ function renderRecipeFilter() {
                             >
                                 <div class="inline-icon " nation="${lang}"></div>
                             </tri-value-checkbox>`)}
-                </side-scrol>
+                </side-scroller>
             </div>
             <div id="genre-filter" class="filter">
                 <div class="filter-heading">
@@ -6406,6 +6406,8 @@ class LitElementBase extends lit_element__WEBPACK_IMPORTED_MODULE_0__.LitElement
     elementsWithTooltips = [];
     connectedCallback() {
         super.connectedCallback();
+        if ('pageName' in this.constructor)
+            document.title = `${this.constructor.pageName}`;
         if (this.shadowRoot?.adoptedStyleSheets)
             this.shadowRoot.adoptedStyleSheets = LitElementBase.baseStyles.concat(this.shadowRoot.adoptedStyleSheets);
     }
@@ -17534,7 +17536,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 let CreateRecipePage = class CreateRecipePage extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
     static isPage = true;
-    static pageName = 'Rezept erstellen';
     static get styles() {
         return (0,_create_recipe_page_css__WEBPACK_IMPORTED_MODULE_7__.renderCreateRecipePageStyles)();
     }
@@ -20987,7 +20988,6 @@ var MusicPlaylistPage_1;
 
 let MusicPlaylistPage = class MusicPlaylistPage extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_3__.LitElementBase {
     static { MusicPlaylistPage_1 = this; }
-    static pageName = 'music-playlist-page';
     static isPage = true;
     static icon = (0,_resources_inline_icons_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_11__.noteIcon)();
     static get styles() {
@@ -21599,7 +21599,7 @@ function renderNavigationStyles() {
 
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: stretch;
 
             border-bottom: 2px solid transparent;
         }

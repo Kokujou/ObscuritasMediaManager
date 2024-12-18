@@ -24,6 +24,8 @@ export class LitElementBase extends LitElement {
     override connectedCallback() {
         super.connectedCallback();
 
+        if ('pageName' in this.constructor) document.title = `${this.constructor.pageName}`;
+
         if (this.shadowRoot?.adoptedStyleSheets)
             this.shadowRoot.adoptedStyleSheets = LitElementBase.baseStyles.concat(this.shadowRoot.adoptedStyleSheets);
     }

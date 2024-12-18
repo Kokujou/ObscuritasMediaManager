@@ -94,7 +94,7 @@ export function renderRecipeFilter(this: RecipeFilter) {
                         @click="${() => this.setArrayFilter('nations', CheckboxState.Forbid)}"
                     ></div>
                 </div>
-                <side-scrol ler>
+                <side-scroller>
                     ${Object.values(Language).map(
                         (lang: Language) =>
                             html` <tri-value-checkbox
@@ -106,7 +106,7 @@ export function renderRecipeFilter(this: RecipeFilter) {
                                 <div class="inline-icon " nation="${lang}"></div>
                             </tri-value-checkbox>`
                     )}
-                </side-scrol>
+                </side-scroller>
             </div>
             <div id="genre-filter" class="filter">
                 <div class="filter-heading">
