@@ -11,8 +11,13 @@ export class RecipeTile extends LitElementBase {
     }
 
     @property({ type: Object }) public declare recipe: RecipeModel;
+    @property({ type: Boolean }) public declare compact: boolean;
 
     override render() {
         return renderRecipeTile.call(this);
+    }
+
+    notifyNationChanged() {
+        this.dispatchEvent(new CustomEvent('change-nation'));
     }
 }

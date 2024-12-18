@@ -2,7 +2,6 @@ import { html } from 'lit-element';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { GenreModel, MediaGenreModel } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
-import { CreateMediaPage } from '../create-media-page/create-media-page';
 import { MediaDetailPage } from '../media-detail-page/media-detail-page';
 import { MediaPage } from './media-page';
 
@@ -50,8 +49,8 @@ export function renderMediaPageTemplate(this: MediaPage) {
             <div id="footer">
                 <div id="result-options">
                     ${LinkElement.forPage(
-                        CreateMediaPage,
-                        {},
+                        MediaDetailPage,
+                        { createNew: true },
                         html`
                             <div
                                 id="add-media-button"

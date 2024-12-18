@@ -8,8 +8,10 @@ export function renderRecipeTile(this: RecipeTile) {
     return html`
         <div id="content">
             <div id="image-container">
-                <div id="image"></div>
-                <div id="nation-icon" class="icon" nation="${recipe.nation}"></div>
+                ${this.recipe.imageUrl || !this.compact
+                    ? html`<div id="image" style="background-image: ${this.recipe.imageUrl}"></div>`
+                    : html` <upload-area></upload-area> `}
+                <div id="nation-icon" class="icon" nation="${recipe.nation}" @click="${() => this.notifyNationChanged()}"></div>
                 <div id="total-time">${TimeSpan.format(recipe.totalTime)}</div>
                 <star-rating id="rating" max="5" singleSelect disabled .values="${createRange(0, recipe.rating)}"></star-rating>
                 <star-rating
@@ -22,12 +24,13 @@ export function renderRecipeTile(this: RecipeTile) {
                     .values="${createRange(0, recipe.difficulty)}"
                 ></star-rating>
             </div>
-            <div id="text-container">
-                <div id="recipe-title">${recipe.title}</div>
-                <div id="">Zubereitungsart: ${recipe.technique}</div>
-                <div id="">Hauptzutat: ${recipe.mainIngredient}</div>
-                <div id="">Gang: ${recipe.course}</div>
-            </div>
+            ${!this.compact
+                ? html` <div id="text-container">
+                      <div id="recipe-title">${recipe.title}</div>
+                      <div id="">Zubereitungsart: ${recipe.technique}</div>
+                      <div id="">Gang: ${recipe.course}</div>
+                  </div>`
+                : ''}
         </div>
     `;
 }

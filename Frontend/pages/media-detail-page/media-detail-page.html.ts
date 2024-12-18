@@ -17,17 +17,20 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
             @load="${() => (this.hasImage = true)}"
             @error="${() => (this.hasImage = false)}"
         />
-        <div
-            id="edit-button"
-            onclick="this.dispatchEvent(new CustomEvent('toggle'))"
-            @toggle="${(e: Event) => this.changeProperty('complete', !this.updatedMedia.complete)}"
-        >
-            <custom-toggle
-                .state="${this.updatedMedia.complete ? CheckboxState.Ignore : CheckboxState.Forbid}"
-                id="edit-toggle"
-            ></custom-toggle>
-            <div id="toggle-edit-text">${this.updatedMedia.complete ? 'Vollständig' : 'Unvollständig'}</div>
-        </div>
+        ${!this.createNew
+            ? html` <div
+                  id="edit-button"
+                  onclick="this.dispatchEvent(new CustomEvent('toggle'))"
+                  @toggle="${(e: Event) => this.changeProperty('complete', !this.updatedMedia.complete)}"
+              >
+                  <custom-toggle
+                      .state="${this.updatedMedia.complete ? CheckboxState.Ignore : CheckboxState.Forbid}"
+                      id="edit-toggle"
+                  ></custom-toggle>
+                  <div id="toggle-edit-text">${this.updatedMedia.complete ? 'Vollständig' : 'Unvollständig'}</div>
+              </div>`
+            : ''}
+
         <page-layout>
             <div id="media-detail-container">
                 <div id="content-panels">

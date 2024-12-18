@@ -25,6 +25,14 @@ export function groupBy<T, U extends keyof T>(array: T[], key: U) {
     }, {} as any) as { [key: string]: T[] };
 }
 
+export function groupAndSelectBy<T, U extends keyof T, V extends keyof T>(array: T[], groupByKey: U, selectKey: V) {
+    if (!array) return {};
+    return array.reduce(function (rv, x) {
+        (rv[x[groupByKey]] = rv[x[groupByKey]] || []).push(x[selectKey]);
+        return rv;
+    }, {} as any) as { [key: string]: T[] };
+}
+
 export function createRange(from: number, to: number) {
     var diff = to - from;
     return [...new Array(diff + 1).keys()].map((x) => x + from);

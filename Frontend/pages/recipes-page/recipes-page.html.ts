@@ -2,7 +2,7 @@ import { html } from 'lit-element';
 import { RecipeSortingProperties } from '../../data/recipe-sorting-properties';
 import { SortingDirections } from '../../data/sorting-directions';
 import { changePage } from '../../services/extensions/url.extension';
-import { CreateRecipePage } from '../create-recipe-page/create-recipe-page';
+import { RecipeDetailPage } from '../recipe-detail-page/recipe-detail-page';
 import { RecipesPage } from './recipes-page';
 
 export function renderRecipesPage(this: RecipesPage) {
@@ -17,7 +17,7 @@ export function renderRecipesPage(this: RecipesPage) {
                                     <recipe-tile
                                         class="recipe-tile"
                                         .recipe="${x}"
-                                        @click="${() => changePage(CreateRecipePage, { recipeId: x.id })}"
+                                        @click="${() => changePage(RecipeDetailPage, { recipeId: x.id })}"
                                     >
                                         ${x.title}
                                     </recipe-tile>

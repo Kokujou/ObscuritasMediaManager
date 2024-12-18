@@ -58,6 +58,10 @@ export class GroupedDropdown extends LitElementBase {
 
             this.result = this.results[index];
         });
+
+        this.addEventListener('click', (e) => e.stopPropagation());
+
+        document.addEventListener('click', () => (this.showDropDown = false));
     }
 
     updated(_changedProperties: Map<string, any>) {

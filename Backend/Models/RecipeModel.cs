@@ -12,10 +12,7 @@ public class RecipeModel
     public static void Configure(ModelBuilder builder)
     {
         var entity = builder.Entity<RecipeModel>();
-        entity.HasMany(x => x.Ingredients).WithOne().HasForeignKey(x => x.RecipeId).HasPrincipalKey(x => x.Id);
-        entity.Navigation(x => x.Ingredients).AutoInclude();
-        entity.HasMany(x => x.Cookware).WithOne().HasForeignKey(x => x.RecipeId).HasPrincipalKey(x => x.Id);
-        entity.Navigation(x => x.Cookware).AutoInclude();
+        builder.Entity<RecipeIngredientMappingModel>();
     }
 
     public Guid Id { get; set; }
@@ -25,15 +22,19 @@ public class RecipeModel
     public int Difficulty { get; set; }
     public int Rating { get; set; }
     public Course Course { get; set; }
-    public Ingredient MainIngredient { get; set; }
     public CookingTechnique Technique { get; set; }
     public TimeSpan PreparationTime { get; set; }
     public TimeSpan CookingTime { get; set; }
     public TimeSpan TotalTime => PreparationTime + CookingTime;
-    public IEnumerable<IngredientModel> Ingredients { get; set; } = [];
-    public IEnumerable<CookwareModel> Cookware { get; set; } = [];
+
+    [ForeignKey(nameof(RecipeIngredientMappingModel.RecipeId))]
+    public IEnumerable<RecipeIngredientMappingModel> Ingredients { get; set; } = [];
+
+    public IEnumerable<RecipeCookwareMappingModel> Cookware { get; set; } = [];
     [MaxLength(9999)] public string? FormattedText { get; set; }
 
-    public IEnumerable<string> IngredientNames => Ingredients.Select(x => x.Name);
+    public IEnumerable<string> IngredientNames => Ingredients.Select(x => x.IngredientName);
+    public IEnumerable<IngredientCategory> IngredientCategories =>
+        Ingredients.Select(x => x.IngredientCategory).Distinct();
     public IEnumerable<string> CookwareNames => Cookware.Select(x => x.Name);
 }

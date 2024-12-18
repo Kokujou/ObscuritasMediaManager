@@ -24,8 +24,6 @@ export class LitElementBase extends LitElement {
     override connectedCallback() {
         super.connectedCallback();
 
-        if ('pageName' in this.constructor) document.title = `${this.constructor.pageName}`;
-
         if (this.shadowRoot?.adoptedStyleSheets)
             this.shadowRoot.adoptedStyleSheets = LitElementBase.baseStyles.concat(this.shadowRoot.adoptedStyleSheets);
     }
@@ -41,6 +39,7 @@ export class LitElementBase extends LitElement {
     override updated(_changedProperties: Map<any, any>) {
         super.updated(_changedProperties);
 
+        if ('pageName' in this.constructor) document.title = `${this.constructor.pageName}`;
         this.attachTooltips();
     }
 
@@ -54,7 +53,7 @@ export class LitElementBase extends LitElement {
     }
 
     attachTooltips() {
-        this.shadowRoot!.querySelectorAll('*[tooltip]')!.forEach((element) => {
+        (this.shadowRoot ?? this).querySelectorAll('*[tooltip]')!.forEach((element) => {
             if (!this.elementsWithTooltips.includes(element)) this.attachTooltip(element);
         });
     }

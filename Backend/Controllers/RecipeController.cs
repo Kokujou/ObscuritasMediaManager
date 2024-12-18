@@ -23,16 +23,12 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
     }
 
     [HttpPost]
-    public async Task CreateRecipe(RecipeModel recipe)
+    public async Task<Guid> CreateRecipe(RecipeModel recipe)
     {
         recipe.Id = Guid.NewGuid();
-        foreach (var ingredient in recipe.Ingredients)
-        {
-            ingredient.RecipeId = recipe.Id;
-            ingredient.Id = Guid.NewGuid();
-        }
 
         await recipeRepository.CreateRecipe(recipe);
+        return recipe.Id;
     }
 
     [HttpPatch]

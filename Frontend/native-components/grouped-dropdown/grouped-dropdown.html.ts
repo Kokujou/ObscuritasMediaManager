@@ -25,7 +25,7 @@ export function renderGroupedDropdown(this: GroupedDropdown) {
                 @scroll="${(e: Event) => e.preventDefault()}"
                 style="display: ${this.showDropDown ? 'block' : 'none'}"
             >
-                ${Object.entries(this.options).map((section) => {
+                ${Object.entries(this.options ?? {}).map((section) => {
                     return renderDropdownSection.call(this, section[0], section[1]);
                 })}
             </div>

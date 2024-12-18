@@ -1804,7 +1804,7 @@ export class RecipeClient {
         return Promise.resolve<RecipeModel[]>(null as any);
     }
 
-    createRecipe(recipe: RecipeModel, signal?: AbortSignal): Promise<void> {
+    createRecipe(recipe: RecipeModel, signal?: AbortSignal): Promise<string> {
         let url_ = this.baseUrl + "/api/Recipe";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1816,6 +1816,7 @@ export class RecipeClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
+                "Accept": "application/json"
             }
         };
 
@@ -1824,19 +1825,23 @@ export class RecipeClient {
         });
     }
 
-    protected processCreateRecipe(response: Response): Promise<void> {
+    protected processCreateRecipe(response: Response): Promise<string> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-            return;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<void>(null as any);
+        return Promise.resolve<string>(null as any);
     }
 
     updateRecipe(recipe: RecipeModel, signal?: AbortSignal): Promise<void> {
@@ -3013,15 +3018,15 @@ export class RecipeModel implements IRecipeModel {
     difficulty!: number;
     rating!: number;
     course!: Course;
-    mainIngredient!: Ingredient;
     technique!: CookingTechnique;
     preparationTime!: string;
     cookingTime!: string;
     totalTime!: string;
-    ingredients!: IngredientModel[];
-    cookware!: CookwareModel[];
+    ingredients!: RecipeIngredientMappingModel[];
+    cookware!: RecipeCookwareMappingModel[];
     formattedText!: string | null;
     ingredientNames!: string[];
+    ingredientCategories!: IngredientCategory[];
     cookwareNames!: string[];
 
     constructor(data?: Partial<IRecipeModel>) {
@@ -3036,6 +3041,7 @@ export class RecipeModel implements IRecipeModel {
             this.ingredients = [];
             this.cookware = [];
             this.ingredientNames = [];
+            this.ingredientCategories = [];
             this.cookwareNames = [];
         }
     }
@@ -3049,7 +3055,6 @@ export class RecipeModel implements IRecipeModel {
             this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : <any>null;
             this.rating = _data["rating"] !== undefined ? _data["rating"] : <any>null;
             this.course = _data["course"] !== undefined ? _data["course"] : <any>null;
-            this.mainIngredient = _data["mainIngredient"] !== undefined ? _data["mainIngredient"] : <any>null;
             this.technique = _data["technique"] !== undefined ? _data["technique"] : <any>null;
             this.preparationTime = _data["preparationTime"] !== undefined ? _data["preparationTime"] : <any>null;
             this.cookingTime = _data["cookingTime"] !== undefined ? _data["cookingTime"] : <any>null;
@@ -3057,7 +3062,7 @@ export class RecipeModel implements IRecipeModel {
             if (Array.isArray(_data["ingredients"])) {
                 this.ingredients = [] as any;
                 for (let item of _data["ingredients"])
-                    this.ingredients!.push(IngredientModel.fromJS(item, _mappings));
+                    this.ingredients!.push(RecipeIngredientMappingModel.fromJS(item, _mappings));
             }
             else {
                 this.ingredients = <any>null;
@@ -3065,7 +3070,7 @@ export class RecipeModel implements IRecipeModel {
             if (Array.isArray(_data["cookware"])) {
                 this.cookware = [] as any;
                 for (let item of _data["cookware"])
-                    this.cookware!.push(CookwareModel.fromJS(item, _mappings));
+                    this.cookware!.push(RecipeCookwareMappingModel.fromJS(item, _mappings));
             }
             else {
                 this.cookware = <any>null;
@@ -3078,6 +3083,14 @@ export class RecipeModel implements IRecipeModel {
             }
             else {
                 this.ingredientNames = <any>null;
+            }
+            if (Array.isArray(_data["ingredientCategories"])) {
+                this.ingredientCategories = [] as any;
+                for (let item of _data["ingredientCategories"])
+                    this.ingredientCategories!.push(item);
+            }
+            else {
+                this.ingredientCategories = <any>null;
             }
             if (Array.isArray(_data["cookwareNames"])) {
                 this.cookwareNames = [] as any;
@@ -3104,7 +3117,6 @@ export class RecipeModel implements IRecipeModel {
         data["difficulty"] = this.difficulty !== undefined ? this.difficulty : <any>null;
         data["rating"] = this.rating !== undefined ? this.rating : <any>null;
         data["course"] = this.course !== undefined ? this.course : <any>null;
-        data["mainIngredient"] = this.mainIngredient !== undefined ? this.mainIngredient : <any>null;
         data["technique"] = this.technique !== undefined ? this.technique : <any>null;
         data["preparationTime"] = this.preparationTime !== undefined ? this.preparationTime : <any>null;
         data["cookingTime"] = this.cookingTime !== undefined ? this.cookingTime : <any>null;
@@ -3124,6 +3136,11 @@ export class RecipeModel implements IRecipeModel {
             data["ingredientNames"] = [];
             for (let item of this.ingredientNames)
                 data["ingredientNames"].push(item);
+        }
+        if (Array.isArray(this.ingredientCategories)) {
+            data["ingredientCategories"] = [];
+            for (let item of this.ingredientCategories)
+                data["ingredientCategories"].push(item);
         }
         if (Array.isArray(this.cookwareNames)) {
             data["cookwareNames"] = [];
@@ -3149,15 +3166,15 @@ export interface IRecipeModel {
     difficulty: number;
     rating: number;
     course: Course;
-    mainIngredient: Ingredient;
     technique: CookingTechnique;
     preparationTime: string;
     cookingTime: string;
     totalTime: string;
-    ingredients: IngredientModel[];
-    cookware: CookwareModel[];
+    ingredients: RecipeIngredientMappingModel[];
+    cookware: RecipeCookwareMappingModel[];
     formattedText: string | null;
     ingredientNames: string[];
+    ingredientCategories: IngredientCategory[];
     cookwareNames: string[];
 }
 
@@ -3172,18 +3189,6 @@ export enum Course {
     Snack = "Snack",
 }
 
-export enum Ingredient {
-    Meat = "Meat",
-    Noodles = "Noodles",
-    Rice = "Rice",
-    Bread = "Bread",
-    Fish = "Fish",
-    Vegetables = "Vegetables",
-    Fruits = "Fruits",
-    Sweets = "Sweets",
-    Miscellaneous = "Miscellaneous",
-}
-
 export enum CookingTechnique {
     Boiling = "Boiling",
     Baking = "Baking",
@@ -3196,17 +3201,102 @@ export enum CookingTechnique {
     Raw = "Raw",
 }
 
-export class IngredientModel implements IIngredientModel {
+export class RecipeIngredientMappingModel implements IRecipeIngredientMappingModel {
     id!: string;
     recipeId!: string;
-    name!: string;
+    ingredientName!: string;
+    ingredientCategory!: IngredientCategory;
     description!: string | null;
     groupName!: string | null;
+    unit!: MeasurementUnit;
     amount!: number;
-    measurement!: Measurement;
     order!: number;
 
-    constructor(data?: Partial<IIngredientModel>) {
+    constructor(data?: Partial<IRecipeIngredientMappingModel>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+        if (!data) {
+            this.unit = new MeasurementUnit();
+        }
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : <any>null;
+            this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : <any>null;
+            this.ingredientCategory = _data["ingredientCategory"] !== undefined ? _data["ingredientCategory"] : <any>null;
+            this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
+            this.groupName = _data["groupName"] !== undefined ? _data["groupName"] : <any>null;
+            this.unit = _data["unit"] ? MeasurementUnit.fromJS(_data["unit"], _mappings) : new MeasurementUnit();
+            this.amount = _data["amount"] !== undefined ? _data["amount"] : <any>null;
+            this.order = _data["order"] !== undefined ? _data["order"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): RecipeIngredientMappingModel | null {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<RecipeIngredientMappingModel>(data, _mappings, RecipeIngredientMappingModel);
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : <any>null;
+        data["ingredientName"] = this.ingredientName !== undefined ? this.ingredientName : <any>null;
+        data["ingredientCategory"] = this.ingredientCategory !== undefined ? this.ingredientCategory : <any>null;
+        data["description"] = this.description !== undefined ? this.description : <any>null;
+        data["groupName"] = this.groupName !== undefined ? this.groupName : <any>null;
+        data["unit"] = this.unit ? this.unit.toJSON() : <any>null;
+        data["amount"] = this.amount !== undefined ? this.amount : <any>null;
+        data["order"] = this.order !== undefined ? this.order : <any>null;
+        return data;
+    }
+
+    clone(): RecipeIngredientMappingModel {
+        const json = this.toJSON();
+        let result = new RecipeIngredientMappingModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRecipeIngredientMappingModel {
+    id: string;
+    recipeId: string;
+    ingredientName: string;
+    ingredientCategory: IngredientCategory;
+    description: string | null;
+    groupName: string | null;
+    unit: MeasurementUnit;
+    amount: number;
+    order: number;
+}
+
+export enum IngredientCategory {
+    Meat = "Meat",
+    Noodles = "Noodles",
+    Rice = "Rice",
+    Bread = "Bread",
+    Fish = "Fish",
+    Vegetables = "Vegetables",
+    Fruits = "Fruits",
+    Sweets = "Sweets",
+    Miscellaneous = "Miscellaneous",
+}
+
+export class MeasurementUnit implements IMeasurementUnit {
+    name!: string;
+    shortName!: string;
+    multiplier!: number;
+    measurement!: Measurement;
+
+    constructor(data?: Partial<IMeasurementUnit>) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
@@ -3218,52 +3308,40 @@ export class IngredientModel implements IIngredientModel {
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
-            this.groupName = _data["groupName"] !== undefined ? _data["groupName"] : <any>null;
-            this.amount = _data["amount"] !== undefined ? _data["amount"] : <any>null;
+            this.shortName = _data["shortName"] !== undefined ? _data["shortName"] : <any>null;
+            this.multiplier = _data["multiplier"] !== undefined ? _data["multiplier"] : <any>null;
             this.measurement = _data["measurement"] !== undefined ? _data["measurement"] : <any>null;
-            this.order = _data["order"] !== undefined ? _data["order"] : <any>null;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): IngredientModel | null {
+    static fromJS(data: any, _mappings?: any): MeasurementUnit | null {
         data = typeof data === 'object' ? data : {};
-        return createInstance<IngredientModel>(data, _mappings, IngredientModel);
+        return createInstance<MeasurementUnit>(data, _mappings, MeasurementUnit);
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["description"] = this.description !== undefined ? this.description : <any>null;
-        data["groupName"] = this.groupName !== undefined ? this.groupName : <any>null;
-        data["amount"] = this.amount !== undefined ? this.amount : <any>null;
+        data["shortName"] = this.shortName !== undefined ? this.shortName : <any>null;
+        data["multiplier"] = this.multiplier !== undefined ? this.multiplier : <any>null;
         data["measurement"] = this.measurement !== undefined ? this.measurement : <any>null;
-        data["order"] = this.order !== undefined ? this.order : <any>null;
         return data;
     }
 
-    clone(): IngredientModel {
+    clone(): MeasurementUnit {
         const json = this.toJSON();
-        let result = new IngredientModel();
+        let result = new MeasurementUnit();
         result.init(json);
         return result;
     }
 }
 
-export interface IIngredientModel {
-    id: string;
-    recipeId: string;
+export interface IMeasurementUnit {
     name: string;
-    description: string | null;
-    groupName: string | null;
-    amount: number;
+    shortName: string;
+    multiplier: number;
     measurement: Measurement;
-    order: number;
 }
 
 export enum Measurement {
@@ -3275,12 +3353,11 @@ export enum Measurement {
     Unitless = "Unitless",
 }
 
-export class CookwareModel implements ICookwareModel {
-    id!: string;
+export class RecipeCookwareMappingModel implements IRecipeCookwareMappingModel {
     recipeId!: string;
     name!: string;
 
-    constructor(data?: Partial<ICookwareModel>) {
+    constructor(data?: Partial<IRecipeCookwareMappingModel>) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
@@ -3292,35 +3369,32 @@ export class CookwareModel implements ICookwareModel {
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): CookwareModel | null {
+    static fromJS(data: any, _mappings?: any): RecipeCookwareMappingModel | null {
         data = typeof data === 'object' ? data : {};
-        return createInstance<CookwareModel>(data, _mappings, CookwareModel);
+        return createInstance<RecipeCookwareMappingModel>(data, _mappings, RecipeCookwareMappingModel);
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
         data["recipeId"] = this.recipeId !== undefined ? this.recipeId : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         return data;
     }
 
-    clone(): CookwareModel {
+    clone(): RecipeCookwareMappingModel {
         const json = this.toJSON();
-        let result = new CookwareModel();
+        let result = new RecipeCookwareMappingModel();
         result.init(json);
         return result;
     }
 }
 
-export interface ICookwareModel {
-    id: string;
+export interface IRecipeCookwareMappingModel {
     recipeId: string;
     name: string;
 }

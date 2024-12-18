@@ -34,39 +34,40 @@ export class MediaDetailPage extends LitElementBase {
         return renderMediaDetailPageStyles();
     }
 
-    get nameInputValue() {
+    protected get nameInputValue() {
         return (this.shadowRoot!.querySelector('#media-name') as HTMLInputElement)?.value;
     }
 
-    get seasonScrollContainer() {
+    protected get seasonScrollContainer() {
         var element = this.shadowRoot!.querySelector<HTMLElement>('#season-inner')!;
 
         if (element) return element;
         return undefined;
     }
 
-    get nextMediaId() {
+    protected get nextMediaId() {
         var currentIndex = this.mediaIds.findIndex((x) => x == this.updatedMedia.id);
         if (currentIndex < 0) return null;
         return this.mediaIds[currentIndex + 1];
     }
 
-    get prevMediaId() {
+    protected get prevMediaId() {
         var currentIndex = this.mediaIds.findIndex((x) => x == this.updatedMedia.id);
         if (currentIndex < 0) return null;
         return this.mediaIds[currentIndex - 1];
     }
 
-    get imageUrl() {
+    protected get imageUrl() {
         return `./Backend/api/media/${this.updatedMedia.id}/image?rev=${this.imageRevision}`;
     }
 
-    get isJapanese() {
+    protected get isJapanese() {
         var type = this.updatedMedia.type;
         return type == MediaCategory.AnimeMovies || type == MediaCategory.AnimeSeries || type == MediaCategory.JDrama;
     }
 
     @state() public declare mediaId: string;
+    @state() public declare createNew: boolean;
 
     @state() protected declare updatedMedia: MediaModel;
     @state() protected declare mediaIds: string[];
@@ -75,7 +76,6 @@ export class MediaDetailPage extends LitElementBase {
     @state() protected declare imageRevision: number;
     @state() protected declare hoveredRating: number;
     @state() protected declare selectedSeason: number;
-    @state() protected declare createNew: boolean;
 
     constructor() {
         super();

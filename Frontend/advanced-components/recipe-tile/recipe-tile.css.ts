@@ -1,10 +1,10 @@
-import { css } from 'lit-element';
+import { css, unsafeCSS } from 'lit-element';
+import { Language } from '../../obscuritas-media-manager-backend-client';
+import { unsetIcon } from '../../resources/inline-icons/general/unset-icon.svg';
+import { renderMaskImage } from '../../services/extensions/style.extensions';
 
 export function renderRecipeTileStyles() {
     return css`
-        #content {
-        }
-
         #image-container {
             position: relative;
             width: var(--recipe-tile-width);
@@ -14,6 +14,11 @@ export function renderRecipeTileStyles() {
         #image {
             position: absolute;
             inset: 0;
+        }
+
+        upload-area {
+            position: absolute;
+            inset: 50px;
         }
 
         #rating {
@@ -30,22 +35,28 @@ export function renderRecipeTileStyles() {
             transform: translateY(-50%);
         }
 
-        .icon {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: gray;
-        }
-
         #nation-icon {
+            position: absolute;
+            width: 15%;
+            aspect-ratio: 1;
+
             top: 10px;
             right: 10px;
+            border-radius: 50%;
+
+            cursor: pointer;
+        }
+
+        #nation-icon[nation='${unsafeCSS(Language.Unset)}'] {
+            ${renderMaskImage(unsetIcon())};
+            background: gray;
         }
 
         #technique-icon {
             top: 60px;
             right: 10px;
         }
+
         #ingredient-icon {
             top: 110px;
             right: 10px;

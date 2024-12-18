@@ -6,6 +6,7 @@ import { InteropQueryResponse } from '../client-interop/interop-query-response';
 import { ResponseStatus } from '../client-interop/response-status';
 import { Observable } from '../data/observable';
 import { MessageSnackbar } from '../native-components/message-snackbar/message-snackbar';
+import { PageRouting } from '../pages/page-routing/page-routing';
 import { InteropProxyService } from './backend.services';
 import { waitForSeconds } from './extensions/animation.extension';
 
@@ -71,6 +72,7 @@ export class ClientInteropService {
         console.log('websocket connection successfull');
         this.onConnected.next(null);
         this.failCounter.next(0);
+        while (!PageRouting.instance) await waitForSeconds(1);
         MessageSnackbar.popup('Websocket Verbindung zum Client Interop erfolgreich', 'success');
 
         this.socket.onmessage = async (e: MessageEvent) => {

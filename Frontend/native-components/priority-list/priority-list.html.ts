@@ -9,13 +9,14 @@ export function renderPriorityList(this: PriorityList) {
                 position: relative;
                 display: flex;
                 flex-direction: row;
-                margin: 0 60px;
+                width: 100%;
+
+                gap: 20px;
             }
 
             .icon {
-                position: absolute;
                 background: white;
-                height: 100%;
+                width: 40px;
                 mask-size: 60% !important;
 
                 cursor: pointer;
@@ -24,14 +25,10 @@ export function renderPriorityList(this: PriorityList) {
             }
 
             .move-icon {
-                left: -20px;
-                transform: translateX(-100%);
                 cursor: move;
             }
 
             .delete-icon {
-                right: -20px;
-                transform: translateX(100%);
                 background: darkred;
             }
 
