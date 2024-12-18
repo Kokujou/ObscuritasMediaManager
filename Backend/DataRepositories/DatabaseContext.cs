@@ -44,5 +44,9 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
         RecipeModel.Configure(modelBuilder);
 
         modelBuilder.AddEnumConversion();
+
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        foreach (var navigation in entityType.GetNavigations())
+            navigation.SetIsEagerLoaded(true);
     }
 }

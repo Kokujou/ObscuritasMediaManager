@@ -37,7 +37,7 @@ public class MediaModel
                     .HasForeignKey("GenreId")
                     .HasPrincipalKey(nameof(MediaGenreModel.Id)),
                 x => x.HasOne(typeof(MediaModel)).WithMany().HasForeignKey("MediaId").HasPrincipalKey(nameof(Id)));
-        entity.Navigation(x => x.Genres).AutoInclude();
+        entity.Navigation(x => x.Genres);
         entity.Property(x => x.ContentWarnings)
             .HasConversion(
                 x => string.Join(",", x.Select(y => y.ToString())),

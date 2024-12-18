@@ -1,7 +1,7 @@
 import { html } from 'lit-element';
 import { RecipeSortingProperties } from '../../data/recipe-sorting-properties';
 import { SortingDirections } from '../../data/sorting-directions';
-import { changePage } from '../../services/extensions/url.extension';
+import { LinkElement } from '../../native-components/link-element/link-element';
 import { RecipeDetailPage } from '../recipe-detail-page/recipe-detail-page';
 import { RecipesPage } from './recipes-page';
 
@@ -11,17 +11,13 @@ export function renderRecipesPage(this: RecipesPage) {
             <div id="page">
                 <paginated-scrolling id="recipes-content" scrollTopThreshold="20" @scrollBottom="${() => this.loadMoreItems()}">
                     <div id="items">
-                        ${this.filteredRecipes?.map(
-                            (x) =>
-                                html`
-                                    <recipe-tile
-                                        class="recipe-tile"
-                                        .recipe="${x}"
-                                        @click="${() => changePage(RecipeDetailPage, { recipeId: x.id })}"
-                                    >
-                                        ${x.title}
-                                    </recipe-tile>
-                                `
+                        ${LinkElement.forPage(RecipeDetailPage, {}, html`<div id="add-recipe-icon"></div>`)}
+                        ${this.filteredRecipes?.map((recipe) =>
+                            LinkElement.forPage(
+                                RecipeDetailPage,
+                                { recipeId: recipe.id },
+                                html` <recipe-tile class="recipe-tile" .recipe="${recipe}"> ${recipe.title} </recipe-tile> `
+                            )
                         )}
                     </div>
                 </paginated-scrolling>

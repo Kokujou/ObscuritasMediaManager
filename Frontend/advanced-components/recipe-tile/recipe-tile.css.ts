@@ -11,9 +11,51 @@ export function renderRecipeTileStyles() {
             min-height: var(--recipe-tile-min-height);
         }
 
+        #background-image {
+            position: absolute;
+            width: calc(100% - 50px);
+            height: calc(100% - 100px);
+            top: 50%;
+            left: 25px;
+            transform: translateY(-50%);
+
+            background-repeat: no-repeat;
+            background-position: center center;
+
+            filter: blur(20px);
+            border-radius: 25%;
+        }
+
+        #remove-image-button,
         #image {
             position: absolute;
+            left: 50px;
+            width: calc(100% - 100px);
+            max-height: calc(100% - 100px);
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 5px;
+        }
+
+        #remove-image-button {
+            z-index: 1;
+            opacity: 0;
+            filter: drop-shadow(0 0 10px black);
+
+            transition: opacity ease 0.15s;
+
+            cursor: pointer;
+        }
+
+        #trash-icon {
+            position: absolute;
             inset: 0;
+            background: darkred;
+            mask-size: 30%;
+        }
+
+        #image-container:hover #remove-image-button {
+            opacity: 0.8;
         }
 
         upload-area {

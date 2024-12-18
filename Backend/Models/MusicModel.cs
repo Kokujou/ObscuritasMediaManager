@@ -33,7 +33,7 @@ public class MusicModel
                     .HasPrincipalKey(y => y.Id),
                 x => x.HasOne<MusicModel>().WithMany().HasForeignKey(y => y.TrackHash).HasPrincipalKey(y => y.Hash));
 
-        entity.Navigation(x => x.Instruments).AutoInclude();
+        entity.Navigation(x => x.Instruments);
     }
 
     [MaxLength(255)] public string Name { get; set; } = null!;
@@ -53,7 +53,7 @@ public class MusicModel
     [MaxLength(255)] public string? Lyrics { get; set; }
     public byte Rating { get; set; }
     public bool Complete { get; set; }
-    [MaxLength(255)][Key] public string Hash { get; set; } = null!;
+    [MaxLength(255)] [Key] public string Hash { get; set; } = null!;
     [JsonIgnore] [IgnoreDataMember] public long FileBytes { get; set; }
     public bool Deleted { get; set; }
 

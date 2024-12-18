@@ -1,5 +1,6 @@
 import { html } from 'lit-element';
 import { TimeSpan } from '../../data/timespan';
+import { Icons } from '../../resources/inline-icons/icon-registry';
 import { createRange } from '../../services/extensions/array.extensions';
 import { RecipeTile } from './recipe-tile';
 
@@ -8,9 +9,20 @@ export function renderRecipeTile(this: RecipeTile) {
     return html`
         <div id="content">
             <div id="image-container">
-                ${this.recipe.imageUrl || !this.compact
-                    ? html`<div id="image" style="background-image: ${this.recipe.imageUrl}"></div>`
-                    : html` <upload-area></upload-area> `}
+                ${this.recipe.imageUrl
+                    ? html`
+                          <div
+                              id="background-image"
+                              style="background-image: url('data: image/png; base64, ${this.recipe.imageUrl}')"
+                          ></div>
+                          <img id="image" src="data: image/png; base64, ${this.recipe.imageUrl}" />
+                          <div id="remove-image-button" @click="${this.notifyImageRemoved}">
+                              <div id="trash-icon" icon="${Icons.Trash}"></div>
+                          </div>
+                      `
+                    : this.compact
+                    ? html` <upload-area></upload-area> `
+                    : ''}
                 <div id="nation-icon" class="icon" nation="${recipe.nation}" @click="${() => this.notifyNationChanged()}"></div>
                 <div id="total-time">${TimeSpan.format(recipe.totalTime)}</div>
                 <star-rating id="rating" max="5" singleSelect disabled .values="${createRange(0, recipe.rating)}"></star-rating>

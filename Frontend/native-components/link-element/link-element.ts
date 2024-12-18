@@ -58,9 +58,10 @@ export class LinkElement extends LitElementBase {
         return renderLinkElement.call(this);
     }
 
-    handleClick(event: Event) {
+    handleClick(event: MouseEvent) {
+        console.log('link-click');
         if (this.target == '_blank') return;
-        event.preventDefault();
+        if (event.button == 0) event.preventDefault();
         if (this.disabled) return;
 
         if (this.href) location.assign(this.fullLink);

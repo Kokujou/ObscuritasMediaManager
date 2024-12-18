@@ -1,4 +1,6 @@
 import { css } from 'lit-element';
+import { plusIcon } from '../../resources/inline-icons/general/plus-icon.svg';
+import { renderMaskImage } from '../../services/extensions/style.extensions';
 
 export function renderRecipesPageStyles() {
     return css`
@@ -28,6 +30,17 @@ export function renderRecipesPageStyles() {
             flex-direction: row;
             flex-wrap: wrap;
             gap: 50px;
+        }
+
+        #add-recipe-icon {
+            width: 100px;
+            height: 100px;
+
+            margin: 100px;
+
+            ${renderMaskImage(plusIcon())};
+
+            cursor: pointer;
         }
 
         .recipe-tile {

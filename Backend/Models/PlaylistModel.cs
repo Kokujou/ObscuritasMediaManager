@@ -33,9 +33,9 @@ public class PlaylistModel
             .HasForeignKey(x => x.TrackHash);
 
         mappingEntity.HasKey(x => new { x.PlaylistId, x.TrackHash });
-        mappingEntity.Navigation(x => x.Playlist).AutoInclude();
-        mappingEntity.Navigation(x => x.Track).AutoInclude();
-        entity.Navigation(x => x.TrackMappings).AutoInclude();
+        mappingEntity.Navigation(x => x.Playlist);
+        mappingEntity.Navigation(x => x.Track);
+        entity.Navigation(x => x.TrackMappings);
     }
 
     [Key] public Guid Id { get; set; }

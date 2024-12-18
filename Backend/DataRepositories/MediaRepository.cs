@@ -50,7 +50,7 @@ public class MediaRepository(DatabaseContext context)
 
     public async Task UpdateAsync(Guid id, JsonNode old, JsonNode updated, JsonSerializerOptions serializerOptions)
     {
-        var actual = await context.Media.IgnoreAutoIncludes().AsTracking().SingleOrDefaultAsync(x => x.Id == id);
+        var actual = await context.Media.AsTracking().SingleOrDefaultAsync(x => x.Id == id);
         if (actual == default) throw new ModelNotFoundException(id);
 
         if (updated[nameof(MediaModel.Genres)] is not null)

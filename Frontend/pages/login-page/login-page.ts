@@ -20,6 +20,12 @@ export class LoginPage extends LitElementBase {
     @state() protected declare username: string;
     @state() protected declare password: string;
 
+    constructor() {
+        super();
+        this.username = '';
+        this.password = '';
+    }
+
     async login() {
         try {
             var request = new CredentialsRequest({ username: this.username, password: this.password });

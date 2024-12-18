@@ -7,8 +7,8 @@ namespace ObscuritasMediaManager.Backend.Models;
 [Table("RecipeIngredientMapping")]
 public class RecipeIngredientMappingModel
 {
-    [Key] public Guid Id { get; set; }
-    public Guid RecipeId { get; set; }
+    [Key] public Guid? Id { get; set; } = Guid.NewGuid();
+    public Guid? RecipeId { get; set; }
 
     [MaxLength(255)] public required string IngredientName { get; set; }
     public required IngredientCategory IngredientCategory { get; set; }

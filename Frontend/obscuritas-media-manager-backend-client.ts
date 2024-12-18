@@ -3011,7 +3011,7 @@ export interface IUpdateRequestOfPlaylistModel {
 }
 
 export class RecipeModel implements IRecipeModel {
-    id!: string;
+    id!: string | null;
     title!: string;
     nation!: Language;
     imageUrl!: string | null;
@@ -3022,9 +3022,9 @@ export class RecipeModel implements IRecipeModel {
     preparationTime!: string;
     cookingTime!: string;
     totalTime!: string;
+    formattedText!: string | null;
     ingredients!: RecipeIngredientMappingModel[];
     cookware!: RecipeCookwareMappingModel[];
-    formattedText!: string | null;
     ingredientNames!: string[];
     ingredientCategories!: IngredientCategory[];
     cookwareNames!: string[];
@@ -3059,6 +3059,7 @@ export class RecipeModel implements IRecipeModel {
             this.preparationTime = _data["preparationTime"] !== undefined ? _data["preparationTime"] : <any>null;
             this.cookingTime = _data["cookingTime"] !== undefined ? _data["cookingTime"] : <any>null;
             this.totalTime = _data["totalTime"] !== undefined ? _data["totalTime"] : <any>null;
+            this.formattedText = _data["formattedText"] !== undefined ? _data["formattedText"] : <any>null;
             if (Array.isArray(_data["ingredients"])) {
                 this.ingredients = [] as any;
                 for (let item of _data["ingredients"])
@@ -3075,7 +3076,6 @@ export class RecipeModel implements IRecipeModel {
             else {
                 this.cookware = <any>null;
             }
-            this.formattedText = _data["formattedText"] !== undefined ? _data["formattedText"] : <any>null;
             if (Array.isArray(_data["ingredientNames"])) {
                 this.ingredientNames = [] as any;
                 for (let item of _data["ingredientNames"])
@@ -3121,6 +3121,7 @@ export class RecipeModel implements IRecipeModel {
         data["preparationTime"] = this.preparationTime !== undefined ? this.preparationTime : <any>null;
         data["cookingTime"] = this.cookingTime !== undefined ? this.cookingTime : <any>null;
         data["totalTime"] = this.totalTime !== undefined ? this.totalTime : <any>null;
+        data["formattedText"] = this.formattedText !== undefined ? this.formattedText : <any>null;
         if (Array.isArray(this.ingredients)) {
             data["ingredients"] = [];
             for (let item of this.ingredients)
@@ -3131,7 +3132,6 @@ export class RecipeModel implements IRecipeModel {
             for (let item of this.cookware)
                 data["cookware"].push(item.toJSON());
         }
-        data["formattedText"] = this.formattedText !== undefined ? this.formattedText : <any>null;
         if (Array.isArray(this.ingredientNames)) {
             data["ingredientNames"] = [];
             for (let item of this.ingredientNames)
@@ -3159,7 +3159,7 @@ export class RecipeModel implements IRecipeModel {
 }
 
 export interface IRecipeModel {
-    id: string;
+    id: string | null;
     title: string;
     nation: Language;
     imageUrl: string | null;
@@ -3170,9 +3170,9 @@ export interface IRecipeModel {
     preparationTime: string;
     cookingTime: string;
     totalTime: string;
+    formattedText: string | null;
     ingredients: RecipeIngredientMappingModel[];
     cookware: RecipeCookwareMappingModel[];
-    formattedText: string | null;
     ingredientNames: string[];
     ingredientCategories: IngredientCategory[];
     cookwareNames: string[];
@@ -3202,8 +3202,8 @@ export enum CookingTechnique {
 }
 
 export class RecipeIngredientMappingModel implements IRecipeIngredientMappingModel {
-    id!: string;
-    recipeId!: string;
+    id!: string | null;
+    recipeId!: string | null;
     ingredientName!: string;
     ingredientCategory!: IngredientCategory;
     description!: string | null;
@@ -3267,8 +3267,8 @@ export class RecipeIngredientMappingModel implements IRecipeIngredientMappingMod
 }
 
 export interface IRecipeIngredientMappingModel {
-    id: string;
-    recipeId: string;
+    id: string | null;
+    recipeId: string | null;
     ingredientName: string;
     ingredientCategory: IngredientCategory;
     description: string | null;

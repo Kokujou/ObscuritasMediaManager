@@ -20,4 +20,8 @@ export class RecipeTile extends LitElementBase {
     notifyNationChanged() {
         this.dispatchEvent(new CustomEvent('change-nation'));
     }
+
+    notifyImageRemoved() {
+        this.dispatchEvent(new CustomEvent('remove-image'));
+    }
 }

@@ -91,6 +91,6 @@ export class MediaTile extends LitElementBase {
     }
 
     notifyImageAdded(imageData: string) {
-        this.dispatchEvent(new CustomEvent('imageReceived', { detail: { imageData: imageData } }));
+        this.dispatchEvent(new CustomEvent('imageReceived'));
     }
 }

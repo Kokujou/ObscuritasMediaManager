@@ -2906,7 +2906,7 @@ let MediaTile = class MediaTile extends _data_lit_element_base__WEBPACK_IMPORTED
         this.dispatchEvent(new CustomEvent('genresChanged', { detail: { genres: genres } }));
     }
     notifyImageAdded(imageData) {
-        this.dispatchEvent(new CustomEvent('imageReceived', { detail: { imageData: imageData } }));
+        this.dispatchEvent(new CustomEvent('imageReceived'));
     }
 };
 __decorate([
@@ -4956,9 +4956,51 @@ function renderRecipeTileStyles() {
             min-height: var(--recipe-tile-min-height);
         }
 
+        #background-image {
+            position: absolute;
+            width: calc(100% - 50px);
+            height: calc(100% - 100px);
+            top: 50%;
+            left: 25px;
+            transform: translateY(-50%);
+
+            background-repeat: no-repeat;
+            background-position: center center;
+
+            filter: blur(20px);
+            border-radius: 25%;
+        }
+
+        #remove-image-button,
         #image {
             position: absolute;
+            left: 50px;
+            width: calc(100% - 100px);
+            max-height: calc(100% - 100px);
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 5px;
+        }
+
+        #remove-image-button {
+            z-index: 1;
+            opacity: 0;
+            filter: drop-shadow(0 0 10px black);
+
+            transition: opacity ease 0.15s;
+
+            cursor: pointer;
+        }
+
+        #trash-icon {
+            position: absolute;
             inset: 0;
+            background: darkred;
+            mask-size: 30%;
+        }
+
+        #image-container:hover #remove-image-button {
+            opacity: 0.8;
         }
 
         upload-area {
@@ -5045,7 +5087,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
 /* harmony import */ var _data_timespan__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/timespan */ "./data/timespan.ts");
-/* harmony import */ var _services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/extensions/array.extensions */ "./services/extensions/array.extensions.ts");
+/* harmony import */ var _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../resources/inline-icons/icon-registry */ "./resources/inline-icons/icon-registry.ts");
+/* harmony import */ var _services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/extensions/array.extensions */ "./services/extensions/array.extensions.ts");
+
 
 
 
@@ -5054,12 +5098,23 @@ function renderRecipeTile() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <div id="content">
             <div id="image-container">
-                ${this.recipe.imageUrl || !this.compact
-        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="image" style="background-image: ${this.recipe.imageUrl}"></div>`
-        : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <upload-area></upload-area> `}
+                ${this.recipe.imageUrl
+        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+                          <div
+                              id="background-image"
+                              style="background-image: url('data: image/png; base64, ${this.recipe.imageUrl}')"
+                          ></div>
+                          <img id="image" src="data: image/png; base64, ${this.recipe.imageUrl}" />
+                          <div id="remove-image-button" @click="${this.notifyImageRemoved}">
+                              <div id="trash-icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_2__.Icons.Trash}"></div>
+                          </div>
+                      `
+        : this.compact
+            ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <upload-area></upload-area> `
+            : ''}
                 <div id="nation-icon" class="icon" nation="${recipe.nation}" @click="${() => this.notifyNationChanged()}"></div>
                 <div id="total-time">${_data_timespan__WEBPACK_IMPORTED_MODULE_1__.TimeSpan.format(recipe.totalTime)}</div>
-                <star-rating id="rating" max="5" singleSelect disabled .values="${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_2__.createRange)(0, recipe.rating)}"></star-rating>
+                <star-rating id="rating" max="5" singleSelect disabled .values="${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_3__.createRange)(0, recipe.rating)}"></star-rating>
                 <star-rating
                     id="difficulty"
                     max="5"
@@ -5067,7 +5122,7 @@ function renderRecipeTile() {
                     swords
                     vertical
                     disabled
-                    .values="${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_2__.createRange)(0, recipe.difficulty)}"
+                    .values="${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_3__.createRange)(0, recipe.difficulty)}"
                 ></star-rating>
             </div>
             ${!this.compact
@@ -5117,6 +5172,9 @@ let RecipeTile = class RecipeTile extends _data_lit_element_base__WEBPACK_IMPORT
     }
     notifyNationChanged() {
         this.dispatchEvent(new CustomEvent('change-nation'));
+    }
+    notifyImageRemoved() {
+        this.dispatchEvent(new CustomEvent('remove-image'));
     }
 };
 __decorate([
@@ -5288,7 +5346,7 @@ let StarRating = class StarRating extends _data_lit_element_base__WEBPACK_IMPORT
         else {
             this.values.push(rating);
         }
-        this.dispatchEvent(new CustomEvent('ratingChanged', { detail: { rating, include } }));
+        this.dispatchEvent(new CustomEvent('ratingChanged', { detail: { rating, include }, bubbles: true, composed: true }));
         this.requestFullUpdate();
     }
 };
@@ -5624,7 +5682,7 @@ let UploadArea = class UploadArea extends _data_lit_element_base__WEBPACK_IMPORT
         }
     }
     notifyImageAdded(selectedImageData) {
-        this.dispatchEvent(new CustomEvent('imageReceived', { detail: { imageData: selectedImageData } }));
+        this.dispatchEvent(new CustomEvent('imageReceived', { detail: { imageData: selectedImageData }, bubbles: true, composed: true }));
     }
 };
 UploadArea = __decorate([
@@ -11376,9 +11434,11 @@ let LinkElement = LinkElement_1 = class LinkElement extends _data_lit_element_ba
         return _link_element_html__WEBPACK_IMPORTED_MODULE_5__.renderLinkElement.call(this);
     }
     handleClick(event) {
+        console.log('link-click');
         if (this.target == '_blank')
             return;
-        event.preventDefault();
+        if (event.button == 0)
+            event.preventDefault();
         if (this.disabled)
             return;
         if (this.href)
@@ -16641,9 +16701,9 @@ class RecipeModel {
     preparationTime;
     cookingTime;
     totalTime;
+    formattedText;
     ingredients;
     cookware;
-    formattedText;
     ingredientNames;
     ingredientCategories;
     cookwareNames;
@@ -16675,6 +16735,7 @@ class RecipeModel {
             this.preparationTime = _data["preparationTime"] !== undefined ? _data["preparationTime"] : null;
             this.cookingTime = _data["cookingTime"] !== undefined ? _data["cookingTime"] : null;
             this.totalTime = _data["totalTime"] !== undefined ? _data["totalTime"] : null;
+            this.formattedText = _data["formattedText"] !== undefined ? _data["formattedText"] : null;
             if (Array.isArray(_data["ingredients"])) {
                 this.ingredients = [];
                 for (let item of _data["ingredients"])
@@ -16691,7 +16752,6 @@ class RecipeModel {
             else {
                 this.cookware = null;
             }
-            this.formattedText = _data["formattedText"] !== undefined ? _data["formattedText"] : null;
             if (Array.isArray(_data["ingredientNames"])) {
                 this.ingredientNames = [];
                 for (let item of _data["ingredientNames"])
@@ -16735,6 +16795,7 @@ class RecipeModel {
         data["preparationTime"] = this.preparationTime !== undefined ? this.preparationTime : null;
         data["cookingTime"] = this.cookingTime !== undefined ? this.cookingTime : null;
         data["totalTime"] = this.totalTime !== undefined ? this.totalTime : null;
+        data["formattedText"] = this.formattedText !== undefined ? this.formattedText : null;
         if (Array.isArray(this.ingredients)) {
             data["ingredients"] = [];
             for (let item of this.ingredients)
@@ -16745,7 +16806,6 @@ class RecipeModel {
             for (let item of this.cookware)
                 data["cookware"].push(item.toJSON());
         }
-        data["formattedText"] = this.formattedText !== undefined ? this.formattedText : null;
         if (Array.isArray(this.ingredientNames)) {
             data["ingredientNames"] = [];
             for (let item of this.ingredientNames)
@@ -17202,6 +17262,11 @@ let LoginPage = class LoginPage extends _data_lit_element_base__WEBPACK_IMPORTED
     static pageName = 'Login';
     static get styles() {
         return (0,_login_page_css__WEBPACK_IMPORTED_MODULE_7__.renderLoginPageStyles)();
+    }
+    constructor() {
+        super();
+        this.username = '';
+        this.password = '';
     }
     async login() {
         try {
@@ -21628,7 +21693,16 @@ function renderRecipeDetailPage() {
                                 + Gruppe hinzufügen
                             </button>
                         </div>
-                        <recipe-tile .recipe="${this.recipe}" compact @change-nation="${() => this.changeNation()}"></recipe-tile>
+                        <recipe-tile
+                            .recipe="${this.recipe}"
+                            compact
+                            @change-nation="${() => this.changeNation()}"
+                            @imageReceived="${(e) => this.changeProperty('imageUrl', e.detail.imageData)}"
+                            @remove-image="${() => this.changeProperty('imageUrl', null)}"
+                            @ratingChanged="${(e) => e.composedPath()[0].swords
+        ? this.changeProperty('difficulty', e.detail.rating)
+        : this.changeProperty('rating', e.detail.rating)}"
+                        ></recipe-tile>
                     </div>
 
                     <div id="description-area">
@@ -21688,7 +21762,9 @@ function renderRecipeDetailPage() {
                     >
                     </textarea>
                     <div id="action-area">
-                        ${!this.recipe.id ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <input type="submit" value="Erstellen" @click="${this.createRecipe}" /> ` : ''}
+                        ${!this.recipe.id
+        ? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <input type="submit" value="Erstellen" @click="${() => this.createRecipe()}" /> `
+        : ''}
                     </div>
                 </form>
             </div>
@@ -21708,7 +21784,7 @@ function renderIngredientGroup(group) {
             />
             <priority-list
                 .items="${group[1]}"
-                .itemRenderer="${renderIngredient}"
+                .itemRenderer="${(item) => renderIngredient.call(this, item)}"
                 @delete-item="${(e) => this.removeItem(e.detail)}"
             >
             </priority-list>
@@ -21719,7 +21795,7 @@ function renderIngredientGroup(group) {
     `;
 }
 function renderIngredient(ingredient) {
-    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div class="ingredient">
+    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div class="ingredient" @change="${() => this.changeProperty('ingredients', this.recipe.ingredients)}">
         <input
             type="text"
             class="ingredient-amount"
@@ -21781,15 +21857,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _advanced_components_language_switcher_language_switcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../advanced-components/language-switcher/language-switcher */ "./advanced-components/language-switcher/language-switcher.ts");
 /* harmony import */ var _data_lit_element_base__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data/lit-element-base */ "./data/lit-element-base.ts");
 /* harmony import */ var _data_measurement_units__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../data/measurement-units */ "./data/measurement-units.ts");
-/* harmony import */ var _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../native-components/message-snackbar/message-snackbar */ "./native-components/message-snackbar/message-snackbar.ts");
-/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
-/* harmony import */ var _services_backend_services__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/backend.services */ "./services/backend.services.ts");
-/* harmony import */ var _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/extensions/url.extension */ "./services/extensions/url.extension.ts");
-/* harmony import */ var _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../recipes-page/recipes-page */ "./pages/recipes-page/recipes-page.ts");
-/* harmony import */ var _recipe_detail_page_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./recipe-detail-page.css */ "./pages/recipe-detail-page/recipe-detail-page.css.ts");
-/* harmony import */ var _recipe_detail_page_html__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./recipe-detail-page.html */ "./pages/recipe-detail-page/recipe-detail-page.html.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_4__, _services_backend_services__WEBPACK_IMPORTED_MODULE_6__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_7__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_8__]);
-([_native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_4__, _services_backend_services__WEBPACK_IMPORTED_MODULE_6__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_7__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _data_timespan__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../data/timespan */ "./data/timespan.ts");
+/* harmony import */ var _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../native-components/message-snackbar/message-snackbar */ "./native-components/message-snackbar/message-snackbar.ts");
+/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
+/* harmony import */ var _services_backend_services__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/backend.services */ "./services/backend.services.ts");
+/* harmony import */ var _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/extensions/url.extension */ "./services/extensions/url.extension.ts");
+/* harmony import */ var _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../recipes-page/recipes-page */ "./pages/recipes-page/recipes-page.ts");
+/* harmony import */ var _recipe_detail_page_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./recipe-detail-page.css */ "./pages/recipe-detail-page/recipe-detail-page.css.ts");
+/* harmony import */ var _recipe_detail_page_html__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./recipe-detail-page.html */ "./pages/recipe-detail-page/recipe-detail-page.html.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__, _services_backend_services__WEBPACK_IMPORTED_MODULE_7__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_8__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_9__]);
+([_native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__, _services_backend_services__WEBPACK_IMPORTED_MODULE_7__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_8__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -21808,21 +21885,21 @@ var RecipeDetailPage_1;
 
 
 
+
 let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_2__.LitElementBase {
     static { RecipeDetailPage_1 = this; }
     static isPage = true;
     static get styles() {
-        return (0,_recipe_detail_page_css__WEBPACK_IMPORTED_MODULE_9__.renderRecipeDetailPageStyles)();
+        return (0,_recipe_detail_page_css__WEBPACK_IMPORTED_MODULE_10__.renderRecipeDetailPageStyles)();
     }
     static get newIngredient() {
-        return new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.RecipeIngredientMappingModel({
-            id: crypto.randomUUID(),
-            recipeId: crypto.randomUUID(),
+        return new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.RecipeIngredientMappingModel({
             amount: 0,
             description: 'Zutat-Beschreibung',
             groupName: 'Neue Gruppe',
             ingredientName: 'Neue Zutat',
-            unit: new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.MeasurementUnit(_data_measurement_units__WEBPACK_IMPORTED_MODULE_3__.MeasurementUnits[0]),
+            unit: new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.MeasurementUnit(_data_measurement_units__WEBPACK_IMPORTED_MODULE_3__.MeasurementUnits[0]),
+            ingredientCategory: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.IngredientCategory.Meat,
             order: 0,
         });
     }
@@ -21838,10 +21915,15 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
     }
     constructor() {
         super();
-        this.recipe = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.RecipeModel({
-            id: crypto.randomUUID(),
+        this.recipe = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.RecipeModel({
             title: 'Rezepttitel',
-            nation: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Language.Unset,
+            nation: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Language.Unset,
+            cookingTime: new _data_timespan__WEBPACK_IMPORTED_MODULE_4__.TimeSpan().toString(),
+            technique: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.CookingTechnique.Baking,
+            course: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Course.Main,
+            totalTime: new _data_timespan__WEBPACK_IMPORTED_MODULE_4__.TimeSpan().toString(),
+            cookware: [],
+            preparationTime: new _data_timespan__WEBPACK_IMPORTED_MODULE_4__.TimeSpan().toString(),
             difficulty: 0,
             rating: 0,
             formattedText: 'Dein Rezept-Text',
@@ -21852,12 +21934,15 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
     async connectedCallback() {
         super.connectedCallback();
         if (this.recipeId) {
-            this.recipe = await _services_backend_services__WEBPACK_IMPORTED_MODULE_6__.RecipeService.getRecipe(this.recipeId);
+            this.recipe = await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.getRecipe(this.recipeId);
             await this.requestFullUpdate();
         }
     }
     render() {
-        return _recipe_detail_page_html__WEBPACK_IMPORTED_MODULE_10__.renderRecipeDetailPage.call(this);
+        document.title = this.recipe.id
+            ? `Rezept - ${this.recipe.title}`
+            : `Rezept erstellen ${this.recipe.title ? `- ${this.recipe.title}` : ''}`;
+        return _recipe_detail_page_html__WEBPACK_IMPORTED_MODULE_11__.renderRecipeDetailPage.call(this);
     }
     addGroup(event) {
         event.stopPropagation();
@@ -21874,7 +21959,7 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
     async changeProperty(property, value) {
         this.recipe[property] = value;
         if (this.recipe.id)
-            await _services_backend_services__WEBPACK_IMPORTED_MODULE_6__.RecipeService.updateRecipe(this.recipe);
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.updateRecipe(this.recipe);
         this.requestFullUpdate();
     }
     renameGroup(affectedIngredients, newName) {
@@ -21897,25 +21982,33 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
         event.preventDefault();
         event.stopPropagation();
         if (!this.recipe.course || !this.recipe.course || !this.recipe.technique) {
-            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_4__.MessageSnackbar.popup('Bitte alle notwendigen Informationen ausfüllen.', 'error');
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__.MessageSnackbar.popup('Bitte alle notwendigen Informationen ausfüllen.', 'error');
             return;
         }
-        if ((0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_7__.getQueryValue)('recipe'))
-            await _services_backend_services__WEBPACK_IMPORTED_MODULE_6__.RecipeService.updateRecipe(this.recipe);
+        if ((0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_8__.getQueryValue)('recipe'))
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.updateRecipe(this.recipe);
         else
-            await _services_backend_services__WEBPACK_IMPORTED_MODULE_6__.RecipeService.createRecipe(this.recipe);
-        (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_7__.changePage)(_recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_8__.RecipesPage);
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.createRecipe(this.recipe);
+        (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_8__.changePage)(_recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_9__.RecipesPage);
     }
     async createRecipe() {
-        this.recipe.id = await _services_backend_services__WEBPACK_IMPORTED_MODULE_6__.RecipeService.createRecipe(this.recipe);
-        this.requestFullUpdate();
+        try {
+            this.recipe.id = await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.createRecipe(this.recipe);
+            this.recipeId = this.recipe.id;
+            this.requestFullUpdate();
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__.MessageSnackbar.popup('Das Rezept wurde erfolgreich erstellt.', 'success');
+        }
+        catch (err) {
+            console.error(err);
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__.MessageSnackbar.popup('Ein Fehler ist beim erstellen des Rezepts aufgetreten.', 'error');
+        }
     }
 };
 __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)()
 ], RecipeDetailPage.prototype, "recipeId", void 0);
 __decorate([
-    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Object })
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
 ], RecipeDetailPage.prototype, "recipe", void 0);
 __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.query)('#page-container')
@@ -21941,6 +22034,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   renderRecipesPageStyles: () => (/* binding */ renderRecipesPageStyles)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
+/* harmony import */ var _resources_inline_icons_general_plus_icon_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../resources/inline-icons/general/plus-icon.svg */ "./resources/inline-icons/general/plus-icon.svg.ts");
+/* harmony import */ var _services_extensions_style_extensions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/extensions/style.extensions */ "./services/extensions/style.extensions.ts");
+
+
 
 function renderRecipesPageStyles() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.css) `
@@ -21970,6 +22067,17 @@ function renderRecipesPageStyles() {
             flex-direction: row;
             flex-wrap: wrap;
             gap: 50px;
+        }
+
+        #add-recipe-icon {
+            width: 100px;
+            height: 100px;
+
+            margin: 100px;
+
+            ${(0,_services_extensions_style_extensions__WEBPACK_IMPORTED_MODULE_2__.renderMaskImage)((0,_resources_inline_icons_general_plus_icon_svg__WEBPACK_IMPORTED_MODULE_1__.plusIcon)())};
+
+            cursor: pointer;
         }
 
         .recipe-tile {
@@ -22021,10 +22129,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   renderRecipesPage: () => (/* binding */ renderRecipesPage)
 /* harmony export */ });
 /* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
-/* harmony import */ var _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/extensions/url.extension */ "./services/extensions/url.extension.ts");
+/* harmony import */ var _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../native-components/link-element/link-element */ "./native-components/link-element/link-element.ts");
 /* harmony import */ var _recipe_detail_page_recipe_detail_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../recipe-detail-page/recipe-detail-page */ "./pages/recipe-detail-page/recipe-detail-page.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_1__, _recipe_detail_page_recipe_detail_page__WEBPACK_IMPORTED_MODULE_2__]);
-([_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_1__, _recipe_detail_page_recipe_detail_page__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__, _recipe_detail_page_recipe_detail_page__WEBPACK_IMPORTED_MODULE_2__]);
+([_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__, _recipe_detail_page_recipe_detail_page__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -22034,15 +22142,8 @@ function renderRecipesPage() {
             <div id="page">
                 <paginated-scrolling id="recipes-content" scrollTopThreshold="20" @scrollBottom="${() => this.loadMoreItems()}">
                     <div id="items">
-                        ${this.filteredRecipes?.map((x) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-                                    <recipe-tile
-                                        class="recipe-tile"
-                                        .recipe="${x}"
-                                        @click="${() => (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_1__.changePage)(_recipe_detail_page_recipe_detail_page__WEBPACK_IMPORTED_MODULE_2__.RecipeDetailPage, { recipeId: x.id })}"
-                                    >
-                                        ${x.title}
-                                    </recipe-tile>
-                                `)}
+                        ${_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__.LinkElement.forPage(_recipe_detail_page_recipe_detail_page__WEBPACK_IMPORTED_MODULE_2__.RecipeDetailPage, {}, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<div id="add-recipe-icon"></div>`)}
+                        ${this.filteredRecipes?.map((recipe) => _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_1__.LinkElement.forPage(_recipe_detail_page_recipe_detail_page__WEBPACK_IMPORTED_MODULE_2__.RecipeDetailPage, { recipeId: recipe.id }, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <recipe-tile class="recipe-tile" .recipe="${recipe}"> ${recipe.title} </recipe-tile> `))}
                     </div>
                 </paginated-scrolling>
                 <div id="search-panel-container">

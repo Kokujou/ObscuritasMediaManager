@@ -1,9 +1,13 @@
-import { customElement, property, query } from 'lit-element/decorators';
+import { customElement, property, query, state } from 'lit-element/decorators';
 import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MeasurementUnits } from '../../data/measurement-units';
+import { TimeSpan } from '../../data/timespan';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
+    CookingTechnique,
+    Course,
+    IngredientCategory,
     Language,
     MeasurementUnit,
     RecipeIngredientMappingModel,
@@ -25,18 +29,17 @@ export class RecipeDetailPage extends LitElementBase {
 
     static get newIngredient() {
         return new RecipeIngredientMappingModel({
-            id: crypto.randomUUID(),
-            recipeId: crypto.randomUUID(),
             amount: 0,
             description: 'Zutat-Beschreibung',
             groupName: 'Neue Gruppe',
             ingredientName: 'Neue Zutat',
             unit: new MeasurementUnit(MeasurementUnits[0]),
+            ingredientCategory: IngredientCategory.Meat,
             order: 0,
         });
     }
 
-    get emptyGroup() {
+    protected get emptyGroup() {
         var counter = 0;
 
         var defaultGroupName = 'Neue Gruppe';
@@ -50,17 +53,23 @@ export class RecipeDetailPage extends LitElementBase {
         return defaultIngredient;
     }
 
-    @property() public declare recipeId: string;
-    @property({ type: Object }) public declare recipe: RecipeModel;
+    @property() public declare recipeId: string | null;
+
+    @state() protected declare recipe: RecipeModel;
 
     @query('#page-container') protected declare pageContainer: HTMLElement;
 
     constructor() {
         super();
         this.recipe = new RecipeModel({
-            id: crypto.randomUUID(),
             title: 'Rezepttitel',
             nation: Language.Unset,
+            cookingTime: new TimeSpan().toString(),
+            technique: CookingTechnique.Baking,
+            course: Course.Main,
+            totalTime: new TimeSpan().toString(),
+            cookware: [],
+            preparationTime: new TimeSpan().toString(),
             difficulty: 0,
             rating: 0,
             formattedText: 'Dein Rezept-Text',
@@ -79,6 +88,9 @@ export class RecipeDetailPage extends LitElementBase {
     }
 
     override render() {
+        document.title = this.recipe.id
+            ? `Rezept - ${this.recipe.title}`
+            : `Rezept erstellen ${this.recipe.title ? `- ${this.recipe.title}` : ''}`;
         return renderRecipeDetailPage.call(this);
     }
 
@@ -138,7 +150,14 @@ export class RecipeDetailPage extends LitElementBase {
     }
 
     async createRecipe() {
-        this.recipe.id = await RecipeService.createRecipe(this.recipe);
-        this.requestFullUpdate();
+        try {
+            this.recipe.id = await RecipeService.createRecipe(this.recipe);
+            this.recipeId = this.recipe.id;
+            this.requestFullUpdate();
+            MessageSnackbar.popup('Das Rezept wurde erfolgreich erstellt.', 'success');
+        } catch (err) {
+            console.error(err);
+            MessageSnackbar.popup('Ein Fehler ist beim erstellen des Rezepts aufgetreten.', 'error');
+        }
     }
 }

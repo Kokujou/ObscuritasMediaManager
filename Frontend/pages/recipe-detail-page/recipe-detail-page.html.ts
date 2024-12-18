@@ -1,4 +1,5 @@
 import { html } from 'lit-element';
+import { StarRating } from '../../advanced-components/star-rating/star-rating';
 import { MeasurementUnits } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
@@ -34,7 +35,18 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                                 + Gruppe hinzufügen
                             </button>
                         </div>
-                        <recipe-tile .recipe="${this.recipe}" compact @change-nation="${() => this.changeNation()}"></recipe-tile>
+                        <recipe-tile
+                            .recipe="${this.recipe}"
+                            compact
+                            @change-nation="${() => this.changeNation()}"
+                            @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
+                                this.changeProperty('imageUrl', e.detail.imageData)}"
+                            @remove-image="${() => this.changeProperty('imageUrl', null)}"
+                            @ratingChanged="${(e: CustomEvent<{ rating: number; include: boolean }>) =>
+                                (e.composedPath()[0] as StarRating).swords
+                                    ? this.changeProperty('difficulty', e.detail.rating)
+                                    : this.changeProperty('rating', e.detail.rating)}"
+                        ></recipe-tile>
                     </div>
 
                     <div id="description-area">
@@ -101,7 +113,9 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                     >
                     </textarea>
                     <div id="action-area">
-                        ${!this.recipe.id ? html` <input type="submit" value="Erstellen" @click="${this.createRecipe}" /> ` : ''}
+                        ${!this.recipe.id
+                            ? html` <input type="submit" value="Erstellen" @click="${() => this.createRecipe()}" /> `
+                            : ''}
                     </div>
                 </form>
             </div>
@@ -122,7 +136,7 @@ function renderIngredientGroup(this: RecipeDetailPage, group: [name: string, ing
             />
             <priority-list
                 .items="${group[1]}"
-                .itemRenderer="${renderIngredient}"
+                .itemRenderer="${(item: RecipeIngredientMappingModel) => renderIngredient.call(this, item)}"
                 @delete-item="${(e: CustomEvent<any>) => this.removeItem(e.detail)}"
             >
             </priority-list>
@@ -133,8 +147,8 @@ function renderIngredientGroup(this: RecipeDetailPage, group: [name: string, ing
     `;
 }
 
-function renderIngredient(ingredient: RecipeIngredientMappingModel) {
-    return html` <div class="ingredient">
+function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMappingModel) {
+    return html` <div class="ingredient" @change="${() => this.changeProperty('ingredients', this.recipe.ingredients)}">
         <input
             type="text"
             class="ingredient-amount"

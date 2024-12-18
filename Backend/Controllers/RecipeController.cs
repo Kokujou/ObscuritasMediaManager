@@ -23,18 +23,19 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
     }
 
     [HttpPost]
-    public async Task<Guid> CreateRecipe(RecipeModel recipe)
+    public async Task<Guid> CreateRecipe([FromBody] RecipeModel recipe)
     {
         recipe.Id = Guid.NewGuid();
+        //    foreach (var ingredient in recipe.Ingredients) ingredient.RecipeId = recipe.Id;
 
         await recipeRepository.CreateRecipe(recipe);
-        return recipe.Id;
+        return recipe.Id!.Value;
     }
 
     [HttpPatch]
     public async Task UpdateRecipeAsync(RecipeModel recipe)
     {
-        if (!await recipeRepository.ExistsAsync(recipe.Id)) throw new("recipe not found");
+        if (!await recipeRepository.ExistsAsync(recipe.Id!.Value)) throw new("recipe not found");
 
         await recipeRepository.UpdateRecipe(recipe);
     }

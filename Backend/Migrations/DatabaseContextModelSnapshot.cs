@@ -29,7 +29,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("MediaId");
 
-                    b.ToTable("MediaGenreMapping");
+                    b.ToTable("MediaGenreMapping", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.GenreModel", b =>
@@ -45,7 +45,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GenreModel");
+                    b.ToTable("GenreModel", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.InstrumentModel", b =>
@@ -65,7 +65,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Instruments");
+                    b.ToTable("Instruments", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MediaGenreModel", b =>
@@ -85,7 +85,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MediaGenres");
+                    b.ToTable("MediaGenres", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MediaModel", b =>
@@ -158,7 +158,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Media");
+                    b.ToTable("Media", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MusicInstrumentMappingModel", b =>
@@ -181,7 +181,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("TrackHash");
 
-                    b.ToTable("MusicInstrumentMapping");
+                    b.ToTable("MusicInstrumentMapping", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MusicModel", b =>
@@ -250,7 +250,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Hash");
 
-                    b.ToTable("Music");
+                    b.ToTable("Music", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.PlaylistModel", b =>
@@ -292,7 +292,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Playlists");
+                    b.ToTable("Playlists", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.PlaylistTrackMappingModel", b =>
@@ -321,7 +321,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("TrackHash");
 
-                    b.ToTable("PlaylistTrackMapping");
+                    b.ToTable("PlaylistTrackMapping", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeCookwareMappingModel", b =>
@@ -342,7 +342,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("RecipeModelId");
 
-                    b.ToTable("Cookware");
+                    b.ToTable("Cookware", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeIngredientMappingModel", b =>
@@ -381,7 +381,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("RecipeIngredientMapping");
+                    b.ToTable("RecipeIngredientMapping", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeModel", b =>
@@ -429,7 +429,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.UserModel", b =>
@@ -450,7 +450,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.UserSettingsModel", b =>
@@ -472,7 +472,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserSettings");
+                    b.ToTable("UserSettings", (string)null);
                 });
 
             modelBuilder.Entity("MediaGenreMapping", b =>
