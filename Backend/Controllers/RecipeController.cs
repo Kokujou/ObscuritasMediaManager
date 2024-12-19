@@ -28,7 +28,7 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
         recipe.Id = Guid.NewGuid();
         //    foreach (var ingredient in recipe.Ingredients) ingredient.RecipeId = recipe.Id;
 
-        await recipeRepository.CreateRecipe(recipe);
+        await recipeRepository.CreateRecipeAsync(recipe);
         return recipe.Id!.Value;
     }
 
@@ -37,7 +37,25 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
     {
         if (!await recipeRepository.ExistsAsync(recipe.Id!.Value)) throw new("recipe not found");
 
-        await recipeRepository.UpdateRecipe(recipe);
+        await recipeRepository.UpdateRecipeAsync(recipe);
+    }
+
+    [HttpPost("{recipeId}/ingredient")]
+    public async Task<Guid> AddIngredientAsync(Guid recipeId,
+        [FromBody] RecipeIngredientMappingModel ingredient)
+    {
+        ingredient.RecipeId = recipeId;
+        ingredient.Id = Guid.NewGuid();
+
+        await recipeRepository.AddIngredientAsync(ingredient);
+
+        return ingredient.Id!.Value;
+    }
+
+    [HttpDelete("{recipeId}/ingredient/{ingredientId}")]
+    public async Task DeleteIngredientAsync(Guid recipeId, Guid ingredientId)
+    {
+        await recipeRepository.DeleteIngredientAsync(recipeId, ingredientId);
     }
 
     [HttpPost("cookware/search")]

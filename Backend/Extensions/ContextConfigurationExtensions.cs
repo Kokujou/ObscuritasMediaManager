@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ObscuritasMediaManager.Backend.Extensions;
 
@@ -10,13 +11,10 @@ public static class ContextConfigurationExtensions
         foreach (var property in entityType.GetProperties())
         {
             var propertyType = property.ClrType;
-            if (!propertyType.IsEnum && !(Nullable.GetUnderlyingType(propertyType)?.IsEnum ?? false))
+            if ((!propertyType.IsEnum && !(Nullable.GetUnderlyingType(propertyType)?.IsEnum ?? false)) ||
+                entityType.IsOwned())
                 continue;
-
-            modelBuilder
-                .Entity(entityType.ClrType)
-                .Property(property.Name)
-                .HasConversion<string>();
+            property.SetValueConverter(typeof(EnumToStringConverter<>).MakeGenericType(propertyType));
         }
     }
 }

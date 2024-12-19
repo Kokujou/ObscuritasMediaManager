@@ -5,6 +5,10 @@ import { renderMaskImage } from '../../services/extensions/style.extensions';
 
 export function renderRecipeTileStyles() {
     return css`
+        #content {
+            width: var(--recipe-tile-width);
+        }
+
         #image-container {
             position: relative;
             width: var(--recipe-tile-width);
@@ -21,8 +25,9 @@ export function renderRecipeTileStyles() {
 
             background-repeat: no-repeat;
             background-position: center center;
+            background-size: 200%;
 
-            filter: blur(20px);
+            filter: blur(15px);
             border-radius: 25%;
         }
 
@@ -123,6 +128,9 @@ export function renderRecipeTileStyles() {
         #recipe-title {
             font-weight: bold;
             font-size: 24px;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            overflow: hidden;
         }
     `;
 }

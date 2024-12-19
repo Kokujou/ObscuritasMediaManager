@@ -24,12 +24,13 @@ export class GroupedDropdown extends LitElementBase {
     @state() public declare showDropDown: boolean;
     @state() protected declare search: string;
 
-    result = { category: null, value: null } as GroupedDropdownResult;
+    @state() protected declare result: GroupedDropdownResult;
     searchResetCallback = setTimeout(() => (this.search = ''), 1000);
 
     constructor() {
         super();
         this.maxDisplayDepth = 5;
+        this.result = { category: null, value: null } as GroupedDropdownResult;
     }
 
     override connectedCallback() {
@@ -40,7 +41,7 @@ export class GroupedDropdown extends LitElementBase {
                 this.search += e.key;
                 clearTimeout(this.searchResetCallback);
                 this.searchResetCallback = setTimeout(() => (this.search = ''), 1000);
-                this.result = this.results.find((x) => x.value.toLowerCase().startsWith(this.search.toLowerCase()));
+                this.changeResult(this.results.find((x) => x.value.toLowerCase().startsWith(this.search.toLowerCase())));
             }
 
             if (e.key != 'ArrowUp' && e.key != 'ArrowDown') return;
@@ -56,7 +57,7 @@ export class GroupedDropdown extends LitElementBase {
             if (index < 0) index = this.results.length - 1;
             if (index >= this.results.length) index = 0;
 
-            this.result = this.results[index];
+            this.changeResult(this.results[index]);
         });
 
         this.addEventListener('click', (e) => e.stopPropagation());
@@ -64,12 +65,9 @@ export class GroupedDropdown extends LitElementBase {
         document.addEventListener('click', () => (this.showDropDown = false));
     }
 
-    updated(_changedProperties: Map<string, any>) {
-        super.updated(_changedProperties);
-        if (_changedProperties.has('result')) {
-            this.dispatchEvent(new CustomEvent('selectionChange', { detail: this.result }));
-            this.requestFullUpdate();
-        }
+    changeResult(result: GroupedDropdownResult) {
+        this.result = result;
+        this.dispatchEvent(new CustomEvent('selectionChange', { detail: this.result }));
     }
 
     override render() {

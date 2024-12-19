@@ -94,17 +94,14 @@ export class RecipeDetailPage extends LitElementBase {
         return renderRecipeDetailPage.call(this);
     }
 
-    addGroup(event: Event) {
+    async addIngredient(group: string, event: Event) {
         event.stopPropagation();
         event.preventDefault();
-        this.recipe.ingredients.push(this.emptyGroup);
-        this.requestFullUpdate();
-    }
 
-    addIngredient(group: string, event: Event) {
-        event.stopPropagation();
-        event.preventDefault();
-        this.recipe.ingredients.push(RecipeDetailPage.newIngredient);
+        const ingredient = RecipeDetailPage.newIngredient;
+        ingredient.groupName = group;
+        ingredient.id = await RecipeService.addIngredient(this.recipe.id!, ingredient);
+        this.recipe.ingredients.push(ingredient);
         this.requestFullUpdate();
     }
 
@@ -125,13 +122,28 @@ export class RecipeDetailPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    removeItem(ingredient: RecipeIngredientMappingModel) {
+    async removeItem(ingredient: RecipeIngredientMappingModel) {
+        await RecipeService.deleteIngredient(this.recipe.id!, ingredient.id!);
         this.recipe.ingredients = this.recipe.ingredients.filter((x) => x.id != ingredient.id);
+
         this.requestFullUpdate();
     }
 
     async changeNation() {
         this.changeProperty('nation', await LanguageSwitcher.spawnAt(this.pageContainer, this.recipe.nation));
+    }
+
+    changeIngredientUnit(ingredient: RecipeIngredientMappingModel, unitName: string) {
+        console.log(this.recipe.ingredients.includes(ingredient));
+
+        var unit = MeasurementUnits.find((x) => x.name == unitName);
+        if (!unit) {
+            MessageSnackbar.popup('Die ausgewählte Einheit ist nicht bekannt: ' + unitName, 'error');
+            return;
+        }
+
+        ingredient.unit = unit;
+        this.changeProperty('ingredients', this.recipe.ingredients);
     }
 
     async submit(event: SubmitEvent) {

@@ -52,7 +52,7 @@ export function renderRecipeDetailPageStyles() {
             display: flex;
             flex-direction: column;
 
-            min-height: 500px;
+            min-height: 300px;
             flex: auto;
             margin-right: 10px;
         }

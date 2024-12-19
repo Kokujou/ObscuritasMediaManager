@@ -4950,6 +4950,10 @@ __webpack_require__.r(__webpack_exports__);
 
 function renderRecipeTileStyles() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.css) `
+        #content {
+            width: var(--recipe-tile-width);
+        }
+
         #image-container {
             position: relative;
             width: var(--recipe-tile-width);
@@ -4966,8 +4970,9 @@ function renderRecipeTileStyles() {
 
             background-repeat: no-repeat;
             background-position: center center;
+            background-size: 200%;
 
-            filter: blur(20px);
+            filter: blur(15px);
             border-radius: 25%;
         }
 
@@ -5068,6 +5073,9 @@ function renderRecipeTileStyles() {
         #recipe-title {
             font-weight: bold;
             font-size: 24px;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            overflow: hidden;
         }
     `;
 }
@@ -11204,7 +11212,7 @@ function renderDropDownOption(value) {
             ?selected="${this.result.value == value.value}"
             class="option"
             .value="${value}"
-            @click=${() => (this.result = value)}
+            @click=${() => this.changeResult(value)}
         >
             ${value.value}
         </div>
@@ -11247,11 +11255,11 @@ let GroupedDropdown = class GroupedDropdown extends _data_lit_element_base__WEBP
             .map((x) => x[1].map((y) => ({ category: x[0], value: y })))
             .flatMap((x) => x);
     }
-    result = { category: null, value: null };
     searchResetCallback = setTimeout(() => (this.search = ''), 1000);
     constructor() {
         super();
         this.maxDisplayDepth = 5;
+        this.result = { category: null, value: null };
     }
     connectedCallback() {
         super.connectedCallback();
@@ -11260,7 +11268,7 @@ let GroupedDropdown = class GroupedDropdown extends _data_lit_element_base__WEBP
                 this.search += e.key;
                 clearTimeout(this.searchResetCallback);
                 this.searchResetCallback = setTimeout(() => (this.search = ''), 1000);
-                this.result = this.results.find((x) => x.value.toLowerCase().startsWith(this.search.toLowerCase()));
+                this.changeResult(this.results.find((x) => x.value.toLowerCase().startsWith(this.search.toLowerCase())));
             }
             if (e.key != 'ArrowUp' && e.key != 'ArrowDown')
                 return;
@@ -11275,17 +11283,14 @@ let GroupedDropdown = class GroupedDropdown extends _data_lit_element_base__WEBP
                 index = this.results.length - 1;
             if (index >= this.results.length)
                 index = 0;
-            this.result = this.results[index];
+            this.changeResult(this.results[index]);
         });
         this.addEventListener('click', (e) => e.stopPropagation());
         document.addEventListener('click', () => (this.showDropDown = false));
     }
-    updated(_changedProperties) {
-        super.updated(_changedProperties);
-        if (_changedProperties.has('result')) {
-            this.dispatchEvent(new CustomEvent('selectionChange', { detail: this.result }));
-            this.requestFullUpdate();
-        }
+    changeResult(result) {
+        this.result = result;
+        this.dispatchEvent(new CustomEvent('selectionChange', { detail: this.result }));
     }
     render() {
         return _grouped_dropdown_html__WEBPACK_IMPORTED_MODULE_3__.renderGroupedDropdown.call(this);
@@ -11303,6 +11308,9 @@ __decorate([
 __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
 ], GroupedDropdown.prototype, "search", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], GroupedDropdown.prototype, "result", void 0);
 GroupedDropdown = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('grouped-dropdown')
 ], GroupedDropdown);
@@ -15791,6 +15799,85 @@ class RecipeClient {
                 let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 result200 = RecipeModel.fromJS(resultData200, _mappings);
                 return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    addIngredient(recipeId, ingredient, signal) {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/ingredient";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(ingredient);
+        let options_ = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processAddIngredient(_response);
+        });
+    }
+    processAddIngredient(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null;
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    deleteIngredient(recipeId, ingredientId, signal) {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/ingredient/{ingredientId}";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        if (ingredientId === undefined || ingredientId === null)
+            throw new Error("The parameter 'ingredientId' must be defined.");
+        url_ = url_.replace("{ingredientId}", encodeURIComponent("" + ingredientId));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "DELETE",
+            signal,
+            headers: {}
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processDeleteIngredient(_response);
+        });
+    }
+    processDeleteIngredient(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
             });
         }
         else if (status !== 200 && status !== 204) {
@@ -21518,7 +21605,7 @@ function renderRecipeDetailPageStyles() {
             display: flex;
             flex-direction: column;
 
-            min-height: 500px;
+            min-height: 300px;
             flex: auto;
             margin-right: 10px;
         }
@@ -21689,7 +21776,11 @@ function renderRecipeDetailPage() {
                                 @change="${(e) => this.changeProperty('title', e.target.value)}"
                             />
                             ${Object.entries((0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_5__.groupBy)(this.recipe.ingredients, 'groupName')).map((group) => renderIngredientGroup.call(this, group))}
-                            <button tabindex="0" id="add-group-link" @click="${(e) => this.addGroup(e)}">
+                            <button
+                                tabindex="0"
+                                id="add-group-link"
+                                @click="${(e) => this.addIngredient('Neue Gruppe', e)}"
+                            >
                                 + Gruppe hinzufügen
                             </button>
                         </div>
@@ -21795,6 +21886,7 @@ function renderIngredientGroup(group) {
     `;
 }
 function renderIngredient(ingredient) {
+    const ingredient2 = ingredient;
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div class="ingredient" @change="${() => this.changeProperty('ingredients', this.recipe.ingredients)}">
         <input
             type="text"
@@ -21811,7 +21903,7 @@ function renderIngredient(ingredient) {
             .result="${{ category: ingredient.unit.measurement, value: ingredient.unit.name }}"
             .options="${(0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_5__.groupAndSelectBy)(_data_measurement_units__WEBPACK_IMPORTED_MODULE_1__.MeasurementUnits, 'measurement', 'name')}"
             class="ingredient-unit"
-            @selectionChange="${(e) => ([ingredient.unit.measurement, ingredient.unit.name] = [e.detail.category, e.detail.value])}"
+            @selectionChange="${(e) => this.changeIngredientUnit(ingredient2, e.detail.value)}"
         ></grouped-dropdown>
         <input
             type="text"
@@ -21944,16 +22036,13 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
             : `Rezept erstellen ${this.recipe.title ? `- ${this.recipe.title}` : ''}`;
         return _recipe_detail_page_html__WEBPACK_IMPORTED_MODULE_11__.renderRecipeDetailPage.call(this);
     }
-    addGroup(event) {
+    async addIngredient(group, event) {
         event.stopPropagation();
         event.preventDefault();
-        this.recipe.ingredients.push(this.emptyGroup);
-        this.requestFullUpdate();
-    }
-    addIngredient(group, event) {
-        event.stopPropagation();
-        event.preventDefault();
-        this.recipe.ingredients.push(RecipeDetailPage_1.newIngredient);
+        const ingredient = RecipeDetailPage_1.newIngredient;
+        ingredient.groupName = group;
+        ingredient.id = await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.addIngredient(this.recipe.id, ingredient);
+        this.recipe.ingredients.push(ingredient);
         this.requestFullUpdate();
     }
     async changeProperty(property, value) {
@@ -21971,12 +22060,23 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
         this.recipe.imageUrl = imageData;
         this.requestFullUpdate();
     }
-    removeItem(ingredient) {
+    async removeItem(ingredient) {
+        await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.deleteIngredient(this.recipe.id, ingredient.id);
         this.recipe.ingredients = this.recipe.ingredients.filter((x) => x.id != ingredient.id);
         this.requestFullUpdate();
     }
     async changeNation() {
         this.changeProperty('nation', await _advanced_components_language_switcher_language_switcher__WEBPACK_IMPORTED_MODULE_1__.LanguageSwitcher.spawnAt(this.pageContainer, this.recipe.nation));
+    }
+    changeIngredientUnit(ingredient, unitName) {
+        console.log(this.recipe.ingredients.includes(ingredient));
+        var unit = _data_measurement_units__WEBPACK_IMPORTED_MODULE_3__.MeasurementUnits.find((x) => x.name == unitName);
+        if (!unit) {
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_5__.MessageSnackbar.popup('Die ausgewählte Einheit ist nicht bekannt: ' + unitName, 'error');
+            return;
+        }
+        ingredient.unit = unit;
+        this.changeProperty('ingredients', this.recipe.ingredients);
     }
     async submit(event) {
         event.preventDefault();

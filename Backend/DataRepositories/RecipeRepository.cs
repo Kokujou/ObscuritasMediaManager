@@ -20,16 +20,28 @@ public class RecipeRepository(DatabaseContext databaseContext)
         return await databaseContext.Recipes.AnyAsync(x => x.Id == id);
     }
 
-    public async Task CreateRecipe(RecipeModel recipe)
+    public async Task CreateRecipeAsync(RecipeModel recipe)
     {
         await databaseContext.Recipes.AddAsync(recipe);
         await databaseContext.SaveChangesAsync();
     }
 
-    public async Task UpdateRecipe(RecipeModel recipe)
+    public async Task UpdateRecipeAsync(RecipeModel recipe)
     {
         databaseContext.Update(recipe);
         await databaseContext.SaveChangesAsync();
+    }
+
+    public async Task AddIngredientAsync(RecipeIngredientMappingModel ingredient)
+    {
+        databaseContext.Add(ingredient);
+        await databaseContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteIngredientAsync(Guid recipeId, Guid ingredientId)
+    {
+        await databaseContext.Set<RecipeIngredientMappingModel>()
+            .Where(x => x.Id == ingredientId && x.RecipeId == recipeId).ExecuteDeleteAsync();
     }
 
     public IQueryable<string> GetCookware(string search)

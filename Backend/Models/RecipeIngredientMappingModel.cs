@@ -14,7 +14,7 @@ public class RecipeIngredientMappingModel
     public required IngredientCategory IngredientCategory { get; set; }
     [MaxLength(9999)] public string? Description { get; set; }
     [MaxLength(255)] public string? GroupName { get; set; }
-    [NotMapped] public required MeasurementUnit Unit { get; set; }
+    public required MeasurementUnit Unit { get; set; }
     public float Amount { get; set; }
     public int Order { get; set; }
 }

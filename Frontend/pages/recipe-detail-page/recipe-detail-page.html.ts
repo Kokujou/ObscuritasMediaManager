@@ -4,12 +4,7 @@ import { MeasurementUnits } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
 import { GroupedDropdownResult } from '../../native-components/grouped-dropdown/grouped-dropdown';
-import {
-    CookingTechnique,
-    Course,
-    Measurement,
-    RecipeIngredientMappingModel,
-} from '../../obscuritas-media-manager-backend-client';
+import { CookingTechnique, Course, RecipeIngredientMappingModel } from '../../obscuritas-media-manager-backend-client';
 import { groupAndSelectBy, groupBy } from '../../services/extensions/array.extensions';
 import { RecipeDetailPage } from './recipe-detail-page';
 
@@ -31,7 +26,11 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                             ${Object.entries(groupBy(this.recipe.ingredients, 'groupName')).map((group) =>
                                 renderIngredientGroup.call(this, group)
                             )}
-                            <button tabindex="0" id="add-group-link" @click="${(e: Event) => this.addGroup(e)}">
+                            <button
+                                tabindex="0"
+                                id="add-group-link"
+                                @click="${(e: Event) => this.addIngredient('Neue Gruppe', e)}"
+                            >
                                 + Gruppe hinzufügen
                             </button>
                         </div>
@@ -148,6 +147,7 @@ function renderIngredientGroup(this: RecipeDetailPage, group: [name: string, ing
 }
 
 function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMappingModel) {
+    const ingredient2 = ingredient;
     return html` <div class="ingredient" @change="${() => this.changeProperty('ingredients', this.recipe.ingredients)}">
         <input
             type="text"
@@ -165,7 +165,7 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
             .options="${groupAndSelectBy(MeasurementUnits, 'measurement', 'name')}"
             class="ingredient-unit"
             @selectionChange="${(e: CustomEvent<GroupedDropdownResult>) =>
-                ([ingredient.unit.measurement, ingredient.unit.name] = [e.detail.category as Measurement, e.detail.value!])}"
+                this.changeIngredientUnit(ingredient2, e.detail.value!)}"
         ></grouped-dropdown>
         <input
             type="text"

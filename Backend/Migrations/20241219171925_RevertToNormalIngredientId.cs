@@ -1,0 +1,120 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace ObscuritasMediaManager.Backend.Migrations
+{
+    /// <inheritdoc />
+    public partial class RevertToNormalIngredientId : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_RecipeIngredientMapping_Recipes_RecipeId",
+                table: "RecipeIngredientMapping");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_RecipeIngredientMapping",
+                table: "RecipeIngredientMapping");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "GroupName",
+                table: "RecipeIngredientMapping",
+                type: "TEXT",
+                maxLength: 255,
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "TEXT",
+                oldMaxLength: 255);
+
+            migrationBuilder.AlterColumn<Guid>(
+                name: "RecipeId",
+                table: "RecipeIngredientMapping",
+                type: "TEXT",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "TEXT");
+
+            migrationBuilder.AddColumn<Guid>(
+                name: "Id",
+                table: "RecipeIngredientMapping",
+                type: "TEXT",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_RecipeIngredientMapping",
+                table: "RecipeIngredientMapping",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecipeIngredientMapping_RecipeId",
+                table: "RecipeIngredientMapping",
+                column: "RecipeId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_RecipeIngredientMapping_Recipes_RecipeId",
+                table: "RecipeIngredientMapping",
+                column: "RecipeId",
+                principalTable: "Recipes",
+                principalColumn: "Id");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_RecipeIngredientMapping_Recipes_RecipeId",
+                table: "RecipeIngredientMapping");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_RecipeIngredientMapping",
+                table: "RecipeIngredientMapping");
+
+            migrationBuilder.DropIndex(
+                name: "IX_RecipeIngredientMapping_RecipeId",
+                table: "RecipeIngredientMapping");
+
+            migrationBuilder.DropColumn(
+                name: "Id",
+                table: "RecipeIngredientMapping");
+
+            migrationBuilder.AlterColumn<Guid>(
+                name: "RecipeId",
+                table: "RecipeIngredientMapping",
+                type: "TEXT",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"),
+                oldClrType: typeof(Guid),
+                oldType: "TEXT",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "GroupName",
+                table: "RecipeIngredientMapping",
+                type: "TEXT",
+                maxLength: 255,
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "TEXT",
+                oldMaxLength: 255,
+                oldNullable: true);
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_RecipeIngredientMapping",
+                table: "RecipeIngredientMapping",
+                columns: new[] { "RecipeId", "IngredientName", "GroupName", "Order" });
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_RecipeIngredientMapping_Recipes_RecipeId",
+                table: "RecipeIngredientMapping",
+                column: "RecipeId",
+                principalTable: "Recipes",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+        }
+    }
+}

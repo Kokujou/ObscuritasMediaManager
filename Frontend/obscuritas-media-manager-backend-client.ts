@@ -1918,6 +1918,86 @@ export class RecipeClient {
         return Promise.resolve<RecipeModel>(null as any);
     }
 
+    addIngredient(recipeId: string, ingredient: RecipeIngredientMappingModel, signal?: AbortSignal): Promise<string> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/ingredient";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(ingredient);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processAddIngredient(_response);
+        });
+    }
+
+    protected processAddIngredient(response: Response): Promise<string> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<string>(null as any);
+    }
+
+    deleteIngredient(recipeId: string, ingredientId: string, signal?: AbortSignal): Promise<void> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/ingredient/{ingredientId}";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        if (ingredientId === undefined || ingredientId === null)
+            throw new Error("The parameter 'ingredientId' must be defined.");
+        url_ = url_.replace("{ingredientId}", encodeURIComponent("" + ingredientId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDeleteIngredient(_response);
+        });
+    }
+
+    protected processDeleteIngredient(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
     searchCookware(search: string, signal?: AbortSignal): Promise<string[]> {
         let url_ = this.baseUrl + "/api/Recipe/cookware/search";
         url_ = url_.replace(/[?&]$/, "");

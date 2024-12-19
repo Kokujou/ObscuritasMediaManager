@@ -47,7 +47,7 @@ function renderDropDownOption(this: GroupedDropdown, value: import('./grouped-dr
             ?selected="${this.result.value == value.value}"
             class="option"
             .value="${value}"
-            @click=${() => (this.result = value)}
+            @click=${() => this.changeResult(value)}
         >
             ${value.value}
         </div>
