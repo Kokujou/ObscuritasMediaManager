@@ -79,6 +79,7 @@ export function renderGroupedDropdownStyles() {
             background-color: var(--accent-color-full);
 
             overflow-y: auto;
+            overscroll-behavior: contain;
 
             z-index: 10;
         }

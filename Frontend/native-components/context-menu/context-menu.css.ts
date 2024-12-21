@@ -6,9 +6,12 @@ export function renderContextMenuStyles() {
             position: fixed;
             box-shadow: 1px 1px 1px black;
             z-index: 1;
-            background: white;
+            background: var(--accent-color-full);
             min-width: 200px;
-            color: black;
+            overflow-y: auto;
+            color: white;
+
+            scrollbar-width: thin;
         }
 
         .item-wrapper {
@@ -31,7 +34,7 @@ export function renderContextMenuStyles() {
         .item-icon {
             width: 25px;
             height: 25px;
-            background: black;
+            background: white;
         }
 
         .item-text {

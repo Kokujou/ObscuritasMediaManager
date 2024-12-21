@@ -6,6 +6,7 @@ import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg';
 import { renderMaskImage } from '../../services/extensions/style.extensions';
 import { arrowIcon } from './general/arrow.svg';
 import { ascendingIcon } from './general/ascending-icon.svg';
+import { categoryIcon } from './general/category-icon.svg';
 import { cleanIcon } from './general/clean-icon.svg';
 import { crossIcon } from './general/cross-icon.svg';
 import { descendingIcon } from './general/descending-icon.svg';
@@ -70,6 +71,7 @@ export const IconRegistry = {
     Clipboard: clipboardIcon(),
     Edit: editIcon(),
     Repair: repairIcon(),
+    Category: categoryIcon(),
 };
 
 export const Icons = {} as typeof IconRegistry;

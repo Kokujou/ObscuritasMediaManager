@@ -7,6 +7,7 @@ export function renderRecipeDetailPageStyles() {
         }
 
         #page-container {
+            position: relative;
             width: 100%;
             border-radius: 50px;
             padding: 20px;
@@ -127,6 +128,14 @@ export function renderRecipeDetailPageStyles() {
             background: var(--accent-color);
         }
 
+        .ingredient-category-icon {
+            background: white;
+            width: 25px;
+            height: 25px;
+
+            cursor: pointer;
+        }
+
         .description-section {
             display: flex;
             flex-direction: row;
@@ -143,15 +152,9 @@ export function renderRecipeDetailPageStyles() {
             text-shadow: 2px 2px 2px black;
         }
 
-        drop-down {
-            background: transparent;
-            width: 300px;
-        }
-
         input[type='text'] {
             padding: 10px 10px;
             --icon-size: 25px;
-            width: 300px;
             box-sizing: border-box;
 
             background: transparent;
@@ -203,6 +206,9 @@ export function renderRecipeDetailPageStyles() {
 
         .action-button:hover {
             background: linear-gradient(130deg, transparent 0 20%, #fff8, transparent 40% 90%), #3039;
+        }
+
+        context-menu {
         }
     `;
 }

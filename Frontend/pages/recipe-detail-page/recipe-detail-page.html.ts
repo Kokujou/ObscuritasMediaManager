@@ -1,10 +1,18 @@
 import { html } from 'lit-element';
 import { StarRating } from '../../advanced-components/star-rating/star-rating';
-import { MeasurementUnits } from '../../data/measurement-units';
+import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
+import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
 import { GroupedDropdownResult } from '../../native-components/grouped-dropdown/grouped-dropdown';
-import { CookingTechnique, Course, RecipeIngredientMappingModel } from '../../obscuritas-media-manager-backend-client';
+import {
+    CookingTechnique,
+    Course,
+    IngredientCategory,
+    RecipeIngredientMappingModel,
+} from '../../obscuritas-media-manager-backend-client';
+import { Icons } from '../../resources/inline-icons/icon-registry';
+import { IngredientIcons } from '../../resources/inline-icons/ingredient-icons/icon-registry';
 import { groupAndSelectBy, groupBy } from '../../services/extensions/array.extensions';
 import { RecipeDetailPage } from './recipe-detail-page';
 
@@ -131,6 +139,7 @@ function renderIngredientGroup(this: RecipeDetailPage, group: [name: string, ing
                 .items="${group[1]}"
                 .itemRenderer="${(item: RecipeIngredientMappingModel) => renderIngredient.call(this, item)}"
                 @delete-item="${(e: CustomEvent<any>) => this.removeItem(e.detail)}"
+                @list-changed="${() => this.changeProperty('ingredients', this.recipe.ingredients)}"
             >
             </priority-list>
             <button tabindex="0" id="add-ingredient-link" @click="${(e: Event) => this.addIngredient(group[0], e)}">
@@ -143,15 +152,18 @@ function renderIngredientGroup(this: RecipeDetailPage, group: [name: string, ing
 function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMappingModel) {
     const ingredient2 = ingredient;
     return html` <div class="ingredient" @change="${() => this.changeProperty('ingredients', this.recipe.ingredients)}">
-        <input
-            type="text"
-            class="ingredient-amount"
-            supportedCharacters="[0-9.]"
-            .value="${ingredient.amount.toString()}"
-            onclick="javascript:this.select()"
-            @input="${(e: KeyboardEvent) => handleLabelInput(e, /[0-9.]/g)}"
-            @change="${(e: Event) => (ingredient.amount = Number.parseFloat((e.target as HTMLInputElement).value) ?? 0)}"
-        />
+        ${!ValuelessMeasurements.includes(ingredient.unit.measurement)
+            ? html` <input
+                  type="text"
+                  class="ingredient-amount"
+                  supportedCharacters="[0-9.]"
+                  .value="${ingredient.amount.toString()}"
+                  onclick="javascript:this.select()"
+                  @input="${(e: KeyboardEvent) => handleLabelInput(e, /[0-9.]/g)}"
+                  @change="${(e: Event) => (ingredient.amount = Number.parseFloat((e.target as HTMLInputElement).value) ?? 0)}"
+              />`
+            : ''}
+
         <grouped-dropdown
             tabindex="0"
             compact
@@ -169,6 +181,7 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
             @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
             @change="${(e: Event) => (ingredient.ingredientName = (e.target as HTMLInputElement).value)}"
         />
+
         <input
             type="text"
             class="ingredient-description"
@@ -177,6 +190,26 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
             @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
             @change="${(e: Event) => (ingredient.description = (e.target as HTMLInputElement).value)}"
         />
+        <div class="ingredient-category">${ingredient.ingredientCategory}</div>
+        <div
+            class="ingredient-category-icon"
+            icon="${Icons.Category}"
+            tooltip="${ingredient.ingredientCategory}"
+            @click="${(e: PointerEvent) =>
+                ContextMenu.popup(
+                    Object.values(IngredientCategory)
+                        .filter((x) => x != ingredient.ingredientCategory)
+                        .map(
+                            (category) =>
+                                ({
+                                    text: category,
+                                    icon: IngredientIcons[ingredient.ingredientCategory],
+                                    action: () => this.changeIngredientCategory(ingredient, category),
+                                } as ContextMenuItem)
+                        ),
+                    e
+                )}"
+        ></div>
     </div>`;
 }
 

@@ -25,8 +25,14 @@ export class ContextMenu extends LitElementBase {
         var menu = new ContextMenu();
         pointerEvent.stopPropagation();
         menu.items = items;
-        menu.style.top = pointerEvent.pageY / getScaleFactorY() + 'px';
+        var itemTop = pointerEvent.pageY / getScaleFactorY();
+        menu.style.top = itemTop + 'px';
+        if (pointerEvent.pageY > screen.height / 2) menu.style.transform = 'translateY(-100%)';
+
         menu.style.left = pointerEvent.pageX / getScaleFactorX() + 'px';
+        if (pointerEvent.pageY > screen.height / 2) menu.style.maxHeight = `${itemTop}px`;
+        else menu.style.maxHeight = `calc(100% - ${itemTop}px)`;
+        console.log(itemTop);
 
         PageRouting.container!.append(menu);
         ContextMenu.instance = menu;
@@ -46,6 +52,8 @@ export class ContextMenu extends LitElementBase {
             },
             { signal: this.abortController.signal, passive: false }
         );
+
+        this.addEventListener('wheel', (e) => e.stopPropagation());
 
         window.addEventListener('click', (e: Event) => this.remove(), { signal: this.abortController.signal });
         window.addEventListener('contextmenu', (e: Event) => this.remove(), { signal: this.abortController.signal });

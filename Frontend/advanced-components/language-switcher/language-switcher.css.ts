@@ -5,7 +5,7 @@ export function renderLanguageSwitcherStyles() {
         :host {
             background: #000c !important;
             inset: 0;
-            position: absolute;
+            position: fixed;
             mask: none !important;
             z-index: 5;
 
@@ -49,11 +49,15 @@ export function renderLanguageSwitcherStyles() {
 
         #confirm-button {
             position: absolute;
-            inset: 43%;
+            left: 50%;
+            top: 50%;
             z-index: 60;
             cursor: pointer;
             pointer-events: all;
-            transform: translateZ(500px);
+            transform: translateZ(500px) translateX(-50%) translateY(-50%);
+
+            width: 75px;
+            height: 75px;
         }
 
         #confirm-icon {
@@ -73,6 +77,8 @@ export function renderLanguageSwitcherStyles() {
             top: 50px;
             font-size: 40px;
             cursor: pointer;
+            pointer-events: all;
+            color: white;
         }
 
         @keyframes fadeIn {

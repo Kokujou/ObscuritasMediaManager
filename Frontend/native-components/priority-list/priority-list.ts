@@ -13,7 +13,7 @@ export class PriorityList extends LitElementBase {
         return this;
     }
 
-    @property({ type: Array }) public declare items: any[];
+    @property({ type: Array }) public declare items: PriorityListItem[];
     @property({ type: Object }) public declare itemRenderer: (item: any) => unknown;
 
     @state() protected declare oldEntries: any[];
@@ -74,9 +74,9 @@ export class PriorityList extends LitElementBase {
 
         selectedElement.classList.remove('overlayed');
 
+        this.dispatchEvent(new CustomEvent('list-changed'));
         this.currentlyDraggedItemIndex = -1;
         this.currentlyDraggedOverItemIndex = -1;
-        //    this.notifyListChanged();
     }
 
     switchItems(index1: number, index2: number) {

@@ -62,7 +62,9 @@ export class LitElementBase extends LitElement {
         var CustomTooltip = window.customElements.get(
             'custom-tooltip'
         ) as typeof import('../native-components/custom-tooltip/custom-tooltip').CustomTooltip;
-        element.addEventListener('pointerover', (e: Event) => CustomTooltip.show(element.getAttribute('tooltip'), e));
+        element.addEventListener('pointerover', (e: Event) =>
+            CustomTooltip.show(element.getAttribute('tooltip'), e, (element.getAttribute('anchor') as any) ?? 'top')
+        );
         this.elementsWithTooltips.push(element);
     }
 

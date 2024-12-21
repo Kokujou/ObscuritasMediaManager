@@ -13,3 +13,5 @@ export const MeasurementUnits = [
     new MeasurementUnit({ measurement: Measurement.Pinch, name: 'Prise', shortName: 'Prise', multiplier: 1 }),
     new MeasurementUnit({ measurement: Measurement.Unitless, name: 'Unitless', shortName: '', multiplier: 1 }),
 ];
+
+export const ValuelessMeasurements = [Measurement.Pinch, Measurement.Unitless];

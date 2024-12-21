@@ -90,6 +90,7 @@ export function renderDropDownStyles() {
             background-color: var(--accent-color-full);
 
             overflow-y: auto;
+            overscroll-behavior: contain;
 
             z-index: 10;
         }

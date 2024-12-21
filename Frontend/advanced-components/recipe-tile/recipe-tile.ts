@@ -21,6 +21,7 @@ export class RecipeTile extends LitElementBase {
         super.connectedCallback();
 
         this.addEventListener('contextmenu', (e) => {
+            if (this.compact) return;
             e.preventDefault();
             ContextMenu.popup(getRecipeTileContextMenuItems.call(this), e);
         });

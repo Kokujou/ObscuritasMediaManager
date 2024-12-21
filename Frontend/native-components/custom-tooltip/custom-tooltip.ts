@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
 import { PageRouting } from '../../pages/page-routing/page-routing';
@@ -76,7 +76,7 @@ export class CustomTooltip extends LitElementBase {
 
     text: string;
     target: HTMLElement;
-    anchor = 'top';
+    @property({ reflect: true }) public declare anchor: 'top' | 'left' | 'bottom' | 'right';
 
     override render() {
         return renderTooltip.call(this);

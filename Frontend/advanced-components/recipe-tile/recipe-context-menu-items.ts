@@ -50,7 +50,7 @@ export function getRecipeTileContextMenuItems(this: RecipeTile) {
                     declineActionText: 'Nein',
                     noImplicitAccept: true,
                 });
-                await RecipeService.softDeleteRecipe(this.recipe.id!);
+                await RecipeService.hardDeleteRecipe(this.recipe.id!);
                 await MessageSnackbar.popup('Rezept erfolgreich gelöscht.', 'success');
                 Session.recipes.next(await RecipeService.getAllRecipes());
             } catch (err) {

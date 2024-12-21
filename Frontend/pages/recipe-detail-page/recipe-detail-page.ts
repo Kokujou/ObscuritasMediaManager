@@ -1,7 +1,7 @@
 import { customElement, property, query, state } from 'lit-element/decorators';
 import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher';
 import { LitElementBase } from '../../data/lit-element-base';
-import { MeasurementUnits } from '../../data/measurement-units';
+import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
@@ -33,7 +33,7 @@ export class RecipeDetailPage extends LitElementBase {
             description: 'Zutat-Beschreibung',
             groupName: 'Neue Gruppe',
             ingredientName: 'Neue Zutat',
-            unit: new MeasurementUnit(MeasurementUnits[0]),
+            unit: new MeasurementUnit(MeasurementUnits.find((x) => x.shortName == 'g')),
             ingredientCategory: IngredientCategory.Meat,
             order: 0,
         });
@@ -100,6 +100,7 @@ export class RecipeDetailPage extends LitElementBase {
 
         const ingredient = RecipeDetailPage.newIngredient;
         ingredient.groupName = group;
+        ingredient.order = this.recipe.ingredients.filter((x) => x.groupName == group).length;
         ingredient.id = await RecipeService.addIngredient(this.recipe.id!, ingredient);
         this.recipe.ingredients.push(ingredient);
         this.requestFullUpdate();
@@ -113,6 +114,7 @@ export class RecipeDetailPage extends LitElementBase {
 
     renameGroup(affectedIngredients: RecipeIngredientMappingModel[], newName: string) {
         for (var ingredient of affectedIngredients) ingredient.groupName = newName;
+        this.changeProperty('ingredients', this.recipe.ingredients);
 
         this.requestFullUpdate();
     }
@@ -130,12 +132,10 @@ export class RecipeDetailPage extends LitElementBase {
     }
 
     async changeNation() {
-        this.changeProperty('nation', await LanguageSwitcher.spawnAt(this.pageContainer, this.recipe.nation));
+        this.changeProperty('nation', await LanguageSwitcher.spawnAt(document.body, this.recipe.nation));
     }
 
     changeIngredientUnit(ingredient: RecipeIngredientMappingModel, unitName: string) {
-        console.log(this.recipe.ingredients.includes(ingredient));
-
         var unit = MeasurementUnits.find((x) => x.name == unitName);
         if (!unit) {
             MessageSnackbar.popup('Die ausgewählte Einheit ist nicht bekannt: ' + unitName, 'error');
@@ -143,6 +143,12 @@ export class RecipeDetailPage extends LitElementBase {
         }
 
         ingredient.unit = unit;
+        if (ValuelessMeasurements.includes(ingredient.unit.measurement)) ingredient.amount = 1;
+        this.changeProperty('ingredients', this.recipe.ingredients);
+    }
+
+    changeIngredientCategory(ingredient: RecipeIngredientMappingModel, category: IngredientCategory) {
+        ingredient.ingredientCategory = category;
         this.changeProperty('ingredients', this.recipe.ingredients);
     }
 
