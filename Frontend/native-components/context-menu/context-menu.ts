@@ -1,13 +1,14 @@
 import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { PageRouting } from '../../pages/page-routing/page-routing';
+import { Icons } from '../../resources/inline-icons/icon-registry';
 import { getScaleFactorX, getScaleFactorY } from '../../services/extensions/document.extensions';
 import { renderContextMenuStyles } from './context-menu.css';
 import { renderContextMenu } from './context-menu.html';
 
 export class ContextMenuItem {
     text: string;
-    icon: string;
+    icon: keyof typeof Icons;
     action: () => void;
 }
 

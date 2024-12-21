@@ -1,11 +1,11 @@
+import { PropertyValues } from 'lit-element';
 import { customElement, query, state } from 'lit-element/decorators';
 import { RecipeFilter } from '../../advanced-components/recipe-filter/recipe-filter';
 import { FilterEntry } from '../../data/filter-entry';
 import { LitElementBase } from '../../data/lit-element-base';
 import { RecipeSortingProperties } from '../../data/recipe-sorting-properties';
+import { Session } from '../../data/session';
 import { SortingDirections } from '../../data/sorting-directions';
-import { RecipeModel } from '../../obscuritas-media-manager-backend-client';
-import { RecipeService } from '../../services/backend.services';
 import { distinct, sortBy } from '../../services/extensions/array.extensions';
 import { RecipeFilterService } from '../../services/recipe-filter.service';
 import { renderRecipesPageStyles } from './recipes-page.css';
@@ -22,16 +22,18 @@ export class RecipesPage extends LitElementBase {
 
     get filteredRecipes() {
         if (!this.filterSidebar?.filter) return [];
-        var sorted = RecipeFilterService.filter(this.recipes ?? [], this.filterSidebar.filter);
+        var sorted = RecipeFilterService.filter(Session.recipes.current() ?? [], this.filterSidebar.filter);
         let sortingProperty = this.sortingProperty;
         if (sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[sortingProperty]);
+
+        for (var i = 0; i < 5; i++) sorted = sorted.concat(sorted);
+
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }
 
     @state() protected declare sortingProperty: keyof typeof RecipeSortingProperties;
     @state() protected declare sortingDirection: keyof typeof SortingDirections;
-    @state() protected declare recipes: RecipeModel[] | undefined;
 
     @query('recipe-filter') protected declare filterSidebar: RecipeFilter | undefined;
 
@@ -43,9 +45,15 @@ export class RecipesPage extends LitElementBase {
 
     override async connectedCallback() {
         super.connectedCallback();
-        this.recipes = await RecipeService.getAllRecipes();
-        for (var i = 0; i < 5; i++) this.recipes = this.recipes?.concat(this.recipes);
-        this.filterSidebar!.filter.ingredients = new FilterEntry(distinct(this.recipes.flatMap((x) => x.ingredientNames)));
+
+        Session.recipes.subscribe(() => this.requestFullUpdate(), true);
+    }
+
+    protected override firstUpdated(_changedProperties: PropertyValues): void {
+        super.firstUpdated(_changedProperties);
+        this.filterSidebar!.filter.ingredients = new FilterEntry(
+            distinct(Session.recipes.current().flatMap((x) => x.ingredientNames))
+        );
         this.requestFullUpdate();
     }
 

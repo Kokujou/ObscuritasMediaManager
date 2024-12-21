@@ -5,6 +5,12 @@ import { renderMaskImage } from '../../services/extensions/style.extensions';
 
 export function renderRecipeTileStyles() {
     return css`
+        :host {
+            display: inline-block;
+            width: var(--recipe-tile-width);
+            min-width: var(--recipe-tile-width);
+        }
+
         #content {
             width: var(--recipe-tile-width);
         }

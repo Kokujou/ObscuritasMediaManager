@@ -4,10 +4,6 @@ import { viewportHeight, viewportWidth } from '../../services/extensions/documen
 export function renderPageRoutingStyles() {
     return css`
         :host {
-            --accent-color: #222a;
-            --accent-color-full: #222;
-            --background-color: #444444ff;
-            --font-color: #ddd;
             display: inline-flex;
             background-position: 0 0;
             font-family: Arial, Helvetica, sans-serif;

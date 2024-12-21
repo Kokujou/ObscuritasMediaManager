@@ -1,11 +1,12 @@
-import { InstrumentModel, MediaModel, MusicModel } from '../obscuritas-media-manager-backend-client';
-import { MediaService, MusicService } from '../services/backend.services';
+import { InstrumentModel, MediaModel, MusicModel, RecipeModel } from '../obscuritas-media-manager-backend-client';
+import { MediaService, MusicService, RecipeService } from '../services/backend.services';
 import { Observable } from './observable';
 
 export class Session {
     static currentPage = new Observable('');
     static mediaList = new Observable<MediaModel[]>([]);
     static tracks = new Observable<MusicModel[]>([]);
+    static recipes = new Observable<RecipeModel[]>([]);
     static instruments = new Observable<InstrumentModel[]>([]);
 
     static initialized = false;
@@ -21,6 +22,9 @@ export class Session {
                 .catch((err) => console.error(err)),
             MusicService.getInstruments()
                 .then((list) => Session.instruments.next(list))
+                .catch((err) => console.error(err)),
+            RecipeService.getAllRecipes()
+                .then((list) => Session.recipes.next(list))
                 .catch((err) => console.error(err)),
         ];
 

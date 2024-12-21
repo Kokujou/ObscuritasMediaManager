@@ -25,6 +25,7 @@ export class RecipeFilterOptions {
     static fromJSON(text: string) {
         var object = JSON.parse(text);
         for (var key in object) if (object[key]?.states) Object.setPrototypeOf(object[key], FilterEntry.prototype);
+        object.maxDuration = Object.setPrototypeOf(object.maxDuration, TimeSpan.prototype);
         return object;
     }
 }

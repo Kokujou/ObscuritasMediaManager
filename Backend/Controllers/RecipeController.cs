@@ -63,4 +63,22 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
     {
         return recipeRepository.GetCookware(search);
     }
+
+    [HttpDelete("{recipeId}/soft")]
+    public async Task SoftDeleteRecipeAsync(Guid recipeId)
+    {
+        await recipeRepository.DeleteRecipeAsync(recipeId);
+    }
+
+    [HttpPost("{recipeId}/undelete")]
+    public async Task UndeleteRecipeAsync(Guid recipeId)
+    {
+        await recipeRepository.UndeleteRecipeAsync(recipeId);
+    }
+
+    [HttpDelete("{recipeId}/hard")]
+    public async Task HardDeleteRecipeAsync(Guid recipeId)
+    {
+        await recipeRepository.DeleteRecipeAsync(recipeId, true);
+    }
 }

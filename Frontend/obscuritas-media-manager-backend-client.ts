@@ -2043,6 +2043,108 @@ export class RecipeClient {
         }
         return Promise.resolve<string[]>(null as any);
     }
+
+    softDeleteRecipe(recipeId: string, signal?: AbortSignal): Promise<void> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/soft";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processSoftDeleteRecipe(_response);
+        });
+    }
+
+    protected processSoftDeleteRecipe(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    undeleteRecipe(recipeId: string, signal?: AbortSignal): Promise<void> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/undelete";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUndeleteRecipe(_response);
+        });
+    }
+
+    protected processUndeleteRecipe(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    hardDeleteRecipe(recipeId: string, signal?: AbortSignal): Promise<void> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/hard";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processHardDeleteRecipe(_response);
+        });
+    }
+
+    protected processHardDeleteRecipe(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
 }
 
 export class MusicModel implements IMusicModel {
@@ -3103,6 +3205,7 @@ export class RecipeModel implements IRecipeModel {
     cookingTime!: string;
     totalTime!: string;
     formattedText!: string | null;
+    deleted!: boolean;
     ingredients!: RecipeIngredientMappingModel[];
     cookware!: RecipeCookwareMappingModel[];
     ingredientNames!: string[];
@@ -3140,6 +3243,7 @@ export class RecipeModel implements IRecipeModel {
             this.cookingTime = _data["cookingTime"] !== undefined ? _data["cookingTime"] : <any>null;
             this.totalTime = _data["totalTime"] !== undefined ? _data["totalTime"] : <any>null;
             this.formattedText = _data["formattedText"] !== undefined ? _data["formattedText"] : <any>null;
+            this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : <any>null;
             if (Array.isArray(_data["ingredients"])) {
                 this.ingredients = [] as any;
                 for (let item of _data["ingredients"])
@@ -3202,6 +3306,7 @@ export class RecipeModel implements IRecipeModel {
         data["cookingTime"] = this.cookingTime !== undefined ? this.cookingTime : <any>null;
         data["totalTime"] = this.totalTime !== undefined ? this.totalTime : <any>null;
         data["formattedText"] = this.formattedText !== undefined ? this.formattedText : <any>null;
+        data["deleted"] = this.deleted !== undefined ? this.deleted : <any>null;
         if (Array.isArray(this.ingredients)) {
             data["ingredients"] = [];
             for (let item of this.ingredients)
@@ -3251,6 +3356,7 @@ export interface IRecipeModel {
     cookingTime: string;
     totalTime: string;
     formattedText: string | null;
+    deleted: boolean;
     ingredients: RecipeIngredientMappingModel[];
     cookware: RecipeCookwareMappingModel[];
     ingredientNames: string[];

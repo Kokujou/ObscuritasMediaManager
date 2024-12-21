@@ -2,7 +2,6 @@ import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../../data/lit-element-base';
 import { ContextMenu, ContextMenuItem } from '../../../native-components/context-menu/context-menu';
 import { MusicModel } from '../../../obscuritas-media-manager-backend-client';
-import { Icons } from '../../../resources/inline-icons/icon-registry';
 import { renderAudioTileStyles } from './audio-tile.css';
 import { renderAudioTile } from './audio-tile.html';
 
@@ -31,22 +30,22 @@ export class AudioTile extends LitElementBase {
                 {
                     text: 'Kopieren',
                     action: () => this.dispatchEvent(new CustomEvent('clipboard')),
-                    icon: Icons.Clipboard,
+                    icon: 'Clipboard',
                 },
             ];
             var softDeleteItem: ContextMenuItem = {
                 text: 'In Papierkorb verschieben',
-                icon: Icons.Trash,
+                icon: 'Trash',
                 action: () => this.dispatchEvent(new CustomEvent('soft-delete')),
             };
             var hardDeleteItem: ContextMenuItem = {
                 text: 'Endgültig löschen',
-                icon: Icons.Trash,
+                icon: 'Trash',
                 action: () => this.dispatchEvent(new CustomEvent('hard-delete')),
             };
             var restoreItem: ContextMenuItem = {
                 text: 'Wiederherstellen',
-                icon: Icons.Revert,
+                icon: 'Revert',
                 action: () => this.dispatchEvent(new CustomEvent('restore')),
             };
 

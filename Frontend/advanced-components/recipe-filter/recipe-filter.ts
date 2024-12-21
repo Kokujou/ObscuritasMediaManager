@@ -25,12 +25,8 @@ export class RecipeFilter extends LitElementBase {
         super();
 
         var cachedFilterString = localStorage.getItem('recipes.filter');
-        try {
-            if (!cachedFilterString) throw null;
-            this.filter = RecipeFilterOptions.fromJSON(JSON.parse(cachedFilterString));
-        } catch {
-            this.filter = new RecipeFilterOptions();
-        }
+        this.filter = new RecipeFilterOptions();
+        if (cachedFilterString) this.filter = RecipeFilterOptions.fromJSON(cachedFilterString);
 
         this.sortingProperty = 'unset';
         this.sortingDirection = 'ascending';

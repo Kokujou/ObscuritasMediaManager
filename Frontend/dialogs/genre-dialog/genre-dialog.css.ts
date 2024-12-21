@@ -19,10 +19,6 @@ export function renderGenreDialogStyles() {
             z-index: 1;
         }
 
-        custom-toggle {
-            --accent-color-full: gray;
-        }
-
         #search-input {
             all: unset;
             padding: 10px;

@@ -12,96 +12,89 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
     return html`
         <page-layout>
             <div id="page-container">
-                <form id="create-recipe-form" @submit="${(e: SubmitEvent) => this.submit(e)}">
-                    <div id="image-ingredients-container">
-                        <div id="ingredient-container">
-                            <input
-                                type="text"
-                                id="title"
-                                .value="${this.recipe.title}"
-                                onclick="javascript:this.select()"
-                                @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
-                                @change="${(e: Event) => this.changeProperty('title', (e.target as HTMLInputElement).value)}"
-                            />
-                            ${Object.entries(groupBy(this.recipe.ingredients, 'groupName')).map((group) =>
-                                renderIngredientGroup.call(this, group)
-                            )}
-                            <button
-                                tabindex="0"
-                                id="add-group-link"
-                                @click="${(e: Event) => this.addIngredient('Neue Gruppe', e)}"
-                            >
-                                + Gruppe hinzufügen
-                            </button>
-                        </div>
-                        <recipe-tile
-                            .recipe="${this.recipe}"
-                            compact
-                            @change-nation="${() => this.changeNation()}"
-                            @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
-                                this.changeProperty('imageUrl', e.detail.imageData)}"
-                            @remove-image="${() => this.changeProperty('imageUrl', null)}"
-                            @ratingChanged="${(e: CustomEvent<{ rating: number; include: boolean }>) =>
-                                (e.composedPath()[0] as StarRating).swords
-                                    ? this.changeProperty('difficulty', e.detail.rating)
-                                    : this.changeProperty('rating', e.detail.rating)}"
-                        ></recipe-tile>
+                <div id="image-ingredients-container">
+                    <div id="ingredient-container">
+                        <input
+                            type="text"
+                            id="title"
+                            .value="${this.recipe.title}"
+                            onclick="javascript:this.select()"
+                            @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
+                            @change="${(e: Event) => this.changeProperty('title', (e.target as HTMLInputElement).value)}"
+                        />
+                        ${Object.entries(groupBy(this.recipe.ingredients, 'groupName')).map((group) =>
+                            renderIngredientGroup.call(this, group)
+                        )}
+                        <button tabindex="0" id="add-group-link" @click="${(e: Event) => this.addIngredient('Neue Gruppe', e)}">
+                            + Gruppe hinzufügen
+                        </button>
                     </div>
+                    <recipe-tile
+                        .recipe="${this.recipe}"
+                        compact
+                        @change-nation="${() => this.changeNation()}"
+                        @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
+                            this.changeProperty('imageUrl', e.detail.imageData)}"
+                        @remove-image="${() => this.changeProperty('imageUrl', null)}"
+                        @ratingChanged="${(e: CustomEvent<{ rating: number; include: boolean }>) =>
+                            (e.composedPath()[0] as StarRating).swords
+                                ? this.changeProperty('difficulty', e.detail.rating)
+                                : this.changeProperty('rating', e.detail.rating)}"
+                    ></recipe-tile>
+                </div>
 
-                    <div id="description-area">
-                        <div class="description-section" id="dropdown-section">
-                            <div class="description-input">
-                                <div class="input-title">Gang:</div>
-                                <drop-down
-                                    id="course"
-                                    tabindex="0"
-                                    .options="${DropDownOption.createSimpleArray(Object.values(Course), this.recipe.course)}"
-                                    @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
-                                        this.changeProperty('course', e.detail.option.value)}"
-                                ></drop-down>
-                            </div>
-                            <div class="description-input">
-                                <div class="input-title">Zubereitungsart:</div>
-                                <drop-down
-                                    id="technique"
-                                    tabindex="0"
-                                    .options="${DropDownOption.createSimpleArray(
-                                        Object.values(CookingTechnique),
-                                        this.recipe.technique
-                                    )}"
-                                    @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
-                                        this.changeProperty('technique', e.detail.option.value)}"
-                                ></drop-down>
-                            </div>
+                <div id="description-area">
+                    <div class="description-section" id="dropdown-section">
+                        <div class="description-input">
+                            <div class="input-title">Gang:</div>
+                            <drop-down
+                                id="course"
+                                tabindex="0"
+                                .options="${DropDownOption.createSimpleArray(Object.values(Course), this.recipe.course)}"
+                                @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
+                                    this.changeProperty('course', e.detail.option.value)}"
+                            ></drop-down>
                         </div>
-                        <div class="description-section" id="times-section">
-                            <div class="description-input">
-                                <div class="input-title">Vorbereitungsdauer:</div>
-                                <duration-input
-                                    id="preparation-time"
-                                    .timespan="${TimeSpan.fromString(this.recipe.preparationTime)}"
-                                    @duration-changed="${(e: CustomEvent<string>) =>
-                                        this.changeProperty('preparationTime', e.detail)}"
-                                ></duration-input>
-                            </div>
-                            <div class="description-input">
-                                <div class="input-title">Kochdauer:</div>
-                                <duration-input
-                                    id="cooking-time"
-                                    .timespan="${TimeSpan.fromString(this.recipe.cookingTime)}"
-                                    @duration-changed="${(e: CustomEvent<string>) =>
-                                        this.changeProperty('cookingTime', e.detail)}"
-                                ></duration-input>
-                            </div>
-                            <div class="description-input">
-                                <div class="input-title">Gesamtdauer:</div>
-                                <duration-input
-                                    disabled
-                                    id="total-time"
-                                    .timespan="${TimeSpan.fromString(this.recipe.totalTime)}"
-                                    @duration-changed="${(e: CustomEvent<string>) => this.changeProperty('totalTime', e.detail)}"
-                                ></duration-input>
-                            </div>
+                        <div class="description-input">
+                            <div class="input-title">Zubereitungsart:</div>
+                            <drop-down
+                                id="technique"
+                                tabindex="0"
+                                .options="${DropDownOption.createSimpleArray(
+                                    Object.values(CookingTechnique),
+                                    this.recipe.technique
+                                )}"
+                                @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
+                                    this.changeProperty('technique', e.detail.option.value)}"
+                            ></drop-down>
+                        </div>
+                    </div>
+                    <div class="description-section" id="times-section">
+                        <div class="description-input">
+                            <div class="input-title">Vorbereitungsdauer:</div>
+                            <duration-input
+                                id="preparation-time"
+                                .timespan="${TimeSpan.fromString(this.recipe.preparationTime)}"
+                                @duration-changed="${(e: CustomEvent<string>) =>
+                                    this.changeProperty('preparationTime', e.detail)}"
+                            ></duration-input>
+                        </div>
+                        <div class="description-input">
+                            <div class="input-title">Kochdauer:</div>
+                            <duration-input
+                                id="cooking-time"
+                                .timespan="${TimeSpan.fromString(this.recipe.cookingTime)}"
+                                @duration-changed="${(e: CustomEvent<string>) => this.changeProperty('cookingTime', e.detail)}"
+                            ></duration-input>
+                        </div>
+                        <div class="description-input">
+                            <div class="input-title">Gesamtdauer:</div>
+                            <duration-input
+                                disabled
+                                id="total-time"
+                                .timespan="${TimeSpan.fromString(this.recipe.totalTime)}"
+                                @duration-changed="${(e: CustomEvent<string>) => this.changeProperty('totalTime', e.detail)}"
+                            ></duration-input>
                         </div>
                     </div>
                     <textarea
@@ -111,12 +104,13 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                         .value="${this.recipe.formattedText ?? ''}"
                     >
                     </textarea>
-                    <div id="action-area">
-                        ${!this.recipe.id
-                            ? html` <input type="submit" value="Erstellen" @click="${() => this.createRecipe()}" /> `
-                            : ''}
-                    </div>
-                </form>
+                </div>
+
+                <div id="action-area">
+                    ${!this.recipe.id
+                        ? html` <div class="action-button" @click="${() => this.createRecipe()}">Erstellen</div> `
+                        : ''}
+                </div>
             </div>
         </page-layout>
     `;

@@ -4,6 +4,7 @@ import { SortingDirections } from '../../data/sorting-directions';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { RecipeDetailPage } from '../recipe-detail-page/recipe-detail-page';
 import { RecipesPage } from './recipes-page';
+import { Session } from '../../data/session';
 
 export function renderRecipesPage(this: RecipesPage) {
     return html`
@@ -33,7 +34,9 @@ export function renderRecipesPage(this: RecipesPage) {
                             }>
                         ) => this.updateSorting(e.detail.property, e.detail.direction)}"
                     ></recipe-filter>
-                    <div id="result-count-label">${this.filteredRecipes.length} von ${this.recipes?.length ?? 0} Rezepte</div>
+                    <div id="result-count-label">
+                        ${this.filteredRecipes.length} von ${Session.recipes.current()?.length ?? 0} Rezepte
+                    </div>
                 </div>
             </div>
         </page-layout>

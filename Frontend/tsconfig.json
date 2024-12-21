@@ -25,6 +25,7 @@
         "**/*.stories*",
         "**/.storybook/**",
         "**/obscuritas-media-manager-backend-client.ts",
+        "obscuritas-media-manager-backend-client.ts",
         "**/bin/**",
         "**/obj/**"
     ],

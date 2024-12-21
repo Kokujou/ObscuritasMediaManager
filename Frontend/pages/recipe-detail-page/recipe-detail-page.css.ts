@@ -3,34 +3,37 @@ import { css } from 'lit-element';
 export function renderRecipeDetailPageStyles() {
     return css`
         page-layout {
-            position: absolute;
-            inset: 0;
             font-size: 18px;
         }
 
         #page-container {
-            position: absolute;
-            inset: 0;
+            width: 100%;
             border-radius: 50px;
-            margin-left: 10px;
+            padding: 20px;
+            box-sizing: border-box;
             overflow: hidden;
 
-            background: #222;
+            display: inline-flex;
+            flex-direction: column;
         }
 
-        #create-recipe-form {
-            position: absolute;
-            inset: 10px;
-            top: 25px;
-            bottom: 25px;
-            padding: 25px;
-            margin: 0 !important;
+        #image-ingredients-container {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+        }
+
+        #ingredient-container {
             display: flex;
             flex-direction: column;
 
-            overflow-y: scroll;
-            overflow-x: hidden;
-            scrollbar-width: thin;
+            min-height: 300px;
+            flex: auto;
+            padding: 20px;
+            border-radius: 20px;
+            box-sizing: padding-box;
+
+            background: var(--accent-color);
         }
 
         #title {
@@ -41,20 +44,6 @@ export function renderRecipeDetailPageStyles() {
             width: 800px;
             flex: unset;
             --label-height: auto;
-        }
-
-        #image-ingredients-container {
-            display: flex;
-            flex-direction: row;
-        }
-
-        #ingredient-container {
-            display: flex;
-            flex-direction: column;
-
-            min-height: 300px;
-            flex: auto;
-            margin-right: 10px;
         }
 
         #ingredients-section-title {
@@ -132,6 +121,10 @@ export function renderRecipeDetailPageStyles() {
             gap: 20px;
             margin-top: 50px;
             margin-bottom: 50px;
+            padding: 20px;
+            border-radius: 20px;
+
+            background: var(--accent-color);
         }
 
         .description-section {
@@ -159,6 +152,7 @@ export function renderRecipeDetailPageStyles() {
             padding: 10px 10px;
             --icon-size: 25px;
             width: 300px;
+            box-sizing: border-box;
 
             background: transparent;
             color: inherit;
@@ -174,10 +168,41 @@ export function renderRecipeDetailPageStyles() {
         #recipe-text {
             border: none;
             outline: none;
-            background: lightgray;
-            font-size: 18px;
             min-height: 200px;
             margin-bottom: 50px;
+            border-radius: 20px;
+            padding: 10px;
+            border: 3px dashed;
+
+            background: var(--accent-color-full);
+            font: inherit;
+            color: inherit;
+            font-size: 18px;
+        }
+
+        #action-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-button {
+            padding: 25px 50px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(130deg, transparent 0 20%, #fff5, transparent 40% 90%), #0009;
+
+            box-shadow: 0 0 10px white inset, 0 0 20px #440055, 0 0 20px #440055, 0 0 20px #440055;
+            text-shadow: 0 0 10px black;
+
+            font-size: 30px;
+            color: lightgray;
+
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            background: linear-gradient(130deg, transparent 0 20%, #fff8, transparent 40% 90%), #3039;
         }
     `;
 }

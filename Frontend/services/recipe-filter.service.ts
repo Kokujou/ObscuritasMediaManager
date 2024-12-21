@@ -7,6 +7,7 @@ export class RecipeFilterService {
     static filter(recipes: RecipeModel[], filter: RecipeFilterOptions) {
         var filteredRecipes = [...recipes];
 
+        ObjectFilterService.applyValueFilter(filteredRecipes, filter.showDeleted, 'deleted');
         ObjectFilterService.applyMultiPropertySearch(filteredRecipes, filter.search ?? '', 'title', 'formattedText');
         ObjectFilterService.applyPropertyFilter(filteredRecipes, filter.courses, 'course');
         ObjectFilterService.applyPropertyFilter(filteredRecipes, filter.techniques, 'technique');

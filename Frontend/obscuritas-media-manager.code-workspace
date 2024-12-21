@@ -26,6 +26,12 @@
         },
         "typescript.enablePromptUseWorkspaceTsdk": true,
         "files.watcherInclude": ["**/*.ts"],
+        "files.watcherExclude": {
+            "**/.git/objects/**": true,
+            "**/.git/subtree-cache/**": true,
+            "**/.hg/store/**": true,
+            "**/obscuritas-media-manager-backend-client.ts": true
+        },
         "typescript.preferences.importModuleSpecifierEnding": "minimal",
         "typescript.tsserver.experimental.enableProjectDiagnostics": false
     },

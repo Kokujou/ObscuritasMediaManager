@@ -72,7 +72,6 @@ export function renderEditPlaylistDialogStyles() {
         }
 
         drop-down {
-            --accent-color-full: #333;
             width: 250px;
         }
 

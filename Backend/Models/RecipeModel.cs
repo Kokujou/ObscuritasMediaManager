@@ -26,6 +26,7 @@ public class RecipeModel
     public TimeSpan CookingTime { get; set; }
     public TimeSpan TotalTime => PreparationTime + CookingTime;
     [MaxLength(9999)] public string? FormattedText { get; set; }
+    public bool Deleted { get; set; }
 
     [ForeignKey(nameof(RecipeIngredientMappingModel.RecipeId))]
     public IEnumerable<RecipeIngredientMappingModel> Ingredients { get; set; } = null!;
