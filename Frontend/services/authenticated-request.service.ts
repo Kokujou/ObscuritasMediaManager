@@ -1,4 +1,5 @@
 import { LoginPage } from '../pages/login-page/login-page';
+import { MaintenancePage } from '../pages/maintenance-page/maintenance-page';
 import { changePage } from './extensions/url.extension';
 
 export class AuthenticatedRequestService {
@@ -15,6 +16,8 @@ export class AuthenticatedRequestService {
 
             if (response.status == 401) {
                 changePage(LoginPage);
+            } else if (response.status == 503) {
+                changePage(MaintenancePage);
             }
 
             if (response.status > 400) throw { httpStatus: response.status };

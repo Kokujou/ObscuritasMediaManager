@@ -62,7 +62,7 @@ function renderGenreSection(this: GenreDialog, sectionName: string, genres: Genr
 
 function renderGenre(this: GenreDialog, genre: GenreModel) {
     return html`<tri-value-checkbox
-        .allowThreeValues="${this.options.allowThreeValues}"
+        ?allowThreeValues="${this.options.allowThreeValues}"
         @valueChanged="${(e: CustomEvent<{ value: CheckboxState }>) => this.handleGenreSelection(e.detail, genre)}"
         .value="${this.getValue(genre)}"
         .ignoredState="${this.options.ignoredState}"

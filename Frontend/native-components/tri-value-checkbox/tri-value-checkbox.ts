@@ -2,13 +2,13 @@ import { customElement, property } from 'lit-element/decorators';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Enum } from '../../services/extensions/enum.extensions';
-import { renderTriValueCheckbox } from './tri-value-checkbox.css';
-import { renderTriValueCheckboxStyles } from './tri-value-checkbox.html';
+import { renderTriValueCheckboxStyles } from './tri-value-checkbox.css';
+import { renderTriValueCheckbox } from './tri-value-checkbox.html';
 
 @customElement('tri-value-checkbox')
 export class TriValueCheckbox extends LitElementBase {
     static override get styles() {
-        return renderTriValueCheckbox();
+        return renderTriValueCheckboxStyles();
     }
 
     @property({ reflect: true }) public declare value: CheckboxState;
@@ -23,7 +23,7 @@ export class TriValueCheckbox extends LitElementBase {
     }
 
     override render() {
-        return renderTriValueCheckboxStyles.call(this);
+        return renderTriValueCheckbox.call(this);
     }
 
     firstUpdated(_changedProperties: Map<any, any>) {

@@ -20,6 +20,7 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         MediaModel.Configure(modelBuilder);
 
         modelBuilder.Entity<MusicModel>()
@@ -46,7 +47,10 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
         modelBuilder.AddEnumConversion();
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-        foreach (var navigation in entityType.GetNavigations())
-            navigation.SetIsEagerLoaded(true);
+        {
+            foreach (var navigation in entityType.GetNavigations()) navigation.SetIsEagerLoaded(true);
+            foreach (var navigation in entityType.GetSkipNavigations().Where(x => x.PropertyInfo is not null))
+                navigation.SetIsEagerLoaded(true);
+        }
     }
 }

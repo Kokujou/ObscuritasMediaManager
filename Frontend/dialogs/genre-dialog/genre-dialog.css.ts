@@ -30,6 +30,9 @@ export function renderGenreDialogStyles() {
             height: 450px;
             width: 700px;
             overflow-y: auto;
+
+            display: flex;
+            flex-direction: column;
         }
 
         .genre-section {
@@ -38,6 +41,9 @@ export function renderGenreDialogStyles() {
             padding-bottom: 20px;
             margin-left: 10px;
             margin-right: 10px;
+
+            display: flex;
+            flex-direction: column;
         }
 
         .genre-section::after {

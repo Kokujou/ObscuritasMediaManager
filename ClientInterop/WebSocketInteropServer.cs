@@ -19,7 +19,7 @@ public class WebSocketInteropServer() : WebSocketServer("ws://localhost:8005")
 
     public static void SendEventTo<T>(Guid clientId, T response) where T : IInteropEvent
     {
-        Clients[clientId].SendEvent(response);
+        Clients.GetValueOrDefault(clientId)?.SendEvent(response);
     }
 
     public static Guid AddClient(WebSocketInteropClient client)
@@ -45,11 +45,11 @@ public class WebSocketInteropServer() : WebSocketServer("ws://localhost:8005")
         try
         {
             await commandHandler.ExecuteAsync(request.Payload);
-            Clients[clientId].RespondOnCommand(request, ResponseStatus.Success);
+            Clients.GetValueOrDefault(clientId)?.RespondOnCommand(request, ResponseStatus.Success);
         }
         catch (Exception ex)
         {
-            Clients[clientId].RespondOnCommand(request, ResponseStatus.Error, ex.ToString());
+            Clients.GetValueOrDefault(clientId)?.RespondOnCommand(request, ResponseStatus.Error, ex.ToString());
         }
     }
 
@@ -59,11 +59,11 @@ public class WebSocketInteropServer() : WebSocketServer("ws://localhost:8005")
         try
         {
             var result = await queryHandler.ExecuteAsync(deserialized.Payload);
-            Clients[clientId].RespondOnQuery(deserialized, result, ResponseStatus.Success);
+            Clients.GetValueOrDefault(clientId)?.RespondOnQuery(deserialized, result, ResponseStatus.Success);
         }
         catch (Exception ex)
         {
-            Clients[clientId].RespondOnQuery(deserialized, null, ResponseStatus.Error, ex.Message);
+            Clients.GetValueOrDefault(clientId)?.RespondOnQuery(deserialized, null, ResponseStatus.Error, ex.Message);
         }
     }
 

@@ -77,20 +77,24 @@ public static class AudioService
 
             var decoder = OpusCodecFactory.CreateDecoder(48000, 1);
             var oggIn = new OpusOggReadStream(decoder, fileIn);
-            while (oggIn.HasNextPacket)
+
+            Task.Run(() =>
             {
-                var packet = oggIn.DecodeNextPacket();
-                if (packet == null)
-                    continue;
-
-                foreach (var t in packet)
+                while (oggIn.HasNextPacket)
                 {
-                    var bytes = BitConverter.GetBytes(t);
-                    pcmStream.Write(bytes, 0, bytes.Length);
-                }
-            }
+                    var packet = oggIn.DecodeNextPacket();
+                    if (packet == null)
+                        continue;
 
-            pcmStream.Position = 0;
+                    foreach (var t in packet)
+                    {
+                        var bytes = BitConverter.GetBytes(t);
+                        pcmStream.Write(bytes, 0, bytes.Length);
+                    }
+                }
+
+                pcmStream.Position = 0;
+            }).Wait();
             _reader = new RawSourceWaveStream(pcmStream, new(48000, 1));
         }
 

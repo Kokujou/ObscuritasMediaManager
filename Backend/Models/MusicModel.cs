@@ -32,8 +32,6 @@ public class MusicModel
                 x => x.HasOne<InstrumentModel>().WithMany().HasForeignKey(y => y.InstrumentId)
                     .HasPrincipalKey(y => y.Id),
                 x => x.HasOne<MusicModel>().WithMany().HasForeignKey(y => y.TrackHash).HasPrincipalKey(y => y.Hash));
-
-        entity.Navigation(x => x.Instruments);
     }
 
     [MaxLength(255)] public string Name { get; set; } = null!;

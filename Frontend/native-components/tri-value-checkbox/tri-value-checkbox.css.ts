@@ -1,9 +1,9 @@
 import { css } from 'lit-element';
 
-export function renderTriValueCheckbox() {
+export function renderTriValueCheckboxStyles() {
     return css`
         :host {
-            display: inline-block;
+            display: inline-flex;
 
             --forbid-color: #cc555555;
             --allow-color: #55cc5555;
