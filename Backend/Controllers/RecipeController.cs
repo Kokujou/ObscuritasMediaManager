@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ObscuritasMediaManager.Backend.Controllers.Responses;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Models;
 
@@ -38,6 +39,13 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
         if (!await recipeRepository.ExistsAsync(recipe.Id!.Value)) throw new("recipe not found");
 
         await recipeRepository.UpdateRecipeAsync(recipe);
+    }
+
+    [HttpPost("ingredients/search/{search}")]
+    public IQueryable<IngredientResponse> SearchIngredients(string search,
+        [FromQuery] int maxItems = 5)
+    {
+        return recipeRepository.SearchItems(search, maxItems).Select(IngredientResponse.FromRecipeMapping);
     }
 
     [HttpPost("{recipeId}/ingredient")]

@@ -3,11 +3,13 @@ import { LanguageSwitcher } from '../../advanced-components/language-switcher/la
 import { LitElementBase } from '../../data/lit-element-base';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
+import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
     CookingTechnique,
     Course,
     IngredientCategory,
+    IngredientResponse,
     Language,
     MeasurementUnit,
     RecipeIngredientMappingModel,
@@ -149,6 +151,26 @@ export class RecipeDetailPage extends LitElementBase {
 
     changeIngredientCategory(ingredient: RecipeIngredientMappingModel, category: IngredientCategory) {
         ingredient.ingredientCategory = category;
+        this.changeProperty('ingredients', this.recipe.ingredients);
+    }
+
+    async searchIngredients(ingredient: RecipeIngredientMappingModel, search: string) {
+        return [{ id: search, text: '+ Zutat hinzufügen' } as AutocompleteItem].concat(
+            (await RecipeService.searchIngredients(search)).map((x) =>
+                Object.assign(x, { id: x.name, text: x.name } as AutocompleteItem)
+            )
+        );
+    }
+
+    updateIngredient(source: RecipeIngredientMappingModel, target: IngredientResponse & AutocompleteItem) {
+        source.ingredientName = target.id;
+
+        if (target instanceof IngredientResponse) {
+            source.ingredientCategory = target.category;
+            if (source.unit.measurement != target.measurement)
+                source.unit = MeasurementUnits.find((x) => x.measurement == target.measurement)!;
+        }
+
         this.changeProperty('ingredients', this.recipe.ingredients);
     }
 

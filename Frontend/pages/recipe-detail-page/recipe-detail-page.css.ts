@@ -89,6 +89,10 @@ export function renderRecipeDetailPageStyles() {
             min-width: 150px;
         }
 
+        .ingredient-name {
+            width: 200px;
+        }
+
         #add-ingredient-link,
         #add-group-link {
             font: inherit;
@@ -107,7 +111,7 @@ export function renderRecipeDetailPageStyles() {
         }
 
         .ingredient-description {
-            flex: auto;
+            width: 200px;
         }
 
         recipe-tile {
@@ -132,8 +136,14 @@ export function renderRecipeDetailPageStyles() {
             background: white;
             width: 25px;
             height: 25px;
+            margin: 2px;
 
             cursor: pointer;
+        }
+
+        .ingredient-category-icon-wrapper:focus {
+            border: 2px dashed;
+            outline: none;
         }
 
         .description-section {

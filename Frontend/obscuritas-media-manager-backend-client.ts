@@ -1918,6 +1918,56 @@ export class RecipeClient {
         return Promise.resolve<RecipeModel>(null as any);
     }
 
+    searchIngredients(search: string, maxItems?: number | undefined, signal?: AbortSignal): Promise<IngredientResponse[]> {
+        let url_ = this.baseUrl + "/api/Recipe/ingredients/search/{search}?";
+        if (search === undefined || search === null)
+            throw new Error("The parameter 'search' must be defined.");
+        url_ = url_.replace("{search}", encodeURIComponent("" + search));
+        if (maxItems === null)
+            throw new Error("The parameter 'maxItems' cannot be null.");
+        else if (maxItems !== undefined)
+            url_ += "maxItems=" + encodeURIComponent("" + maxItems) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processSearchIngredients(_response);
+        });
+    }
+
+    protected processSearchIngredients(response: Response): Promise<IngredientResponse[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(IngredientResponse.fromJS(item, _mappings));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<IngredientResponse[]>(null as any);
+    }
+
     addIngredient(recipeId: string, ingredient: RecipeIngredientMappingModel, signal?: AbortSignal): Promise<string> {
         let url_ = this.baseUrl + "/api/Recipe/{recipeId}/ingredient";
         if (recipeId === undefined || recipeId === null)
@@ -3583,6 +3633,56 @@ export class RecipeCookwareMappingModel implements IRecipeCookwareMappingModel {
 export interface IRecipeCookwareMappingModel {
     recipeId: string;
     name: string;
+}
+
+export class IngredientResponse implements IIngredientResponse {
+    name!: string;
+    category!: IngredientCategory;
+    measurement!: Measurement;
+
+    constructor(data?: Partial<IIngredientResponse>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.category = _data["category"] !== undefined ? _data["category"] : <any>null;
+            this.measurement = _data["measurement"] !== undefined ? _data["measurement"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): IngredientResponse | null {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<IngredientResponse>(data, _mappings, IngredientResponse);
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["category"] = this.category !== undefined ? this.category : <any>null;
+        data["measurement"] = this.measurement !== undefined ? this.measurement : <any>null;
+        return data;
+    }
+
+    clone(): IngredientResponse {
+        const json = this.toJSON();
+        let result = new IngredientResponse();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IIngredientResponse {
+    name: string;
+    category: IngredientCategory;
+    measurement: Measurement;
 }
 
 function jsonParse(json: any, reviver?: any) {

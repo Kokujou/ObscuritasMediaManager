@@ -74,4 +74,11 @@ public class RecipeRepository(DatabaseContext databaseContext)
         await databaseContext.Recipes.Where(x => x.Id == recipeId && x.Deleted)
             .ExecuteUpdateAsync(x => x.SetProperty(y => y.Deleted, false));
     }
+
+    public IQueryable<RecipeIngredientMappingModel> SearchItems(string search, int maxItems)
+    {
+        return databaseContext.Set<RecipeIngredientMappingModel>()
+            .Where(x => x.IngredientName.ToLower().Contains(search.ToLower()))
+            .Take(maxItems);
+    }
 }

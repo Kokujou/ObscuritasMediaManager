@@ -2,6 +2,7 @@ import { html } from 'lit-element';
 import { StarRating } from '../../advanced-components/star-rating/star-rating';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
+import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
 import { GroupedDropdownResult } from '../../native-components/grouped-dropdown/grouped-dropdown';
@@ -9,6 +10,7 @@ import {
     CookingTechnique,
     Course,
     IngredientCategory,
+    IngredientResponse,
     RecipeIngredientMappingModel,
 } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
@@ -173,14 +175,14 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
             @selectionChange="${(e: CustomEvent<GroupedDropdownResult>) =>
                 this.changeIngredientUnit(ingredient2, e.detail.value!)}"
         ></grouped-dropdown>
-        <input
+        <autocomplete-input
             type="text"
             class="ingredient-name"
-            .value="${ingredient.ingredientName}"
-            onclick="javascript:this.select()"
-            @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
-            @change="${(e: Event) => (ingredient.ingredientName = (e.target as HTMLInputElement).value)}"
-        />
+            .value="${{ id: ingredient.ingredientName, text: ingredient.ingredientName }}"
+            .searchItems="${(search: string) => this.searchIngredients(ingredient, search)}"
+            @value-changed="${(e: CustomEvent<AutocompleteItem & IngredientResponse>) =>
+                this.updateIngredient(ingredient, e.detail)}"
+        ></autocomplete-input>
 
         <input
             type="text"
@@ -192,9 +194,10 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
         />
         <div class="ingredient-category">${ingredient.ingredientCategory}</div>
         <div
-            class="ingredient-category-icon"
-            icon="${Icons.Category}"
+            class="ingredient-category-icon-wrapper"
             tooltip="${ingredient.ingredientCategory}"
+            tabindex="0"
+            onkeydown="javascript: if("
             @click="${(e: PointerEvent) =>
                 ContextMenu.popup(
                     Object.values(IngredientCategory)
@@ -209,7 +212,9 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
                         ),
                     e
                 )}"
-        ></div>
+        >
+            <div class="ingredient-category-icon" icon="${Icons.Category}"></div>
+        </div>
     </div>`;
 }
 
