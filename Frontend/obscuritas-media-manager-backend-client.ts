@@ -3522,7 +3522,12 @@ export enum IngredientCategory {
     Fish = "Fish",
     Vegetables = "Vegetables",
     Fruits = "Fruits",
-    Sweets = "Sweets",
+    Dairy = "Dairy",
+    Eggs = "Eggs",
+    Nuts = "Nuts",
+    Drinks = "Drinks",
+    Condiments = "Condiments",
+    Oil = "Oil",
     Miscellaneous = "Miscellaneous",
 }
 

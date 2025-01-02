@@ -26,8 +26,6 @@ export class RecipesPage extends LitElementBase {
         let sortingProperty = this.sortingProperty;
         if (sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[sortingProperty]);
 
-        for (var i = 0; i < 5; i++) sorted = sorted.concat(sorted);
-
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }

@@ -8,7 +8,8 @@ import { renderContextMenu } from './context-menu.html';
 
 export class ContextMenuItem {
     text: string;
-    icon: keyof typeof Icons;
+    icon?: keyof typeof Icons;
+    image?: string;
     action: () => void;
 }
 
@@ -20,19 +21,28 @@ export class ContextMenu extends LitElementBase {
         return renderContextMenuStyles();
     }
 
-    static popup(items: ContextMenuItem[], pointerEvent: PointerEvent | MouseEvent) {
+    static popup(items: ContextMenuItem[], pointerEvent: Event | PointerEvent | MouseEvent) {
         if (ContextMenu.instance) ContextMenu.instance.remove();
         var menu = new ContextMenu();
         pointerEvent.stopPropagation();
         menu.items = items;
-        var itemTop = pointerEvent.pageY / getScaleFactorY();
-        menu.style.top = itemTop + 'px';
-        if (pointerEvent.pageY > screen.height / 2) menu.style.transform = 'translateY(-100%)';
 
-        menu.style.left = pointerEvent.pageX / getScaleFactorX() + 'px';
-        if (pointerEvent.pageY > screen.height / 2) menu.style.maxHeight = `${itemTop}px`;
+        var x: number, y: number;
+        if (pointerEvent instanceof PointerEvent || pointerEvent instanceof MouseEvent)
+            [x, y] = [pointerEvent.pageX, pointerEvent.pageY];
+        else {
+            var target = pointerEvent.target as HTMLElement;
+            var rect = target.getBoundingClientRect();
+            [x, y] = [rect.x, rect.y];
+        }
+
+        var itemTop = y / getScaleFactorY();
+        menu.style.top = itemTop + 'px';
+        if (y > screen.height / 2) menu.style.transform = 'translateY(-100%)';
+
+        menu.style.left = x / getScaleFactorX() + 'px';
+        if (y > screen.height / 2) menu.style.maxHeight = `${itemTop}px`;
         else menu.style.maxHeight = `calc(100% - ${itemTop}px)`;
-        console.log(itemTop);
 
         PageRouting.container!.append(menu);
         ContextMenu.instance = menu;
@@ -57,6 +67,7 @@ export class ContextMenu extends LitElementBase {
 
         window.addEventListener('click', (e: Event) => this.remove(), { signal: this.abortController.signal });
         window.addEventListener('contextmenu', (e: Event) => this.remove(), { signal: this.abortController.signal });
+        window.addEventListener('keydown', (e: Event) => this.remove(), { signal: this.abortController.signal });
     }
 
     override render() {

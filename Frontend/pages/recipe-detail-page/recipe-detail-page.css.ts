@@ -149,14 +149,16 @@ export function renderRecipeDetailPageStyles() {
         .description-section {
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
             gap: 20px;
+            margin: 0 20px;
         }
 
         .description-input {
             display: flex;
             flex-direction: row;
             align-items: center;
-            gap: 20px;
+            gap: 10px;
 
             font-weight: bold;
             text-shadow: 2px 2px 2px black;
@@ -186,9 +188,10 @@ export function renderRecipeDetailPageStyles() {
             border-radius: 20px;
             padding: 10px;
             border: 3px dashed;
+            caret-color: white;
 
             background: var(--accent-color-full);
-            font: inherit;
+            font-style: inherit;
             color: inherit;
             font-size: 18px;
         }
@@ -216,9 +219,6 @@ export function renderRecipeDetailPageStyles() {
 
         .action-button:hover {
             background: linear-gradient(130deg, transparent 0 20%, #fff8, transparent 40% 90%), #3039;
-        }
-
-        context-menu {
         }
     `;
 }

@@ -20,7 +20,7 @@ export function renderContextMenuStyles() {
             align-items: center;
             cursor: pointer;
             gap: 20px;
-            padding: 10px;
+            padding: 5px 10px;
         }
 
         .item-wrapper:hover {
@@ -32,8 +32,8 @@ export function renderContextMenuStyles() {
         }
 
         .item-icon {
-            width: 25px;
-            height: 25px;
+            width: 35px;
+            height: 35px;
             background: white;
         }
 

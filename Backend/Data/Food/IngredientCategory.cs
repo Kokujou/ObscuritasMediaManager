@@ -9,6 +9,11 @@ public enum IngredientCategory
     Fish,
     Vegetables,
     Fruits,
-    Sweets,
+    Dairy,
+    Eggs,
+    Nuts,
+    Drinks,
+    Condiments,
+    Oil,
     Miscellaneous
 }

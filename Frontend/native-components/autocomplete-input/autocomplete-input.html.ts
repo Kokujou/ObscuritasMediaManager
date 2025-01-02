@@ -17,8 +17,8 @@ export function renderAutocompleteInput(this: AutocompleteInput) {
                           html`
                               <div
                                   class="option"
-                                  ?selected="${this.value.id == item.id}"
-                                  ?focused="${item.id == this.focusedItem?.id}"
+                                  ?selected="${this.value && this.value.id == item.id}"
+                                  ?focused="${this.focusedItem && item.id == this.focusedItem.id}"
                                   @click="${() => this.selectItem(item)}"
                               >
                                   ${item.text}

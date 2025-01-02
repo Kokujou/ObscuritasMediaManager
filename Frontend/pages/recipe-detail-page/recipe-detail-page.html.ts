@@ -66,7 +66,7 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                             ></drop-down>
                         </div>
                         <div class="description-input">
-                            <div class="input-title">Zubereitungsart:</div>
+                            <div class="input-title">Zubereitung:</div>
                             <drop-down
                                 id="technique"
                                 tabindex="0"
@@ -78,10 +78,8 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                                     this.changeProperty('technique', e.detail.option.value)}"
                             ></drop-down>
                         </div>
-                    </div>
-                    <div class="description-section" id="times-section">
                         <div class="description-input">
-                            <div class="input-title">Vorbereitungsdauer:</div>
+                            <div class="input-title">Vorbereitung:</div>
                             <duration-input
                                 id="preparation-time"
                                 .timespan="${TimeSpan.fromString(this.recipe.preparationTime)}"
@@ -90,7 +88,7 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                             ></duration-input>
                         </div>
                         <div class="description-input">
-                            <div class="input-title">Kochdauer:</div>
+                            <div class="input-title">Kochen:</div>
                             <duration-input
                                 id="cooking-time"
                                 .timespan="${TimeSpan.fromString(this.recipe.cookingTime)}"
@@ -98,7 +96,7 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                             ></duration-input>
                         </div>
                         <div class="description-input">
-                            <div class="input-title">Gesamtdauer:</div>
+                            <div class="input-title">Gesamt:</div>
                             <duration-input
                                 disabled
                                 id="total-time"
@@ -195,10 +193,14 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
         <div class="ingredient-category">${ingredient.ingredientCategory}</div>
         <div
             class="ingredient-category-icon-wrapper"
-            tooltip="${ingredient.ingredientCategory}"
             tabindex="0"
-            onkeydown="javascript: if("
-            @click="${(e: PointerEvent) =>
+            onkeydown="javascript: if(event.key == 'Enter' || event.key == ' ') 
+            { 
+                event.preventDefault(); 
+                event.stopPropagation();
+                this.dispatchEvent(new CustomEvent('click'));
+            }"
+            @click="${(e: Event) =>
                 ContextMenu.popup(
                     Object.values(IngredientCategory)
                         .filter((x) => x != ingredient.ingredientCategory)
@@ -206,7 +208,7 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
                             (category) =>
                                 ({
                                     text: category,
-                                    icon: IngredientIcons[ingredient.ingredientCategory],
+                                    image: IngredientIcons[category],
                                     action: () => this.changeIngredientCategory(ingredient, category),
                                 } as ContextMenuItem)
                         ),
