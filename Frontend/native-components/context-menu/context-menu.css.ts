@@ -4,7 +4,7 @@ export function renderContextMenuStyles() {
     return css`
         :host {
             position: fixed;
-            box-shadow: 1px 1px 1px black;
+            box-shadow: 2px 2px 2px black;
             z-index: 1;
             background: var(--accent-color-full);
             min-width: 200px;

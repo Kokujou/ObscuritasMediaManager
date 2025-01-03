@@ -2048,8 +2048,12 @@ export class RecipeClient {
         return Promise.resolve<void>(null as any);
     }
 
-    searchCookware(search: string, signal?: AbortSignal): Promise<string[]> {
-        let url_ = this.baseUrl + "/api/Recipe/cookware/search";
+    searchCookware(search: string, maxItems?: number | undefined, signal?: AbortSignal): Promise<string[]> {
+        let url_ = this.baseUrl + "/api/Recipe/cookware/search?";
+        if (maxItems === null)
+            throw new Error("The parameter 'maxItems' cannot be null.");
+        else if (maxItems !== undefined)
+            url_ += "maxItems=" + encodeURIComponent("" + maxItems) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(search);
@@ -2092,6 +2096,86 @@ export class RecipeClient {
             });
         }
         return Promise.resolve<string[]>(null as any);
+    }
+
+    addCookware(recipeId: string, cookware: RecipeCookwareMappingModel, signal?: AbortSignal): Promise<string> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/cookware";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(cookware);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processAddCookware(_response);
+        });
+    }
+
+    protected processAddCookware(response: Response): Promise<string> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<string>(null as any);
+    }
+
+    deleteCookware(recipeId: string, cookwareId: string, signal?: AbortSignal): Promise<void> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/cookware/{cookwareId}";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        if (cookwareId === undefined || cookwareId === null)
+            throw new Error("The parameter 'cookwareId' must be defined.");
+        url_ = url_.replace("{cookwareId}", encodeURIComponent("" + cookwareId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDeleteCookware(_response);
+        });
+    }
+
+    protected processDeleteCookware(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
     }
 
     softDeleteRecipe(recipeId: string, signal?: AbortSignal): Promise<void> {
@@ -3595,6 +3679,7 @@ export enum Measurement {
 }
 
 export class RecipeCookwareMappingModel implements IRecipeCookwareMappingModel {
+    id!: string | null;
     recipeId!: string;
     name!: string;
 
@@ -3610,6 +3695,7 @@ export class RecipeCookwareMappingModel implements IRecipeCookwareMappingModel {
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : <any>null;
             this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
         }
@@ -3622,6 +3708,7 @@ export class RecipeCookwareMappingModel implements IRecipeCookwareMappingModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : <any>null;
         data["recipeId"] = this.recipeId !== undefined ? this.recipeId : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         return data;
@@ -3636,6 +3723,7 @@ export class RecipeCookwareMappingModel implements IRecipeCookwareMappingModel {
 }
 
 export interface IRecipeCookwareMappingModel {
+    id: string | null;
     recipeId: string;
     name: string;
 }

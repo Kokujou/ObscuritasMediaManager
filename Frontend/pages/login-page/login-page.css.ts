@@ -49,7 +49,7 @@ export function renderLoginPageStyles() {
             background: none;
             border: none;
             outline: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
             color: white;
             font-size: 24px;
 

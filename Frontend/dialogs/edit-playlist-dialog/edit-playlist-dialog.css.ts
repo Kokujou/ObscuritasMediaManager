@@ -65,7 +65,7 @@ export function renderEditPlaylistDialogStyles() {
             border: none;
             color: inherit;
             font-size: inherit;
-            border-bottom: 1px solid var(--font-color);
+            border-bottom: 2px solid var(--font-color);
             padding: 10px;
             width: 350px;
             background: none;

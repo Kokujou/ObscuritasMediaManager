@@ -27,6 +27,7 @@ export function renderRecipeDetailPageStyles() {
         #ingredient-container {
             display: flex;
             flex-direction: column;
+            gap: 20px;
 
             min-height: 300px;
             flex: auto;
@@ -40,7 +41,6 @@ export function renderRecipeDetailPageStyles() {
         #title {
             display: inline-flex;
             font-size: 36px;
-            margin-bottom: 50px;
             max-width: 800px;
             width: 800px;
             flex: unset;
@@ -60,8 +60,6 @@ export function renderRecipeDetailPageStyles() {
             display: flex;
             flex-direction: column;
             gap: 10px;
-
-            margin-bottom: 20px;
         }
 
         .group-title {
@@ -94,7 +92,8 @@ export function renderRecipeDetailPageStyles() {
         }
 
         #add-ingredient-link,
-        #add-group-link {
+        #add-group-link,
+        #add-cookware-link {
             font: inherit;
             font-weight: bold;
             cursor: pointer;
@@ -108,6 +107,34 @@ export function renderRecipeDetailPageStyles() {
         #add-group-link:hover {
             text-decoration: underline;
             text-underline-offset: 8px;
+        }
+
+        #cooking-utensil-heading {
+            font-size: 24px;
+        }
+
+        #cookware {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .cookware-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cookware-input {
+            width: 300px;
+        }
+
+        .remove-cookware-icon {
+            width: 25px;
+            height: 25px;
+            background: white;
+            cursor: pointer;
         }
 
         .ingredient-description {
@@ -149,8 +176,7 @@ export function renderRecipeDetailPageStyles() {
         .description-section {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
-            gap: 20px;
+            gap: 50px;
             margin: 0 20px;
         }
 
@@ -174,7 +200,7 @@ export function renderRecipeDetailPageStyles() {
             font: inherit;
             border: none;
             outline: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
 
             overflow: auto;
             scrollbar-width: none;

@@ -38,6 +38,36 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                         <button tabindex="0" id="add-group-link" @click="${(e: Event) => this.addIngredient('Neue Gruppe', e)}">
                             + Gruppe hinzufügen
                         </button>
+                        <div id="cooking-utensil-heading">Kochutensilien:</div>
+                        <div id="cookware">
+                            ${this.recipe.cookware.map(
+                                (cookware) =>
+                                    html` <div class="cookware-row">
+                                        <autocomplete-input
+                                            class="cookware-input"
+                                            .value="${{ id: cookware.name, text: cookware.name }}"
+                                            .searchItems="${this.searchCookware}"
+                                            @value-changed="${(e: CustomEvent<AutocompleteItem>) =>
+                                                this.updateCookware(cookware, e.detail.id)}"
+                                        ></autocomplete-input>
+                                        <div
+                                            class="remove-cookware-icon"
+                                            icon="${Icons.Trash}"
+                                            @click="${() => this.removeCookware(cookware)}"
+                                        ></div>
+                                    </div>`
+                            )}
+                        </div>
+                        <button
+                            tabindex="0"
+                            id="add-cookware-link"
+                            @click="${(e: Event) => this.addCookware()}"
+                            @keyup="${(e: KeyboardEvent) => {
+                                if (e.key == 'Enter') e.target?.dispatchEvent(new Event('click'));
+                            }}"
+                        >
+                            + Kochutensil hinzufügen
+                        </button>
                     </div>
                     <recipe-tile
                         .recipe="${this.recipe}"
@@ -83,6 +113,7 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                             <duration-input
                                 id="preparation-time"
                                 .timespan="${TimeSpan.fromString(this.recipe.preparationTime)}"
+                                compact
                                 @duration-changed="${(e: CustomEvent<string>) =>
                                     this.changeProperty('preparationTime', e.detail)}"
                             ></duration-input>
@@ -92,16 +123,8 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                             <duration-input
                                 id="cooking-time"
                                 .timespan="${TimeSpan.fromString(this.recipe.cookingTime)}"
+                                compact
                                 @duration-changed="${(e: CustomEvent<string>) => this.changeProperty('cookingTime', e.detail)}"
-                            ></duration-input>
-                        </div>
-                        <div class="description-input">
-                            <div class="input-title">Gesamt:</div>
-                            <duration-input
-                                disabled
-                                id="total-time"
-                                .timespan="${TimeSpan.fromString(this.recipe.totalTime)}"
-                                @duration-changed="${(e: CustomEvent<string>) => this.changeProperty('totalTime', e.detail)}"
                             ></duration-input>
                         </div>
                     </div>
@@ -138,7 +161,7 @@ function renderIngredientGroup(this: RecipeDetailPage, group: [name: string, ing
             <priority-list
                 .items="${group[1]}"
                 .itemRenderer="${(item: RecipeIngredientMappingModel) => renderIngredient.call(this, item)}"
-                @delete-item="${(e: CustomEvent<any>) => this.removeItem(e.detail)}"
+                @delete-item="${(e: CustomEvent<any>) => this.removeIngredient(e.detail)}"
                 @list-changed="${() => this.changeProperty('ingredients', this.recipe.ingredients)}"
             >
             </priority-list>
@@ -177,7 +200,7 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
             type="text"
             class="ingredient-name"
             .value="${{ id: ingredient.ingredientName, text: ingredient.ingredientName }}"
-            .searchItems="${(search: string) => this.searchIngredients(ingredient, search)}"
+            .searchItems="${(search: string) => this.searchIngredients(search)}"
             @value-changed="${(e: CustomEvent<AutocompleteItem & IngredientResponse>) =>
                 this.updateIngredient(ingredient, e.detail)}"
         ></autocomplete-input>

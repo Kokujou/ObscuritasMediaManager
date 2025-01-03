@@ -22,7 +22,7 @@ export function renderGenreDialogStyles() {
         #search-input {
             all: unset;
             padding: 10px;
-            border-bottom: 1px solid lightgray;
+            border-bottom: 2px solid lightgray;
             margin: 20px 80px;
         }
 
@@ -52,7 +52,7 @@ export function renderGenreDialogStyles() {
             left: 50px;
             bottom: 0;
             right: 50px;
-            height: 1px;
+            height: 2px;
 
             background-color: white;
         }
@@ -121,7 +121,7 @@ export function renderGenreDialogStyles() {
 
             padding: 20px;
             border-radius: 20px;
-            border-width: 1px;
+            border-width: 2px;
             border-style: solid;
             cursor: pointer;
             user-select: none;

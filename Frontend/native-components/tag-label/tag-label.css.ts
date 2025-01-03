@@ -54,7 +54,7 @@ export function renderTagLabelStyles() {
 
         #invisible-text {
             opacity: 0;
-            height: 1px;
+            height: 2px;
             white-space: nowrap;
         }
 

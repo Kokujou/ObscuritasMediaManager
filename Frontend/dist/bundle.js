@@ -1287,7 +1287,7 @@ function renderDurationInputStyles() {
             font-size: 18px;
             font-weight: bold;
 
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
         }
 
         input {
@@ -1300,6 +1300,8 @@ function renderDurationInputStyles() {
             border: none;
             outline: none;
             color: white;
+
+            user-select: auto !important;
         }
     `;
 }
@@ -1321,30 +1323,21 @@ __webpack_require__.r(__webpack_exports__);
 
 function renderDurationInput() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
-        ${renderBoundInput.call(this, 'days', 99)}d
+        ${this.compact ? '' : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` ${renderBoundInput.call(this, 'days', 99)}d`}
         <!-- -->
-        ${renderBoundInput.call(this, 'hours', 24)}h
+        ${renderBoundInput.call(this, 'hours', this.compact ? 999 : 24)}h
         <!-- -->
         ${renderBoundInput.call(this, 'minutes', 59)}m
         <!-- -->
-        ${renderBoundInput.call(this, 'seconds', 59)}s
+        ${this.compact ? '' : (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` ${renderBoundInput.call(this, 'seconds', 99)}s`}
     `;
 }
 function renderBoundInput(property, max) {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `<input
         type="text"
-        maxlength="2"
-        max="${max}"
-        size="2"
         value="${`${this.timespan[property] ?? '00'}`.padStart(2, '0')}"
-        onclick="javascript:this.select()"
-        onfocus="javascript:this.select()"
-        @keydown="${this.handleKeyDown}"
         oninput="javascript:this.dispatchEvent(new Event('change'))"
-        onchange="javascript: if(Number.parseInt(this.value) > Number.parseInt(this.max)) this.value = this.max;
-         this.value = this.value.toString().padStart(2,'0');
-         this.dispatchEvent(new CustomEvent('valueChanged'))"
-        @valueChanged="${(e) => this.handleValueChange(property, e.target)}"
+        @change="${(e) => this.handleValueChange(property, e.target, max)}"
     />`;
 }
 
@@ -1386,16 +1379,22 @@ let DurationInput = class DurationInput extends _data_lit_element_base__WEBPACK_
         this.timespan = new _data_timespan__WEBPACK_IMPORTED_MODULE_2__.TimeSpan();
     }
     handleKeyDown(event) {
-        if (event.key.length == 1 && !Number.parseInt(event.key)) {
+        var keyNumber = Number.parseInt(event.key);
+        var target = event.target;
+        if (keyNumber >= 0) {
+            target.value = (Number.parseInt(target.value) + keyNumber).toString().padStart(2, '0');
+            return;
+        }
+        if (event.key.length == 1 && !keyNumber && keyNumber != 0) {
             event.stopPropagation();
             event.preventDefault();
             return;
         }
-        var target = event.target;
-        if (target.value[0] == '0')
-            target.value = Number.parseInt(target.value).toString();
     }
-    handleValueChange(property, element) {
+    handleValueChange(property, element, max) {
+        if (Number.parseInt(element.value) > max)
+            element.value = max.toString().padStart(2, '0');
+        element.value = Number.parseInt(element.value).toString().padStart(2, '0');
         if (property == 'toString')
             return;
         if (typeof this.timespan[property] != 'number')
@@ -1410,6 +1409,9 @@ let DurationInput = class DurationInput extends _data_lit_element_base__WEBPACK_
 __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Object })
 ], DurationInput.prototype, "timespan", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.property)({ type: Boolean })
+], DurationInput.prototype, "compact", void 0);
 DurationInput = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('duration-input')
 ], DurationInput);
@@ -1909,7 +1911,7 @@ function renderMediaFilterSidebarStyles() {
         #search-input {
             border: none;
             outline: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
             background: none;
             color: inherit;
             font-size: inherit;
@@ -5690,7 +5692,7 @@ function renderUploadAreaStyles() {
         #upload-description #brose-files-link {
             color: var(--font-color);
             font-weight: bold;
-            text-shadow: 1px 1px 1px black;
+            text-shadow: 2px 2px 2px black;
         }
 
         #image-container > * {
@@ -7811,7 +7813,7 @@ function renderEditPlaylistDialogStyles() {
             border: none;
             color: inherit;
             font-size: inherit;
-            border-bottom: 1px solid var(--font-color);
+            border-bottom: 2px solid var(--font-color);
             padding: 10px;
             width: 350px;
             background: none;
@@ -8370,7 +8372,7 @@ function renderGenreDialogStyles() {
         #search-input {
             all: unset;
             padding: 10px;
-            border-bottom: 1px solid lightgray;
+            border-bottom: 2px solid lightgray;
             margin: 20px 80px;
         }
 
@@ -8400,7 +8402,7 @@ function renderGenreDialogStyles() {
             left: 50px;
             bottom: 0;
             right: 50px;
-            height: 1px;
+            height: 2px;
 
             background-color: white;
         }
@@ -8469,7 +8471,7 @@ function renderGenreDialogStyles() {
 
             padding: 20px;
             border-radius: 20px;
-            border-width: 1px;
+            border-width: 2px;
             border-style: solid;
             cursor: pointer;
             user-select: none;
@@ -8894,7 +8896,7 @@ function renderInputDialogStyles() {
 
             outline: none;
             border: none;
-            border-bottom: 1px solid white;
+            border-bottom: 2px solid white;
         }
     `;
 }
@@ -9659,7 +9661,7 @@ function renderAutocompleteInputStyles() {
             width: 100%;
             box-sizing: border-box;
 
-            border-bottom: 1px solid;
+            border-bottom: 2px solid !important;
             padding: 10px;
         }
 
@@ -9783,6 +9785,10 @@ let AutocompleteInput = class AutocompleteInput extends _data_lit_element_base__
         this.showDropdown = true;
     }
     handleKeyDown(event) {
+        if (event.key == 'Escape' || event.key == 'Tab') {
+            this.selectItem(this.value);
+            return;
+        }
         if (event.key == 'Enter' && this.focusedItem && this.showDropdown) {
             this.selectItem(this.focusedItem);
             return;
@@ -9809,6 +9815,7 @@ let AutocompleteInput = class AutocompleteInput extends _data_lit_element_base__
         this.value = item;
         this.dispatchEvent(new CustomEvent('value-changed', { bubbles: true, composed: true, detail: this.value }));
         this.showDropdown = false;
+        this.searchField.value = this.value.text;
     }
 };
 __decorate([
@@ -9856,7 +9863,7 @@ function renderBorderButtonStyles() {
             display: block;
 
             --primary-color: darkgray;
-            --border: 1px solid var(--primary-color);
+            --border: 2px solid var(--primary-color);
             color: black;
         }
 
@@ -10248,7 +10255,7 @@ function renderContextMenuStyles() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.css) `
         :host {
             position: fixed;
-            box-shadow: 1px 1px 1px black;
+            box-shadow: 2px 2px 2px black;
             z-index: 1;
             background: var(--accent-color-full);
             min-width: 200px;
@@ -11062,7 +11069,7 @@ function renderDropDownStyles() {
             justify-content: flex-start;
 
             color: inherit;
-            border-bottom: 1px solid lightgray;
+            border-bottom: 2px solid lightgray;
             padding: 10px 0;
         }
 
@@ -11145,7 +11152,7 @@ function renderDropDownStyles() {
             outline: none;
             background-color: transparent;
             border: none;
-            border-bottom: 1px solid lightgray;
+            border-bottom: 2px solid lightgray;
 
             font: inherit;
             color: inherit;
@@ -11463,7 +11470,7 @@ function renderGroupedDropdownStyles() {
             justify-content: flex-start;
 
             color: inherit;
-            border-bottom: 1px solid lightgray;
+            border-bottom: 2px solid lightgray;
             padding: 10px 0;
         }
 
@@ -13224,8 +13231,8 @@ function renderScrollSelectStyles() {
             top: var(--active-item-start);
             height: 40px;
 
-            border-bottom: 1px solid;
-            border-top: 1px solid;
+            border-bottom: 2px solid;
+            border-top: 2px solid;
         }
     `;
 }
@@ -13688,7 +13695,7 @@ function renderTagLabelStyles() {
 
         #invisible-text {
             opacity: 0;
-            height: 1px;
+            height: 2px;
             white-space: nowrap;
         }
 
@@ -13959,7 +13966,7 @@ function renderTriValueCheckboxStyles() {
             position: relative;
             padding: var(--padding, 20px);
             border-radius: 20px;
-            border-width: 1px;
+            border-width: 2px;
             border-style: solid;
             cursor: pointer;
             user-select: none;
@@ -16342,8 +16349,12 @@ class RecipeClient {
         }
         return Promise.resolve(null);
     }
-    searchCookware(search, signal) {
-        let url_ = this.baseUrl + "/api/Recipe/cookware/search";
+    searchCookware(search, maxItems, signal) {
+        let url_ = this.baseUrl + "/api/Recipe/cookware/search?";
+        if (maxItems === null)
+            throw new Error("The parameter 'maxItems' cannot be null.");
+        else if (maxItems !== undefined)
+            url_ += "maxItems=" + encodeURIComponent("" + maxItems) + "&";
         url_ = url_.replace(/[?&]$/, "");
         const content_ = JSON.stringify(search);
         let options_ = {
@@ -16379,6 +16390,85 @@ class RecipeClient {
                     result200 = null;
                 }
                 return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    addCookware(recipeId, cookware, signal) {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/cookware";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(cookware);
+        let options_ = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processAddCookware(_response);
+        });
+    }
+    processAddCookware(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null;
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    deleteCookware(recipeId, cookwareId, signal) {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/cookware/{cookwareId}";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        if (cookwareId === undefined || cookwareId === null)
+            throw new Error("The parameter 'cookwareId' must be defined.");
+        url_ = url_.replace("{cookwareId}", encodeURIComponent("" + cookwareId));
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "DELETE",
+            signal,
+            headers: {}
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processDeleteCookware(_response);
+        });
+    }
+    processDeleteCookware(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
             });
         }
         else if (status !== 200 && status !== 204) {
@@ -17625,6 +17715,7 @@ var Measurement;
     Measurement["Unitless"] = "Unitless";
 })(Measurement || (Measurement = {}));
 class RecipeCookwareMappingModel {
+    id;
     recipeId;
     name;
     constructor(data) {
@@ -17637,6 +17728,7 @@ class RecipeCookwareMappingModel {
     }
     init(_data, _mappings) {
         if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null;
             this.name = _data["name"] !== undefined ? _data["name"] : null;
         }
@@ -17647,6 +17739,7 @@ class RecipeCookwareMappingModel {
     }
     toJSON(data) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id !== undefined ? this.id : null;
         data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null;
         data["name"] = this.name !== undefined ? this.name : null;
         return data;
@@ -17837,7 +17930,7 @@ function renderLoginPageStyles() {
             background: none;
             border: none;
             outline: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
             color: white;
             font-size: 24px;
 
@@ -18454,7 +18547,7 @@ function renderMediaDetailPageStyles() {
         input {
             background: none;
             border: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
             padding: 5px 10px;
         }
 
@@ -18530,7 +18623,7 @@ function renderMediaDetailPageStyles() {
         }
 
         .link {
-            text-shadow: 1px 1px 1px black;
+            text-shadow: 2px 2px 2px black;
             margin: 10px 30px;
             cursor: pointer;
         }
@@ -20777,7 +20870,7 @@ function renderMusicPlaylistStyles() {
             flex: auto;
             background: transparent;
             border: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
             padding: 10px 10px;
             white-space: nowrap;
             user-select: text;
@@ -20791,7 +20884,7 @@ function renderMusicPlaylistStyles() {
         input.editable-label {
             outline: none;
             border: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
             font: inherit;
             color: inherit;
             background: none;
@@ -21773,7 +21866,7 @@ function renderNavigationStyles() {
             display: flex;
             flex-direction: row;
 
-            border-top: 1px solid var(--font-color);
+            border-top: 2px solid var(--font-color);
         }
 
         #nav-section:first-of-type {
@@ -22260,6 +22353,7 @@ function renderRecipeDetailPageStyles() {
         #ingredient-container {
             display: flex;
             flex-direction: column;
+            gap: 20px;
 
             min-height: 300px;
             flex: auto;
@@ -22273,7 +22367,6 @@ function renderRecipeDetailPageStyles() {
         #title {
             display: inline-flex;
             font-size: 36px;
-            margin-bottom: 50px;
             max-width: 800px;
             width: 800px;
             flex: unset;
@@ -22293,8 +22386,6 @@ function renderRecipeDetailPageStyles() {
             display: flex;
             flex-direction: column;
             gap: 10px;
-
-            margin-bottom: 20px;
         }
 
         .group-title {
@@ -22327,7 +22418,8 @@ function renderRecipeDetailPageStyles() {
         }
 
         #add-ingredient-link,
-        #add-group-link {
+        #add-group-link,
+        #add-cookware-link {
             font: inherit;
             font-weight: bold;
             cursor: pointer;
@@ -22341,6 +22433,34 @@ function renderRecipeDetailPageStyles() {
         #add-group-link:hover {
             text-decoration: underline;
             text-underline-offset: 8px;
+        }
+
+        #cooking-utensil-heading {
+            font-size: 24px;
+        }
+
+        #cookware {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .cookware-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cookware-input {
+            width: 300px;
+        }
+
+        .remove-cookware-icon {
+            width: 25px;
+            height: 25px;
+            background: white;
+            cursor: pointer;
         }
 
         .ingredient-description {
@@ -22382,8 +22502,7 @@ function renderRecipeDetailPageStyles() {
         .description-section {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
-            gap: 20px;
+            gap: 50px;
             margin: 0 20px;
         }
 
@@ -22407,7 +22526,7 @@ function renderRecipeDetailPageStyles() {
             font: inherit;
             border: none;
             outline: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
 
             overflow: auto;
             scrollbar-width: none;
@@ -22508,6 +22627,33 @@ function renderRecipeDetailPage() {
                         <button tabindex="0" id="add-group-link" @click="${(e) => this.addIngredient('Neue Gruppe', e)}">
                             + Gruppe hinzufügen
                         </button>
+                        <div id="cooking-utensil-heading">Kochutensilien:</div>
+                        <div id="cookware">
+                            ${this.recipe.cookware.map((cookware) => (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <div class="cookware-row">
+                                        <autocomplete-input
+                                            class="cookware-input"
+                                            .value="${{ id: cookware.name, text: cookware.name }}"
+                                            .searchItems="${this.searchCookware}"
+                                            @value-changed="${(e) => this.updateCookware(cookware, e.detail.id)}"
+                                        ></autocomplete-input>
+                                        <div
+                                            class="remove-cookware-icon"
+                                            icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_6__.Icons.Trash}"
+                                            @click="${() => this.removeCookware(cookware)}"
+                                        ></div>
+                                    </div>`)}
+                        </div>
+                        <button
+                            tabindex="0"
+                            id="add-cookware-link"
+                            @click="${(e) => this.addCookware()}"
+                            @keyup="${(e) => {
+        if (e.key == 'Enter')
+            e.target?.dispatchEvent(new Event('click'));
+    }}"
+                        >
+                            + Kochutensil hinzufügen
+                        </button>
                     </div>
                     <recipe-tile
                         .recipe="${this.recipe}"
@@ -22546,6 +22692,7 @@ function renderRecipeDetailPage() {
                             <duration-input
                                 id="preparation-time"
                                 .timespan="${_data_timespan__WEBPACK_IMPORTED_MODULE_2__.TimeSpan.fromString(this.recipe.preparationTime)}"
+                                compact
                                 @duration-changed="${(e) => this.changeProperty('preparationTime', e.detail)}"
                             ></duration-input>
                         </div>
@@ -22554,16 +22701,8 @@ function renderRecipeDetailPage() {
                             <duration-input
                                 id="cooking-time"
                                 .timespan="${_data_timespan__WEBPACK_IMPORTED_MODULE_2__.TimeSpan.fromString(this.recipe.cookingTime)}"
+                                compact
                                 @duration-changed="${(e) => this.changeProperty('cookingTime', e.detail)}"
-                            ></duration-input>
-                        </div>
-                        <div class="description-input">
-                            <div class="input-title">Gesamt:</div>
-                            <duration-input
-                                disabled
-                                id="total-time"
-                                .timespan="${_data_timespan__WEBPACK_IMPORTED_MODULE_2__.TimeSpan.fromString(this.recipe.totalTime)}"
-                                @duration-changed="${(e) => this.changeProperty('totalTime', e.detail)}"
                             ></duration-input>
                         </div>
                     </div>
@@ -22599,7 +22738,7 @@ function renderIngredientGroup(group) {
             <priority-list
                 .items="${group[1]}"
                 .itemRenderer="${(item) => renderIngredient.call(this, item)}"
-                @delete-item="${(e) => this.removeItem(e.detail)}"
+                @delete-item="${(e) => this.removeIngredient(e.detail)}"
                 @list-changed="${() => this.changeProperty('ingredients', this.recipe.ingredients)}"
             >
             </priority-list>
@@ -22636,7 +22775,7 @@ function renderIngredient(ingredient) {
             type="text"
             class="ingredient-name"
             .value="${{ id: ingredient.ingredientName, text: ingredient.ingredientName }}"
-            .searchItems="${(search) => this.searchIngredients(ingredient, search)}"
+            .searchItems="${(search) => this.searchIngredients(search)}"
             @value-changed="${(e) => this.updateIngredient(ingredient, e.detail)}"
         ></autocomplete-input>
 
@@ -22785,6 +22924,12 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
             : `Rezept erstellen ${this.recipe.title ? `- ${this.recipe.title}` : ''}`;
         return _recipe_detail_page_html__WEBPACK_IMPORTED_MODULE_11__.renderRecipeDetailPage.call(this);
     }
+    async changeProperty(property, value) {
+        this.recipe[property] = value;
+        if (this.recipe.id)
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.updateRecipe(this.recipe);
+        this.requestFullUpdate();
+    }
     async addIngredient(group, event) {
         event.stopPropagation();
         event.preventDefault();
@@ -22795,11 +22940,11 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
         this.recipe.ingredients.push(ingredient);
         this.requestFullUpdate();
     }
-    async changeProperty(property, value) {
-        this.recipe[property] = value;
-        if (this.recipe.id)
-            await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.updateRecipe(this.recipe);
-        this.requestFullUpdate();
+    async addCookware() {
+        var cookware = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.RecipeCookwareMappingModel({ name: '', recipeId: this.recipe.id });
+        this.recipe.cookware = this.recipe.cookware.concat(cookware);
+        cookware.id = await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.addCookware(this.recipe.id, cookware);
+        await this.requestFullUpdate();
     }
     renameGroup(affectedIngredients, newName) {
         for (var ingredient of affectedIngredients)
@@ -22811,10 +22956,15 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
         this.recipe.imageUrl = imageData;
         this.requestFullUpdate();
     }
-    async removeItem(ingredient) {
+    async removeIngredient(ingredient) {
         await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.deleteIngredient(this.recipe.id, ingredient.id);
         this.recipe.ingredients = this.recipe.ingredients.filter((x) => x.id != ingredient.id);
-        this.requestFullUpdate();
+        await this.requestFullUpdate();
+    }
+    async removeCookware(cookware) {
+        await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.deleteCookware(this.recipe.id, cookware.id);
+        this.recipe.cookware = this.recipe.cookware.filter((x) => x.name != cookware.name);
+        await this.requestFullUpdate();
     }
     async changeNation() {
         this.changeProperty('nation', await _advanced_components_language_switcher_language_switcher__WEBPACK_IMPORTED_MODULE_1__.LanguageSwitcher.spawnAt(document.body, this.recipe.nation));
@@ -22834,8 +22984,11 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
         ingredient.ingredientCategory = category;
         this.changeProperty('ingredients', this.recipe.ingredients);
     }
-    async searchIngredients(ingredient, search) {
-        return [{ id: search, text: '+ Zutat hinzufügen' }].concat((await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.searchIngredients(search)).map((x) => Object.assign(x, { id: x.name, text: x.name })));
+    async searchIngredients(search) {
+        return [{ id: search, text: '+ Zutat hinzufügen' }].concat((await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.searchIngredients(search)).map((x) => Object.assign(x, { id: x.name, text: x.name + ` (${x.measurement})` })));
+    }
+    async searchCookware(search) {
+        return [{ id: search, text: '+ Kochutensil hinzufügen' }].concat((await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.searchCookware(search)).map((x) => Object.assign(x, { id: x, text: x })));
     }
     updateIngredient(source, target) {
         source.ingredientName = target.id;
@@ -22845,6 +22998,10 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
                 source.unit = _data_measurement_units__WEBPACK_IMPORTED_MODULE_3__.MeasurementUnits.find((x) => x.measurement == target.measurement);
         }
         this.changeProperty('ingredients', this.recipe.ingredients);
+    }
+    updateCookware(source, newCookware) {
+        source.name = newCookware;
+        this.changeProperty('cookware', this.recipe.cookware);
     }
     async submit(event) {
         event.preventDefault();

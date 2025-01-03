@@ -78,7 +78,7 @@ export function renderMediaFilterSidebarStyles() {
         #search-input {
             border: none;
             outline: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
             background: none;
             color: inherit;
             font-size: inherit;

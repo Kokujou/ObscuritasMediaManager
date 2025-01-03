@@ -160,7 +160,7 @@ function renderNavigationStyles() {
             display: flex;
             flex-direction: row;
 
-            border-top: 1px solid var(--font-color);
+            border-top: 2px solid var(--font-color);
         }
 
         #nav-section:first-of-type {

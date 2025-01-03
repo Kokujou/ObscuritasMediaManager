@@ -27,7 +27,7 @@ export function renderGroupedDropdownStyles() {
             justify-content: flex-start;
 
             color: inherit;
-            border-bottom: 1px solid lightgray;
+            border-bottom: 2px solid lightgray;
             padding: 10px 0;
         }
 

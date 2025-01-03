@@ -27,7 +27,7 @@ export function renderDropDownStyles() {
             justify-content: flex-start;
 
             color: inherit;
-            border-bottom: 1px solid lightgray;
+            border-bottom: 2px solid lightgray;
             padding: 10px 0;
         }
 
@@ -110,7 +110,7 @@ export function renderDropDownStyles() {
             outline: none;
             background-color: transparent;
             border: none;
-            border-bottom: 1px solid lightgray;
+            border-bottom: 2px solid lightgray;
 
             font: inherit;
             color: inherit;

@@ -325,7 +325,7 @@ export function renderMediaDetailPageStyles() {
         input {
             background: none;
             border: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
             padding: 5px 10px;
         }
 
@@ -401,7 +401,7 @@ export function renderMediaDetailPageStyles() {
         }
 
         .link {
-            text-shadow: 1px 1px 1px black;
+            text-shadow: 2px 2px 2px black;
             margin: 10px 30px;
             cursor: pointer;
         }

@@ -7,7 +7,7 @@ export function renderBorderButtonStyles() {
             display: block;
 
             --primary-color: darkgray;
-            --border: 1px solid var(--primary-color);
+            --border: 2px solid var(--primary-color);
             color: black;
         }
 

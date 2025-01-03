@@ -36,7 +36,8 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
     [HttpPatch]
     public async Task UpdateRecipeAsync(RecipeModel recipe)
     {
-        if (!await recipeRepository.ExistsAsync(recipe.Id!.Value)) throw new("recipe not found");
+        var current = await recipeRepository.GetAsync(recipe.Id!.Value);
+        if (current is null) throw new("recipe not found");
 
         await recipeRepository.UpdateRecipeAsync(recipe);
     }
@@ -45,7 +46,7 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
     public IQueryable<IngredientResponse> SearchIngredients(string search,
         [FromQuery] int maxItems = 5)
     {
-        return recipeRepository.SearchItems(search, maxItems).Select(IngredientResponse.FromRecipeMapping);
+        return recipeRepository.SearchIngredients(search, maxItems).Select(IngredientResponse.FromRecipeMapping);
     }
 
     [HttpPost("{recipeId}/ingredient")]
@@ -67,9 +68,27 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
     }
 
     [HttpPost("cookware/search")]
-    public IQueryable<string> SearchCookwareAsync([FromBody] string search)
+    public IQueryable<string> SearchCookwareAsync([FromBody] string search, [FromQuery] int maxItems = 5)
     {
-        return recipeRepository.GetCookware(search);
+        return recipeRepository.GetCookware(search, maxItems);
+    }
+
+    [HttpPost("{recipeId}/cookware")]
+    public async Task<Guid> AddCookwareAsync(Guid recipeId,
+        [FromBody] RecipeCookwareMappingModel cookware)
+    {
+        cookware.RecipeId = recipeId;
+        cookware.Id = Guid.NewGuid();
+
+        await recipeRepository.AddCookwareAsync(cookware);
+
+        return cookware.Id!.Value;
+    }
+
+    [HttpDelete("{recipeId}/cookware/{cookwareId}")]
+    public async Task DeleteCookwareAsync(Guid recipeId, Guid cookwareId)
+    {
+        await recipeRepository.DeleteCookwareAsync(recipeId, cookwareId);
     }
 
     [HttpDelete("{recipeId}/soft")]

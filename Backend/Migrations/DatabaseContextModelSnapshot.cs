@@ -326,7 +326,8 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeCookwareMappingModel", b =>
                 {
-                    b.Property<Guid>("RecipeId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -334,7 +335,12 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("RecipeId");
+                    b.Property<Guid>("RecipeId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId");
 
                     b.ToTable("Cookware");
                 });

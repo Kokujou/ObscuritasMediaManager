@@ -12,7 +12,7 @@ export function renderDurationInputStyles() {
             font-size: 18px;
             font-weight: bold;
 
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
         }
 
         input {
@@ -25,6 +25,8 @@ export function renderDurationInputStyles() {
             border: none;
             outline: none;
             color: white;
+
+            user-select: auto !important;
         }
     `;
 }

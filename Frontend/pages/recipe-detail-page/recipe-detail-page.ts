@@ -12,6 +12,7 @@ import {
     IngredientResponse,
     Language,
     MeasurementUnit,
+    RecipeCookwareMappingModel,
     RecipeIngredientMappingModel,
     RecipeModel,
 } from '../../obscuritas-media-manager-backend-client';
@@ -96,6 +97,12 @@ export class RecipeDetailPage extends LitElementBase {
         return renderRecipeDetailPage.call(this);
     }
 
+    async changeProperty<T extends keyof RecipeModel>(property: T, value: RecipeModel[T]) {
+        this.recipe[property] = value;
+        if (this.recipe.id) await RecipeService.updateRecipe(this.recipe);
+        this.requestFullUpdate();
+    }
+
     async addIngredient(group: string, event: Event) {
         event.stopPropagation();
         event.preventDefault();
@@ -108,10 +115,11 @@ export class RecipeDetailPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    async changeProperty<T extends keyof RecipeModel>(property: T, value: RecipeModel[T]) {
-        this.recipe[property] = value;
-        if (this.recipe.id) await RecipeService.updateRecipe(this.recipe);
-        this.requestFullUpdate();
+    async addCookware() {
+        var cookware = new RecipeCookwareMappingModel({ name: '', recipeId: this.recipe.id! });
+        this.recipe.cookware = this.recipe.cookware.concat(cookware);
+        cookware.id = await RecipeService.addCookware(this.recipe.id!, cookware);
+        await this.requestFullUpdate();
     }
 
     renameGroup(affectedIngredients: RecipeIngredientMappingModel[], newName: string) {
@@ -126,11 +134,16 @@ export class RecipeDetailPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    async removeItem(ingredient: RecipeIngredientMappingModel) {
+    async removeIngredient(ingredient: RecipeIngredientMappingModel) {
         await RecipeService.deleteIngredient(this.recipe.id!, ingredient.id!);
         this.recipe.ingredients = this.recipe.ingredients.filter((x) => x.id != ingredient.id);
+        await this.requestFullUpdate();
+    }
 
-        this.requestFullUpdate();
+    async removeCookware(cookware: RecipeCookwareMappingModel) {
+        await RecipeService.deleteCookware(this.recipe.id!, cookware.id);
+        this.recipe.cookware = this.recipe.cookware.filter((x) => x.name != cookware.name);
+        await this.requestFullUpdate();
     }
 
     async changeNation() {
@@ -154,11 +167,17 @@ export class RecipeDetailPage extends LitElementBase {
         this.changeProperty('ingredients', this.recipe.ingredients);
     }
 
-    async searchIngredients(ingredient: RecipeIngredientMappingModel, search: string) {
+    async searchIngredients(search: string) {
         return [{ id: search, text: '+ Zutat hinzufügen' } as AutocompleteItem].concat(
             (await RecipeService.searchIngredients(search)).map((x) =>
-                Object.assign(x, { id: x.name, text: x.name } as AutocompleteItem)
+                Object.assign(x, { id: x.name, text: x.name + ` (${x.measurement})` } as AutocompleteItem)
             )
+        );
+    }
+
+    async searchCookware(search: string) {
+        return [{ id: search, text: '+ Kochutensil hinzufügen' } as AutocompleteItem].concat(
+            (await RecipeService.searchCookware(search)).map((x) => Object.assign(x, { id: x, text: x } as AutocompleteItem))
         );
     }
 
@@ -172,6 +191,11 @@ export class RecipeDetailPage extends LitElementBase {
         }
 
         this.changeProperty('ingredients', this.recipe.ingredients);
+    }
+
+    updateCookware(source: RecipeCookwareMappingModel, newCookware: string) {
+        source.name = newCookware;
+        this.changeProperty('cookware', this.recipe.cookware);
     }
 
     async submit(event: SubmitEvent) {

@@ -1,10 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ObscuritasMediaManager.Backend.Data.Food;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
 public class RecipeRepository(DatabaseContext databaseContext)
 {
+    private static readonly List<Measurement> PrimaryMeasurements =
+        [Measurement.Mass, Measurement.Size, Measurement.Volume];
+
     public IQueryable<RecipeModel> GetAll()
     {
         return databaseContext.Recipes;
@@ -44,9 +48,22 @@ public class RecipeRepository(DatabaseContext databaseContext)
             .Where(x => x.Id == ingredientId && x.RecipeId == recipeId).ExecuteDeleteAsync();
     }
 
-    public IQueryable<string> GetCookware(string search)
+    public IQueryable<string> GetCookware(string search, int maxItems)
     {
-        return databaseContext.Cookware.Select(x => x.Name).Distinct();
+        return databaseContext.Cookware.Select(x => x.Name)
+            .Where(cookware => cookware.ToLower().Contains(search.ToLower())).Distinct().Take(maxItems);
+    }
+
+    public async Task AddCookwareAsync(RecipeCookwareMappingModel cookware)
+    {
+        databaseContext.Add(cookware);
+        await databaseContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteCookwareAsync(Guid recipeId, Guid cookwareId)
+    {
+        await databaseContext.Set<RecipeCookwareMappingModel>().Where(x => x.Id == cookwareId && x.RecipeId == recipeId)
+            .ExecuteDeleteAsync();
     }
 
     public async Task DeleteRecipeAsync(Guid recipeId, bool hard = false)
@@ -75,10 +92,13 @@ public class RecipeRepository(DatabaseContext databaseContext)
             .ExecuteUpdateAsync(x => x.SetProperty(y => y.Deleted, false));
     }
 
-    public IQueryable<RecipeIngredientMappingModel> SearchItems(string search, int maxItems)
+    public IQueryable<RecipeIngredientMappingModel> SearchIngredients(string search, int maxItems)
     {
         return databaseContext.Set<RecipeIngredientMappingModel>()
             .Where(x => x.IngredientName.ToLower().Contains(search.ToLower()))
-            .Take(maxItems);
+            .GroupBy(x => new { x.IngredientName, x.Unit.Measurement })
+            .Select(x => x.First())
+            .Take(maxItems)
+            .ToList().AsQueryable();
     }
 }

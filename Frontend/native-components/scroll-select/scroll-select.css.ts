@@ -58,8 +58,8 @@ export function renderScrollSelectStyles() {
             top: var(--active-item-start);
             height: 40px;
 
-            border-bottom: 1px solid;
-            border-top: 1px solid;
+            border-bottom: 2px solid;
+            border-top: 2px solid;
         }
     `;
 }

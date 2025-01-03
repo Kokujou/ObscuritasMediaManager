@@ -41,6 +41,11 @@ export class AutocompleteInput extends LitElementBase {
     }
 
     handleKeyDown(event: KeyboardEvent) {
+        if (event.key == 'Escape' || event.key == 'Tab') {
+            this.selectItem(this.value);
+            return;
+        }
+
         if (event.key == 'Enter' && this.focusedItem && this.showDropdown) {
             this.selectItem(this.focusedItem);
             return;
@@ -71,5 +76,6 @@ export class AutocompleteInput extends LitElementBase {
         this.value = item;
         this.dispatchEvent(new CustomEvent('value-changed', { bubbles: true, composed: true, detail: this.value }));
         this.showDropdown = false;
+        this.searchField.value = this.value.text;
     }
 }

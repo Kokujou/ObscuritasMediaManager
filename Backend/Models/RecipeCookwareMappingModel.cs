@@ -6,6 +6,7 @@ namespace ObscuritasMediaManager.Backend.Models;
 [Table("Cookware")]
 public class RecipeCookwareMappingModel
 {
-    [Key] public Guid RecipeId { get; set; }
+    [Key] public Guid? Id { get; set; } = Guid.NewGuid();
+    public Guid RecipeId { get; set; }
     [MaxLength(255)] public required string Name { get; set; }
 }

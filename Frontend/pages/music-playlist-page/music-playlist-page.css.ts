@@ -278,7 +278,7 @@ export function renderMusicPlaylistStyles() {
             flex: auto;
             background: transparent;
             border: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
             padding: 10px 10px;
             white-space: nowrap;
             user-select: text;
@@ -292,7 +292,7 @@ export function renderMusicPlaylistStyles() {
         input.editable-label {
             outline: none;
             border: none;
-            border-bottom: 1px solid;
+            border-bottom: 2px solid;
             font: inherit;
             color: inherit;
             background: none;

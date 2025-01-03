@@ -16,7 +16,7 @@ export function renderAutocompleteInputStyles() {
             width: 100%;
             box-sizing: border-box;
 
-            border-bottom: 1px solid;
+            border-bottom: 2px solid !important;
             padding: 10px;
         }
 

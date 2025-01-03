@@ -94,7 +94,7 @@ export function renderUploadAreaStyles() {
         #upload-description #brose-files-link {
             color: var(--font-color);
             font-weight: bold;
-            text-shadow: 1px 1px 1px black;
+            text-shadow: 2px 2px 2px black;
         }
 
         #image-container > * {
