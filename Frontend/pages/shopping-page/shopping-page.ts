@@ -109,4 +109,11 @@ export class ShoppingPage extends LitElementBase {
             MessageSnackbar.popup('Fehler beim erstellen der Zutat: ' + err, 'error');
         }
     }
+
+    markAsFavorite(ingredient: IngredientModel) {
+        if (!Session.favoriteIngredients.includes(ingredient.ingredientName))
+            Session.favoriteIngredients = Session.favoriteIngredients.concat(ingredient.ingredientName);
+        else Session.favoriteIngredients = Session.favoriteIngredients.filter((x) => x != ingredient.ingredientName);
+        this.requestFullUpdate();
+    }
 }

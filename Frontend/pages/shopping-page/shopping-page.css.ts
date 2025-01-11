@@ -108,5 +108,13 @@ export function renderShoppingPageStyles() {
             height: 20px;
             background: white;
         }
+
+        .action-icon {
+            width: 30px;
+            height: 30px;
+            background: white;
+
+            cursor: pointer;
+        }
     `;
 }

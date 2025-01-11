@@ -36,6 +36,7 @@ import { downloadPlaylistIcon } from './playlist-icons/download-playlist-icon.sv
 import { playPlaylistIcon } from './playlist-icons/play-playlist-icon.svg';
 import { savePlaylistIcon } from './playlist-icons/save-playlist-icon.svg';
 import { shufflePlaylistIcon } from './playlist-icons/shuffle-playlist-icon.svg';
+import { starIcon } from './general/star-icon.svg';
 
 export const IconRegistry = {
     Cross: crossIcon(),
@@ -74,6 +75,7 @@ export const IconRegistry = {
     Repair: repairIcon(),
     Category: categoryIcon(),
     Search: searchIcon(),
+    Star: starIcon(),
 };
 
 export const Icons = {} as typeof IconRegistry;

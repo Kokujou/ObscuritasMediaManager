@@ -125,6 +125,8 @@ function renderIngredient(this: ShoppingPage, ingredient: IngredientModel) {
             </div>
         </td>
         <td></td>
-        <td></td>
+        <td>
+            <div class="action-icon" icon="${Icons.Star}" @click="${() => this.markAsFavorite(ingredient)}"></div>
+        </td>
     </tr>`;
 }
