@@ -77,6 +77,7 @@ export class DropDown extends LitElementBase {
         this.searchFilter = '';
         searchBox.value = '';
         this.requestFullUpdate();
+        if (this.showDropDown) searchBox.focus();
     }
 
     changeOptionState(option: DropDownOption<any>, state: CheckboxState) {

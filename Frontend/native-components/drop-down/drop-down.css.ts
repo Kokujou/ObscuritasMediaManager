@@ -79,7 +79,7 @@ export function renderDropDownStyles() {
             position: absolute;
             top: 100%;
             width: var(--option-width, 100%);
-            min-width: fit-content;
+            min-width: max-content;
 
             display: flex;
             flex-direction: column;
@@ -105,7 +105,7 @@ export function renderDropDownStyles() {
             padding: 5px 10px;
             margin: 15px;
             margin-bottom: 5px;
-            box-sizing: padding-box;
+            box-sizing: border-box;
 
             outline: none;
             background-color: transparent;

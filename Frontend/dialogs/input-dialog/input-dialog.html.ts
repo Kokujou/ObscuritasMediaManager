@@ -3,7 +3,7 @@ import { InputDialog } from './input-dialog';
 
 export function renderInputDialog(this: InputDialog) {
     return html` <dialog-base
-        caption="Bitte Basispfad auswählen"
+        caption="${this.caption}"
         showBorder
         canAccept
         acceptActionText="Weiter"

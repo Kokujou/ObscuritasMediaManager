@@ -6,6 +6,7 @@ import { getPageName } from '../../services/extensions/url.extension';
 import { MediaPage } from '../media-page/media-page';
 import { MusicPage } from '../music-page/music-page';
 import { RecipesPage } from '../recipes-page/recipes-page';
+import { ShoppingPage } from '../shopping-page/shopping-page';
 import { WelcomePage } from '../welcome-page/welcome-page';
 
 export function renderPageLayout() {
@@ -44,7 +45,8 @@ function renderNavigation() {
                     <div id="nav-section-links">
                         ${renderNavItem(MediaPage)}<br />
                         ${renderNavItem(MusicPage)}<br />
-                        ${renderNavItem(RecipesPage)}
+                        ${renderNavItem(RecipesPage)}<br />
+                        ${renderNavItem(ShoppingPage)}
                     </div>
                 </div>
             </div>

@@ -96,246 +96,254 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_unselect_all_icon_svg_ts__WEBPACK_IMPORTED_MODULE_82__ = __webpack_require__(/*! ./resources/inline-icons/general/unselect-all-icon.svg.ts */ "./resources/inline-icons/general/unselect-all-icon.svg.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_speech_icon_svg_ts__WEBPACK_IMPORTED_MODULE_83__ = __webpack_require__(/*! ./resources/inline-icons/general/speech-icon.svg.ts */ "./resources/inline-icons/general/speech-icon.svg.ts");
 /* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_select_all_icon_svg_ts__WEBPACK_IMPORTED_MODULE_84__ = __webpack_require__(/*! ./resources/inline-icons/general/select-all-icon.svg.ts */ "./resources/inline-icons/general/select-all-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_save_tick_icon_svg_ts__WEBPACK_IMPORTED_MODULE_85__ = __webpack_require__(/*! ./resources/inline-icons/general/save-tick-icon.svg.ts */ "./resources/inline-icons/general/save-tick-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_revert_icon_svg_ts__WEBPACK_IMPORTED_MODULE_86__ = __webpack_require__(/*! ./resources/inline-icons/general/revert-icon.svg.ts */ "./resources/inline-icons/general/revert-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_repair_icon_svg_ts__WEBPACK_IMPORTED_MODULE_87__ = __webpack_require__(/*! ./resources/inline-icons/general/repair-icon.svg.ts */ "./resources/inline-icons/general/repair-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_popup_icon_svg_ts__WEBPACK_IMPORTED_MODULE_88__ = __webpack_require__(/*! ./resources/inline-icons/general/popup-icon.svg.ts */ "./resources/inline-icons/general/popup-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_plus_icon_svg_ts__WEBPACK_IMPORTED_MODULE_89__ = __webpack_require__(/*! ./resources/inline-icons/general/plus-icon.svg.ts */ "./resources/inline-icons/general/plus-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_note_icon_svg_ts__WEBPACK_IMPORTED_MODULE_90__ = __webpack_require__(/*! ./resources/inline-icons/general/note-icon.svg.ts */ "./resources/inline-icons/general/note-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_lookup_icon_svg_ts__WEBPACK_IMPORTED_MODULE_91__ = __webpack_require__(/*! ./resources/inline-icons/general/lookup-icon.svg.ts */ "./resources/inline-icons/general/lookup-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_import_icon_svg_ts__WEBPACK_IMPORTED_MODULE_92__ = __webpack_require__(/*! ./resources/inline-icons/general/import-icon.svg.ts */ "./resources/inline-icons/general/import-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_globus_icon_svg_ts__WEBPACK_IMPORTED_MODULE_93__ = __webpack_require__(/*! ./resources/inline-icons/general/globus-icon.svg.ts */ "./resources/inline-icons/general/globus-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_drag_icon_svg_ts__WEBPACK_IMPORTED_MODULE_94__ = __webpack_require__(/*! ./resources/inline-icons/general/drag-icon.svg.ts */ "./resources/inline-icons/general/drag-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_descending_icon_svg_ts__WEBPACK_IMPORTED_MODULE_95__ = __webpack_require__(/*! ./resources/inline-icons/general/descending-icon.svg.ts */ "./resources/inline-icons/general/descending-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_cross_icon_svg_ts__WEBPACK_IMPORTED_MODULE_96__ = __webpack_require__(/*! ./resources/inline-icons/general/cross-icon.svg.ts */ "./resources/inline-icons/general/cross-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_clean_icon_svg_ts__WEBPACK_IMPORTED_MODULE_97__ = __webpack_require__(/*! ./resources/inline-icons/general/clean-icon.svg.ts */ "./resources/inline-icons/general/clean-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_category_icon_svg_ts__WEBPACK_IMPORTED_MODULE_98__ = __webpack_require__(/*! ./resources/inline-icons/general/category-icon.svg.ts */ "./resources/inline-icons/general/category-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_ascending_icon_svg_ts__WEBPACK_IMPORTED_MODULE_99__ = __webpack_require__(/*! ./resources/inline-icons/general/ascending-icon.svg.ts */ "./resources/inline-icons/general/ascending-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_arrow_svg_ts__WEBPACK_IMPORTED_MODULE_100__ = __webpack_require__(/*! ./resources/inline-icons/general/arrow.svg.ts */ "./resources/inline-icons/general/arrow.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_icons_target_groups_register_target_groups_ts__WEBPACK_IMPORTED_MODULE_101__ = __webpack_require__(/*! ./resources/icons/target-groups/register-target-groups.ts */ "./resources/icons/target-groups/register-target-groups.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_icons_content_warnings_register_content_warnings_ts__WEBPACK_IMPORTED_MODULE_102__ = __webpack_require__(/*! ./resources/icons/content-warnings/register-content-warnings.ts */ "./resources/icons/content-warnings/register-content-warnings.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_ts__WEBPACK_IMPORTED_MODULE_103__ = __webpack_require__(/*! ./pages/welcome-page/welcome-page.ts */ "./pages/welcome-page/welcome-page.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_html_ts__WEBPACK_IMPORTED_MODULE_104__ = __webpack_require__(/*! ./pages/welcome-page/welcome-page.html.ts */ "./pages/welcome-page/welcome-page.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_css_ts__WEBPACK_IMPORTED_MODULE_105__ = __webpack_require__(/*! ./pages/welcome-page/welcome-page.css.ts */ "./pages/welcome-page/welcome-page.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_ts__WEBPACK_IMPORTED_MODULE_106__ = __webpack_require__(/*! ./pages/recipes-page/recipes-page.ts */ "./pages/recipes-page/recipes-page.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_html_ts__WEBPACK_IMPORTED_MODULE_107__ = __webpack_require__(/*! ./pages/recipes-page/recipes-page.html.ts */ "./pages/recipes-page/recipes-page.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_css_ts__WEBPACK_IMPORTED_MODULE_108__ = __webpack_require__(/*! ./pages/recipes-page/recipes-page.css.ts */ "./pages/recipes-page/recipes-page.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_ts__WEBPACK_IMPORTED_MODULE_109__ = __webpack_require__(/*! ./pages/recipe-detail-page/recipe-detail-page.ts */ "./pages/recipe-detail-page/recipe-detail-page.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_110__ = __webpack_require__(/*! ./pages/recipe-detail-page/recipe-detail-page.html.ts */ "./pages/recipe-detail-page/recipe-detail-page.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_css_ts__WEBPACK_IMPORTED_MODULE_111__ = __webpack_require__(/*! ./pages/recipe-detail-page/recipe-detail-page.css.ts */ "./pages/recipe-detail-page/recipe-detail-page.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_ts__WEBPACK_IMPORTED_MODULE_112__ = __webpack_require__(/*! ./pages/page-routing/page-routing.ts */ "./pages/page-routing/page-routing.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_html_ts__WEBPACK_IMPORTED_MODULE_113__ = __webpack_require__(/*! ./pages/page-routing/page-routing.html.ts */ "./pages/page-routing/page-routing.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_css_ts__WEBPACK_IMPORTED_MODULE_114__ = __webpack_require__(/*! ./pages/page-routing/page-routing.css.ts */ "./pages/page-routing/page-routing.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_ts__WEBPACK_IMPORTED_MODULE_115__ = __webpack_require__(/*! ./pages/page-layout/page-layout.ts */ "./pages/page-layout/page-layout.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_html_ts__WEBPACK_IMPORTED_MODULE_116__ = __webpack_require__(/*! ./pages/page-layout/page-layout.html.ts */ "./pages/page-layout/page-layout.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_css_ts__WEBPACK_IMPORTED_MODULE_117__ = __webpack_require__(/*! ./pages/page-layout/page-layout.css.ts */ "./pages/page-layout/page-layout.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_ts__WEBPACK_IMPORTED_MODULE_118__ = __webpack_require__(/*! ./pages/obscuritas-media-manager/obscuritas-media-manager.ts */ "./pages/obscuritas-media-manager/obscuritas-media-manager.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_html_ts__WEBPACK_IMPORTED_MODULE_119__ = __webpack_require__(/*! ./pages/obscuritas-media-manager/obscuritas-media-manager.html.ts */ "./pages/obscuritas-media-manager/obscuritas-media-manager.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_css_ts__WEBPACK_IMPORTED_MODULE_120__ = __webpack_require__(/*! ./pages/obscuritas-media-manager/obscuritas-media-manager.css.ts */ "./pages/obscuritas-media-manager/obscuritas-media-manager.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_ts__WEBPACK_IMPORTED_MODULE_121__ = __webpack_require__(/*! ./pages/music-playlist-page/music-playlist-page.ts */ "./pages/music-playlist-page/music-playlist-page.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_html_ts__WEBPACK_IMPORTED_MODULE_122__ = __webpack_require__(/*! ./pages/music-playlist-page/music-playlist-page.html.ts */ "./pages/music-playlist-page/music-playlist-page.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_css_ts__WEBPACK_IMPORTED_MODULE_123__ = __webpack_require__(/*! ./pages/music-playlist-page/music-playlist-page.css.ts */ "./pages/music-playlist-page/music-playlist-page.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_audio_file_extensions_ts__WEBPACK_IMPORTED_MODULE_124__ = __webpack_require__(/*! ./pages/music-playlist-page/audio-file-extensions.ts */ "./pages/music-playlist-page/audio-file-extensions.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_ts__WEBPACK_IMPORTED_MODULE_125__ = __webpack_require__(/*! ./pages/music-page/music-page.ts */ "./pages/music-page/music-page.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_html_ts__WEBPACK_IMPORTED_MODULE_126__ = __webpack_require__(/*! ./pages/music-page/music-page.html.ts */ "./pages/music-page/music-page.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_css_ts__WEBPACK_IMPORTED_MODULE_127__ = __webpack_require__(/*! ./pages/music-page/music-page.css.ts */ "./pages/music-page/music-page.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_ts__WEBPACK_IMPORTED_MODULE_128__ = __webpack_require__(/*! ./pages/media-page/media-page.ts */ "./pages/media-page/media-page.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_html_ts__WEBPACK_IMPORTED_MODULE_129__ = __webpack_require__(/*! ./pages/media-page/media-page.html.ts */ "./pages/media-page/media-page.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_css_ts__WEBPACK_IMPORTED_MODULE_130__ = __webpack_require__(/*! ./pages/media-page/media-page.css.ts */ "./pages/media-page/media-page.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_ts__WEBPACK_IMPORTED_MODULE_131__ = __webpack_require__(/*! ./pages/media-detail-page/media-detail-page.ts */ "./pages/media-detail-page/media-detail-page.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_132__ = __webpack_require__(/*! ./pages/media-detail-page/media-detail-page.html.ts */ "./pages/media-detail-page/media-detail-page.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_css_ts__WEBPACK_IMPORTED_MODULE_133__ = __webpack_require__(/*! ./pages/media-detail-page/media-detail-page.css.ts */ "./pages/media-detail-page/media-detail-page.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_images_trash_icon_svg_ts__WEBPACK_IMPORTED_MODULE_134__ = __webpack_require__(/*! ./pages/media-detail-page/images/trash-icon.svg.ts */ "./pages/media-detail-page/images/trash-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_images_edit_icon_svg_ts__WEBPACK_IMPORTED_MODULE_135__ = __webpack_require__(/*! ./pages/media-detail-page/images/edit-icon.svg.ts */ "./pages/media-detail-page/images/edit-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_maintenance_page_maintenance_page_ts__WEBPACK_IMPORTED_MODULE_136__ = __webpack_require__(/*! ./pages/maintenance-page/maintenance-page.ts */ "./pages/maintenance-page/maintenance-page.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_maintenance_page_maintenance_page_html_ts__WEBPACK_IMPORTED_MODULE_137__ = __webpack_require__(/*! ./pages/maintenance-page/maintenance-page.html.ts */ "./pages/maintenance-page/maintenance-page.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_maintenance_page_maintenance_page_css_ts__WEBPACK_IMPORTED_MODULE_138__ = __webpack_require__(/*! ./pages/maintenance-page/maintenance-page.css.ts */ "./pages/maintenance-page/maintenance-page.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_ts__WEBPACK_IMPORTED_MODULE_139__ = __webpack_require__(/*! ./pages/login-page/login-page.ts */ "./pages/login-page/login-page.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_html_ts__WEBPACK_IMPORTED_MODULE_140__ = __webpack_require__(/*! ./pages/login-page/login-page.html.ts */ "./pages/login-page/login-page.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_css_ts__WEBPACK_IMPORTED_MODULE_141__ = __webpack_require__(/*! ./pages/login-page/login-page.css.ts */ "./pages/login-page/login-page.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_warning_banner_warning_banner_ts__WEBPACK_IMPORTED_MODULE_142__ = __webpack_require__(/*! ./native-components/warning-banner/warning-banner.ts */ "./native-components/warning-banner/warning-banner.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_warning_banner_warning_banner_html_ts__WEBPACK_IMPORTED_MODULE_143__ = __webpack_require__(/*! ./native-components/warning-banner/warning-banner.html.ts */ "./native-components/warning-banner/warning-banner.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_warning_banner_warning_banner_css_ts__WEBPACK_IMPORTED_MODULE_144__ = __webpack_require__(/*! ./native-components/warning-banner/warning-banner.css.ts */ "./native-components/warning-banner/warning-banner.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tri_value_checkbox_tri_value_checkbox_ts__WEBPACK_IMPORTED_MODULE_145__ = __webpack_require__(/*! ./native-components/tri-value-checkbox/tri-value-checkbox.ts */ "./native-components/tri-value-checkbox/tri-value-checkbox.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tri_value_checkbox_tri_value_checkbox_html_ts__WEBPACK_IMPORTED_MODULE_146__ = __webpack_require__(/*! ./native-components/tri-value-checkbox/tri-value-checkbox.html.ts */ "./native-components/tri-value-checkbox/tri-value-checkbox.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tri_value_checkbox_tri_value_checkbox_css_ts__WEBPACK_IMPORTED_MODULE_147__ = __webpack_require__(/*! ./native-components/tri-value-checkbox/tri-value-checkbox.css.ts */ "./native-components/tri-value-checkbox/tri-value-checkbox.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tag_label_tag_label_ts__WEBPACK_IMPORTED_MODULE_148__ = __webpack_require__(/*! ./native-components/tag-label/tag-label.ts */ "./native-components/tag-label/tag-label.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tag_label_tag_label_html_ts__WEBPACK_IMPORTED_MODULE_149__ = __webpack_require__(/*! ./native-components/tag-label/tag-label.html.ts */ "./native-components/tag-label/tag-label.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tag_label_tag_label_css_ts__WEBPACK_IMPORTED_MODULE_150__ = __webpack_require__(/*! ./native-components/tag-label/tag-label.css.ts */ "./native-components/tag-label/tag-label.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_side_scroller_side_scroller_ts__WEBPACK_IMPORTED_MODULE_151__ = __webpack_require__(/*! ./native-components/side-scroller/side-scroller.ts */ "./native-components/side-scroller/side-scroller.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_side_scroller_side_scroller_html_ts__WEBPACK_IMPORTED_MODULE_152__ = __webpack_require__(/*! ./native-components/side-scroller/side-scroller.html.ts */ "./native-components/side-scroller/side-scroller.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_side_scroller_side_scroller_css_ts__WEBPACK_IMPORTED_MODULE_153__ = __webpack_require__(/*! ./native-components/side-scroller/side-scroller.css.ts */ "./native-components/side-scroller/side-scroller.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_scroll_select_scroll_select_ts__WEBPACK_IMPORTED_MODULE_154__ = __webpack_require__(/*! ./native-components/scroll-select/scroll-select.ts */ "./native-components/scroll-select/scroll-select.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_scroll_select_scroll_select_html_ts__WEBPACK_IMPORTED_MODULE_155__ = __webpack_require__(/*! ./native-components/scroll-select/scroll-select.html.ts */ "./native-components/scroll-select/scroll-select.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_scroll_select_scroll_select_css_ts__WEBPACK_IMPORTED_MODULE_156__ = __webpack_require__(/*! ./native-components/scroll-select/scroll-select.css.ts */ "./native-components/scroll-select/scroll-select.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_slider_range_slider_ts__WEBPACK_IMPORTED_MODULE_157__ = __webpack_require__(/*! ./native-components/range-slider/range-slider.ts */ "./native-components/range-slider/range-slider.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_slider_range_slider_html_ts__WEBPACK_IMPORTED_MODULE_158__ = __webpack_require__(/*! ./native-components/range-slider/range-slider.html.ts */ "./native-components/range-slider/range-slider.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_slider_range_slider_css_ts__WEBPACK_IMPORTED_MODULE_159__ = __webpack_require__(/*! ./native-components/range-slider/range-slider.css.ts */ "./native-components/range-slider/range-slider.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_selector_range_selector_ts__WEBPACK_IMPORTED_MODULE_160__ = __webpack_require__(/*! ./native-components/range-selector/range-selector.ts */ "./native-components/range-selector/range-selector.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_selector_range_selector_html_ts__WEBPACK_IMPORTED_MODULE_161__ = __webpack_require__(/*! ./native-components/range-selector/range-selector.html.ts */ "./native-components/range-selector/range-selector.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_selector_range_selector_css_ts__WEBPACK_IMPORTED_MODULE_162__ = __webpack_require__(/*! ./native-components/range-selector/range-selector.css.ts */ "./native-components/range-selector/range-selector.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_priority_list_priority_list_ts__WEBPACK_IMPORTED_MODULE_163__ = __webpack_require__(/*! ./native-components/priority-list/priority-list.ts */ "./native-components/priority-list/priority-list.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_priority_list_priority_list_html_ts__WEBPACK_IMPORTED_MODULE_164__ = __webpack_require__(/*! ./native-components/priority-list/priority-list.html.ts */ "./native-components/priority-list/priority-list.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_partial_loading_partial_loading_ts__WEBPACK_IMPORTED_MODULE_165__ = __webpack_require__(/*! ./native-components/partial-loading/partial-loading.ts */ "./native-components/partial-loading/partial-loading.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_partial_loading_partial_loading_stories_example_ts__WEBPACK_IMPORTED_MODULE_166__ = __webpack_require__(/*! ./native-components/partial-loading/partial-loading.stories.example.ts */ "./native-components/partial-loading/partial-loading.stories.example.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_partial_loading_partial_loading_html_ts__WEBPACK_IMPORTED_MODULE_167__ = __webpack_require__(/*! ./native-components/partial-loading/partial-loading.html.ts */ "./native-components/partial-loading/partial-loading.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_ts__WEBPACK_IMPORTED_MODULE_168__ = __webpack_require__(/*! ./native-components/ordered-list/ordered-list.ts */ "./native-components/ordered-list/ordered-list.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_html_ts__WEBPACK_IMPORTED_MODULE_169__ = __webpack_require__(/*! ./native-components/ordered-list/ordered-list.html.ts */ "./native-components/ordered-list/ordered-list.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_css_ts__WEBPACK_IMPORTED_MODULE_170__ = __webpack_require__(/*! ./native-components/ordered-list/ordered-list.css.ts */ "./native-components/ordered-list/ordered-list.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_ts__WEBPACK_IMPORTED_MODULE_171__ = __webpack_require__(/*! ./native-components/message-snackbar/message-snackbar.ts */ "./native-components/message-snackbar/message-snackbar.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_html_ts__WEBPACK_IMPORTED_MODULE_172__ = __webpack_require__(/*! ./native-components/message-snackbar/message-snackbar.html.ts */ "./native-components/message-snackbar/message-snackbar.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_css_ts__WEBPACK_IMPORTED_MODULE_173__ = __webpack_require__(/*! ./native-components/message-snackbar/message-snackbar.css.ts */ "./native-components/message-snackbar/message-snackbar.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_loading_screen_loading_screen_ts__WEBPACK_IMPORTED_MODULE_174__ = __webpack_require__(/*! ./native-components/loading-screen/loading-screen.ts */ "./native-components/loading-screen/loading-screen.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_loading_circle_loading_circle_ts__WEBPACK_IMPORTED_MODULE_175__ = __webpack_require__(/*! ./native-components/loading-circle/loading-circle.ts */ "./native-components/loading-circle/loading-circle.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_loading_circle_loading_circle_html_ts__WEBPACK_IMPORTED_MODULE_176__ = __webpack_require__(/*! ./native-components/loading-circle/loading-circle.html.ts */ "./native-components/loading-circle/loading-circle.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_loading_circle_loading_circle_css_ts__WEBPACK_IMPORTED_MODULE_177__ = __webpack_require__(/*! ./native-components/loading-circle/loading-circle.css.ts */ "./native-components/loading-circle/loading-circle.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_ts__WEBPACK_IMPORTED_MODULE_178__ = __webpack_require__(/*! ./native-components/link-element/link-element.ts */ "./native-components/link-element/link-element.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_html_ts__WEBPACK_IMPORTED_MODULE_179__ = __webpack_require__(/*! ./native-components/link-element/link-element.html.ts */ "./native-components/link-element/link-element.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_css_ts__WEBPACK_IMPORTED_MODULE_180__ = __webpack_require__(/*! ./native-components/link-element/link-element.css.ts */ "./native-components/link-element/link-element.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_grouped_dropdown_grouped_dropdown_ts__WEBPACK_IMPORTED_MODULE_181__ = __webpack_require__(/*! ./native-components/grouped-dropdown/grouped-dropdown.ts */ "./native-components/grouped-dropdown/grouped-dropdown.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_grouped_dropdown_grouped_dropdown_html_ts__WEBPACK_IMPORTED_MODULE_182__ = __webpack_require__(/*! ./native-components/grouped-dropdown/grouped-dropdown.html.ts */ "./native-components/grouped-dropdown/grouped-dropdown.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_grouped_dropdown_grouped_dropdown_css_ts__WEBPACK_IMPORTED_MODULE_183__ = __webpack_require__(/*! ./native-components/grouped-dropdown/grouped-dropdown.css.ts */ "./native-components/grouped-dropdown/grouped-dropdown.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_drop_down_drop_down_ts__WEBPACK_IMPORTED_MODULE_184__ = __webpack_require__(/*! ./native-components/drop-down/drop-down.ts */ "./native-components/drop-down/drop-down.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_drop_down_drop_down_html_ts__WEBPACK_IMPORTED_MODULE_185__ = __webpack_require__(/*! ./native-components/drop-down/drop-down.html.ts */ "./native-components/drop-down/drop-down.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_drop_down_drop_down_css_ts__WEBPACK_IMPORTED_MODULE_186__ = __webpack_require__(/*! ./native-components/drop-down/drop-down.css.ts */ "./native-components/drop-down/drop-down.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_drop_down_drop_down_option_ts__WEBPACK_IMPORTED_MODULE_187__ = __webpack_require__(/*! ./native-components/drop-down/drop-down-option.ts */ "./native-components/drop-down/drop-down-option.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_ts__WEBPACK_IMPORTED_MODULE_188__ = __webpack_require__(/*! ./native-components/custom-tooltip/custom-tooltip.ts */ "./native-components/custom-tooltip/custom-tooltip.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_html_ts__WEBPACK_IMPORTED_MODULE_189__ = __webpack_require__(/*! ./native-components/custom-tooltip/custom-tooltip.html.ts */ "./native-components/custom-tooltip/custom-tooltip.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_css_ts__WEBPACK_IMPORTED_MODULE_190__ = __webpack_require__(/*! ./native-components/custom-tooltip/custom-tooltip.css.ts */ "./native-components/custom-tooltip/custom-tooltip.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_toggle_custom_toggle_ts__WEBPACK_IMPORTED_MODULE_191__ = __webpack_require__(/*! ./native-components/custom-toggle/custom-toggle.ts */ "./native-components/custom-toggle/custom-toggle.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_toggle_custom_toggle_html_ts__WEBPACK_IMPORTED_MODULE_192__ = __webpack_require__(/*! ./native-components/custom-toggle/custom-toggle.html.ts */ "./native-components/custom-toggle/custom-toggle.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_toggle_custom_toggle_css_ts__WEBPACK_IMPORTED_MODULE_193__ = __webpack_require__(/*! ./native-components/custom-toggle/custom-toggle.css.ts */ "./native-components/custom-toggle/custom-toggle.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_ts__WEBPACK_IMPORTED_MODULE_194__ = __webpack_require__(/*! ./native-components/context-tooltip/context-tooltip.ts */ "./native-components/context-tooltip/context-tooltip.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_html_ts__WEBPACK_IMPORTED_MODULE_195__ = __webpack_require__(/*! ./native-components/context-tooltip/context-tooltip.html.ts */ "./native-components/context-tooltip/context-tooltip.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_css_ts__WEBPACK_IMPORTED_MODULE_196__ = __webpack_require__(/*! ./native-components/context-tooltip/context-tooltip.css.ts */ "./native-components/context-tooltip/context-tooltip.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_ts__WEBPACK_IMPORTED_MODULE_197__ = __webpack_require__(/*! ./native-components/context-menu/context-menu.ts */ "./native-components/context-menu/context-menu.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_html_ts__WEBPACK_IMPORTED_MODULE_198__ = __webpack_require__(/*! ./native-components/context-menu/context-menu.html.ts */ "./native-components/context-menu/context-menu.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_css_ts__WEBPACK_IMPORTED_MODULE_199__ = __webpack_require__(/*! ./native-components/context-menu/context-menu.css.ts */ "./native-components/context-menu/context-menu.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_ts__WEBPACK_IMPORTED_MODULE_200__ = __webpack_require__(/*! ./native-components/compact-audio-player/compact-audio-player.ts */ "./native-components/compact-audio-player/compact-audio-player.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_html_ts__WEBPACK_IMPORTED_MODULE_201__ = __webpack_require__(/*! ./native-components/compact-audio-player/compact-audio-player.html.ts */ "./native-components/compact-audio-player/compact-audio-player.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_css_ts__WEBPACK_IMPORTED_MODULE_202__ = __webpack_require__(/*! ./native-components/compact-audio-player/compact-audio-player.css.ts */ "./native-components/compact-audio-player/compact-audio-player.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_border_button_border_button_ts__WEBPACK_IMPORTED_MODULE_203__ = __webpack_require__(/*! ./native-components/border-button/border-button.ts */ "./native-components/border-button/border-button.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_border_button_border_button_html_ts__WEBPACK_IMPORTED_MODULE_204__ = __webpack_require__(/*! ./native-components/border-button/border-button.html.ts */ "./native-components/border-button/border-button.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_border_button_border_button_css_ts__WEBPACK_IMPORTED_MODULE_205__ = __webpack_require__(/*! ./native-components/border-button/border-button.css.ts */ "./native-components/border-button/border-button.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_autocomplete_input_autocomplete_input_ts__WEBPACK_IMPORTED_MODULE_206__ = __webpack_require__(/*! ./native-components/autocomplete-input/autocomplete-input.ts */ "./native-components/autocomplete-input/autocomplete-input.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_autocomplete_input_autocomplete_input_html_ts__WEBPACK_IMPORTED_MODULE_207__ = __webpack_require__(/*! ./native-components/autocomplete-input/autocomplete-input.html.ts */ "./native-components/autocomplete-input/autocomplete-input.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_autocomplete_input_autocomplete_input_css_ts__WEBPACK_IMPORTED_MODULE_208__ = __webpack_require__(/*! ./native-components/autocomplete-input/autocomplete-input.css.ts */ "./native-components/autocomplete-input/autocomplete-input.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_ts__WEBPACK_IMPORTED_MODULE_209__ = __webpack_require__(/*! ./dialogs/select-options-dialog/select-options-dialog.ts */ "./dialogs/select-options-dialog/select-options-dialog.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_html_ts__WEBPACK_IMPORTED_MODULE_210__ = __webpack_require__(/*! ./dialogs/select-options-dialog/select-options-dialog.html.ts */ "./dialogs/select-options-dialog/select-options-dialog.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_css_ts__WEBPACK_IMPORTED_MODULE_211__ = __webpack_require__(/*! ./dialogs/select-options-dialog/select-options-dialog.css.ts */ "./dialogs/select-options-dialog/select-options-dialog.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_ts__WEBPACK_IMPORTED_MODULE_212__ = __webpack_require__(/*! ./dialogs/playlist-selection-dialog/playlist-selection-dialog.ts */ "./dialogs/playlist-selection-dialog/playlist-selection-dialog.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_html_ts__WEBPACK_IMPORTED_MODULE_213__ = __webpack_require__(/*! ./dialogs/playlist-selection-dialog/playlist-selection-dialog.html.ts */ "./dialogs/playlist-selection-dialog/playlist-selection-dialog.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_css_ts__WEBPACK_IMPORTED_MODULE_214__ = __webpack_require__(/*! ./dialogs/playlist-selection-dialog/playlist-selection-dialog.css.ts */ "./dialogs/playlist-selection-dialog/playlist-selection-dialog.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_ts__WEBPACK_IMPORTED_MODULE_215__ = __webpack_require__(/*! ./dialogs/play-music-dialog/play-music-dialog.ts */ "./dialogs/play-music-dialog/play-music-dialog.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_html_ts__WEBPACK_IMPORTED_MODULE_216__ = __webpack_require__(/*! ./dialogs/play-music-dialog/play-music-dialog.html.ts */ "./dialogs/play-music-dialog/play-music-dialog.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_css_ts__WEBPACK_IMPORTED_MODULE_217__ = __webpack_require__(/*! ./dialogs/play-music-dialog/play-music-dialog.css.ts */ "./dialogs/play-music-dialog/play-music-dialog.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_ts__WEBPACK_IMPORTED_MODULE_218__ = __webpack_require__(/*! ./dialogs/input-dialog/input-dialog.ts */ "./dialogs/input-dialog/input-dialog.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_html_ts__WEBPACK_IMPORTED_MODULE_219__ = __webpack_require__(/*! ./dialogs/input-dialog/input-dialog.html.ts */ "./dialogs/input-dialog/input-dialog.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_css_ts__WEBPACK_IMPORTED_MODULE_220__ = __webpack_require__(/*! ./dialogs/input-dialog/input-dialog.css.ts */ "./dialogs/input-dialog/input-dialog.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_media_genres_ts__WEBPACK_IMPORTED_MODULE_221__ = __webpack_require__(/*! ./dialogs/genre-dialog/media-genres.ts */ "./dialogs/genre-dialog/media-genres.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_ts__WEBPACK_IMPORTED_MODULE_222__ = __webpack_require__(/*! ./dialogs/genre-dialog/genre-dialog.ts */ "./dialogs/genre-dialog/genre-dialog.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_html_ts__WEBPACK_IMPORTED_MODULE_223__ = __webpack_require__(/*! ./dialogs/genre-dialog/genre-dialog.html.ts */ "./dialogs/genre-dialog/genre-dialog.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_css_ts__WEBPACK_IMPORTED_MODULE_224__ = __webpack_require__(/*! ./dialogs/genre-dialog/genre-dialog.css.ts */ "./dialogs/genre-dialog/genre-dialog.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_entity_status_dialog_entity_status_dialog_ts__WEBPACK_IMPORTED_MODULE_225__ = __webpack_require__(/*! ./dialogs/entity-status-dialog/entity-status-dialog.ts */ "./dialogs/entity-status-dialog/entity-status-dialog.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_entity_status_dialog_entity_status_dialog_html_ts__WEBPACK_IMPORTED_MODULE_226__ = __webpack_require__(/*! ./dialogs/entity-status-dialog/entity-status-dialog.html.ts */ "./dialogs/entity-status-dialog/entity-status-dialog.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_entity_status_dialog_entity_status_dialog_css_ts__WEBPACK_IMPORTED_MODULE_227__ = __webpack_require__(/*! ./dialogs/entity-status-dialog/entity-status-dialog.css.ts */ "./dialogs/entity-status-dialog/entity-status-dialog.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_ts__WEBPACK_IMPORTED_MODULE_228__ = __webpack_require__(/*! ./dialogs/edit-playlist-dialog/edit-playlist-dialog.ts */ "./dialogs/edit-playlist-dialog/edit-playlist-dialog.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_html_ts__WEBPACK_IMPORTED_MODULE_229__ = __webpack_require__(/*! ./dialogs/edit-playlist-dialog/edit-playlist-dialog.html.ts */ "./dialogs/edit-playlist-dialog/edit-playlist-dialog.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_css_ts__WEBPACK_IMPORTED_MODULE_230__ = __webpack_require__(/*! ./dialogs/edit-playlist-dialog/edit-playlist-dialog.css.ts */ "./dialogs/edit-playlist-dialog/edit-playlist-dialog.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_result_genre_dialog_result_ts__WEBPACK_IMPORTED_MODULE_231__ = __webpack_require__(/*! ./dialogs/dialog-result/genre-dialog.result.ts */ "./dialogs/dialog-result/genre-dialog.result.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_ts__WEBPACK_IMPORTED_MODULE_232__ = __webpack_require__(/*! ./dialogs/dialog-base/dialog-base.ts */ "./dialogs/dialog-base/dialog-base.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_html_ts__WEBPACK_IMPORTED_MODULE_233__ = __webpack_require__(/*! ./dialogs/dialog-base/dialog-base.html.ts */ "./dialogs/dialog-base/dialog-base.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_css_ts__WEBPACK_IMPORTED_MODULE_234__ = __webpack_require__(/*! ./dialogs/dialog-base/dialog-base.css.ts */ "./dialogs/dialog-base/dialog-base.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_ts__WEBPACK_IMPORTED_MODULE_235__ = __webpack_require__(/*! ./dialogs/audio-subtitle-dialog/lyrics-dialog.ts */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_html_ts__WEBPACK_IMPORTED_MODULE_236__ = __webpack_require__(/*! ./dialogs/audio-subtitle-dialog/lyrics-dialog.html.ts */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_css_ts__WEBPACK_IMPORTED_MODULE_237__ = __webpack_require__(/*! ./dialogs/audio-subtitle-dialog/lyrics-dialog.css.ts */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_util_types_ts__WEBPACK_IMPORTED_MODULE_238__ = __webpack_require__(/*! ./data/util-types.ts */ "./data/util-types.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_timespan_ts__WEBPACK_IMPORTED_MODULE_239__ = __webpack_require__(/*! ./data/timespan.ts */ "./data/timespan.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_sorting_directions_ts__WEBPACK_IMPORTED_MODULE_240__ = __webpack_require__(/*! ./data/sorting-directions.ts */ "./data/sorting-directions.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_241__ = __webpack_require__(/*! ./data/session.ts */ "./data/session.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_recipe_sorting_properties_ts__WEBPACK_IMPORTED_MODULE_242__ = __webpack_require__(/*! ./data/recipe-sorting-properties.ts */ "./data/recipe-sorting-properties.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_proper_object_ts__WEBPACK_IMPORTED_MODULE_243__ = __webpack_require__(/*! ./data/proper-object.ts */ "./data/proper-object.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_observable_ts__WEBPACK_IMPORTED_MODULE_244__ = __webpack_require__(/*! ./data/observable.ts */ "./data/observable.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_music_sorting_properties_ts__WEBPACK_IMPORTED_MODULE_245__ = __webpack_require__(/*! ./data/music-sorting-properties.ts */ "./data/music-sorting-properties.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_measurement_units_ts__WEBPACK_IMPORTED_MODULE_246__ = __webpack_require__(/*! ./data/measurement-units.ts */ "./data/measurement-units.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_lit_element_base_ts__WEBPACK_IMPORTED_MODULE_247__ = __webpack_require__(/*! ./data/lit-element-base.ts */ "./data/lit-element-base.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_filter_entry_ts__WEBPACK_IMPORTED_MODULE_248__ = __webpack_require__(/*! ./data/filter-entry.ts */ "./data/filter-entry.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_participants_ts__WEBPACK_IMPORTED_MODULE_249__ = __webpack_require__(/*! ./data/enumerations/participants.ts */ "./data/enumerations/participants.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_nation_ts__WEBPACK_IMPORTED_MODULE_250__ = __webpack_require__(/*! ./data/enumerations/nation.ts */ "./data/enumerations/nation.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_mood_ts__WEBPACK_IMPORTED_MODULE_251__ = __webpack_require__(/*! ./data/enumerations/mood.ts */ "./data/enumerations/mood.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_instrument_types_ts__WEBPACK_IMPORTED_MODULE_252__ = __webpack_require__(/*! ./data/enumerations/instrument-types.ts */ "./data/enumerations/instrument-types.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_checkbox_state_ts__WEBPACK_IMPORTED_MODULE_253__ = __webpack_require__(/*! ./data/enumerations/checkbox-state.ts */ "./data/enumerations/checkbox-state.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_volume_changed_event_ts__WEBPACK_IMPORTED_MODULE_254__ = __webpack_require__(/*! ./client-interop/volume-changed-event.ts */ "./client-interop/volume-changed-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_position_changed_event_ts__WEBPACK_IMPORTED_MODULE_255__ = __webpack_require__(/*! ./client-interop/track-position-changed-event.ts */ "./client-interop/track-position-changed-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_ended_event_ts__WEBPACK_IMPORTED_MODULE_256__ = __webpack_require__(/*! ./client-interop/track-ended-event.ts */ "./client-interop/track-ended-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_changed_event_ts__WEBPACK_IMPORTED_MODULE_257__ = __webpack_require__(/*! ./client-interop/track-changed-event.ts */ "./client-interop/track-changed-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_response_status_ts__WEBPACK_IMPORTED_MODULE_258__ = __webpack_require__(/*! ./client-interop/response-status.ts */ "./client-interop/response-status.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_playback_state_ts__WEBPACK_IMPORTED_MODULE_259__ = __webpack_require__(/*! ./client-interop/playback-state.ts */ "./client-interop/playback-state.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_playback_state_changed_event_ts__WEBPACK_IMPORTED_MODULE_260__ = __webpack_require__(/*! ./client-interop/playback-state-changed-event.ts */ "./client-interop/playback-state-changed-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_ts__WEBPACK_IMPORTED_MODULE_261__ = __webpack_require__(/*! ./client-interop/interop-query.ts */ "./client-interop/interop-query.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_response_ts__WEBPACK_IMPORTED_MODULE_262__ = __webpack_require__(/*! ./client-interop/interop-query-response.ts */ "./client-interop/interop-query-response.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_request_ts__WEBPACK_IMPORTED_MODULE_263__ = __webpack_require__(/*! ./client-interop/interop-query-request.ts */ "./client-interop/interop-query-request.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_event_ts__WEBPACK_IMPORTED_MODULE_264__ = __webpack_require__(/*! ./client-interop/interop-event.ts */ "./client-interop/interop-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_ts__WEBPACK_IMPORTED_MODULE_265__ = __webpack_require__(/*! ./client-interop/interop-command.ts */ "./client-interop/interop-command.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_response_ts__WEBPACK_IMPORTED_MODULE_266__ = __webpack_require__(/*! ./client-interop/interop-command-response.ts */ "./client-interop/interop-command-response.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_request_ts__WEBPACK_IMPORTED_MODULE_267__ = __webpack_require__(/*! ./client-interop/interop-command-request.ts */ "./client-interop/interop-command-request.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_i_interop_event_ts__WEBPACK_IMPORTED_MODULE_268__ = __webpack_require__(/*! ./client-interop/i-interop-event.ts */ "./client-interop/i-interop-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_files_query_request_ts__WEBPACK_IMPORTED_MODULE_269__ = __webpack_require__(/*! ./client-interop/files-query-request.ts */ "./client-interop/files-query-request.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_connected_event_ts__WEBPACK_IMPORTED_MODULE_270__ = __webpack_require__(/*! ./client-interop/connected-event.ts */ "./client-interop/connected-event.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_271__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.ts */ "./advanced-components/upload-area/upload-area.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_html_ts__WEBPACK_IMPORTED_MODULE_272__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.html.ts */ "./advanced-components/upload-area/upload-area.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_css_ts__WEBPACK_IMPORTED_MODULE_273__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.css.ts */ "./advanced-components/upload-area/upload-area.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_images_drop_icon_svg_ts__WEBPACK_IMPORTED_MODULE_274__ = __webpack_require__(/*! ./advanced-components/upload-area/images/drop-icon.svg.ts */ "./advanced-components/upload-area/images/drop-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_images_clipboard_icon_svg_ts__WEBPACK_IMPORTED_MODULE_275__ = __webpack_require__(/*! ./advanced-components/upload-area/images/clipboard-icon.svg.ts */ "./advanced-components/upload-area/images/clipboard-icon.svg.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_ts__WEBPACK_IMPORTED_MODULE_276__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.ts */ "./advanced-components/star-rating/star-rating.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_stories_example_ts__WEBPACK_IMPORTED_MODULE_277__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.stories.example.ts */ "./advanced-components/star-rating/star-rating.stories.example.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_html_ts__WEBPACK_IMPORTED_MODULE_278__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.html.ts */ "./advanced-components/star-rating/star-rating.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_css_ts__WEBPACK_IMPORTED_MODULE_279__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.css.ts */ "./advanced-components/star-rating/star-rating.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_ts__WEBPACK_IMPORTED_MODULE_280__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.ts */ "./advanced-components/recipe-tile/recipe-tile.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_html_ts__WEBPACK_IMPORTED_MODULE_281__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.html.ts */ "./advanced-components/recipe-tile/recipe-tile.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_css_ts__WEBPACK_IMPORTED_MODULE_282__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.css.ts */ "./advanced-components/recipe-tile/recipe-tile.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_context_menu_items_ts__WEBPACK_IMPORTED_MODULE_283__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-context-menu-items.ts */ "./advanced-components/recipe-tile/recipe-context-menu-items.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_filter_recipe_filter_ts__WEBPACK_IMPORTED_MODULE_284__ = __webpack_require__(/*! ./advanced-components/recipe-filter/recipe-filter.ts */ "./advanced-components/recipe-filter/recipe-filter.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_filter_recipe_filter_html_ts__WEBPACK_IMPORTED_MODULE_285__ = __webpack_require__(/*! ./advanced-components/recipe-filter/recipe-filter.html.ts */ "./advanced-components/recipe-filter/recipe-filter.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_filter_recipe_filter_css_ts__WEBPACK_IMPORTED_MODULE_286__ = __webpack_require__(/*! ./advanced-components/recipe-filter/recipe-filter.css.ts */ "./advanced-components/recipe-filter/recipe-filter.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_filter_recipe_filter_options_ts__WEBPACK_IMPORTED_MODULE_287__ = __webpack_require__(/*! ./advanced-components/recipe-filter/recipe-filter-options.ts */ "./advanced-components/recipe-filter/recipe-filter-options.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_288__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.ts */ "./advanced-components/playlist-tile/playlist-tile.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_html_ts__WEBPACK_IMPORTED_MODULE_289__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.html.ts */ "./advanced-components/playlist-tile/playlist-tile.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_css_ts__WEBPACK_IMPORTED_MODULE_290__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.css.ts */ "./advanced-components/playlist-tile/playlist-tile.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_ts__WEBPACK_IMPORTED_MODULE_291__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_html_ts__WEBPACK_IMPORTED_MODULE_292__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.html.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_css_ts__WEBPACK_IMPORTED_MODULE_293__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.css.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_294__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.ts */ "./advanced-components/music-filter/music-filter.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_html_ts__WEBPACK_IMPORTED_MODULE_295__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.html.ts */ "./advanced-components/music-filter/music-filter.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_css_ts__WEBPACK_IMPORTED_MODULE_296__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.css.ts */ "./advanced-components/music-filter/music-filter.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_297__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter-options.ts */ "./advanced-components/music-filter/music-filter-options.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_298__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.ts */ "./advanced-components/media-tile/media-tile.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_html_ts__WEBPACK_IMPORTED_MODULE_299__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.html.ts */ "./advanced-components/media-tile/media-tile.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_css_ts__WEBPACK_IMPORTED_MODULE_300__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.css.ts */ "./advanced-components/media-tile/media-tile.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_ts__WEBPACK_IMPORTED_MODULE_301__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.ts */ "./advanced-components/media-playlist/media-playlist.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_html_ts__WEBPACK_IMPORTED_MODULE_302__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.html.ts */ "./advanced-components/media-playlist/media-playlist.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_css_ts__WEBPACK_IMPORTED_MODULE_303__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.css.ts */ "./advanced-components/media-playlist/media-playlist.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_ts__WEBPACK_IMPORTED_MODULE_304__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter.ts */ "./advanced-components/media-filter-sidebar/media-filter.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_ts__WEBPACK_IMPORTED_MODULE_305__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_html_ts__WEBPACK_IMPORTED_MODULE_306__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.html.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_css_ts__WEBPACK_IMPORTED_MODULE_307__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.css.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_ts__WEBPACK_IMPORTED_MODULE_308__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.ts */ "./advanced-components/language-switcher/language-switcher.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_html_ts__WEBPACK_IMPORTED_MODULE_309__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.html.ts */ "./advanced-components/language-switcher/language-switcher.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_css_ts__WEBPACK_IMPORTED_MODULE_310__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.css.ts */ "./advanced-components/language-switcher/language-switcher.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_ts__WEBPACK_IMPORTED_MODULE_311__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.ts */ "./advanced-components/image-tile/image-tile.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_html_ts__WEBPACK_IMPORTED_MODULE_312__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.html.ts */ "./advanced-components/image-tile/image-tile.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_css_ts__WEBPACK_IMPORTED_MODULE_313__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.css.ts */ "./advanced-components/image-tile/image-tile.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_ts__WEBPACK_IMPORTED_MODULE_314__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.ts */ "./advanced-components/duration-input/duration-input.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_html_ts__WEBPACK_IMPORTED_MODULE_315__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.html.ts */ "./advanced-components/duration-input/duration-input.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_css_ts__WEBPACK_IMPORTED_MODULE_316__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.css.ts */ "./advanced-components/duration-input/duration-input.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_317__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.ts */ "./advanced-components/audio-tile-base/audio-tile-base.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_318__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.html.ts */ "./advanced-components/audio-tile-base/audio-tile-base.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_css_ts__WEBPACK_IMPORTED_MODULE_319__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.css.ts */ "./advanced-components/audio-tile-base/audio-tile-base.css.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_320__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_html_ts__WEBPACK_IMPORTED_MODULE_321__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.html.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.html.ts");
-/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_css_ts__WEBPACK_IMPORTED_MODULE_322__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.css.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.css.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_all_entries_ts__WEBPACK_IMPORTED_MODULE_2__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_media_import_service_ts__WEBPACK_IMPORTED_MODULE_6__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_maintenance_service_ts__WEBPACK_IMPORTED_MODULE_8__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_clipboard_service_ts__WEBPACK_IMPORTED_MODULE_9__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_client_interop_service_ts__WEBPACK_IMPORTED_MODULE_10__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_backend_services_ts__WEBPACK_IMPORTED_MODULE_11__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_authenticated_request_service_ts__WEBPACK_IMPORTED_MODULE_12__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_audio_service_ts__WEBPACK_IMPORTED_MODULE_14__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_url_extension_ts__WEBPACK_IMPORTED_MODULE_15__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_file_extension_ts__WEBPACK_IMPORTED_MODULE_20__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_ts__WEBPACK_IMPORTED_MODULE_103__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_html_ts__WEBPACK_IMPORTED_MODULE_104__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_ts__WEBPACK_IMPORTED_MODULE_106__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_html_ts__WEBPACK_IMPORTED_MODULE_107__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_ts__WEBPACK_IMPORTED_MODULE_109__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_110__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_ts__WEBPACK_IMPORTED_MODULE_112__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_ts__WEBPACK_IMPORTED_MODULE_115__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_html_ts__WEBPACK_IMPORTED_MODULE_116__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_ts__WEBPACK_IMPORTED_MODULE_118__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_ts__WEBPACK_IMPORTED_MODULE_121__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_html_ts__WEBPACK_IMPORTED_MODULE_122__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_ts__WEBPACK_IMPORTED_MODULE_125__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_html_ts__WEBPACK_IMPORTED_MODULE_126__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_ts__WEBPACK_IMPORTED_MODULE_128__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_html_ts__WEBPACK_IMPORTED_MODULE_129__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_ts__WEBPACK_IMPORTED_MODULE_131__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_132__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_ts__WEBPACK_IMPORTED_MODULE_139__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_ts__WEBPACK_IMPORTED_MODULE_168__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_ts__WEBPACK_IMPORTED_MODULE_171__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_ts__WEBPACK_IMPORTED_MODULE_178__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_ts__WEBPACK_IMPORTED_MODULE_188__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_ts__WEBPACK_IMPORTED_MODULE_194__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_ts__WEBPACK_IMPORTED_MODULE_197__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_ts__WEBPACK_IMPORTED_MODULE_200__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_html_ts__WEBPACK_IMPORTED_MODULE_201__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_ts__WEBPACK_IMPORTED_MODULE_209__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_ts__WEBPACK_IMPORTED_MODULE_212__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_html_ts__WEBPACK_IMPORTED_MODULE_213__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_ts__WEBPACK_IMPORTED_MODULE_215__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_html_ts__WEBPACK_IMPORTED_MODULE_216__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_css_ts__WEBPACK_IMPORTED_MODULE_217__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_ts__WEBPACK_IMPORTED_MODULE_218__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_ts__WEBPACK_IMPORTED_MODULE_222__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_ts__WEBPACK_IMPORTED_MODULE_228__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_ts__WEBPACK_IMPORTED_MODULE_232__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_ts__WEBPACK_IMPORTED_MODULE_235__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_html_ts__WEBPACK_IMPORTED_MODULE_236__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_241__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_271__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_ts__WEBPACK_IMPORTED_MODULE_280__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_context_menu_items_ts__WEBPACK_IMPORTED_MODULE_283__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_288__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_294__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_297__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_298__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_ts__WEBPACK_IMPORTED_MODULE_305__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_317__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_318__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_320__]);
-([J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_all_entries_ts__WEBPACK_IMPORTED_MODULE_2__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_media_import_service_ts__WEBPACK_IMPORTED_MODULE_6__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_maintenance_service_ts__WEBPACK_IMPORTED_MODULE_8__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_clipboard_service_ts__WEBPACK_IMPORTED_MODULE_9__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_client_interop_service_ts__WEBPACK_IMPORTED_MODULE_10__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_backend_services_ts__WEBPACK_IMPORTED_MODULE_11__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_authenticated_request_service_ts__WEBPACK_IMPORTED_MODULE_12__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_audio_service_ts__WEBPACK_IMPORTED_MODULE_14__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_url_extension_ts__WEBPACK_IMPORTED_MODULE_15__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_file_extension_ts__WEBPACK_IMPORTED_MODULE_20__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_ts__WEBPACK_IMPORTED_MODULE_103__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_html_ts__WEBPACK_IMPORTED_MODULE_104__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_ts__WEBPACK_IMPORTED_MODULE_106__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_html_ts__WEBPACK_IMPORTED_MODULE_107__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_ts__WEBPACK_IMPORTED_MODULE_109__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_110__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_ts__WEBPACK_IMPORTED_MODULE_112__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_ts__WEBPACK_IMPORTED_MODULE_115__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_html_ts__WEBPACK_IMPORTED_MODULE_116__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_ts__WEBPACK_IMPORTED_MODULE_118__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_ts__WEBPACK_IMPORTED_MODULE_121__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_html_ts__WEBPACK_IMPORTED_MODULE_122__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_ts__WEBPACK_IMPORTED_MODULE_125__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_html_ts__WEBPACK_IMPORTED_MODULE_126__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_ts__WEBPACK_IMPORTED_MODULE_128__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_html_ts__WEBPACK_IMPORTED_MODULE_129__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_ts__WEBPACK_IMPORTED_MODULE_131__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_132__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_ts__WEBPACK_IMPORTED_MODULE_139__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_ts__WEBPACK_IMPORTED_MODULE_168__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_ts__WEBPACK_IMPORTED_MODULE_171__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_ts__WEBPACK_IMPORTED_MODULE_178__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_ts__WEBPACK_IMPORTED_MODULE_188__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_ts__WEBPACK_IMPORTED_MODULE_194__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_ts__WEBPACK_IMPORTED_MODULE_197__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_ts__WEBPACK_IMPORTED_MODULE_200__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_html_ts__WEBPACK_IMPORTED_MODULE_201__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_ts__WEBPACK_IMPORTED_MODULE_209__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_ts__WEBPACK_IMPORTED_MODULE_212__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_html_ts__WEBPACK_IMPORTED_MODULE_213__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_ts__WEBPACK_IMPORTED_MODULE_215__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_html_ts__WEBPACK_IMPORTED_MODULE_216__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_css_ts__WEBPACK_IMPORTED_MODULE_217__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_ts__WEBPACK_IMPORTED_MODULE_218__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_ts__WEBPACK_IMPORTED_MODULE_222__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_ts__WEBPACK_IMPORTED_MODULE_228__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_ts__WEBPACK_IMPORTED_MODULE_232__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_ts__WEBPACK_IMPORTED_MODULE_235__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_html_ts__WEBPACK_IMPORTED_MODULE_236__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_241__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_271__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_ts__WEBPACK_IMPORTED_MODULE_280__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_context_menu_items_ts__WEBPACK_IMPORTED_MODULE_283__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_288__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_294__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_297__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_298__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_ts__WEBPACK_IMPORTED_MODULE_305__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_317__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_318__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_320__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_search_icon_svg_ts__WEBPACK_IMPORTED_MODULE_85__ = __webpack_require__(/*! ./resources/inline-icons/general/search-icon.svg.ts */ "./resources/inline-icons/general/search-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_save_tick_icon_svg_ts__WEBPACK_IMPORTED_MODULE_86__ = __webpack_require__(/*! ./resources/inline-icons/general/save-tick-icon.svg.ts */ "./resources/inline-icons/general/save-tick-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_revert_icon_svg_ts__WEBPACK_IMPORTED_MODULE_87__ = __webpack_require__(/*! ./resources/inline-icons/general/revert-icon.svg.ts */ "./resources/inline-icons/general/revert-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_repair_icon_svg_ts__WEBPACK_IMPORTED_MODULE_88__ = __webpack_require__(/*! ./resources/inline-icons/general/repair-icon.svg.ts */ "./resources/inline-icons/general/repair-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_popup_icon_svg_ts__WEBPACK_IMPORTED_MODULE_89__ = __webpack_require__(/*! ./resources/inline-icons/general/popup-icon.svg.ts */ "./resources/inline-icons/general/popup-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_plus_icon_svg_ts__WEBPACK_IMPORTED_MODULE_90__ = __webpack_require__(/*! ./resources/inline-icons/general/plus-icon.svg.ts */ "./resources/inline-icons/general/plus-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_note_icon_svg_ts__WEBPACK_IMPORTED_MODULE_91__ = __webpack_require__(/*! ./resources/inline-icons/general/note-icon.svg.ts */ "./resources/inline-icons/general/note-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_lookup_icon_svg_ts__WEBPACK_IMPORTED_MODULE_92__ = __webpack_require__(/*! ./resources/inline-icons/general/lookup-icon.svg.ts */ "./resources/inline-icons/general/lookup-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_import_icon_svg_ts__WEBPACK_IMPORTED_MODULE_93__ = __webpack_require__(/*! ./resources/inline-icons/general/import-icon.svg.ts */ "./resources/inline-icons/general/import-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_globus_icon_svg_ts__WEBPACK_IMPORTED_MODULE_94__ = __webpack_require__(/*! ./resources/inline-icons/general/globus-icon.svg.ts */ "./resources/inline-icons/general/globus-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_drag_icon_svg_ts__WEBPACK_IMPORTED_MODULE_95__ = __webpack_require__(/*! ./resources/inline-icons/general/drag-icon.svg.ts */ "./resources/inline-icons/general/drag-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_descending_icon_svg_ts__WEBPACK_IMPORTED_MODULE_96__ = __webpack_require__(/*! ./resources/inline-icons/general/descending-icon.svg.ts */ "./resources/inline-icons/general/descending-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_cross_icon_svg_ts__WEBPACK_IMPORTED_MODULE_97__ = __webpack_require__(/*! ./resources/inline-icons/general/cross-icon.svg.ts */ "./resources/inline-icons/general/cross-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_clean_icon_svg_ts__WEBPACK_IMPORTED_MODULE_98__ = __webpack_require__(/*! ./resources/inline-icons/general/clean-icon.svg.ts */ "./resources/inline-icons/general/clean-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_category_icon_svg_ts__WEBPACK_IMPORTED_MODULE_99__ = __webpack_require__(/*! ./resources/inline-icons/general/category-icon.svg.ts */ "./resources/inline-icons/general/category-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_ascending_icon_svg_ts__WEBPACK_IMPORTED_MODULE_100__ = __webpack_require__(/*! ./resources/inline-icons/general/ascending-icon.svg.ts */ "./resources/inline-icons/general/ascending-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_inline_icons_general_arrow_svg_ts__WEBPACK_IMPORTED_MODULE_101__ = __webpack_require__(/*! ./resources/inline-icons/general/arrow.svg.ts */ "./resources/inline-icons/general/arrow.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_icons_target_groups_register_target_groups_ts__WEBPACK_IMPORTED_MODULE_102__ = __webpack_require__(/*! ./resources/icons/target-groups/register-target-groups.ts */ "./resources/icons/target-groups/register-target-groups.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_resources_icons_content_warnings_register_content_warnings_ts__WEBPACK_IMPORTED_MODULE_103__ = __webpack_require__(/*! ./resources/icons/content-warnings/register-content-warnings.ts */ "./resources/icons/content-warnings/register-content-warnings.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_ts__WEBPACK_IMPORTED_MODULE_104__ = __webpack_require__(/*! ./pages/welcome-page/welcome-page.ts */ "./pages/welcome-page/welcome-page.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_html_ts__WEBPACK_IMPORTED_MODULE_105__ = __webpack_require__(/*! ./pages/welcome-page/welcome-page.html.ts */ "./pages/welcome-page/welcome-page.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_css_ts__WEBPACK_IMPORTED_MODULE_106__ = __webpack_require__(/*! ./pages/welcome-page/welcome-page.css.ts */ "./pages/welcome-page/welcome-page.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_shopping_page_shopping_page_ts__WEBPACK_IMPORTED_MODULE_107__ = __webpack_require__(/*! ./pages/shopping-page/shopping-page.ts */ "./pages/shopping-page/shopping-page.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_shopping_page_shopping_page_html_ts__WEBPACK_IMPORTED_MODULE_108__ = __webpack_require__(/*! ./pages/shopping-page/shopping-page.html.ts */ "./pages/shopping-page/shopping-page.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_shopping_page_shopping_page_css_ts__WEBPACK_IMPORTED_MODULE_109__ = __webpack_require__(/*! ./pages/shopping-page/shopping-page.css.ts */ "./pages/shopping-page/shopping-page.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_ts__WEBPACK_IMPORTED_MODULE_110__ = __webpack_require__(/*! ./pages/recipes-page/recipes-page.ts */ "./pages/recipes-page/recipes-page.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_html_ts__WEBPACK_IMPORTED_MODULE_111__ = __webpack_require__(/*! ./pages/recipes-page/recipes-page.html.ts */ "./pages/recipes-page/recipes-page.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_css_ts__WEBPACK_IMPORTED_MODULE_112__ = __webpack_require__(/*! ./pages/recipes-page/recipes-page.css.ts */ "./pages/recipes-page/recipes-page.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_ts__WEBPACK_IMPORTED_MODULE_113__ = __webpack_require__(/*! ./pages/recipe-detail-page/recipe-detail-page.ts */ "./pages/recipe-detail-page/recipe-detail-page.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_114__ = __webpack_require__(/*! ./pages/recipe-detail-page/recipe-detail-page.html.ts */ "./pages/recipe-detail-page/recipe-detail-page.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_css_ts__WEBPACK_IMPORTED_MODULE_115__ = __webpack_require__(/*! ./pages/recipe-detail-page/recipe-detail-page.css.ts */ "./pages/recipe-detail-page/recipe-detail-page.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_ts__WEBPACK_IMPORTED_MODULE_116__ = __webpack_require__(/*! ./pages/page-routing/page-routing.ts */ "./pages/page-routing/page-routing.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_html_ts__WEBPACK_IMPORTED_MODULE_117__ = __webpack_require__(/*! ./pages/page-routing/page-routing.html.ts */ "./pages/page-routing/page-routing.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_css_ts__WEBPACK_IMPORTED_MODULE_118__ = __webpack_require__(/*! ./pages/page-routing/page-routing.css.ts */ "./pages/page-routing/page-routing.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_ts__WEBPACK_IMPORTED_MODULE_119__ = __webpack_require__(/*! ./pages/page-layout/page-layout.ts */ "./pages/page-layout/page-layout.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_html_ts__WEBPACK_IMPORTED_MODULE_120__ = __webpack_require__(/*! ./pages/page-layout/page-layout.html.ts */ "./pages/page-layout/page-layout.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_css_ts__WEBPACK_IMPORTED_MODULE_121__ = __webpack_require__(/*! ./pages/page-layout/page-layout.css.ts */ "./pages/page-layout/page-layout.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_ts__WEBPACK_IMPORTED_MODULE_122__ = __webpack_require__(/*! ./pages/obscuritas-media-manager/obscuritas-media-manager.ts */ "./pages/obscuritas-media-manager/obscuritas-media-manager.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_html_ts__WEBPACK_IMPORTED_MODULE_123__ = __webpack_require__(/*! ./pages/obscuritas-media-manager/obscuritas-media-manager.html.ts */ "./pages/obscuritas-media-manager/obscuritas-media-manager.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_css_ts__WEBPACK_IMPORTED_MODULE_124__ = __webpack_require__(/*! ./pages/obscuritas-media-manager/obscuritas-media-manager.css.ts */ "./pages/obscuritas-media-manager/obscuritas-media-manager.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_ts__WEBPACK_IMPORTED_MODULE_125__ = __webpack_require__(/*! ./pages/music-playlist-page/music-playlist-page.ts */ "./pages/music-playlist-page/music-playlist-page.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_html_ts__WEBPACK_IMPORTED_MODULE_126__ = __webpack_require__(/*! ./pages/music-playlist-page/music-playlist-page.html.ts */ "./pages/music-playlist-page/music-playlist-page.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_css_ts__WEBPACK_IMPORTED_MODULE_127__ = __webpack_require__(/*! ./pages/music-playlist-page/music-playlist-page.css.ts */ "./pages/music-playlist-page/music-playlist-page.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_audio_file_extensions_ts__WEBPACK_IMPORTED_MODULE_128__ = __webpack_require__(/*! ./pages/music-playlist-page/audio-file-extensions.ts */ "./pages/music-playlist-page/audio-file-extensions.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_ts__WEBPACK_IMPORTED_MODULE_129__ = __webpack_require__(/*! ./pages/music-page/music-page.ts */ "./pages/music-page/music-page.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_html_ts__WEBPACK_IMPORTED_MODULE_130__ = __webpack_require__(/*! ./pages/music-page/music-page.html.ts */ "./pages/music-page/music-page.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_css_ts__WEBPACK_IMPORTED_MODULE_131__ = __webpack_require__(/*! ./pages/music-page/music-page.css.ts */ "./pages/music-page/music-page.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_ts__WEBPACK_IMPORTED_MODULE_132__ = __webpack_require__(/*! ./pages/media-page/media-page.ts */ "./pages/media-page/media-page.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_html_ts__WEBPACK_IMPORTED_MODULE_133__ = __webpack_require__(/*! ./pages/media-page/media-page.html.ts */ "./pages/media-page/media-page.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_css_ts__WEBPACK_IMPORTED_MODULE_134__ = __webpack_require__(/*! ./pages/media-page/media-page.css.ts */ "./pages/media-page/media-page.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_ts__WEBPACK_IMPORTED_MODULE_135__ = __webpack_require__(/*! ./pages/media-detail-page/media-detail-page.ts */ "./pages/media-detail-page/media-detail-page.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_136__ = __webpack_require__(/*! ./pages/media-detail-page/media-detail-page.html.ts */ "./pages/media-detail-page/media-detail-page.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_css_ts__WEBPACK_IMPORTED_MODULE_137__ = __webpack_require__(/*! ./pages/media-detail-page/media-detail-page.css.ts */ "./pages/media-detail-page/media-detail-page.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_images_trash_icon_svg_ts__WEBPACK_IMPORTED_MODULE_138__ = __webpack_require__(/*! ./pages/media-detail-page/images/trash-icon.svg.ts */ "./pages/media-detail-page/images/trash-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_images_edit_icon_svg_ts__WEBPACK_IMPORTED_MODULE_139__ = __webpack_require__(/*! ./pages/media-detail-page/images/edit-icon.svg.ts */ "./pages/media-detail-page/images/edit-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_maintenance_page_maintenance_page_ts__WEBPACK_IMPORTED_MODULE_140__ = __webpack_require__(/*! ./pages/maintenance-page/maintenance-page.ts */ "./pages/maintenance-page/maintenance-page.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_maintenance_page_maintenance_page_html_ts__WEBPACK_IMPORTED_MODULE_141__ = __webpack_require__(/*! ./pages/maintenance-page/maintenance-page.html.ts */ "./pages/maintenance-page/maintenance-page.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_maintenance_page_maintenance_page_css_ts__WEBPACK_IMPORTED_MODULE_142__ = __webpack_require__(/*! ./pages/maintenance-page/maintenance-page.css.ts */ "./pages/maintenance-page/maintenance-page.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_ts__WEBPACK_IMPORTED_MODULE_143__ = __webpack_require__(/*! ./pages/login-page/login-page.ts */ "./pages/login-page/login-page.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_html_ts__WEBPACK_IMPORTED_MODULE_144__ = __webpack_require__(/*! ./pages/login-page/login-page.html.ts */ "./pages/login-page/login-page.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_css_ts__WEBPACK_IMPORTED_MODULE_145__ = __webpack_require__(/*! ./pages/login-page/login-page.css.ts */ "./pages/login-page/login-page.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_warning_banner_warning_banner_ts__WEBPACK_IMPORTED_MODULE_146__ = __webpack_require__(/*! ./native-components/warning-banner/warning-banner.ts */ "./native-components/warning-banner/warning-banner.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_warning_banner_warning_banner_html_ts__WEBPACK_IMPORTED_MODULE_147__ = __webpack_require__(/*! ./native-components/warning-banner/warning-banner.html.ts */ "./native-components/warning-banner/warning-banner.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_warning_banner_warning_banner_css_ts__WEBPACK_IMPORTED_MODULE_148__ = __webpack_require__(/*! ./native-components/warning-banner/warning-banner.css.ts */ "./native-components/warning-banner/warning-banner.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tri_value_checkbox_tri_value_checkbox_ts__WEBPACK_IMPORTED_MODULE_149__ = __webpack_require__(/*! ./native-components/tri-value-checkbox/tri-value-checkbox.ts */ "./native-components/tri-value-checkbox/tri-value-checkbox.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tri_value_checkbox_tri_value_checkbox_html_ts__WEBPACK_IMPORTED_MODULE_150__ = __webpack_require__(/*! ./native-components/tri-value-checkbox/tri-value-checkbox.html.ts */ "./native-components/tri-value-checkbox/tri-value-checkbox.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tri_value_checkbox_tri_value_checkbox_css_ts__WEBPACK_IMPORTED_MODULE_151__ = __webpack_require__(/*! ./native-components/tri-value-checkbox/tri-value-checkbox.css.ts */ "./native-components/tri-value-checkbox/tri-value-checkbox.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tag_label_tag_label_ts__WEBPACK_IMPORTED_MODULE_152__ = __webpack_require__(/*! ./native-components/tag-label/tag-label.ts */ "./native-components/tag-label/tag-label.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tag_label_tag_label_html_ts__WEBPACK_IMPORTED_MODULE_153__ = __webpack_require__(/*! ./native-components/tag-label/tag-label.html.ts */ "./native-components/tag-label/tag-label.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_tag_label_tag_label_css_ts__WEBPACK_IMPORTED_MODULE_154__ = __webpack_require__(/*! ./native-components/tag-label/tag-label.css.ts */ "./native-components/tag-label/tag-label.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_side_scroller_side_scroller_ts__WEBPACK_IMPORTED_MODULE_155__ = __webpack_require__(/*! ./native-components/side-scroller/side-scroller.ts */ "./native-components/side-scroller/side-scroller.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_side_scroller_side_scroller_html_ts__WEBPACK_IMPORTED_MODULE_156__ = __webpack_require__(/*! ./native-components/side-scroller/side-scroller.html.ts */ "./native-components/side-scroller/side-scroller.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_side_scroller_side_scroller_css_ts__WEBPACK_IMPORTED_MODULE_157__ = __webpack_require__(/*! ./native-components/side-scroller/side-scroller.css.ts */ "./native-components/side-scroller/side-scroller.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_scroll_select_scroll_select_ts__WEBPACK_IMPORTED_MODULE_158__ = __webpack_require__(/*! ./native-components/scroll-select/scroll-select.ts */ "./native-components/scroll-select/scroll-select.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_scroll_select_scroll_select_html_ts__WEBPACK_IMPORTED_MODULE_159__ = __webpack_require__(/*! ./native-components/scroll-select/scroll-select.html.ts */ "./native-components/scroll-select/scroll-select.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_scroll_select_scroll_select_css_ts__WEBPACK_IMPORTED_MODULE_160__ = __webpack_require__(/*! ./native-components/scroll-select/scroll-select.css.ts */ "./native-components/scroll-select/scroll-select.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_slider_range_slider_ts__WEBPACK_IMPORTED_MODULE_161__ = __webpack_require__(/*! ./native-components/range-slider/range-slider.ts */ "./native-components/range-slider/range-slider.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_slider_range_slider_html_ts__WEBPACK_IMPORTED_MODULE_162__ = __webpack_require__(/*! ./native-components/range-slider/range-slider.html.ts */ "./native-components/range-slider/range-slider.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_slider_range_slider_css_ts__WEBPACK_IMPORTED_MODULE_163__ = __webpack_require__(/*! ./native-components/range-slider/range-slider.css.ts */ "./native-components/range-slider/range-slider.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_selector_range_selector_ts__WEBPACK_IMPORTED_MODULE_164__ = __webpack_require__(/*! ./native-components/range-selector/range-selector.ts */ "./native-components/range-selector/range-selector.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_selector_range_selector_html_ts__WEBPACK_IMPORTED_MODULE_165__ = __webpack_require__(/*! ./native-components/range-selector/range-selector.html.ts */ "./native-components/range-selector/range-selector.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_range_selector_range_selector_css_ts__WEBPACK_IMPORTED_MODULE_166__ = __webpack_require__(/*! ./native-components/range-selector/range-selector.css.ts */ "./native-components/range-selector/range-selector.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_priority_list_priority_list_ts__WEBPACK_IMPORTED_MODULE_167__ = __webpack_require__(/*! ./native-components/priority-list/priority-list.ts */ "./native-components/priority-list/priority-list.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_priority_list_priority_list_html_ts__WEBPACK_IMPORTED_MODULE_168__ = __webpack_require__(/*! ./native-components/priority-list/priority-list.html.ts */ "./native-components/priority-list/priority-list.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_partial_loading_partial_loading_ts__WEBPACK_IMPORTED_MODULE_169__ = __webpack_require__(/*! ./native-components/partial-loading/partial-loading.ts */ "./native-components/partial-loading/partial-loading.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_partial_loading_partial_loading_stories_example_ts__WEBPACK_IMPORTED_MODULE_170__ = __webpack_require__(/*! ./native-components/partial-loading/partial-loading.stories.example.ts */ "./native-components/partial-loading/partial-loading.stories.example.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_partial_loading_partial_loading_html_ts__WEBPACK_IMPORTED_MODULE_171__ = __webpack_require__(/*! ./native-components/partial-loading/partial-loading.html.ts */ "./native-components/partial-loading/partial-loading.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_ts__WEBPACK_IMPORTED_MODULE_172__ = __webpack_require__(/*! ./native-components/ordered-list/ordered-list.ts */ "./native-components/ordered-list/ordered-list.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_html_ts__WEBPACK_IMPORTED_MODULE_173__ = __webpack_require__(/*! ./native-components/ordered-list/ordered-list.html.ts */ "./native-components/ordered-list/ordered-list.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_css_ts__WEBPACK_IMPORTED_MODULE_174__ = __webpack_require__(/*! ./native-components/ordered-list/ordered-list.css.ts */ "./native-components/ordered-list/ordered-list.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_ts__WEBPACK_IMPORTED_MODULE_175__ = __webpack_require__(/*! ./native-components/message-snackbar/message-snackbar.ts */ "./native-components/message-snackbar/message-snackbar.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_html_ts__WEBPACK_IMPORTED_MODULE_176__ = __webpack_require__(/*! ./native-components/message-snackbar/message-snackbar.html.ts */ "./native-components/message-snackbar/message-snackbar.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_css_ts__WEBPACK_IMPORTED_MODULE_177__ = __webpack_require__(/*! ./native-components/message-snackbar/message-snackbar.css.ts */ "./native-components/message-snackbar/message-snackbar.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_loading_screen_loading_screen_ts__WEBPACK_IMPORTED_MODULE_178__ = __webpack_require__(/*! ./native-components/loading-screen/loading-screen.ts */ "./native-components/loading-screen/loading-screen.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_loading_circle_loading_circle_ts__WEBPACK_IMPORTED_MODULE_179__ = __webpack_require__(/*! ./native-components/loading-circle/loading-circle.ts */ "./native-components/loading-circle/loading-circle.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_loading_circle_loading_circle_html_ts__WEBPACK_IMPORTED_MODULE_180__ = __webpack_require__(/*! ./native-components/loading-circle/loading-circle.html.ts */ "./native-components/loading-circle/loading-circle.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_loading_circle_loading_circle_css_ts__WEBPACK_IMPORTED_MODULE_181__ = __webpack_require__(/*! ./native-components/loading-circle/loading-circle.css.ts */ "./native-components/loading-circle/loading-circle.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_ts__WEBPACK_IMPORTED_MODULE_182__ = __webpack_require__(/*! ./native-components/link-element/link-element.ts */ "./native-components/link-element/link-element.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_html_ts__WEBPACK_IMPORTED_MODULE_183__ = __webpack_require__(/*! ./native-components/link-element/link-element.html.ts */ "./native-components/link-element/link-element.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_css_ts__WEBPACK_IMPORTED_MODULE_184__ = __webpack_require__(/*! ./native-components/link-element/link-element.css.ts */ "./native-components/link-element/link-element.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_grouped_dropdown_grouped_dropdown_ts__WEBPACK_IMPORTED_MODULE_185__ = __webpack_require__(/*! ./native-components/grouped-dropdown/grouped-dropdown.ts */ "./native-components/grouped-dropdown/grouped-dropdown.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_grouped_dropdown_grouped_dropdown_html_ts__WEBPACK_IMPORTED_MODULE_186__ = __webpack_require__(/*! ./native-components/grouped-dropdown/grouped-dropdown.html.ts */ "./native-components/grouped-dropdown/grouped-dropdown.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_grouped_dropdown_grouped_dropdown_css_ts__WEBPACK_IMPORTED_MODULE_187__ = __webpack_require__(/*! ./native-components/grouped-dropdown/grouped-dropdown.css.ts */ "./native-components/grouped-dropdown/grouped-dropdown.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_drop_down_drop_down_ts__WEBPACK_IMPORTED_MODULE_188__ = __webpack_require__(/*! ./native-components/drop-down/drop-down.ts */ "./native-components/drop-down/drop-down.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_drop_down_drop_down_html_ts__WEBPACK_IMPORTED_MODULE_189__ = __webpack_require__(/*! ./native-components/drop-down/drop-down.html.ts */ "./native-components/drop-down/drop-down.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_drop_down_drop_down_css_ts__WEBPACK_IMPORTED_MODULE_190__ = __webpack_require__(/*! ./native-components/drop-down/drop-down.css.ts */ "./native-components/drop-down/drop-down.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_drop_down_drop_down_option_ts__WEBPACK_IMPORTED_MODULE_191__ = __webpack_require__(/*! ./native-components/drop-down/drop-down-option.ts */ "./native-components/drop-down/drop-down-option.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_ts__WEBPACK_IMPORTED_MODULE_192__ = __webpack_require__(/*! ./native-components/custom-tooltip/custom-tooltip.ts */ "./native-components/custom-tooltip/custom-tooltip.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_html_ts__WEBPACK_IMPORTED_MODULE_193__ = __webpack_require__(/*! ./native-components/custom-tooltip/custom-tooltip.html.ts */ "./native-components/custom-tooltip/custom-tooltip.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_css_ts__WEBPACK_IMPORTED_MODULE_194__ = __webpack_require__(/*! ./native-components/custom-tooltip/custom-tooltip.css.ts */ "./native-components/custom-tooltip/custom-tooltip.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_toggle_custom_toggle_ts__WEBPACK_IMPORTED_MODULE_195__ = __webpack_require__(/*! ./native-components/custom-toggle/custom-toggle.ts */ "./native-components/custom-toggle/custom-toggle.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_toggle_custom_toggle_html_ts__WEBPACK_IMPORTED_MODULE_196__ = __webpack_require__(/*! ./native-components/custom-toggle/custom-toggle.html.ts */ "./native-components/custom-toggle/custom-toggle.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_toggle_custom_toggle_css_ts__WEBPACK_IMPORTED_MODULE_197__ = __webpack_require__(/*! ./native-components/custom-toggle/custom-toggle.css.ts */ "./native-components/custom-toggle/custom-toggle.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_ts__WEBPACK_IMPORTED_MODULE_198__ = __webpack_require__(/*! ./native-components/context-tooltip/context-tooltip.ts */ "./native-components/context-tooltip/context-tooltip.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_html_ts__WEBPACK_IMPORTED_MODULE_199__ = __webpack_require__(/*! ./native-components/context-tooltip/context-tooltip.html.ts */ "./native-components/context-tooltip/context-tooltip.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_css_ts__WEBPACK_IMPORTED_MODULE_200__ = __webpack_require__(/*! ./native-components/context-tooltip/context-tooltip.css.ts */ "./native-components/context-tooltip/context-tooltip.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_ts__WEBPACK_IMPORTED_MODULE_201__ = __webpack_require__(/*! ./native-components/context-menu/context-menu.ts */ "./native-components/context-menu/context-menu.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_html_ts__WEBPACK_IMPORTED_MODULE_202__ = __webpack_require__(/*! ./native-components/context-menu/context-menu.html.ts */ "./native-components/context-menu/context-menu.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_css_ts__WEBPACK_IMPORTED_MODULE_203__ = __webpack_require__(/*! ./native-components/context-menu/context-menu.css.ts */ "./native-components/context-menu/context-menu.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_ts__WEBPACK_IMPORTED_MODULE_204__ = __webpack_require__(/*! ./native-components/compact-audio-player/compact-audio-player.ts */ "./native-components/compact-audio-player/compact-audio-player.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_html_ts__WEBPACK_IMPORTED_MODULE_205__ = __webpack_require__(/*! ./native-components/compact-audio-player/compact-audio-player.html.ts */ "./native-components/compact-audio-player/compact-audio-player.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_css_ts__WEBPACK_IMPORTED_MODULE_206__ = __webpack_require__(/*! ./native-components/compact-audio-player/compact-audio-player.css.ts */ "./native-components/compact-audio-player/compact-audio-player.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_border_button_border_button_ts__WEBPACK_IMPORTED_MODULE_207__ = __webpack_require__(/*! ./native-components/border-button/border-button.ts */ "./native-components/border-button/border-button.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_border_button_border_button_html_ts__WEBPACK_IMPORTED_MODULE_208__ = __webpack_require__(/*! ./native-components/border-button/border-button.html.ts */ "./native-components/border-button/border-button.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_border_button_border_button_css_ts__WEBPACK_IMPORTED_MODULE_209__ = __webpack_require__(/*! ./native-components/border-button/border-button.css.ts */ "./native-components/border-button/border-button.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_autocomplete_input_autocomplete_input_ts__WEBPACK_IMPORTED_MODULE_210__ = __webpack_require__(/*! ./native-components/autocomplete-input/autocomplete-input.ts */ "./native-components/autocomplete-input/autocomplete-input.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_autocomplete_input_autocomplete_input_html_ts__WEBPACK_IMPORTED_MODULE_211__ = __webpack_require__(/*! ./native-components/autocomplete-input/autocomplete-input.html.ts */ "./native-components/autocomplete-input/autocomplete-input.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_autocomplete_input_autocomplete_input_css_ts__WEBPACK_IMPORTED_MODULE_212__ = __webpack_require__(/*! ./native-components/autocomplete-input/autocomplete-input.css.ts */ "./native-components/autocomplete-input/autocomplete-input.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_ts__WEBPACK_IMPORTED_MODULE_213__ = __webpack_require__(/*! ./dialogs/select-options-dialog/select-options-dialog.ts */ "./dialogs/select-options-dialog/select-options-dialog.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_html_ts__WEBPACK_IMPORTED_MODULE_214__ = __webpack_require__(/*! ./dialogs/select-options-dialog/select-options-dialog.html.ts */ "./dialogs/select-options-dialog/select-options-dialog.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_css_ts__WEBPACK_IMPORTED_MODULE_215__ = __webpack_require__(/*! ./dialogs/select-options-dialog/select-options-dialog.css.ts */ "./dialogs/select-options-dialog/select-options-dialog.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_ts__WEBPACK_IMPORTED_MODULE_216__ = __webpack_require__(/*! ./dialogs/playlist-selection-dialog/playlist-selection-dialog.ts */ "./dialogs/playlist-selection-dialog/playlist-selection-dialog.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_html_ts__WEBPACK_IMPORTED_MODULE_217__ = __webpack_require__(/*! ./dialogs/playlist-selection-dialog/playlist-selection-dialog.html.ts */ "./dialogs/playlist-selection-dialog/playlist-selection-dialog.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_css_ts__WEBPACK_IMPORTED_MODULE_218__ = __webpack_require__(/*! ./dialogs/playlist-selection-dialog/playlist-selection-dialog.css.ts */ "./dialogs/playlist-selection-dialog/playlist-selection-dialog.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_ts__WEBPACK_IMPORTED_MODULE_219__ = __webpack_require__(/*! ./dialogs/play-music-dialog/play-music-dialog.ts */ "./dialogs/play-music-dialog/play-music-dialog.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_html_ts__WEBPACK_IMPORTED_MODULE_220__ = __webpack_require__(/*! ./dialogs/play-music-dialog/play-music-dialog.html.ts */ "./dialogs/play-music-dialog/play-music-dialog.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_css_ts__WEBPACK_IMPORTED_MODULE_221__ = __webpack_require__(/*! ./dialogs/play-music-dialog/play-music-dialog.css.ts */ "./dialogs/play-music-dialog/play-music-dialog.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_ts__WEBPACK_IMPORTED_MODULE_222__ = __webpack_require__(/*! ./dialogs/input-dialog/input-dialog.ts */ "./dialogs/input-dialog/input-dialog.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_html_ts__WEBPACK_IMPORTED_MODULE_223__ = __webpack_require__(/*! ./dialogs/input-dialog/input-dialog.html.ts */ "./dialogs/input-dialog/input-dialog.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_css_ts__WEBPACK_IMPORTED_MODULE_224__ = __webpack_require__(/*! ./dialogs/input-dialog/input-dialog.css.ts */ "./dialogs/input-dialog/input-dialog.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_media_genres_ts__WEBPACK_IMPORTED_MODULE_225__ = __webpack_require__(/*! ./dialogs/genre-dialog/media-genres.ts */ "./dialogs/genre-dialog/media-genres.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_ts__WEBPACK_IMPORTED_MODULE_226__ = __webpack_require__(/*! ./dialogs/genre-dialog/genre-dialog.ts */ "./dialogs/genre-dialog/genre-dialog.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_html_ts__WEBPACK_IMPORTED_MODULE_227__ = __webpack_require__(/*! ./dialogs/genre-dialog/genre-dialog.html.ts */ "./dialogs/genre-dialog/genre-dialog.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_css_ts__WEBPACK_IMPORTED_MODULE_228__ = __webpack_require__(/*! ./dialogs/genre-dialog/genre-dialog.css.ts */ "./dialogs/genre-dialog/genre-dialog.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_entity_status_dialog_entity_status_dialog_ts__WEBPACK_IMPORTED_MODULE_229__ = __webpack_require__(/*! ./dialogs/entity-status-dialog/entity-status-dialog.ts */ "./dialogs/entity-status-dialog/entity-status-dialog.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_entity_status_dialog_entity_status_dialog_html_ts__WEBPACK_IMPORTED_MODULE_230__ = __webpack_require__(/*! ./dialogs/entity-status-dialog/entity-status-dialog.html.ts */ "./dialogs/entity-status-dialog/entity-status-dialog.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_entity_status_dialog_entity_status_dialog_css_ts__WEBPACK_IMPORTED_MODULE_231__ = __webpack_require__(/*! ./dialogs/entity-status-dialog/entity-status-dialog.css.ts */ "./dialogs/entity-status-dialog/entity-status-dialog.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_ts__WEBPACK_IMPORTED_MODULE_232__ = __webpack_require__(/*! ./dialogs/edit-playlist-dialog/edit-playlist-dialog.ts */ "./dialogs/edit-playlist-dialog/edit-playlist-dialog.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_html_ts__WEBPACK_IMPORTED_MODULE_233__ = __webpack_require__(/*! ./dialogs/edit-playlist-dialog/edit-playlist-dialog.html.ts */ "./dialogs/edit-playlist-dialog/edit-playlist-dialog.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_css_ts__WEBPACK_IMPORTED_MODULE_234__ = __webpack_require__(/*! ./dialogs/edit-playlist-dialog/edit-playlist-dialog.css.ts */ "./dialogs/edit-playlist-dialog/edit-playlist-dialog.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_result_genre_dialog_result_ts__WEBPACK_IMPORTED_MODULE_235__ = __webpack_require__(/*! ./dialogs/dialog-result/genre-dialog.result.ts */ "./dialogs/dialog-result/genre-dialog.result.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_ts__WEBPACK_IMPORTED_MODULE_236__ = __webpack_require__(/*! ./dialogs/dialog-base/dialog-base.ts */ "./dialogs/dialog-base/dialog-base.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_html_ts__WEBPACK_IMPORTED_MODULE_237__ = __webpack_require__(/*! ./dialogs/dialog-base/dialog-base.html.ts */ "./dialogs/dialog-base/dialog-base.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_css_ts__WEBPACK_IMPORTED_MODULE_238__ = __webpack_require__(/*! ./dialogs/dialog-base/dialog-base.css.ts */ "./dialogs/dialog-base/dialog-base.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_ts__WEBPACK_IMPORTED_MODULE_239__ = __webpack_require__(/*! ./dialogs/audio-subtitle-dialog/lyrics-dialog.ts */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_html_ts__WEBPACK_IMPORTED_MODULE_240__ = __webpack_require__(/*! ./dialogs/audio-subtitle-dialog/lyrics-dialog.html.ts */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_css_ts__WEBPACK_IMPORTED_MODULE_241__ = __webpack_require__(/*! ./dialogs/audio-subtitle-dialog/lyrics-dialog.css.ts */ "./dialogs/audio-subtitle-dialog/lyrics-dialog.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_util_types_ts__WEBPACK_IMPORTED_MODULE_242__ = __webpack_require__(/*! ./data/util-types.ts */ "./data/util-types.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_timespan_ts__WEBPACK_IMPORTED_MODULE_243__ = __webpack_require__(/*! ./data/timespan.ts */ "./data/timespan.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_sorting_directions_ts__WEBPACK_IMPORTED_MODULE_244__ = __webpack_require__(/*! ./data/sorting-directions.ts */ "./data/sorting-directions.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_245__ = __webpack_require__(/*! ./data/session.ts */ "./data/session.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_recipe_sorting_properties_ts__WEBPACK_IMPORTED_MODULE_246__ = __webpack_require__(/*! ./data/recipe-sorting-properties.ts */ "./data/recipe-sorting-properties.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_proper_object_ts__WEBPACK_IMPORTED_MODULE_247__ = __webpack_require__(/*! ./data/proper-object.ts */ "./data/proper-object.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_observable_ts__WEBPACK_IMPORTED_MODULE_248__ = __webpack_require__(/*! ./data/observable.ts */ "./data/observable.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_music_sorting_properties_ts__WEBPACK_IMPORTED_MODULE_249__ = __webpack_require__(/*! ./data/music-sorting-properties.ts */ "./data/music-sorting-properties.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_measurement_units_ts__WEBPACK_IMPORTED_MODULE_250__ = __webpack_require__(/*! ./data/measurement-units.ts */ "./data/measurement-units.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_lit_element_base_ts__WEBPACK_IMPORTED_MODULE_251__ = __webpack_require__(/*! ./data/lit-element-base.ts */ "./data/lit-element-base.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_filter_entry_ts__WEBPACK_IMPORTED_MODULE_252__ = __webpack_require__(/*! ./data/filter-entry.ts */ "./data/filter-entry.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_participants_ts__WEBPACK_IMPORTED_MODULE_253__ = __webpack_require__(/*! ./data/enumerations/participants.ts */ "./data/enumerations/participants.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_nation_ts__WEBPACK_IMPORTED_MODULE_254__ = __webpack_require__(/*! ./data/enumerations/nation.ts */ "./data/enumerations/nation.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_mood_ts__WEBPACK_IMPORTED_MODULE_255__ = __webpack_require__(/*! ./data/enumerations/mood.ts */ "./data/enumerations/mood.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_instrument_types_ts__WEBPACK_IMPORTED_MODULE_256__ = __webpack_require__(/*! ./data/enumerations/instrument-types.ts */ "./data/enumerations/instrument-types.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_enumerations_checkbox_state_ts__WEBPACK_IMPORTED_MODULE_257__ = __webpack_require__(/*! ./data/enumerations/checkbox-state.ts */ "./data/enumerations/checkbox-state.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_volume_changed_event_ts__WEBPACK_IMPORTED_MODULE_258__ = __webpack_require__(/*! ./client-interop/volume-changed-event.ts */ "./client-interop/volume-changed-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_position_changed_event_ts__WEBPACK_IMPORTED_MODULE_259__ = __webpack_require__(/*! ./client-interop/track-position-changed-event.ts */ "./client-interop/track-position-changed-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_ended_event_ts__WEBPACK_IMPORTED_MODULE_260__ = __webpack_require__(/*! ./client-interop/track-ended-event.ts */ "./client-interop/track-ended-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_track_changed_event_ts__WEBPACK_IMPORTED_MODULE_261__ = __webpack_require__(/*! ./client-interop/track-changed-event.ts */ "./client-interop/track-changed-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_response_status_ts__WEBPACK_IMPORTED_MODULE_262__ = __webpack_require__(/*! ./client-interop/response-status.ts */ "./client-interop/response-status.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_playback_state_ts__WEBPACK_IMPORTED_MODULE_263__ = __webpack_require__(/*! ./client-interop/playback-state.ts */ "./client-interop/playback-state.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_playback_state_changed_event_ts__WEBPACK_IMPORTED_MODULE_264__ = __webpack_require__(/*! ./client-interop/playback-state-changed-event.ts */ "./client-interop/playback-state-changed-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_ts__WEBPACK_IMPORTED_MODULE_265__ = __webpack_require__(/*! ./client-interop/interop-query.ts */ "./client-interop/interop-query.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_response_ts__WEBPACK_IMPORTED_MODULE_266__ = __webpack_require__(/*! ./client-interop/interop-query-response.ts */ "./client-interop/interop-query-response.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_query_request_ts__WEBPACK_IMPORTED_MODULE_267__ = __webpack_require__(/*! ./client-interop/interop-query-request.ts */ "./client-interop/interop-query-request.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_event_ts__WEBPACK_IMPORTED_MODULE_268__ = __webpack_require__(/*! ./client-interop/interop-event.ts */ "./client-interop/interop-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_ts__WEBPACK_IMPORTED_MODULE_269__ = __webpack_require__(/*! ./client-interop/interop-command.ts */ "./client-interop/interop-command.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_response_ts__WEBPACK_IMPORTED_MODULE_270__ = __webpack_require__(/*! ./client-interop/interop-command-response.ts */ "./client-interop/interop-command-response.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_interop_command_request_ts__WEBPACK_IMPORTED_MODULE_271__ = __webpack_require__(/*! ./client-interop/interop-command-request.ts */ "./client-interop/interop-command-request.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_i_interop_event_ts__WEBPACK_IMPORTED_MODULE_272__ = __webpack_require__(/*! ./client-interop/i-interop-event.ts */ "./client-interop/i-interop-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_files_query_request_ts__WEBPACK_IMPORTED_MODULE_273__ = __webpack_require__(/*! ./client-interop/files-query-request.ts */ "./client-interop/files-query-request.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_client_interop_connected_event_ts__WEBPACK_IMPORTED_MODULE_274__ = __webpack_require__(/*! ./client-interop/connected-event.ts */ "./client-interop/connected-event.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_275__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.ts */ "./advanced-components/upload-area/upload-area.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_html_ts__WEBPACK_IMPORTED_MODULE_276__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.html.ts */ "./advanced-components/upload-area/upload-area.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_css_ts__WEBPACK_IMPORTED_MODULE_277__ = __webpack_require__(/*! ./advanced-components/upload-area/upload-area.css.ts */ "./advanced-components/upload-area/upload-area.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_images_drop_icon_svg_ts__WEBPACK_IMPORTED_MODULE_278__ = __webpack_require__(/*! ./advanced-components/upload-area/images/drop-icon.svg.ts */ "./advanced-components/upload-area/images/drop-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_images_clipboard_icon_svg_ts__WEBPACK_IMPORTED_MODULE_279__ = __webpack_require__(/*! ./advanced-components/upload-area/images/clipboard-icon.svg.ts */ "./advanced-components/upload-area/images/clipboard-icon.svg.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_ts__WEBPACK_IMPORTED_MODULE_280__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.ts */ "./advanced-components/star-rating/star-rating.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_stories_example_ts__WEBPACK_IMPORTED_MODULE_281__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.stories.example.ts */ "./advanced-components/star-rating/star-rating.stories.example.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_html_ts__WEBPACK_IMPORTED_MODULE_282__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.html.ts */ "./advanced-components/star-rating/star-rating.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_star_rating_star_rating_css_ts__WEBPACK_IMPORTED_MODULE_283__ = __webpack_require__(/*! ./advanced-components/star-rating/star-rating.css.ts */ "./advanced-components/star-rating/star-rating.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_ts__WEBPACK_IMPORTED_MODULE_284__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.ts */ "./advanced-components/recipe-tile/recipe-tile.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_html_ts__WEBPACK_IMPORTED_MODULE_285__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.html.ts */ "./advanced-components/recipe-tile/recipe-tile.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_css_ts__WEBPACK_IMPORTED_MODULE_286__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-tile.css.ts */ "./advanced-components/recipe-tile/recipe-tile.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_context_menu_items_ts__WEBPACK_IMPORTED_MODULE_287__ = __webpack_require__(/*! ./advanced-components/recipe-tile/recipe-context-menu-items.ts */ "./advanced-components/recipe-tile/recipe-context-menu-items.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_filter_recipe_filter_ts__WEBPACK_IMPORTED_MODULE_288__ = __webpack_require__(/*! ./advanced-components/recipe-filter/recipe-filter.ts */ "./advanced-components/recipe-filter/recipe-filter.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_filter_recipe_filter_html_ts__WEBPACK_IMPORTED_MODULE_289__ = __webpack_require__(/*! ./advanced-components/recipe-filter/recipe-filter.html.ts */ "./advanced-components/recipe-filter/recipe-filter.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_filter_recipe_filter_css_ts__WEBPACK_IMPORTED_MODULE_290__ = __webpack_require__(/*! ./advanced-components/recipe-filter/recipe-filter.css.ts */ "./advanced-components/recipe-filter/recipe-filter.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_filter_recipe_filter_options_ts__WEBPACK_IMPORTED_MODULE_291__ = __webpack_require__(/*! ./advanced-components/recipe-filter/recipe-filter-options.ts */ "./advanced-components/recipe-filter/recipe-filter-options.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_292__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.ts */ "./advanced-components/playlist-tile/playlist-tile.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_html_ts__WEBPACK_IMPORTED_MODULE_293__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.html.ts */ "./advanced-components/playlist-tile/playlist-tile.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_css_ts__WEBPACK_IMPORTED_MODULE_294__ = __webpack_require__(/*! ./advanced-components/playlist-tile/playlist-tile.css.ts */ "./advanced-components/playlist-tile/playlist-tile.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_ts__WEBPACK_IMPORTED_MODULE_295__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_html_ts__WEBPACK_IMPORTED_MODULE_296__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.html.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_paginated_scrolling_paginated_scrolling_css_ts__WEBPACK_IMPORTED_MODULE_297__ = __webpack_require__(/*! ./advanced-components/paginated-scrolling/paginated-scrolling.css.ts */ "./advanced-components/paginated-scrolling/paginated-scrolling.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_298__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.ts */ "./advanced-components/music-filter/music-filter.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_html_ts__WEBPACK_IMPORTED_MODULE_299__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.html.ts */ "./advanced-components/music-filter/music-filter.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_css_ts__WEBPACK_IMPORTED_MODULE_300__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter.css.ts */ "./advanced-components/music-filter/music-filter.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_301__ = __webpack_require__(/*! ./advanced-components/music-filter/music-filter-options.ts */ "./advanced-components/music-filter/music-filter-options.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_302__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.ts */ "./advanced-components/media-tile/media-tile.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_html_ts__WEBPACK_IMPORTED_MODULE_303__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.html.ts */ "./advanced-components/media-tile/media-tile.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_css_ts__WEBPACK_IMPORTED_MODULE_304__ = __webpack_require__(/*! ./advanced-components/media-tile/media-tile.css.ts */ "./advanced-components/media-tile/media-tile.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_ts__WEBPACK_IMPORTED_MODULE_305__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.ts */ "./advanced-components/media-playlist/media-playlist.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_html_ts__WEBPACK_IMPORTED_MODULE_306__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.html.ts */ "./advanced-components/media-playlist/media-playlist.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_playlist_media_playlist_css_ts__WEBPACK_IMPORTED_MODULE_307__ = __webpack_require__(/*! ./advanced-components/media-playlist/media-playlist.css.ts */ "./advanced-components/media-playlist/media-playlist.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_ts__WEBPACK_IMPORTED_MODULE_308__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter.ts */ "./advanced-components/media-filter-sidebar/media-filter.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_ts__WEBPACK_IMPORTED_MODULE_309__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_html_ts__WEBPACK_IMPORTED_MODULE_310__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.html.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_css_ts__WEBPACK_IMPORTED_MODULE_311__ = __webpack_require__(/*! ./advanced-components/media-filter-sidebar/media-filter-sidebar.css.ts */ "./advanced-components/media-filter-sidebar/media-filter-sidebar.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_ts__WEBPACK_IMPORTED_MODULE_312__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.ts */ "./advanced-components/language-switcher/language-switcher.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_html_ts__WEBPACK_IMPORTED_MODULE_313__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.html.ts */ "./advanced-components/language-switcher/language-switcher.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_language_switcher_language_switcher_css_ts__WEBPACK_IMPORTED_MODULE_314__ = __webpack_require__(/*! ./advanced-components/language-switcher/language-switcher.css.ts */ "./advanced-components/language-switcher/language-switcher.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_ts__WEBPACK_IMPORTED_MODULE_315__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.ts */ "./advanced-components/image-tile/image-tile.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_html_ts__WEBPACK_IMPORTED_MODULE_316__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.html.ts */ "./advanced-components/image-tile/image-tile.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_image_tile_image_tile_css_ts__WEBPACK_IMPORTED_MODULE_317__ = __webpack_require__(/*! ./advanced-components/image-tile/image-tile.css.ts */ "./advanced-components/image-tile/image-tile.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_ts__WEBPACK_IMPORTED_MODULE_318__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.ts */ "./advanced-components/duration-input/duration-input.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_html_ts__WEBPACK_IMPORTED_MODULE_319__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.html.ts */ "./advanced-components/duration-input/duration-input.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_duration_input_duration_input_css_ts__WEBPACK_IMPORTED_MODULE_320__ = __webpack_require__(/*! ./advanced-components/duration-input/duration-input.css.ts */ "./advanced-components/duration-input/duration-input.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_321__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.ts */ "./advanced-components/audio-tile-base/audio-tile-base.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_322__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.html.ts */ "./advanced-components/audio-tile-base/audio-tile-base.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_css_ts__WEBPACK_IMPORTED_MODULE_323__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile-base.css.ts */ "./advanced-components/audio-tile-base/audio-tile-base.css.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_324__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_html_ts__WEBPACK_IMPORTED_MODULE_325__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.html.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.html.ts");
+/* harmony import */ var J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_css_ts__WEBPACK_IMPORTED_MODULE_326__ = __webpack_require__(/*! ./advanced-components/audio-tile-base/audio-tile/audio-tile.css.ts */ "./advanced-components/audio-tile-base/audio-tile/audio-tile.css.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_all_entries_ts__WEBPACK_IMPORTED_MODULE_2__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_media_import_service_ts__WEBPACK_IMPORTED_MODULE_6__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_maintenance_service_ts__WEBPACK_IMPORTED_MODULE_8__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_clipboard_service_ts__WEBPACK_IMPORTED_MODULE_9__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_client_interop_service_ts__WEBPACK_IMPORTED_MODULE_10__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_backend_services_ts__WEBPACK_IMPORTED_MODULE_11__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_authenticated_request_service_ts__WEBPACK_IMPORTED_MODULE_12__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_audio_service_ts__WEBPACK_IMPORTED_MODULE_14__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_url_extension_ts__WEBPACK_IMPORTED_MODULE_15__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_file_extension_ts__WEBPACK_IMPORTED_MODULE_20__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_ts__WEBPACK_IMPORTED_MODULE_104__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_html_ts__WEBPACK_IMPORTED_MODULE_105__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_shopping_page_shopping_page_ts__WEBPACK_IMPORTED_MODULE_107__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_shopping_page_shopping_page_html_ts__WEBPACK_IMPORTED_MODULE_108__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_ts__WEBPACK_IMPORTED_MODULE_110__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_html_ts__WEBPACK_IMPORTED_MODULE_111__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_ts__WEBPACK_IMPORTED_MODULE_113__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_114__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_ts__WEBPACK_IMPORTED_MODULE_116__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_ts__WEBPACK_IMPORTED_MODULE_119__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_html_ts__WEBPACK_IMPORTED_MODULE_120__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_ts__WEBPACK_IMPORTED_MODULE_122__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_ts__WEBPACK_IMPORTED_MODULE_125__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_html_ts__WEBPACK_IMPORTED_MODULE_126__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_ts__WEBPACK_IMPORTED_MODULE_129__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_html_ts__WEBPACK_IMPORTED_MODULE_130__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_ts__WEBPACK_IMPORTED_MODULE_132__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_html_ts__WEBPACK_IMPORTED_MODULE_133__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_ts__WEBPACK_IMPORTED_MODULE_135__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_136__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_ts__WEBPACK_IMPORTED_MODULE_143__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_ts__WEBPACK_IMPORTED_MODULE_172__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_ts__WEBPACK_IMPORTED_MODULE_175__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_ts__WEBPACK_IMPORTED_MODULE_182__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_ts__WEBPACK_IMPORTED_MODULE_192__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_ts__WEBPACK_IMPORTED_MODULE_198__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_ts__WEBPACK_IMPORTED_MODULE_201__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_ts__WEBPACK_IMPORTED_MODULE_204__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_html_ts__WEBPACK_IMPORTED_MODULE_205__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_ts__WEBPACK_IMPORTED_MODULE_213__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_ts__WEBPACK_IMPORTED_MODULE_216__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_html_ts__WEBPACK_IMPORTED_MODULE_217__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_ts__WEBPACK_IMPORTED_MODULE_219__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_html_ts__WEBPACK_IMPORTED_MODULE_220__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_css_ts__WEBPACK_IMPORTED_MODULE_221__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_ts__WEBPACK_IMPORTED_MODULE_222__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_ts__WEBPACK_IMPORTED_MODULE_226__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_ts__WEBPACK_IMPORTED_MODULE_232__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_ts__WEBPACK_IMPORTED_MODULE_236__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_ts__WEBPACK_IMPORTED_MODULE_239__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_html_ts__WEBPACK_IMPORTED_MODULE_240__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_245__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_275__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_ts__WEBPACK_IMPORTED_MODULE_284__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_context_menu_items_ts__WEBPACK_IMPORTED_MODULE_287__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_292__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_298__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_301__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_302__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_ts__WEBPACK_IMPORTED_MODULE_309__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_321__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_322__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_324__]);
+([J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_all_entries_ts__WEBPACK_IMPORTED_MODULE_2__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_media_import_service_ts__WEBPACK_IMPORTED_MODULE_6__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_maintenance_service_ts__WEBPACK_IMPORTED_MODULE_8__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_clipboard_service_ts__WEBPACK_IMPORTED_MODULE_9__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_client_interop_service_ts__WEBPACK_IMPORTED_MODULE_10__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_backend_services_ts__WEBPACK_IMPORTED_MODULE_11__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_authenticated_request_service_ts__WEBPACK_IMPORTED_MODULE_12__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_audio_service_ts__WEBPACK_IMPORTED_MODULE_14__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_url_extension_ts__WEBPACK_IMPORTED_MODULE_15__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_services_extensions_file_extension_ts__WEBPACK_IMPORTED_MODULE_20__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_ts__WEBPACK_IMPORTED_MODULE_104__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_welcome_page_welcome_page_html_ts__WEBPACK_IMPORTED_MODULE_105__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_shopping_page_shopping_page_ts__WEBPACK_IMPORTED_MODULE_107__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_shopping_page_shopping_page_html_ts__WEBPACK_IMPORTED_MODULE_108__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_ts__WEBPACK_IMPORTED_MODULE_110__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipes_page_recipes_page_html_ts__WEBPACK_IMPORTED_MODULE_111__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_ts__WEBPACK_IMPORTED_MODULE_113__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_recipe_detail_page_recipe_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_114__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_routing_page_routing_ts__WEBPACK_IMPORTED_MODULE_116__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_ts__WEBPACK_IMPORTED_MODULE_119__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_page_layout_page_layout_html_ts__WEBPACK_IMPORTED_MODULE_120__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_obscuritas_media_manager_obscuritas_media_manager_ts__WEBPACK_IMPORTED_MODULE_122__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_ts__WEBPACK_IMPORTED_MODULE_125__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_playlist_page_music_playlist_page_html_ts__WEBPACK_IMPORTED_MODULE_126__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_ts__WEBPACK_IMPORTED_MODULE_129__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_music_page_music_page_html_ts__WEBPACK_IMPORTED_MODULE_130__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_ts__WEBPACK_IMPORTED_MODULE_132__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_page_media_page_html_ts__WEBPACK_IMPORTED_MODULE_133__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_ts__WEBPACK_IMPORTED_MODULE_135__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_media_detail_page_media_detail_page_html_ts__WEBPACK_IMPORTED_MODULE_136__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_pages_login_page_login_page_ts__WEBPACK_IMPORTED_MODULE_143__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_ordered_list_ordered_list_ts__WEBPACK_IMPORTED_MODULE_172__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_message_snackbar_message_snackbar_ts__WEBPACK_IMPORTED_MODULE_175__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_link_element_link_element_ts__WEBPACK_IMPORTED_MODULE_182__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_custom_tooltip_custom_tooltip_ts__WEBPACK_IMPORTED_MODULE_192__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_tooltip_context_tooltip_ts__WEBPACK_IMPORTED_MODULE_198__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_context_menu_context_menu_ts__WEBPACK_IMPORTED_MODULE_201__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_ts__WEBPACK_IMPORTED_MODULE_204__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_native_components_compact_audio_player_compact_audio_player_html_ts__WEBPACK_IMPORTED_MODULE_205__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_select_options_dialog_select_options_dialog_ts__WEBPACK_IMPORTED_MODULE_213__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_ts__WEBPACK_IMPORTED_MODULE_216__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_playlist_selection_dialog_playlist_selection_dialog_html_ts__WEBPACK_IMPORTED_MODULE_217__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_ts__WEBPACK_IMPORTED_MODULE_219__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_html_ts__WEBPACK_IMPORTED_MODULE_220__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_play_music_dialog_play_music_dialog_css_ts__WEBPACK_IMPORTED_MODULE_221__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_input_dialog_input_dialog_ts__WEBPACK_IMPORTED_MODULE_222__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_genre_dialog_genre_dialog_ts__WEBPACK_IMPORTED_MODULE_226__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_edit_playlist_dialog_edit_playlist_dialog_ts__WEBPACK_IMPORTED_MODULE_232__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_dialog_base_dialog_base_ts__WEBPACK_IMPORTED_MODULE_236__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_ts__WEBPACK_IMPORTED_MODULE_239__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_dialogs_audio_subtitle_dialog_lyrics_dialog_html_ts__WEBPACK_IMPORTED_MODULE_240__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_data_session_ts__WEBPACK_IMPORTED_MODULE_245__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_upload_area_upload_area_ts__WEBPACK_IMPORTED_MODULE_275__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_tile_ts__WEBPACK_IMPORTED_MODULE_284__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_recipe_tile_recipe_context_menu_items_ts__WEBPACK_IMPORTED_MODULE_287__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_playlist_tile_playlist_tile_ts__WEBPACK_IMPORTED_MODULE_292__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_ts__WEBPACK_IMPORTED_MODULE_298__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_music_filter_music_filter_options_ts__WEBPACK_IMPORTED_MODULE_301__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_tile_media_tile_ts__WEBPACK_IMPORTED_MODULE_302__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_media_filter_sidebar_media_filter_sidebar_ts__WEBPACK_IMPORTED_MODULE_309__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_ts__WEBPACK_IMPORTED_MODULE_321__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_base_html_ts__WEBPACK_IMPORTED_MODULE_322__, J_Dokumente_Web_Projekte_ObscuritasMediaManager_Frontend_advanced_components_audio_tile_base_audio_tile_audio_tile_ts__WEBPACK_IMPORTED_MODULE_324__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
+
+
 
 
 
@@ -6857,7 +6865,16 @@ class Session {
     static mediaList = new _observable__WEBPACK_IMPORTED_MODULE_1__.Observable([]);
     static tracks = new _observable__WEBPACK_IMPORTED_MODULE_1__.Observable([]);
     static recipes = new _observable__WEBPACK_IMPORTED_MODULE_1__.Observable([]);
+    static ingredients = new _observable__WEBPACK_IMPORTED_MODULE_1__.Observable([]);
     static instruments = new _observable__WEBPACK_IMPORTED_MODULE_1__.Observable([]);
+    static get favoriteIngredients() {
+        this._favoriteIngredients ??= JSON.parse(localStorage.getItem('favoriteIngredients') ?? '[]');
+        return this._favoriteIngredients;
+    }
+    static set favoriteIngredients(value) {
+        localStorage.setItem('favoriteIngredients', JSON.stringify(value));
+        this._favoriteIngredients = value;
+    }
     static initialized = false;
     static async initialize() {
         Session.initialized = false;
@@ -6873,6 +6890,9 @@ class Session {
                 .catch((err) => console.error(err)),
             _services_backend_services__WEBPACK_IMPORTED_MODULE_0__.RecipeService.getAllRecipes()
                 .then((list) => Session.recipes.next(list))
+                .catch((err) => console.error(err)),
+            _services_backend_services__WEBPACK_IMPORTED_MODULE_0__.RecipeService.getIngredients()
+                .then((list) => Session.ingredients.next(list))
                 .catch((err) => console.error(err)),
         ];
         for (var promise of promises)
@@ -8797,7 +8817,7 @@ let GenreDialog = GenreDialog_1 = class GenreDialog extends _data_lit_element_ba
         return _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Ignore;
     }
     async addGenre(sectionName) {
-        var name = await _input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_10__.InputDialog.show('Bitte Namen eingeben:');
+        var name = await _input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_10__.InputDialog.show('Bitte Basispfad auswählen', 'Bitte Namen eingeben:');
         if (!name)
             return;
         this.dispatchEvent(new CustomEvent('add-genre', { detail: { name, sectionName } }));
@@ -8918,7 +8938,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function renderInputDialog() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <dialog-base
-        caption="Bitte Basispfad auswählen"
+        caption="${this.caption}"
         showBorder
         canAccept
         acceptActionText="Weiter"
@@ -8970,10 +8990,11 @@ let InputDialog = InputDialog_1 = class InputDialog extends _data_lit_element_ba
     static get styles() {
         return (0,_input_dialog_css__WEBPACK_IMPORTED_MODULE_3__.renderInputDialogStyles)();
     }
-    static show(message) {
+    static show(caption, message) {
         return new Promise((resolve) => {
             var dialog = new InputDialog_1();
             dialog.resolve = resolve;
+            dialog.caption = caption;
             dialog.message = message;
             _pages_page_routing_page_routing__WEBPACK_IMPORTED_MODULE_2__.PageRouting.container.append(dialog);
             dialog.requestFullUpdate();
@@ -11024,6 +11045,7 @@ class DropDownOption {
     }
     constructor(value) {
         this.value = value;
+        this.text = `${value}`;
     }
 }
 
@@ -11121,7 +11143,7 @@ function renderDropDownStyles() {
             position: absolute;
             top: 100%;
             width: var(--option-width, 100%);
-            min-width: fit-content;
+            min-width: max-content;
 
             display: flex;
             flex-direction: column;
@@ -11147,7 +11169,7 @@ function renderDropDownStyles() {
             padding: 5px 10px;
             margin: 15px;
             margin-bottom: 5px;
-            box-sizing: padding-box;
+            box-sizing: border-box;
 
             outline: none;
             background-color: transparent;
@@ -11376,6 +11398,8 @@ let DropDown = class DropDown extends _data_lit_element_base__WEBPACK_IMPORTED_M
         this.searchFilter = '';
         searchBox.value = '';
         this.requestFullUpdate();
+        if (this.showDropDown)
+            searchBox.focus();
     }
     changeOptionState(option, state) {
         if (state != _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid && !this.multiselect)
@@ -14267,6 +14291,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   GenreClient: () => (/* binding */ GenreClient),
 /* harmony export */   GenreModel: () => (/* binding */ GenreModel),
 /* harmony export */   IngredientCategory: () => (/* binding */ IngredientCategory),
+/* harmony export */   IngredientModel: () => (/* binding */ IngredientModel),
 /* harmony export */   IngredientResponse: () => (/* binding */ IngredientResponse),
 /* harmony export */   InstrumentModel: () => (/* binding */ InstrumentModel),
 /* harmony export */   InstrumentType: () => (/* binding */ InstrumentType),
@@ -16219,6 +16244,50 @@ class RecipeClient {
         }
         return Promise.resolve(null);
     }
+    getIngredients(signal) {
+        let url_ = this.baseUrl + "/api/Recipe/ingredients";
+        url_ = url_.replace(/[?&]$/, "");
+        let options_ = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processGetIngredients(_response);
+        });
+    }
+    processGetIngredients(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        let _mappings = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                if (Array.isArray(resultData200)) {
+                    result200 = [];
+                    for (let item of resultData200)
+                        result200.push(IngredientModel.fromJS(item, _mappings));
+                }
+                else {
+                    result200 = null;
+                }
+                return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
     searchIngredients(search, maxItems, signal) {
         let url_ = this.baseUrl + "/api/Recipe/ingredients/search/{search}?";
         if (search === undefined || search === null)
@@ -16303,6 +16372,44 @@ class RecipeClient {
                 let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : null;
                 return result200;
+            });
+        }
+        else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve(null);
+    }
+    updateIngredient(ingredientName, ingredient, signal) {
+        let url_ = this.baseUrl + "/api/Recipe/ingredient/{ingredientName}";
+        if (ingredientName === undefined || ingredientName === null)
+            throw new Error("The parameter 'ingredientName' must be defined.");
+        url_ = url_.replace("{ingredientName}", encodeURIComponent("" + ingredientName));
+        url_ = url_.replace(/[?&]$/, "");
+        const content_ = JSON.stringify(ingredient);
+        let options_ = {
+            body: content_,
+            method: "PATCH",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+        return this.http.fetch(url_, options_).then((_response) => {
+            return this.processUpdateIngredient(_response);
+        });
+    }
+    processUpdateIngredient(response) {
+        const status = response.status;
+        let _headers = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v, k) => _headers[k] = v);
+        }
+        ;
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                return;
             });
         }
         else if (status !== 200 && status !== 204) {
@@ -17594,12 +17701,12 @@ class RecipeIngredientMappingModel {
     id;
     recipeId;
     ingredientName;
-    ingredientCategory;
     description;
     groupName;
     unit;
     amount;
     order;
+    ingredient;
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -17616,12 +17723,12 @@ class RecipeIngredientMappingModel {
             this.id = _data["id"] !== undefined ? _data["id"] : null;
             this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null;
             this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : null;
-            this.ingredientCategory = _data["ingredientCategory"] !== undefined ? _data["ingredientCategory"] : null;
             this.description = _data["description"] !== undefined ? _data["description"] : null;
             this.groupName = _data["groupName"] !== undefined ? _data["groupName"] : null;
             this.unit = _data["unit"] ? MeasurementUnit.fromJS(_data["unit"], _mappings) : new MeasurementUnit();
             this.amount = _data["amount"] !== undefined ? _data["amount"] : null;
             this.order = _data["order"] !== undefined ? _data["order"] : null;
+            this.ingredient = _data["ingredient"] ? IngredientModel.fromJS(_data["ingredient"], _mappings) : null;
         }
     }
     static fromJS(data, _mappings) {
@@ -17633,12 +17740,12 @@ class RecipeIngredientMappingModel {
         data["id"] = this.id !== undefined ? this.id : null;
         data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null;
         data["ingredientName"] = this.ingredientName !== undefined ? this.ingredientName : null;
-        data["ingredientCategory"] = this.ingredientCategory !== undefined ? this.ingredientCategory : null;
         data["description"] = this.description !== undefined ? this.description : null;
         data["groupName"] = this.groupName !== undefined ? this.groupName : null;
         data["unit"] = this.unit ? this.unit.toJSON() : null;
         data["amount"] = this.amount !== undefined ? this.amount : null;
         data["order"] = this.order !== undefined ? this.order : null;
+        data["ingredient"] = this.ingredient ? this.ingredient.toJSON() : null;
         return data;
     }
     clone() {
@@ -17648,23 +17755,6 @@ class RecipeIngredientMappingModel {
         return result;
     }
 }
-var IngredientCategory;
-(function (IngredientCategory) {
-    IngredientCategory["Meat"] = "Meat";
-    IngredientCategory["Noodles"] = "Noodles";
-    IngredientCategory["Rice"] = "Rice";
-    IngredientCategory["Bread"] = "Bread";
-    IngredientCategory["Fish"] = "Fish";
-    IngredientCategory["Vegetables"] = "Vegetables";
-    IngredientCategory["Fruits"] = "Fruits";
-    IngredientCategory["Dairy"] = "Dairy";
-    IngredientCategory["Eggs"] = "Eggs";
-    IngredientCategory["Nuts"] = "Nuts";
-    IngredientCategory["Drinks"] = "Drinks";
-    IngredientCategory["Condiments"] = "Condiments";
-    IngredientCategory["Oil"] = "Oil";
-    IngredientCategory["Miscellaneous"] = "Miscellaneous";
-})(IngredientCategory || (IngredientCategory = {}));
 class MeasurementUnit {
     name;
     shortName;
@@ -17714,6 +17804,63 @@ var Measurement;
     Measurement["Piece"] = "Piece";
     Measurement["Unitless"] = "Unitless";
 })(Measurement || (Measurement = {}));
+class IngredientModel {
+    ingredientName;
+    lowestKnownPrice;
+    nation;
+    category;
+    constructor(data) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    this[property] = data[property];
+            }
+        }
+    }
+    init(_data, _mappings) {
+        if (_data) {
+            this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : null;
+            this.lowestKnownPrice = _data["lowestKnownPrice"] !== undefined ? _data["lowestKnownPrice"] : null;
+            this.nation = _data["nation"] !== undefined ? _data["nation"] : null;
+            this.category = _data["category"] !== undefined ? _data["category"] : null;
+        }
+    }
+    static fromJS(data, _mappings) {
+        data = typeof data === 'object' ? data : {};
+        return createInstance(data, _mappings, IngredientModel);
+    }
+    toJSON(data) {
+        data = typeof data === 'object' ? data : {};
+        data["ingredientName"] = this.ingredientName !== undefined ? this.ingredientName : null;
+        data["lowestKnownPrice"] = this.lowestKnownPrice !== undefined ? this.lowestKnownPrice : null;
+        data["nation"] = this.nation !== undefined ? this.nation : null;
+        data["category"] = this.category !== undefined ? this.category : null;
+        return data;
+    }
+    clone() {
+        const json = this.toJSON();
+        let result = new IngredientModel();
+        result.init(json);
+        return result;
+    }
+}
+var IngredientCategory;
+(function (IngredientCategory) {
+    IngredientCategory["Meat"] = "Meat";
+    IngredientCategory["Noodles"] = "Noodles";
+    IngredientCategory["Rice"] = "Rice";
+    IngredientCategory["Bread"] = "Bread";
+    IngredientCategory["Fish"] = "Fish";
+    IngredientCategory["Vegetables"] = "Vegetables";
+    IngredientCategory["Fruits"] = "Fruits";
+    IngredientCategory["Dairy"] = "Dairy";
+    IngredientCategory["Eggs"] = "Eggs";
+    IngredientCategory["Nuts"] = "Nuts";
+    IngredientCategory["Drinks"] = "Drinks";
+    IngredientCategory["Condiments"] = "Condiments";
+    IngredientCategory["Oil"] = "Oil";
+    IngredientCategory["Miscellaneous"] = "Miscellaneous";
+})(IngredientCategory || (IngredientCategory = {}));
 class RecipeCookwareMappingModel {
     id;
     recipeId;
@@ -21940,9 +22087,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _media_page_media_page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../media-page/media-page */ "./pages/media-page/media-page.ts");
 /* harmony import */ var _music_page_music_page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../music-page/music-page */ "./pages/music-page/music-page.ts");
 /* harmony import */ var _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../recipes-page/recipes-page */ "./pages/recipes-page/recipes-page.ts");
-/* harmony import */ var _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../welcome-page/welcome-page */ "./pages/welcome-page/welcome-page.ts");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_4__, _music_page_music_page__WEBPACK_IMPORTED_MODULE_5__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__, _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__]);
-([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_4__, _music_page_music_page__WEBPACK_IMPORTED_MODULE_5__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__, _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _shopping_page_shopping_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../shopping-page/shopping-page */ "./pages/shopping-page/shopping-page.ts");
+/* harmony import */ var _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../welcome-page/welcome-page */ "./pages/welcome-page/welcome-page.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_4__, _music_page_music_page__WEBPACK_IMPORTED_MODULE_5__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__, _shopping_page_shopping_page__WEBPACK_IMPORTED_MODULE_7__, _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_8__]);
+([_data_session__WEBPACK_IMPORTED_MODULE_1__, _native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__, _services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__, _media_page_media_page__WEBPACK_IMPORTED_MODULE_4__, _music_page_music_page__WEBPACK_IMPORTED_MODULE_5__, _recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__, _shopping_page_shopping_page__WEBPACK_IMPORTED_MODULE_7__, _welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -21974,8 +22123,8 @@ function renderNavigation() {
             <div id="link-area">
                 <div id="nav-section">
                     <div class="nav-section-links">
-                        ${_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__.LinkElement.forPage(_welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__.WelcomePage, null, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `Start`, {
-        className: (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__.getPageName)(_welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_7__.WelcomePage) == _data_session__WEBPACK_IMPORTED_MODULE_1__.Session.currentPage.current() ? 'active' : 'normal',
+                        ${_native_components_link_element_link_element__WEBPACK_IMPORTED_MODULE_2__.LinkElement.forPage(_welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_8__.WelcomePage, null, (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `Start`, {
+        className: (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_3__.getPageName)(_welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_8__.WelcomePage) == _data_session__WEBPACK_IMPORTED_MODULE_1__.Session.currentPage.current() ? 'active' : 'normal',
     })}
                     </div>
                 </div>
@@ -21985,7 +22134,8 @@ function renderNavigation() {
                     <div id="nav-section-links">
                         ${renderNavItem(_media_page_media_page__WEBPACK_IMPORTED_MODULE_4__.MediaPage)}<br />
                         ${renderNavItem(_music_page_music_page__WEBPACK_IMPORTED_MODULE_5__.MusicPage)}<br />
-                        ${renderNavItem(_recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__.RecipesPage)}
+                        ${renderNavItem(_recipes_page_recipes_page__WEBPACK_IMPORTED_MODULE_6__.RecipesPage)}<br />
+                        ${renderNavItem(_shopping_page_shopping_page__WEBPACK_IMPORTED_MODULE_7__.ShoppingPage)}
                     </div>
                 </div>
             </div>
@@ -22787,7 +22937,7 @@ function renderIngredient(ingredient) {
             @input="${(e) => handleLabelInput(e)}"
             @change="${(e) => (ingredient.description = e.target.value)}"
         />
-        <div class="ingredient-category">${ingredient.ingredientCategory}</div>
+        <div class="ingredient-category">${ingredient.ingredient?.category}</div>
         <div
             class="ingredient-category-icon-wrapper"
             tabindex="0"
@@ -22798,7 +22948,7 @@ function renderIngredient(ingredient) {
                 this.dispatchEvent(new CustomEvent('click'));
             }"
             @click="${(e) => _native_components_context_menu_context_menu__WEBPACK_IMPORTED_MODULE_3__.ContextMenu.popup(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.IngredientCategory)
-        .filter((x) => x != ingredient.ingredientCategory)
+        .filter((x) => x != ingredient.ingredient?.category)
         .map((category) => ({
         text: category,
         image: _resources_inline_icons_ingredient_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.IngredientIcons[category],
@@ -23283,6 +23433,409 @@ __decorate([
 RecipesPage = __decorate([
     (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('recipes-page')
 ], RecipesPage);
+
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ "./pages/shopping-page/shopping-page.css.ts":
+/*!**************************************************!*\
+  !*** ./pages/shopping-page/shopping-page.css.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   renderShoppingPageStyles: () => (/* binding */ renderShoppingPageStyles)
+/* harmony export */ });
+/* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
+
+function renderShoppingPageStyles() {
+    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.css) `
+        table {
+            width: calc(100% - 40px);
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin: 10px 20px;
+            table-layout: fixed;
+            border-radius: 15px;
+            box-shadow: 0 0 0 2px white;
+
+            background: var(--accent-color);
+        }
+
+        #filter-heading {
+            font-weight: bold;
+        }
+
+        #search-input-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #create-ingredient-link {
+            display: inline;
+            font-weight: bold;
+            text-decoration: underline;
+            padding: 10px 30px;
+
+            cursor: pointer;
+        }
+
+        tr {
+            box-shadow: inset 0 -1px 0 0 white;
+        }
+
+        tr[new] {
+            background: #ff02;
+        }
+
+        tr[favorite] {
+            background: #0f02;
+        }
+
+        .table-head-cell td {
+            font-weight: bold;
+        }
+
+        td {
+            padding: 10px;
+            height: 60px;
+        }
+
+        tbody > tr:last-of-type {
+            box-shadow: none;
+        }
+
+        input {
+            background: none;
+            outline: none;
+            border: none;
+            font-style: inherit;
+            font-weight: inherit;
+            font-size: inherit;
+            color: inherit;
+
+            padding: 10px;
+            border-bottom: 2px solid;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .ingredient-price {
+            width: 100px;
+        }
+
+        .ingredient-category {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .ingredient-category-icon {
+            background: white;
+            width: 25px;
+            height: 25px;
+            margin: 2px;
+
+            cursor: pointer;
+        }
+
+        .ingredient-category-icon-wrapper:focus {
+            border: 2px dashed;
+            outline: none;
+        }
+
+        .ingredient-nation {
+            width: 200px;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            background: white;
+        }
+    `;
+}
+
+
+/***/ }),
+
+/***/ "./pages/shopping-page/shopping-page.html.ts":
+/*!***************************************************!*\
+  !*** ./pages/shopping-page/shopping-page.html.ts ***!
+  \***************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   renderShoppingPage: () => (/* binding */ renderShoppingPage)
+/* harmony export */ });
+/* harmony import */ var lit_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element */ "./node_modules/lit-element/development/index.js");
+/* harmony import */ var _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/enumerations/checkbox-state */ "./data/enumerations/checkbox-state.ts");
+/* harmony import */ var _data_session__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data/session */ "./data/session.ts");
+/* harmony import */ var _native_components_context_menu_context_menu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../native-components/context-menu/context-menu */ "./native-components/context-menu/context-menu.ts");
+/* harmony import */ var _native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../native-components/drop-down/drop-down-option */ "./native-components/drop-down/drop-down-option.ts");
+/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
+/* harmony import */ var _resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../resources/inline-icons/icon-registry */ "./resources/inline-icons/icon-registry.ts");
+/* harmony import */ var _resources_inline_icons_ingredient_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../resources/inline-icons/ingredient-icons/icon-registry */ "./resources/inline-icons/ingredient-icons/icon-registry.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_2__, _native_components_context_menu_context_menu__WEBPACK_IMPORTED_MODULE_3__]);
+([_data_session__WEBPACK_IMPORTED_MODULE_2__, _native_components_context_menu_context_menu__WEBPACK_IMPORTED_MODULE_3__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
+
+
+
+
+
+
+
+function renderShoppingPage() {
+    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
+        <page-layout>
+            <table>
+                <thead>
+                    <tr id="filter-area">
+                        <td id="filter-heading" colspan="2">Suche filtern:</td>
+                        <td>
+                            <drop-down
+                                .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_4__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Language), this.nation)}"
+                                useSearch
+                                @selectionChange="${(e) => (this.nation = e.detail.option.value)}"
+                            ></drop-down>
+                        </td>
+                        <td>
+                            <drop-down
+                                .options="${[
+        _native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_4__.DropDownOption.create({
+            text: 'Unset',
+            value: null,
+            state: !this.category ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Require : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid,
+        }),
+        ..._native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_4__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.IngredientCategory), this.category),
+    ]}"
+                                useSearch
+                                @selectionChange="${(e) => (this.category = e.detail.option.value)}"
+                            ></drop-down>
+                        </td>
+
+                        <td id="search-filter" colspan="2">
+                            <div id="search-input-container">
+                                <div class="icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_6__.Icons.Search}"></div>
+                                <input
+                                    id="search-input"
+                                    placeholder="Suchbegriff eingeben..."
+                                    @input="${(e) => (this.searchText = e.target.value)}"
+                                />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="table-head-cell">
+                        <td style="width: auto">Zutat</td>
+                        <td>Bester Preis</td>
+                        <td>Nationalität</td>
+                        <td style="width: 300px">Kategorie</td>
+                        <td>Shops</td>
+                        <td>Aktionen</td>
+                    </tr>
+                </thead>
+                <tr>
+                    <td colspan="6" align="center">
+                        <div id="create-ingredient-link" @click="${() => this.createIngredient()}">Zutat erstellen</div>
+                    </td>
+                </tr>
+                ${this.filteredIngredients.map((ingredient) => renderIngredient.call(this, ingredient))}
+            </table>
+        </page-layout>
+    `;
+}
+function renderIngredient(ingredient) {
+    return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <tr
+        ?new="${this.newIngredients.includes(ingredient.ingredientName)}"
+        ?favorite="${_data_session__WEBPACK_IMPORTED_MODULE_2__.Session.favoriteIngredients.includes(ingredient.ingredientName)}"
+    >
+        <td>${ingredient?.ingredientName ?? (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) ` <input class="ingredient-name" /> `}</td>
+        <td>
+            <input
+                class="ingredient-price"
+                .value="${ingredient.lowestKnownPrice.toString()}"
+                placeholder="---"
+                @change="${(e) => this.updateIngredient(ingredient, 'lowestKnownPrice', e.target.value)}"
+            />
+        </td>
+        <td>
+            <drop-down
+                class="ingredient-nation"
+                .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_4__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Language), ingredient.nation)}"
+                useSearch
+                @selectionChange="${(e) => this.updateIngredient(ingredient, 'nation', e.detail.option.value)}"
+            ></drop-down>
+        </td>
+        <td>
+            <div class="ingredient-category">
+                <div class="category-text">${ingredient.category ?? _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.IngredientCategory.Miscellaneous}</div>
+                <div
+                    class="ingredient-category-icon-wrapper"
+                    tabindex="0"
+                    onkeydown="javascript: if(event.key == 'Enter' || event.key == ' ') { 
+                                                event.preventDefault(); 
+                                                event.stopPropagation();
+                                                this.dispatchEvent(new CustomEvent('click'));
+                                            }"
+                    @click="${(e) => _native_components_context_menu_context_menu__WEBPACK_IMPORTED_MODULE_3__.ContextMenu.popup(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.IngredientCategory)
+        .filter((x) => x != ingredient.category)
+        .map((category) => ({
+        text: category,
+        image: _resources_inline_icons_ingredient_icons_icon_registry__WEBPACK_IMPORTED_MODULE_7__.IngredientIcons[category],
+        action: () => this.updateIngredient(ingredient, 'category', category),
+    })), e)}"
+                >
+                    <div class="ingredient-category-icon" icon="${_resources_inline_icons_icon_registry__WEBPACK_IMPORTED_MODULE_6__.Icons.Category}"></div>
+                </div>
+            </div>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>`;
+}
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
+/***/ "./pages/shopping-page/shopping-page.ts":
+/*!**********************************************!*\
+  !*** ./pages/shopping-page/shopping-page.ts ***!
+  \**********************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ShoppingPage: () => (/* binding */ ShoppingPage)
+/* harmony export */ });
+/* harmony import */ var lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit-element/decorators */ "./node_modules/lit-element/decorators.js");
+/* harmony import */ var _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/lit-element-base */ "./data/lit-element-base.ts");
+/* harmony import */ var _data_session__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../data/session */ "./data/session.ts");
+/* harmony import */ var _dialogs_input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../dialogs/input-dialog/input-dialog */ "./dialogs/input-dialog/input-dialog.ts");
+/* harmony import */ var _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../native-components/message-snackbar/message-snackbar */ "./native-components/message-snackbar/message-snackbar.ts");
+/* harmony import */ var _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../obscuritas-media-manager-backend-client */ "./obscuritas-media-manager-backend-client.ts");
+/* harmony import */ var _services_backend_services__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/backend.services */ "./services/backend.services.ts");
+/* harmony import */ var _services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/extensions/array.extensions */ "./services/extensions/array.extensions.ts");
+/* harmony import */ var _services_object_filter_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/object-filter.service */ "./services/object-filter.service.ts");
+/* harmony import */ var _shopping_page_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./shopping-page.css */ "./pages/shopping-page/shopping-page.css.ts");
+/* harmony import */ var _shopping_page_html__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./shopping-page.html */ "./pages/shopping-page/shopping-page.html.ts");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_data_session__WEBPACK_IMPORTED_MODULE_2__, _dialogs_input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_3__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_4__, _services_backend_services__WEBPACK_IMPORTED_MODULE_6__, _shopping_page_html__WEBPACK_IMPORTED_MODULE_10__]);
+([_data_session__WEBPACK_IMPORTED_MODULE_2__, _dialogs_input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_3__, _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_4__, _services_backend_services__WEBPACK_IMPORTED_MODULE_6__, _shopping_page_html__WEBPACK_IMPORTED_MODULE_10__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+let ShoppingPage = class ShoppingPage extends _data_lit_element_base__WEBPACK_IMPORTED_MODULE_1__.LitElementBase {
+    static isPage = true;
+    static pageName = 'Shopping';
+    static get styles() {
+        return (0,_shopping_page_css__WEBPACK_IMPORTED_MODULE_9__.renderShoppingPageStyles)();
+    }
+    get ingredients() {
+        return [
+            ..._data_session__WEBPACK_IMPORTED_MODULE_2__.Session.ingredients.current(),
+            ..._data_session__WEBPACK_IMPORTED_MODULE_2__.Session.recipes.current().flatMap((recipe) => recipe.ingredients
+                .filter((x) => !_data_session__WEBPACK_IMPORTED_MODULE_2__.Session.ingredients.current().some((y) => x.ingredientName == y.ingredientName))
+                .map((y) => y.ingredient ??
+                new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.IngredientModel({
+                    ingredientName: y.ingredientName,
+                    lowestKnownPrice: '',
+                    category: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.IngredientCategory.Miscellaneous,
+                    nation: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Language.Unset,
+                }))),
+        ];
+    }
+    get filteredIngredients() {
+        const ingredients = [...this.ingredients];
+        _services_object_filter_service__WEBPACK_IMPORTED_MODULE_8__.ObjectFilterService.applyMultiPropertySearch(ingredients, this.searchText ?? '', 'ingredientName');
+        const filtered = (0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_7__.distinctBy)(ingredients
+            .filter((x) => !this.nation || this.nation == _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Language.Unset || x.nation == this.nation)
+            .filter((x) => !this.category || x.category == this.category)
+            .concat(ingredients.filter((x) => this.newIngredients.includes(x.ingredientName))), (x) => x.ingredientName);
+        const sorted = (0,_services_extensions_array_extensions__WEBPACK_IMPORTED_MODULE_7__.orderBy)(filtered, (i) => !this.newIngredients.includes(i.ingredientName), (i) => !_data_session__WEBPACK_IMPORTED_MODULE_2__.Session.favoriteIngredients.includes(i.ingredientName), (i) => i.ingredientName.toLowerCase());
+        return sorted;
+    }
+    constructor() {
+        super();
+        this.newIngredients = [];
+    }
+    render() {
+        return _shopping_page_html__WEBPACK_IMPORTED_MODULE_10__.renderShoppingPage.call(this);
+    }
+    async updateIngredient(ingredient, property, value) {
+        try {
+            ingredient[property] = value;
+            if (!_data_session__WEBPACK_IMPORTED_MODULE_2__.Session.ingredients.current().some((x) => x.ingredientName == ingredient.ingredientName))
+                _data_session__WEBPACK_IMPORTED_MODULE_2__.Session.ingredients.current().push(ingredient);
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_6__.RecipeService.updateIngredient(ingredient.ingredientName, ingredient);
+            this.requestFullUpdate();
+        }
+        catch (err) {
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_4__.MessageSnackbar.popup(`Ein Fehler ist beim Update von '${property}' Zutat ${ingredient.ingredientName} aufgetreten: ${err}`, 'error');
+        }
+    }
+    async createIngredient() {
+        var ingredientName = await _dialogs_input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_3__.InputDialog.show('Neue Zutat erstellen', 'Zutatenname eingeben:');
+        if (!ingredientName)
+            return;
+        try {
+            var newIngredient = new _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.IngredientModel({
+                ingredientName: ingredientName,
+                category: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.IngredientCategory.Miscellaneous,
+                lowestKnownPrice: '',
+                nation: _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Language.Unset,
+            });
+            this.newIngredients.push(newIngredient.ingredientName);
+            await _services_backend_services__WEBPACK_IMPORTED_MODULE_6__.RecipeService.updateIngredient(ingredientName, newIngredient);
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_4__.MessageSnackbar.popup('Zutat wurde erfolgreich erstellt.', 'success');
+            _data_session__WEBPACK_IMPORTED_MODULE_2__.Session.ingredients.next([newIngredient, ..._data_session__WEBPACK_IMPORTED_MODULE_2__.Session.ingredients.current()]);
+            await this.requestFullUpdate();
+        }
+        catch (err) {
+            _native_components_message_snackbar_message_snackbar__WEBPACK_IMPORTED_MODULE_4__.MessageSnackbar.popup('Fehler beim erstellen der Zutat: ' + err, 'error');
+        }
+    }
+};
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], ShoppingPage.prototype, "searchText", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], ShoppingPage.prototype, "category", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], ShoppingPage.prototype, "nation", void 0);
+__decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.state)()
+], ShoppingPage.prototype, "newIngredients", void 0);
+ShoppingPage = __decorate([
+    (0,lit_element_decorators__WEBPACK_IMPORTED_MODULE_0__.customElement)('shopping-page')
+], ShoppingPage);
 
 
 __webpack_async_result__();
@@ -23889,6 +24442,23 @@ function saveTickIcon() {
 
 /***/ }),
 
+/***/ "./resources/inline-icons/general/search-icon.svg.ts":
+/*!***********************************************************!*\
+  !*** ./resources/inline-icons/general/search-icon.svg.ts ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   searchIcon: () => (/* binding */ searchIcon)
+/* harmony export */ });
+function searchIcon() {
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="13"><g stroke-width="2" stroke="#6c6c6c" fill="none"><path d="M11.29 11.71l-4-4"/><circle cx="5" cy="5" r="4"/></g></svg>`;
+}
+
+
+/***/ }),
+
 /***/ "./resources/inline-icons/general/select-all-icon.svg.ts":
 /*!***************************************************************!*\
   !*** ./resources/inline-icons/general/select-all-icon.svg.ts ***!
@@ -24009,21 +24579,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _general_repair_icon_svg__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./general/repair-icon.svg */ "./resources/inline-icons/general/repair-icon.svg.ts");
 /* harmony import */ var _general_revert_icon_svg__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./general/revert-icon.svg */ "./resources/inline-icons/general/revert-icon.svg.ts");
 /* harmony import */ var _general_save_tick_icon_svg__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./general/save-tick-icon.svg */ "./resources/inline-icons/general/save-tick-icon.svg.ts");
-/* harmony import */ var _general_select_all_icon_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./general/select-all-icon.svg */ "./resources/inline-icons/general/select-all-icon.svg.ts");
-/* harmony import */ var _general_speech_icon_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./general/speech-icon.svg */ "./resources/inline-icons/general/speech-icon.svg.ts");
-/* harmony import */ var _general_unselect_all_icon_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./general/unselect-all-icon.svg */ "./resources/inline-icons/general/unselect-all-icon.svg.ts");
-/* harmony import */ var _general_unset_icon_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./general/unset-icon.svg */ "./resources/inline-icons/general/unset-icon.svg.ts");
-/* harmony import */ var _music_player_icons_change_volume_icon_svg__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./music-player-icons/change-volume-icon.svg */ "./resources/inline-icons/music-player-icons/change-volume-icon.svg.ts");
-/* harmony import */ var _music_player_icons_fast_forward_icon_svg__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./music-player-icons/fast-forward-icon.svg */ "./resources/inline-icons/music-player-icons/fast-forward-icon.svg.ts");
-/* harmony import */ var _music_player_icons_increase_volume_icon_svg__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./music-player-icons/increase-volume-icon.svg */ "./resources/inline-icons/music-player-icons/increase-volume-icon.svg.ts");
-/* harmony import */ var _music_player_icons_pause_icon_svg__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./music-player-icons/pause-icon.svg */ "./resources/inline-icons/music-player-icons/pause-icon.svg.ts");
-/* harmony import */ var _music_player_icons_play_icon_svg__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./music-player-icons/play-icon.svg */ "./resources/inline-icons/music-player-icons/play-icon.svg.ts");
-/* harmony import */ var _playlist_icons_add_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./playlist-icons/add-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/add-playlist-icon.svg.ts");
-/* harmony import */ var _playlist_icons_browse_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./playlist-icons/browse-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/browse-playlist-icon.svg.ts");
-/* harmony import */ var _playlist_icons_download_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./playlist-icons/download-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/download-playlist-icon.svg.ts");
-/* harmony import */ var _playlist_icons_play_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./playlist-icons/play-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/play-playlist-icon.svg.ts");
-/* harmony import */ var _playlist_icons_save_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./playlist-icons/save-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/save-playlist-icon.svg.ts");
-/* harmony import */ var _playlist_icons_shuffle_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./playlist-icons/shuffle-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/shuffle-playlist-icon.svg.ts");
+/* harmony import */ var _general_search_icon_svg__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./general/search-icon.svg */ "./resources/inline-icons/general/search-icon.svg.ts");
+/* harmony import */ var _general_select_all_icon_svg__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./general/select-all-icon.svg */ "./resources/inline-icons/general/select-all-icon.svg.ts");
+/* harmony import */ var _general_speech_icon_svg__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./general/speech-icon.svg */ "./resources/inline-icons/general/speech-icon.svg.ts");
+/* harmony import */ var _general_unselect_all_icon_svg__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./general/unselect-all-icon.svg */ "./resources/inline-icons/general/unselect-all-icon.svg.ts");
+/* harmony import */ var _general_unset_icon_svg__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./general/unset-icon.svg */ "./resources/inline-icons/general/unset-icon.svg.ts");
+/* harmony import */ var _music_player_icons_change_volume_icon_svg__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./music-player-icons/change-volume-icon.svg */ "./resources/inline-icons/music-player-icons/change-volume-icon.svg.ts");
+/* harmony import */ var _music_player_icons_fast_forward_icon_svg__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./music-player-icons/fast-forward-icon.svg */ "./resources/inline-icons/music-player-icons/fast-forward-icon.svg.ts");
+/* harmony import */ var _music_player_icons_increase_volume_icon_svg__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./music-player-icons/increase-volume-icon.svg */ "./resources/inline-icons/music-player-icons/increase-volume-icon.svg.ts");
+/* harmony import */ var _music_player_icons_pause_icon_svg__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./music-player-icons/pause-icon.svg */ "./resources/inline-icons/music-player-icons/pause-icon.svg.ts");
+/* harmony import */ var _music_player_icons_play_icon_svg__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./music-player-icons/play-icon.svg */ "./resources/inline-icons/music-player-icons/play-icon.svg.ts");
+/* harmony import */ var _playlist_icons_add_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./playlist-icons/add-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/add-playlist-icon.svg.ts");
+/* harmony import */ var _playlist_icons_browse_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./playlist-icons/browse-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/browse-playlist-icon.svg.ts");
+/* harmony import */ var _playlist_icons_download_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./playlist-icons/download-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/download-playlist-icon.svg.ts");
+/* harmony import */ var _playlist_icons_play_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./playlist-icons/play-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/play-playlist-icon.svg.ts");
+/* harmony import */ var _playlist_icons_save_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./playlist-icons/save-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/save-playlist-icon.svg.ts");
+/* harmony import */ var _playlist_icons_shuffle_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./playlist-icons/shuffle-playlist-icon.svg */ "./resources/inline-icons/playlist-icons/shuffle-playlist-icon.svg.ts");
+
 
 
 
@@ -24068,28 +24640,28 @@ const IconRegistry = {
     Import: (0,_general_import_icon_svg__WEBPACK_IMPORTED_MODULE_14__.importIcon)(),
     Plus: (0,_general_plus_icon_svg__WEBPACK_IMPORTED_MODULE_17__.plusIcon)(),
     Popup: (0,_general_popup_icon_svg__WEBPACK_IMPORTED_MODULE_18__.popupIcon)(),
-    AddPlaylist: (0,_playlist_icons_add_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_31__.addPlaylistIcon)(),
-    BrowsePlaylist: (0,_playlist_icons_browse_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_32__.browsePlaylistIcon)(),
-    DownloadPlaylist: (0,_playlist_icons_download_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_33__.downloadPlaylistIcon)(),
-    PlayPlaylist: (0,_playlist_icons_play_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_34__.playPlaylistIcon)(),
-    SavePlaylist: (0,_playlist_icons_save_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_35__.savePlaylistIcon)(),
-    ShufflePlaylist: (0,_playlist_icons_shuffle_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_36__.shufflePlaylistIcon)(),
-    ChangeVolume: (0,_music_player_icons_change_volume_icon_svg__WEBPACK_IMPORTED_MODULE_26__.changeVolumeIcon)(),
-    FastForward: (0,_music_player_icons_fast_forward_icon_svg__WEBPACK_IMPORTED_MODULE_27__.fastForwardIcon)(),
-    IncreaseVolume: (0,_music_player_icons_increase_volume_icon_svg__WEBPACK_IMPORTED_MODULE_28__.increaseVolumeIcon)(),
-    Pause: (0,_music_player_icons_pause_icon_svg__WEBPACK_IMPORTED_MODULE_29__.pauseIcon)(),
-    Play: (0,_music_player_icons_play_icon_svg__WEBPACK_IMPORTED_MODULE_30__.playIcon)(),
+    AddPlaylist: (0,_playlist_icons_add_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_32__.addPlaylistIcon)(),
+    BrowsePlaylist: (0,_playlist_icons_browse_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_33__.browsePlaylistIcon)(),
+    DownloadPlaylist: (0,_playlist_icons_download_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_34__.downloadPlaylistIcon)(),
+    PlayPlaylist: (0,_playlist_icons_play_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_35__.playPlaylistIcon)(),
+    SavePlaylist: (0,_playlist_icons_save_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_36__.savePlaylistIcon)(),
+    ShufflePlaylist: (0,_playlist_icons_shuffle_playlist_icon_svg__WEBPACK_IMPORTED_MODULE_37__.shufflePlaylistIcon)(),
+    ChangeVolume: (0,_music_player_icons_change_volume_icon_svg__WEBPACK_IMPORTED_MODULE_27__.changeVolumeIcon)(),
+    FastForward: (0,_music_player_icons_fast_forward_icon_svg__WEBPACK_IMPORTED_MODULE_28__.fastForwardIcon)(),
+    IncreaseVolume: (0,_music_player_icons_increase_volume_icon_svg__WEBPACK_IMPORTED_MODULE_29__.increaseVolumeIcon)(),
+    Pause: (0,_music_player_icons_pause_icon_svg__WEBPACK_IMPORTED_MODULE_30__.pauseIcon)(),
+    Play: (0,_music_player_icons_play_icon_svg__WEBPACK_IMPORTED_MODULE_31__.playIcon)(),
     Clean: (0,_general_clean_icon_svg__WEBPACK_IMPORTED_MODULE_9__.cleanIcon)(),
     Lookup: (0,_general_lookup_icon_svg__WEBPACK_IMPORTED_MODULE_15__.lookupIcon)(),
     Note: (0,_general_note_icon_svg__WEBPACK_IMPORTED_MODULE_16__.noteIcon)(),
     Revert: (0,_general_revert_icon_svg__WEBPACK_IMPORTED_MODULE_20__.revertIcon)(),
     SaveTick: (0,_general_save_tick_icon_svg__WEBPACK_IMPORTED_MODULE_21__.saveTickIcon)(),
-    Unset: (0,_general_unset_icon_svg__WEBPACK_IMPORTED_MODULE_25__.unsetIcon)(),
-    SelectAll: (0,_general_select_all_icon_svg__WEBPACK_IMPORTED_MODULE_22__.selectAllIcon)(),
-    UnselectAll: (0,_general_unselect_all_icon_svg__WEBPACK_IMPORTED_MODULE_24__.unselectAllIcon)(),
+    Unset: (0,_general_unset_icon_svg__WEBPACK_IMPORTED_MODULE_26__.unsetIcon)(),
+    SelectAll: (0,_general_select_all_icon_svg__WEBPACK_IMPORTED_MODULE_23__.selectAllIcon)(),
+    UnselectAll: (0,_general_unselect_all_icon_svg__WEBPACK_IMPORTED_MODULE_25__.unselectAllIcon)(),
     Ascending: (0,_general_ascending_icon_svg__WEBPACK_IMPORTED_MODULE_7__.ascendingIcon)(),
     Descending: (0,_general_descending_icon_svg__WEBPACK_IMPORTED_MODULE_11__.descendingIcon)(),
-    Speech: (0,_general_speech_icon_svg__WEBPACK_IMPORTED_MODULE_23__.speechIcon)(),
+    Speech: (0,_general_speech_icon_svg__WEBPACK_IMPORTED_MODULE_24__.speechIcon)(),
     Globus: (0,_general_globus_icon_svg__WEBPACK_IMPORTED_MODULE_13__.globusIcon)(),
     Drag: (0,_general_drag_icon_svg__WEBPACK_IMPORTED_MODULE_12__.dragIcon)(),
     Drop: (0,_advanced_components_upload_area_images_drop_icon_svg__WEBPACK_IMPORTED_MODULE_2__.dropIcon)(),
@@ -24097,6 +24669,7 @@ const IconRegistry = {
     Edit: (0,_pages_media_detail_page_images_edit_icon_svg__WEBPACK_IMPORTED_MODULE_3__.editIcon)(),
     Repair: (0,_general_repair_icon_svg__WEBPACK_IMPORTED_MODULE_19__.repairIcon)(),
     Category: (0,_general_category_icon_svg__WEBPACK_IMPORTED_MODULE_8__.categoryIcon)(),
+    Search: (0,_general_search_icon_svg__WEBPACK_IMPORTED_MODULE_22__.searchIcon)(),
 };
 const Icons = {};
 Object.keys(IconRegistry).forEach((x) => (Icons[x] = x));
@@ -26126,9 +26699,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createRange: () => (/* binding */ createRange),
 /* harmony export */   distinct: () => (/* binding */ distinct),
+/* harmony export */   distinctBy: () => (/* binding */ distinctBy),
 /* harmony export */   getDistance: () => (/* binding */ getDistance),
 /* harmony export */   groupAndSelectBy: () => (/* binding */ groupAndSelectBy),
 /* harmony export */   groupBy: () => (/* binding */ groupBy),
+/* harmony export */   orderBy: () => (/* binding */ orderBy),
 /* harmony export */   randomizeArray: () => (/* binding */ randomizeArray),
 /* harmony export */   sortBy: () => (/* binding */ sortBy),
 /* harmony export */   union: () => (/* binding */ union)
@@ -26178,6 +26753,20 @@ function union(...params) {
 }
 function distinct(array) {
     return array.filter((value, index) => array.indexOf(value) === index);
+}
+function distinctBy(array, selector) {
+    return array.filter((value, index) => array.findIndex((x) => selector(x) == selector(value)) === index);
+}
+function orderBy(array, ...selectors) {
+    return array.sort(function (a, b) {
+        for (const selector of selectors) {
+            if (selector(a) < selector(b))
+                return -1;
+            if (selector(a) > selector(b))
+                return 1;
+        }
+        return 0;
+    });
 }
 
 
@@ -26411,7 +27000,7 @@ function fileToDataUrl(file) {
     });
 }
 async function importDroppedFiles(files) {
-    var basePath = await _dialogs_input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_1__.InputDialog.show('Bitte den Basispfad des ausgewählten Ordners eingeben:');
+    var basePath = await _dialogs_input_dialog_input_dialog__WEBPACK_IMPORTED_MODULE_1__.InputDialog.show('Bitte Basispfad auswählen', 'Bitte den Basispfad des ausgewählten Ordners eingeben:');
     if (!basePath)
         throw new Error();
     var fileSources = files.map((file) => `${basePath}\\${file.name}`.replaceAll('/', '\\'));

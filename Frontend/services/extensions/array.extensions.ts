@@ -47,3 +47,17 @@ export function union<T>(...params: T[][]) {
 export function distinct<T>(array: T[]) {
     return array.filter((value, index) => array.indexOf(value) === index);
 }
+
+export function distinctBy<T>(array: T[], selector: (item: T) => any) {
+    return array.filter((value, index) => array.findIndex((x) => selector(x) == selector(value)) === index);
+}
+
+export function orderBy<T>(array: T[], ...selectors: ((item: T) => any)[]) {
+    return array.sort(function (a, b) {
+        for (const selector of selectors) {
+            if (selector(a) < selector(b)) return -1;
+            if (selector(a) > selector(b)) return 1;
+        }
+        return 0;
+    });
+}

@@ -10,7 +10,8 @@ public class IngredientResponse
     public static Expression<Func<RecipeIngredientMappingModel, IngredientResponse>> FromRecipeMapping =>
         mapping => new()
         {
-            Name = mapping.IngredientName, Measurement = mapping.Unit.Measurement, Category = mapping.IngredientCategory
+            Name = mapping.IngredientName, Measurement = mapping.Unit.Measurement,
+            Category = mapping.Ingredient == null ? IngredientCategory.Miscellaneous : mapping.Ingredient.Category
         };
 
     [MaxLength(255)] public required string Name { get; set; }

@@ -213,7 +213,7 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
             @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
             @change="${(e: Event) => (ingredient.description = (e.target as HTMLInputElement).value)}"
         />
-        <div class="ingredient-category">${ingredient.ingredientCategory}</div>
+        <div class="ingredient-category">${ingredient.ingredient?.category}</div>
         <div
             class="ingredient-category-icon-wrapper"
             tabindex="0"
@@ -226,7 +226,7 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
             @click="${(e: Event) =>
                 ContextMenu.popup(
                     Object.values(IngredientCategory)
-                        .filter((x) => x != ingredient.ingredientCategory)
+                        .filter((x) => x != ingredient.ingredient?.category)
                         .map(
                             (category) =>
                                 ({

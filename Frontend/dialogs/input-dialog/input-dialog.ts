@@ -10,10 +10,11 @@ export class InputDialog extends LitElementBase {
         return renderInputDialogStyles();
     }
 
-    static show(message: string) {
+    static show(caption: string, message: string) {
         return new Promise<string | null>((resolve) => {
             var dialog = new InputDialog();
             dialog.resolve = resolve;
+            dialog.caption = caption;
             dialog.message = message;
             PageRouting.container!.append(dialog);
             dialog.requestFullUpdate();
@@ -22,6 +23,7 @@ export class InputDialog extends LitElementBase {
     }
 
     declare resolve: (result: string | null) => void;
+    declare caption: string;
     declare message: string;
 
     override render() {

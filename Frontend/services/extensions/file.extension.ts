@@ -17,7 +17,7 @@ export function fileToDataUrl(file: File) {
 }
 
 export async function importDroppedFiles(files: File[]) {
-    var basePath = await InputDialog.show('Bitte den Basispfad des ausgewählten Ordners eingeben:');
+    var basePath = await InputDialog.show('Bitte Basispfad auswählen', 'Bitte den Basispfad des ausgewählten Ordners eingeben:');
     if (!basePath) throw new Error();
 
     var fileSources = files.map((file) => `${basePath}\\${file.name}`.replaceAll('/', '\\'));

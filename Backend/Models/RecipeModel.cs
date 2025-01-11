@@ -12,6 +12,9 @@ public class RecipeModel
     public static void Configure(ModelBuilder builder)
     {
         var entity = builder.Entity<RecipeModel>();
+        builder.Entity<RecipeIngredientMappingModel>().HasOne(x => x.Ingredient).WithMany()
+            .OnDelete(DeleteBehavior.NoAction).HasForeignKey(x => x.IngredientName)
+            .HasPrincipalKey(x => x.IngredientName).IsRequired(false);
     }
 
     public Guid? Id { get; set; } = Guid.NewGuid();
@@ -37,6 +40,6 @@ public class RecipeModel
     [NotMapped] public IEnumerable<string> IngredientNames => Ingredients.Select(x => x.IngredientName);
     [NotMapped]
     public IEnumerable<IngredientCategory> IngredientCategories =>
-        Ingredients.Select(x => x.IngredientCategory).Distinct();
+        Ingredients.Where(x => x.Ingredient is not null).Select(x => x.Ingredient!.Category).Distinct();
     [NotMapped] public IEnumerable<string> CookwareNames => Cookware.Select(x => x.Name);
 }

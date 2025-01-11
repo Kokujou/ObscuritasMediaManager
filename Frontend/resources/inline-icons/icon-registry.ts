@@ -20,6 +20,7 @@ import { popupIcon } from './general/popup-icon.svg';
 import { repairIcon } from './general/repair-icon.svg';
 import { revertIcon } from './general/revert-icon.svg';
 import { saveTickIcon } from './general/save-tick-icon.svg';
+import { searchIcon } from './general/search-icon.svg';
 import { selectAllIcon } from './general/select-all-icon.svg';
 import { speechIcon } from './general/speech-icon.svg';
 import { unselectAllIcon } from './general/unselect-all-icon.svg';
@@ -72,6 +73,7 @@ export const IconRegistry = {
     Edit: editIcon(),
     Repair: repairIcon(),
     Category: categoryIcon(),
+    Search: searchIcon(),
 };
 
 export const Icons = {} as typeof IconRegistry;

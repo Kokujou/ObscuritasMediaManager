@@ -42,6 +42,12 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
         await recipeRepository.UpdateRecipeAsync(recipe);
     }
 
+    [HttpGet("ingredients")]
+    public IQueryable<IngredientModel> GetIngredients()
+    {
+        return recipeRepository.GetIngredients();
+    }
+
     [HttpPost("ingredients/search/{search}")]
     public IQueryable<IngredientResponse> SearchIngredients(string search,
         [FromQuery] int maxItems = 5)
@@ -59,6 +65,13 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
         await recipeRepository.AddIngredientAsync(ingredient);
 
         return ingredient.Id!.Value;
+    }
+
+    [HttpPatch("ingredient/{ingredientName}")]
+    public async Task UpdateIngredientAsync(string ingredientName, [FromBody] IngredientModel ingredient)
+    {
+        if (ingredientName != ingredient.IngredientName) throw new("Ingredients names do not match");
+        await recipeRepository.UpdateIngredientAsync(ingredient);
     }
 
     [HttpDelete("{recipeId}/ingredient/{ingredientId}")]

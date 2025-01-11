@@ -48,6 +48,30 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.ToTable("GenreModel");
                 });
 
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.IngredientModel", b =>
+                {
+                    b.Property<string>("IngredientName")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LowestKnownPrice")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nation")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("IngredientName");
+
+                    b.ToTable("Ingredients");
+                });
+
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.InstrumentModel", b =>
                 {
                     b.Property<int>("Id")
@@ -362,12 +386,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("IngredientCategory")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("IngredientName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
@@ -378,6 +397,8 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IngredientName");
 
                     b.HasIndex("RecipeId");
 
@@ -538,6 +559,11 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeIngredientMappingModel", b =>
                 {
+                    b.HasOne("ObscuritasMediaManager.Backend.Models.IngredientModel", "Ingredient")
+                        .WithMany()
+                        .HasForeignKey("IngredientName")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("ObscuritasMediaManager.Backend.Models.RecipeModel", null)
                         .WithMany("Ingredients")
                         .HasForeignKey("RecipeId");
@@ -570,6 +596,8 @@ namespace ObscuritasMediaManager.Backend.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("RecipeIngredientMappingModelId");
                         });
+
+                    b.Navigation("Ingredient");
 
                     b.Navigation("Unit")
                         .IsRequired();

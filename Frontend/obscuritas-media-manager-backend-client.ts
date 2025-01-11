@@ -1918,6 +1918,49 @@ export class RecipeClient {
         return Promise.resolve<RecipeModel>(null as any);
     }
 
+    getIngredients(signal?: AbortSignal): Promise<IngredientModel[]> {
+        let url_ = this.baseUrl + "/api/Recipe/ingredients";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetIngredients(_response);
+        });
+    }
+
+    protected processGetIngredients(response: Response): Promise<IngredientModel[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(IngredientModel.fromJS(item, _mappings));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<IngredientModel[]>(null as any);
+    }
+
     searchIngredients(search: string, maxItems?: number | undefined, signal?: AbortSignal): Promise<IngredientResponse[]> {
         let url_ = this.baseUrl + "/api/Recipe/ingredients/search/{search}?";
         if (search === undefined || search === null)
@@ -2009,6 +2052,44 @@ export class RecipeClient {
             });
         }
         return Promise.resolve<string>(null as any);
+    }
+
+    updateIngredient(ingredientName: string, ingredient: IngredientModel, signal?: AbortSignal): Promise<void> {
+        let url_ = this.baseUrl + "/api/Recipe/ingredient/{ingredientName}";
+        if (ingredientName === undefined || ingredientName === null)
+            throw new Error("The parameter 'ingredientName' must be defined.");
+        url_ = url_.replace("{ingredientName}", encodeURIComponent("" + ingredientName));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(ingredient);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PATCH",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUpdateIngredient(_response);
+        });
+    }
+
+    protected processUpdateIngredient(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
     }
 
     deleteIngredient(recipeId: string, ingredientId: string, signal?: AbortSignal): Promise<void> {
@@ -3525,12 +3606,12 @@ export class RecipeIngredientMappingModel implements IRecipeIngredientMappingMod
     id!: string | null;
     recipeId!: string | null;
     ingredientName!: string;
-    ingredientCategory!: IngredientCategory;
     description!: string | null;
     groupName!: string | null;
     unit!: MeasurementUnit;
     amount!: number;
     order!: number;
+    ingredient!: IngredientModel | null;
 
     constructor(data?: Partial<IRecipeIngredientMappingModel>) {
         if (data) {
@@ -3550,12 +3631,12 @@ export class RecipeIngredientMappingModel implements IRecipeIngredientMappingMod
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : <any>null;
             this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : <any>null;
-            this.ingredientCategory = _data["ingredientCategory"] !== undefined ? _data["ingredientCategory"] : <any>null;
             this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
             this.groupName = _data["groupName"] !== undefined ? _data["groupName"] : <any>null;
             this.unit = _data["unit"] ? MeasurementUnit.fromJS(_data["unit"], _mappings) : new MeasurementUnit();
             this.amount = _data["amount"] !== undefined ? _data["amount"] : <any>null;
             this.order = _data["order"] !== undefined ? _data["order"] : <any>null;
+            this.ingredient = _data["ingredient"] ? IngredientModel.fromJS(_data["ingredient"], _mappings) : <any>null;
         }
     }
 
@@ -3569,12 +3650,12 @@ export class RecipeIngredientMappingModel implements IRecipeIngredientMappingMod
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["recipeId"] = this.recipeId !== undefined ? this.recipeId : <any>null;
         data["ingredientName"] = this.ingredientName !== undefined ? this.ingredientName : <any>null;
-        data["ingredientCategory"] = this.ingredientCategory !== undefined ? this.ingredientCategory : <any>null;
         data["description"] = this.description !== undefined ? this.description : <any>null;
         data["groupName"] = this.groupName !== undefined ? this.groupName : <any>null;
         data["unit"] = this.unit ? this.unit.toJSON() : <any>null;
         data["amount"] = this.amount !== undefined ? this.amount : <any>null;
         data["order"] = this.order !== undefined ? this.order : <any>null;
+        data["ingredient"] = this.ingredient ? this.ingredient.toJSON() : <any>null;
         return data;
     }
 
@@ -3590,29 +3671,12 @@ export interface IRecipeIngredientMappingModel {
     id: string | null;
     recipeId: string | null;
     ingredientName: string;
-    ingredientCategory: IngredientCategory;
     description: string | null;
     groupName: string | null;
     unit: MeasurementUnit;
     amount: number;
     order: number;
-}
-
-export enum IngredientCategory {
-    Meat = "Meat",
-    Noodles = "Noodles",
-    Rice = "Rice",
-    Bread = "Bread",
-    Fish = "Fish",
-    Vegetables = "Vegetables",
-    Fruits = "Fruits",
-    Dairy = "Dairy",
-    Eggs = "Eggs",
-    Nuts = "Nuts",
-    Drinks = "Drinks",
-    Condiments = "Condiments",
-    Oil = "Oil",
-    Miscellaneous = "Miscellaneous",
+    ingredient: IngredientModel | null;
 }
 
 export class MeasurementUnit implements IMeasurementUnit {
@@ -3676,6 +3740,77 @@ export enum Measurement {
     Pinch = "Pinch",
     Piece = "Piece",
     Unitless = "Unitless",
+}
+
+export class IngredientModel implements IIngredientModel {
+    ingredientName!: string;
+    lowestKnownPrice!: string;
+    nation!: Language;
+    category!: IngredientCategory;
+
+    constructor(data?: Partial<IIngredientModel>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : <any>null;
+            this.lowestKnownPrice = _data["lowestKnownPrice"] !== undefined ? _data["lowestKnownPrice"] : <any>null;
+            this.nation = _data["nation"] !== undefined ? _data["nation"] : <any>null;
+            this.category = _data["category"] !== undefined ? _data["category"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): IngredientModel | null {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<IngredientModel>(data, _mappings, IngredientModel);
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ingredientName"] = this.ingredientName !== undefined ? this.ingredientName : <any>null;
+        data["lowestKnownPrice"] = this.lowestKnownPrice !== undefined ? this.lowestKnownPrice : <any>null;
+        data["nation"] = this.nation !== undefined ? this.nation : <any>null;
+        data["category"] = this.category !== undefined ? this.category : <any>null;
+        return data;
+    }
+
+    clone(): IngredientModel {
+        const json = this.toJSON();
+        let result = new IngredientModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IIngredientModel {
+    ingredientName: string;
+    lowestKnownPrice: string;
+    nation: Language;
+    category: IngredientCategory;
+}
+
+export enum IngredientCategory {
+    Meat = "Meat",
+    Noodles = "Noodles",
+    Rice = "Rice",
+    Bread = "Bread",
+    Fish = "Fish",
+    Vegetables = "Vegetables",
+    Fruits = "Fruits",
+    Dairy = "Dairy",
+    Eggs = "Eggs",
+    Nuts = "Nuts",
+    Drinks = "Drinks",
+    Condiments = "Condiments",
+    Oil = "Oil",
+    Miscellaneous = "Miscellaneous",
 }
 
 export class RecipeCookwareMappingModel implements IRecipeCookwareMappingModel {

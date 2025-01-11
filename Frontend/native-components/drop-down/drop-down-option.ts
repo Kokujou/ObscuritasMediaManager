@@ -24,5 +24,6 @@ export class DropDownOption<T> {
 
     constructor(value: T) {
         this.value = value;
+        this.text = `${value}`;
     }
 }

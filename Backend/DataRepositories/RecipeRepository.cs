@@ -101,4 +101,17 @@ public class RecipeRepository(DatabaseContext databaseContext)
             .Take(maxItems)
             .ToList().AsQueryable();
     }
+
+    public IQueryable<IngredientModel> GetIngredients()
+    {
+        return databaseContext.Set<IngredientModel>();
+    }
+
+    public async Task UpdateIngredientAsync(IngredientModel ingredient)
+    {
+        if (await databaseContext.Set<IngredientModel>().AnyAsync(x => x.IngredientName == ingredient.IngredientName))
+            databaseContext.Update(ingredient);
+        else databaseContext.Add(ingredient);
+        await databaseContext.SaveChangesAsync();
+    }
 }
