@@ -46,11 +46,5 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
     },
     // plugins: [new LitAnalyzerPlugin()],
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './index.html',
-            filename: 'index.html',
-        }),
-    ],
     devtool: 'source-map', // Fügt Source Maps hinzu
 };

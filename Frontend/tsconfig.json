@@ -17,18 +17,7 @@
         "plugins": [{ "name": "ts-lit-plugin" }]
     },
     "include": ["**/*.ts", "**/*.json"],
-    "exclude": [
-        "**/webpack.config.js",
-        "<node_internals>/**/*.js",
-        "**/templates/**",
-        "**/node_modules/**",
-        "**/*.stories*",
-        "**/.storybook/**",
-        "**/obscuritas-media-manager-backend-client.ts",
-        "obscuritas-media-manager-backend-client.ts",
-        "**/bin/**",
-        "**/obj/**"
-    ],
+    "exclude": ["**/templates/**"],
 
     "compileOnSave": true
 }

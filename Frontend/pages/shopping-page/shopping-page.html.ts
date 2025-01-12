@@ -6,6 +6,7 @@ import { DropDownOption } from '../../native-components/drop-down/drop-down-opti
 import { IngredientCategory, IngredientModel, Language } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { IngredientIcons } from '../../resources/inline-icons/ingredient-icons/icon-registry';
+import { renderAsianShopLinks } from './asian-shops.html';
 import { ShoppingPage } from './shopping-page';
 
 export function renderShoppingPage(this: ShoppingPage) {
@@ -14,39 +15,42 @@ export function renderShoppingPage(this: ShoppingPage) {
             <table>
                 <thead>
                     <tr id="filter-area">
-                        <td id="filter-heading" colspan="2">Suche filtern:</td>
-                        <td>
-                            <drop-down
-                                .options="${DropDownOption.createSimpleArray(Object.values(Language), this.nation)}"
-                                useSearch
-                                @selectionChange="${(e: CustomEvent<{ option: DropDownOption<Language> }>) =>
-                                    (this.nation = e.detail.option.value)}"
-                            ></drop-down>
-                        </td>
-                        <td>
-                            <drop-down
-                                .options="${[
-                                    DropDownOption.create({
-                                        text: 'Unset',
-                                        value: null,
-                                        state: !this.category ? CheckboxState.Require : CheckboxState.Forbid,
-                                    }),
-                                    ...DropDownOption.createSimpleArray(Object.values(IngredientCategory), this.category),
-                                ]}"
-                                useSearch
-                                @selectionChange="${(e: CustomEvent<{ option: DropDownOption<IngredientCategory> }>) =>
-                                    (this.category = e.detail.option.value)}"
-                            ></drop-down>
-                        </td>
-
-                        <td id="search-filter" colspan="2">
-                            <div id="search-input-container">
-                                <div class="icon" icon="${Icons.Search}"></div>
-                                <input
-                                    id="search-input"
-                                    placeholder="Suchbegriff eingeben..."
-                                    @input="${(e: Event) => (this.searchText = (e.target as HTMLInputElement).value)}"
-                                />
+                        <td colspan="6">
+                            <div id="filter-header">
+                                Suche filtern:
+                                <div id="nation-filter" class="filter">
+                                    Nationalität:
+                                    <drop-down
+                                        .options="${DropDownOption.createSimpleArray(Object.values(Language), this.nation)}"
+                                        useSearch
+                                        @selectionChange="${(e: CustomEvent<{ option: DropDownOption<Language> }>) =>
+                                            (this.nation = e.detail.option.value)}"
+                                    ></drop-down>
+                                </div>
+                                <div id="category-filter" class="filter">
+                                    Kategorie:
+                                    <drop-down
+                                        .options="${[
+                                            DropDownOption.create({
+                                                text: 'Unset',
+                                                value: null,
+                                                state: !this.category ? CheckboxState.Require : CheckboxState.Forbid,
+                                            }),
+                                            ...DropDownOption.createSimpleArray(Object.values(IngredientCategory), this.category),
+                                        ]}"
+                                        useSearch
+                                        @selectionChange="${(e: CustomEvent<{ option: DropDownOption<IngredientCategory> }>) =>
+                                            (this.category = e.detail.option.value)}"
+                                    ></drop-down>
+                                </div>
+                                <div id="search-container" class="filter">
+                                    <div class="icon" icon="${Icons.Search}"></div>
+                                    <input
+                                        id="search-input"
+                                        placeholder="Suchbegriff eingeben..."
+                                        @input="${(e: Event) => (this.searchText = (e.target as HTMLInputElement).value)}"
+                                    />
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -124,9 +128,17 @@ function renderIngredient(this: ShoppingPage, ingredient: IngredientModel) {
                 </div>
             </div>
         </td>
-        <td></td>
+        <td>${renderShopIcons(ingredient)}</td>
         <td>
             <div class="action-icon" icon="${Icons.Star}" @click="${() => this.markAsFavorite(ingredient)}"></div>
         </td>
     </tr>`;
+}
+
+function renderShopIcons(ingredient: IngredientModel) {
+    switch (ingredient.nation) {
+        case Language.Japanese:
+        case Language.Chinese:
+            return renderAsianShopLinks(ingredient);
+    }
 }

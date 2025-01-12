@@ -15,8 +15,6 @@ export class PageRouting extends LitElementBase {
         return renderPageRoutingStyles();
     }
 
-    static defaultPage = WelcomePage;
-
     static get container() {
         if (!PageRouting.instance?.shadowRoot) return null;
         return PageRouting.instance.shadowRoot!.querySelector('#current-page');

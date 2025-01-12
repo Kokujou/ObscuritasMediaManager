@@ -173,7 +173,6 @@ function renderIngredientGroup(this: RecipeDetailPage, group: [name: string, ing
 }
 
 function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMappingModel) {
-    const ingredient2 = ingredient;
     return html` <div class="ingredient" @change="${() => this.changeProperty('ingredients', this.recipe.ingredients)}">
         ${!ValuelessMeasurements.includes(ingredient.unit.measurement)
             ? html` <input
@@ -194,7 +193,7 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
             .options="${groupAndSelectBy(MeasurementUnits, 'measurement', 'name')}"
             class="ingredient-unit"
             @selectionChange="${(e: CustomEvent<GroupedDropdownResult>) =>
-                this.changeIngredientUnit(ingredient2, e.detail.value!)}"
+                this.changeIngredientUnit(ingredient, e.detail.value!)}"
         ></grouped-dropdown>
         <autocomplete-input
             type="text"
@@ -213,7 +212,7 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
             @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
             @change="${(e: Event) => (ingredient.description = (e.target as HTMLInputElement).value)}"
         />
-        <div class="ingredient-category">${ingredient.ingredient?.category}</div>
+        <div class="ingredient-category">${ingredient.ingredient?.category ?? IngredientCategory.Miscellaneous}</div>
         <div
             class="ingredient-category-icon-wrapper"
             tabindex="0"

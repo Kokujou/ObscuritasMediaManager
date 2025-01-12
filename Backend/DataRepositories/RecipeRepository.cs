@@ -32,7 +32,9 @@ public class RecipeRepository(DatabaseContext databaseContext)
 
     public async Task UpdateRecipeAsync(RecipeModel recipe)
     {
-        databaseContext.Update(recipe);
+        databaseContext.Recipes.Update(recipe);
+        foreach (var change in databaseContext.ChangeTracker.Entries<IngredientModel>())
+            change.State = EntityState.Detached;
         await databaseContext.SaveChangesAsync();
     }
 

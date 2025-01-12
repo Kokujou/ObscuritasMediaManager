@@ -39,7 +39,7 @@
         "version": "2.0.0",
         "tasks": [
             {
-                "label": "Check for build errors",
+                "label": "Bundle project",
                 "type": "shell",
                 "command": "npx",
                 "args": ["webpack", "--watch"],
@@ -53,6 +53,26 @@
                     "showReuseMessage": false
                 },
                 "problemMatcher": "$ts-webpack-watch",
+                "isBackground": true,
+                "runOptions": {
+                    "runOn": "folderOpen"
+                }
+            },
+            {
+                "label": "Check for build errors",
+                "type": "shell",
+                "command": "tsc",
+                "args": ["--watch", "--noEmit"],
+                "presentation": {
+                    "reveal": "never",
+                    "echo": false,
+                    "focus": false,
+                    "panel": "dedicated",
+                    "clear": true,
+                    "revealProblems": "never",
+                    "showReuseMessage": false
+                },
+                "problemMatcher": "$tsc-watch",
                 "isBackground": true,
                 "runOptions": {
                     "runOn": "folderOpen"

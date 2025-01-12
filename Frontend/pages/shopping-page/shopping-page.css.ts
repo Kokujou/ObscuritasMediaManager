@@ -14,15 +14,26 @@ export function renderShoppingPageStyles() {
             background: var(--accent-color);
         }
 
-        #filter-heading {
-            font-weight: bold;
+        #filter-header {
+            padding: 0 20px;
+            justify-content: space-between;
         }
 
-        #search-input-container {
+        #filter-header,
+        .filter {
+            font-weight: bold;
+
             display: flex;
             flex-direction: row;
             align-items: center;
+        }
+
+        .filter {
             gap: 20px;
+        }
+
+        #search-input {
+            width: 300px;
         }
 
         #create-ingredient-link {
@@ -115,6 +126,25 @@ export function renderShoppingPageStyles() {
             background: white;
 
             cursor: pointer;
+        }
+
+        .action-icon:hover,
+        tr[favorite] .action-icon {
+            background: yellow;
+        }
+
+        .shop-icons {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .shop-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 10px;
         }
     `;
 }

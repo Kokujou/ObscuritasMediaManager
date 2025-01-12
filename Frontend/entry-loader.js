@@ -4,12 +4,13 @@ const glob = require('glob');
 
 module.exports = function loader() {
     const dir = path.resolve(this.rootContext, '');
-    const files = glob
-        .sync(`${dir.replace(/\\/g, '/')}/**/*.ts`, {
-            ignore: ['**/node_modules/**', '**/dist/**', '**/templates/**'],
-        })
-        .map((x) => `import ${JSON.stringify(x)}`);
+
+    const allFiles = glob.sync(`${dir.replace(/\\/g, '/')}/**/*.ts`, {
+        ignore: ['**/node_modules/**', '**/dist/**', '**/templates/**'],
+    });
+    const componentFiles = allFiles.filter((file) => allFiles.includes(file.replace('.ts', '.html.ts')));
+    const imports = componentFiles.map((x) => `import ${JSON.stringify(x)}`);
 
     this.addContextDependency(dir);
-    return files.join('\n');
+    return imports.join('\n');
 };

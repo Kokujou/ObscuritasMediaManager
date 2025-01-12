@@ -2451,9 +2451,9 @@ export class MusicModel implements IMusicModel {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): MusicModel | null {
+    static fromJS(data: any, _mappings?: any): MusicModel  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<MusicModel>(data, _mappings, MusicModel);
+        return createInstance<MusicModel>(data, _mappings, MusicModel)!;
     }
 
     toJSON(data?: any) {
@@ -2594,9 +2594,9 @@ export class InstrumentModel implements IInstrumentModel {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): InstrumentModel | null {
+    static fromJS(data: any, _mappings?: any): InstrumentModel  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<InstrumentModel>(data, _mappings, InstrumentModel);
+        return createInstance<InstrumentModel>(data, _mappings, InstrumentModel)!;
     }
 
     toJSON(data?: any) {
@@ -2690,9 +2690,9 @@ export class GenreModel implements IGenreModel {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): GenreModel | null {
+    static fromJS(data: any, _mappings?: any): GenreModel  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<GenreModel>(data, _mappings, GenreModel);
+        return createInstance<GenreModel>(data, _mappings, GenreModel)!;
     }
 
     toJSON(data?: any) {
@@ -2718,7 +2718,6 @@ export interface IGenreModel {
 }
 
 export class MediaGenreModel extends GenreModel implements IMediaGenreModel {
-    sectionName!: string;
     section!: MediaGenreCategory;
 
     constructor(data?: Partial<IMediaGenreModel>) {
@@ -2735,19 +2734,17 @@ export class MediaGenreModel extends GenreModel implements IMediaGenreModel {
     init(_data?: any, _mappings?: any) {
         super.init(_data);
         if (_data) {
-            this.sectionName = _data["sectionName"] !== undefined ? _data["sectionName"] : <any>null;
             this.section = _data["section"] !== undefined ? _data["section"] : <any>null;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): MediaGenreModel | null {
+    static fromJS(data: any, _mappings?: any): MediaGenreModel  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<MediaGenreModel>(data, _mappings, MediaGenreModel);
+        return createInstance<MediaGenreModel>(data, _mappings, MediaGenreModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["sectionName"] = this.sectionName !== undefined ? this.sectionName : <any>null;
         data["section"] = this.section !== undefined ? this.section : <any>null;
         super.toJSON(data);
         return data;
@@ -2762,7 +2759,6 @@ export class MediaGenreModel extends GenreModel implements IMediaGenreModel {
 }
 
 export interface IMediaGenreModel extends IGenreModel {
-    sectionName: string;
     section: MediaGenreCategory;
 }
 
@@ -2805,9 +2801,9 @@ export class CredentialsRequest implements ICredentialsRequest {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): CredentialsRequest | null {
+    static fromJS(data: any, _mappings?: any): CredentialsRequest  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<CredentialsRequest>(data, _mappings, CredentialsRequest);
+        return createInstance<CredentialsRequest>(data, _mappings, CredentialsRequest)!;
     }
 
     toJSON(data?: any) {
@@ -2903,9 +2899,9 @@ export class MediaModel implements IMediaModel {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): MediaModel | null {
+    static fromJS(data: any, _mappings?: any): MediaModel  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<MediaModel>(data, _mappings, MediaModel);
+        return createInstance<MediaModel>(data, _mappings, MediaModel)!;
     }
 
     toJSON(data?: any) {
@@ -3027,9 +3023,9 @@ export class KeyValuePairOfNullableGuidAndModelCreationState implements IKeyValu
         }
     }
 
-    static fromJS(data: any, _mappings?: any): KeyValuePairOfNullableGuidAndModelCreationState | null {
+    static fromJS(data: any, _mappings?: any): KeyValuePairOfNullableGuidAndModelCreationState  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<KeyValuePairOfNullableGuidAndModelCreationState>(data, _mappings, KeyValuePairOfNullableGuidAndModelCreationState);
+        return createInstance<KeyValuePairOfNullableGuidAndModelCreationState>(data, _mappings, KeyValuePairOfNullableGuidAndModelCreationState)!;
     }
 
     toJSON(data?: any) {
@@ -3086,9 +3082,9 @@ export class MediaCreationRequest implements IMediaCreationRequest {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): MediaCreationRequest | null {
+    static fromJS(data: any, _mappings?: any): MediaCreationRequest  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<MediaCreationRequest>(data, _mappings, MediaCreationRequest);
+        return createInstance<MediaCreationRequest>(data, _mappings, MediaCreationRequest)!;
     }
 
     toJSON(data?: any) {
@@ -3136,9 +3132,9 @@ export class UpdateRequestOfObject implements IUpdateRequestOfObject {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): UpdateRequestOfObject | null {
+    static fromJS(data: any, _mappings?: any): UpdateRequestOfObject  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<UpdateRequestOfObject>(data, _mappings, UpdateRequestOfObject);
+        return createInstance<UpdateRequestOfObject>(data, _mappings, UpdateRequestOfObject)!;
     }
 
     toJSON(data?: any) {
@@ -3182,9 +3178,9 @@ export class KeyValuePairOfStringAndModelCreationState implements IKeyValuePairO
         }
     }
 
-    static fromJS(data: any, _mappings?: any): KeyValuePairOfStringAndModelCreationState | null {
+    static fromJS(data: any, _mappings?: any): KeyValuePairOfStringAndModelCreationState  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<KeyValuePairOfStringAndModelCreationState>(data, _mappings, KeyValuePairOfStringAndModelCreationState);
+        return createInstance<KeyValuePairOfStringAndModelCreationState>(data, _mappings, KeyValuePairOfStringAndModelCreationState)!;
     }
 
     toJSON(data?: any) {
@@ -3228,9 +3224,9 @@ export class LyricsResponse implements ILyricsResponse {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): LyricsResponse | null {
+    static fromJS(data: any, _mappings?: any): LyricsResponse  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<LyricsResponse>(data, _mappings, LyricsResponse);
+        return createInstance<LyricsResponse>(data, _mappings, LyricsResponse)!;
     }
 
     toJSON(data?: any) {
@@ -3310,9 +3306,9 @@ export class PlaylistModel implements IPlaylistModel {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): PlaylistModel | null {
+    static fromJS(data: any, _mappings?: any): PlaylistModel  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<PlaylistModel>(data, _mappings, PlaylistModel);
+        return createInstance<PlaylistModel>(data, _mappings, PlaylistModel)!;
     }
 
     toJSON(data?: any) {
@@ -3382,9 +3378,9 @@ export class UpdateRequestOfPlaylistModel implements IUpdateRequestOfPlaylistMod
         }
     }
 
-    static fromJS(data: any, _mappings?: any): UpdateRequestOfPlaylistModel | null {
+    static fromJS(data: any, _mappings?: any): UpdateRequestOfPlaylistModel  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<UpdateRequestOfPlaylistModel>(data, _mappings, UpdateRequestOfPlaylistModel);
+        return createInstance<UpdateRequestOfPlaylistModel>(data, _mappings, UpdateRequestOfPlaylistModel)!;
     }
 
     toJSON(data?: any) {
@@ -3502,9 +3498,9 @@ export class RecipeModel implements IRecipeModel {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): RecipeModel | null {
+    static fromJS(data: any, _mappings?: any): RecipeModel  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<RecipeModel>(data, _mappings, RecipeModel);
+        return createInstance<RecipeModel>(data, _mappings, RecipeModel)!;
     }
 
     toJSON(data?: any) {
@@ -3640,9 +3636,9 @@ export class RecipeIngredientMappingModel implements IRecipeIngredientMappingMod
         }
     }
 
-    static fromJS(data: any, _mappings?: any): RecipeIngredientMappingModel | null {
+    static fromJS(data: any, _mappings?: any): RecipeIngredientMappingModel  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<RecipeIngredientMappingModel>(data, _mappings, RecipeIngredientMappingModel);
+        return createInstance<RecipeIngredientMappingModel>(data, _mappings, RecipeIngredientMappingModel)!;
     }
 
     toJSON(data?: any) {
@@ -3704,9 +3700,9 @@ export class MeasurementUnit implements IMeasurementUnit {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): MeasurementUnit | null {
+    static fromJS(data: any, _mappings?: any): MeasurementUnit  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<MeasurementUnit>(data, _mappings, MeasurementUnit);
+        return createInstance<MeasurementUnit>(data, _mappings, MeasurementUnit)!;
     }
 
     toJSON(data?: any) {
@@ -3767,9 +3763,9 @@ export class IngredientModel implements IIngredientModel {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): IngredientModel | null {
+    static fromJS(data: any, _mappings?: any): IngredientModel  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<IngredientModel>(data, _mappings, IngredientModel);
+        return createInstance<IngredientModel>(data, _mappings, IngredientModel)!;
     }
 
     toJSON(data?: any) {
@@ -3836,9 +3832,9 @@ export class RecipeCookwareMappingModel implements IRecipeCookwareMappingModel {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): RecipeCookwareMappingModel | null {
+    static fromJS(data: any, _mappings?: any): RecipeCookwareMappingModel  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<RecipeCookwareMappingModel>(data, _mappings, RecipeCookwareMappingModel);
+        return createInstance<RecipeCookwareMappingModel>(data, _mappings, RecipeCookwareMappingModel)!;
     }
 
     toJSON(data?: any) {
@@ -3886,9 +3882,9 @@ export class IngredientResponse implements IIngredientResponse {
         }
     }
 
-    static fromJS(data: any, _mappings?: any): IngredientResponse | null {
+    static fromJS(data: any, _mappings?: any): IngredientResponse  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<IngredientResponse>(data, _mappings, IngredientResponse);
+        return createInstance<IngredientResponse>(data, _mappings, IngredientResponse)!;
     }
 
     toJSON(data?: any) {

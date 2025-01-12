@@ -93,7 +93,7 @@
 {% endif -%}
     }
 
-    static fromJS(data: any{% if HandleReferences %}, _mappings?: any{% endif %}): {{ ClassName }}{% if HandleReferences %} | null{% endif %} {
+    static fromJS(data: any{% if HandleReferences %}, _mappings?: any{% endif %}): {{ ClassName }}{% if HandleReferences %} {% endif %} {
         data = typeof data === 'object' ? data : {};
 {% if HandleReferences -%}
 {%   if HasBaseDiscriminator -%}
@@ -102,14 +102,14 @@
 {%       if derivedClass.IsAbstract -%}
             throw new Error("The abstract class '{{ derivedClass.ClassName }}' cannot be instantiated.");
 {%       else -%}
-            return createInstance<{{ derivedClass.ClassName }}>(data, _mappings, {{ derivedClass.ClassName }});
+            return createInstance<{{ derivedClass.ClassName }}>(data, _mappings, {{ derivedClass.ClassName }})!;
 {%       endif -%}
 {%     endfor -%}
 {%   endif -%}
 {%   if IsAbstract -%}
         throw new Error("The abstract class '{{ ClassName }}' cannot be instantiated.");
 {%   else -%}
-        return createInstance<{{ ClassName }}>(data, _mappings, {{ ClassName }});
+        return createInstance<{{ ClassName }}>(data, _mappings, {{ ClassName }})!;
 {%   endif -%}
 {% else -%}
 {%   if HasBaseDiscriminator -%}

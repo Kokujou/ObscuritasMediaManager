@@ -3,12 +3,12 @@ import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { InputDialog } from '../../dialogs/input-dialog/input-dialog';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
-import { IngredientCategory, IngredientModel, Language } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
 import { distinctBy, orderBy } from '../../services/extensions/array.extensions';
 import { ObjectFilterService } from '../../services/object-filter.service';
 import { renderShoppingPageStyles } from './shopping-page.css';
 import { renderShoppingPage } from './shopping-page.html';
+import { IngredientModel, IngredientCategory, Language } from '../../obscuritas-media-manager-backend-client';
 
 @customElement('shopping-page')
 export class ShoppingPage extends LitElementBase {

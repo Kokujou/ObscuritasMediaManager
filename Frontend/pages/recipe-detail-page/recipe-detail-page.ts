@@ -9,6 +9,7 @@ import {
     CookingTechnique,
     Course,
     IngredientCategory,
+    IngredientModel,
     IngredientResponse,
     Language,
     MeasurementUnit,
@@ -37,8 +38,8 @@ export class RecipeDetailPage extends LitElementBase {
             groupName: 'Neue Gruppe',
             ingredientName: 'Neue Zutat',
             unit: new MeasurementUnit(MeasurementUnits.find((x) => x.shortName == 'g')),
-            ingredientCategory: IngredientCategory.Meat,
             order: 0,
+            ingredient: null,
         });
     }
 
@@ -100,6 +101,7 @@ export class RecipeDetailPage extends LitElementBase {
     async changeProperty<T extends keyof RecipeModel>(property: T, value: RecipeModel[T]) {
         this.recipe[property] = value;
         if (this.recipe.id) await RecipeService.updateRecipe(this.recipe);
+        this.recipe = await RecipeService.getRecipe(this.recipe.id!);
         this.requestFullUpdate();
     }
 
@@ -141,7 +143,7 @@ export class RecipeDetailPage extends LitElementBase {
     }
 
     async removeCookware(cookware: RecipeCookwareMappingModel) {
-        await RecipeService.deleteCookware(this.recipe.id!, cookware.id);
+        await RecipeService.deleteCookware(this.recipe.id!, cookware.id!);
         this.recipe.cookware = this.recipe.cookware.filter((x) => x.name != cookware.name);
         await this.requestFullUpdate();
     }
@@ -162,8 +164,14 @@ export class RecipeDetailPage extends LitElementBase {
         this.changeProperty('ingredients', this.recipe.ingredients);
     }
 
-    changeIngredientCategory(ingredient: RecipeIngredientMappingModel, category: IngredientCategory) {
-        ingredient.ingredientCategory = category;
+    changeIngredientCategory(mapping: RecipeIngredientMappingModel, category: IngredientCategory) {
+        if (mapping.ingredient) mapping.ingredient.category = category;
+        else
+            mapping.ingredient = new IngredientModel({
+                ingredientName: mapping.ingredientName,
+                nation: Language.Unset,
+                category: category,
+            });
         this.changeProperty('ingredients', this.recipe.ingredients);
     }
 
@@ -183,12 +191,9 @@ export class RecipeDetailPage extends LitElementBase {
 
     updateIngredient(source: RecipeIngredientMappingModel, target: IngredientResponse & AutocompleteItem) {
         source.ingredientName = target.id;
-
-        if (target instanceof IngredientResponse) {
-            source.ingredientCategory = target.category;
-            if (source.unit.measurement != target.measurement)
-                source.unit = MeasurementUnits.find((x) => x.measurement == target.measurement)!;
-        }
+        source.ingredient = undefined as any;
+        if (target instanceof IngredientResponse && source.unit.measurement != target.measurement)
+            source.unit = MeasurementUnits.find((x) => x.measurement == target.measurement)!;
 
         this.changeProperty('ingredients', this.recipe.ingredients);
     }

@@ -5,7 +5,6 @@ export const RecipeSortingProperties: Partial<Record<keyof RecipeModel | 'unset'
     nation: 'Cuisine',
     rating: 'Bewertung',
     difficulty: 'Schwierigkeit',
-    mainIngredient: 'Hauptzutat',
     course: 'Gang',
     technique: 'Technik',
     unset: 'Keine Sortierung',
