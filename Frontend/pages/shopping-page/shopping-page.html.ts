@@ -13,6 +13,15 @@ export function renderShoppingPage(this: ShoppingPage) {
     return html`
         <page-layout>
             <table>
+                <colgroup>
+                    <col width="100%" />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                </colgroup>
                 <thead>
                     <tr id="filter-area">
                         <td colspan="6">
@@ -55,10 +64,11 @@ export function renderShoppingPage(this: ShoppingPage) {
                         </td>
                     </tr>
                     <tr class="table-head-cell">
-                        <td style="width: auto">Zutat</td>
+                        <td>Zutat</td>
                         <td>Bester Preis</td>
                         <td>Nationalität</td>
-                        <td style="width: 300px">Kategorie</td>
+                        <td>Zustand</td>
+                        <td>Kategorie</td>
                         <td>Shops</td>
                         <td>Aktionen</td>
                     </tr>
@@ -96,6 +106,25 @@ function renderIngredient(this: ShoppingPage, ingredient: IngredientModel) {
                 useSearch
                 @selectionChange="${(e: CustomEvent<{ option: DropDownOption<Language> }>) =>
                     this.updateIngredient(ingredient, 'nation', e.detail.option.value)}"
+            ></drop-down>
+        </td>
+        <td>
+            <drop-down
+                class="ingredient-measurement"
+                .options="${[
+                    DropDownOption.create({
+                        value: true,
+                        text: 'Flüssig',
+                        state: ingredient.isFluid ? CheckboxState.Require : CheckboxState.Forbid,
+                    }),
+                    DropDownOption.create({
+                        value: false,
+                        text: 'Fest',
+                        state: ingredient.isFluid ? CheckboxState.Forbid : CheckboxState.Require,
+                    }),
+                ]}"
+                @selectionChange="${(e: CustomEvent<{ option: DropDownOption<boolean> }>) =>
+                    this.updateIngredient(ingredient, 'isFluid', e.detail.option.value)}"
             ></drop-down>
         </td>
         <td>

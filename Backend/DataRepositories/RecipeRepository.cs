@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Data.Food;
+using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
@@ -94,14 +95,40 @@ public class RecipeRepository(DatabaseContext databaseContext)
             .ExecuteUpdateAsync(x => x.SetProperty(y => y.Deleted, false));
     }
 
-    public IQueryable<RecipeIngredientMappingModel> SearchIngredients(string search, int maxItems)
+    public IQueryable<IngredientModel> SearchIngredients(string search, int maxItems)
     {
-        return databaseContext.Set<RecipeIngredientMappingModel>()
+        var combined = databaseContext.Set<RecipeIngredientMappingModel>()
+            .Select(mapping => new
+            {
+                mapping.IngredientName,
+                Category = mapping.Ingredient == null ? IngredientCategory.Miscellaneous : mapping.Ingredient.Category,
+                Nation = Language.Unset,
+                LowestKnownPrice = "",
+                IsFluid = mapping.Unit.Measurement == Measurement.Volume
+            })
+            .Concat(databaseContext.Set<IngredientModel>().Select(ingredient => new
+            {
+                ingredient.IngredientName,
+                ingredient.Category,
+                ingredient.Nation,
+                ingredient.LowestKnownPrice,
+                ingredient.IsFluid
+            }))
+            .Select(x => new IngredientModel
+            {
+                IngredientName = x.IngredientName,
+                LowestKnownPrice = x.LowestKnownPrice,
+                IsFluid = x.IsFluid,
+                Category = x.Category,
+                Nation = x.Nation
+            });
+
+        return combined
             .Where(x => x.IngredientName.ToLower().Contains(search.ToLower()))
-            .GroupBy(x => new { x.IngredientName, x.Unit.Measurement })
+            .GroupBy(x => new { x.IngredientName, x.IsFluid })
             .Select(x => x.First())
             .Take(maxItems)
-            .ToList().AsQueryable();
+            .AsQueryable();
     }
 
     public IQueryable<IngredientModel> GetIngredients()

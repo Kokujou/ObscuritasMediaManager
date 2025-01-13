@@ -13371,7 +13371,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   GenreModel: () => (/* binding */ GenreModel),
 /* harmony export */   IngredientCategory: () => (/* binding */ IngredientCategory),
 /* harmony export */   IngredientModel: () => (/* binding */ IngredientModel),
-/* harmony export */   IngredientResponse: () => (/* binding */ IngredientResponse),
 /* harmony export */   InstrumentModel: () => (/* binding */ InstrumentModel),
 /* harmony export */   InstrumentType: () => (/* binding */ InstrumentType),
 /* harmony export */   Instrumentation: () => (/* binding */ Instrumentation),
@@ -15403,7 +15402,7 @@ class RecipeClient {
                 if (Array.isArray(resultData200)) {
                     result200 = [];
                     for (let item of resultData200)
-                        result200.push(IngredientResponse.fromJS(item, _mappings));
+                        result200.push(IngredientModel.fromJS(item, _mappings));
                 }
                 else {
                     result200 = null;
@@ -16885,6 +16884,7 @@ class IngredientModel {
     lowestKnownPrice;
     nation;
     category;
+    isFluid;
     constructor(data) {
         if (data) {
             for (var property in data) {
@@ -16899,6 +16899,7 @@ class IngredientModel {
             this.lowestKnownPrice = _data["lowestKnownPrice"] !== undefined ? _data["lowestKnownPrice"] : null;
             this.nation = _data["nation"] !== undefined ? _data["nation"] : null;
             this.category = _data["category"] !== undefined ? _data["category"] : null;
+            this.isFluid = _data["isFluid"] !== undefined ? _data["isFluid"] : null;
         }
     }
     static fromJS(data, _mappings) {
@@ -16911,6 +16912,7 @@ class IngredientModel {
         data["lowestKnownPrice"] = this.lowestKnownPrice !== undefined ? this.lowestKnownPrice : null;
         data["nation"] = this.nation !== undefined ? this.nation : null;
         data["category"] = this.category !== undefined ? this.category : null;
+        data["isFluid"] = this.isFluid !== undefined ? this.isFluid : null;
         return data;
     }
     clone() {
@@ -16970,43 +16972,6 @@ class RecipeCookwareMappingModel {
     clone() {
         const json = this.toJSON();
         let result = new RecipeCookwareMappingModel();
-        result.init(json);
-        return result;
-    }
-}
-class IngredientResponse {
-    name;
-    category;
-    measurement;
-    constructor(data) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
-                    this[property] = data[property];
-            }
-        }
-    }
-    init(_data, _mappings) {
-        if (_data) {
-            this.name = _data["name"] !== undefined ? _data["name"] : null;
-            this.category = _data["category"] !== undefined ? _data["category"] : null;
-            this.measurement = _data["measurement"] !== undefined ? _data["measurement"] : null;
-        }
-    }
-    static fromJS(data, _mappings) {
-        data = typeof data === 'object' ? data : {};
-        return createInstance(data, _mappings, IngredientResponse);
-    }
-    toJSON(data) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name !== undefined ? this.name : null;
-        data["category"] = this.category !== undefined ? this.category : null;
-        data["measurement"] = this.measurement !== undefined ? this.measurement : null;
-        return data;
-    }
-    clone() {
-        const json = this.toJSON();
-        let result = new IngredientResponse();
         result.init(json);
         return result;
     }
@@ -21476,7 +21441,7 @@ let PageRouting = class PageRouting extends _data_lit_element_base__WEBPACK_IMPO
             await PageRouting_1.currentPageInstance?.requestFullUpdate();
             return;
         }
-        (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_5__.changePage)(PageRouting_1.defaultPage);
+        (0,_services_extensions_url_extension__WEBPACK_IMPORTED_MODULE_5__.changePage)(_welcome_page_welcome_page__WEBPACK_IMPORTED_MODULE_6__.WelcomePage);
     }
     loadPageFromHash(e) {
         e?.preventDefault();
@@ -21968,7 +21933,6 @@ function renderIngredient(ingredient) {
             .searchItems="${(search) => this.searchIngredients(search)}"
             @value-changed="${(e) => this.updateIngredient(ingredient, e.detail)}"
         ></autocomplete-input>
-
         <input
             type="text"
             class="ingredient-description"
@@ -22183,7 +22147,10 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
         this.changeProperty('ingredients', this.recipe.ingredients);
     }
     async searchIngredients(search) {
-        return [{ id: search, text: '+ Zutat hinzufügen' }].concat((await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.searchIngredients(search)).map((x) => Object.assign(x, { id: x.name, text: x.name + ` (${x.measurement})` })));
+        return [{ id: search, text: '+ Zutat hinzufügen' }].concat((await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.searchIngredients(search)).map((x) => Object.assign(x, {
+            id: x.ingredientName,
+            text: x.ingredientName + ` (${x.isFluid ? 'flüssig' : 'fest'})`,
+        })));
     }
     async searchCookware(search) {
         return [{ id: search, text: '+ Kochutensil hinzufügen' }].concat((await _services_backend_services__WEBPACK_IMPORTED_MODULE_7__.RecipeService.searchCookware(search)).map((x) => Object.assign(x, { id: x, text: x })));
@@ -22191,8 +22158,12 @@ let RecipeDetailPage = class RecipeDetailPage extends _data_lit_element_base__WE
     updateIngredient(source, target) {
         source.ingredientName = target.id;
         source.ingredient = undefined;
-        if (target instanceof _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.IngredientResponse && source.unit.measurement != target.measurement)
-            source.unit = _data_measurement_units__WEBPACK_IMPORTED_MODULE_3__.MeasurementUnits.find((x) => x.measurement == target.measurement);
+        if (target instanceof _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.IngredientModel) {
+            const incompatibleMeasurement = target.isFluid ? _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Measurement.Mass : _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Measurement.Volume;
+            if (source.unit.measurement == incompatibleMeasurement)
+                source.unit = _data_measurement_units__WEBPACK_IMPORTED_MODULE_3__.MeasurementUnits.find((x) => x.measurement == (target.isFluid ? _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Measurement.Volume : _obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_6__.Measurement.Mass));
+        }
+        this.requestFullUpdate();
         this.changeProperty('ingredients', this.recipe.ingredients);
     }
     updateCookware(source, newCookware) {
@@ -22557,7 +22528,6 @@ function renderShoppingPageStyles() {
             border-collapse: collapse;
             border-spacing: 0;
             margin: 10px 20px;
-            table-layout: fixed;
             border-radius: 15px;
             box-shadow: 0 0 0 2px white;
 
@@ -22612,7 +22582,7 @@ function renderShoppingPageStyles() {
         }
 
         td {
-            padding: 10px;
+            padding: 10px 20px;
             height: 60px;
         }
 
@@ -22639,11 +22609,16 @@ function renderShoppingPageStyles() {
             width: 100px;
         }
 
+        .ingredient-measurement {
+            width: 100px;
+        }
+
         .ingredient-category {
             display: flex;
             flex-direction: row;
             align-items: center;
             gap: 20px;
+            width: 200px;
         }
 
         .ingredient-category-icon {
@@ -22737,6 +22712,15 @@ function renderShoppingPage() {
     return (0,lit_element__WEBPACK_IMPORTED_MODULE_0__.html) `
         <page-layout>
             <table>
+                <colgroup>
+                    <col width="100%" />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                </colgroup>
                 <thead>
                     <tr id="filter-area">
                         <td colspan="6">
@@ -22777,10 +22761,11 @@ function renderShoppingPage() {
                         </td>
                     </tr>
                     <tr class="table-head-cell">
-                        <td style="width: auto">Zutat</td>
+                        <td>Zutat</td>
                         <td>Bester Preis</td>
                         <td>Nationalität</td>
-                        <td style="width: 300px">Kategorie</td>
+                        <td>Zustand</td>
+                        <td>Kategorie</td>
                         <td>Shops</td>
                         <td>Aktionen</td>
                     </tr>
@@ -22815,6 +22800,24 @@ function renderIngredient(ingredient) {
                 .options="${_native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_4__.DropDownOption.createSimpleArray(Object.values(_obscuritas_media_manager_backend_client__WEBPACK_IMPORTED_MODULE_5__.Language), ingredient.nation)}"
                 useSearch
                 @selectionChange="${(e) => this.updateIngredient(ingredient, 'nation', e.detail.option.value)}"
+            ></drop-down>
+        </td>
+        <td>
+            <drop-down
+                class="ingredient-measurement"
+                .options="${[
+        _native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_4__.DropDownOption.create({
+            value: true,
+            text: 'Flüssig',
+            state: ingredient.isFluid ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Require : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid,
+        }),
+        _native_components_drop_down_drop_down_option__WEBPACK_IMPORTED_MODULE_4__.DropDownOption.create({
+            value: false,
+            text: 'Fest',
+            state: ingredient.isFluid ? _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Forbid : _data_enumerations_checkbox_state__WEBPACK_IMPORTED_MODULE_1__.CheckboxState.Require,
+        }),
+    ]}"
+                @selectionChange="${(e) => this.updateIngredient(ingredient, 'isFluid', e.detail.option.value)}"
             ></drop-down>
         </td>
         <td>

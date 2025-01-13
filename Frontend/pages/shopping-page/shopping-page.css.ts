@@ -7,7 +7,6 @@ export function renderShoppingPageStyles() {
             border-collapse: collapse;
             border-spacing: 0;
             margin: 10px 20px;
-            table-layout: fixed;
             border-radius: 15px;
             box-shadow: 0 0 0 2px white;
 
@@ -62,7 +61,7 @@ export function renderShoppingPageStyles() {
         }
 
         td {
-            padding: 10px;
+            padding: 10px 20px;
             height: 60px;
         }
 
@@ -89,11 +88,16 @@ export function renderShoppingPageStyles() {
             width: 100px;
         }
 
+        .ingredient-measurement {
+            width: 100px;
+        }
+
         .ingredient-category {
             display: flex;
             flex-direction: row;
             align-items: center;
             gap: 20px;
+            width: 200px;
         }
 
         .ingredient-category-icon {

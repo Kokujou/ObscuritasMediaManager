@@ -58,6 +58,9 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsFluid")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("LowestKnownPrice")
                         .IsRequired()
                         .HasMaxLength(255)

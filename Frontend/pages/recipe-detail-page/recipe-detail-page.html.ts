@@ -10,7 +10,7 @@ import {
     CookingTechnique,
     Course,
     IngredientCategory,
-    IngredientResponse,
+    IngredientModel,
     RecipeIngredientMappingModel,
 } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
@@ -200,10 +200,9 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
             class="ingredient-name"
             .value="${{ id: ingredient.ingredientName, text: ingredient.ingredientName }}"
             .searchItems="${(search: string) => this.searchIngredients(search)}"
-            @value-changed="${(e: CustomEvent<AutocompleteItem & IngredientResponse>) =>
+            @value-changed="${(e: CustomEvent<AutocompleteItem & IngredientModel>) =>
                 this.updateIngredient(ingredient, e.detail)}"
         ></autocomplete-input>
-
         <input
             type="text"
             class="ingredient-description"

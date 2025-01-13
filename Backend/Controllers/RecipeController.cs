@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ObscuritasMediaManager.Backend.Controllers.Responses;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Models;
 
@@ -49,10 +48,9 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
     }
 
     [HttpPost("ingredients/search/{search}")]
-    public IQueryable<IngredientResponse> SearchIngredients(string search,
-        [FromQuery] int maxItems = 5)
+    public IQueryable<IngredientModel> SearchIngredients(string search, [FromQuery] int maxItems = 5)
     {
-        return recipeRepository.SearchIngredients(search, maxItems).Select(IngredientResponse.FromRecipeMapping);
+        return recipeRepository.SearchIngredients(search, maxItems);
     }
 
     [HttpPost("{recipeId}/ingredient")]

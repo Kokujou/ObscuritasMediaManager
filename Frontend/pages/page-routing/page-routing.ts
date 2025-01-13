@@ -100,7 +100,7 @@ export class PageRouting extends LitElementBase {
             return;
         }
 
-        changePage(PageRouting.defaultPage);
+        changePage(WelcomePage);
     }
 
     loadPageFromHash(e: Event | null) {

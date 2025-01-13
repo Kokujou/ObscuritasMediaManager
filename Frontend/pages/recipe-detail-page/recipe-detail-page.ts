@@ -10,8 +10,8 @@ import {
     Course,
     IngredientCategory,
     IngredientModel,
-    IngredientResponse,
     Language,
+    Measurement,
     MeasurementUnit,
     RecipeCookwareMappingModel,
     RecipeIngredientMappingModel,
@@ -178,7 +178,10 @@ export class RecipeDetailPage extends LitElementBase {
     async searchIngredients(search: string) {
         return [{ id: search, text: '+ Zutat hinzufügen' } as AutocompleteItem].concat(
             (await RecipeService.searchIngredients(search)).map((x) =>
-                Object.assign(x, { id: x.name, text: x.name + ` (${x.measurement})` } as AutocompleteItem)
+                Object.assign(x, {
+                    id: x.ingredientName,
+                    text: x.ingredientName + ` (${x.isFluid ? 'flüssig' : 'fest'})`,
+                } as AutocompleteItem)
             )
         );
     }
@@ -189,12 +192,17 @@ export class RecipeDetailPage extends LitElementBase {
         );
     }
 
-    updateIngredient(source: RecipeIngredientMappingModel, target: IngredientResponse & AutocompleteItem) {
+    updateIngredient(source: RecipeIngredientMappingModel, target: IngredientModel & AutocompleteItem) {
         source.ingredientName = target.id;
         source.ingredient = undefined as any;
-        if (target instanceof IngredientResponse && source.unit.measurement != target.measurement)
-            source.unit = MeasurementUnits.find((x) => x.measurement == target.measurement)!;
-
+        if (target instanceof IngredientModel) {
+            const incompatibleMeasurement = target.isFluid ? Measurement.Mass : Measurement.Volume;
+            if (source.unit.measurement == incompatibleMeasurement)
+                source.unit = MeasurementUnits.find(
+                    (x) => x.measurement == (target.isFluid ? Measurement.Volume : Measurement.Mass)
+                )!;
+        }
+        this.requestFullUpdate();
         this.changeProperty('ingredients', this.recipe.ingredients);
     }
 
