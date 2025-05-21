@@ -7,3 +7,4 @@ obj
 **/nswag_template/nswag_client
 database.sqlite-wal
 database.sqlite-shm
+Frontend/dist
