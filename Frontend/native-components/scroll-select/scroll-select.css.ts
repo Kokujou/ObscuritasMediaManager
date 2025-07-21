@@ -18,7 +18,6 @@ export function renderScrollSelectStyles() {
         #scroll-items {
             z-index: 1;
             overflow: hidden;
-            scrollbar-width: none;
 
             height: 100%;
         }

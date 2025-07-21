@@ -1,5 +1,14 @@
+import { css } from 'lit-element';
+
 export function renderObscuritasMediaManagerStyles() {
-    return null;
+    return css`
+        :host {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    `;
     // return css`
     //     page-routing {
     //         transition: display, opacity 4s ease;

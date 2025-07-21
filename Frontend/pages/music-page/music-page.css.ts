@@ -2,10 +2,6 @@ import { css } from 'lit-element';
 
 export function renderMusicPageStyles() {
     return css`
-        * {
-            scrollbar-width: thin;
-        }
-
         #music-page {
             position: absolute;
             left: 0;
@@ -58,8 +54,6 @@ export function renderMusicPageStyles() {
             flex-wrap: wrap;
             align-items: flex-start;
 
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-color) #20625599;
             border-radius: 20px;
         }
 

@@ -15,7 +15,7 @@ export function renderMediaPageStyles() {
             right: 0px;
             top: 10px;
             width: 450px;
-            height: 700px;
+            height: calc(100% - 10px);
         }
 
         #results {

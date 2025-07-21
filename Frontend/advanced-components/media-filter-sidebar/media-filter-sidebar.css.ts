@@ -37,7 +37,6 @@ export function renderMediaFilterSidebarStyles() {
 
             overflow-y: auto;
             overflow-x: hidden;
-            scrollbar-width: thin;
         }
 
         .filter-entry {

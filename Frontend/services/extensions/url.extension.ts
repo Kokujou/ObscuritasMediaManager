@@ -2,7 +2,6 @@ import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { Page } from '../../data/util-types';
 import { pascalToKeabCase } from './convention.extension';
-import { setFavicon } from './style.extensions';
 
 export function getQueryValue(query: string) {
     var queries = location.search.substr(1).split('&');
@@ -14,12 +13,11 @@ export function getQueryValue(query: string) {
 
 export type NonMethodKeys<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
 
-export function changePage<T extends Page, U extends Omit<InstanceType<T>, keyof LitElementBase> | null>(
+export function changePage<T extends Page, U extends Omit<InstanceType<T>, keyof LitElementBase>>(
     target: T,
     params: Partial<Pick<U, NonMethodKeys<U>>> = {},
     reflectInHistory = true
 ) {
-    setFavicon('');
     var newUrl = new URL(location.href);
     newUrl.search = '';
     newUrl.hash = '';

@@ -431,9 +431,11 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasMaxLength(9999)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ImageUrl")
-                        .HasMaxLength(2147483647)
-                        .HasColumnType("TEXT");
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("BLOB");
+
+                    b.Property<bool>("IsRecipe")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nation")
                         .IsRequired()

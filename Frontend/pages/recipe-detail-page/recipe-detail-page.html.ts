@@ -74,8 +74,8 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                         compact
                         @change-nation="${() => this.changeNation()}"
                         @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
-                            this.changeProperty('imageUrl', e.detail.imageData)}"
-                        @remove-image="${() => this.changeProperty('imageUrl', null)}"
+                            this.changeProperty('imageData', e.detail.imageData)}"
+                        @remove-image="${() => this.changeProperty('imageData', null)}"
                         @ratingChanged="${(e: CustomEvent<{ rating: number; include: boolean }>) =>
                             (e.composedPath()[0] as StarRating).swords
                                 ? this.changeProperty('difficulty', e.detail.rating)

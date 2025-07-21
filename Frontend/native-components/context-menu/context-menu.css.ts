@@ -10,8 +10,6 @@ export function renderContextMenuStyles() {
             min-width: 200px;
             overflow-y: auto;
             color: white;
-
-            scrollbar-width: thin;
         }
 
         .item-wrapper {

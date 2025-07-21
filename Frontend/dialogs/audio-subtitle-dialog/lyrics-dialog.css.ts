@@ -40,7 +40,6 @@ export function renderAudioSubtitleDialogStyles() {
             max-height: 400px;
             padding: 0 50px;
             overflow: visible;
-            scrollbar-width: thin;
 
             mask: linear-gradient(
                 to bottom,

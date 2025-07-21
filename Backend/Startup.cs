@@ -1,3 +1,5 @@
+using System.Text.Encodings.Web;
+using System.Text.Json.Serialization;
 using Genius;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
@@ -7,8 +9,6 @@ using ObscuritasMediaManager.Backend.Authentication;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Services;
 using ObscuritasMediaManager.Backend.Services.Interfaces;
-using System.Text.Encodings.Web;
-using System.Text.Json.Serialization;
 using Xabe.FFmpeg;
 
 namespace ObscuritasMediaManager.Backend;

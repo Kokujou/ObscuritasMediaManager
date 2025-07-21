@@ -203,7 +203,7 @@ export class MediaDetailPage extends LitElementBase {
             if (result.value != ModelCreationState.Success) throw new Error(result.value);
             Session.mediaList.next(await MediaService.getAll());
             await MessageSnackbar.popup('Der Eintrag wurde erfolgreich erstellt.', 'success');
-            changePage(MediaDetailPage, { mediaId: result.key });
+            changePage(MediaDetailPage, { mediaId: result.key! });
         } catch (err) {
             await MessageSnackbar.popup('Ein Fehler ist beim erstellen des Eintrags aufgetreten: ' + err, 'error');
         }

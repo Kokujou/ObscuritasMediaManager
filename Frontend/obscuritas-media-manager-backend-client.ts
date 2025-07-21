@@ -3407,7 +3407,7 @@ export class RecipeModel implements IRecipeModel {
     id!: string | null;
     title!: string;
     nation!: Language;
-    imageUrl!: string | null;
+    imageData!: string | null;
     difficulty!: number;
     rating!: number;
     course!: Course;
@@ -3415,6 +3415,7 @@ export class RecipeModel implements IRecipeModel {
     preparationTime!: string;
     cookingTime!: string;
     totalTime!: string;
+    isRecipe!: boolean;
     formattedText!: string | null;
     deleted!: boolean;
     ingredients!: RecipeIngredientMappingModel[];
@@ -3445,7 +3446,7 @@ export class RecipeModel implements IRecipeModel {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.title = _data["title"] !== undefined ? _data["title"] : <any>null;
             this.nation = _data["nation"] !== undefined ? _data["nation"] : <any>null;
-            this.imageUrl = _data["imageUrl"] !== undefined ? _data["imageUrl"] : <any>null;
+            this.imageData = _data["imageData"] !== undefined ? _data["imageData"] : <any>null;
             this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : <any>null;
             this.rating = _data["rating"] !== undefined ? _data["rating"] : <any>null;
             this.course = _data["course"] !== undefined ? _data["course"] : <any>null;
@@ -3453,6 +3454,7 @@ export class RecipeModel implements IRecipeModel {
             this.preparationTime = _data["preparationTime"] !== undefined ? _data["preparationTime"] : <any>null;
             this.cookingTime = _data["cookingTime"] !== undefined ? _data["cookingTime"] : <any>null;
             this.totalTime = _data["totalTime"] !== undefined ? _data["totalTime"] : <any>null;
+            this.isRecipe = _data["isRecipe"] !== undefined ? _data["isRecipe"] : <any>null;
             this.formattedText = _data["formattedText"] !== undefined ? _data["formattedText"] : <any>null;
             this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : <any>null;
             if (Array.isArray(_data["ingredients"])) {
@@ -3508,7 +3510,7 @@ export class RecipeModel implements IRecipeModel {
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["title"] = this.title !== undefined ? this.title : <any>null;
         data["nation"] = this.nation !== undefined ? this.nation : <any>null;
-        data["imageUrl"] = this.imageUrl !== undefined ? this.imageUrl : <any>null;
+        data["imageData"] = this.imageData !== undefined ? this.imageData : <any>null;
         data["difficulty"] = this.difficulty !== undefined ? this.difficulty : <any>null;
         data["rating"] = this.rating !== undefined ? this.rating : <any>null;
         data["course"] = this.course !== undefined ? this.course : <any>null;
@@ -3516,6 +3518,7 @@ export class RecipeModel implements IRecipeModel {
         data["preparationTime"] = this.preparationTime !== undefined ? this.preparationTime : <any>null;
         data["cookingTime"] = this.cookingTime !== undefined ? this.cookingTime : <any>null;
         data["totalTime"] = this.totalTime !== undefined ? this.totalTime : <any>null;
+        data["isRecipe"] = this.isRecipe !== undefined ? this.isRecipe : <any>null;
         data["formattedText"] = this.formattedText !== undefined ? this.formattedText : <any>null;
         data["deleted"] = this.deleted !== undefined ? this.deleted : <any>null;
         if (Array.isArray(this.ingredients)) {
@@ -3558,7 +3561,7 @@ export interface IRecipeModel {
     id: string | null;
     title: string;
     nation: Language;
-    imageUrl: string | null;
+    imageData: string | null;
     difficulty: number;
     rating: number;
     course: Course;
@@ -3566,6 +3569,7 @@ export interface IRecipeModel {
     preparationTime: string;
     cookingTime: string;
     totalTime: string;
+    isRecipe: boolean;
     formattedText: string | null;
     deleted: boolean;
     ingredients: RecipeIngredientMappingModel[];

@@ -28,7 +28,6 @@ export function renderRecipeFilterStyles() {
             font-size: 24px;
             overflow-y: auto;
             overflow-x: hidden;
-            scrollbar-width: thin;
         }
 
         #search-heading {

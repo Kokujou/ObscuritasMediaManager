@@ -2,10 +2,6 @@ import { css } from 'lit-element';
 
 export function renderPaginatedScrollingStyles() {
     return css`
-        * {
-            scrollbar-width: thin;
-        }
-
         :host {
             position: relative;
         }

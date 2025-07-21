@@ -1,5 +1,6 @@
 import { css } from 'lit-element';
-import { plusIcon } from '../../resources/inline-icons/general/plus-icon.svg';
+import { addDishIcon } from '../../resources/inline-icons/general/add-dish-icon.svg';
+import { addRecipeIcon } from '../../resources/inline-icons/general/add-recipe-icon.svg';
 import { renderMaskImage } from '../../services/extensions/style.extensions';
 
 export function renderRecipesPageStyles() {
@@ -32,15 +33,26 @@ export function renderRecipesPageStyles() {
             gap: 50px;
         }
 
-        #add-recipe-icon {
+        .add-icon {
             width: 100px;
             height: 100px;
+            box-sizing: border-box;
+            margin: 20px;
 
-            margin: 100px;
-
-            ${renderMaskImage(plusIcon())};
-
+            background: gray;
             cursor: pointer;
+        }
+
+        link-element:hover .add-icon {
+            transform: scale(1.25);
+        }
+
+        #add-recipe-icon {
+            ${renderMaskImage(addRecipeIcon())};
+        }
+
+        #add-dish-icon {
+            ${renderMaskImage(addDishIcon())};
         }
 
         .recipe-tile {
@@ -68,11 +80,6 @@ export function renderRecipesPageStyles() {
 
         recipe-filter {
             width: 400px;
-        }
-
-        #add-recipe-icon {
-            background: gray;
-            box-sizing: border-box;
         }
     `;
 }

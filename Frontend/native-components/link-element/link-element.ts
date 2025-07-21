@@ -6,6 +6,8 @@ import { changePage, getPageName } from '../../services/extensions/url.extension
 import { renderLinkElementStyles } from './link-element.css';
 import { renderLinkElement } from './link-element.html';
 
+type PageParams<U> = Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>;
+
 @customElement('link-element')
 export class LinkElement extends LitElementBase {
     static override get styles() {
@@ -14,7 +16,7 @@ export class LinkElement extends LitElementBase {
 
     static forPage<T extends Page, U extends Omit<InstanceType<T>, keyof LitElementBase>>(
         page: T,
-        params: Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>> | null,
+        params: Partial<PageParams<U>> | null,
         inner: TemplateResult | string,
         options: Partial<Record<keyof LinkElement, any>> = {}
     ) {

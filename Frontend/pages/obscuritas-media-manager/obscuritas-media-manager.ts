@@ -2,6 +2,7 @@ import { html } from 'lit-element';
 import { customElement, state } from 'lit-element/decorators.js';
 import { LitElementBase } from '../../data/lit-element-base';
 import { LinkElement } from '../../native-components/link-element/link-element';
+import { renderObscuritasMediaManagerStyles } from './obscuritas-media-manager.css';
 import { renderObscuritasMediaManager } from './obscuritas-media-manager.html';
 LinkElement;
 
@@ -28,7 +29,7 @@ export class ObscuritasMediaManager extends LitElementBase {
     }
 
     static override get styles() {
-        return [];
+        return renderObscuritasMediaManagerStyles();
     }
 
     get currentResources() {

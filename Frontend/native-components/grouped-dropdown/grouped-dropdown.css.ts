@@ -6,10 +6,6 @@ export function renderGroupedDropdownStyles() {
             display: inline-block;
         }
 
-        * {
-            scrollbar-width: thin;
-        }
-
         #empty-text-placeholder {
             position: relative;
             visibility: hidden;

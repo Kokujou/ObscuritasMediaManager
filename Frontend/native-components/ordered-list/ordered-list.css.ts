@@ -12,8 +12,6 @@ export function renderOrderedListStyles() {
 
             display: flex;
             flex-direction: column;
-
-            scrollbar-width: thin;
         }
 
         .row {

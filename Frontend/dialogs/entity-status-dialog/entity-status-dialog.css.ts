@@ -12,8 +12,6 @@ export function renderEntityStatusDialogStyles() {
             min-width: 400px;
             overflow-y: scroll;
             overflow-x: hidden;
-
-            scrollbar-width: thin;
         }
 
         .entry {

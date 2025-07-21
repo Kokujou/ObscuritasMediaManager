@@ -37,7 +37,6 @@ export function renderSideScrollerStyles() {
         #content-container {
             flex: auto;
             overflow: hidden;
-            scrollbar-width: none;
 
             mask: linear-gradient(to right, transparent 0%, black 10% 90%, transparent 100%);
         }

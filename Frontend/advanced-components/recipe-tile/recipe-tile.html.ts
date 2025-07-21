@@ -9,13 +9,13 @@ export function renderRecipeTile(this: RecipeTile) {
     return html`
         <div id="content">
             <div id="image-container">
-                ${this.recipe.imageUrl
+                ${this.recipe.imageData
                     ? html`
                           <div
                               id="background-image"
-                              style="background-image: url('data: image/png; base64, ${this.recipe.imageUrl}')"
+                              style="background-image: url('data: image/png; base64, ${this.recipe.imageData}')"
                           ></div>
-                          <img id="image" src="data: image/png; base64, ${this.recipe.imageUrl}" />
+                          <img id="image" src="data: image/png; base64, ${this.recipe.imageData}" />
                           <div id="remove-image-button" @click="${this.notifyImageRemoved}">
                               <div id="trash-icon" icon="${Icons.Trash}"></div>
                           </div>

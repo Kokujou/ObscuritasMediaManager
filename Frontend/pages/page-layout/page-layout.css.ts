@@ -47,9 +47,6 @@ export function renderWebcomponentTemplateStyles() {
             overflow-y: auto;
             margin: 10px;
             margin-top: 30px;
-
-            scrollbar-color: #20625599 transparent;
-            scrollbar-width: thin;
         }
 
         a {
@@ -147,8 +144,6 @@ function renderNavigationStyles() {
             max-height: calc(100% - var(--header-height) - 40px);
 
             overflow-y: auto;
-            scrollbar-color: #20625599 transparent;
-            scrollbar-width: thin;
         }
 
         #link-area {

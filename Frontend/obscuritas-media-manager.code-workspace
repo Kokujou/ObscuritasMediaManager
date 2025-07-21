@@ -33,7 +33,8 @@
             "**/obscuritas-media-manager-backend-client.ts": true
         },
         "typescript.preferences.importModuleSpecifierEnding": "minimal",
-        "typescript.tsserver.experimental.enableProjectDiagnostics": false
+        "typescript.tsserver.experimental.enableProjectDiagnostics": false,
+        "typescript.tsdk": "node_modules\\typescript\\lib"
     },
     "tasks": {
         "version": "2.0.0",

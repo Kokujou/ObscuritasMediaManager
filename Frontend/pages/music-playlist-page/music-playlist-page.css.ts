@@ -2,10 +2,6 @@ import { css } from 'lit-element';
 
 export function renderMusicPlaylistStyles() {
     return css`
-        * {
-            scrollbar-width: thin;
-        }
-
         #music-player-container {
             position: absolute;
             left: 50px;

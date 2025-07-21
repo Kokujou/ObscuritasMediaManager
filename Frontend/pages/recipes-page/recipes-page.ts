@@ -1,13 +1,11 @@
 import { PropertyValues } from 'lit-element';
-import { customElement, query, state } from 'lit-element/decorators';
-import { RecipeFilter } from '../../advanced-components/recipe-filter/recipe-filter';
-import { FilterEntry } from '../../data/filter-entry';
+import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { RecipeSortingProperties } from '../../data/recipe-sorting-properties';
 import { Session } from '../../data/session';
 import { SortingDirections } from '../../data/sorting-directions';
-import { distinct, sortBy } from '../../services/extensions/array.extensions';
-import { RecipeFilterService } from '../../services/recipe-filter.service';
+import { changePage } from '../../services/extensions/url.extension';
+import { ImportFoodPage } from '../import-food-page/import-food-page';
 import { renderRecipesPageStyles } from './recipes-page.css';
 import { renderRecipesPage } from './recipes-page.html';
 
@@ -20,20 +18,18 @@ export class RecipesPage extends LitElementBase {
         return renderRecipesPageStyles();
     }
 
-    get filteredRecipes() {
-        if (!this.filterSidebar?.filter) return [];
-        var sorted = RecipeFilterService.filter(Session.recipes.current() ?? [], this.filterSidebar.filter);
-        let sortingProperty = this.sortingProperty;
-        if (sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[sortingProperty]);
+    // get filteredRecipes() {
+    //     if (!this.filterSidebar?.filter) return [];
+    //     var sorted = RecipeFilterService.filter(Session.recipes.current() ?? [], this.filterSidebar.filter);
+    //     let sortingProperty = this.sortingProperty;
+    //     if (sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[sortingProperty]);
 
-        if (this.sortingDirection == 'ascending') return sorted;
-        return sorted.reverse();
-    }
+    //     if (this.sortingDirection == 'ascending') return sorted;
+    //     return sorted.reverse();
+    // }
 
     @state() protected declare sortingProperty: keyof typeof RecipeSortingProperties;
     @state() protected declare sortingDirection: keyof typeof SortingDirections;
-
-    @query('recipe-filter') protected declare filterSidebar: RecipeFilter | undefined;
 
     constructor() {
         super();
@@ -49,9 +45,6 @@ export class RecipesPage extends LitElementBase {
 
     protected override firstUpdated(_changedProperties: PropertyValues): void {
         super.firstUpdated(_changedProperties);
-        this.filterSidebar!.filter.ingredients = new FilterEntry(
-            distinct(Session.recipes.current().flatMap((x) => x.ingredientNames))
-        );
         this.requestFullUpdate();
     }
 
@@ -68,6 +61,16 @@ export class RecipesPage extends LitElementBase {
     override render() {
         return renderRecipesPage.call(this);
     }
+
+    async showFileBrowser() {
+        var filesToImport = await document.openFileBrowser('image/*');
+        if (!filesToImport?.length) return;
+
+        await ImportFoodPage.cacheFiles(filesToImport);
+        changePage(ImportFoodPage, {});
+    }
+
+    submitFileBrowser() {}
 
     loadMoreItems() {}
 }
