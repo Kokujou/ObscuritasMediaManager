@@ -1,5 +1,5 @@
 import { css } from 'lit-element';
-import { viewportHeight, viewportWidth } from '../../services/extensions/document.extensions';
+import { viewportHeight, viewportWidth } from '../../extensions/document.extensions';
 
 export function renderPageRoutingStyles() {
     return css`

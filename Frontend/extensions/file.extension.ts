@@ -1,6 +1,6 @@
-import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
-import { InputDialog } from '../../dialogs/input-dialog/input-dialog';
-import { FileService } from '../backend.services';
+import { DialogBase } from '../dialogs/dialog-base/dialog-base';
+import { InputDialog } from '../dialogs/input-dialog/input-dialog';
+import { FileService } from '../services/backend.services';
 
 export function fileToDataUrl(file: File) {
     return new Promise<string | null>((resolve, reject) => {

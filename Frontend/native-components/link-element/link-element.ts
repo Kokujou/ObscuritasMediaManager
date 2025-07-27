@@ -2,11 +2,11 @@ import { html, TemplateResult } from 'lit-element';
 import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Page } from '../../data/util-types';
-import { changePage, getPageName } from '../../services/extensions/url.extension';
+import { changePage, getPageName } from '../../extensions/url.extension';
 import { renderLinkElementStyles } from './link-element.css';
 import { renderLinkElement } from './link-element.html';
 
-type PageParams<U> = Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>;
+type PageParams<U> = Pick<U, import('../../extensions/url.extension').NonMethodKeys<U>>;
 
 @customElement('link-element')
 export class LinkElement extends LitElementBase {
@@ -34,7 +34,7 @@ export class LinkElement extends LitElementBase {
 
     static getLinkFor<T extends Page, U extends Omit<InstanceType<T>, keyof LitElementBase> | undefined>(
         page: T | undefined,
-        params: Partial<Pick<U, import('../../services/extensions/url.extension').NonMethodKeys<U>>>
+        params: Partial<Pick<U, import('../../extensions/url.extension').NonMethodKeys<U>>>
     ) {
         var link = '';
         if (params)

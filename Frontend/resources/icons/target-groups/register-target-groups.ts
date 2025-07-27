@@ -1,6 +1,6 @@
 import { unsafeCSS } from 'lit-element';
+import { renderMaskImage } from '../../../extensions/style.extensions';
 import { TargetGroup } from '../../../obscuritas-media-manager-backend-client';
-import { renderMaskImage } from '../../../services/extensions/style.extensions';
 import { crossIcon } from '../../inline-icons/general/cross-icon.svg';
 
 export function registerTargetGroups() {

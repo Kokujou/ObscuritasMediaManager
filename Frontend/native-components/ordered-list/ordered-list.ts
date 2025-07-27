@@ -1,8 +1,8 @@
 import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
-import { union } from '../../services/extensions/array.extensions';
-import { getAllElementsRecurse } from '../../services/extensions/document.extensions';
+import { union } from '../../extensions/array.extensions';
+import { getAllElementsRecurse } from '../../extensions/document.extensions';
 import { renderOrderedListStyles } from './ordered-list.css';
 import { renderOrderedList } from './ordered-list.html';
 

@@ -1,5 +1,5 @@
+import { distinct } from '../../extensions/array.extensions';
 import { MediaGenreCategory, MediaGenreModel } from '../../obscuritas-media-manager-backend-client';
-import { distinct } from '../../services/extensions/array.extensions';
 
 const MandatoryGenres = [
     MediaGenreCategory.MainGenre,

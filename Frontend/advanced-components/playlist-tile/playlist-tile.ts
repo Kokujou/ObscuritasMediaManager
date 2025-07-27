@@ -1,10 +1,10 @@
 import { customElement, property } from 'lit-element/decorators';
 import { MoodColors } from '../../data/enumerations/mood';
 import { LitElementBase } from '../../data/lit-element-base';
+import { rgbHexToHsv } from '../../extensions/style.extensions';
 import { ContextMenu } from '../../native-components/context-menu/context-menu';
 import { Mood, PlaylistModel } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
-import { rgbHexToHsv } from '../../services/extensions/style.extensions';
 import { renderPlaylistTileStyles } from './playlist-tile.css';
 import { renderPlaylistTile } from './playlist-tile.html';
 

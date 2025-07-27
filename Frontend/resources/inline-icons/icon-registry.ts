@@ -1,9 +1,9 @@
 import { unsafeCSS } from 'lit-element';
 import { clipboardIcon } from '../../advanced-components/upload-area/images/clipboard-icon.svg';
 import { dropIcon } from '../../advanced-components/upload-area/images/drop-icon.svg';
+import { renderMaskImage } from '../../extensions/style.extensions';
 import { editIcon } from '../../pages/media-detail-page/images/edit-icon.svg';
 import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg';
-import { renderMaskImage } from '../../services/extensions/style.extensions';
 import { arrowIcon } from './general/arrow.svg';
 import { ascendingIcon } from './general/ascending-icon.svg';
 import { categoryIcon } from './general/category-icon.svg';
@@ -23,6 +23,7 @@ import { saveTickIcon } from './general/save-tick-icon.svg';
 import { searchIcon } from './general/search-icon.svg';
 import { selectAllIcon } from './general/select-all-icon.svg';
 import { speechIcon } from './general/speech-icon.svg';
+import { starIcon } from './general/star-icon.svg';
 import { unselectAllIcon } from './general/unselect-all-icon.svg';
 import { unsetIcon } from './general/unset-icon.svg';
 import { changeVolumeIcon } from './music-player-icons/change-volume-icon.svg';
@@ -36,7 +37,6 @@ import { downloadPlaylistIcon } from './playlist-icons/download-playlist-icon.sv
 import { playPlaylistIcon } from './playlist-icons/play-playlist-icon.svg';
 import { savePlaylistIcon } from './playlist-icons/save-playlist-icon.svg';
 import { shufflePlaylistIcon } from './playlist-icons/shuffle-playlist-icon.svg';
-import { starIcon } from './general/star-icon.svg';
 
 export const IconRegistry = {
     Cross: crossIcon(),

@@ -1,4 +1,5 @@
 import { css, unsafeCSS } from 'lit-element';
+import { renderBackgroundImage } from '../../extensions/style.extensions';
 import { Language } from '../../obscuritas-media-manager-backend-client';
 import { africaFlag } from '../../resources/inline-icons/language-icons/africa-flag.svg';
 import { chinaFlag } from '../../resources/inline-icons/language-icons/china-flag.svg';
@@ -11,7 +12,6 @@ import { noLanguageIcon } from '../../resources/inline-icons/language-icons/no-l
 import { russiaFlag } from '../../resources/inline-icons/language-icons/russia-flag.svg';
 import { southAmericaFlag } from '../../resources/inline-icons/language-icons/south-america-flag.svg';
 import { spainFlag } from '../../resources/inline-icons/language-icons/spain-flag.svg';
-import { renderBackgroundImage } from '../../services/extensions/style.extensions';
 
 export function renderLanguageFlags() {
     return css`

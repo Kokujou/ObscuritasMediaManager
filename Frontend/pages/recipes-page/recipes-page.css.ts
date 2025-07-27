@@ -1,7 +1,7 @@
 import { css } from 'lit-element';
+import { renderMaskImage } from '../../extensions/style.extensions';
 import { addDishIcon } from '../../resources/inline-icons/general/add-dish-icon.svg';
 import { addRecipeIcon } from '../../resources/inline-icons/general/add-recipe-icon.svg';
-import { renderMaskImage } from '../../services/extensions/style.extensions';
 
 export function renderRecipesPageStyles() {
     return css`

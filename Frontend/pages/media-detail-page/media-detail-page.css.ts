@@ -1,5 +1,5 @@
 import { css } from 'lit-element';
-import { renderMaskImage } from '../../services/extensions/style.extensions';
+import { renderMaskImage } from '../../extensions/style.extensions';
 import { trashIcon } from './images/trash-icon.svg';
 
 export function renderMediaDetailPageStyles() {

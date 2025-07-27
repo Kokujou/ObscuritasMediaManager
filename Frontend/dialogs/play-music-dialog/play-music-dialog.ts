@@ -1,9 +1,9 @@
 import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { waitForSeconds } from '../../extensions/animation.extension';
 import { MusicModel } from '../../obscuritas-media-manager-backend-client';
 import { PageRouting } from '../../pages/page-routing/page-routing';
 import { AudioService } from '../../services/audio-service';
-import { waitForSeconds } from '../../services/extensions/animation.extension';
 import { renderPlayMusicDialogStyles } from './play-music-dialog.css';
 import { renderPlayMusicDialog } from './play-music-dialog.html';
 

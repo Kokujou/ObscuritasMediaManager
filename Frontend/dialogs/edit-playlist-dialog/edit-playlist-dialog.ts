@@ -1,5 +1,6 @@
 import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { distinct } from '../../extensions/array.extensions';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
     Language,
@@ -11,7 +12,6 @@ import {
 } from '../../obscuritas-media-manager-backend-client';
 import { PageRouting } from '../../pages/page-routing/page-routing';
 import { MusicService, PlaylistService } from '../../services/backend.services';
-import { distinct } from '../../services/extensions/array.extensions';
 import { DialogBase } from '../dialog-base/dialog-base';
 import { renderEditPlaylistDialogStyles } from './edit-playlist-dialog.css';
 import { renderEditPlaylistDialog } from './edit-playlist-dialog.html';

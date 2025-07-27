@@ -1,6 +1,6 @@
 import { unsafeCSS } from 'lit-element';
+import { renderMaskImage } from '../../../extensions/style.extensions';
 import { IngredientCategory } from '../../../obscuritas-media-manager-backend-client';
-import { renderMaskImage } from '../../../services/extensions/style.extensions';
 import { miscIcon } from '../instrument-icons/misc-icon.svg';
 import { breadIcon } from './bread-icon.svg';
 import { condimentsIcon } from './condiments-icon.svg';

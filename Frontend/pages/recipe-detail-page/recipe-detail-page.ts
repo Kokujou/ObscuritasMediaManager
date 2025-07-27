@@ -3,6 +3,7 @@ import { LanguageSwitcher } from '../../advanced-components/language-switcher/la
 import { LitElementBase } from '../../data/lit-element-base';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
+import { changePage, getQueryValue } from '../../extensions/url.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
@@ -18,7 +19,6 @@ import {
     RecipeModel,
 } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
-import { changePage, getQueryValue } from '../../services/extensions/url.extension';
 import { RecipesPage } from '../recipes-page/recipes-page';
 import { renderRecipeDetailPageStyles } from './recipe-detail-page.css';
 import { renderRecipeDetailPage } from './recipe-detail-page.html';

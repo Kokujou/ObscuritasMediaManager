@@ -1,6 +1,6 @@
 import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
-import { newGuid } from '../../services/extensions/crypto.extensions';
+import { newGuid } from '../../extensions/crypto.extensions';
 import { renderImportFoodPageStyles } from './import-food-page.css';
 
 const CacheName = 'food-cache';

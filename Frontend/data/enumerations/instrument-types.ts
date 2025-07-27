@@ -1,4 +1,5 @@
 import { css, unsafeCSS } from 'lit-element';
+import { renderMaskImage } from '../../extensions/style.extensions';
 import { InstrumentType } from '../../obscuritas-media-manager-backend-client';
 import { unsetIcon } from '../../resources/inline-icons/general/unset-icon.svg';
 import { brassIcon } from '../../resources/inline-icons/instrument-icons/brass-icon.svg';
@@ -10,7 +11,6 @@ import { miscIcon } from '../../resources/inline-icons/instrument-icons/misc-ico
 import { percussionIcon } from '../../resources/inline-icons/instrument-icons/percussion-icon.svg';
 import { stringsIcon } from '../../resources/inline-icons/instrument-icons/string-icon.svg';
 import { woodWindIcon } from '../../resources/inline-icons/instrument-icons/wood-wind-icon.svg';
-import { renderMaskImage } from '../../services/extensions/style.extensions';
 
 export function renderInstrumentTypeIcons() {
     return css`

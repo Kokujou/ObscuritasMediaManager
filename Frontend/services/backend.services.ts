@@ -10,7 +10,6 @@ import {
     RecipeClient,
 } from '../obscuritas-media-manager-backend-client';
 import { AuthenticatedRequestService } from './authenticated-request.service';
-import { ClientInteropService } from './client-interop-service';
 
 const baseUrl = 'Backend';
 
@@ -24,4 +23,3 @@ export const CleanupService = new CleanupClient(baseUrl, authenticatedRequestSer
 export const LoginService = new LoginClient(baseUrl, authenticatedRequestService);
 export const RecipeService = new RecipeClient(baseUrl, authenticatedRequestService);
 export const InteropProxyService = new InteropProxyClient(baseUrl, authenticatedRequestService);
-ClientInteropService.startConnection();

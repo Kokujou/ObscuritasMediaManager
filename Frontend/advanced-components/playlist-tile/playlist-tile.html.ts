@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
+import { renderMaskImage } from '../../extensions/style.extensions';
 import { playlistIcon } from '../../resources/inline-icons/playlist-icons/playlist-icon.svg';
-import { renderMaskImage } from '../../services/extensions/style.extensions';
 import { PlaylistTile } from './playlist-tile';
 
 export function renderPlaylistTile(this: PlaylistTile) {

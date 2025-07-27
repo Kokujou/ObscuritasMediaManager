@@ -1,5 +1,5 @@
 import { html } from 'lit-element';
-import { getScaleFactorX, getScaleFactorY, viewportHeight, viewportWidth } from '../../services/extensions/document.extensions';
+import { getScaleFactorX, getScaleFactorY, viewportHeight, viewportWidth } from '../../extensions/document.extensions';
 import { PageRouting } from './page-routing';
 
 export function renderPageRouting(this: PageRouting) {

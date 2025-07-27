@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
+import { sortBy } from '../../extensions/array.extensions';
 import { Icons } from '../../resources/inline-icons/icon-registry';
-import { sortBy } from '../../services/extensions/array.extensions';
 import { PriorityList } from './priority-list';
 
 export function renderPriorityList(this: PriorityList) {

@@ -1,6 +1,6 @@
 import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
-import { scrollIntoParentViewX } from '../../services/extensions/document.extensions';
+import { scrollIntoParentViewX } from '../../extensions/document.extensions';
 import { renderSideScrollerStyles } from './side-scroller.css';
 import { renderSideScroller } from './side-scroller.html';
 

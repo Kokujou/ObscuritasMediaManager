@@ -1,8 +1,8 @@
 import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
-import { sortBy } from '../../services/extensions/array.extensions';
-import { cloneElementAsFixed, findElementIndexMatchingCursorY } from '../../services/extensions/document.extensions';
-import { minmax } from '../../services/extensions/math.extensions';
+import { sortBy } from '../../extensions/array.extensions';
+import { cloneElementAsFixed, findElementIndexMatchingCursorY } from '../../extensions/document.extensions';
+import { minmax } from '../../extensions/math.extensions';
 import { renderPriorityList } from './priority-list.html';
 
 type PriorityListItem = { order: number };

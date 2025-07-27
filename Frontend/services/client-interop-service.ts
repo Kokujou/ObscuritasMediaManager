@@ -5,10 +5,10 @@ import { InteropQueryRequest } from '../client-interop/interop-query-request';
 import { InteropQueryResponse } from '../client-interop/interop-query-response';
 import { ResponseStatus } from '../client-interop/response-status';
 import { Observable } from '../data/observable';
+import { waitForSeconds } from '../extensions/animation.extension';
 import { MessageSnackbar } from '../native-components/message-snackbar/message-snackbar';
 import { PageRouting } from '../pages/page-routing/page-routing';
 import { InteropProxyService } from './backend.services';
-import { waitForSeconds } from './extensions/animation.extension';
 
 export class ClientInteropService {
     static socket: WebSocket | null;

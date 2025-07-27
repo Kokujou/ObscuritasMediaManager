@@ -3,11 +3,11 @@ import { MusicFilterOptions } from '../../advanced-components/music-filter/music
 import { SortingProperties } from '../../data/music-sorting-properties';
 import { Session } from '../../data/session';
 import { SortingDirections } from '../../data/sorting-directions';
+import { changePage } from '../../extensions/url.extension';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { AudioService } from '../../services/audio-service';
 import { ClipboardService } from '../../services/clipboard.service';
-import { changePage } from '../../services/extensions/url.extension';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page';
 import { MusicPage } from './music-page';
 

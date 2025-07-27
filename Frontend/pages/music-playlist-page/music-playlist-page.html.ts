@@ -1,12 +1,12 @@
 import { html } from 'lit-element';
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood';
 import { Session } from '../../data/session';
+import { Enum } from '../../extensions/enum.extensions';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { Instrumentation, Mood, MusicGenre, MusicModel, Participants } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { AudioService } from '../../services/audio-service';
 import { ClipboardService } from '../../services/clipboard.service';
-import { Enum } from '../../services/extensions/enum.extensions';
 import { MediaDetailPage } from '../media-detail-page/media-detail-page';
 import { MusicPlaylistPage } from './music-playlist-page';
 

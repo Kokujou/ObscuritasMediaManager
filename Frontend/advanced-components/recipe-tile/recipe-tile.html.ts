@@ -1,7 +1,7 @@
 import { html } from 'lit-element';
 import { TimeSpan } from '../../data/timespan';
+import { createRange } from '../../extensions/array.extensions';
 import { Icons } from '../../resources/inline-icons/icon-registry';
-import { createRange } from '../../services/extensions/array.extensions';
 import { RecipeTile } from './recipe-tile';
 
 export function renderRecipeTile(this: RecipeTile) {

@@ -2,9 +2,11 @@ import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { Page } from '../../data/util-types';
-import { LoadingScreen } from '../../native-components/loading-screen/loading-screen';
-import { setFavicon } from '../../services/extensions/style.extensions';
-import { changePage, getPageName, queryToObject } from '../../services/extensions/url.extension';
+import { setFavicon } from '../../extensions/style.extensions';
+import { changePage, getPageName, queryToObject } from '../../extensions/url.extension';
+import { ClientInteropService } from '../../services/client-interop-service';
+import { LoginPage, LoginPage } from '../login-page/login-page';
+import { MaintenancePage } from '../maintenance-page/maintenance-page';
 import { WelcomePage } from '../welcome-page/welcome-page';
 import { renderPageRoutingStyles } from './page-routing.css';
 import { renderPageRouting } from './page-routing.html';
@@ -49,17 +51,20 @@ export class PageRouting extends LitElementBase {
     override connectedCallback() {
         super.connectedCallback();
 
+        ClientInteropService.startConnection();
+        document.addEventListener('login', () => changePage(LoginPage));
+        document.addEventListener('maintenance', () => changePage(MaintenancePage));
         this.subscriptions.push(
-            Session.currentPage.subscribe((newValue, oldValue) => {
-                if (newValue) this.switchPage(newValue, oldValue).then(() => this.requestFullUpdate());
+            Session.currentPage.subscribe(async (newValue, oldValue) => {
+                if (newValue) await this.switchPage(newValue, oldValue).then(() => this.requestFullUpdate());
             })
         );
     }
 
-    firstUpdated(_changedProperties: Map<any, any>) {
+    async firstUpdated(_changedProperties: Map<any, any>) {
         super.firstUpdated(_changedProperties);
         Session.currentPage.next(getPageName(this.currentPage));
-        document.querySelector(LoadingScreen.tag)?.remove();
+        document.querySelector('loading-screen')?.remove();
     }
 
     changeHash(newHash: string) {
@@ -96,7 +101,8 @@ export class PageRouting extends LitElementBase {
                 }
             }
             if (isNewPageLoad) PageRouting.container!.appendChild(PageRouting.currentPageInstance!);
-            await PageRouting.currentPageInstance?.requestFullUpdate();
+            await PageRouting.currentPageInstance.requestFullUpdate();
+            await PageRouting.currentPageInstance.updateComplete;
             return;
         }
 

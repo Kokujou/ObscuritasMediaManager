@@ -1,7 +1,7 @@
 import { customElement, property } from 'lit-element/decorators';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { LitElementBase } from '../../data/lit-element-base';
-import { Enum } from '../../services/extensions/enum.extensions';
+import { Enum } from '../../extensions/enum.extensions';
 import { renderCustomToggleStyles } from './custom-toggle.css';
 import { renderCustomToggle } from './custom-toggle.html';
 

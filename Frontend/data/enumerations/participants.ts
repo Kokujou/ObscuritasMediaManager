@@ -1,4 +1,5 @@
 import { css, unsafeCSS } from 'lit-element';
+import { renderMaskImage } from '../../extensions/style.extensions';
 import { Participants } from '../../obscuritas-media-manager-backend-client';
 import { unsetIcon } from '../../resources/inline-icons/general/unset-icon.svg';
 import { largeGroupIcon } from '../../resources/inline-icons/participants-icons/large-group.svg';
@@ -6,7 +7,6 @@ import { largeOrchestraIcon } from '../../resources/inline-icons/participants-ic
 import { singlePersonIcon } from '../../resources/inline-icons/participants-icons/single-person.svg';
 import { smalLGroupIcon } from '../../resources/inline-icons/participants-icons/small-group.svg';
 import { smallOrchestraIcon } from '../../resources/inline-icons/participants-icons/small-orchestra-svg';
-import { renderMaskImage } from '../../services/extensions/style.extensions';
 
 export function renderParticipantCountIcon() {
     return css`

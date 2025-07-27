@@ -1,6 +1,6 @@
 import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
-import { fileToDataUrl } from '../../services/extensions/file.extension';
+import { fileToDataUrl } from '../../extensions/file.extension';
 import { renderUploadAreaStyles } from './upload-area.css';
 import { renderUploadArea } from './upload-area.html';
 

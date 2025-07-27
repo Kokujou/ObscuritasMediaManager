@@ -1,8 +1,8 @@
 import { html } from 'lit-element';
 import { Session } from '../../data/session';
 import { Page } from '../../data/util-types';
+import { getPageName } from '../../extensions/url.extension';
 import { LinkElement } from '../../native-components/link-element/link-element';
-import { getPageName } from '../../services/extensions/url.extension';
 import { MediaPage } from '../media-page/media-page';
 import { MusicPage } from '../music-page/music-page';
 import { RecipesPage } from '../recipes-page/recipes-page';

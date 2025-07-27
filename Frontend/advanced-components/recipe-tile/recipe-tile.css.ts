@@ -1,7 +1,7 @@
 import { css, unsafeCSS } from 'lit-element';
+import { renderMaskImage } from '../../extensions/style.extensions';
 import { Language } from '../../obscuritas-media-manager-backend-client';
 import { unsetIcon } from '../../resources/inline-icons/general/unset-icon.svg';
-import { renderMaskImage } from '../../services/extensions/style.extensions';
 
 export function renderRecipeTileStyles() {
     return css`

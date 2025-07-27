@@ -1,7 +1,7 @@
 import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { getScaleFactorX, getScaleFactorY } from '../../extensions/document.extensions';
 import { PageRouting } from '../../pages/page-routing/page-routing';
-import { getScaleFactorX, getScaleFactorY } from '../../services/extensions/document.extensions';
 import { renderContextMenuStyles } from './context-menu.css';
 import { renderContextMenu } from './context-menu.html';
 

@@ -1,7 +1,7 @@
 import { html } from 'lit-element';
+import { getPageName } from '../../extensions/url.extension';
 import { MusicPlaylistPage } from '../../pages/music-playlist-page/music-playlist-page';
 import { Icons } from '../../resources/inline-icons/icon-registry';
-import { getPageName } from '../../services/extensions/url.extension';
 import { PlaylistSelectionDialog } from './playlist-selection-dialog';
 
 export function renderPlaylistSelectionDialog(this: PlaylistSelectionDialog) {

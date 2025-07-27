@@ -53,5 +53,4 @@ export class Session {
         Session.initialized = true;
     }
 }
-
 await Session.initialize();

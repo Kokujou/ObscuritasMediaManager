@@ -16,7 +16,7 @@
         "strictBindCallApply": true,
         "plugins": [{ "name": "ts-lit-plugin" }]
     },
-    "include": ["**/*.ts", "**/*.json"],
+    "include": ["**/*.ts", "**/*.json", "native-components/loading-screen/loading-screen.js"],
     "exclude": ["**/templates/**"],
 
     "compileOnSave": true

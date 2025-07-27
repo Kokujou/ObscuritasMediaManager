@@ -4,7 +4,7 @@ import { LitElementBase } from '../../data/lit-element-base';
 import { RecipeSortingProperties } from '../../data/recipe-sorting-properties';
 import { Session } from '../../data/session';
 import { SortingDirections } from '../../data/sorting-directions';
-import { changePage } from '../../services/extensions/url.extension';
+import { changePage } from '../../extensions/url.extension';
 import { ImportFoodPage } from '../import-food-page/import-food-page';
 import { renderRecipesPageStyles } from './recipes-page.css';
 import { renderRecipesPage } from './recipes-page.html';

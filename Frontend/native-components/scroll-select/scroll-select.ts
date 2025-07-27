@@ -1,7 +1,7 @@
 import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { getTargetScrollPosition, scrollIntoParentViewY } from '../../extensions/document.extensions';
 import { Mood } from '../../obscuritas-media-manager-backend-client';
-import { getTargetScrollPosition, scrollIntoParentViewY } from '../../services/extensions/document.extensions';
 import { renderScrollSelectStyles } from './scroll-select.css';
 import { renderScrollSelect } from './scroll-select.html';
 

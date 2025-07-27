@@ -1,13 +1,13 @@
 import { html } from 'lit-element';
 import { InteropQuery } from '../client-interop/interop-query';
 import { EntityStatusDialog } from '../dialogs/entity-status-dialog/entity-status-dialog';
+import { changePage } from '../extensions/url.extension';
 import { LinkElement } from '../native-components/link-element/link-element';
 import { Language, MediaCategory, MediaCreationRequest, ModelCreationState } from '../obscuritas-media-manager-backend-client';
 import { MediaDetailPage } from '../pages/media-detail-page/media-detail-page';
 import { MusicPlaylistPage } from '../pages/music-playlist-page/music-playlist-page';
 import { MediaService, MusicService, PlaylistService } from './backend.services';
 import { ClientInteropService } from './client-interop-service';
-import { changePage } from './extensions/url.extension';
 
 export class MediaImportService {
     static async importAudioFiles() {

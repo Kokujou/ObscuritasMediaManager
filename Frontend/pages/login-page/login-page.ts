@@ -1,9 +1,9 @@
 import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { changePage } from '../../extensions/url.extension';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import { CredentialsRequest } from '../../obscuritas-media-manager-backend-client';
 import { LoginService } from '../../services/backend.services';
-import { changePage } from '../../services/extensions/url.extension';
 import { WelcomePage } from '../welcome-page/welcome-page';
 import { renderLoginPageStyles } from './login-page.css';
 import { renderLoginPage } from './login-page.html';

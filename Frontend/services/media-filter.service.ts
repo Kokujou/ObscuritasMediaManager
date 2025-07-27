@@ -1,7 +1,7 @@
 import { MediaFilter } from '../advanced-components/media-filter-sidebar/media-filter';
 import { CheckboxState } from '../data/enumerations/checkbox-state';
+import { sortBy } from '../extensions/array.extensions';
 import { MediaModel } from '../obscuritas-media-manager-backend-client';
-import { sortBy } from './extensions/array.extensions';
 import { ObjectFilterService } from './object-filter.service';
 
 export class MediaFilterService {

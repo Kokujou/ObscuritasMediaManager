@@ -1,10 +1,10 @@
 import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
+import { waitForSeconds } from '../../extensions/animation.extension';
 import { MusicModel } from '../../obscuritas-media-manager-backend-client';
 import { AudioService } from '../../services/audio-service';
 import { MusicService } from '../../services/backend.services';
-import { waitForSeconds } from '../../services/extensions/animation.extension';
 import { renderAudioSubtitleDialogStyles } from './lyrics-dialog.css';
 import { renderAudioSubtitleDialog } from './lyrics-dialog.html';
 

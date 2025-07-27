@@ -5,6 +5,8 @@ import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog';
+import { setFavicon } from '../../extensions/style.extensions';
+import { changePage } from '../../extensions/url.extension';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
     ContentWarning,
@@ -18,8 +20,6 @@ import {
 } from '../../obscuritas-media-manager-backend-client';
 import { MediaService } from '../../services/backend.services';
 import { ClientInteropService } from '../../services/client-interop-service';
-import { setFavicon } from '../../services/extensions/style.extensions';
-import { changePage } from '../../services/extensions/url.extension';
 import { MediaFilterService } from '../../services/media-filter.service';
 import { renderMediaDetailPageStyles } from './media-detail-page.css';
 import { renderMediaDetailPage } from './media-detail-page.html';

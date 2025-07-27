@@ -2,6 +2,7 @@ import { html } from 'lit-element';
 import { StarRating } from '../../advanced-components/star-rating/star-rating';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
+import { groupAndSelectBy, groupBy } from '../../extensions/array.extensions';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
@@ -15,7 +16,6 @@ import {
 } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { IngredientIcons } from '../../resources/inline-icons/ingredient-icons/icon-registry';
-import { groupAndSelectBy, groupBy } from '../../services/extensions/array.extensions';
 import { RecipeDetailPage } from './recipe-detail-page';
 
 export function renderRecipeDetailPage(this: RecipeDetailPage) {

@@ -9,14 +9,14 @@ import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.resu
 import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog';
+import { distinct, randomizeArray } from '../../extensions/array.extensions';
+import { changePage } from '../../extensions/url.extension';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import { MusicGenre, MusicModel, PlaylistModel, UpdateRequestOfObject } from '../../obscuritas-media-manager-backend-client';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg';
 import { AudioService } from '../../services/audio-service';
 import { MusicService, PlaylistService } from '../../services/backend.services';
 import { ClientInteropService } from '../../services/client-interop-service';
-import { distinct, randomizeArray } from '../../services/extensions/array.extensions';
-import { changePage } from '../../services/extensions/url.extension';
 import { MediaFilterService } from '../../services/media-filter.service';
 import { AudioFileExtensions } from './audio-file-extensions';
 import { renderMusicPlaylistStyles } from './music-playlist-page.css';

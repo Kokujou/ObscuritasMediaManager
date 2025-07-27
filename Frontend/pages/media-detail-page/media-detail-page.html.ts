@@ -1,11 +1,11 @@
 import { html } from 'lit-element';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
+import { createRange, groupBy } from '../../extensions/array.extensions';
+import { Enum } from '../../extensions/enum.extensions';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { ContentWarning, Language, MediaCategory, MediaStatus, TargetGroup } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
-import { createRange, groupBy } from '../../services/extensions/array.extensions';
-import { Enum } from '../../services/extensions/enum.extensions';
 import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page';
 import { MediaDetailPage } from './media-detail-page';
 

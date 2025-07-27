@@ -1,6 +1,5 @@
 import { html } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import { LoadingScreen } from '../loading-screen/loading-screen';
 
 export function renderPartialLoading() {
     return html`
@@ -25,6 +24,6 @@ export function renderPartialLoading() {
             }
         </style>
 
-        <div id="wrapper">${unsafeHTML(LoadingScreen.renderLoadingIcon())}</div>
+        <div id="wrapper">${unsafeHTML('')}</div>
     `;
 }

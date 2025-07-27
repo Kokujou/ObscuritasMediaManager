@@ -1,6 +1,6 @@
-import { LitElementBase } from '../../data/lit-element-base';
-import { Session } from '../../data/session';
-import { Page } from '../../data/util-types';
+import { LitElementBase } from '../data/lit-element-base';
+import { Session } from '../data/session';
+import { Page } from '../data/util-types';
 import { pascalToKeabCase } from './convention.extension';
 
 export function getQueryValue(query: string) {
