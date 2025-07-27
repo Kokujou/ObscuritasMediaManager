@@ -1,17 +1,18 @@
 import { css } from 'lit-element';
+import { viewportHeight, viewportWidth } from '../../services/extensions/document.extensions';
 
 export function renderPageRoutingStyles() {
     return css`
         :host {
-            position: absolute;
-            inset: 0;
+            display: inline-flex;
             background-position: 0 0;
             font-family: Arial, Helvetica, sans-serif;
         }
 
         #viewport {
-            position: absolute;
-            inset: 0;
+            position: relative;
+            left: 0;
+            top: 0;
             overflow-y: auto;
             overflow-x: auto;
 
@@ -22,9 +23,15 @@ export function renderPageRoutingStyles() {
         }
 
         #current-page {
-            position: absolute;
-            inset: 0;
+            position: relative;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+
             color: var(--font-color);
+
+            width: ${viewportWidth}px;
+            height: ${viewportHeight}px;
         }
     `;
 }
