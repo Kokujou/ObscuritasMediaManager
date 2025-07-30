@@ -74,8 +74,7 @@ export class ImportFoodPage extends LitElementBase {
     changeCurrentImage() {
         var imageUrl = this.paginatedFiles[this.sideScroller.currentItemIndex];
         var metadata = localStorage.getItem(MetadataCacheKey(this.sideScroller.currentItemIndex));
-        this.currentImage = new FoodModel();
-        Object.assign(this.currentImage, JSON.parse(metadata!));
+        this.currentImage = FoodModel.fromJS(JSON.parse(metadata!));
         this.currentImage.imageData = imageUrl;
         this.requestFullUpdate();
         changePage(ImportFoodPage, { index: this.sideScroller.currentItemIndex }, false);

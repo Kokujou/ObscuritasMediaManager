@@ -31,8 +31,10 @@ export function renderImportFoodPageStyles() {
         #edit-image-sidebar {
             width: 30%;
             height: 100%;
+            max-height: 100%;
             padding: 50px;
             box-sizing: border-box;
+            overflow-y: auto;
 
             font-size: 18px;
             display: flex;

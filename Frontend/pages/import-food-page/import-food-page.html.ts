@@ -42,6 +42,17 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                         @ratingChanged="${(e: CustomEvent) => (this.currentImage.difficulty = e.detail.rating)}"
                     ></star-rating>
                     <label>Tags:</label>
+                    <drop-down
+                        .options="${ColoredFoodTags.filter(
+                            (tag) => !this.currentImage.tags.some((existing) => tag.value == existing.value)
+                        ).map((tag) => DropDownOption.create({ category: tag.key, text: tag.value, value: tag }))}"
+                        caption="Neuen Tag auswählen"
+                        useSearch
+                        @selectionChange="${(e: CustomEvent<{ option: DropDownOption<FoodTagModel> }>) => {
+                            this.currentImage.tags.push(e.detail.option.value);
+                            this.requestFullUpdate();
+                        }}"
+                    ></drop-down>
                     <div id="tags">
                         ${ColoredFoodTags.filter((tag) => this.currentImage.tags.some((existing) => existing.value == tag.value))
                             .orderBy((x) => x.key)
@@ -53,18 +64,6 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                                     ></tag-label>`
                             )}
                     </div>
-                    <drop-down
-                        .options="${ColoredFoodTags.filter(
-                            (tag) => !this.currentImage.tags.some((existing) => tag.value == existing.value)
-                        ).map((tag) => DropDownOption.create({ category: tag.key, text: tag.value, value: tag }))}"
-                        orientation="up"
-                        caption="Neuen Tag auswählen"
-                        useSearch
-                        @selectionChange="${(e: CustomEvent<{ option: DropDownOption<FoodTagModel> }>) => {
-                            this.currentImage.tags.push(new FoodTagModel(e.detail.option.value));
-                            this.requestFullUpdate();
-                        }}"
-                    ></drop-down>
                 </div>
                 <side-scroller
                     @change="${() => {

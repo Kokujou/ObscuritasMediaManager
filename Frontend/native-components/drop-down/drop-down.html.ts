@@ -59,6 +59,7 @@ function showDropDown(this: DropDown) {
             ${Object.entries(
                 this.options
                     .filter((x) => x.text.toLocaleLowerCase().match(this.searchFilter?.toLocaleLowerCase()))
+                    .orderBy((x) => x.category)
                     .groupBy((x) => x.category)
             ).map(
                 (group) => html`
