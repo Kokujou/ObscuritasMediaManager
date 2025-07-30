@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
 import { TimeSpan } from '../../data/timespan';
-import { createRange } from '../../extensions/array.extensions';
+
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { RecipeTile } from './recipe-tile';
 
@@ -25,7 +25,7 @@ export function renderRecipeTile(this: RecipeTile) {
                     : ''}
                 <div id="nation-icon" class="icon" nation="${recipe.nation}" @click="${() => this.notifyNationChanged()}"></div>
                 <div id="total-time">${TimeSpan.format(recipe.totalTime)}</div>
-                <star-rating id="rating" max="5" singleSelect disabled .values="${createRange(0, recipe.rating)}"></star-rating>
+                <star-rating id="rating" max="5" singleSelect disabled .values="${Array.createRange(0, recipe.rating)}"></star-rating>
                 <star-rating
                     id="difficulty"
                     max="5"
@@ -33,7 +33,7 @@ export function renderRecipeTile(this: RecipeTile) {
                     swords
                     vertical
                     disabled
-                    .values="${createRange(0, recipe.difficulty)}"
+                    .values="${Array.createRange(0, recipe.difficulty)}"
                 ></star-rating>
             </div>
             ${!this.compact

@@ -1,6 +1,6 @@
 import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
-import { distinct } from '../../extensions/array.extensions';
+
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
     Language,
@@ -135,7 +135,7 @@ export class EditPlaylistDialog extends LitElementBase {
             if (addedGenres.length > 0) updatedTrack.genres = updatedTrack.genres.concat(newGenres);
             if (removedGenres.length > 0)
                 updatedTrack.genres = updatedTrack.genres.filter((genre) => !removedGenres.includes(genre));
-            updatedTrack.genres = distinct(updatedTrack.genres);
+            updatedTrack.genres = updatedTrack.genres.distinct();
 
             await MusicService.update(track.hash!, new UpdateRequestOfObject({ oldModel: track, newModel: updatedTrack }));
         } catch (err) {

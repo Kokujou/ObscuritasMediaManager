@@ -9,7 +9,7 @@ import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.resu
 import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog';
-import { distinct, randomizeArray } from '../../extensions/array.extensions';
+
 import { changePage } from '../../extensions/url.extension';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import { MusicGenre, MusicModel, PlaylistModel, UpdateRequestOfObject } from '../../obscuritas-media-manager-backend-client';
@@ -201,7 +201,7 @@ export class MusicPlaylistPage extends LitElementBase {
                 this.playlist.tracks[this.trackIndex][property] = value;
                 if (property == 'instruments') {
                     this.updatedTrack.instrumentNames = this.updatedTrack.instruments.map((x) => x.name);
-                    this.updatedTrack.instrumentTypes = distinct(this.updatedTrack.instruments.map((x) => x.type));
+                    this.updatedTrack.instrumentTypes = this.updatedTrack.instruments.map((x) => x.type).distinct();
                 }
             }
             await this.requestFullUpdate();
@@ -267,7 +267,7 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     randomize() {
-        this.playlist.tracks = randomizeArray(this.playlist.tracks);
+        this.playlist.tracks = this.playlist.tracks.randomize();
         this.changeTrack(0);
         this.requestFullUpdate();
     }

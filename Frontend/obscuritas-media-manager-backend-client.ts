@@ -1761,7 +1761,7 @@ export class RecipeClient {
         this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
-    getAllRecipes(signal?: AbortSignal): Promise<RecipeModel[]> {
+    getAllRecipes(signal?: AbortSignal): Promise<RecipeModelBase[]> {
         let url_ = this.baseUrl + "/api/Recipe";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1778,7 +1778,7 @@ export class RecipeClient {
         });
     }
 
-    protected processGetAllRecipes(response: Response): Promise<RecipeModel[]> {
+    protected processGetAllRecipes(response: Response): Promise<RecipeModelBase[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         let _mappings: { source: any, target: any }[] = [];
@@ -1789,7 +1789,7 @@ export class RecipeClient {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(RecipeModel.fromJS(item, _mappings));
+                    result200!.push(RecipeModelBase.fromJS(item, _mappings));
             }
             else {
                 result200 = <any>null;
@@ -1801,7 +1801,7 @@ export class RecipeClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<RecipeModel[]>(null as any);
+        return Promise.resolve<RecipeModelBase[]>(null as any);
     }
 
     createRecipe(recipe: RecipeModel, signal?: AbortSignal): Promise<string> {
@@ -1877,6 +1877,52 @@ export class RecipeClient {
             });
         }
         return Promise.resolve<void>(null as any);
+    }
+
+    searchDishes(search?: string | undefined, signal?: AbortSignal): Promise<string[]> {
+        let url_ = this.baseUrl + "/api/Recipe/search-dishes?";
+        if (search === null)
+            throw new Error("The parameter 'search' cannot be null.");
+        else if (search !== undefined)
+            url_ += "search=" + encodeURIComponent("" + search) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processSearchDishes(_response);
+        });
+    }
+
+    protected processSearchDishes(response: Response): Promise<string[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(item);
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<string[]>(null as any);
     }
 
     getRecipe(id: string, signal?: AbortSignal): Promise<RecipeModel> {
@@ -3403,21 +3449,197 @@ export interface IUpdateRequestOfPlaylistModel {
     newModel: PlaylistModel | null;
 }
 
-export class RecipeModel implements IRecipeModel {
-    id!: string | null;
+export class RecipeModelBase implements IRecipeModelBase {
+    id!: string;
     title!: string;
-    nation!: Language;
+    description!: string;
     imageData!: string | null;
     difficulty!: number;
     rating!: number;
-    course!: Course;
-    technique!: CookingTechnique;
+    deleted!: boolean;
+    type!: string;
+    tags!: FoodTagModel[];
+
+    protected _discriminator: string;
+
+    constructor(data?: Partial<IRecipeModelBase>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+        if (!data) {
+            this.tags = [];
+        }
+        this._discriminator = "RecipeModelBase";
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
+            this.title = _data["title"] !== undefined ? _data["title"] : <any>null;
+            this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
+            this.imageData = _data["imageData"] !== undefined ? _data["imageData"] : <any>null;
+            this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : <any>null;
+            this.rating = _data["rating"] !== undefined ? _data["rating"] : <any>null;
+            this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : <any>null;
+            this.type = _data["type"] !== undefined ? _data["type"] : <any>null;
+            if (Array.isArray(_data["tags"])) {
+                this.tags = [] as any;
+                for (let item of _data["tags"])
+                    this.tags!.push(FoodTagModel.fromJS(item, _mappings));
+            }
+            else {
+                this.tags = <any>null;
+            }
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): RecipeModelBase  {
+        data = typeof data === 'object' ? data : {};
+        if (data["Type"] === "RecipeModel")
+            return createInstance<RecipeModel>(data, _mappings, RecipeModel)!;
+        if (data["Type"] === "FoodModel")
+            return createInstance<FoodModel>(data, _mappings, FoodModel)!;
+        return createInstance<RecipeModelBase>(data, _mappings, RecipeModelBase)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["Type"] = this._discriminator;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["title"] = this.title !== undefined ? this.title : <any>null;
+        data["description"] = this.description !== undefined ? this.description : <any>null;
+        data["imageData"] = this.imageData !== undefined ? this.imageData : <any>null;
+        data["difficulty"] = this.difficulty !== undefined ? this.difficulty : <any>null;
+        data["rating"] = this.rating !== undefined ? this.rating : <any>null;
+        data["deleted"] = this.deleted !== undefined ? this.deleted : <any>null;
+        data["type"] = this.type !== undefined ? this.type : <any>null;
+        if (Array.isArray(this.tags)) {
+            data["tags"] = [];
+            for (let item of this.tags)
+                data["tags"].push(item.toJSON());
+        }
+        return data;
+    }
+
+    clone(): RecipeModelBase {
+        const json = this.toJSON();
+        let result = new RecipeModelBase();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRecipeModelBase {
+    id: string;
+    title: string;
+    description: string;
+    imageData: string | null;
+    difficulty: number;
+    rating: number;
+    deleted: boolean;
+    type: string;
+    tags: FoodTagModel[];
+}
+
+export class FoodTagModel implements IFoodTagModel {
+    recipeId!: string;
+    key!: string;
+    value!: string;
+
+    constructor(data?: Partial<IFoodTagModel>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : <any>null;
+            this.key = _data["key"] !== undefined ? _data["key"] : <any>null;
+            this.value = _data["value"] !== undefined ? _data["value"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): FoodTagModel  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<FoodTagModel>(data, _mappings, FoodTagModel)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : <any>null;
+        data["key"] = this.key !== undefined ? this.key : <any>null;
+        data["value"] = this.value !== undefined ? this.value : <any>null;
+        return data;
+    }
+
+    clone(): FoodTagModel {
+        const json = this.toJSON();
+        let result = new FoodTagModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFoodTagModel {
+    recipeId: string;
+    key: string;
+    value: string;
+}
+
+export class FoodModel extends RecipeModelBase implements IFoodModel {
+
+    constructor(data?: Partial<IFoodModel>) {
+        super(data);
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+        this._discriminator = "FoodModel";
+    }
+
+    init(_data?: any, _mappings?: any) {
+        super.init(_data);
+    }
+
+    static fromJS(data: any, _mappings?: any): FoodModel  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<FoodModel>(data, _mappings, FoodModel)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        super.toJSON(data);
+        return data;
+    }
+
+    clone(): FoodModel {
+        const json = this.toJSON();
+        let result = new FoodModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFoodModel extends IRecipeModelBase {
+}
+
+export class RecipeModel extends RecipeModelBase implements IRecipeModel {
     preparationTime!: string;
     cookingTime!: string;
     totalTime!: string;
-    isRecipe!: boolean;
     formattedText!: string | null;
-    deleted!: boolean;
     ingredients!: RecipeIngredientMappingModel[];
     cookware!: RecipeCookwareMappingModel[];
     ingredientNames!: string[];
@@ -3425,6 +3647,7 @@ export class RecipeModel implements IRecipeModel {
     cookwareNames!: string[];
 
     constructor(data?: Partial<IRecipeModel>) {
+        super(data);
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
@@ -3439,24 +3662,16 @@ export class RecipeModel implements IRecipeModel {
             this.ingredientCategories = [];
             this.cookwareNames = [];
         }
+        this._discriminator = "RecipeModel";
     }
 
     init(_data?: any, _mappings?: any) {
+        super.init(_data);
         if (_data) {
-            this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
-            this.title = _data["title"] !== undefined ? _data["title"] : <any>null;
-            this.nation = _data["nation"] !== undefined ? _data["nation"] : <any>null;
-            this.imageData = _data["imageData"] !== undefined ? _data["imageData"] : <any>null;
-            this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : <any>null;
-            this.rating = _data["rating"] !== undefined ? _data["rating"] : <any>null;
-            this.course = _data["course"] !== undefined ? _data["course"] : <any>null;
-            this.technique = _data["technique"] !== undefined ? _data["technique"] : <any>null;
             this.preparationTime = _data["preparationTime"] !== undefined ? _data["preparationTime"] : <any>null;
             this.cookingTime = _data["cookingTime"] !== undefined ? _data["cookingTime"] : <any>null;
             this.totalTime = _data["totalTime"] !== undefined ? _data["totalTime"] : <any>null;
-            this.isRecipe = _data["isRecipe"] !== undefined ? _data["isRecipe"] : <any>null;
             this.formattedText = _data["formattedText"] !== undefined ? _data["formattedText"] : <any>null;
-            this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : <any>null;
             if (Array.isArray(_data["ingredients"])) {
                 this.ingredients = [] as any;
                 for (let item of _data["ingredients"])
@@ -3507,20 +3722,10 @@ export class RecipeModel implements IRecipeModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["id"] = this.id !== undefined ? this.id : <any>null;
-        data["title"] = this.title !== undefined ? this.title : <any>null;
-        data["nation"] = this.nation !== undefined ? this.nation : <any>null;
-        data["imageData"] = this.imageData !== undefined ? this.imageData : <any>null;
-        data["difficulty"] = this.difficulty !== undefined ? this.difficulty : <any>null;
-        data["rating"] = this.rating !== undefined ? this.rating : <any>null;
-        data["course"] = this.course !== undefined ? this.course : <any>null;
-        data["technique"] = this.technique !== undefined ? this.technique : <any>null;
         data["preparationTime"] = this.preparationTime !== undefined ? this.preparationTime : <any>null;
         data["cookingTime"] = this.cookingTime !== undefined ? this.cookingTime : <any>null;
         data["totalTime"] = this.totalTime !== undefined ? this.totalTime : <any>null;
-        data["isRecipe"] = this.isRecipe !== undefined ? this.isRecipe : <any>null;
         data["formattedText"] = this.formattedText !== undefined ? this.formattedText : <any>null;
-        data["deleted"] = this.deleted !== undefined ? this.deleted : <any>null;
         if (Array.isArray(this.ingredients)) {
             data["ingredients"] = [];
             for (let item of this.ingredients)
@@ -3546,6 +3751,7 @@ export class RecipeModel implements IRecipeModel {
             for (let item of this.cookwareNames)
                 data["cookwareNames"].push(item);
         }
+        super.toJSON(data);
         return data;
     }
 
@@ -3557,49 +3763,16 @@ export class RecipeModel implements IRecipeModel {
     }
 }
 
-export interface IRecipeModel {
-    id: string | null;
-    title: string;
-    nation: Language;
-    imageData: string | null;
-    difficulty: number;
-    rating: number;
-    course: Course;
-    technique: CookingTechnique;
+export interface IRecipeModel extends IRecipeModelBase {
     preparationTime: string;
     cookingTime: string;
     totalTime: string;
-    isRecipe: boolean;
     formattedText: string | null;
-    deleted: boolean;
     ingredients: RecipeIngredientMappingModel[];
     cookware: RecipeCookwareMappingModel[];
     ingredientNames: string[];
     ingredientCategories: IngredientCategory[];
     cookwareNames: string[];
-}
-
-export enum Course {
-    Starter = "Starter",
-    Main = "Main",
-    Side = "Side",
-    Desert = "Desert",
-    Salad = "Salad",
-    Soup = "Soup",
-    Drink = "Drink",
-    Snack = "Snack",
-}
-
-export enum CookingTechnique {
-    Boiling = "Boiling",
-    Baking = "Baking",
-    Frying = "Frying",
-    DeepFrying = "DeepFrying",
-    Steaming = "Steaming",
-    Mixed = "Mixed",
-    Freezing = "Freezing",
-    Grilling = "Grilling",
-    Raw = "Raw",
 }
 
 export class RecipeIngredientMappingModel implements IRecipeIngredientMappingModel {

@@ -3,7 +3,6 @@ import { css } from 'lit-element';
 export function renderTagLabelStyles() {
     return css`
         :host {
-            --label-color: #883377;
             display: inline-block;
             user-select: none;
         }
@@ -32,16 +31,6 @@ export function renderTagLabelStyles() {
             margin: 0 !important;
         }
 
-        #new-tag-input {
-            border: none;
-            background-color: inherit;
-            outline: none;
-            border-bottom: 2px solid black;
-            width: 100%;
-            padding: 0 !important;
-            font-family: inherit;
-        }
-
         #new-label-form,
         #new-tag-input,
         #label-text {
@@ -50,6 +39,17 @@ export function renderTagLabelStyles() {
             padding: 5px;
             margin-right: 5px;
             font-size: inherit;
+        }
+
+        #new-tag-input {
+            border: none;
+            background-color: inherit;
+            outline: none;
+            border-bottom: 2px solid black;
+            width: 100%;
+            min-width: var(--tag-label-min-width, unset);
+            padding: 0 !important;
+            font-family: inherit;
         }
 
         #invisible-text {

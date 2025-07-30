@@ -1,3 +1,5 @@
+import { PageRouting } from '../pages/page-routing/page-routing';
+
 export function getScaleFactorX() {
     if (outerWidth - innerWidth > 100) return (outerWidth - 20) / viewportWidth;
     else return (innerWidth - 20) / viewportWidth;
@@ -86,4 +88,12 @@ export function findElementIndexMatchingCursorY(cursorY: number, elements: NodeL
         if (cursorY > boundingRect.top && cursorY < boundingRect.bottom) return index;
     }
     return elements.length - 1;
+}
+
+export function dimLight() {
+    PageRouting.instance.setAttribute('dimmed', '');
+}
+
+export function undimLight() {
+    PageRouting.instance.removeAttribute('dimmed');
 }

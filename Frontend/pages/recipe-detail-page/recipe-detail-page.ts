@@ -193,7 +193,7 @@ export class RecipeDetailPage extends LitElementBase {
     }
 
     updateIngredient(source: RecipeIngredientMappingModel, target: IngredientModel & AutocompleteItem) {
-        source.ingredientName = target.id;
+        source.ingredientName = target.id!;
         source.ingredient = undefined as any;
         if (target instanceof IngredientModel) {
             const incompatibleMeasurement = target.isFluid ? Measurement.Mass : Measurement.Volume;

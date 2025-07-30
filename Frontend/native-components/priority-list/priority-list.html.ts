@@ -1,5 +1,5 @@
 import { html } from 'lit-element';
-import { sortBy } from '../../extensions/array.extensions';
+
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { PriorityList } from './priority-list';
 
@@ -43,19 +43,21 @@ export function renderPriorityList(this: PriorityList) {
             }
         </style>
 
-        ${sortBy(this.items, (x) => x.order).map((item, index) => {
-            item.order = index;
-            return html`
-                <div class="item" order="${index}">
-                    <div
-                        class="move-icon icon"
-                        icon="${Icons.Drag}"
-                        draggable="true"
-                        @dragstart="${(e: DragEvent) => this.registerDragItem(e, index)}"
-                    ></div>
-                    ${this.itemRenderer(item)}
-                    <div class="icon" icon="${Icons.Trash}" @click="${() => this.notifyDeleteItem(item)}"></div>
-                </div>
-            `;
-        })}`;
+        ${this.items
+            .orderBy((x) => x.order)
+            .map((item, index) => {
+                item.order = index;
+                return html`
+                    <div class="item" order="${index}">
+                        <div
+                            class="move-icon icon"
+                            icon="${Icons.Drag}"
+                            draggable="true"
+                            @dragstart="${(e: DragEvent) => this.registerDragItem(e, index)}"
+                        ></div>
+                        ${this.itemRenderer(item)}
+                        <div class="icon" icon="${Icons.Trash}" @click="${() => this.notifyDeleteItem(item)}"></div>
+                    </div>
+                `;
+            })}`;
 }

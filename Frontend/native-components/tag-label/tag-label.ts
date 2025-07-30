@@ -26,6 +26,7 @@ export class TagLabel extends LitElementBase {
     @property({ type: Boolean, reflect: true }) public declare createNew: boolean;
     @property({ type: Boolean, reflect: true }) public declare disabled: boolean;
     @property({ type: Array }) public declare autocomplete: string[];
+    @property() public declare placeholder?: string;
 
     @state() protected declare autofillIndex: number;
     @state() protected declare showAutocomplete: boolean;

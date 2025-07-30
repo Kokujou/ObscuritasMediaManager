@@ -14,6 +14,7 @@ function renderNewLabelForm(this: TagLabel) {
     return html`<form id="new-label-form" action="javascript:void(0)">
         <input
             id="new-tag-input"
+            placeholder="${this.placeholder ?? ''}"
             @keydown="${(e: KeyboardEvent) => this.handleInput(e)}"
             @input="${() => this.requestFullUpdate()}"
             @focus="${() => (this.showAutocomplete = true)}"

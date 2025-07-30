@@ -23,7 +23,10 @@ export class DropDown extends LitElementBase {
     get caption() {
         var notForbiddenOptions = this.options.filter((x) => x.state != CheckboxState.Forbid);
         if (this._caption)
-            return this._caption + (notForbiddenOptions.length > 0 ? ` (${notForbiddenOptions.length} ausgewählt)` : '');
+            return (
+                this._caption +
+                (notForbiddenOptions.length > 0 && this.multiselect ? ` (${notForbiddenOptions.length} ausgewählt)` : '')
+            );
 
         if (!this.multiselect) return notForbiddenOptions[0]?.text ?? this.unsetText;
         else if (notForbiddenOptions.length == 0) return this.unsetText;
@@ -36,6 +39,7 @@ export class DropDown extends LitElementBase {
 
     @property() public declare unsetText: string;
     @property() public declare searchFilter: string;
+    @property({ reflect: true }) public declare orientation: 'up' | 'down';
     @property({ type: Number }) public declare maxDisplayDepth: number;
     @property({ type: Number }) public declare _currentIndex: number;
     @property({ type: Boolean, reflect: true }) public declare required: boolean;
@@ -85,7 +89,7 @@ export class DropDown extends LitElementBase {
         option.state = state;
 
         this.dispatchEvent(new CustomEvent('selectionChange', { detail: { option } }));
-        this.dispatchEvent(new Event('change'));
+        this.dispatchEvent(new Event('change', { composed: true, bubbles: true }));
         this.requestFullUpdate();
     }
 }

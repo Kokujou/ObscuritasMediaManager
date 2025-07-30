@@ -1,6 +1,6 @@
 import { MediaFilter } from '../advanced-components/media-filter-sidebar/media-filter';
 import { CheckboxState } from '../data/enumerations/checkbox-state';
-import { sortBy } from '../extensions/array.extensions';
+
 import { MediaModel } from '../obscuritas-media-manager-backend-client';
 import { ObjectFilterService } from './object-filter.service';
 
@@ -30,7 +30,7 @@ export class MediaFilterService {
 
         if (!filter.sortingProperty) return result;
         var property = filter.sortingProperty;
-        var sorted = sortBy(result, (x) => x[property]);
+        var sorted = result.orderBy((x) => x[property]);
         if (!filter.sortingDirection || filter.sortingDirection == 'ascending') return sorted;
         else return sorted.reverse();
     }

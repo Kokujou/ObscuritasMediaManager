@@ -42,7 +42,7 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
 
         modelBuilder.Entity<UserSettingsModel>();
 
-        RecipeModel.Configure(modelBuilder);
+        RecipeModelBase.Configure(modelBuilder);
 
         modelBuilder.AddEnumConversion();
 

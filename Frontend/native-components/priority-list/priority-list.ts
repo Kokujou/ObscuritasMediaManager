@@ -1,6 +1,6 @@
 import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
-import { sortBy } from '../../extensions/array.extensions';
+
 import { cloneElementAsFixed, findElementIndexMatchingCursorY } from '../../extensions/document.extensions';
 import { minmax } from '../../extensions/math.extensions';
 import { renderPriorityList } from './priority-list.html';
@@ -82,7 +82,7 @@ export class PriorityList extends LitElementBase {
     switchItems(index1: number, index2: number) {
         this.items[index1].order = index2;
         this.items[index2].order = index1;
-        this.items = sortBy(this.items, (x) => x.order);
+        this.items = this.items.orderBy((x) => x.order);
     }
 
     switchWithDragged(index: number) {

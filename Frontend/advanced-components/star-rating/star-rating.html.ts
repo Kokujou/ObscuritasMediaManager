@@ -1,5 +1,5 @@
 import { html } from 'lit-element';
-import { createRange } from '../../extensions/array.extensions';
+
 import { StarRating } from './star-rating';
 
 export function renderStarRating(this: StarRating) {
@@ -12,7 +12,7 @@ export function renderStarRating(this: StarRating) {
               </style>`
             : ''}
         <div id="star-container">
-            ${createRange(0, this.max - 1).map(
+            ${Array.createRange(0, this.max - 1).map(
                 (x) =>
                     html`<div
                         class="star"

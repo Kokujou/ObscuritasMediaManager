@@ -79,7 +79,6 @@ export function renderDropDownStyles() {
 
             display: flex;
             flex-direction: column;
-            gap: 10px;
 
             color: var(--font-color);
             border: none;
@@ -90,6 +89,11 @@ export function renderDropDownStyles() {
             overscroll-behavior: contain;
 
             z-index: 10;
+        }
+
+        :host([orientation='up']) .options {
+            top: unset;
+            bottom: 100%;
         }
 
         .options:not([visible]) {
@@ -113,9 +117,16 @@ export function renderDropDownStyles() {
             font-weight: normal;
         }
 
+        .category-label {
+            font-size: 16px;
+            margin-top: 30px;
+            margin-bottom: 5px;
+            align-self: center;
+        }
+
         .option {
             line-height: 40px;
-            padding: 0 20px;
+            padding: 5px 20px;
 
             font-weight: 400;
             text-transform: capitalize;

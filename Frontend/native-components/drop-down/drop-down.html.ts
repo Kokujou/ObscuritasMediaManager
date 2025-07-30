@@ -56,11 +56,16 @@ function showDropDown(this: DropDown) {
                       </div>
                   `
                 : ''}
-            ${this.options
-                .filter((x) => x.text.toLocaleLowerCase().match(this.searchFilter?.toLocaleLowerCase()))
-                .map((options) => {
-                    return renderDropDownOption.call(this, options);
-                })}
+            ${Object.entries(
+                this.options
+                    .filter((x) => x.text.toLocaleLowerCase().match(this.searchFilter?.toLocaleLowerCase()))
+                    .groupBy((x) => x.category)
+            ).map(
+                (group) => html`
+                    ${group[0] ? html` <label class="category-label">======= ${group[0]} ======</label>` : ''}
+                    ${group[1].map((option) => renderDropDownOption.call(this, option))}
+                `
+            )}
         </div>
         <div class="dropdown-icon-container ${this.showDropDown ? 'dropped-down' : ''}">></div>
     </div> `;

@@ -5,7 +5,7 @@ import { Page } from '../../data/util-types';
 import { setFavicon } from '../../extensions/style.extensions';
 import { changePage, getPageName, queryToObject } from '../../extensions/url.extension';
 import { ClientInteropService } from '../../services/client-interop-service';
-import { LoginPage, LoginPage } from '../login-page/login-page';
+import { LoginPage } from '../login-page/login-page';
 import { MaintenancePage } from '../maintenance-page/maintenance-page';
 import { WelcomePage } from '../welcome-page/welcome-page';
 import { renderPageRoutingStyles } from './page-routing.css';

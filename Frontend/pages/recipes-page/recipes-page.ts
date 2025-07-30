@@ -22,7 +22,7 @@ export class RecipesPage extends LitElementBase {
     //     if (!this.filterSidebar?.filter) return [];
     //     var sorted = RecipeFilterService.filter(Session.recipes.current() ?? [], this.filterSidebar.filter);
     //     let sortingProperty = this.sortingProperty;
-    //     if (sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[sortingProperty]);
+    //     if (sortingProperty != 'unset') sorted = orderBy(sorted, (x) => x[sortingProperty]);
 
     //     if (this.sortingDirection == 'ascending') return sorted;
     //     return sorted.reverse();
@@ -66,7 +66,7 @@ export class RecipesPage extends LitElementBase {
         var filesToImport = await document.openFileBrowser('image/*');
         if (!filesToImport?.length) return;
 
-        await ImportFoodPage.cacheFiles(filesToImport);
+        ImportFoodPage.cacheFiles(filesToImport);
         changePage(ImportFoodPage, {});
     }
 

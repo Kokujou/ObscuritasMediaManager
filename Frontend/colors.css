@@ -1,6 +1,8 @@
 :root {
     --accent-color: #222a;
     --accent-color-full: #222;
-    --background-color: #444444ff;
+    --background-color: #444f;
     --font-color: #ddd;
+
+    --label-color: #883377;
 }

@@ -1,7 +1,7 @@
 import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
-import { union } from '../../extensions/array.extensions';
+
 import { getAllElementsRecurse } from '../../extensions/document.extensions';
 import { renderOrderedListStyles } from './ordered-list.css';
 import { renderOrderedList } from './ordered-list.html';
@@ -110,7 +110,7 @@ export class OrderedList extends LitElementBase {
         if (event.shiftKey) newValues = Array.from(this.getRangeBetween(this.lastIndex, index));
         else this.lastIndex = index;
 
-        if (event.ctrlKey) this.selectedIndices = union(this.selectedIndices, newValues);
+        if (event.ctrlKey) this.selectedIndices = this.selectedIndices.union(newValues);
         else this.selectedIndices = newValues;
 
         this.requestFullUpdate();

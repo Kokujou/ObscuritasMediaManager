@@ -3,6 +3,7 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state';
 export class DropDownOption<T> {
     text: string;
     value: T;
+    category?: string;
     state: CheckboxState;
     color: string;
 

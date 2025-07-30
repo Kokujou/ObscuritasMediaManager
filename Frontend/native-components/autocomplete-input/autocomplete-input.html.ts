@@ -6,9 +6,11 @@ export function renderAutocompleteInput(this: AutocompleteInput) {
         <input
             id="search-field"
             type="text"
-            .value="${this.value.text}"
+            .value="${this.value?.text ?? ''}"
+            placeholder="${this.placeholder ?? ''}"
             @input="${(e: Event) => this.handleInput(e)}"
             @keydown="${(e: KeyboardEvent) => this.handleKeyDown(e)}"
+            @blur="${() => setTimeout(() => this.selectItem(this.value), 200)}"
         />
         ${this.showDropdown
             ? html`<div id="dropdown">

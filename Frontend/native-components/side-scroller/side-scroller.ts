@@ -34,7 +34,7 @@ export class SideScroller extends LitElementBase {
         return this.currentItemIndex < this.children.length - 1;
     }
 
-    @state() protected declare currentItemIndex: number;
+    @state() public declare currentItemIndex: number;
 
     constructor() {
         super();
@@ -56,12 +56,21 @@ export class SideScroller extends LitElementBase {
         return renderSideScroller.call(this);
     }
 
+    setIndex(index: number) {
+        this.currentItemIndex = index;
+        var element = this.scrollChildren[this.currentItemIndex];
+        scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
+        this.requestFullUpdate();
+        this.dispatchEvent(new Event('change'));
+    }
+
     scrollToLeft() {
         if (this.currentItemIndex <= 0) return;
         this.currentItemIndex--;
         var element = this.scrollChildren[this.currentItemIndex];
         scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
         this.requestFullUpdate();
+        this.dispatchEvent(new Event('change'));
     }
 
     scrollToRight() {
@@ -71,5 +80,6 @@ export class SideScroller extends LitElementBase {
         var element = this.scrollChildren[this.currentItemIndex];
         scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
         this.requestFullUpdate();
+        this.dispatchEvent(new Event('change'));
     }
 }

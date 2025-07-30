@@ -143,4 +143,9 @@ public class RecipeRepository(DatabaseContext databaseContext)
         else databaseContext.Add(ingredient);
         await databaseContext.SaveChangesAsync();
     }
+
+    public IQueryable<string> SearchDishes(string search)
+    {
+        return databaseContext.Recipes.Select(x => x.Title).Where(x => x.ToLower().Contains(search.ToLower()));
+    }
 }

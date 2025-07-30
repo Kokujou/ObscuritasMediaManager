@@ -2,7 +2,7 @@ import { html } from 'lit-element';
 import { StarRating } from '../../advanced-components/star-rating/star-rating';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
-import { groupAndSelectBy, groupBy } from '../../extensions/array.extensions';
+
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
@@ -32,7 +32,7 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                             @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
                             @change="${(e: Event) => this.changeProperty('title', (e.target as HTMLInputElement).value)}"
                         />
-                        ${Object.entries(groupBy(this.recipe.ingredients, 'groupName')).map((group) =>
+                        ${Object.entries(this.recipe.ingredients.groupByKey('groupName')).map((group) =>
                             renderIngredientGroup.call(this, group)
                         )}
                         <button tabindex="0" id="add-group-link" @click="${(e: Event) => this.addIngredient('Neue Gruppe', e)}">
@@ -48,7 +48,7 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                                             .value="${{ id: cookware.name, text: cookware.name }}"
                                             .searchItems="${this.searchCookware}"
                                             @value-changed="${(e: CustomEvent<AutocompleteItem>) =>
-                                                this.updateCookware(cookware, e.detail.id)}"
+                                                this.updateCookware(cookware, e.detail.id!)}"
                                         ></autocomplete-input>
                                         <div
                                             class="remove-cookware-icon"
@@ -190,7 +190,7 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
             tabindex="0"
             compact
             .result="${{ category: ingredient.unit.measurement, value: ingredient.unit.name }}"
-            .options="${groupAndSelectBy(MeasurementUnits, 'measurement', 'name')}"
+            .options="${MeasurementUnits.groupAndSelectBy('measurement', 'name')}"
             class="ingredient-unit"
             @selectionChange="${(e: CustomEvent<GroupedDropdownResult>) =>
                 this.changeIngredientUnit(ingredient, e.detail.value!)}"

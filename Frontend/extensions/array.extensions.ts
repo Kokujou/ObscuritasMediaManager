@@ -1,63 +1,84 @@
-export function randomizeArray(array: any[]) {
-    var resultList = [];
+export {};
+
+declare global {
+    interface Array<T> {
+        randomize(): T[];
+        getDistance(selectedEntry: T, targetEntry: T): number;
+        groupBy<T>(this: T[], selector: (item: T) => any): Record<string, T[]>;
+        groupByKey<K extends keyof T>(key: K): Record<string, T[]>;
+        groupAndSelectBy<K extends keyof T, V extends keyof T>(groupKey: K, selectKey: V): Record<string, T[V][]>;
+        union(...others: T[][]): T[];
+        distinct(): T[];
+        distinctBy(selector: (item: T) => any): T[];
+        orderBy(...selectors: ((item: T) => any)[]): T[];
+    }
+
+    interface ArrayConstructor {
+        createRange(from: number, to: number): number[];
+    }
+}
+
+Array.prototype.randomize = function <T>(this: T[]): T[] {
+    const array = [...this];
+    const resultList: T[] = [];
     while (array.length > 0) {
-        var randomIndex = Math.floor(Math.random() * array.length);
+        const randomIndex = Math.floor(Math.random() * array.length);
         resultList.push(array.splice(randomIndex, 1)[0]);
     }
     return resultList;
-}
+};
 
-export function sortBy<T>(array: T[], selector: (item: T) => any) {
-    return array.sort((a, b) => (selector(a) > selector(b) ? 1 : selector(a) === selector(b) ? 0 : -1));
-}
-
-export function getDistance<T>(array: T[], selectedEntry: T, targetEntry: T) {
-    var selectedIndex = array.indexOf(selectedEntry);
-    var targetIndex = array.indexOf(targetEntry);
-    return targetIndex - selectedIndex;
-}
-
-export function groupBy<T, U extends keyof T>(array: T[], key: U) {
-    if (!array) return {};
-    return array.reduce(function (rv, x) {
-        (rv[x[key]] = rv[x[key]] || []).push(x);
+Array.prototype.groupByKey = function <T, K extends keyof T>(this: T[], key: K): Record<string, T[]> {
+    return this.reduce((rv, x) => {
+        const groupKey = String(x[key]);
+        (rv[groupKey] = rv[groupKey] || []).push(x);
         return rv;
-    }, {} as any) as { [key: string]: T[] };
-}
+    }, {} as Record<string, T[]>);
+};
 
-export function groupAndSelectBy<T, U extends keyof T, V extends keyof T>(array: T[], groupByKey: U, selectKey: V) {
-    if (!array) return {};
-    return array.reduce(function (rv, x) {
-        (rv[x[groupByKey]] = rv[x[groupByKey]] || []).push(x[selectKey]);
+Array.prototype.groupBy = function <T>(this: T[], selector: (item: T) => any): Record<string, T[]> {
+    return this.reduce((rv, x) => {
+        const groupKey = selector(x);
+        (rv[groupKey] = rv[groupKey] || []).push(x);
         return rv;
-    }, {} as any) as { [key: string]: T[] };
-}
+    }, {} as Record<string, T[]>);
+};
 
-export function createRange(from: number, to: number) {
-    var diff = to - from;
-    return [...new Array(diff + 1).keys()].map((x) => x + from);
-}
+Array.prototype.groupAndSelectBy = function <T, K extends keyof T, V extends keyof T>(
+    this: T[],
+    groupKey: K,
+    selectKey: V
+): Record<string, T[V][]> {
+    return this.reduce((rv, x) => {
+        const key = String(x[groupKey]);
+        (rv[key] = rv[key] || []).push(x[selectKey]);
+        return rv;
+    }, {} as Record<string, T[V][]>);
+};
 
-export function union<T>(...params: T[][]) {
-    if (params.length == 0) return [];
-    if (params.length == 1) return params[0];
-    return Array.from(new Set(params.flatMap((x) => x)));
-}
+Array.prototype.union = function <T>(this: T[], ...others: T[][]): T[] {
+    return Array.from(new Set([...this, ...others.flatMap((x) => x)]));
+};
 
-export function distinct<T>(array: T[]) {
-    return array.filter((value, index) => array.indexOf(value) === index);
-}
+Array.prototype.distinct = function <T>(this: T[]): T[] {
+    return this.filter((value, index, array) => array.indexOf(value) === index);
+};
 
-export function distinctBy<T>(array: T[], selector: (item: T) => any) {
-    return array.filter((value, index) => array.findIndex((x) => selector(x) == selector(value)) === index);
-}
+Array.prototype.distinctBy = function <T>(this: T[], selector: (item: T) => any): T[] {
+    return this.filter((value, index, array) => array.findIndex((x) => selector(x) === selector(value)) === index);
+};
 
-export function orderBy<T>(array: T[], ...selectors: ((item: T) => any)[]) {
-    return array.sort(function (a, b) {
+Array.prototype.orderBy = function <T>(this: T[], ...selectors: ((item: T) => any)[]): T[] {
+    return this.sort((a, b) => {
         for (const selector of selectors) {
             if (selector(a) < selector(b)) return -1;
             if (selector(a) > selector(b)) return 1;
         }
         return 0;
     });
-}
+};
+
+Array.createRange = function (from: number, to: number): number[] {
+    const diff = to - from;
+    return [...new Array(diff + 1).keys()].map((x) => x + from);
+};

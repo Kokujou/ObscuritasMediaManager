@@ -1,4 +1,3 @@
-import { distinct } from '../../extensions/array.extensions';
 import { MediaGenreCategory, MediaGenreModel } from '../../obscuritas-media-manager-backend-client';
 
 const MandatoryGenres = [
@@ -24,5 +23,5 @@ export function getAvailableGenreSections(selectedGenres: MediaGenreModel[]) {
     var baseSections = MandatoryGenres.concat(selectedGenres.map((x) => x.section));
     var selectedMainGenres = selectedGenres.filter((x) => x.section == MediaGenreCategory.MainGenre);
     for (var mainGenre of selectedMainGenres) baseSections = baseSections.concat(MainGenreConditions[mainGenre.name] ?? []);
-    return distinct(baseSections);
+    return baseSections.distinct();
 }

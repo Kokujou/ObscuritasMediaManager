@@ -9,7 +9,7 @@ import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
 import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog';
 import { PlaylistSelectionDialog } from '../../dialogs/playlist-selection-dialog/playlist-selection-dialog';
-import { sortBy } from '../../extensions/array.extensions';
+
 import { changePage } from '../../extensions/url.extension';
 import { ContextMenu } from '../../native-components/context-menu/context-menu';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
@@ -47,7 +47,7 @@ export class MusicPage extends LitElementBase {
     get filteredPlaylists() {
         var sorted = MusicFilterService.filterPlaylists(this.playlists, this.filter);
         let sortingProperty = this.sortingProperty;
-        if (sortingProperty in PlaylistModel) sorted = sortBy(sorted, (x) => x[sortingProperty as keyof PlaylistModel]);
+        if (sortingProperty in PlaylistModel) sorted = sorted.orderBy((x) => x[sortingProperty as keyof PlaylistModel]);
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }
@@ -55,7 +55,7 @@ export class MusicPage extends LitElementBase {
     get filteredTracks() {
         var sorted = MusicFilterService.filterTracks(Session.tracks.current(), this.filter);
         let sortingProperty = this.sortingProperty;
-        if (sortingProperty != 'unset') sorted = sortBy(sorted, (x) => x[sortingProperty]);
+        if (sortingProperty != 'unset') sorted = sorted.orderBy((x) => x[sortingProperty]);
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }

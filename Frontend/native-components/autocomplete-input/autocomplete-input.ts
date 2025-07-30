@@ -3,7 +3,7 @@ import { LitElementBase } from '../../data/lit-element-base';
 import { renderAutocompleteInputStyles } from './autocomplete-input.css';
 import { renderAutocompleteInput } from './autocomplete-input.html';
 
-export type AutocompleteItem = { text: string; id: string };
+export type AutocompleteItem = { text: string; id: string | null };
 
 @customElement('autocomplete-input')
 export class AutocompleteInput extends LitElementBase {
@@ -11,17 +11,22 @@ export class AutocompleteInput extends LitElementBase {
         return renderAutocompleteInputStyles();
     }
 
-    @property() public declare searchItems: (text: string) => Promise<AutocompleteItem[]>;
-    @property({ type: Object }) public declare value: AutocompleteItem;
+    @property() public declare searchItems?: (text: string) => Promise<AutocompleteItem[]>;
+    @property() public declare placeholder?: string;
+    @property({ type: Object }) public declare value?: AutocompleteItem;
+    @property({ type: Boolean }) public declare allowText: boolean;
 
     @state() protected declare showDropdown: boolean;
     @state() protected declare searchResult: AutocompleteItem[] | undefined;
-    @state() protected declare focusedItem: AutocompleteItem | undefined;
+    @state() protected declare focusedItem: AutocompleteItem | null;
 
-    @query('#search-field') protected declare searchField: HTMLInputElement;
+    @query('#search-field') public declare searchField: HTMLInputElement;
 
     connectedCallback() {
         super.connectedCallback();
+
+        this.onblur = () => this.selectItem(this.value);
+        this.tabIndex = 0;
     }
 
     override render() {
@@ -36,8 +41,8 @@ export class AutocompleteInput extends LitElementBase {
             return;
         }
 
-        this.searchResult = await this.searchItems((event.target as HTMLInputElement).value);
-        this.showDropdown = true;
+        if (this.searchItems) this.searchResult = await this.searchItems((event.target as HTMLInputElement).value);
+        if (this.searchResult?.length) this.showDropdown = true;
     }
 
     handleKeyDown(event: KeyboardEvent) {
@@ -46,7 +51,7 @@ export class AutocompleteInput extends LitElementBase {
             return;
         }
 
-        if (event.key == 'Enter' && this.focusedItem && this.showDropdown) {
+        if (event.key == 'Enter' && this.showDropdown) {
             this.selectItem(this.focusedItem);
             return;
         }
@@ -72,10 +77,15 @@ export class AutocompleteInput extends LitElementBase {
         }
     }
 
-    selectItem(item: AutocompleteItem) {
+    selectItem(item: AutocompleteItem | undefined | null) {
+        if (!item?.id && !this.allowText) return;
+        if (!item?.id) item = { id: null, text: this.searchField.value };
+        console.log(item);
         this.value = item;
+
         this.dispatchEvent(new CustomEvent('value-changed', { bubbles: true, composed: true, detail: this.value }));
+        this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
         this.showDropdown = false;
-        this.searchField.value = this.value.text;
+        this.searchField.value = this.value?.text ?? '';
     }
 }

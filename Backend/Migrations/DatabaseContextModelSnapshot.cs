@@ -32,6 +32,24 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.ToTable("MediaGenreMapping");
                 });
 
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodTagModel", b =>
+                {
+                    b.Property<Guid>("RecipeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Key")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("RecipeId", "Key", "Value");
+
+                    b.ToTable("FoodTagMapping");
+                });
+
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.GenreModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -408,57 +426,46 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.ToTable("RecipeIngredientMapping");
                 });
 
-            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeModel", b =>
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeModelBase", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("CookingTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Course")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("Deleted")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Difficulty")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("FormattedText")
-                        .HasMaxLength(9999)
-                        .HasColumnType("TEXT");
-
                     b.Property<byte[]>("ImageData")
                         .HasColumnType("BLOB");
 
-                    b.Property<bool>("IsRecipe")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Nation")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<TimeSpan>("PreparationTime")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("Rating")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Technique")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Recipes");
+
+                    b.HasDiscriminator<string>("Type").HasValue("RecipeModelBase");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.UserModel", b =>
@@ -504,6 +511,34 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.ToTable("UserSettings");
                 });
 
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodModel", b =>
+                {
+                    b.HasBaseType("ObscuritasMediaManager.Backend.Models.RecipeModelBase");
+
+                    b.ToTable("Recipes");
+
+                    b.HasDiscriminator().HasValue("Food");
+                });
+
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeModel", b =>
+                {
+                    b.HasBaseType("ObscuritasMediaManager.Backend.Models.RecipeModelBase");
+
+                    b.Property<TimeSpan>("CookingTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FormattedText")
+                        .HasMaxLength(9999)
+                        .HasColumnType("TEXT");
+
+                    b.Property<TimeSpan>("PreparationTime")
+                        .HasColumnType("TEXT");
+
+                    b.ToTable("Recipes");
+
+                    b.HasDiscriminator().HasValue("Recipe");
+                });
+
             modelBuilder.Entity("MediaGenreMapping", b =>
                 {
                     b.HasOne("ObscuritasMediaManager.Backend.Models.MediaGenreModel", null)
@@ -515,6 +550,15 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.HasOne("ObscuritasMediaManager.Backend.Models.MediaModel", null)
                         .WithMany()
                         .HasForeignKey("MediaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodTagModel", b =>
+                {
+                    b.HasOne("ObscuritasMediaManager.Backend.Models.RecipeModelBase", null)
+                        .WithMany("Tags")
+                        .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -611,6 +655,11 @@ namespace ObscuritasMediaManager.Backend.Migrations
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.PlaylistModel", b =>
                 {
                     b.Navigation("TrackMappings");
+                });
+
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeModelBase", b =>
+                {
+                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeModel", b =>

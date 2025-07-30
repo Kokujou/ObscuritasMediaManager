@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
-import { createRange, groupBy } from '../../extensions/array.extensions';
+
 import { Enum } from '../../extensions/enum.extensions';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
 import { LinkElement } from '../../native-components/link-element/link-element';
@@ -52,7 +52,7 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                             <star-rating
                                 max="5"
                                 singleSelect
-                                .values="${createRange(0, this.updatedMedia.rating)}"
+                                .values="${Array.createRange(0, this.updatedMedia.rating)}"
                                 @ratingChanged="${(e: CustomEvent<{ rating: number; include: boolean }>) =>
                                     this.changeProperty('rating', e.detail.rating)}"
                             ></star-rating>
@@ -319,7 +319,7 @@ function renderGenreSection(this: MediaDetailPage) {
     return html`<div class="property-entry genre-entry">
         <div class="property-name">Genres:</div>
         <div class="property-value">
-            ${Object.entries(groupBy(this.updatedMedia?.genres ?? [], 'section'))
+            ${Object.entries((this.updatedMedia?.genres ?? []).groupByKey('section'))
                 .flatMap((x) => x[1])
                 .map(
                     (x) =>

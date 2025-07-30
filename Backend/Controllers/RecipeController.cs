@@ -11,9 +11,15 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 public class RecipeController(RecipeRepository recipeRepository) : ControllerBase
 {
     [HttpGet]
-    public IQueryable<RecipeModel> GetAllRecipes()
+    public IQueryable<RecipeModelBase> GetAllRecipes()
     {
         return recipeRepository.GetAll();
+    }
+
+    [HttpPost("search-dishes")]
+    public IQueryable<string> SearchDishes(string search)
+    {
+        return recipeRepository.SearchDishes(search);
     }
 
     [HttpGet("{id}")]
@@ -29,13 +35,13 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
         //    foreach (var ingredient in recipe.Ingredients) ingredient.RecipeId = recipe.Id;
 
         await recipeRepository.CreateRecipeAsync(recipe);
-        return recipe.Id!.Value;
+        return recipe.Id;
     }
 
     [HttpPatch]
     public async Task UpdateRecipeAsync(RecipeModel recipe)
     {
-        var current = await recipeRepository.GetAsync(recipe.Id!.Value);
+        var current = await recipeRepository.GetAsync(recipe.Id);
         if (current is null) throw new("recipe not found");
 
         await recipeRepository.UpdateRecipeAsync(recipe);

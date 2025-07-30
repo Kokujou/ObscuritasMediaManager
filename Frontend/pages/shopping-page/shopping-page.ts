@@ -2,7 +2,7 @@ import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { InputDialog } from '../../dialogs/input-dialog/input-dialog';
-import { distinctBy, orderBy } from '../../extensions/array.extensions';
+
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import { IngredientCategory, IngredientModel, Language } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
@@ -42,16 +42,13 @@ export class ShoppingPage extends LitElementBase {
     get filteredIngredients() {
         const ingredients = [...this.ingredients];
         ObjectFilterService.applyMultiPropertySearch(ingredients, this.searchText ?? '', 'ingredientName');
-        const filtered = distinctBy(
-            ingredients
-                .filter((x) => !this.nation || this.nation == Language.Unset || x.nation == this.nation)
-                .filter((x) => !this.category || x.category == this.category)
-                .concat(ingredients.filter((x) => this.newIngredients.includes(x.ingredientName))),
-            (x) => x.ingredientName
-        );
+        const filtered = ingredients
+            .filter((x) => !this.nation || this.nation == Language.Unset || x.nation == this.nation)
+            .filter((x) => !this.category || x.category == this.category)
+            .concat(ingredients.filter((x) => this.newIngredients.includes(x.ingredientName)))
+            .distinctBy((x) => x.ingredientName);
 
-        const sorted = orderBy(
-            filtered,
+        const sorted = filtered.orderBy(
             (i) => !this.newIngredients.includes(i.ingredientName),
             (i) => !Session.favoriteIngredients.includes(i.ingredientName),
             (i) => i.ingredientName.toLowerCase()
