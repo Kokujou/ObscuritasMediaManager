@@ -61,7 +61,7 @@ export class SideScroller extends LitElementBase {
         var element = this.scrollChildren[this.currentItemIndex];
         scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
         this.requestFullUpdate();
-        this.dispatchEvent(new Event('change'));
+        this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     }
 
     scrollToLeft() {
@@ -70,7 +70,7 @@ export class SideScroller extends LitElementBase {
         var element = this.scrollChildren[this.currentItemIndex];
         scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
         this.requestFullUpdate();
-        this.dispatchEvent(new Event('change'));
+        this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     }
 
     scrollToRight() {
@@ -80,6 +80,6 @@ export class SideScroller extends LitElementBase {
         var element = this.scrollChildren[this.currentItemIndex];
         scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
         this.requestFullUpdate();
-        this.dispatchEvent(new Event('change'));
+        this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     }
 }

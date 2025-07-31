@@ -28,6 +28,12 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
         return await recipeRepository.GetAsync(id);
     }
 
+    [HttpPost("import-dishes")]
+    public async Task ImportDishes([FromBody] List<FoodModel> dishes)
+    {
+        await recipeRepository.ImportDishesAsync(dishes);
+    }
+
     [HttpPost]
     public async Task<Guid> CreateRecipe([FromBody] RecipeModel recipe)
     {

@@ -1964,6 +1964,41 @@ export class RecipeClient {
         return Promise.resolve<RecipeModel>(null as any);
     }
 
+    importDishes(dishes: FoodModel[], signal?: AbortSignal): Promise<void> {
+        let url_ = this.baseUrl + "/api/Recipe/import-dishes";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(dishes);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processImportDishes(_response);
+        });
+    }
+
+    protected processImportDishes(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
     getIngredients(signal?: AbortSignal): Promise<IngredientModel[]> {
         let url_ = this.baseUrl + "/api/Recipe/ingredients";
         url_ = url_.replace(/[?&]$/, "");
@@ -3454,6 +3489,7 @@ export class RecipeModelBase implements IRecipeModelBase {
     title!: string;
     description!: string;
     imageData!: string | null;
+    imageHash!: string;
     difficulty!: number;
     rating!: number;
     deleted!: boolean;
@@ -3482,6 +3518,7 @@ export class RecipeModelBase implements IRecipeModelBase {
             this.title = _data["title"] !== undefined ? _data["title"] : <any>null;
             this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
             this.imageData = _data["imageData"] !== undefined ? _data["imageData"] : <any>null;
+            this.imageHash = _data["imageHash"] !== undefined ? _data["imageHash"] : <any>null;
             this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : <any>null;
             this.rating = _data["rating"] !== undefined ? _data["rating"] : <any>null;
             this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : <any>null;
@@ -3513,6 +3550,7 @@ export class RecipeModelBase implements IRecipeModelBase {
         data["title"] = this.title !== undefined ? this.title : <any>null;
         data["description"] = this.description !== undefined ? this.description : <any>null;
         data["imageData"] = this.imageData !== undefined ? this.imageData : <any>null;
+        data["imageHash"] = this.imageHash !== undefined ? this.imageHash : <any>null;
         data["difficulty"] = this.difficulty !== undefined ? this.difficulty : <any>null;
         data["rating"] = this.rating !== undefined ? this.rating : <any>null;
         data["deleted"] = this.deleted !== undefined ? this.deleted : <any>null;
@@ -3538,6 +3576,7 @@ export interface IRecipeModelBase {
     title: string;
     description: string;
     imageData: string | null;
+    imageHash: string;
     difficulty: number;
     rating: number;
     deleted: boolean;

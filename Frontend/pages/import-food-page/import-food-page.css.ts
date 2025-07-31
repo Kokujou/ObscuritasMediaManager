@@ -6,12 +6,14 @@ export function renderImportFoodPageStyles() {
             width: 100%;
             height: 100%;
             padding: 30px;
+            border-radius: 20px;
             box-sizing: border-box;
 
             display: inline-flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
+            background: #0009;
         }
 
         #current-image-editor {
@@ -24,8 +26,6 @@ export function renderImportFoodPageStyles() {
             display: flex;
             align-items: center;
             justify-content: center;
-
-            background: #000;
         }
 
         #edit-image-sidebar {

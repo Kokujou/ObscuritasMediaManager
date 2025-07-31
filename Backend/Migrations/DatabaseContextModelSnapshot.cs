@@ -446,6 +446,11 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.Property<byte[]>("ImageData")
                         .HasColumnType("BLOB");
 
+                    b.Property<string>("ImageHash")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Rating")
                         .HasColumnType("INTEGER");
 
@@ -456,10 +461,13 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasMaxLength(21)
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageHash")
+                        .IsUnique();
 
                     b.ToTable("Recipes");
 

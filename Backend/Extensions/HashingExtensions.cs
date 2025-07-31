@@ -17,7 +17,7 @@ public static class HashingExtensions
         return BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
     }
 
-    public static string GetHash<T>(this T input) where T : notnull
+    public static string GetHash<T>(this T input)
     {
         var type = typeof(T);
         if (type == typeof(object))
@@ -25,13 +25,13 @@ public static class HashingExtensions
         return input.GetHash(type);
     }
 
-    public static string GetHash(this object input, Type type)
+    public static string GetHash(this object? input, Type type)
     {
         using var md5 = MD5.Create();
 
         if (type.IsPrimitive || type == typeof(string) || type == typeof(decimal))
             return string.Join(string.Empty,
-                md5.ComputeHash(Encoding.UTF8.GetBytes(input.ToString() ?? string.Empty))
+                md5.ComputeHash(Encoding.UTF8.GetBytes(input?.ToString() ?? string.Empty))
                     .Select(x => x.ToString("X2")));
 
         List<PropertyInfo> hashableProperties;

@@ -148,4 +148,16 @@ public class RecipeRepository(DatabaseContext databaseContext)
     {
         return databaseContext.Recipes.Select(x => x.Title).Where(x => x.ToLower().Contains(search.ToLower()));
     }
+
+    public async Task ImportDishesAsync(List<FoodModel> dishes)
+    {
+        var hashDict = dishes.ToDictionary(x => x.ImageHash, x => x);
+
+        var duplicateHashes = await databaseContext.Set<RecipeModelBase>()
+            .Where(x => hashDict.Keys.Contains(x.ImageHash)).Select(x => x.ImageHash).ToListAsync();
+        foreach (var hash in duplicateHashes) hashDict.Remove(hash);
+
+        databaseContext.AddRange(hashDict.Values);
+        await databaseContext.SaveChangesAsync();
+    }
 }
