@@ -24,10 +24,10 @@ public class RecipeModelBase
             .HasPrincipalKey(x => x.IngredientName).IsRequired(false);
     }
 
-    [Key] public Guid Id { get; set; } = Guid.NewGuid();
+    [Key] public Guid Id { get; private set; } = Guid.NewGuid();
     [MaxLength(255)] public required string Title { get; set; }
     [MaxLength(255)] public required string Description { get; set; }
-    public byte[]? ImageData { get; set; }
+    public string? ImageData { get; set; }
     [JsonIgnore]
     [MaxLength(32)]
     public string ImageHash
@@ -38,7 +38,7 @@ public class RecipeModelBase
     public int Difficulty { get; set; }
     public int Rating { get; set; }
     public bool Deleted { get; set; }
-    [MaxLength(255)] public required string Type { get; set; } = null!;
+    [MaxLength(255)] public string? Type { get; set; }
 
     [ForeignKey(nameof(FoodTagModel.RecipeId))]
     public List<FoodTagModel> Tags { get; set; } = [];

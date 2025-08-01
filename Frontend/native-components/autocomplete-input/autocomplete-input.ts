@@ -80,7 +80,6 @@ export class AutocompleteInput extends LitElementBase {
     selectItem(item: AutocompleteItem | undefined | null) {
         if (!item?.id && !this.allowText) return;
         if (!item?.id) item = { id: null, text: this.searchField.value };
-        console.log(item);
         this.value = item;
 
         this.dispatchEvent(new CustomEvent('value-changed', { bubbles: true, composed: true, detail: this.value }));

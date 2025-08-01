@@ -28,18 +28,15 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
         return await recipeRepository.GetAsync(id);
     }
 
-    [HttpPost("import-dishes")]
-    public async Task ImportDishes([FromBody] List<FoodModel> dishes)
+    [HttpPut("dish")]
+    public async Task ImportDish([FromBody] FoodModel dish)
     {
-        await recipeRepository.ImportDishesAsync(dishes);
+        await recipeRepository.CreateDishAsync(dish);
     }
 
     [HttpPost]
     public async Task<Guid> CreateRecipe([FromBody] RecipeModel recipe)
     {
-        recipe.Id = Guid.NewGuid();
-        //    foreach (var ingredient in recipe.Ingredients) ingredient.RecipeId = recipe.Id;
-
         await recipeRepository.CreateRecipeAsync(recipe);
         return recipe.Id;
     }

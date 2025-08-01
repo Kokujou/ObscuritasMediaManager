@@ -1,28 +1,40 @@
 import { RecipeFilterOptions } from '../advanced-components/recipe-filter/recipe-filter-options';
 import { TimeSpan } from '../data/timespan';
-import { RecipeModel } from '../obscuritas-media-manager-backend-client';
+import { RecipeModel } from '../obscuritas-media-manager-backend -obscuritas-media-manager-services-client';
+import { FoodModel, RecipeModelBase } from '../obscuritas-media-manager-backend-client';
 import { ObjectFilterService } from './object-filter.service';
 
 export class RecipeFilterService {
-    static filter(recipes: RecipeModel[], filter: RecipeFilterOptions) {
-        var filteredRecipes = [...recipes];
+    static filter(recipes: RecipeModelBase[], filter: RecipeFilterOptions) {
+        var filteredItems = [...recipes];
 
-        ObjectFilterService.applyValueFilter(filteredRecipes, filter.showDeleted, 'deleted');
-        ObjectFilterService.applyMultiPropertySearch(filteredRecipes, filter.search ?? '', 'title', 'formattedText');
-        ObjectFilterService.applyPropertyFilter(filteredRecipes, filter.courses, 'course');
-        ObjectFilterService.applyPropertyFilter(filteredRecipes, filter.techniques, 'technique');
+        ObjectFilterService.applyValueFilter(filteredItems, filter.showDeleted, 'deleted');
+        ObjectFilterService.applyPropertyFilter(filteredItems, filter.ratings, 'rating');
+        if (filter.maxDifficulty > 0)
+            ObjectFilterService.applyRangeFilter(filteredItems, { min: 0, max: filter.maxDifficulty }, 'difficulty');
+
+        /* To be verified!! */
+        ObjectFilterService.applyArrayFilter(filteredItems, filter.courses, 'tags');
+        ObjectFilterService.applyArrayFilter(filteredItems, filter.techniques, 'tags');
+        ObjectFilterService.applyArrayFilter(filteredItems, filter.nations, 'tags');
+
+        var filteredRecipes = filteredItems.filter((x) => x instanceof RecipeModel);
+        var filteredFood = filteredItems.filter((x) => x instanceof FoodModel);
+
         ObjectFilterService.applyArrayFilter(filteredRecipes, filter.ingredients, 'ingredientNames');
-        ObjectFilterService.applyPropertyFilter(filteredRecipes, filter.nations, 'nation');
-        ObjectFilterService.applyPropertyFilter(filteredRecipes, filter.ratings, 'rating');
+        ObjectFilterService.applyMultiPropertySearch(filteredFood, filter.search ?? '', 'title', 'description');
+        ObjectFilterService.applyMultiPropertySearch(
+            filteredRecipes,
+            filter.search ?? '',
+            'title',
+            'description',
+            'formattedText'
+        );
         if (filter.maxDuration.toString() != new TimeSpan().toString())
             filteredRecipes = filteredRecipes.filter((x) =>
                 TimeSpan.fromString(x[filter.filterByTime]).smallerThan(filter.maxDuration)
             );
-        if (filter.maxDifficulty > 0)
-            ObjectFilterService.applyRangeFilter(filteredRecipes, { min: 0, max: filter.maxDifficulty }, 'difficulty');
-        // ObjectFilterService.applyValueFilter(filteredRecipes, filter.showComplete, 'complete');
-        // ObjectFilterService.applyValueFilter(filteredRecipes, filter.showDeleted, 'deleted');
 
-        return filteredRecipes;
+        return filteredItems;
     }
 }

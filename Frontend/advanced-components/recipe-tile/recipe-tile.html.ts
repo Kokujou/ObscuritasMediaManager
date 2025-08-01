@@ -23,9 +23,15 @@ export function renderRecipeTile(this: RecipeTile) {
                     : this.compact
                     ? html` <upload-area></upload-area> `
                     : ''}
-                <div id="nation-icon" class="icon" nation="${recipe.nation}" @click="${() => this.notifyNationChanged()}"></div>
+                <div id="nation-icon" class="icon" @click="${() => this.notifyNationChanged()}"></div>
                 <div id="total-time">${TimeSpan.format(recipe.totalTime)}</div>
-                <star-rating id="rating" max="5" singleSelect disabled .values="${Array.createRange(0, recipe.rating)}"></star-rating>
+                <star-rating
+                    id="rating"
+                    max="5"
+                    singleSelect
+                    disabled
+                    .values="${Array.createRange(0, recipe.rating)}"
+                ></star-rating>
                 <star-rating
                     id="difficulty"
                     max="5"
@@ -39,8 +45,6 @@ export function renderRecipeTile(this: RecipeTile) {
             ${!this.compact
                 ? html` <div id="text-container">
                       <div id="recipe-title">${recipe.title}</div>
-                      <div id="">Zubereitungsart: ${recipe.technique}</div>
-                      <div id="">Gang: ${recipe.course}</div>
                   </div>`
                 : ''}
         </div>

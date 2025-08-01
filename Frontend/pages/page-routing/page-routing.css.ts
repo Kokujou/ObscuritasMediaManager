@@ -27,7 +27,7 @@ export function renderPageRoutingStyles() {
         }
 
         #current-page {
-            position: relative;
+            position: absolute;
             left: 0;
             top: 0;
             overflow: hidden;

@@ -1,5 +1,3 @@
-using System.Text.Encodings.Web;
-using System.Text.Json.Serialization;
 using Genius;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
@@ -7,8 +5,11 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Authentication;
 using ObscuritasMediaManager.Backend.DataRepositories;
+using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Services;
 using ObscuritasMediaManager.Backend.Services.Interfaces;
+using System.Text.Encodings.Web;
+using System.Text.Json.Serialization;
 using Xabe.FFmpeg;
 
 namespace ObscuritasMediaManager.Backend;
@@ -96,7 +97,12 @@ public class Startup
                         if (exception is null) return;
 
                         Log.Error(exception.ToString());
-                        context.Response.StatusCode = 400;
+
+                        context.Response.StatusCode = exception switch
+                        {
+                            ConflictException => 409,
+                            _ => 400
+                        };
 
                         await context.Response
                             .WriteAsJsonAsync(

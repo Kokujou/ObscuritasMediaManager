@@ -6,12 +6,14 @@ import { FoodTagModel } from '../../obscuritas-media-manager-backend-client';
 import { ImportFoodPage } from './import-food-page';
 
 ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFoodPage) {
-    if (!this.paginatedFiles.length) return;
     return html`
         <div id="page">
             <div id="current-image-editor">
                 <img id="current-image" src="${this.currentImage.imageData!}" />
-                <div id="edit-image-sidebar" @change="${this.updateCurrentImage}">
+                <div
+                    id="edit-image-sidebar"
+                    @change="${() => ImportFoodPage.cacheMetadata(this.sideScroller.currentItemIndex, this.currentImage)}"
+                >
                     <autocomplete-input
                         id="food-name"
                         allowText
@@ -66,9 +68,9 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                     </div>
                 </div>
                 <side-scroller
-                    @change="${() => {
-                        if (this.sideScroller.currentItemIndex >= this.paginatedFiles.length - 5) this.loadMoreImages();
-                        this.changeCurrentImage();
+                    @change="${async () => {
+                        if (this.sideScroller.currentItemIndex >= this.paginatedFiles.length - 5) await this.loadMoreImages();
+                        await this.changeCurrentImage();
                     }}"
                 >
                     ${this.paginatedFiles.map(
@@ -81,6 +83,10 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                         </div>`
                     )}
                 </side-scroller>
+            </div>
+
+            <div id="finish-import-button" @click="${async () => await this.importFiles()}">
+                <div id="finish-import-icon"></div>
             </div>
         </div>
     `;

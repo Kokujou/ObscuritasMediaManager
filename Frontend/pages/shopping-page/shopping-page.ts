@@ -4,6 +4,7 @@ import { Session } from '../../data/session';
 import { InputDialog } from '../../dialogs/input-dialog/input-dialog';
 
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
+import { RecipeModel } from '../../obscuritas-media-manager-backend -obscuritas-media-manager-services-client';
 import { IngredientCategory, IngredientModel, Language } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
 import { ObjectFilterService } from '../../services/object-filter.service';
@@ -23,18 +24,20 @@ export class ShoppingPage extends LitElementBase {
         return [
             ...Session.ingredients.current(),
             ...Session.recipes.current().flatMap((recipe) =>
-                recipe.ingredients
-                    .filter((x) => !Session.ingredients.current().some((y) => x.ingredientName == y.ingredientName))
-                    .map(
-                        (y) =>
-                            y.ingredient ??
-                            new IngredientModel({
-                                ingredientName: y.ingredientName,
-                                lowestKnownPrice: '',
-                                category: IngredientCategory.Miscellaneous,
-                                nation: Language.Unset,
-                            })
-                    )
+                recipe instanceof RecipeModel
+                    ? recipe.ingredients
+                          .filter((x) => !Session.ingredients.current().some((y) => x.ingredientName == y.ingredientName))
+                          .map(
+                              (y) =>
+                                  y.ingredient ??
+                                  new IngredientModel({
+                                      ingredientName: y.ingredientName,
+                                      lowestKnownPrice: '',
+                                      category: IngredientCategory.Miscellaneous,
+                                      nation: Language.Unset,
+                                  })
+                          )
+                    : []
             ),
         ];
     }

@@ -1,4 +1,6 @@
 import { css } from 'lit-element';
+import { renderMaskImage } from '../../extensions/style.extensions';
+import { saveTickIcon } from '../../resources/inline-icons/general/save-tick-icon.svg';
 
 export function renderImportFoodPageStyles() {
     return css`
@@ -132,7 +134,8 @@ export function renderImportFoodPageStyles() {
         }
 
         .remove-image-icon:hover {
-            background: red;
+            background-color: red;
+            transition: background-color 0.5s ease-out;
         }
 
         .arrow-link {
@@ -151,6 +154,35 @@ export function renderImportFoodPageStyles() {
             filter: brightness(0.6);
             cursor: default;
             pointer-events: none;
+        }
+
+        #finish-import-button {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 20px;
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: green;
+            box-shadow: 0 0 20px green;
+            cursor: pointer;
+        }
+
+        #finish-import-button:hover {
+            scale: 1.2;
+            transition: scale 0.2s ease-out;
+        }
+
+        #finish-import-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+
+            ${renderMaskImage(saveTickIcon())};
         }
     `;
 }

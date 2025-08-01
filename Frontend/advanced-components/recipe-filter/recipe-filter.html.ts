@@ -3,10 +3,14 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { MusicSortingProperties } from '../../data/music-sorting-properties';
 import { TimeSpan } from '../../data/timespan';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
-import { CookingTechnique, Course, Language } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { RecipeFilter } from './recipe-filter';
 import { RecipeTimes } from './recipe-filter-options';
+import {
+    Language,
+    Course,
+    CookingTechnique,
+} from '../../obscuritas-media-manager-backend -obscuritas-media-manager-services-client';
 
 export function renderRecipeFilter(this: RecipeFilter) {
     return html`

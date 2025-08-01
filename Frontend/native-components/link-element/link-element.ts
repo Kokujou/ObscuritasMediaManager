@@ -61,7 +61,6 @@ export class LinkElement extends LitElementBase {
     }
 
     handleClick(event: MouseEvent) {
-        console.log('link-click');
         if (this.target == '_blank') return;
         if (event.button == 0) event.preventDefault();
         if (this.disabled) return;

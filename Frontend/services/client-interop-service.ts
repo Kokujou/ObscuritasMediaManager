@@ -69,7 +69,6 @@ export class ClientInteropService {
 
         await InteropProxyService.connectToInterop();
         this.socket = await this.#tryConnect();
-        console.log('websocket connection successfull');
         this.onConnected.next(null);
         this.failCounter.next(0);
         while (!PageRouting.instance) await waitForSeconds(1);

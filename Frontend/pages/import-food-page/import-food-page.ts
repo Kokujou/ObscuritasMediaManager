@@ -1,32 +1,48 @@
 import { customElement, query, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
+import { waitForAnimation } from '../../extensions/animation.extension';
 import { dimLight, undimLight } from '../../extensions/document.extensions';
 import { changePage, getQueryValue } from '../../extensions/url.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { SideScroller } from '../../native-components/side-scroller/side-scroller';
 import { FoodModel } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
+import { RecipesPage } from '../recipes-page/recipes-page';
 import { renderImportFoodPageStyles } from './import-food-page.css';
 
 const CacheName = 'food-cache' as const;
 let Cache = await caches.open(CacheName);
 const MetadataCacheKey = (i: number) => `ImportFood.item.${i}`;
+const ImageCacheKey = (i: number) => `https://localhost/food-item/${i}`;
 
 @customElement('import-food-page')
 export class ImportFoodPage extends LitElementBase {
     static isPage = true as const;
     static caching = false;
 
-    static async cacheFiles(files: FileList) {
+    static async cacheMetadata(index: number, dish: FoodModel) {
+        localStorage.setItem(MetadataCacheKey(index), JSON.stringify(Object.assign({}, dish, { imageData: null })));
+    }
+
+    static async cacheFilesParallel(files: FileList) {
+        if (files.length) await this.clearCache();
+        await this.cacheFiles(files);
+    }
+
+    private static async clearCache() {
+        for (var request of await Cache.keys()) await Cache.delete(request);
+
+        for (let i = 0; i < localStorage.length; i++)
+            if (localStorage.key(i)!.startsWith('ImportFood.item')) localStorage.removeItem(localStorage.key(i)!);
+    }
+
+    private static async cacheFiles(files: FileList | Response[]) {
         this.caching = true;
-        if (files.length) {
-            for (var request of await Cache.keys()) await Cache.delete(request);
-
-            for (let i = 0; i < localStorage.length; i++)
-                if (localStorage.key(i)!.startsWith('ImportFood.item')) localStorage.removeItem(localStorage.key(i)!);
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            await Cache.put(ImageCacheKey(i), file instanceof Response ? file : new Response(file));
         }
-
-        for (let i = 0; i < files.length; i++) await Cache.put(i.toString(), new Response(files[i]));
         this.caching = false;
     }
 
@@ -38,12 +54,10 @@ export class ImportFoodPage extends LitElementBase {
 
     protected paginatedFiles: string[] = [];
     @state() protected declare currentImage: FoodModel;
-    @state() protected declare pageSize: number;
 
     constructor() {
         super();
-        this.pageSize = 0;
-        this.currentImage = new FoodModel();
+        this.currentImage = new FoodModel({ tags: [] });
     }
 
     override render() {}
@@ -54,29 +68,38 @@ export class ImportFoodPage extends LitElementBase {
         document.title = 'Gerichte importieren';
 
         var fromQuery = getQueryValue('index');
+        await this.requestFullUpdate();
+        await this.updated;
+        await waitForAnimation();
         await this.loadMoreImages();
         if (fromQuery) this.sideScroller.setIndex(Number.parseInt(fromQuery));
     }
 
     async loadMoreImages() {
-        if (this.pageSize && this.paginatedFiles.length < this.pageSize) return;
+        const currentLength = this.paginatedFiles.length;
+        let itemsToGet = 10;
+        while (this.sideScroller.currentItemIndex > currentLength + itemsToGet) itemsToGet += 10;
 
-        while (ImportFoodPage.caching && (await Cache.keys()).length < 10) await Promise.resolve();
-        if (!(await Cache.keys()).length) throw new Error('no items to import!');
-        this.pageSize += 10;
-        for (var response of (await Cache.matchAll()).slice(this.paginatedFiles.length))
-            this.paginatedFiles.push(URL.createObjectURL(await response!.blob()));
+        do var cacheSize = (await Cache.keys()).length;
+        while (ImportFoodPage.caching && cacheSize < itemsToGet);
+
+        if (cacheSize <= this.paginatedFiles.length) return;
+        if (!cacheSize) throw new Error('no items to import!');
+
+        for (var i = 0; i < itemsToGet; i++) {
+            var fromCache = await Cache.match(ImageCacheKey(currentLength + i));
+            if (!fromCache) break;
+            this.paginatedFiles.push(URL.createObjectURL(await fromCache.blob()));
+        }
 
         await this.requestFullUpdate();
         this.changeCurrentImage();
     }
 
-    changeCurrentImage() {
-        var imageUrl = this.paginatedFiles[this.sideScroller.currentItemIndex];
-        var metadata = localStorage.getItem(MetadataCacheKey(this.sideScroller.currentItemIndex));
-        this.currentImage = FoodModel.fromJS(JSON.parse(metadata!)) ?? new FoodModel();
-        this.currentImage.imageData = imageUrl;
+    async changeCurrentImage() {
+        this.currentImage = await this.loadImageData(this.sideScroller.currentItemIndex, 'url');
         this.requestFullUpdate();
+
         changePage(ImportFoodPage, { index: this.sideScroller.currentItemIndex }, false);
     }
 
@@ -95,16 +118,84 @@ export class ImportFoodPage extends LitElementBase {
             .map((name) => ({ id: name, text: name } as AutocompleteItem));
     }
 
-    async updateCurrentImage() {
-        localStorage.setItem(MetadataCacheKey(this.sideScroller.currentItemIndex), JSON.stringify(this.currentImage));
-    }
-
     async removeImageAt(index: number) {
         this.paginatedFiles = this.paginatedFiles.filter((_, i) => i != index);
-        await Cache.delete((await Cache.keys()).at(index) as any);
+        await Cache.delete((await Cache.keys()).at(index)!);
         localStorage.removeItem(MetadataCacheKey(index));
 
         await this.requestFullUpdate();
+    }
+
+    async importFiles() {
+        var cacheSize = (await Cache.keys()).length;
+        var confirmed = await DialogBase.show(`${cacheSize} Gerichte importieren`, {
+            acceptActionText: 'Ja',
+            declineActionText: 'Nein',
+            content: `Bist du sicher, dass du diese Gerichte importieren möchtest?
+${
+    this.paginatedFiles.length < cacheSize
+        ? '\nWarnung! Es sind noch unbearbeitete Bilder übrig. Diese Bilder werden ohne Metadaten importiert.'
+        : ''
+}
+Abhängig von der Größe kann der Vorgang einige Minuten dauern.`,
+        });
+
+        if (!confirmed) return;
+
+        const toLoad = this.paginatedFiles.length - cacheSize;
+        const currentLength = this.paginatedFiles.length;
+        for (var i = 0; i < toLoad; i++)
+            this.paginatedFiles.push(URL.createObjectURL(await (await Cache.match(ImageCacheKey(currentLength + i)))!.blob()));
+        var withMetadata = this.paginatedFiles.map((_, i) => this.loadImageData(i, 'data'));
+
+        var dupes = [];
+        for (let dish of await Promise.all(withMetadata)) {
+            var response = dish.imageData;
+            try {
+                dish.imageData = await (dish.imageData as any as Response).clone().base64();
+                await RecipeService.importDish(dish);
+            } catch (ex) {
+                if (ex.httpStatus == 409) dupes.push(dish);
+                else {
+                    await DialogBase.show('Something went wrong', {
+                        declineActionText: 'Ok',
+                        content: `Ein Fehler ist beim hochladen des Gerichts ${dish.title} aufgetreten.
+Fehler: ${ex.reason}`,
+                    });
+                    return;
+                }
+            } finally {
+                dish.imageData = response as any as Response as any;
+            }
+        }
+
+        await ImportFoodPage.clearCache();
+
+        if (dupes.length > 0) {
+            await ImportFoodPage.cacheFiles(dupes.map((dish) => dish.imageData as any as Response));
+            for (let i = 0; i < dupes.length; i++) await ImportFoodPage.cacheMetadata(i, dupes[i]);
+            await DialogBase.show('Duplikate übersprungen', {
+                declineActionText: 'Ok',
+                content: `Beim hochladen wurden ${dupes.length} Duplikate übersprungen.
+Alle anderen Gerichte wurden erfolgreich hochgeladen.
+Die Duplikate verbleiben auf der Seite.
+Wenn alles in Ordnung ist, kannst du die Seite manuell verlassen.`,
+            });
+            return;
+        }
+
+        changePage(RecipesPage);
+    }
+
+    private async loadImageData(index: number, imageMode: 'url' | 'data') {
+        var imageUrl = this.paginatedFiles[index];
+        var metadata = localStorage.getItem(MetadataCacheKey(index));
+        var withMetadata =
+            FoodModel.fromJS(JSON.parse(metadata!)) ??
+            new FoodModel({ deleted: false, difficulty: 0, rating: 0, tags: [], description: '', title: '' });
+        if (imageMode == 'url') withMetadata.imageData = imageUrl;
+        else withMetadata.imageData = (await Cache.match(ImageCacheKey(index)))!.clone() as any;
+        return withMetadata;
     }
 
     disconnectedCallback(): void {

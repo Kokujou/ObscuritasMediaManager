@@ -66,7 +66,7 @@ export class RecipesPage extends LitElementBase {
         var filesToImport = await document.openFileBrowser('image/*');
         if (!filesToImport?.length) return;
 
-        ImportFoodPage.cacheFiles(filesToImport);
+        await ImportFoodPage.cacheFilesParallel(filesToImport);
         changePage(ImportFoodPage, {});
     }
 

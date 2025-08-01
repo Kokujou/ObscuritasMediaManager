@@ -1,5 +1,4 @@
 import { customElement, property, query, state } from 'lit-element/decorators';
-import { LanguageSwitcher } from '../../advanced-components/language-switcher/language-switcher';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
@@ -7,8 +6,6 @@ import { changePage, getQueryValue } from '../../extensions/url.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
-    CookingTechnique,
-    Course,
     IngredientCategory,
     IngredientModel,
     Language,
@@ -67,10 +64,7 @@ export class RecipeDetailPage extends LitElementBase {
         super();
         this.recipe = new RecipeModel({
             title: 'Rezepttitel',
-            nation: Language.Unset,
             cookingTime: new TimeSpan().toString(),
-            technique: CookingTechnique.Baking,
-            course: Course.Main,
             totalTime: new TimeSpan().toString(),
             cookware: [],
             preparationTime: new TimeSpan().toString(),
@@ -148,10 +142,6 @@ export class RecipeDetailPage extends LitElementBase {
         await this.requestFullUpdate();
     }
 
-    async changeNation() {
-        this.changeProperty('nation', await LanguageSwitcher.spawnAt(document.body, this.recipe.nation));
-    }
-
     changeIngredientUnit(ingredient: RecipeIngredientMappingModel, unitName: string) {
         var unit = MeasurementUnits.find((x) => x.name == unitName);
         if (!unit) {
@@ -215,7 +205,7 @@ export class RecipeDetailPage extends LitElementBase {
         event.preventDefault();
         event.stopPropagation();
 
-        if (!this.recipe.course || !this.recipe.course || !this.recipe.technique) {
+        if (!this.recipe.tags) {
             MessageSnackbar.popup('Bitte alle notwendigen Informationen ausfüllen.', 'error');
             return;
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Data.Food;
 using ObscuritasMediaManager.Backend.Data.Music;
+using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
@@ -149,15 +150,12 @@ public class RecipeRepository(DatabaseContext databaseContext)
         return databaseContext.Recipes.Select(x => x.Title).Where(x => x.ToLower().Contains(search.ToLower()));
     }
 
-    public async Task ImportDishesAsync(List<FoodModel> dishes)
+    public async Task CreateDishAsync(FoodModel dish)
     {
-        var hashDict = dishes.ToDictionary(x => x.ImageHash, x => x);
+        if (await databaseContext.Set<RecipeModelBase>().AnyAsync(x => x.ImageHash == dish.ImageHash))
+            throw new ConflictException("Dish already exists!");
 
-        var duplicateHashes = await databaseContext.Set<RecipeModelBase>()
-            .Where(x => hashDict.Keys.Contains(x.ImageHash)).Select(x => x.ImageHash).ToListAsync();
-        foreach (var hash in duplicateHashes) hashDict.Remove(hash);
-
-        databaseContext.AddRange(hashDict.Values);
+        databaseContext.Add(dish);
         await databaseContext.SaveChangesAsync();
     }
 }

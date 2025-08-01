@@ -5,15 +5,8 @@ import { TimeSpan } from '../../data/timespan';
 
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu';
-import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
 import { GroupedDropdownResult } from '../../native-components/grouped-dropdown/grouped-dropdown';
-import {
-    CookingTechnique,
-    Course,
-    IngredientCategory,
-    IngredientModel,
-    RecipeIngredientMappingModel,
-} from '../../obscuritas-media-manager-backend-client';
+import { IngredientCategory, IngredientModel, RecipeIngredientMappingModel } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { IngredientIcons } from '../../resources/inline-icons/ingredient-icons/icon-registry';
 import { RecipeDetailPage } from './recipe-detail-page';
@@ -72,7 +65,6 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                     <recipe-tile
                         .recipe="${this.recipe}"
                         compact
-                        @change-nation="${() => this.changeNation()}"
                         @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
                             this.changeProperty('imageData', e.detail.imageData)}"
                         @remove-image="${() => this.changeProperty('imageData', null)}"
@@ -85,29 +77,6 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
 
                 <div id="description-area">
                     <div class="description-section" id="dropdown-section">
-                        <div class="description-input">
-                            <div class="input-title">Gang:</div>
-                            <drop-down
-                                id="course"
-                                tabindex="0"
-                                .options="${DropDownOption.createSimpleArray(Object.values(Course), this.recipe.course)}"
-                                @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
-                                    this.changeProperty('course', e.detail.option.value)}"
-                            ></drop-down>
-                        </div>
-                        <div class="description-input">
-                            <div class="input-title">Zubereitung:</div>
-                            <drop-down
-                                id="technique"
-                                tabindex="0"
-                                .options="${DropDownOption.createSimpleArray(
-                                    Object.values(CookingTechnique),
-                                    this.recipe.technique
-                                )}"
-                                @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
-                                    this.changeProperty('technique', e.detail.option.value)}"
-                            ></drop-down>
-                        </div>
                         <div class="description-input">
                             <div class="input-title">Vorbereitung:</div>
                             <duration-input
