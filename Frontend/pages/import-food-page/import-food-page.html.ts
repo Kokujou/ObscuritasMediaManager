@@ -69,7 +69,7 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                 </div>
                 <side-scroller
                     @change="${async () => {
-                        if (this.sideScroller.currentItemIndex >= this.paginatedFiles.length - 5) await this.loadMoreImages();
+                        if (this.sideScroller.currentItemIndex >= this.paginatedFiles.length - 5) await this.loadMoreImages(10);
                         await this.changeCurrentImage();
                     }}"
                 >

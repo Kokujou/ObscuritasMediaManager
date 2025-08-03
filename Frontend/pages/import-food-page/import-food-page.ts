@@ -55,6 +55,8 @@ export class ImportFoodPage extends LitElementBase {
     protected paginatedFiles: string[] = [];
     @state() protected declare currentImage: FoodModel;
 
+    private lastCachedIndex = 0;
+
     constructor() {
         super();
         this.currentImage = new FoodModel({ tags: [] });
@@ -71,14 +73,14 @@ export class ImportFoodPage extends LitElementBase {
         await this.requestFullUpdate();
         await this.updated;
         await waitForAnimation();
-        await this.loadMoreImages();
+        await this.loadMoreImages(10);
         if (fromQuery) this.sideScroller.setIndex(Number.parseInt(fromQuery));
     }
 
-    async loadMoreImages() {
+    async loadMoreImages(itemsToGet?: number) {
         const currentLength = this.paginatedFiles.length;
-        let itemsToGet = 10;
-        while (this.sideScroller.currentItemIndex > currentLength + itemsToGet) itemsToGet += 10;
+        while (itemsToGet && this.sideScroller.currentItemIndex > currentLength + itemsToGet) itemsToGet += 10;
+        itemsToGet ??= Number.POSITIVE_INFINITY;
 
         do var cacheSize = (await Cache.keys()).length;
         while (ImportFoodPage.caching && cacheSize < itemsToGet);
@@ -86,11 +88,15 @@ export class ImportFoodPage extends LitElementBase {
         if (cacheSize <= this.paginatedFiles.length) return;
         if (!cacheSize) throw new Error('no items to import!');
 
-        for (var i = 0; i < itemsToGet; i++) {
-            var fromCache = await Cache.match(ImageCacheKey(currentLength + i));
-            if (!fromCache) break;
+        if (itemsToGet > cacheSize - this.paginatedFiles.length) itemsToGet = cacheSize - this.paginatedFiles.length;
+
+        for (var i = 0, success = 0; success < itemsToGet; i++) {
+            var fromCache = await Cache.match(ImageCacheKey(this.lastCachedIndex + i));
+            if (!fromCache) continue;
             this.paginatedFiles.push(URL.createObjectURL(await fromCache.blob()));
+            success++;
         }
+        this.lastCachedIndex = i; // already +1 due to final iteration of for
 
         await this.requestFullUpdate();
         this.changeCurrentImage();
@@ -123,6 +129,7 @@ export class ImportFoodPage extends LitElementBase {
         await Cache.delete((await Cache.keys()).at(index)!);
         localStorage.removeItem(MetadataCacheKey(index));
 
+        if (index == this.sideScroller.currentItemIndex) await this.changeCurrentImage();
         await this.requestFullUpdate();
     }
 
@@ -142,10 +149,7 @@ Abhängig von der Größe kann der Vorgang einige Minuten dauern.`,
 
         if (!confirmed) return;
 
-        const toLoad = this.paginatedFiles.length - cacheSize;
-        const currentLength = this.paginatedFiles.length;
-        for (var i = 0; i < toLoad; i++)
-            this.paginatedFiles.push(URL.createObjectURL(await (await Cache.match(ImageCacheKey(currentLength + i)))!.blob()));
+        this.loadMoreImages();
         var withMetadata = this.paginatedFiles.map((_, i) => this.loadImageData(i, 'data'));
 
         var dupes = [];
