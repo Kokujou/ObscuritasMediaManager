@@ -57,6 +57,8 @@ export class SideScroller extends LitElementBase {
     }
 
     setIndex(index: number) {
+        if (index < 0) index = 0;
+        if (index >= this.scrollChildren.length) index = this.scrollChildren.length - 1;
         this.currentItemIndex = index;
         var element = this.scrollChildren[this.currentItemIndex];
         scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);

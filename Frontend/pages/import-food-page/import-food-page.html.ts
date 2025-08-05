@@ -9,10 +9,38 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
     return html`
         <div id="page">
             <div id="current-image-editor">
-                <img id="current-image" src="${this.currentImage.imageData!}" />
+                <div id="current-image-background">
+                    <div
+                        id="current-image-container"
+                        style="aspect-ratio: ${this.currentAspectRatio}; ${this.currentAspectRatio > 1
+                            ? 'width: 100%;'
+                            : 'height: 100%'}"
+                    >
+                        <img
+                            id="current-image"
+                            src="${this.currentImage.imageData!}"
+                            style="aspect-ratio: ${this.currentAspectRatio}; ${this.currentAspectRatio > 1
+                                ? 'width: 100%;'
+                                : 'height: 100%'}"
+                            @load="${() => this.requestFullUpdate()}"
+                        />
+                        ${ImportFoodPage.caching.current()
+                            ? html`
+                                  <div id="cache-loading-indicator">
+                                      <partial-loading hideText full-width></partial-loading>
+                                      <div class="loading-text">Cache lädt...</div>
+                                  </div>
+                              `
+                            : ''}
+                    </div>
+                </div>
                 <div
                     id="edit-image-sidebar"
                     @change="${() => ImportFoodPage.cacheMetadata(this.sideScroller.currentItemIndex, this.currentImage)}"
+                    @keyup="${(e: KeyboardEvent) => {
+                        if (e.key == 'Escape') this.focus();
+                        e.stopPropagation();
+                    }}"
                 >
                     <autocomplete-input
                         id="food-name"

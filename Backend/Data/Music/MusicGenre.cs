@@ -13,6 +13,7 @@ public enum MusicGenre
     Electronic,
     Flamenco,
     Folk,
+    HipHop,
     House,
     Instrumental,
     Jazz,

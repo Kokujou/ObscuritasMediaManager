@@ -6,6 +6,7 @@ export function renderAutocompleteInput(this: AutocompleteInput) {
         <input
             id="search-field"
             type="text"
+            tabindex="0"
             .value="${this.value?.text ?? ''}"
             placeholder="${this.placeholder ?? ''}"
             @input="${(e: Event) => this.handleInput(e)}"

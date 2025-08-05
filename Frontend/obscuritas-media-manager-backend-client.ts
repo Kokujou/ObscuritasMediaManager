@@ -2727,6 +2727,7 @@ export enum MusicGenre {
     Electronic = "Electronic",
     Flamenco = "Flamenco",
     Folk = "Folk",
+    HipHop = "HipHop",
     House = "House",
     Instrumental = "Instrumental",
     Jazz = "Jazz",

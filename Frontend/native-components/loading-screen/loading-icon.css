@@ -1,5 +1,5 @@
 svg {
-    filter: drop-shadow(0 0 5px purple) drop-shadow(0 0 5px purple);
+    filter: drop-shadow(0 0 3px purple) drop-shadow(0 0 3px purple);
     width: 100%;
     height: 100%;
     position: relative;
@@ -8,7 +8,7 @@ svg {
 g {
     stroke-dasharray: 21.402;
     stroke-dashoffset: 21.402;
-    stroke: purple;
+    stroke: black !important;
     stroke-width: 10;
 }
 

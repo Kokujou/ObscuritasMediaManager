@@ -16,6 +16,10 @@ declare global {
     interface ArrayConstructor {
         createRange(from: number, to: number): number[];
     }
+
+    interface FileList {
+        toIterator(this: FileList): IteratorObject<File, undefined, unknown>;
+    }
 }
 
 Array.prototype.randomize = function <T>(this: T[]): T[] {
@@ -81,4 +85,9 @@ Array.prototype.orderBy = function <T>(this: T[], ...selectors: ((item: T) => an
 Array.createRange = function (from: number, to: number): number[] {
     const diff = to - from;
     return [...new Array(diff + 1).keys()].map((x) => x + from);
+};
+
+FileList.prototype.toIterator = function* () {
+    for (let i = 0; i < this.length; i++) yield this[i];
+    return undefined;
 };

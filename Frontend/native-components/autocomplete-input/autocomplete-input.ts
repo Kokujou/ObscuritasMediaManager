@@ -26,7 +26,6 @@ export class AutocompleteInput extends LitElementBase {
         super.connectedCallback();
 
         this.onblur = () => this.selectItem(this.value);
-        this.tabIndex = 0;
     }
 
     override render() {

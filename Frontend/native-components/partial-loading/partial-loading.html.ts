@@ -1,11 +1,12 @@
 import { html } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+//@ts-ignore
+import { loadingIcon } from '../../resources/inline-icons/general/loading.icon.svg.js';
 
 export function renderPartialLoading() {
     return html`
+        <link rel="stylesheet" href="./native-components/loading-screen/loading-icon.css" />
         <style>
-            @import './native-components/loading-screen/loading-icon.css';
-
             :host {
                 display: flex;
                 align-items: center;
@@ -14,7 +15,7 @@ export function renderPartialLoading() {
                 height: 100%;
             }
 
-            #wrapper {
+            :host(:not([full-width])) #wrapper {
                 width: 30%;
                 height: 30%;
             }
@@ -24,6 +25,6 @@ export function renderPartialLoading() {
             }
         </style>
 
-        <div id="wrapper">${unsafeHTML('')}</div>
+        <div id="wrapper">${unsafeHTML(loadingIcon())}</div>
     `;
 }
