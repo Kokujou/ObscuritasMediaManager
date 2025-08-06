@@ -95,12 +95,7 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                             )}
                     </div>
                 </div>
-                <side-scroller
-                    @change="${async () => {
-                        if (this.sideScroller.currentItemIndex >= this.paginatedFiles.length - 5) await this.loadMoreImages(10);
-                        await this.changeCurrentImage();
-                    }}"
-                >
+                <side-scroller @change="${async () => await this.changeCurrentImage()}">
                     ${this.paginatedFiles.map(
                         (file, i) => html` <div
                             class="imported-image-container"

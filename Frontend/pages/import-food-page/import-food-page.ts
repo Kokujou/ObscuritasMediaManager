@@ -20,7 +20,7 @@ const ImageCacheKey = (i: number) => `https://localhost/food-item/${i}`;
 @customElement('import-food-page')
 export class ImportFoodPage extends LitElementBase {
     static isPage = true as const;
-    static caching = new Observable<boolean>(true);
+    static caching = new Observable<boolean>(false);
     static cacheAbertController? = new AbortController();
 
     static async cacheMetadata(index: number, dish: FoodModel) {
@@ -150,6 +150,7 @@ export class ImportFoodPage extends LitElementBase {
     }
 
     async changeCurrentImage() {
+        if (this.sideScroller.currentItemIndex >= this.paginatedFiles.length - 5) await this.loadMoreImages(10);
         this.currentImage = await this.loadImageData(this.sideScroller.currentItemIndex, 'url');
         this.requestFullUpdate();
 
