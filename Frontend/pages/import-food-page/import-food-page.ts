@@ -36,22 +36,18 @@ export class ImportFoodPage extends LitElementBase {
         };
         window.onpopstate = (e) => {
             e.stopImmediatePropagation();
-            console.log('pop');
             alert('Einige Bilder sind noch nicht hochgeladen, wenn du die Seite jetzt verlässt, gehen einige Bilder verloren!');
         };
 
         if (files.length) await this.clearCache();
 
-        var first10 = files.toIterator().take(10);
-        var next = files.toIterator().drop(10);
-
         this.caching.next(true);
-        await this.cacheFiles(first10.take(10), this.cacheAbertController.signal);
-        this.cacheFiles(next, this.cacheAbertController.signal).then(() => {
+        this.cacheFiles(files.toIterator(), this.cacheAbertController.signal).then(() => {
             this.caching.next(false);
             window.onbeforeunload = null;
             window.onpopstate = null;
         });
+        while ((await Cache.keys()).length <= 10) await Promise.resolve();
     }
 
     private static async clearCache() {
@@ -68,11 +64,12 @@ export class ImportFoodPage extends LitElementBase {
         signal: AbortSignal
     ) {
         let i = 0;
+
         while (!signal.aborted) {
             var result = files.next();
-            console.log(result.done);
             if (result.done) break;
             const file = result.value;
+
             await Cache.put(ImageCacheKey(i), file instanceof Response ? file : new Response(file));
             i++;
         }
