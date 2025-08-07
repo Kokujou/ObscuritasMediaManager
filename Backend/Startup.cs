@@ -36,7 +36,7 @@ public class Startup
 
         services.AddDbContext<DatabaseContext>(
             x => x.UseSqlite(
-                    @"Data Source=J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\database.sqlite;foreign keys=false;")
+                    @"Data Source=J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\Database\database.sqlite;foreign keys=false;")
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .EnableSensitiveDataLogging());
 
