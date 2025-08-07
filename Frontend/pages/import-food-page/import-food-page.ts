@@ -83,7 +83,9 @@ export class ImportFoodPage extends LitElementBase {
     @query('#current-image') protected declare currentImageElement?: HTMLImageElement;
 
     protected paginatedFiles: string[] = [];
-    @state() protected declare currentImage: FoodModel;
+    @state() protected declare currentDish: FoodModel;
+
+    @state() protected declare cacheSize: number;
 
     private lastCachedIndex = 0;
 
@@ -94,7 +96,7 @@ export class ImportFoodPage extends LitElementBase {
 
     constructor() {
         super();
-        this.currentImage = new FoodModel({ tags: [] });
+        this.currentDish = new FoodModel({ tags: [] });
     }
 
     override render() {}
@@ -108,7 +110,12 @@ export class ImportFoodPage extends LitElementBase {
         document.title = 'Gerichte importieren';
 
         document.addEventListener('keyup', this.handleKeyUp.bind(this));
-        this.subscriptions.push(ImportFoodPage.caching.subscribe(() => this.requestFullUpdate()));
+        this.subscriptions.push(
+            ImportFoodPage.caching.subscribe(async (caching) => {
+                if (!caching) this.cacheSize = (await Cache.keys()).length;
+                this.requestFullUpdate();
+            }, true)
+        );
 
         var fromQuery = Number.parseInt(getQueryValue('index') ?? '0');
         await this.requestFullUpdate();
@@ -147,26 +154,28 @@ export class ImportFoodPage extends LitElementBase {
     }
 
     async changeCurrentImage() {
+        await ImportFoodPage.cacheMetadata(Number.parseInt(this.currentDish.id), this.currentDish);
         if (this.sideScroller.currentItemIndex >= this.paginatedFiles.length - 5) await this.loadMoreImages(10);
-        this.currentImage = await this.loadImageData(this.sideScroller.currentItemIndex, 'url');
+        this.currentDish = await this.loadImageData(this.sideScroller.currentItemIndex, 'url');
         this.requestFullUpdate();
 
         changePage(ImportFoodPage, { index: this.sideScroller.currentItemIndex } as any, false);
     }
 
     async searchDishes(search: string) {
-        var localNames: (string | undefined)[] = [];
+        var localNames: FoodModel[] = [];
         for (let i = 0; i < localStorage.length; i++) {
             var key = localStorage.key(i)!;
             if (key.startsWith('ImportFood.item') && key != MetadataCacheKey(this.sideScroller.currentItemIndex))
-                localNames.push((JSON.parse(localStorage.getItem(key)!) as FoodModel).title);
+                localNames.push(JSON.parse(localStorage.getItem(key)!) as FoodModel);
         }
 
         return localNames
-            .filter((x) => x?.length && x.toLowerCase().includes(search.toLowerCase()))
+            .filter((x) => x?.title?.length && x.title.toLowerCase().includes(search.toLowerCase()))
             .concat(await RecipeService.searchDishes(search))
             .sort()
-            .map((name) => ({ id: name, text: name } as AutocompleteItem));
+            .distinctBy((x) => x.title)
+            .map((x) => Object.assign(x, { id: x.title, text: x.title }) as typeof x & AutocompleteItem);
     }
 
     async handleKeyUp(event: KeyboardEvent) {
@@ -185,10 +194,22 @@ Bit du sicher dass du es löschen möchtest?`,
         if (event.key == 'ArrowRight') this.sideScroller.setIndex(this.sideScroller.currentItemIndex + 1);
     }
 
+    applySearchResult(result: FoodModel) {
+        console.log(result == this.currentDish);
+        this.currentDish.description ||= result.description;
+        this.currentDish.rating ||= result.rating;
+        this.currentDish.difficulty ||= result.difficulty;
+        if (!this.currentDish.tags.length) this.currentDish.tags = [...result.tags];
+        console.log(!this.currentDish.tags.length, result.tags);
+
+        this.requestFullUpdate();
+    }
+
     async removeImageAt(index: number) {
         this.paginatedFiles = this.paginatedFiles.filter((_, i) => i != index);
         await Cache.delete((await Cache.keys()).at(index)!);
         localStorage.removeItem(MetadataCacheKey(index));
+        this.cacheSize--;
 
         if (index == this.sideScroller.currentItemIndex) await this.changeCurrentImage();
         await this.requestFullUpdate();
@@ -224,9 +245,9 @@ Abhängig von der Größe kann der Vorgang einige Minuten dauern.`,
 
         var dupes = [];
         for (let dish of await Promise.all(withMetadata)) {
-            var response = dish.imageData;
+            var response = dish.image.imageData;
             try {
-                dish.imageData = await (dish.imageData as any as Response).clone().base64();
+                dish.image.imageData = await (dish.image.imageData as any as Response).clone().base64();
                 await RecipeService.importDish(dish);
             } catch (ex) {
                 if (ex.httpStatus == 409) dupes.push(dish);
@@ -239,7 +260,7 @@ Fehler: ${ex.reason}`,
                     return;
                 }
             } finally {
-                dish.imageData = response as any as Response as any;
+                dish.image.imageData = response as any as Response as any;
             }
         }
 
@@ -248,7 +269,7 @@ Fehler: ${ex.reason}`,
         if (dupes.length > 0) {
             ImportFoodPage.cacheAbertController = new AbortController();
             await ImportFoodPage.cacheFiles(
-                dupes.map((dish) => dish.imageData as any as Response).values(),
+                dupes.map((dish) => dish.image.imageData as any as Response).values(),
                 ImportFoodPage.cacheAbertController?.signal
             );
             for (let i = 0; i < dupes.length; i++) await ImportFoodPage.cacheMetadata(i, dupes[i]);
@@ -271,8 +292,9 @@ Wenn alles in Ordnung ist, kannst du die Seite manuell verlassen.`,
         var withMetadata =
             FoodModel.fromJS(JSON.parse(metadata!)) ??
             new FoodModel({ deleted: false, difficulty: 0, rating: 0, tags: [], description: '', title: '' });
-        if (imageMode == 'url') withMetadata.imageData = imageUrl;
-        else withMetadata.imageData = (await Cache.match(ImageCacheKey(index)))!.clone() as any;
+        withMetadata.id = index.toString();
+        if (imageMode == 'url') withMetadata.image.imageData = imageUrl;
+        else withMetadata.image.imageData = (await fetch(imageUrl)).clone() as any;
         return withMetadata;
     }
 

@@ -1,7 +1,7 @@
 import { FoodTagModel, IngredientCategory, Language } from '../../obscuritas-media-manager-backend-client';
 import { CookingTechnique } from './cooking-technique';
 import { Course } from './course';
-import { FoodCategory } from './foot-category';
+import { FoodCategory } from './food-category';
 
 declare module '../../obscuritas-media-manager-backend-client' {
     interface FoodTagModel {

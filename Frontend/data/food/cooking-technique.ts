@@ -8,4 +8,5 @@ export enum CookingTechnique {
     Freezing = 'Freezing',
     Grilling = 'Grilling',
     Raw = 'Raw',
+    Flambe = 'Flambe',
 }

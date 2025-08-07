@@ -1879,7 +1879,49 @@ export class RecipeClient {
         return Promise.resolve<void>(null as any);
     }
 
-    searchDishes(search?: string | undefined, signal?: AbortSignal): Promise<string[]> {
+    getRecipeImage(recipeId: string, signal?: AbortSignal): Promise<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/image";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/octet-stream"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetRecipeImage(_response);
+        });
+    }
+
+    protected processGetRecipeImage(response: Response): Promise<FileResponse | null> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            }
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse | null>(null as any);
+    }
+
+    searchDishes(search?: string | undefined, signal?: AbortSignal): Promise<RecipeModelBase[]> {
         let url_ = this.baseUrl + "/api/Recipe/search-dishes?";
         if (search === null)
             throw new Error("The parameter 'search' cannot be null.");
@@ -1900,9 +1942,10 @@ export class RecipeClient {
         });
     }
 
-    protected processSearchDishes(response: Response): Promise<string[]> {
+    protected processSearchDishes(response: Response): Promise<RecipeModelBase[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
@@ -1910,7 +1953,7 @@ export class RecipeClient {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(item);
+                    result200!.push(RecipeModelBase.fromJS(item, _mappings));
             }
             else {
                 result200 = <any>null;
@@ -1922,10 +1965,10 @@ export class RecipeClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<string[]>(null as any);
+        return Promise.resolve<RecipeModelBase[]>(null as any);
     }
 
-    getRecipe(id: string, signal?: AbortSignal): Promise<RecipeModel> {
+    getRecipe(id: string, signal?: AbortSignal): Promise<RecipeModelBase> {
         let url_ = this.baseUrl + "/api/Recipe/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1945,7 +1988,7 @@ export class RecipeClient {
         });
     }
 
-    protected processGetRecipe(response: Response): Promise<RecipeModel> {
+    protected processGetRecipe(response: Response): Promise<RecipeModelBase> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         let _mappings: { source: any, target: any }[] = [];
@@ -1953,7 +1996,7 @@ export class RecipeClient {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
-            result200 = RecipeModel.fromJS(resultData200, _mappings);
+            result200 = RecipeModelBase.fromJS(resultData200, _mappings);
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -1961,7 +2004,7 @@ export class RecipeClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<RecipeModel>(null as any);
+        return Promise.resolve<RecipeModelBase>(null as any);
     }
 
     importDish(dish: FoodModel, signal?: AbortSignal): Promise<void> {
@@ -3489,7 +3532,7 @@ export class RecipeModelBase implements IRecipeModelBase {
     id!: string;
     title!: string;
     description!: string;
-    imageData!: string | null;
+    image!: FoodImageModel;
     difficulty!: number;
     rating!: number;
     deleted!: boolean;
@@ -3507,6 +3550,7 @@ export class RecipeModelBase implements IRecipeModelBase {
         }
 
         if (!data) {
+            this.image = new FoodImageModel();
             this.tags = [];
         }
         this._discriminator = "RecipeModelBase";
@@ -3517,7 +3561,7 @@ export class RecipeModelBase implements IRecipeModelBase {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.title = _data["title"] !== undefined ? _data["title"] : <any>null;
             this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
-            this.imageData = _data["imageData"] !== undefined ? _data["imageData"] : <any>null;
+            this.image = _data["image"] ? FoodImageModel.fromJS(_data["image"], _mappings) : new FoodImageModel();
             this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : <any>null;
             this.rating = _data["rating"] !== undefined ? _data["rating"] : <any>null;
             this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : <any>null;
@@ -3548,7 +3592,7 @@ export class RecipeModelBase implements IRecipeModelBase {
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["title"] = this.title !== undefined ? this.title : <any>null;
         data["description"] = this.description !== undefined ? this.description : <any>null;
-        data["imageData"] = this.imageData !== undefined ? this.imageData : <any>null;
+        data["image"] = this.image ? this.image.toJSON() : <any>null;
         data["difficulty"] = this.difficulty !== undefined ? this.difficulty : <any>null;
         data["rating"] = this.rating !== undefined ? this.rating : <any>null;
         data["deleted"] = this.deleted !== undefined ? this.deleted : <any>null;
@@ -3573,7 +3617,7 @@ export interface IRecipeModelBase {
     id: string;
     title: string;
     description: string;
-    imageData: string | null;
+    image: FoodImageModel;
     difficulty: number;
     rating: number;
     deleted: boolean;
@@ -3581,8 +3625,54 @@ export interface IRecipeModelBase {
     tags: FoodTagModel[];
 }
 
-export class FoodTagModel implements IFoodTagModel {
+export class FoodImageModel implements IFoodImageModel {
     recipeId!: string;
+    imageData!: string | null;
+
+    constructor(data?: Partial<IFoodImageModel>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : <any>null;
+            this.imageData = _data["imageData"] !== undefined ? _data["imageData"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): FoodImageModel  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<FoodImageModel>(data, _mappings, FoodImageModel)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : <any>null;
+        data["imageData"] = this.imageData !== undefined ? this.imageData : <any>null;
+        return data;
+    }
+
+    clone(): FoodImageModel {
+        const json = this.toJSON();
+        let result = new FoodImageModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFoodImageModel {
+    recipeId: string;
+    imageData: string | null;
+}
+
+export class FoodTagModel implements IFoodTagModel {
+    recipeId!: string | null;
     key!: string;
     value!: string;
 
@@ -3626,7 +3716,7 @@ export class FoodTagModel implements IFoodTagModel {
 }
 
 export interface IFoodTagModel {
-    recipeId: string;
+    recipeId: string | null;
     key: string;
     value: string;
 }

@@ -8,7 +8,7 @@ namespace ObscuritasMediaManager.Backend.Models;
 [PrimaryKey(nameof(RecipeId), nameof(Key), nameof(Value))]
 public class FoodTagModel
 {
-    public Guid RecipeId { get; set; }
+    public required Guid? RecipeId { get; set; } = null!;
 
     [MaxLength(255)] public required string Key { get; set; } = null!;
     [MaxLength(255)] public required string Value { get; set; } = null!;

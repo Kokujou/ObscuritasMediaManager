@@ -39,6 +39,7 @@ export function renderAutocompleteInputStyles() {
 
         .option {
             padding: 10px;
+            user-select: none;
         }
 
         .option[focused],

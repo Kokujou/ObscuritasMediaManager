@@ -11,14 +11,19 @@ public class RecipeRepository(DatabaseContext databaseContext)
     private static readonly List<Measurement> PrimaryMeasurements =
         [Measurement.Mass, Measurement.Size, Measurement.Volume];
 
-    public IQueryable<RecipeModel> GetAll()
+    public IQueryable<RecipeModelBase> GetAll()
     {
-        return databaseContext.Recipes;
+        return databaseContext.Set<RecipeModelBase>();
     }
 
-    public async Task<RecipeModel> GetAsync(Guid id)
+    public async Task<RecipeModelBase> GetAsync(Guid id)
     {
-        return await databaseContext.Recipes.SingleAsync(x => x.Id == id);
+        return await databaseContext.Set<RecipeModelBase>().SingleAsync(x => x.Id == id);
+    }
+
+    public async Task<FoodImageModel> GetImageAsync(Guid id)
+    {
+        return await databaseContext.Set<FoodImageModel>().FirstAsync(x => x.RecipeId == id);
     }
 
     public async Task<bool> ExistsAsync(Guid id)
@@ -145,15 +150,17 @@ public class RecipeRepository(DatabaseContext databaseContext)
         await databaseContext.SaveChangesAsync();
     }
 
-    public IQueryable<string> SearchDishes(string search)
+    public IQueryable<RecipeModelBase> SearchDishes(string search)
     {
-        return databaseContext.Recipes.Select(x => x.Title).Where(x => x.ToLower().Contains(search.ToLower()));
+        return databaseContext.Set<RecipeModelBase>().Where(x => x.Title.ToLower().Contains(search.ToLower()));
     }
 
     public async Task CreateDishAsync(FoodModel dish)
     {
-        if (await databaseContext.Set<RecipeModelBase>().AnyAsync(x => x.ImageHash == dish.ImageHash))
+        if (await databaseContext.Set<FoodImageModel>().AnyAsync(x => x.ImageHash == dish.Image.ImageHash))
             throw new ConflictException("Dish already exists!");
+
+        foreach (var tag in dish.Tags) tag.RecipeId = dish.Id;
 
         databaseContext.Add(dish);
         await databaseContext.SaveChangesAsync();

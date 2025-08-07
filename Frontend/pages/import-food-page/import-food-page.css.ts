@@ -134,6 +134,13 @@ export function renderImportFoodPageStyles() {
             --side-scroller-padding-inner: 40px 0;
         }
 
+        #file-count {
+            position: absolute;
+            bottom: 10px;
+            left: 200px;
+            color: white;
+        }
+
         .imported-image-container {
             position: relative;
             height: 100%;

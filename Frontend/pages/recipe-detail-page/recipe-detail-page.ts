@@ -126,7 +126,7 @@ export class RecipeDetailPage extends LitElementBase {
     }
 
     notifyImageAdded(imageData: string) {
-        this.recipe.imageData = imageData;
+        this.recipe.image.imageData = imageData;
         this.requestFullUpdate();
     }
 

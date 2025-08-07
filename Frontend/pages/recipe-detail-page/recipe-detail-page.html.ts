@@ -6,7 +6,12 @@ import { TimeSpan } from '../../data/timespan';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu';
 import { GroupedDropdownResult } from '../../native-components/grouped-dropdown/grouped-dropdown';
-import { IngredientCategory, IngredientModel, RecipeIngredientMappingModel } from '../../obscuritas-media-manager-backend-client';
+import {
+    FoodImageModel,
+    IngredientCategory,
+    IngredientModel,
+    RecipeIngredientMappingModel,
+} from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { IngredientIcons } from '../../resources/inline-icons/ingredient-icons/icon-registry';
 import { RecipeDetailPage } from './recipe-detail-page';
@@ -66,8 +71,8 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                         .recipe="${this.recipe}"
                         compact
                         @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
-                            this.changeProperty('imageData', e.detail.imageData)}"
-                        @remove-image="${() => this.changeProperty('imageData', null)}"
+                            this.changeProperty('image', new FoodImageModel({ imageData: e.detail.imageData }))}"
+                        @remove-image="${() => this.changeProperty('image', new FoodImageModel({ imageData: null }))}"
                         @ratingChanged="${(e: CustomEvent<{ rating: number; include: boolean }>) =>
                             (e.composedPath()[0] as StarRating).swords
                                 ? this.changeProperty('difficulty', e.detail.rating)

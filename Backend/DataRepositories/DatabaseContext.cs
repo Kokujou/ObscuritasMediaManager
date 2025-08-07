@@ -2,6 +2,7 @@
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
+using System.Reflection;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -48,8 +49,12 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
-            foreach (var navigation in entityType.GetNavigations()) navigation.SetIsEagerLoaded(true);
-            foreach (var navigation in entityType.GetSkipNavigations().Where(x => x.PropertyInfo is not null))
+            foreach (var navigation in entityType.GetNavigations()
+                         .Where(n => n.PropertyInfo?.GetCustomAttribute<IgnoreAutoIncludeAttribute>() is null))
+                navigation.SetIsEagerLoaded(true);
+            foreach (var navigation in entityType.GetSkipNavigations()
+                         .Where(x => x.PropertyInfo is not null)
+                         .Where(n => n.PropertyInfo!.GetCustomAttribute<IgnoreAutoIncludeAttribute>() is null))
                 navigation.SetIsEagerLoaded(true);
         }
     }

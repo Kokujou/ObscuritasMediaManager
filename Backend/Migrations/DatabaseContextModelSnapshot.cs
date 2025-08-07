@@ -32,6 +32,28 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.ToTable("MediaGenreMapping");
                 });
 
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodImageModel", b =>
+                {
+                    b.Property<Guid>("RecipeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageData")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageHash")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("RecipeId");
+
+                    b.HasIndex("ImageHash")
+                        .IsUnique();
+
+                    b.ToTable("FoodImageMapping");
+                });
+
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodTagModel", b =>
                 {
                     b.Property<Guid>("RecipeId")
@@ -429,7 +451,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeModelBase", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("Deleted")
@@ -442,14 +463,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.Property<int>("Difficulty")
                         .HasColumnType("INTEGER");
-
-                    b.Property<byte[]>("ImageData")
-                        .HasColumnType("BLOB");
-
-                    b.Property<string>("ImageHash")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("Rating")
                         .HasColumnType("INTEGER");
@@ -465,9 +478,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ImageHash")
-                        .IsUnique();
 
                     b.ToTable("Recipes");
 
@@ -658,6 +668,17 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.Navigation("Unit")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeModelBase", b =>
+                {
+                    b.HasOne("ObscuritasMediaManager.Backend.Models.FoodImageModel", "Image")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.PlaylistModel", b =>

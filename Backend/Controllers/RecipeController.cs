@@ -16,14 +16,26 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
         return recipeRepository.GetAll();
     }
 
+    [HttpGet("{recipeId}/image")]
+    public async Task<IActionResult> GetRecipeImage(Guid recipeId)
+    {
+        var image = await recipeRepository.GetImageAsync(recipeId);
+        if (image.ImageData is null) return NoContent();
+
+        Response.Headers["Cache-Control"] = "public, max-age=31536000, immutable";
+
+        var fileType = image.ImageData["data:".Length..image.ImageData.IndexOf(';')];
+        return File(Convert.FromBase64String(image.ImageData[(image.ImageData.IndexOf(',') + 1)..]), fileType);
+    }
+
     [HttpPost("search-dishes")]
-    public IQueryable<string> SearchDishes(string search)
+    public IQueryable<RecipeModelBase> SearchDishes(string search)
     {
         return recipeRepository.SearchDishes(search);
     }
 
     [HttpGet("{id}")]
-    public async Task<RecipeModel> GetRecipe(Guid id)
+    public async Task<RecipeModelBase> GetRecipe(Guid id)
     {
         return await recipeRepository.GetAsync(id);
     }

@@ -42,6 +42,7 @@ export class TagLabel extends LitElementBase {
 
     notifyRemoved(e: Event) {
         this.dispatchEvent(new CustomEvent('removed'));
+        this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true }));
     }
 
     notifyTagCreated() {
