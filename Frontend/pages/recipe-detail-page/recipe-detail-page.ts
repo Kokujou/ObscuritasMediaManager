@@ -80,7 +80,7 @@ export class RecipeDetailPage extends LitElementBase {
         super.connectedCallback();
 
         if (this.recipeId) {
-            this.recipe = await RecipeService.getRecipe(this.recipeId);
+            this.recipe = (await RecipeService.getRecipe(this.recipeId)) as RecipeModel;
             await this.requestFullUpdate();
         }
     }
@@ -95,7 +95,7 @@ export class RecipeDetailPage extends LitElementBase {
     async changeProperty<T extends keyof RecipeModel>(property: T, value: RecipeModel[T]) {
         this.recipe[property] = value;
         if (this.recipe.id) await RecipeService.updateRecipe(this.recipe);
-        this.recipe = await RecipeService.getRecipe(this.recipe.id!);
+        this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
         this.requestFullUpdate();
     }
 

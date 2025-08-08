@@ -1,4 +1,3 @@
-import { PropertyValues } from 'lit-element';
 import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { RecipeSortingProperties } from '../../data/recipe-sorting-properties';
@@ -38,14 +37,9 @@ export class RecipesPage extends LitElementBase {
     }
 
     override async connectedCallback() {
-        super.connectedCallback();
+        await super.connectedCallback();
 
         Session.recipes.subscribe(() => this.requestFullUpdate(), true);
-    }
-
-    protected override firstUpdated(_changedProperties: PropertyValues): void {
-        super.firstUpdated(_changedProperties);
-        this.requestFullUpdate();
     }
 
     updateSorting(sortingProperty: keyof typeof RecipeSortingProperties, sortingDirection: keyof typeof SortingDirections) {

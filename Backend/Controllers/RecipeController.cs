@@ -8,7 +8,7 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class RecipeController(RecipeRepository recipeRepository) : ControllerBase
+public class RecipeController(RecipeRepository recipeRepository, DatabaseContext context) : ControllerBase
 {
     [HttpGet]
     public IQueryable<RecipeModelBase> GetAllRecipes()
@@ -26,6 +26,18 @@ public class RecipeController(RecipeRepository recipeRepository) : ControllerBas
 
         var fileType = image.ImageData["data:".Length..image.ImageData.IndexOf(';')];
         return File(Convert.FromBase64String(image.ImageData[(image.ImageData.IndexOf(',') + 1)..]), fileType);
+    }
+
+    [HttpGet("{recipeId}/thumb")]
+    public async Task<IActionResult> GetRecipeThumb(Guid recipeId)
+    {
+        var image = await recipeRepository.GetImageAsync(recipeId);
+        if (image.ThumbData is null) return NoContent();
+
+        Response.Headers["Cache-Control"] = "public, max-age=31536000, immutable";
+
+        var fileType = image.ThumbData["data:".Length..image.ThumbData.IndexOf(';')];
+        return File(Convert.FromBase64String(image.ThumbData[(image.ThumbData.IndexOf(',') + 1)..]), fileType);
     }
 
     [HttpPost("search-dishes")]

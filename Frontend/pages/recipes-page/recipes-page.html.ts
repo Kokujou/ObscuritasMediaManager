@@ -21,7 +21,7 @@ export function renderRecipesPage(this: RecipesPage) {
                                         width="200px"
                                         height="200px"
                                         decoding="async"
-                                        src="./Backend/api/recipe/${recipe.id}/image"
+                                        src="./Backend/api/recipe/${recipe.id}/thumb"
                                     />
                                     <div id="food-title">${recipe.title}</div>
                                 </div>

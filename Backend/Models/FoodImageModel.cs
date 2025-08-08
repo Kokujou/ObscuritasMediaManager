@@ -10,9 +10,11 @@ namespace ObscuritasMediaManager.Backend.Models;
 [Index(nameof(ImageHash), IsUnique = true)]
 public class FoodImageModel
 {
-    [Key] public Guid RecipeId { get; set; }
+    [Key] public Guid RecipeId { get; private set; } = Guid.NewGuid();
     // ReSharper disable once EntityFramework.ModelValidation.UnlimitedStringLength
     public string? ImageData { get; set; }
+    // ReSharper disable once EntityFramework.ModelValidation.UnlimitedStringLength
+    public string? ThumbData { get; set; }
 
     [JsonIgnore]
     [MaxLength(32)]

@@ -88,6 +88,7 @@ export function renderImportFoodPageStyles() {
             position: relative;
             max-height: 100%;
             max-width: 70%;
+            user-select: none;
 
             display: inline-block;
         }
@@ -128,6 +129,8 @@ export function renderImportFoodPageStyles() {
             height: 20%;
             width: calc(70% - 40px * 2);
             font-size: 40px;
+
+            user-select: none;
 
             min-height: 0;
             --side-scroller-gap: 30px;

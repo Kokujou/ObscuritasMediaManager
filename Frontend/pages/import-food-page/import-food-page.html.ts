@@ -3,9 +3,10 @@ import { ColoredFoodTags } from '../../data/food/food-tags';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
 import { FoodModel, FoodTagModel } from '../../obscuritas-media-manager-backend-client';
-import { ImportFoodPage } from './import-food-page';
+import { FoodCache, ImportFoodPage } from './import-food-page';
 
 ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFoodPage) {
+    if (!this.currentDish) return null;
     return html`
         <div id="page">
             <div id="current-image-editor">
@@ -23,8 +24,9 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                                 ? 'width: 100%;'
                                 : 'height: 100%'}"
                             @load="${() => this.requestFullUpdate()}"
+                            @error="${() => this.reloadImage(this.currentDish)}"
                         />
-                        ${ImportFoodPage.caching.current()
+                        ${ImportFoodPage.caching.current() || this.loading
                             ? html`
                                   <div id="cache-loading-indicator">
                                       <partial-loading hideText full-width></partial-loading>
@@ -36,7 +38,7 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                 </div>
                 <div
                     id="edit-image-sidebar"
-                    @change="${() => ImportFoodPage.cacheMetadata(this.sideScroller.currentItemIndex, this.currentDish)}"
+                    @change="${() => FoodCache.updateMetadata(this.currentDish)}"
                     @keyup="${(e: KeyboardEvent) => {
                         if (e.key == 'Escape') this.focus();
                         e.stopPropagation();
@@ -107,16 +109,21 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                 </div>
                 <side-scroller @change="${async () => await this.changeCurrentImage()}">
                     ${this.paginatedFiles.map(
-                        (file, i) => html` <div
+                        (dish, i) => html` <div
                             class="imported-image-container"
                             ?current="${this.sideScroller?.currentItemIndex == i}"
                         >
-                            <img class="imported-image" src="${file}" @click="${() => this.sideScroller.setIndex(i)}" />
-                            <div class="remove-image-icon" @click="${() => this.removeImageAt(i)}">&times;</div>
+                            <img
+                                class="imported-image"
+                                src="${dish.image.imageData!}"
+                                @click="${() => this.sideScroller!.setIndex(i)}"
+                                @error="${() => this.reloadThumb(dish)}"
+                            />
+                            <div class="remove-image-icon" @click="${() => this.removeDish(dish)}">&times;</div>
                         </div>`
                     )}
                 </side-scroller>
-                <div id="file-count">${this.cacheSize} Bilder gefunden...</div>
+                <div id="file-count">${FoodCache.length} Bilder gefunden...</div>
             </div>
 
             <div id="finish-import-button" @click="${async () => await this.importFiles()}">

@@ -2,20 +2,21 @@ import { customElement, query, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Observable } from '../../data/observable';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
-import { waitForAnimation } from '../../extensions/animation.extension';
+import { waitForAnimation, waitForSeconds } from '../../extensions/animation.extension';
 import { dimLight, undimLight } from '../../extensions/document.extensions';
 import { changePage, getQueryValue } from '../../extensions/url.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { SideScroller } from '../../native-components/side-scroller/side-scroller';
-import { FoodModel } from '../../obscuritas-media-manager-backend-client';
+import { FoodImageModel, FoodModel } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
+import { CachingService } from '../../services/caching.service';
+import { ImageCompressionService } from '../../services/image-compression.service';
 import { RecipesPage } from '../recipes-page/recipes-page';
 import { renderImportFoodPageStyles } from './import-food-page.css';
 
 const CacheName = 'food-cache' as const;
-let Cache = await caches.open(CacheName);
-const MetadataCacheKey = (i: number) => `ImportFood.item.${i}`;
-const ImageCacheKey = (i: number) => `https://localhost/food-item/${i}`;
+export const FoodCache = new CachingService<FoodModel>(await caches.open(CacheName));
+await FoodCache.initialize();
 
 @customElement('import-food-page')
 export class ImportFoodPage extends LitElementBase {
@@ -23,23 +24,20 @@ export class ImportFoodPage extends LitElementBase {
     static caching = new Observable<boolean>(false);
     static cacheAbertController? = new AbortController();
 
-    static async cacheMetadata(index: number, dish: FoodModel) {
-        localStorage.setItem(MetadataCacheKey(index), JSON.stringify(Object.assign({}, dish, { imageData: null })));
-    }
-
     static async cacheFilesParallel(files: FileList) {
         if (this.cacheAbertController) this.cacheAbertController.abort();
         this.cacheAbertController = new AbortController();
 
         window.onbeforeunload = (e) => {
-            if (ImportFoodPage.caching) e.preventDefault();
+            if (ImportFoodPage.caching.current()) e.preventDefault();
         };
         window.onpopstate = (e) => {
+            if (!ImportFoodPage.caching.current()) return;
             e.stopImmediatePropagation();
             alert('Einige Bilder sind noch nicht hochgeladen, wenn du die Seite jetzt verlässt, gehen einige Bilder verloren!');
         };
 
-        if (files.length) await this.clearCache();
+        if (files.length) await FoodCache.clear();
 
         this.caching.next(true);
         this.cacheFiles(files.toIterator(), this.cacheAbertController.signal).then(() => {
@@ -47,16 +45,8 @@ export class ImportFoodPage extends LitElementBase {
             window.onbeforeunload = null;
             window.onpopstate = null;
         });
-        while ((await Cache.keys()).length <= 10) await Promise.resolve();
-    }
 
-    private static async clearCache() {
-        var allDeletions = (await Cache.keys()).map(async (key) => await Cache.delete(key));
-
-        for (let i = 0; i < localStorage.length; i++)
-            if (localStorage.key(i)!.startsWith('ImportFood.item')) localStorage.removeItem(localStorage.key(i)!);
-
-        await Promise.all(allDeletions);
+        while (FoodCache.length <= 10 && this.caching.current()) await waitForSeconds(0);
     }
 
     private static async cacheFiles(
@@ -69,8 +59,19 @@ export class ImportFoodPage extends LitElementBase {
             var result = files.next();
             if (result.done) break;
             const file = result.value;
+            const response = file instanceof Response ? file : new Response(file);
+            const dish = new FoodModel({
+                id: i.toString(),
+                tags: [],
+                image: new FoodImageModel(),
+                deleted: false,
+                difficulty: 0,
+                rating: 0,
+                description: '',
+                title: '',
+            });
+            await FoodCache.cacheJson(dish, await response.blob());
 
-            await Cache.put(ImageCacheKey(i), file instanceof Response ? file : new Response(file));
             i++;
         }
     }
@@ -79,24 +80,20 @@ export class ImportFoodPage extends LitElementBase {
         return renderImportFoodPageStyles();
     }
 
-    @query('side-scroller') protected declare sideScroller: SideScroller;
+    @query('side-scroller') protected declare sideScroller?: SideScroller;
     @query('#current-image') protected declare currentImageElement?: HTMLImageElement;
 
-    protected paginatedFiles: string[] = [];
+    protected paginatedFiles: FoodModel[] = [];
     @state() protected declare currentDish: FoodModel;
-
-    @state() protected declare cacheSize: number;
-
-    private lastCachedIndex = 0;
+    @state() protected declare loading: boolean;
 
     get currentAspectRatio() {
         if (!this.currentImageElement) return 1;
         return this.currentImageElement.naturalWidth / this.currentImageElement.naturalHeight;
     }
 
-    constructor() {
-        super();
-        this.currentDish = new FoodModel({ tags: [] });
+    get currentIndex() {
+        return this.sideScroller?.currentItemIndex ?? 0;
     }
 
     override render() {}
@@ -110,67 +107,80 @@ export class ImportFoodPage extends LitElementBase {
         document.title = 'Gerichte importieren';
 
         document.addEventListener('keyup', this.handleKeyUp.bind(this));
-        this.subscriptions.push(
-            ImportFoodPage.caching.subscribe(async (caching) => {
-                if (!caching) this.cacheSize = (await Cache.keys()).length;
-                this.requestFullUpdate();
-            }, true)
-        );
+        this.subscriptions.push(ImportFoodPage.caching.subscribe(async () => this.requestFullUpdate(), true));
 
         var fromQuery = Number.parseInt(getQueryValue('index') ?? '0');
+        let itemsToGet = 10;
+
+        while (itemsToGet <= fromQuery) itemsToGet += 10;
+        await this.loadMoreImages(itemsToGet);
         await this.requestFullUpdate();
         await this.updated;
         await waitForAnimation();
 
-        let itemsToGet = 10;
-        while (itemsToGet <= fromQuery) itemsToGet += 10;
-        await this.loadMoreImages(itemsToGet);
-        if (fromQuery) this.sideScroller.setIndex(fromQuery);
+        if (fromQuery) this.sideScroller!.setIndex(fromQuery);
     }
 
     async loadMoreImages(itemsToGet?: number) {
+        if (this.loading) return;
+        this.loading = true;
         const currentLength = this.paginatedFiles.length;
-        while (itemsToGet && this.sideScroller.currentItemIndex > currentLength + itemsToGet) itemsToGet += 10;
+        while (itemsToGet && this.currentIndex > currentLength + itemsToGet) itemsToGet += 10;
         itemsToGet ??= Number.POSITIVE_INFINITY;
 
-        do var cacheSize = (await Cache.keys()).length;
-        while (ImportFoodPage.caching.current() && cacheSize < itemsToGet);
+        while (ImportFoodPage.caching.current() && FoodCache.length < itemsToGet) await Promise.resolve();
 
-        if (cacheSize <= this.paginatedFiles.length) return;
-        if (!cacheSize) throw new Error('no items to import!');
-
-        if (itemsToGet > cacheSize - this.paginatedFiles.length) itemsToGet = cacheSize - this.paginatedFiles.length;
-
-        for (var i = 0, success = 0; success < itemsToGet; i++) {
-            var fromCache = await Cache.match(ImageCacheKey(this.lastCachedIndex + i));
-            if (!fromCache) continue;
-            this.paginatedFiles.push(URL.createObjectURL(await fromCache.blob()));
-            success++;
+        if (FoodCache.length <= this.paginatedFiles.length) {
+            this.loading = false;
+            return;
         }
-        this.lastCachedIndex += i; // already +1 due to final iteration of for
+        if (!FoodCache.length) throw new Error('no items to import!');
+
+        const itemsLeft = FoodCache.length - this.paginatedFiles.length;
+        if (itemsToGet > itemsLeft) itemsToGet = itemsLeft;
+
+        for (var fromCache of (await FoodCache.getIterator()).drop(this.paginatedFiles.length).take(itemsToGet)) {
+            var dish = FoodModel.fromJS(await fromCache);
+            this.paginatedFiles.push(dish);
+            await this.reloadThumb(dish, false);
+        }
 
         await this.requestFullUpdate();
         this.changeCurrentImage();
+        this.loading = false;
     }
 
     async changeCurrentImage() {
-        await ImportFoodPage.cacheMetadata(Number.parseInt(this.currentDish.id), this.currentDish);
-        if (this.sideScroller.currentItemIndex >= this.paginatedFiles.length - 5) await this.loadMoreImages(10);
-        this.currentDish = await this.loadImageData(this.sideScroller.currentItemIndex, 'url');
-        this.requestFullUpdate();
+        if (this.currentDish) await FoodCache.updateMetadata(this.currentDish);
+        if (this.currentIndex >= this.paginatedFiles.length - 5) await this.loadMoreImages(10);
+        this.currentDish = this.paginatedFiles[this.currentIndex];
 
-        changePage(ImportFoodPage, { index: this.sideScroller.currentItemIndex } as any, false);
+        changePage(ImportFoodPage, { index: this.currentIndex } as any, false);
+        this.requestFullUpdate();
+    }
+
+    async reloadImage(dish: FoodModel, update = true) {
+        var response = await FoodCache.getPayload(dish);
+        var test = await response.base64();
+        if (!test.startsWith('data:image')) return;
+        dish.image.imageData = URL.createObjectURL(response);
+        await FoodCache.updateMetadata(dish);
+        if (update) await this.requestFullUpdate();
+    }
+
+    async reloadThumb(dish: FoodModel, update = true) {
+        await this.reloadImage(dish, update);
+        if (!dish.image.imageData?.startsWith('data:image')) return;
+        var thumbData = await ImageCompressionService.generateThumbnail(dish.image.imageData!, 200, 200);
+        dish.image.thumbData = URL.createObjectURL(thumbData);
+        await FoodCache.updateMetadata(dish);
+        if (update) await this.requestFullUpdate();
     }
 
     async searchDishes(search: string) {
-        var localNames: FoodModel[] = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            var key = localStorage.key(i)!;
-            if (key.startsWith('ImportFood.item') && key != MetadataCacheKey(this.sideScroller.currentItemIndex))
-                localNames.push(JSON.parse(localStorage.getItem(key)!) as FoodModel);
-        }
+        var fromCache = await Promise.all((await FoodCache.getIterator()).toArray());
 
-        return localNames
+        return fromCache
             .filter((x) => x?.title?.length && x.title.toLowerCase().includes(search.toLowerCase()))
             .concat(await RecipeService.searchDishes(search))
             .sort()
@@ -188,30 +198,38 @@ Es bleibt jedoch auf deinem Computer erhalten.
 Bit du sicher dass du es löschen möchtest?`,
             });
             if (!confirmed) return;
-            await this.removeImageAt(this.sideScroller.currentItemIndex);
+            await this.removeDish(this.currentDish!);
         }
-        if (event.key == 'ArrowLeft') this.sideScroller.setIndex(this.sideScroller.currentItemIndex - 1);
-        if (event.key == 'ArrowRight') this.sideScroller.setIndex(this.sideScroller.currentItemIndex + 1);
+        if (event.key == 'ArrowLeft') this.sideScroller!.setIndex(this.currentIndex - 1);
+        if (event.key == 'ArrowRight') this.sideScroller!.setIndex(this.currentIndex + 1);
     }
 
     applySearchResult(result: FoodModel) {
-        console.log(result == this.currentDish);
+        if (!this.currentDish) return;
         this.currentDish.description ||= result.description;
         this.currentDish.rating ||= result.rating;
         this.currentDish.difficulty ||= result.difficulty;
         if (!this.currentDish.tags.length) this.currentDish.tags = [...result.tags];
-        console.log(!this.currentDish.tags.length, result.tags);
 
         this.requestFullUpdate();
     }
 
-    async removeImageAt(index: number) {
-        this.paginatedFiles = this.paginatedFiles.filter((_, i) => i != index);
-        await Cache.delete((await Cache.keys()).at(index)!);
-        localStorage.removeItem(MetadataCacheKey(index));
-        this.cacheSize--;
+    async removeDish(dish: FoodModel) {
+        await FoodCache.deleteObject(dish);
+        this.paginatedFiles = this.paginatedFiles.filter((fromList) => fromList != dish);
 
-        if (index == this.sideScroller.currentItemIndex) await this.changeCurrentImage();
+        if (this.sideScroller!.currentItemIndex >= this.paginatedFiles.length) {
+            this.sideScroller?.setIndex(this.paginatedFiles.length - 1);
+            return;
+        }
+
+        if (dish == this.currentDish) {
+            this.changeCurrentImage();
+        } else {
+            var currentIndex = this.paginatedFiles.indexOf(this.currentDish);
+            if (this.sideScroller?.currentItemIndex != currentIndex) this.sideScroller?.setIndex(currentIndex);
+        }
+
         await this.requestFullUpdate();
     }
 
@@ -225,7 +243,7 @@ Bitte warte, bis das Caching abgeschlossen ist, bevor du importierst.`,
             return;
         }
 
-        var cacheSize = (await Cache.keys()).length;
+        var cacheSize = FoodCache.length;
         var confirmed = await DialogBase.show(`${cacheSize} Gerichte importieren`, {
             acceptActionText: 'Ja',
             declineActionText: 'Nein',
@@ -241,13 +259,17 @@ Abhängig von der Größe kann der Vorgang einige Minuten dauern.`,
         if (!confirmed) return;
 
         this.loadMoreImages();
-        var withMetadata = this.paginatedFiles.map((_, i) => this.loadImageData(i, 'data'));
 
         var dupes = [];
-        for (let dish of await Promise.all(withMetadata)) {
+        for (let dish of this.paginatedFiles) {
             var response = dish.image.imageData;
             try {
-                dish.image.imageData = await (dish.image.imageData as any as Response).clone().base64();
+                dish.id = null!;
+                dish.image.recipeId = null!;
+                dish.image.imageData = await (await fetch(dish.image.imageData!)).base64();
+                dish.image.thumbData = await (
+                    await ImageCompressionService.generateThumbnail(dish.image.imageData, 200, 200)
+                ).base64();
                 await RecipeService.importDish(dish);
             } catch (ex) {
                 if (ex.httpStatus == 409) dupes.push(dish);
@@ -264,15 +286,13 @@ Fehler: ${ex.reason}`,
             }
         }
 
-        await ImportFoodPage.clearCache();
+        await FoodCache.clear();
 
         if (dupes.length > 0) {
             ImportFoodPage.cacheAbertController = new AbortController();
-            await ImportFoodPage.cacheFiles(
-                dupes.map((dish) => dish.image.imageData as any as Response).values(),
-                ImportFoodPage.cacheAbertController?.signal
-            );
-            for (let i = 0; i < dupes.length; i++) await ImportFoodPage.cacheMetadata(i, dupes[i]);
+
+            for (let i = 0; i < dupes.length; i++)
+                await FoodCache.cacheJson(dupes[i], await (dupes[i].image.imageData as any as Response).blob());
             await DialogBase.show('Duplikate übersprungen', {
                 declineActionText: 'Ok',
                 content: `Beim hochladen wurden ${dupes.length} Duplikate übersprungen.
@@ -284,18 +304,6 @@ Wenn alles in Ordnung ist, kannst du die Seite manuell verlassen.`,
         }
 
         changePage(RecipesPage);
-    }
-
-    private async loadImageData(index: number, imageMode: 'url' | 'data') {
-        var imageUrl = this.paginatedFiles[index];
-        var metadata = localStorage.getItem(MetadataCacheKey(index));
-        var withMetadata =
-            FoodModel.fromJS(JSON.parse(metadata!)) ??
-            new FoodModel({ deleted: false, difficulty: 0, rating: 0, tags: [], description: '', title: '' });
-        withMetadata.id = index.toString();
-        if (imageMode == 'url') withMetadata.image.imageData = imageUrl;
-        else withMetadata.image.imageData = (await fetch(imageUrl)).clone() as any;
-        return withMetadata;
     }
 
     disconnectedCallback(): void {

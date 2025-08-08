@@ -2,6 +2,10 @@ declare global {
     interface Response {
         base64(): Promise<string>;
     }
+
+    interface Blob {
+        base64(): Promise<string>;
+    }
 }
 
 Response.prototype.base64 = function (this: Response) {
@@ -9,6 +13,14 @@ Response.prototype.base64 = function (this: Response) {
         var reader = new FileReader();
         reader.onloadend = () => resolve(reader.result as string);
         reader.readAsDataURL(await this.blob());
+    });
+};
+
+Blob.prototype.base64 = function (this: Blob) {
+    return new Promise(async (resolve) => {
+        var reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(this);
     });
 };
 

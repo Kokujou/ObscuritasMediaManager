@@ -1921,6 +1921,48 @@ export class RecipeClient {
         return Promise.resolve<FileResponse | null>(null as any);
     }
 
+    getRecipeThumb(recipeId: string, signal?: AbortSignal): Promise<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/thumb";
+        if (recipeId === undefined || recipeId === null)
+            throw new Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/octet-stream"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetRecipeThumb(_response);
+        });
+    }
+
+    protected processGetRecipeThumb(response: Response): Promise<FileResponse | null> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            }
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse | null>(null as any);
+    }
+
     searchDishes(search?: string | undefined, signal?: AbortSignal): Promise<RecipeModelBase[]> {
         let url_ = this.baseUrl + "/api/Recipe/search-dishes?";
         if (search === null)
@@ -3628,6 +3670,7 @@ export interface IRecipeModelBase {
 export class FoodImageModel implements IFoodImageModel {
     recipeId!: string;
     imageData!: string | null;
+    thumbData!: string | null;
 
     constructor(data?: Partial<IFoodImageModel>) {
         if (data) {
@@ -3643,6 +3686,7 @@ export class FoodImageModel implements IFoodImageModel {
         if (_data) {
             this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : <any>null;
             this.imageData = _data["imageData"] !== undefined ? _data["imageData"] : <any>null;
+            this.thumbData = _data["thumbData"] !== undefined ? _data["thumbData"] : <any>null;
         }
     }
 
@@ -3655,6 +3699,7 @@ export class FoodImageModel implements IFoodImageModel {
         data = typeof data === 'object' ? data : {};
         data["recipeId"] = this.recipeId !== undefined ? this.recipeId : <any>null;
         data["imageData"] = this.imageData !== undefined ? this.imageData : <any>null;
+        data["thumbData"] = this.thumbData !== undefined ? this.thumbData : <any>null;
         return data;
     }
 
@@ -3669,6 +3714,7 @@ export class FoodImageModel implements IFoodImageModel {
 export interface IFoodImageModel {
     recipeId: string;
     imageData: string | null;
+    thumbData: string | null;
 }
 
 export class FoodTagModel implements IFoodTagModel {
