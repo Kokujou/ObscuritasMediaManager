@@ -3669,6 +3669,7 @@ export interface IRecipeModelBase {
 
 export class FoodImageModel implements IFoodImageModel {
     recipeId!: string;
+    mimeType!: string | null;
     imageData!: string | null;
     thumbData!: string | null;
 
@@ -3685,6 +3686,7 @@ export class FoodImageModel implements IFoodImageModel {
     init(_data?: any, _mappings?: any) {
         if (_data) {
             this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : <any>null;
+            this.mimeType = _data["mimeType"] !== undefined ? _data["mimeType"] : <any>null;
             this.imageData = _data["imageData"] !== undefined ? _data["imageData"] : <any>null;
             this.thumbData = _data["thumbData"] !== undefined ? _data["thumbData"] : <any>null;
         }
@@ -3698,6 +3700,7 @@ export class FoodImageModel implements IFoodImageModel {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["recipeId"] = this.recipeId !== undefined ? this.recipeId : <any>null;
+        data["mimeType"] = this.mimeType !== undefined ? this.mimeType : <any>null;
         data["imageData"] = this.imageData !== undefined ? this.imageData : <any>null;
         data["thumbData"] = this.thumbData !== undefined ? this.thumbData : <any>null;
         return data;
@@ -3713,6 +3716,7 @@ export class FoodImageModel implements IFoodImageModel {
 
 export interface IFoodImageModel {
     recipeId: string;
+    mimeType: string | null;
     imageData: string | null;
     thumbData: string | null;
 }

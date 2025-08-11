@@ -20,24 +20,22 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     public async Task<IActionResult> GetRecipeImage(Guid recipeId)
     {
         var image = await recipeRepository.GetImageAsync(recipeId);
-        if (image.ImageData is null) return NoContent();
+        if (image is { ImageData: null } or { MimeType: null }) return NoContent();
 
-        Response.Headers["Cache-Control"] = "public, max-age=31536000, immutable";
+        Response.Headers.CacheControl = "public, max-age=31536000, immutable";
 
-        var fileType = image.ImageData["data:".Length..image.ImageData.IndexOf(';')];
-        return File(Convert.FromBase64String(image.ImageData[(image.ImageData.IndexOf(',') + 1)..]), fileType);
+        return File(image.ImageData, image.MimeType);
     }
 
     [HttpGet("{recipeId}/thumb")]
     public async Task<IActionResult> GetRecipeThumb(Guid recipeId)
     {
-        var image = await recipeRepository.GetImageAsync(recipeId);
-        if (image.ThumbData is null) return NoContent();
+        var thumb = await recipeRepository.GetThumbAsync(recipeId);
+        if (thumb is null) return NoContent();
 
-        Response.Headers["Cache-Control"] = "public, max-age=31536000, immutable";
+        Response.Headers.CacheControl = "public, max-age=31536000, immutable";
 
-        var fileType = image.ThumbData["data:".Length..image.ThumbData.IndexOf(';')];
-        return File(Convert.FromBase64String(image.ThumbData[(image.ThumbData.IndexOf(',') + 1)..]), fileType);
+        return File(thumb, "image/jpeg");
     }
 
     [HttpPost("search-dishes")]

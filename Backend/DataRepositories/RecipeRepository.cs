@@ -26,6 +26,12 @@ public class RecipeRepository(DatabaseContext databaseContext)
         return await databaseContext.Set<FoodImageModel>().FirstAsync(x => x.RecipeId == id);
     }
 
+    public async Task<byte[]?> GetThumbAsync(Guid id)
+    {
+        return await databaseContext.Set<FoodImageModel>().Where(x => x.RecipeId == id).Select(x => x.ThumbData)
+            .FirstAsync();
+    }
+
     public async Task<bool> ExistsAsync(Guid id)
     {
         return await databaseContext.Recipes.AnyAsync(x => x.Id == id);
