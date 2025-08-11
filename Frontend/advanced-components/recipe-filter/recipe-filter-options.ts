@@ -1,11 +1,9 @@
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { FilterEntry } from '../../data/filter-entry';
+import { CookingTechnique } from '../../data/food/cooking-technique';
+import { Course } from '../../data/food/course';
 import { TimeSpan } from '../../data/timespan';
-import {
-    Language,
-    CookingTechnique,
-    Course,
-} from '../../obscuritas-media-manager-backend -obscuritas-media-manager-services-client';
+import { Language } from '../../obscuritas-media-manager-backend-client';
 
 export const RecipeTimes = {
     totalTime: 'Gesamt',

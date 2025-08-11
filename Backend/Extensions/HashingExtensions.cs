@@ -1,7 +1,8 @@
-﻿using System.Reflection;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
 
 namespace ObscuritasMediaManager.Backend.Extensions;
 
@@ -28,31 +29,29 @@ public static class HashingExtensions
     public static string GetHash(this object? input, Type type)
     {
         using var md5 = MD5.Create();
-
         if (type.IsPrimitive || type == typeof(string) || type == typeof(decimal))
-            return string.Join(string.Empty,
-                md5.ComputeHash(Encoding.UTF8.GetBytes(input?.ToString() ?? string.Empty))
+            return string.Join("",
+                MD5.HashData(Encoding.UTF8.GetBytes(input?.ToString() ?? ""))
                     .Select(x => x.ToString("X2")));
 
-        List<PropertyInfo> hashableProperties;
-        lock (TypeSignatures)
-        {
-            if (!TypeSignatures.TryGetValue(type, out hashableProperties!))
-            {
-                hashableProperties = type
-                    .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                    .Where(x => !Attribute.IsDefined(x, typeof(NotHashableAttribute)))
-                    .ToList();
-                TypeSignatures.Add(type, hashableProperties);
-            }
-        }
-
-        var hashablePropertyValues =
-            hashableProperties.ToDictionary(x => x.Name, x => x.GetValue(input));
-        var jsonString = JsonSerializer.Serialize(hashablePropertyValues);
+        var jsonString =
+            JsonConvert.SerializeObject(input,
+                new JsonSerializerSettings { ContractResolver = new OnlyHashablePropertiesContractResolver() });
         var bytes = Encoding.UTF8.GetBytes(jsonString);
-        var hashBytes = md5.ComputeHash(bytes);
+        var hashBytes = MD5.HashData(bytes);
+        return string.Join("", hashBytes.Select(x => x.ToString("X2")));
+    }
 
-        return string.Join(string.Empty, hashBytes.Select(x => x.ToString("X2")));
+    public class OnlyHashablePropertiesContractResolver : DefaultContractResolver
+    {
+        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization serialization)
+        {
+            var prop = base.CreateProperty(member, serialization);
+
+            if (member.GetCustomAttribute<NotHashableAttribute>() is not null)
+                prop.ShouldSerialize = _ => false;
+
+            return prop;
+        }
     }
 }

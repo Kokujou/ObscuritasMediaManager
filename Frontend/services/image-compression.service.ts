@@ -3,6 +3,7 @@ export class ImageCompressionService {
         const image = document.createElement('img');
         return new Promise<Blob>((resolve, reject) => {
             image.src = imageData;
+            image.onerror = (e: ErrorEvent) => reject(e);
             image.onload = () => {
                 // Berechne Zielgröße mit Erhaltung des Seitenverhältnisses
                 let ratio = Math.min(maxWidth / image.width, maxHeight / image.height);

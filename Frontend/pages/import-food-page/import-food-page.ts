@@ -262,14 +262,17 @@ Abhängig von der Größe kann der Vorgang einige Minuten dauern.`,
 
         var dupes = [];
         for (let dish of this.paginatedFiles) {
-            var response = dish.image.imageData;
             try {
                 dish.id = null!;
                 dish.image.recipeId = null!;
-                dish.image.imageData = await (await fetch(dish.image.imageData!)).base64();
-                dish.image.thumbData = await (
-                    await ImageCompressionService.generateThumbnail(dish.image.imageData, 200, 200)
-                ).base64();
+                var response = await fetch(dish.image.imageData!);
+                var blob = await response.blob();
+                var base64 = await blob.base64();
+                dish.image.imageData = base64.split(',')[1];
+                dish.image.mimeType = blob.type;
+                dish.image.thumbData = (await (await ImageCompressionService.generateThumbnail(base64, 200, 200)).base64()).split(
+                    ','
+                )[1];
                 await RecipeService.importDish(dish);
             } catch (ex) {
                 if (ex.httpStatus == 409) dupes.push(dish);
@@ -281,8 +284,6 @@ Fehler: ${ex.reason}`,
                     });
                     return;
                 }
-            } finally {
-                dish.image.imageData = response as any as Response as any;
             }
         }
 

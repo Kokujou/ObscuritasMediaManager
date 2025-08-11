@@ -4,8 +4,7 @@ import { Session } from '../../data/session';
 import { InputDialog } from '../../dialogs/input-dialog/input-dialog';
 
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
-import { RecipeModel } from '../../obscuritas-media-manager-backend -obscuritas-media-manager-services-client';
-import { IngredientCategory, IngredientModel, Language } from '../../obscuritas-media-manager-backend-client';
+import { IngredientCategory, IngredientModel, Language, RecipeModel } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
 import { ObjectFilterService } from '../../services/object-filter.service';
 import { renderShoppingPageStyles } from './shopping-page.css';

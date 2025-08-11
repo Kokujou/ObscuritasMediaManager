@@ -1,7 +1,6 @@
 import { RecipeFilterOptions } from '../advanced-components/recipe-filter/recipe-filter-options';
 import { TimeSpan } from '../data/timespan';
-import { RecipeModel } from '../obscuritas-media-manager-backend -obscuritas-media-manager-services-client';
-import { FoodModel, RecipeModelBase } from '../obscuritas-media-manager-backend-client';
+import { FoodModel, RecipeModel, RecipeModelBase } from '../obscuritas-media-manager-backend-client';
 import { ObjectFilterService } from './object-filter.service';
 
 export class RecipeFilterService {

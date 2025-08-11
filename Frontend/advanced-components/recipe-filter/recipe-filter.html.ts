@@ -6,11 +6,9 @@ import { DropDownOption } from '../../native-components/drop-down/drop-down-opti
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { RecipeFilter } from './recipe-filter';
 import { RecipeTimes } from './recipe-filter-options';
-import {
-    Language,
-    Course,
-    CookingTechnique,
-} from '../../obscuritas-media-manager-backend -obscuritas-media-manager-services-client';
+import { CookingTechnique } from '../../data/food/cooking-technique';
+import { Course } from '../../data/food/course';
+import { Language } from '../../obscuritas-media-manager-backend-client';
 
 export function renderRecipeFilter(this: RecipeFilter) {
     return html`
