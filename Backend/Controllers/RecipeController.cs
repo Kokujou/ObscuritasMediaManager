@@ -16,10 +16,10 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
         return recipeRepository.GetAll();
     }
 
-    [HttpGet("{recipeId}/image")]
-    public async Task<IActionResult> GetRecipeImage(Guid recipeId)
+    [HttpGet("{recipeId}/images/{index}")]
+    public async Task<IActionResult> GetRecipeImage(Guid recipeId, int index)
     {
-        var image = await recipeRepository.GetImageAsync(recipeId);
+        var image = await recipeRepository.GetImageAsync(recipeId, index);
         if (image is { ImageData: null } or { MimeType: null }) return NoContent();
 
         Response.Headers.CacheControl = "public, max-age=31536000, immutable";
@@ -27,10 +27,10 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
         return File(image.ImageData, image.MimeType);
     }
 
-    [HttpGet("{recipeId}/thumb")]
-    public async Task<IActionResult> GetRecipeThumb(Guid recipeId)
+    [HttpGet("{recipeId}/thumb/{index}")]
+    public async Task<IActionResult> GetRecipeThumb(Guid recipeId, int index)
     {
-        var thumb = await recipeRepository.GetThumbAsync(recipeId);
+        var thumb = await recipeRepository.GetThumbAsync(recipeId, index);
         if (thumb is null) return NoContent();
 
         Response.Headers.CacheControl = "public, max-age=31536000, immutable";
@@ -53,7 +53,7 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     [HttpPut("dish")]
     public async Task ImportDish([FromBody] FoodModel dish)
     {
-        await recipeRepository.CreateDishAsync(dish);
+        await recipeRepository.CreateOrAppendDishAsync(dish);
     }
 
     [HttpPost]

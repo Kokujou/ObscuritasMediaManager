@@ -14,20 +14,9 @@ export function renderRecipesPage(this: RecipesPage) {
                         <link-element @click="${() => this.showFileBrowser()}">
                             <div class="add-icon" id="add-dish-icon"></div>
                         </link-element>
-                        ${Session.recipes.current().map(
-                            (recipe) => html`
-                                <div id="food-tile">
-                                    <img
-                                        width="200px"
-                                        height="200px"
-                                        decoding="async"
-                                        style="object-fit:contain;"
-                                        src="./Backend/api/recipe/${recipe.id}/thumb"
-                                    />
-                                    <div id="food-title">${recipe.title}</div>
-                                </div>
-                            `
-                        )}
+                        ${Session.recipes
+                            .current()
+                            .map((recipe) => html` <recipe-tile-base .recipe="${recipe}"></recipe-tile-base> `)}
                     </div>
                 </paginated-scrolling>
             </div>

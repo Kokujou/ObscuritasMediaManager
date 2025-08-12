@@ -1879,11 +1879,14 @@ export class RecipeClient {
         return Promise.resolve<void>(null as any);
     }
 
-    getRecipeImage(recipeId: string, signal?: AbortSignal): Promise<FileResponse | null> {
-        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/image";
+    getRecipeImage(recipeId: string, index: number, signal?: AbortSignal): Promise<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/images/{index}";
         if (recipeId === undefined || recipeId === null)
             throw new Error("The parameter 'recipeId' must be defined.");
         url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        if (index === undefined || index === null)
+            throw new Error("The parameter 'index' must be defined.");
+        url_ = url_.replace("{index}", encodeURIComponent("" + index));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -1921,11 +1924,14 @@ export class RecipeClient {
         return Promise.resolve<FileResponse | null>(null as any);
     }
 
-    getRecipeThumb(recipeId: string, signal?: AbortSignal): Promise<FileResponse | null> {
-        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/thumb";
+    getRecipeThumb(recipeId: string, index: number, signal?: AbortSignal): Promise<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/thumb/{index}";
         if (recipeId === undefined || recipeId === null)
             throw new Error("The parameter 'recipeId' must be defined.");
         url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        if (index === undefined || index === null)
+            throw new Error("The parameter 'index' must be defined.");
+        url_ = url_.replace("{index}", encodeURIComponent("" + index));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -3574,7 +3580,8 @@ export class RecipeModelBase implements IRecipeModelBase {
     id!: string;
     title!: string;
     description!: string;
-    image!: FoodImageModel;
+    images!: FoodImageModel[];
+    imageCount!: number;
     difficulty!: number;
     rating!: number;
     deleted!: boolean;
@@ -3592,7 +3599,7 @@ export class RecipeModelBase implements IRecipeModelBase {
         }
 
         if (!data) {
-            this.image = new FoodImageModel();
+            this.images = [];
             this.tags = [];
         }
         this._discriminator = "RecipeModelBase";
@@ -3603,7 +3610,15 @@ export class RecipeModelBase implements IRecipeModelBase {
             this.id = _data["id"] !== undefined ? _data["id"] : <any>null;
             this.title = _data["title"] !== undefined ? _data["title"] : <any>null;
             this.description = _data["description"] !== undefined ? _data["description"] : <any>null;
-            this.image = _data["image"] ? FoodImageModel.fromJS(_data["image"], _mappings) : new FoodImageModel();
+            if (Array.isArray(_data["images"])) {
+                this.images = [] as any;
+                for (let item of _data["images"])
+                    this.images!.push(FoodImageModel.fromJS(item, _mappings));
+            }
+            else {
+                this.images = <any>null;
+            }
+            this.imageCount = _data["imageCount"] !== undefined ? _data["imageCount"] : <any>null;
             this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : <any>null;
             this.rating = _data["rating"] !== undefined ? _data["rating"] : <any>null;
             this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : <any>null;
@@ -3634,7 +3649,12 @@ export class RecipeModelBase implements IRecipeModelBase {
         data["id"] = this.id !== undefined ? this.id : <any>null;
         data["title"] = this.title !== undefined ? this.title : <any>null;
         data["description"] = this.description !== undefined ? this.description : <any>null;
-        data["image"] = this.image ? this.image.toJSON() : <any>null;
+        if (Array.isArray(this.images)) {
+            data["images"] = [];
+            for (let item of this.images)
+                data["images"].push(item.toJSON());
+        }
+        data["imageCount"] = this.imageCount !== undefined ? this.imageCount : <any>null;
         data["difficulty"] = this.difficulty !== undefined ? this.difficulty : <any>null;
         data["rating"] = this.rating !== undefined ? this.rating : <any>null;
         data["deleted"] = this.deleted !== undefined ? this.deleted : <any>null;
@@ -3659,7 +3679,8 @@ export interface IRecipeModelBase {
     id: string;
     title: string;
     description: string;
-    image: FoodImageModel;
+    images: FoodImageModel[];
+    imageCount: number;
     difficulty: number;
     rating: number;
     deleted: boolean;

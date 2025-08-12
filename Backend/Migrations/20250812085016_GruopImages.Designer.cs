@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -10,12 +11,14 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 namespace ObscuritasMediaManager.Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250812085016_GruopImages")]
+    partial class GruopImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.8");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
 
             modelBuilder.Entity("MediaGenreMapping", b =>
                 {
@@ -37,12 +40,13 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.Property<Guid>("RecipeId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ImageHash")
-                        .HasMaxLength(32)
-                        .HasColumnType("TEXT");
-
                     b.Property<byte[]>("ImageData")
                         .HasColumnType("BLOB");
+
+                    b.Property<string>("ImageHash")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("MimeType")
                         .HasMaxLength(20)
@@ -51,7 +55,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.Property<byte[]>("ThumbData")
                         .HasColumnType("BLOB");
 
-                    b.HasKey("RecipeId", "ImageHash");
+                    b.HasKey("RecipeId");
 
                     b.HasIndex("ImageHash")
                         .IsUnique();
@@ -470,9 +474,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.Property<int>("Difficulty")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ImageCount")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("Rating")
                         .HasColumnType("INTEGER");
 
@@ -487,9 +488,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Title")
-                        .IsUnique();
 
                     b.ToTable("Recipes");
 

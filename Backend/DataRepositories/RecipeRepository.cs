@@ -21,15 +21,15 @@ public class RecipeRepository(DatabaseContext databaseContext)
         return await databaseContext.Set<RecipeModelBase>().SingleAsync(x => x.Id == id);
     }
 
-    public async Task<FoodImageModel> GetImageAsync(Guid id)
+    public async Task<FoodImageModel> GetImageAsync(Guid id, int index)
     {
-        return await databaseContext.Set<FoodImageModel>().FirstAsync(x => x.RecipeId == id);
+        return await databaseContext.Set<FoodImageModel>().Where(x => x.RecipeId == id).ElementAtAsync(index);
     }
 
-    public async Task<byte[]?> GetThumbAsync(Guid id)
+    public async Task<byte[]?> GetThumbAsync(Guid id, int index)
     {
         return await databaseContext.Set<FoodImageModel>().Where(x => x.RecipeId == id).Select(x => x.ThumbData)
-            .FirstAsync();
+            .ElementAtAsync(index);
     }
 
     public async Task<bool> ExistsAsync(Guid id)
@@ -161,14 +161,17 @@ public class RecipeRepository(DatabaseContext databaseContext)
         return databaseContext.Set<RecipeModelBase>().Where(x => x.Title.ToLower().Contains(search.ToLower()));
     }
 
-    public async Task CreateDishAsync(FoodModel dish)
+    public async Task CreateOrAppendDishAsync(FoodModel dish)
     {
-        if (await databaseContext.Set<FoodImageModel>().AnyAsync(x => x.ImageHash == dish.Image.ImageHash))
+        var image = dish.Images.FirstOrDefault();
+        if (image is null) throw new ArgumentException("Dish image is required!", nameof(dish));
+        if (await databaseContext.Set<FoodImageModel>().AnyAsync(x => x.ImageHash == image.ImageHash))
             throw new ConflictException("Dish already exists!");
 
-        foreach (var tag in dish.Tags) tag.RecipeId = dish.Id;
-
-        databaseContext.Add(dish);
+        var existing = await databaseContext.Set<FoodModel>().AsTracking()
+            .FirstOrDefaultAsync(x => x.Title == dish.Title);
+        if (existing is not null) existing.Images.Add(image);
+        else databaseContext.Add(dish);
         await databaseContext.SaveChangesAsync();
     }
 }

@@ -9,6 +9,7 @@ namespace ObscuritasMediaManager.Backend.Models;
 [JsonPolymorphic(TypeDiscriminatorPropertyName = nameof(Type))]
 [JsonDerivedType(typeof(FoodModel), "Food")]
 [JsonDerivedType(typeof(RecipeModel), "Recipe")]
+[Index(nameof(Title), IsUnique = true)]
 public class RecipeModelBase
 {
     public static void Configure(ModelBuilder builder)
@@ -22,13 +23,15 @@ public class RecipeModelBase
             .HasPrincipalKey(x => x.IngredientName).IsRequired(false);
     }
 
-    [Key] public Guid Id { get; private set; } = Guid.NewGuid();
+    [Key] public Guid Id { get; set; } = Guid.NewGuid();
     [MaxLength(255)] public required string Title { get; set; }
     [MaxLength(255)] public required string Description { get; set; }
 
-    [ForeignKey(nameof(Id))]
+    [ForeignKey(nameof(FoodImageModel.RecipeId))]
     [IgnoreAutoInclude]
-    public required FoodImageModel Image { get; set; } = null!;
+    public required List<FoodImageModel> Images { get; set; } = [];
+
+    public int ImageCount { get; private set; }
 
     public int Difficulty { get; set; }
     public int Rating { get; set; }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -10,9 +11,11 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 namespace ObscuritasMediaManager.Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250812102546_revert")]
+    partial class revert
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.8");
@@ -37,12 +40,13 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.Property<Guid>("RecipeId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ImageHash")
-                        .HasMaxLength(32)
-                        .HasColumnType("TEXT");
-
                     b.Property<byte[]>("ImageData")
                         .HasColumnType("BLOB");
+
+                    b.Property<string>("ImageHash")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("MimeType")
                         .HasMaxLength(20)
@@ -51,7 +55,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.Property<byte[]>("ThumbData")
                         .HasColumnType("BLOB");
 
-                    b.HasKey("RecipeId", "ImageHash");
+                    b.HasKey("RecipeId");
 
                     b.HasIndex("ImageHash")
                         .IsUnique();
@@ -487,9 +491,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Title")
-                        .IsUnique();
 
                     b.ToTable("Recipes");
 

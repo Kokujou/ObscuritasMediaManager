@@ -8,9 +8,10 @@ namespace ObscuritasMediaManager.Backend.Models;
 
 [Table("FoodImageMapping")]
 [Index(nameof(ImageHash), IsUnique = true)]
+[PrimaryKey(nameof(RecipeId), nameof(ImageHash))]
 public class FoodImageModel
 {
-    [Key] public Guid RecipeId { get; private set; } = Guid.NewGuid();
+    public Guid RecipeId { get; set; } = Guid.NewGuid();
 
     [MaxLength(20)] public string? MimeType { get; set; }
     public byte[]? ImageData { get; set; }

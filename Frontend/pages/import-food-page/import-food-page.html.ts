@@ -19,7 +19,7 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                     >
                         <img
                             id="current-image"
-                            src="${this.currentDish.image.imageData!}"
+                            src="${this.currentDish.images[0].imageData!}"
                             style="aspect-ratio: ${this.currentAspectRatio}; ${this.currentAspectRatio > 1
                                 ? 'width: 100%;'
                                 : 'height: 100%'}"
@@ -115,7 +115,7 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                         >
                             <img
                                 class="imported-image"
-                                src="${dish.image.imageData!}"
+                                src="${dish.images[0].imageData!}"
                                 @click="${() => this.sideScroller!.setIndex(i)}"
                                 @error="${() => this.reloadThumb(dish)}"
                             />
