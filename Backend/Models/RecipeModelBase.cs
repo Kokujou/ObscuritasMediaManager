@@ -31,6 +31,10 @@ public class RecipeModelBase
     [IgnoreAutoInclude]
     public required List<FoodImageModel> Images { get; set; } = [];
 
+    [ForeignKey(nameof(FoodTagModel.RecipeId))]
+    [IgnoreAutoInclude]
+    public required List<FoodThumbModel> Thumbs { get; set; } = [];
+
     public int ImageCount { get; private set; }
 
     public int Difficulty { get; set; }

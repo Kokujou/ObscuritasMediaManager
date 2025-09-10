@@ -20,6 +20,6 @@ export function renderRecipeTileBase(this: RecipeTileBase) {
                 `
             )}
         </div>
-        <div id="food-title">${this.recipe.title}</div>
+        ${this.compact ? html` <div id="food-title">${this.recipe.title}</div> ` : ''}
     `;
 }

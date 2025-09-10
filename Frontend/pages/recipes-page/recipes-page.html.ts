@@ -16,7 +16,7 @@ export function renderRecipesPage(this: RecipesPage) {
                         </link-element>
                         ${Session.recipes
                             .current()
-                            .map((recipe) => html` <recipe-tile-base .recipe="${recipe}"></recipe-tile-base> `)}
+                            .map((recipe) => html` <recipe-tile-base .recipe="${recipe}" compact></recipe-tile-base> `)}
                     </div>
                 </paginated-scrolling>
             </div>

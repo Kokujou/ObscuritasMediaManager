@@ -11,6 +11,7 @@ export class RecipeTileBase extends LitElementBase {
     }
 
     @property({ type: Object }) public declare recipe: RecipeModelBase;
+    @property({ type: Boolean }) public declare compact: boolean;
 
     override render() {
         return renderRecipeTileBase.call(this);

@@ -1,5 +1,5 @@
 export class ImageCompressionService {
-    static generateThumbnail(imageData: string, maxWidth: number, maxHeight: number) {
+    static generateThumbnail(imageData: string, maxWidth = 200, maxHeight = 200) {
         const image = document.createElement('img');
         return new Promise<Blob>((resolve, reject) => {
             image.src = imageData;

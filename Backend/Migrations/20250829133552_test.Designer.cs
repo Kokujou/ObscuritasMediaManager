@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -10,9 +11,11 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 namespace ObscuritasMediaManager.Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250829133552_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.8");
@@ -48,6 +51,9 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
+                    b.Property<byte[]>("ThumbData")
+                        .HasColumnType("BLOB");
+
                     b.HasKey("RecipeId", "ImageHash");
 
                     b.HasIndex("ImageHash")
@@ -72,23 +78,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.HasKey("RecipeId", "Key", "Value");
 
                     b.ToTable("FoodTagMapping");
-                });
-
-            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodThumbModel", b =>
-                {
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ThumbHash")
-                        .HasMaxLength(32)
-                        .HasColumnType("TEXT");
-
-                    b.Property<byte[]>("ThumbData")
-                        .HasColumnType("BLOB");
-
-                    b.HasKey("RecipeId", "ThumbHash");
-
-                    b.ToTable("FoodThumbMapping");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.GenreModel", b =>
@@ -616,15 +605,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodThumbModel", b =>
-                {
-                    b.HasOne("ObscuritasMediaManager.Backend.Models.RecipeModelBase", null)
-                        .WithMany("Thumbs")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MusicInstrumentMappingModel", b =>
                 {
                     b.HasOne("ObscuritasMediaManager.Backend.Models.InstrumentModel", null)
@@ -724,8 +704,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.Navigation("Images");
 
                     b.Navigation("Tags");
-
-                    b.Navigation("Thumbs");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeModel", b =>

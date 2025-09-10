@@ -7,7 +7,7 @@ import { dimLight, undimLight } from '../../extensions/document.extensions';
 import { changePage, getQueryValue } from '../../extensions/url.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { SideScroller } from '../../native-components/side-scroller/side-scroller';
-import { FoodImageModel, FoodModel } from '../../obscuritas-media-manager-backend-client';
+import { FoodImageModel, FoodModel, FoodThumbModel } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
 import { CachingService } from '../../services/caching.service';
 import { ImageCompressionService } from '../../services/image-compression.service';
@@ -64,6 +64,7 @@ export class ImportFoodPage extends LitElementBase {
                 id: i.toString(),
                 tags: [],
                 images: [new FoodImageModel()],
+                thumbs: [new FoodThumbModel()],
                 deleted: false,
                 difficulty: 0,
                 rating: 0,
@@ -171,8 +172,8 @@ export class ImportFoodPage extends LitElementBase {
     async reloadThumb(dish: FoodModel, update = true) {
         await this.reloadImage(dish, update);
         if (!dish.images[0].imageData?.startsWith('data:image')) return;
-        var thumbData = await ImageCompressionService.generateThumbnail(dish.images[0].imageData!, 200, 200);
-        dish.images[0].thumbData = URL.createObjectURL(thumbData);
+        var thumbData = await ImageCompressionService.generateThumbnail(dish.images[0].imageData!);
+        dish.thumbs[0].thumbData = URL.createObjectURL(thumbData);
         await FoodCache.updateMetadata(dish);
         if (update) await this.requestFullUpdate();
     }
@@ -270,9 +271,9 @@ Abhängig von der Größe kann der Vorgang einige Minuten dauern.`,
                 var base64 = await blob.base64();
                 dish.images[0].imageData = base64.split(',')[1];
                 dish.images[0].mimeType = blob.type;
-                dish.images[0].thumbData = (
-                    await (await ImageCompressionService.generateThumbnail(base64, 200, 200)).base64()
-                ).split(',')[1];
+                dish.thumbs[0].thumbData = (await (await ImageCompressionService.generateThumbnail(base64)).base64()).split(
+                    ','
+                )[1];
                 await RecipeService.importDish(dish);
             } catch (ex) {
                 if (ex.httpStatus == 409) dupes.push(dish);

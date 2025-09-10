@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Models;
 
@@ -61,6 +63,17 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     {
         await recipeRepository.CreateRecipeAsync(recipe);
         return recipe.Id;
+    }
+
+    [HttpPut("recipe/{recipeId}/image")]
+    public async Task<RecipeModelBase> AddRecipeImage(Guid recipeId, [FromBody] RecipeImageCreationRequest request)
+    {
+        request.Image.RecipeId = recipeId;
+        request.Thumb.RecipeId = recipeId;
+        context.Add(request.Image);
+        context.Add(request.Thumb);
+        await context.SaveChangesAsync();
+        return await context.Set<RecipeModelBase>().SingleAsync(x => x.Id == recipeId);
     }
 
     [HttpPatch]

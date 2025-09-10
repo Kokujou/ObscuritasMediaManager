@@ -98,6 +98,7 @@ export class ShoppingPage extends LitElementBase {
                 category: IngredientCategory.Miscellaneous,
                 lowestKnownPrice: '',
                 nation: Language.Unset,
+                isFluid: false,
             });
             this.newIngredients.push(newIngredient.ingredientName);
             await RecipeService.updateIngredient(ingredientName, newIngredient);

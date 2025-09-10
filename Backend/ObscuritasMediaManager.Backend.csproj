@@ -14,9 +14,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Remove="Database\**" />
 		<Compile Remove="nswag_template\**" />
+		<Content Remove="Database\**" />
 		<Content Remove="nswag_template\**" />
+		<EmbeddedResource Remove="Database\**" />
 		<EmbeddedResource Remove="nswag_template\**" />
+		<None Remove="Database\**" />
 		<None Remove="nswag_template\**" />
 	</ItemGroup>
 	<PropertyGroup>

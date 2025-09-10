@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -10,9 +11,11 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 namespace ObscuritasMediaManager.Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250910095242_SplitImageAndThumbTables")]
+    partial class SplitImageAndThumbTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.8");
@@ -88,7 +91,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("RecipeId", "ThumbHash");
 
-                    b.ToTable("FoodThumbMapping");
+                    b.ToTable("FoodThumbModel");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.GenreModel", b =>

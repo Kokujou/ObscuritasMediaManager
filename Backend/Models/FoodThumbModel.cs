@@ -6,21 +6,19 @@ using System.Text.Json.Serialization;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
-[Table("FoodImageMapping")]
-[Index(nameof(ImageHash), IsUnique = true)]
-[PrimaryKey(nameof(RecipeId), nameof(ImageHash))]
-public class FoodImageModel
+[Table("FoodThumbMapping")]
+[PrimaryKey(nameof(RecipeId), nameof(ThumbHash))]
+public class FoodThumbModel
 {
     public Guid RecipeId { get; set; } = Guid.NewGuid();
 
-    [MaxLength(20)] public string? MimeType { get; set; }
-    public byte[]? ImageData { get; set; }
+    public byte[]? ThumbData { get; set; }
 
     [JsonIgnore]
     [MaxLength(32)]
-    public string ImageHash
+    public string ThumbHash
     {
-        get => ImageData.GetHash();
+        get => ThumbData.GetHash();
         set => _ = value;
     }
 }

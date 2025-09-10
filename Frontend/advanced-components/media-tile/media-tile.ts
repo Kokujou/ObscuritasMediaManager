@@ -89,8 +89,4 @@ export class MediaTile extends LitElementBase {
         e?.stopPropagation();
         this.dispatchEvent(new CustomEvent('genresChanged', { detail: { genres: genres } }));
     }
-
-    notifyImageAdded(imageData: string) {
-        this.dispatchEvent(new CustomEvent('imageReceived'));
-    }
 }

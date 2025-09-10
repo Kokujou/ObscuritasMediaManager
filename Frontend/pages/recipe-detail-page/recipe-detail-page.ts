@@ -6,16 +6,20 @@ import { changePage, getQueryValue } from '../../extensions/url.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
+    FoodImageModel,
+    FoodThumbModel,
     IngredientCategory,
     IngredientModel,
     Language,
     Measurement,
     MeasurementUnit,
     RecipeCookwareMappingModel,
+    RecipeImageCreationRequest,
     RecipeIngredientMappingModel,
     RecipeModel,
 } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
+import { ImageCompressionService } from '../../services/image-compression.service';
 import { RecipesPage } from '../recipes-page/recipes-page';
 import { renderRecipeDetailPageStyles } from './recipe-detail-page.css';
 import { renderRecipeDetailPage } from './recipe-detail-page.html';
@@ -125,8 +129,16 @@ export class RecipeDetailPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    notifyImageAdded(imageData: string) {
-        this.recipe.image.imageData = imageData;
+    async addImage(imageData: string) {
+        var thumbData = (await (await ImageCompressionService.generateThumbnail(imageData)).base64()).split(',')[1];
+        this.recipe = (await RecipeService.addRecipeImage(
+            this.recipe.id,
+            new RecipeImageCreationRequest({
+                image: new FoodImageModel({ imageData, mimeType: 'image/png' }),
+                thumb: new FoodThumbModel({ thumbData }),
+            })
+        )) as RecipeModel;
+
         this.requestFullUpdate();
     }
 
