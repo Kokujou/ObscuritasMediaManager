@@ -17,6 +17,8 @@ export function renderEntityStatusDialogStyles() {
         .entry {
             display: flex;
             flex-direction: row;
+            align-items: center;
+            justify-content: center;
             padding: 10px;
             min-width: 300px;
             gap: 30px;
@@ -42,6 +44,9 @@ export function renderEntityStatusDialogStyles() {
         .entry-text {
             flex: auto;
             user-select: text;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         #entries-loading-indication {

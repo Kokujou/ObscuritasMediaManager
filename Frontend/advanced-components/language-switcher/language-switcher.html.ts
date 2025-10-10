@@ -37,7 +37,7 @@ function renderLanguageWheel(this: LanguageSwitcher, size: number) {
                 language="${targetLangauge}"
                 class="icon"
                 ?main="${targetLangauge == this.language}"
-                .style="${styles}"
+                style="${styles}"
             ></div>`;
         })}
     `;
