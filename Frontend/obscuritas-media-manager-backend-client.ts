@@ -2934,6 +2934,7 @@ export interface IGenreModel {
 }
 
 export class MediaGenreModel extends GenreModel implements IMediaGenreModel {
+    sectionName!: string;
     section!: MediaGenreCategory;
 
     constructor(data?: Partial<IMediaGenreModel>) {
@@ -2950,6 +2951,7 @@ export class MediaGenreModel extends GenreModel implements IMediaGenreModel {
     init(_data?: any, _mappings?: any) {
         super.init(_data);
         if (_data) {
+            this.sectionName = _data["sectionName"] !== undefined ? _data["sectionName"] : <any>null;
             this.section = _data["section"] !== undefined ? _data["section"] : <any>null;
         }
     }
@@ -2961,6 +2963,7 @@ export class MediaGenreModel extends GenreModel implements IMediaGenreModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["sectionName"] = this.sectionName !== undefined ? this.sectionName : <any>null;
         data["section"] = this.section !== undefined ? this.section : <any>null;
         super.toJSON(data);
         return data;
@@ -2975,6 +2978,7 @@ export class MediaGenreModel extends GenreModel implements IMediaGenreModel {
 }
 
 export interface IMediaGenreModel extends IGenreModel {
+    sectionName: string;
     section: MediaGenreCategory;
 }
 

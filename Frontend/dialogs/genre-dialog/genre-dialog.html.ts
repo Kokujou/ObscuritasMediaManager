@@ -4,9 +4,10 @@ import { GenreModel } from '../../obscuritas-media-manager-backend-client';
 import { GenreDialog } from './genre-dialog';
 
 export function renderGenreDialog(this: GenreDialog) {
-    var filteredSections = Object.keys(this.genreDict).filter((section) =>
-        this.genreDict[section].some(
-            (genre) => genre.name.toLowerCase().includes(this.searchText.toLowerCase()) || this.genreDict[section].length == 0
+    const genreDict = this.options.genres.groupByKey('sectionName');
+    var filteredSections = Object.keys(genreDict).filter((section) =>
+        genreDict[section].some(
+            (genre) => genre.name.toLowerCase().includes(this.searchText.toLowerCase()) || genreDict[section].length == 0
         )
     );
 
@@ -40,7 +41,7 @@ export function renderGenreDialog(this: GenreDialog) {
                 />
 
                 <div id="genre-container">
-                    ${filteredSections.map((section) => renderGenreSection.call(this, section, this.genreDict[section]))}
+                    ${filteredSections.map((section) => renderGenreSection.call(this, section, genreDict[section]))}
                     ${filteredSections.length <= 0 ? html`Keine passenden Genres gefunden.` : ''}
                 </div>
             </div>

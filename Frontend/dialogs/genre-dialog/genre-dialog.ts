@@ -138,15 +138,6 @@ export class GenreDialog extends LitElementBase {
         return getAvailableGenreSections(this.options.allowedGenres as MediaGenreModel[]);
     }
 
-    get genreDict() {
-        return this.options.genres.reduce((prev, current, index, array) => {
-            if (!prev[current.sectionName]) prev[current.sectionName] = [];
-            prev[current.sectionName].push(current as MediaGenreModel);
-
-            return prev;
-        }, {} as { [key: string]: MediaGenreModel[] });
-    }
-
     @property({ type: Object }) public declare options: GenreDialogOptions;
     @state() protected declare searchText: string;
 
