@@ -62,17 +62,22 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                         <div id="content-warning-section" class="property-entry">
                             <div class="property-name">Inhaltswarnungen:</div>
                             <div id="content-warnings">
-                                ${Object.values(ContentWarning).map(
-                                    (warning) =>
-                                        html`<div
-                                            class="content-warning-icon-wrapper"
-                                            ?selected="${this.updatedMedia?.contentWarnings?.includes(warning)}"
-                                            @click="${() => this.toggleContentWarning(warning)}"
-                                        >
-                                            <div class="content-warning-icon" content-warning="${warning}"></div>
-                                            <div class="content-warning-label">${warning}</div>
-                                        </div>`
-                                )}
+                                ${Object.values(ContentWarning)
+                                    .filter(
+                                        (warning) =>
+                                            !this.updatedMedia.complete || this.updatedMedia?.contentWarnings?.includes(warning)
+                                    )
+                                    .map(
+                                        (warning) =>
+                                            html`<div
+                                                class="content-warning-icon-wrapper"
+                                                ?selected="${this.updatedMedia?.contentWarnings?.includes(warning)}"
+                                                @click="${() => this.toggleContentWarning(warning)}"
+                                            >
+                                                <div class="content-warning-icon" content-warning="${warning}"></div>
+                                                <div class="content-warning-label">${warning}</div>
+                                            </div>`
+                                    )}
                             </div>
                         </div>
                     </div>

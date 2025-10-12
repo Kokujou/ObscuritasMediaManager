@@ -131,6 +131,7 @@ export function renderMediaDetailPageStyles() {
             max-height: 500px;
             display: grid;
             grid-template-columns: auto auto;
+            min-width: 300px;
         }
 
         .content-warning-icon-wrapper {
