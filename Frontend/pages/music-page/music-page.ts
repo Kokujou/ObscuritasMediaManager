@@ -54,8 +54,12 @@ export class MusicPage extends LitElementBase {
 
     get filteredTracks() {
         var sorted = MusicFilterService.filterTracks(Session.tracks.current(), this.filter);
-        let sortingProperty = this.sortingProperty;
-        if (sortingProperty != 'unset') sorted = sorted.orderBy((x) => x[sortingProperty]);
+        if (this.sortingProperty == 'unset' && this.sortingDirection == 'ascending') return sorted;
+        if (this.sortingProperty == 'unset') return sorted.reverse();
+
+        const sortingProperty: (keyof MusicModel)[] = [this.sortingProperty];
+        if (this.sortingProperty == 'mood1') sortingProperty.push('mood2');
+        sorted = sorted.orderBy(...sortingProperty.map((property) => (x: MusicModel) => x[property]));
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }

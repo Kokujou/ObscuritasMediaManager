@@ -73,6 +73,7 @@ Array.prototype.distinctBy = function <T>(this: T[], selector: (item: T) => any)
 };
 
 Array.prototype.orderBy = function <T>(this: T[], ...selectors: ((item: T) => any)[]): T[] {
+    console.log(selectors);
     return this.sort((a, b) => {
         for (const selector of selectors) {
             if (selector(a) < selector(b)) return -1;
