@@ -8,7 +8,7 @@ public class LoadTrackHandler : IQueryHandler
     {
         await Task.Yield();
         var filePath = payload?.GetString()!;
-        AudioService.ChangeTrack(filePath);
+        await AudioService.ChangeTrackAsync(filePath);
 
         return AudioService.GetCurrentTrackDuration().TotalMilliseconds;
     }

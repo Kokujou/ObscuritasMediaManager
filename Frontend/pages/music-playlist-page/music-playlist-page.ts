@@ -18,6 +18,7 @@ import { AudioService } from '../../services/audio-service';
 import { MusicService, PlaylistService } from '../../services/backend.services';
 import { ClientInteropService } from '../../services/client-interop-service';
 import { MediaFilterService } from '../../services/media-filter.service';
+import { MusicPage } from '../music-page/music-page';
 import { AudioFileExtensions } from './audio-file-extensions';
 import { renderMusicPlaylistStyles } from './music-playlist-page.css';
 import { renderMusicPlaylistPage } from './music-playlist-page.html';
@@ -126,7 +127,17 @@ export class MusicPlaylistPage extends LitElementBase {
             this.playlist = new PlaylistModel({ tracks: [new MusicModel(currentTrack)], isTemporary: true, genres: [] });
             this.trackIndex = 0;
         } else {
-            this.playlist = await PlaylistService.getPlaylist(this.playlistId);
+            try {
+                this.playlist = await PlaylistService.getPlaylist(this.playlistId);
+            } catch {
+                MessageSnackbar.popup(
+                    'Die Playlist konnte nicht gefunden werden.\n' + 'Temporäre Playlists werden regelmäßig gelöscht. ',
+                    'error'
+                );
+                changePage(MusicPage);
+                return;
+            }
+
             this.playlist.tracks = this.playlist.tracks.map((x) => new MusicModel(x));
             this.trackIndex = this.trackIndex;
         }

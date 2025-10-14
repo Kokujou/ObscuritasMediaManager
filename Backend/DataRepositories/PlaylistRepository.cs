@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Concurrent;
+using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Models;
-using System.Collections.Concurrent;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -27,7 +27,7 @@ public class PlaylistRepository(DatabaseContext context)
                 Id = playlistId
             };
 
-        return await context.Playlists.SingleOrDefaultAsync(x => x.Id == playlistId);
+        return await context.Playlists.SingleAsync(x => x.Id == playlistId);
     }
 
     public Guid CreateTemporaryPlaylist(List<string> hashes)

@@ -58,13 +58,14 @@ public static class AudioService
         PlaybackStateChanged?.Invoke(Player.PlaybackState);
     }
 
-    public static void ChangeTrack(string trackPath)
+    public static async Task ChangeTrackAsync(string trackPath)
     {
         ArgumentNullException.ThrowIfNull(trackPath);
 
         Stop();
+        Player.Dispose();
         Player = new();
-        _reader?.Dispose();
+        if (_reader is not null) await _reader.DisposeAsync()!;
 
         try
         {
@@ -72,13 +73,13 @@ public static class AudioService
         }
         catch
         {
-            var fileIn = File.OpenRead(trackPath);
+            await using var fileIn = File.OpenRead(trackPath);
             var pcmStream = new MemoryStream();
 
-            var decoder = OpusCodecFactory.CreateDecoder(48000, 1);
+            using var decoder = OpusCodecFactory.CreateDecoder(48000, 1);
             var oggIn = new OpusOggReadStream(decoder, fileIn);
 
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 while (oggIn.HasNextPacket)
                 {
@@ -94,7 +95,7 @@ public static class AudioService
                 }
 
                 pcmStream.Position = 0;
-            }).Wait();
+            });
             _reader = new RawSourceWaveStream(pcmStream, new(48000, 1));
         }
 
