@@ -39,7 +39,7 @@ export function renderScrollSelectStyles() {
         .scroll-item {
             width: 100%;
 
-            font-size: 18px;
+            font-size: 14px;
             font-weight: bold;
             text-transform: uppercase;
 
@@ -47,7 +47,7 @@ export function renderScrollSelectStyles() {
             align-items: center;
             justify-content: center;
 
-            min-height: 40px !important;
+            min-height: 30px !important;
         }
 
         #border-overlay {
@@ -55,7 +55,7 @@ export function renderScrollSelectStyles() {
             left: 0;
             right: 0;
             top: var(--active-item-start);
-            height: 40px;
+            height: 30px;
 
             border-bottom: 2px solid;
             border-top: 2px solid;

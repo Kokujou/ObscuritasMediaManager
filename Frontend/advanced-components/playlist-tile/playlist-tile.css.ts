@@ -167,7 +167,7 @@ export function renderPlaylistTileStyles() {
         }
 
         #playlist-title {
-            font-size: 24px;
+            font-size: 16px;
             text-align: center;
 
             overflow: hidden;

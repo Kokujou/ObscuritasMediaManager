@@ -22,22 +22,19 @@ export function renderMusicPlaylistStyles() {
         #complete-checkbox {
             display: flex;
             flex-direction: row;
+            align-items: center;
 
             position: absolute;
-            top: 25px;
-            right: 25px;
+            top: 20px;
+            right: 20px;
 
-            font-size: 20px;
+            font-size: 14px;
             font-weight: bold;
             z-index: 2;
         }
 
         #complete-checkbox .label {
-            margin-right: 10px;
-        }
-
-        #complete-checkbox input[type='checkbox'] {
-            transform: scale(1.5);
+            margin-right: 5px;
         }
 
         #current-track-container {
@@ -48,9 +45,10 @@ export function renderMusicPlaylistStyles() {
         }
 
         #mood-switcher-container {
-            align-self: center;
+            align-self: flex-start;
             display: flex;
             flex-direction: column;
+            margin-top: 80px;
         }
 
         #mood-tabs {
@@ -63,9 +61,9 @@ export function renderMusicPlaylistStyles() {
         }
 
         .mood-tab {
-            font-size: 24px;
-            width: 50px;
-            height: 50px;
+            font-size: 16px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
         }
@@ -84,12 +82,12 @@ export function renderMusicPlaylistStyles() {
 
         #mood-switcher {
             position: relative;
-            min-height: 250px;
-            max-height: 250px;
-            height: 250px;
-            min-width: 200px;
-            max-width: 200px;
-            width: 200px;
+            min-height: 200px;
+            max-height: 200px;
+            height: 200px;
+            min-width: 175px;
+            max-width: 175px;
+            width: 175px;
 
             border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
@@ -112,15 +110,15 @@ export function renderMusicPlaylistStyles() {
         }
 
         audio-tile-base {
-            min-width: 400px;
-            height: 400px;
+            min-width: 300px;
+            height: 300px;
         }
 
         #show-lyrics-link {
             margin-top: 10px;
             align-self: center;
             font-weight: bold;
-            font-size: 24px;
+            font-size: 16px;
             cursor: pointer;
         }
 
@@ -145,7 +143,7 @@ export function renderMusicPlaylistStyles() {
             background-color: var(--primary-color);
             flex: auto;
             border-radius: 20px;
-            margin: 50px;
+            margin: 30px;
             margin-bottom: 0;
             min-width: 0;
             padding: 20px;
@@ -153,7 +151,7 @@ export function renderMusicPlaylistStyles() {
         }
 
         #audio-title {
-            font-size: 30px;
+            font-size: 18px;
             max-width: 100%;
             margin-top: -10px;
 
@@ -163,7 +161,7 @@ export function renderMusicPlaylistStyles() {
         }
 
         #audio-subtitle {
-            font-size: 24px;
+            font-size: 16px;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -202,14 +200,14 @@ export function renderMusicPlaylistStyles() {
         }
 
         tag-label {
-            font-size: 18px;
+            font-size: 14px;
             color: var(--font-color);
             --label-color: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
         }
 
         #track-position-container {
             width: 100%;
-            height: 50px;
+            height: 30px;
 
             filter: drop-shadow(0 0 10px black);
 
@@ -220,12 +218,12 @@ export function renderMusicPlaylistStyles() {
         }
 
         #track-position-label {
-            font-size: 18px;
+            font-size: 14px;
         }
 
         #track-position {
             flex: auto;
-            margin: 0 20px;
+            margin: 0 10px;
         }
 
         #audio-controls {
@@ -235,7 +233,7 @@ export function renderMusicPlaylistStyles() {
         }
 
         #audio-controls > * {
-            margin-right: 30px;
+            margin-right: 15px;
         }
 
         #change-volume-container {
@@ -264,7 +262,7 @@ export function renderMusicPlaylistStyles() {
             flex-direction: row;
             align-items: center;
             gap: 10px;
-            font-size: 20px;
+            font-size: 14px;
             font-weight: bold;
         }
 
@@ -281,8 +279,8 @@ export function renderMusicPlaylistStyles() {
         }
 
         #change-path-button {
-            width: 40px;
-            height: 40px;
+            width: 20px;
+            height: 20px;
         }
 
         input.editable-label {
@@ -300,12 +298,11 @@ export function renderMusicPlaylistStyles() {
         }
 
         #edit-playlist-link {
-            font-size: 30px;
+            font-size: 16px;
             font-weight: bold;
             align-self: center;
             justify-self: center;
-            margin-top: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             cursor: pointer;
 
             display: flex;
@@ -336,7 +333,7 @@ export function renderMusicPlaylistStyles() {
         #media-playlist-container {
             display: inline-flex;
             flex: auto;
-            padding: 0 50px;
+            padding: 0 30px;
             padding-bottom: 20px;
         }
     `;
@@ -346,8 +343,8 @@ function renderAudioPlayerIcons() {
     return css`
         .audio-icon {
             background: var(--font-color);
-            width: 50px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
             cursor: pointer;
         }
 

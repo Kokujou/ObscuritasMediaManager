@@ -242,9 +242,9 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                                             Enum.nextValue(TargetGroup, this.updatedMedia.targetGroup, 'None')
                                         )}"
                                 ></div>
-                                <svg id="target-group-label" viewbox="0 0 100 30">
+                                <svg id="target-group-label" viewbox="0 0 50 20">
                                     <text
-                                        textLength="100"
+                                        textLength="50"
                                         x="0"
                                         y="50%"
                                         lengthAdjust="spacingAndGlyphs"

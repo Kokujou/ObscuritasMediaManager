@@ -13,11 +13,11 @@ export function renderMusicPageStyles() {
         #search-panel-container {
             position: absolute;
             top: 0;
-            right: 25px;
-            width: 400px;
+            right: 5px;
+            width: 300px;
             bottom: 100px;
 
-            padding: 0 20px;
+            padding: 0 10px;
 
             display: flex;
             flex-direction: column;
@@ -33,7 +33,7 @@ export function renderMusicPageStyles() {
         }
 
         #result-count-label {
-            font-size: 20px;
+            font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -59,9 +59,9 @@ export function renderMusicPageStyles() {
 
         #search-results-container {
             position: absolute;
-            bottom: 150px;
+            bottom: 80px;
             left: 0;
-            right: 500px;
+            right: 350px;
             top: 0;
         }
 
@@ -83,10 +83,10 @@ export function renderMusicPageStyles() {
         playlist-tile {
             display: inline-block;
             position: relative;
-            width: 275px;
-            min-height: 275px;
-            --audio-tile-width: 275px;
-            --audio-tile-min-height: 275px;
+            width: 200px;
+            min-height: 200px;
+            --audio-tile-width: 200px;
+            --audio-tile-min-height: 200px;
         }
     `;
 }
@@ -97,8 +97,8 @@ function renderResultOptionsBar() {
             position: absolute;
             bottom: 0;
             left: 50px;
-            right: 500px;
-            height: 100px;
+            right: 350px;
+            height: 60px;
 
             display: flex;
             align-items: stretch;
@@ -124,21 +124,21 @@ function renderResultOptionsBar() {
         .option-section > a {
             position: relative;
             margin: 0 10px;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             background-color: var(--font-color);
 
             cursor: pointer;
         }
 
         #import-files {
-            width: 35px;
-            height: 35px;
+            width: 25px;
+            height: 25px;
         }
 
         #create-song {
-            width: 35px;
-            height: 35px;
+            width: 25px;
+            height: 25px;
         }
 
         #active-track-warning {

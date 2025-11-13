@@ -23,15 +23,17 @@ export function renderMusicFilterStyles() {
             width: 100%;
             flex: auto;
             margin: 20px 0;
-            gap: 30px;
+            padding: 0 10px;
+            gap: 20px;
+            box-sizing: border-box;
 
-            font-size: 24px;
+            font-size: 16px;
             overflow-y: auto;
             overflow-x: hidden;
         }
 
         #search-heading {
-            font-size: 30px;
+            font-size: 18px;
             text-align: center;
 
             display: flex;
@@ -119,8 +121,8 @@ export function renderMusicFilterStyles() {
 
         .inline-icon,
         .icon-button {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             cursor: pointer;
 
             background-color: #ffffff99;
@@ -163,7 +165,7 @@ export function renderMusicFilterStyles() {
 
         drop-down {
             font: inherit;
-            font-size: 20px;
+            font-size: 14px;
             width: 90%;
 
             color: white;
@@ -171,12 +173,13 @@ export function renderMusicFilterStyles() {
         }
 
         input[type='text'] {
-            font-size: 20px;
+            padding: 5px;
+            font-size: 14px;
             width: 100%;
             background: transparent;
             color: var(--font-color);
             border: none;
-            border-bottom: 5px solid black;
+            border-bottom: 2px solid gray;
             padding: 10 20px;
             outline: none;
         }

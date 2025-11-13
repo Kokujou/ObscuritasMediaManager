@@ -24,8 +24,8 @@ export function renderMediaDetailPageStyles() {
         }
 
         #popup-icon {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
 
             background: white;
 
@@ -40,7 +40,7 @@ export function renderMediaDetailPageStyles() {
         }
 
         #toggle-edit-text {
-            font-size: 24px;
+            font-size: 16px;
         }
 
         :host([editMode]) #toggle-edit-text {
@@ -58,7 +58,7 @@ export function renderMediaDetailPageStyles() {
         #prev-link,
         #next-link {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 14px;
             margin-bottom: 10px;
             z-index: 1;
             cursor: pointer;
@@ -77,19 +77,20 @@ export function renderMediaDetailPageStyles() {
         }
 
         #media-heading {
-            font-size: 36px;
+            font-size: 24px;
 
             position: relative;
+            padding: 10px 0;
             display: flex;
             flex-direction: row;
             align-items: center;
-            gap: 20px;
+            gap: 10px;
             width: 100%;
         }
 
         #trailer-link {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 16px;
             margin-bottom: 20px;
         }
 
@@ -112,7 +113,7 @@ export function renderMediaDetailPageStyles() {
         }
 
         #left-panel {
-            min-width: 350px;
+            min-width: 250px;
             align-items: center;
         }
 
@@ -131,19 +132,21 @@ export function renderMediaDetailPageStyles() {
             max-height: 500px;
             display: grid;
             grid-template-columns: auto auto;
-            min-width: 300px;
+            min-width: 250px;
         }
 
         .content-warning-icon-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 10px;
 
             background: var(--accent-color-full);
             margin: 10px;
             padding: 10px;
-            width: 110px;
+            width: 90px;
+            height: 90px;
             border-radius: 20px;
             cursor: pointer;
             opacity: 0.6;
@@ -159,8 +162,8 @@ export function renderMediaDetailPageStyles() {
         }
 
         .content-warning-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: #c22;
         }
 
@@ -177,6 +180,7 @@ export function renderMediaDetailPageStyles() {
             padding: 20px 40px;
             flex: auto;
             margin-right: 20px;
+            box-sizing: border-box;
         }
 
         #right-panel-top {
@@ -191,7 +195,7 @@ export function renderMediaDetailPageStyles() {
 
         #media-image-container {
             width: 100%;
-            min-height: 500px;
+            min-height: 350px;
             display: flex;
             align-items: stretch;
             justify-content: stretch;
@@ -267,7 +271,7 @@ export function renderMediaDetailPageStyles() {
             position: relative;
             display: flex;
             flex-direction: row;
-            font-size: 24px;
+            font-size: 16px;
             align-items: center;
             margin-bottom: 10px;
             gap: 20px;
@@ -306,7 +310,7 @@ export function renderMediaDetailPageStyles() {
             margin-right: 10px;
             margin-top: 5px;
             margin-bottom: 5px;
-            font-size: 18px;
+            font-size: 14px;
         }
 
         input,
@@ -340,7 +344,7 @@ export function renderMediaDetailPageStyles() {
             padding: 10px 20px;
             resize: none;
             color: white;
-            font-size: 18px;
+            font-size: 16px;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
             display: inline-block;
@@ -365,12 +369,12 @@ export function renderMediaDetailPageStyles() {
         #target-group-section {
             flex-direction: column;
             gap: 20px;
-            margin-right: 50px;
+            margin-right: 30px;
         }
 
         #target-group-icon {
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             background: white;
             cursor: pointer;
         }
@@ -378,6 +382,7 @@ export function renderMediaDetailPageStyles() {
         #target-group-label {
             text-transform: uppercase;
             font-weight: bold;
+            width: 70%;
         }
 
         #media-rating {
@@ -388,7 +393,7 @@ export function renderMediaDetailPageStyles() {
         #media-rating .star {
             color: gray;
             text-shadow: 3px 3px 3px black;
-            font-size: 48px;
+            font-size: 16px;
             cursor: pointer;
             line-height: 1;
         }
@@ -414,7 +419,7 @@ export function renderMediaDetailPageStyles() {
         }
 
         #action-row {
-            font-size: 36px;
+            font-size: 18px;
             text-shadow: 0 0 10px purple;
             margin: 20px 0;
 
@@ -442,7 +447,7 @@ export function renderMediaDetailPageStyles() {
 
         #path-row {
             margin-bottom: 20px;
-            padding: 20px 80px;
+            padding: 10px 40px;
             align-self: center;
             border-radius: 20px;
 
@@ -454,14 +459,14 @@ export function renderMediaDetailPageStyles() {
 
             background: var(--accent-color);
 
-            font-size: 24px;
+            font-size: 16px;
         }
 
         #path {
             flex: auto;
             font: inherit;
             font-size: inherit;
-            width: 700px;
+            width: 500px;
         }
 
         #edit-path-button {
@@ -490,7 +495,7 @@ export function renderMediaDetailPageStyles() {
         }
 
         .track-name {
-            font-size: 20px;
+            font-size: 14px;
             flex: auto;
         }
     `;

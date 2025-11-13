@@ -6,6 +6,10 @@ export function renderDropDownStyles() {
             display: inline-block;
         }
 
+        * {
+            outline: none;
+        }
+
         #empty-text-placeholder {
             position: relative;
             visibility: hidden;
@@ -38,7 +42,7 @@ export function renderDropDownStyles() {
             min-width: 0;
             overflow: hidden;
             text-overflow: ellipsis;
-            padding: 0 10px;
+            padding: 0 5px;
         }
 
         .dropdown-icon-container {
@@ -125,8 +129,9 @@ export function renderDropDownStyles() {
         }
 
         .option {
-            line-height: 40px;
-            padding: 5px 20px;
+            font-size: 14px;
+            line-height: 25px;
+            padding: 5px 10px;
 
             font-weight: 400;
             text-transform: capitalize;

@@ -154,6 +154,34 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.ToTable("Instruments");
                 });
 
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.InventoryItemModel", b =>
+                {
+                    b.Property<Guid>("ItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("IngredientName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("Level")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Target")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ItemId");
+
+                    b.HasIndex("IngredientName");
+
+                    b.ToTable("Inventory");
+                });
+
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MediaGenreModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -622,6 +650,49 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .WithMany("Thumbs")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.InventoryItemModel", b =>
+                {
+                    b.HasOne("ObscuritasMediaManager.Backend.Models.IngredientModel", "Ingredient")
+                        .WithMany()
+                        .HasForeignKey("IngredientName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("ObscuritasMediaManager.Backend.Models.MeasurementUnit", "Unit", b1 =>
+                        {
+                            b1.Property<Guid>("InventoryItemModelItemId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<int>("Measurement")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<float>("Multiplier")
+                                .HasColumnType("REAL");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("ShortName")
+                                .IsRequired()
+                                .HasMaxLength(10)
+                                .HasColumnType("TEXT");
+
+                            b1.HasKey("InventoryItemModelItemId");
+
+                            b1.ToTable("Inventory");
+
+                            b1.WithOwner()
+                                .HasForeignKey("InventoryItemModelItemId");
+                        });
+
+                    b.Navigation("Ingredient");
+
+                    b.Navigation("Unit")
                         .IsRequired();
                 });
 

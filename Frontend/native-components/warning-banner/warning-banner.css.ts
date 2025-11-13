@@ -26,7 +26,7 @@ export function renderWarningBannerStyles() {
             right: 20px;
             top: 0;
             bottom: 0;
-            font-size: 24px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
 

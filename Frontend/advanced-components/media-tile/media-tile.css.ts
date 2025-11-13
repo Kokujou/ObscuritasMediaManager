@@ -48,7 +48,7 @@ export function renderMediaTileStyles() {
         #rating-container .star {
             color: gray;
             text-shadow: 3px 3px 3px black;
-            font-size: 36px;
+            font-size: 18px;
             cursor: pointer;
             line-height: 1;
         }
@@ -73,7 +73,7 @@ export function renderMediaTileStyles() {
             pointer-events: none;
 
             cursor: pointer;
-            font-size: 25px;
+            font-size: 16px;
             text-shadow: 2px 2px 2px black;
             color: white;
             text-align: center;

@@ -40,7 +40,7 @@ export function renderRecipeDetailPageStyles() {
 
         #title {
             display: inline-flex;
-            font-size: 36px;
+            font-size: 18px;
             max-width: 800px;
             width: 800px;
             flex: unset;
@@ -48,7 +48,7 @@ export function renderRecipeDetailPageStyles() {
         }
 
         #ingredients-section-title {
-            font-size: 30px;
+            font-size: 18px;
         }
 
         #measurement-config-area {
@@ -63,7 +63,7 @@ export function renderRecipeDetailPageStyles() {
         }
 
         .group-title {
-            font-size: 24px !important;
+            font-size: 16px !important;
             align-self: flex-start;
             min-width: 100% !important;
         }
@@ -110,7 +110,7 @@ export function renderRecipeDetailPageStyles() {
         }
 
         #cooking-utensil-heading {
-            font-size: 24px;
+            font-size: 16px;
         }
 
         #cookware {
@@ -144,7 +144,7 @@ export function renderRecipeDetailPageStyles() {
         recipe-tile {
             --recipe-tile-width: 400px;
             --recipe-tile-min-height: 400px;
-            --font-size: 45px;
+            --font-size: 16px;
         }
 
         #description-area {
@@ -237,7 +237,7 @@ export function renderRecipeDetailPageStyles() {
             box-shadow: 0 0 10px white inset, 0 0 20px #440055, 0 0 20px #440055, 0 0 20px #440055;
             text-shadow: 0 0 10px black;
 
-            font-size: 30px;
+            font-size: 18px;
             color: lightgray;
 
             cursor: pointer;

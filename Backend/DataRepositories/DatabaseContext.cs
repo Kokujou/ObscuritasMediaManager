@@ -18,6 +18,7 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
     public DbSet<RecipeModel> Recipes { get; set; }
     public DbSet<UserSettingsModel> UserSettings { get; set; }
     public DbSet<RecipeCookwareMappingModel> Cookware { get; set; }
+    public DbSet<InventoryItemModel> Inventory { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

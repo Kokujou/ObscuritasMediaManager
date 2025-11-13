@@ -1,14 +1,14 @@
 import { html } from 'lit-element';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
-import { MusicSortingProperties } from '../../data/music-sorting-properties';
+import { CookingTechnique } from '../../data/food/cooking-technique';
+import { Course } from '../../data/food/course';
+import { RecipeSortingProperties } from '../../data/recipe-sorting-properties';
 import { TimeSpan } from '../../data/timespan';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
+import { Language } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { RecipeFilter } from './recipe-filter';
 import { RecipeTimes } from './recipe-filter-options';
-import { CookingTechnique } from '../../data/food/cooking-technique';
-import { Course } from '../../data/food/course';
-import { Language } from '../../obscuritas-media-manager-backend-client';
 
 export function renderRecipeFilter(this: RecipeFilter) {
     return html`
@@ -49,7 +49,7 @@ export function renderRecipeFilter(this: RecipeFilter) {
                 </div>
                 <div id="sorting-container">
                     <drop-down
-                        .options="${Object.entries(MusicSortingProperties).map((x) =>
+                        .options="${Object.entries(RecipeSortingProperties).map((x) =>
                             DropDownOption.create({
                                 value: x[0],
                                 text: x[1],

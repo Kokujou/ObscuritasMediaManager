@@ -12,7 +12,7 @@ export function renderTriValueCheckboxStyles() {
 
         .checkbox {
             position: relative;
-            padding: var(--padding, 20px);
+            padding: var(--padding, 15px);
             border-radius: 20px;
             border-width: 2px;
             border-style: solid;

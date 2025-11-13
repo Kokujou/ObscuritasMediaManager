@@ -7,7 +7,7 @@ export function renderWelcomePageStyles() {
         }
 
         #page-heading {
-            font-size: 40px;
+            font-size: 24px;
             font-weight: bold;
             margin-bottom: 40px;
             text-align: center;
@@ -36,8 +36,8 @@ export function renderWelcomePageStyles() {
             display: block;
             border-radius: 50%;
 
-            width: 250px;
-            height: 250px;
+            width: 200px;
+            height: 200px;
         }
     `;
 }

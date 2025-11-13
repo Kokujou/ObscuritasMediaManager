@@ -41,7 +41,7 @@ export function renderLoginPageStyles() {
             transform-origin: left;
             transition: all 0.2s linear;
 
-            font-size: 24px;
+            font-size: 16px;
         }
 
         input[type='text'],
@@ -51,7 +51,7 @@ export function renderLoginPageStyles() {
             outline: none;
             border-bottom: 2px solid;
             color: white;
-            font-size: 24px;
+            font-size: 16px;
 
             width: 100%;
             padding: 10px;
@@ -64,7 +64,7 @@ export function renderLoginPageStyles() {
             outline: none;
             padding: 10px 50px;
 
-            font-size: 24px;
+            font-size: 16px;
         }
     `;
 }

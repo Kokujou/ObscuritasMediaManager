@@ -14,7 +14,7 @@ export function renderMediaPlaylistStyles() {
 
             border-radius: 20px;
             box-sizing: border-box;
-            border: 20px solid var(--primary-color);
+            border: 15px solid var(--primary-color);
 
             position: absolute;
             inset: 0;
@@ -24,6 +24,7 @@ export function renderMediaPlaylistStyles() {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            gap: 10px;
             height: 100%;
             padding-left: 10px;
             padding-right: 30px;
@@ -32,8 +33,8 @@ export function renderMediaPlaylistStyles() {
 
         .playlist-button {
             background: var(--font-color);
-            width: 50px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
             cursor: pointer;
         }
 
@@ -53,7 +54,7 @@ export function renderMediaPlaylistStyles() {
 
         .playlist-entry {
             padding: 5px 20px;
-            font-size: 18px;
+            font-size: 14px;
             cursor: pointer;
             background: linear-gradient(#00000077 0% 100%), linear-gradient(var(--primary-color) 0% 100%);
         }

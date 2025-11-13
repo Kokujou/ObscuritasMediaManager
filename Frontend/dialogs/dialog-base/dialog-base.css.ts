@@ -39,7 +39,7 @@ export function renderDialogBaseStyles() {
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 36px;
+            font-size: 18px;
             cursor: pointer;
         }
 
@@ -48,7 +48,7 @@ export function renderDialogBaseStyles() {
             white-space: pre-line;
             position: relative;
             margin: 20px;
-            font-size: 24px;
+            font-size: 16px;
         }
 
         #dialog-text {
@@ -56,7 +56,7 @@ export function renderDialogBaseStyles() {
         }
 
         #dialog-title {
-            font-size: 36px;
+            font-size: 18px;
             margin: 0 40px;
             margin-bottom: 20px;
         }
@@ -67,7 +67,7 @@ export function renderDialogBaseStyles() {
             margin-top: 20px;
             position: relative;
             justify-content: flex-end;
-            font-size: 24px;
+            font-size: 16px;
         }
 
         #dialog-actions > * {

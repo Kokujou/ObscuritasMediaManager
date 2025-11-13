@@ -60,7 +60,7 @@ function showDropDown(this: DropDown) {
                 this.options
                     .filter((x) => x.text.toLocaleLowerCase().match(this.searchFilter?.toLocaleLowerCase()))
                     .orderBy((x) => x.category)
-                    .groupBy((x) => x.category)
+                    .groupBy((x) => x.category!)
             ).map(
                 (group) => html`
                     ${group[0] ? html` <label class="category-label">======= ${group[0]} ======</label>` : ''}

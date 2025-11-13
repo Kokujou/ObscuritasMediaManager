@@ -19,7 +19,7 @@ export function renderAudioSubtitleDialogStyles() {
 
         #lyrics-wrapper {
             position: relative;
-            font-size: 21px;
+            font-size: 16px;
             letter-spacing: 1.2;
             text-shadow: 0 0 3px black;
 

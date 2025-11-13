@@ -410,6 +410,164 @@ export class InteropProxyClient {
     }
 }
 
+export class InventoryClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
+    }
+
+    getInventory(signal?: AbortSignal): Promise<InventoryItemModel[]> {
+        let url_ = this.baseUrl + "/Inventory";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetInventory(_response);
+        });
+    }
+
+    protected processGetInventory(response: Response): Promise<InventoryItemModel[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(InventoryItemModel.fromJS(item, _mappings));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<InventoryItemModel[]>(null as any);
+    }
+
+    updateItem(item: InventoryItemModel, signal?: AbortSignal): Promise<void> {
+        let url_ = this.baseUrl + "/Inventory";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(item);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PATCH",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processUpdateItem(_response);
+        });
+    }
+
+    protected processUpdateItem(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    addItem(item: InventoryItemModel, signal?: AbortSignal): Promise<void> {
+        let url_ = this.baseUrl + "/Inventory";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(item);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processAddItem(_response);
+        });
+    }
+
+    protected processAddItem(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    deleteItem(itemId: string, signal?: AbortSignal): Promise<void> {
+        let url_ = this.baseUrl + "/Inventory/{itemId}";
+        if (itemId === undefined || itemId === null)
+            throw new Error("The parameter 'itemId' must be defined.");
+        url_ = url_.replace("{itemId}", encodeURIComponent("" + itemId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processDeleteItem(_response);
+        });
+    }
+
+    protected processDeleteItem(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+}
+
 export class LoginClient {
     private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
     private baseUrl: string;
@@ -3000,6 +3158,219 @@ export enum MediaGenreCategory {
     Mood = "Mood",
 }
 
+export class InventoryItemModel implements IInventoryItemModel {
+    itemId!: string;
+    target!: InventoryTarget;
+    ingredientName!: string;
+    quantity!: number;
+    unit!: MeasurementUnit;
+    level!: number | null;
+    ingredient!: IngredientModel | null;
+
+    constructor(data?: Partial<IInventoryItemModel>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+        if (!data) {
+            this.unit = new MeasurementUnit();
+        }
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.itemId = _data["itemId"] !== undefined ? _data["itemId"] : <any>null;
+            this.target = _data["target"] !== undefined ? _data["target"] : <any>null;
+            this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : <any>null;
+            this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : <any>null;
+            this.unit = _data["unit"] ? MeasurementUnit.fromJS(_data["unit"], _mappings) : new MeasurementUnit();
+            this.level = _data["level"] !== undefined ? _data["level"] : <any>null;
+            this.ingredient = _data["ingredient"] ? IngredientModel.fromJS(_data["ingredient"], _mappings) : <any>null;
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): InventoryItemModel  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<InventoryItemModel>(data, _mappings, InventoryItemModel)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["itemId"] = this.itemId !== undefined ? this.itemId : <any>null;
+        data["target"] = this.target !== undefined ? this.target : <any>null;
+        data["ingredientName"] = this.ingredientName !== undefined ? this.ingredientName : <any>null;
+        data["quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
+        data["unit"] = this.unit ? this.unit.toJSON() : <any>null;
+        data["level"] = this.level !== undefined ? this.level : <any>null;
+        data["ingredient"] = this.ingredient ? this.ingredient.toJSON() : <any>null;
+        return data;
+    }
+
+    clone(): InventoryItemModel {
+        const json = this.toJSON();
+        let result = new InventoryItemModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IInventoryItemModel {
+    itemId: string;
+    target: InventoryTarget;
+    ingredientName: string;
+    quantity: number;
+    unit: MeasurementUnit;
+    level: number | null;
+    ingredient: IngredientModel | null;
+}
+
+export enum InventoryTarget {
+    Fridge = "Fridge",
+    Freezer = "Freezer",
+    Other = "Other",
+}
+
+export class MeasurementUnit implements IMeasurementUnit {
+    name!: string;
+    shortName!: string;
+    multiplier!: number;
+    measurement!: Measurement;
+
+    constructor(data?: Partial<IMeasurementUnit>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
+            this.shortName = _data["shortName"] !== undefined ? _data["shortName"] : <any>null;
+            this.multiplier = _data["multiplier"] !== undefined ? _data["multiplier"] : <any>null;
+            this.measurement = _data["measurement"] !== undefined ? _data["measurement"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): MeasurementUnit  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<MeasurementUnit>(data, _mappings, MeasurementUnit)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["shortName"] = this.shortName !== undefined ? this.shortName : <any>null;
+        data["multiplier"] = this.multiplier !== undefined ? this.multiplier : <any>null;
+        data["measurement"] = this.measurement !== undefined ? this.measurement : <any>null;
+        return data;
+    }
+
+    clone(): MeasurementUnit {
+        const json = this.toJSON();
+        let result = new MeasurementUnit();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMeasurementUnit {
+    name: string;
+    shortName: string;
+    multiplier: number;
+    measurement: Measurement;
+}
+
+export enum Measurement {
+    Mass = "Mass",
+    Volume = "Volume",
+    Size = "Size",
+    Pinch = "Pinch",
+    Piece = "Piece",
+    Unitless = "Unitless",
+}
+
+export class IngredientModel implements IIngredientModel {
+    ingredientName!: string;
+    lowestKnownPrice!: string;
+    nation!: Language;
+    category!: IngredientCategory;
+    isFluid!: boolean;
+
+    constructor(data?: Partial<IIngredientModel>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : <any>null;
+            this.lowestKnownPrice = _data["lowestKnownPrice"] !== undefined ? _data["lowestKnownPrice"] : <any>null;
+            this.nation = _data["nation"] !== undefined ? _data["nation"] : <any>null;
+            this.category = _data["category"] !== undefined ? _data["category"] : <any>null;
+            this.isFluid = _data["isFluid"] !== undefined ? _data["isFluid"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): IngredientModel  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<IngredientModel>(data, _mappings, IngredientModel)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ingredientName"] = this.ingredientName !== undefined ? this.ingredientName : <any>null;
+        data["lowestKnownPrice"] = this.lowestKnownPrice !== undefined ? this.lowestKnownPrice : <any>null;
+        data["nation"] = this.nation !== undefined ? this.nation : <any>null;
+        data["category"] = this.category !== undefined ? this.category : <any>null;
+        data["isFluid"] = this.isFluid !== undefined ? this.isFluid : <any>null;
+        return data;
+    }
+
+    clone(): IngredientModel {
+        const json = this.toJSON();
+        let result = new IngredientModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IIngredientModel {
+    ingredientName: string;
+    lowestKnownPrice: string;
+    nation: Language;
+    category: IngredientCategory;
+    isFluid: boolean;
+}
+
+export enum IngredientCategory {
+    Meat = "Meat",
+    Noodles = "Noodles",
+    Rice = "Rice",
+    Bread = "Bread",
+    Fish = "Fish",
+    Vegetables = "Vegetables",
+    Fruits = "Fruits",
+    Dairy = "Dairy",
+    Eggs = "Eggs",
+    Nuts = "Nuts",
+    Drinks = "Drinks",
+    Condiments = "Condiments",
+    Oil = "Oil",
+    Miscellaneous = "Miscellaneous",
+}
+
 export class CredentialsRequest implements ICredentialsRequest {
     username!: string;
     password!: string;
@@ -4152,144 +4523,6 @@ export interface IRecipeIngredientMappingModel {
     amount: number;
     order: number;
     ingredient: IngredientModel | null;
-}
-
-export class MeasurementUnit implements IMeasurementUnit {
-    name!: string;
-    shortName!: string;
-    multiplier!: number;
-    measurement!: Measurement;
-
-    constructor(data?: Partial<IMeasurementUnit>) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-
-    }
-
-    init(_data?: any, _mappings?: any) {
-        if (_data) {
-            this.name = _data["name"] !== undefined ? _data["name"] : <any>null;
-            this.shortName = _data["shortName"] !== undefined ? _data["shortName"] : <any>null;
-            this.multiplier = _data["multiplier"] !== undefined ? _data["multiplier"] : <any>null;
-            this.measurement = _data["measurement"] !== undefined ? _data["measurement"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any, _mappings?: any): MeasurementUnit  {
-        data = typeof data === 'object' ? data : {};
-        return createInstance<MeasurementUnit>(data, _mappings, MeasurementUnit)!;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name !== undefined ? this.name : <any>null;
-        data["shortName"] = this.shortName !== undefined ? this.shortName : <any>null;
-        data["multiplier"] = this.multiplier !== undefined ? this.multiplier : <any>null;
-        data["measurement"] = this.measurement !== undefined ? this.measurement : <any>null;
-        return data;
-    }
-
-    clone(): MeasurementUnit {
-        const json = this.toJSON();
-        let result = new MeasurementUnit();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IMeasurementUnit {
-    name: string;
-    shortName: string;
-    multiplier: number;
-    measurement: Measurement;
-}
-
-export enum Measurement {
-    Mass = "Mass",
-    Volume = "Volume",
-    Size = "Size",
-    Pinch = "Pinch",
-    Piece = "Piece",
-    Unitless = "Unitless",
-}
-
-export class IngredientModel implements IIngredientModel {
-    ingredientName!: string;
-    lowestKnownPrice!: string;
-    nation!: Language;
-    category!: IngredientCategory;
-    isFluid!: boolean;
-
-    constructor(data?: Partial<IIngredientModel>) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-
-    }
-
-    init(_data?: any, _mappings?: any) {
-        if (_data) {
-            this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : <any>null;
-            this.lowestKnownPrice = _data["lowestKnownPrice"] !== undefined ? _data["lowestKnownPrice"] : <any>null;
-            this.nation = _data["nation"] !== undefined ? _data["nation"] : <any>null;
-            this.category = _data["category"] !== undefined ? _data["category"] : <any>null;
-            this.isFluid = _data["isFluid"] !== undefined ? _data["isFluid"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any, _mappings?: any): IngredientModel  {
-        data = typeof data === 'object' ? data : {};
-        return createInstance<IngredientModel>(data, _mappings, IngredientModel)!;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["ingredientName"] = this.ingredientName !== undefined ? this.ingredientName : <any>null;
-        data["lowestKnownPrice"] = this.lowestKnownPrice !== undefined ? this.lowestKnownPrice : <any>null;
-        data["nation"] = this.nation !== undefined ? this.nation : <any>null;
-        data["category"] = this.category !== undefined ? this.category : <any>null;
-        data["isFluid"] = this.isFluid !== undefined ? this.isFluid : <any>null;
-        return data;
-    }
-
-    clone(): IngredientModel {
-        const json = this.toJSON();
-        let result = new IngredientModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IIngredientModel {
-    ingredientName: string;
-    lowestKnownPrice: string;
-    nation: Language;
-    category: IngredientCategory;
-    isFluid: boolean;
-}
-
-export enum IngredientCategory {
-    Meat = "Meat",
-    Noodles = "Noodles",
-    Rice = "Rice",
-    Bread = "Bread",
-    Fish = "Fish",
-    Vegetables = "Vegetables",
-    Fruits = "Fruits",
-    Dairy = "Dairy",
-    Eggs = "Eggs",
-    Nuts = "Nuts",
-    Drinks = "Drinks",
-    Condiments = "Condiments",
-    Oil = "Oil",
-    Miscellaneous = "Miscellaneous",
 }
 
 export class RecipeCookwareMappingModel implements IRecipeCookwareMappingModel {

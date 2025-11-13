@@ -25,13 +25,13 @@ export function renderRecipeFilterStyles() {
             margin: 20px 0;
             gap: 30px;
 
-            font-size: 24px;
+            font-size: 16px;
             overflow-y: auto;
             overflow-x: hidden;
         }
 
         #search-heading {
-            font-size: 30px;
+            font-size: 18px;
             text-align: center;
 
             display: flex;
@@ -173,7 +173,7 @@ export function renderRecipeFilterStyles() {
 
         drop-down {
             font: inherit;
-            font-size: 20px;
+            font-size: 14px;
             width: 90%;
 
             color: white;
@@ -181,7 +181,7 @@ export function renderRecipeFilterStyles() {
         }
 
         input[type='text'] {
-            font-size: 20px;
+            font-size: 14px;
             width: 100%;
             background: transparent;
             color: var(--font-color);

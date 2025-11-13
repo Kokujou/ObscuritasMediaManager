@@ -3,6 +3,7 @@ import {
     FileClient,
     GenreClient,
     InteropProxyClient,
+    InventoryClient,
     LoginClient,
     MediaClient,
     MusicClient,
@@ -23,3 +24,4 @@ export const CleanupService = new CleanupClient(baseUrl, authenticatedRequestSer
 export const LoginService = new LoginClient(baseUrl, authenticatedRequestService);
 export const RecipeService = new RecipeClient(baseUrl, authenticatedRequestService);
 export const InteropProxyService = new InteropProxyClient(baseUrl, authenticatedRequestService);
+export const InventoryService = new InventoryClient(baseUrl, authenticatedRequestService);

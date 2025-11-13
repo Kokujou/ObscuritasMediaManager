@@ -14,7 +14,7 @@ export function renderMediaPageStyles() {
             position: absolute;
             right: 0px;
             top: 10px;
-            width: 450px;
+            width: 350px;
             height: calc(100% - 10px);
         }
 
@@ -23,7 +23,7 @@ export function renderMediaPageStyles() {
             bottom: 110px;
             top: 0;
             left: 0;
-            right: 460px;
+            right: 360px;
             margin-left: 60px;
         }
 
@@ -32,8 +32,8 @@ export function renderMediaPageStyles() {
             flex-direction: row;
             flex-wrap: wrap;
             align-items: flex-start;
-            gap: 60px;
-            padding: 80px 0;
+            gap: 40px;
+            padding: 40px 0;
         }
 
         #tile-button {
@@ -53,14 +53,14 @@ export function renderMediaPageStyles() {
 
         media-tile {
             cursor: pointer;
-            width: 200px;
-            min-height: 350px;
+            width: 150px;
+            min-height: 250px;
         }
 
         #footer {
             position: absolute;
             bottom: 0;
-            height: 100px;
+            height: 60px;
             left: 50px;
             right: 500px;
 
@@ -82,8 +82,8 @@ export function renderMediaPageStyles() {
         }
 
         .option-button {
-            width: 40px;
-            height: 40px;
+            width: 25px;
+            height: 25px;
             background: white;
             cursor: pointer;
         }

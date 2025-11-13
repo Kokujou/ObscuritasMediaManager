@@ -54,7 +54,7 @@ export function renderPlayMusicDialogStyles() {
             position: absolute;
             top: 5px;
             right: 5px;
-            font-size: 30px;
+            font-size: 18px;
         }
 
         #position-slider {

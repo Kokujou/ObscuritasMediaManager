@@ -105,12 +105,12 @@ function renderHeaderStyles() {
         }
 
         #header #logo #title {
-            font-size: 48px;
+            font-size: 36px;
             font-weight: bold;
         }
 
         #header #logo #subtitle {
-            font-size: 24px;
+            font-size: 16px;
             font-weight: bold;
             text-align: center;
         }
@@ -169,7 +169,7 @@ function renderNavigationStyles() {
         }
 
         .nav-section-heading {
-            font-size: 30px;
+            font-size: 18px;
             padding: 20px;
             writing-mode: vertical-rl;
             text-align: center;
@@ -178,18 +178,18 @@ function renderNavigationStyles() {
         }
 
         #home-link {
-            font-size: 30px !important;
+            font-size: 18px !important;
             border-bottom: none !important;
         }
 
         link-element {
             text-shadow: 2px 2px 2px black;
             letter-spacing: 2px;
-            font-size: 21px;
+            font-size: 18px;
             white-space: nowrap;
 
             margin-left: 20px;
-            min-height: 50px;
+            min-height: 40px;
 
             display: flex;
             align-items: center;

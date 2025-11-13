@@ -7,7 +7,7 @@ export function renderEditPlaylistDialogStyles() {
             flex-direction: column;
             gap: 50px;
             width: 900px;
-            font-size: 22px;
+            font-size: 16px;
             max-height: 600px;
             overflow-y: auto;
             padding-right: 20px;

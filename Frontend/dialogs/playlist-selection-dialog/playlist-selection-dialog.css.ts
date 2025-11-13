@@ -42,7 +42,7 @@ export function renderPlaylistSelectionDialogStyles() {
         }
 
         star-rating {
-            --font-size: 20px;
+            --font-size: 14px;
             pointer-events: none;
         }
 

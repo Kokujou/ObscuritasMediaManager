@@ -2,7 +2,6 @@ import { html } from 'lit-element';
 import { RecipeTileBase } from './recipe-tile-base';
 
 export function renderRecipeTileBase(this: RecipeTileBase) {
-    console.log(Array.createRange(0, 2));
     return html`
         <div id="recipe-images-container">
             ${Array.createRange(0, this.recipe.imageCount - 1).map(

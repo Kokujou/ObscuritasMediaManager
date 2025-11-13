@@ -10,7 +10,7 @@ export function renderRangeSliderStyles() {
         #slider {
             -webkit-appearance: none;
             width: 100%;
-            height: 10px;
+            height: 7px;
             border-radius: 5px;
             background: var(--background-color, #28b2aaaa);
             outline: none;
@@ -21,8 +21,8 @@ export function renderRangeSliderStyles() {
             outline: none;
             border: none;
             background: var(--slider-color, var(--accent-color-full));
-            width: 25px;
-            height: 25px;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
             cursor: pointer;
         }

@@ -16,6 +16,7 @@ export function renderWebcomponentTemplateStyles() {
         #image-tile {
             display: flex;
             flex-direction: column;
+            gap: 20px;
             flex: auto;
             background-color: var(--accent-color);
             padding: 25px 0;
@@ -31,7 +32,7 @@ export function renderWebcomponentTemplateStyles() {
 
         #image-text {
             text-align: center;
-            font-size: 30px;
+            font-size: 14px;
             font-weight: bold;
             text-shadow: 2px 2px 2px black;
         }

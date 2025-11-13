@@ -133,7 +133,7 @@ export function renderRecipeTileStyles() {
 
         #recipe-title {
             font-weight: bold;
-            font-size: 24px;
+            font-size: 16px;
             text-overflow: ellipsis;
             max-width: 100%;
             overflow: hidden;

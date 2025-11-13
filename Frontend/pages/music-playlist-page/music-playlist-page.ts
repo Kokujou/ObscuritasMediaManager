@@ -185,6 +185,8 @@ export class MusicPlaylistPage extends LitElementBase {
 
         changePage(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.trackIndex }, false);
 
+        this.switchSelectedMood('mood1');
+
         await this.requestFullUpdate();
         await AudioService.play(this.updatedTrack?.path);
     }

@@ -4,7 +4,7 @@ declare global {
     interface Array<T> {
         randomize(): T[];
         getDistance(selectedEntry: T, targetEntry: T): number;
-        groupBy<T>(this: T[], selector: (item: T) => any): Record<string, T[]>;
+        groupBy<T, U extends string | number>(this: T[], selector: (item: T) => U): Record<U, T[]>;
         groupByKey<K extends keyof T>(key: K): Record<string, T[]>;
         groupAndSelectBy<K extends keyof T, V extends keyof T>(groupKey: K, selectKey: V): Record<string, T[V][]>;
         union(...others: T[][]): T[];
@@ -40,12 +40,12 @@ Array.prototype.groupByKey = function <T, K extends keyof T>(this: T[], key: K):
     }, {} as Record<string, T[]>);
 };
 
-Array.prototype.groupBy = function <T>(this: T[], selector: (item: T) => any): Record<string, T[]> {
+Array.prototype.groupBy = function <T, U extends string | number>(this: T[], selector: (item: T) => U): Record<U, T[]> {
     return this.reduce((rv, x) => {
         const groupKey = selector(x);
         (rv[groupKey] = rv[groupKey] || []).push(x);
         return rv;
-    }, {} as Record<string, T[]>);
+    }, {} as Record<U, T[]>);
 };
 
 Array.prototype.groupAndSelectBy = function <T, K extends keyof T, V extends keyof T>(
@@ -73,7 +73,6 @@ Array.prototype.distinctBy = function <T>(this: T[], selector: (item: T) => any)
 };
 
 Array.prototype.orderBy = function <T>(this: T[], ...selectors: ((item: T) => any)[]): T[] {
-    console.log(selectors);
     return this.sort((a, b) => {
         for (const selector of selectors) {
             if (selector(a) < selector(b)) return -1;

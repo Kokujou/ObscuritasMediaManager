@@ -58,7 +58,7 @@ export function renderRecipesPageStyles() {
         .recipe-tile {
             --recipe-tile-width: 300px;
             --recipe-tile-min-height: 300px;
-            --font-size: 30px;
+            --font-size: 18px;
 
             cursor: pointer;
         }

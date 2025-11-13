@@ -75,7 +75,7 @@ export function renderLanguageSwitcherStyles() {
             z-index: 60;
             right: 0;
             top: 50px;
-            font-size: 40px;
+            font-size: 16px;
             cursor: pointer;
             pointer-events: all;
             color: white;

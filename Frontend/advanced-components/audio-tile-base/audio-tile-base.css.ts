@@ -113,7 +113,7 @@ export function renderAudioTileBaseStyles() {
         }
 
         #add-instruments-link {
-            font-size: 24px;
+            font-size: 16px;
             text-decoration: underline;
         }
 

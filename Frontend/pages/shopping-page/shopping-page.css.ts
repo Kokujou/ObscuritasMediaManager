@@ -85,11 +85,11 @@ export function renderShoppingPageStyles() {
         }
 
         .ingredient-price {
-            width: 100px;
+            width: 80px;
         }
 
         .ingredient-measurement {
-            width: 100px;
+            width: 80px;
         }
 
         .ingredient-category {
@@ -97,7 +97,7 @@ export function renderShoppingPageStyles() {
             flex-direction: row;
             align-items: center;
             gap: 20px;
-            width: 200px;
+            width: 150px;
         }
 
         .ingredient-category-icon {
@@ -115,7 +115,7 @@ export function renderShoppingPageStyles() {
         }
 
         .ingredient-nation {
-            width: 200px;
+            width: 120px;
         }
 
         .icon {
@@ -125,8 +125,8 @@ export function renderShoppingPageStyles() {
         }
 
         .action-icon {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             background: white;
 
             cursor: pointer;
@@ -145,10 +145,10 @@ export function renderShoppingPageStyles() {
         }
 
         .shop-icon {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             background: white;
-            border-radius: 10px;
+            border-radius: 5px;
         }
     `;
 }

@@ -62,7 +62,7 @@ export function renderGenreDialogStyles() {
         }
 
         .section-title {
-            font-size: 24px;
+            font-size: 16px;
             margin-bottom: 10px;
             text-shadow: 2px 2px 2px black;
         }
@@ -117,7 +117,7 @@ export function renderGenreDialogStyles() {
 
         #add-genre-button {
             display: inline-block;
-            font-size: 24px;
+            font-size: 16px;
 
             padding: 20px;
             border-radius: 20px;

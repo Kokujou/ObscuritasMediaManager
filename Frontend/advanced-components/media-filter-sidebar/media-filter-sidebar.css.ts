@@ -20,20 +20,20 @@ export function renderMediaFilterSidebarStyles() {
         #heading {
             width: 100%;
 
-            font-size: 36px;
+            font-size: 18px;
 
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 10px;
         }
 
         #filters {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            padding: 30px;
+            gap: 10px;
+            padding: 0 15px;
 
             overflow-y: auto;
             overflow-x: hidden;
@@ -42,8 +42,8 @@ export function renderMediaFilterSidebarStyles() {
         .filter-entry {
             display: flex;
             width: 100%;
-            font-size: 20px;
-            gap: 20px;
+            font-size: 14px;
+            gap: 10px;
         }
 
         .filter-entry[simple] {
@@ -117,18 +117,18 @@ export function renderMediaFilterSidebarStyles() {
 
         #content-warning-filter tri-value-checkbox,
         #target-group-filter tri-value-checkbox {
-            --padding: 15px;
+            --padding: 10px;
         }
 
         #content-warning-filter tri-value-checkbox .icon-button,
         #target-group-filter tri-value-checkbox .icon-button {
-            width: 35px;
-            height: 35px;
+            width: 25px;
+            height: 25px;
         }
 
         .icon-button {
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
 
             cursor: pointer;
 
@@ -145,7 +145,7 @@ export function renderMediaFilterSidebarStyles() {
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 14px;
             margin-top: 10px;
         }
     `;

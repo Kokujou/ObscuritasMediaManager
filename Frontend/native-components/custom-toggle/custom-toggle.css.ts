@@ -8,8 +8,8 @@ export function renderCustomToggleStyles() {
             display: block;
             background-color: var(--untoggled-color, #0007);
             border-radius: 7px;
-            --width: 60px;
-            --height: 30px;
+            --width: 40px;
+            --height: 20px;
             height: var(--height);
             min-width: var(--width);
             cursor: pointer;
@@ -20,7 +20,7 @@ export function renderCustomToggleStyles() {
         }
 
         :host([threeValues]) {
-            --width: 90px;
+            --width: 60px;
         }
 
         #slider {

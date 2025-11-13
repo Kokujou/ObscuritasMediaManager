@@ -49,7 +49,7 @@ export function renderImportFoodPageStyles() {
         }
 
         #food-name {
-            font-size: 24px;
+            font-size: 16px;
         }
 
         #food-description {
@@ -116,7 +116,7 @@ export function renderImportFoodPageStyles() {
         }
 
         .loading-text {
-            font-size: 20px;
+            font-size: 14px;
             font-weight: bold;
             color: black;
             text-shadow: 0 0 2px #505, 0 0 2px #505;
@@ -128,7 +128,7 @@ export function renderImportFoodPageStyles() {
             left: 40px;
             height: 20%;
             width: calc(70% - 40px * 2);
-            font-size: 40px;
+            font-size: 16px;
 
             user-select: none;
 
@@ -180,7 +180,7 @@ export function renderImportFoodPageStyles() {
 
             border-radius: 50%;
             background: gray;
-            font-size: 24px;
+            font-size: 16px;
             z-index: 5;
 
             user-select: none;

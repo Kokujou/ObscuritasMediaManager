@@ -1,6 +1,7 @@
 import { TemplateResult } from 'lit-element';
 import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { PageRouting } from '../../pages/page-routing/page-routing';
 import { renderWarningBannerStyles } from './warning-banner.css';
 import { renderWarningBanner } from './warning-banner.html';
 
@@ -18,7 +19,7 @@ export class WarningBanner extends LitElementBase {
         banner.inner = inner;
         banner.requestFullUpdate();
 
-        document.body.prepend(banner);
+        PageRouting.instance.prepend(banner);
         this.instance = banner;
     }
 

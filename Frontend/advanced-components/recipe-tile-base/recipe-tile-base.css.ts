@@ -45,7 +45,7 @@ export function renderRecipeTileBaseStyles() {
             z-index: 1000;
             white-space: pre-wrap;
             text-align: center;
-            font-size: 20px;
+            font-size: 14px;
             font-weight: bold;
             text-shadow: 0 0 10px purple, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black;
         }

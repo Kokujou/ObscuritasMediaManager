@@ -5,7 +5,7 @@ export function renderStarRatingStyles() {
         #star-container {
             display: flex;
             flex-direction: row;
-            font-size: var(--font-size, 50px);
+            font-size: var(--font-size, 40px);
         }
 
         .star {

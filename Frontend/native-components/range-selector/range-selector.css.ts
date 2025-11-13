@@ -46,10 +46,18 @@ export function renderRangeSelectorStyles() {
             transform: translateY(-50%) translateX(-50%);
             z-index: 2;
 
-            width: var(--slider-size, 25px);
-            height: var(--slider-size, 25px);
+            width: var(--slider-size, 15px);
+            height: var(--slider-size, 15px);
             border-radius: 50%;
             background: var(--slider-color, gray);
+        }
+
+        .slider:hover {
+            filter: brightness(0.9);
+        }
+
+        .slider:active {
+            filter: brightness(0.7);
         }
     `;
 }
