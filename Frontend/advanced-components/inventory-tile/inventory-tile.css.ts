@@ -117,5 +117,10 @@ export function renderInventoryTileStyles() {
             pointer-events: none;
             background-color: gray;
         }
+
+        #increment-button,
+        #decrement-button {
+            cursor: pointer;
+        }
     `;
 }

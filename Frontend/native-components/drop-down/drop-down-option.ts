@@ -17,7 +17,7 @@ export class DropDownOption<T> {
         return values.map((key) =>
             DropDownOption.create({
                 value: key,
-                text: `${key}`,
+                text: `${key ?? '---'}`,
                 state: key == defaultValue ? CheckboxState.Ignore : CheckboxState.Forbid,
             })
         );

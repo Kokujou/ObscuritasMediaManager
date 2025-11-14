@@ -60,13 +60,35 @@ export function renderInventoryTile(this: InventoryTile) {
                           id="accept-icon"
                           class="action-icon"
                           ?disabled="${!this.item.ingredientName || !this.item.quantity || !this.item.unit?.name}"
-                          @click="${this.notifyItemCreated}"
+                          @click="${this.acceptChange}"
                       ></div>
                       <div
                           id="cancel-icon"
                           class="action-icon"
                           @click="${() => (this.createMode ? this.remove() : this.cancelEdit())}"
                       ></div>
+                  </flex-column>`
+                : null}
+            ${!this.createMode
+                ? html` <flex-column>
+                      <div
+                          id="increment-button"
+                          @pointerdown="${(e: Event) => {
+                              e.preventDefault();
+                              this.incrementAmount((this.pointerdownController = new AbortController()).signal);
+                          }}"
+                      >
+                          ▲
+                      </div>
+                      <div
+                          id="decrement-button"
+                          @pointerdown="${(e: Event) => {
+                              e.preventDefault();
+                              this.decrementAmount((this.pointerdownController = new AbortController()).signal);
+                          }}"
+                      >
+                          ▼
+                      </div>
                   </flex-column>`
                 : null}
         </flex-row>

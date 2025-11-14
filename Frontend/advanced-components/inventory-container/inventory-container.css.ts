@@ -51,6 +51,7 @@ export function renderInventoryContainerStyles() {
 
         #main-levels {
             flex: auto;
+            align-items: stretch;
         }
 
         .level {

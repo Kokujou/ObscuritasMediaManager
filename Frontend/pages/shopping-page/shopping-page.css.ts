@@ -1,4 +1,6 @@
 import { css } from 'lit';
+import { renderMaskImage } from '../../extensions/style.extensions';
+import { revertIcon } from '../../resources/inline-icons/general/revert-icon.svg';
 
 export function renderShoppingPageStyles() {
     return css`
@@ -31,8 +33,23 @@ export function renderShoppingPageStyles() {
             gap: 20px;
         }
 
+        .filter drop-down {
+            min-width: 150px;
+        }
+
         #search-input {
             width: 300px;
+        }
+
+        .reset-filters-icon {
+            width: 30px;
+            height: 30px;
+
+            background: white;
+
+            cursor: pointer;
+
+            ${renderMaskImage(revertIcon())};
         }
 
         #create-ingredient-link {

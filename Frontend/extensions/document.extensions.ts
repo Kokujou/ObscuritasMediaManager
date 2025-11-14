@@ -1,19 +1,5 @@
 import { PageRouting } from '../pages/page-routing/page-routing';
 
-export function getScaleFactorX() {
-    if (outerWidth - innerWidth > 100) return (outerWidth - 20) / viewportWidth;
-    else return (innerWidth - 20) / viewportWidth;
-}
-
-export function getScaleFactorY() {
-    if (outerHeight - innerHeight > 200) return (outerHeight - 140) / viewportHeight;
-
-    return (innerHeight - 20) / viewportHeight;
-}
-
-export const viewportWidth = 1920;
-export const viewportHeight = 900;
-
 export function scrollIntoParentViewX(element: HTMLElement, elementContainer: HTMLElement, parent: HTMLElement) {
     if (!element || !elementContainer || !parent) return;
     var targetLeft = element.offsetLeft + elementContainer.offsetLeft - parent.offsetWidth / 2 - element.offsetWidth / 2;

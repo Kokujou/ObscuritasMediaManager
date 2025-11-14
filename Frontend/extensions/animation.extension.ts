@@ -1,5 +1,8 @@
-export function waitForSeconds(seconds: number) {
-    return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+export function waitForSeconds(seconds: number, signal?: AbortSignal) {
+    return new Promise((resolve) => {
+        let timeout = setTimeout(resolve, seconds * 1000, { signal });
+        signal?.addEventListener('abort', () => clearTimeout(timeout));
+    });
 }
 
 export function waitForAnimation() {

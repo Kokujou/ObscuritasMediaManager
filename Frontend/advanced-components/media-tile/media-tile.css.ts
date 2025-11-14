@@ -94,6 +94,7 @@ export function renderMediaTileStyles() {
             gap: 10px;
             margin-top: 10px;
             transition: max-height 1s ease;
+            font-size: 12px;
         }
 
         :host(:hover) #genre-list {

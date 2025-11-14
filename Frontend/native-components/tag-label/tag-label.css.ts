@@ -35,8 +35,8 @@ export function renderTagLabelStyles() {
         #new-tag-input,
         #label-text {
             color: inherit;
-            min-width: 50px;
-            padding: 5px;
+            min-width: 30px;
+            padding: 3px;
             margin-right: 5px;
             font-size: inherit;
         }

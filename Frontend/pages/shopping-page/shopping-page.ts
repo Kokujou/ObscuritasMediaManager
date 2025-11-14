@@ -45,7 +45,7 @@ export class ShoppingPage extends LitElementBase {
         const ingredients = [...this.ingredients];
         ObjectFilterService.applyMultiPropertySearch(ingredients, this.searchText ?? '', 'ingredientName');
         const filtered = ingredients
-            .filter((x) => !this.nation || this.nation == Language.Unset || x.nation == this.nation)
+            .filter((x) => !this.nation || x.nation == this.nation)
             .filter((x) => !this.category || x.category == this.category)
             .concat(ingredients.filter((x) => this.newIngredients.includes(x.ingredientName)))
             .distinctBy((x) => x.ingredientName);
@@ -115,5 +115,11 @@ export class ShoppingPage extends LitElementBase {
             Session.favoriteIngredients = Session.favoriteIngredients.concat(ingredient.ingredientName);
         else Session.favoriteIngredients = Session.favoriteIngredients.filter((x) => x != ingredient.ingredientName);
         this.requestFullUpdate();
+    }
+
+    resetFilters() {
+        this.nation = undefined;
+        this.category = undefined;
+        this.searchText = undefined;
     }
 }

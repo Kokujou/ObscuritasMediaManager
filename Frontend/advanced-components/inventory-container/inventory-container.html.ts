@@ -12,14 +12,17 @@ export function renderInventoryContainer(this: InventoryContainer) {
             <drop-down
                 id="container-caption"
                 .caption="${this.target}"
-                .options="${DropDownOption.createSimpleArray([InventoryTarget.Freezer, InventoryTarget.Fridge], this.target)}"
+                .options="${DropDownOption.createSimpleArray(Object.keysOf(InventoryTarget), this.target)}"
                 @selectionChange="${(e: CustomEvent<{ option: DropDownOption<InventoryTarget> }>) =>
                     (this.target = e.detail.option.value)}"
             ></drop-down>
             <flex-row id="container">
-                <flex-column id="side-levels" class="levels">
-                    ${Array.createRange(0, maxSideLevel + 1).map((level) => renderLevel.call(this, level, true))}
-                </flex-column>
+                ${this.target == InventoryTarget.Other
+                    ? null
+                    : html` <flex-column id="side-levels" class="levels">
+                          ${Array.createRange(0, maxSideLevel + 1).map((level) => renderLevel.call(this, level, true))}
+                      </flex-column>`}
+
                 <flex-column id="main-levels" class="levels">
                     ${Array.createRange(0, maxLevel + 1).map((level) => renderLevel.call(this, level, false))}
                 </flex-column>

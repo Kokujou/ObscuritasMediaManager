@@ -26,11 +26,14 @@ export function renderShoppingPage(this: ShoppingPage) {
                     <tr id="filter-area">
                         <td colspan="6">
                             <div id="filter-header">
-                                Suche filtern:
                                 <div id="nation-filter" class="filter">
                                     Nationalität:
                                     <drop-down
-                                        .options="${DropDownOption.createSimpleArray(Object.values(Language), this.nation)}"
+                                        .caption="${this.nation ?? '---'}"
+                                        .options="${DropDownOption.createSimpleArray(
+                                            [null, ...Object.values(Language)],
+                                            this.nation
+                                        )}"
                                         useSearch
                                         @selectionChange="${(e: CustomEvent<{ option: DropDownOption<Language> }>) =>
                                             (this.nation = e.detail.option.value)}"
@@ -60,6 +63,11 @@ export function renderShoppingPage(this: ShoppingPage) {
                                         @input="${(e: Event) => (this.searchText = (e.target as HTMLInputElement).value)}"
                                     />
                                 </div>
+                                <div
+                                    class="reset-filters-icon"
+                                    tooltip="Filter zurücksetzen"
+                                    @click="${() => this.resetFilters()}"
+                                ></div>
                             </div>
                         </td>
                     </tr>

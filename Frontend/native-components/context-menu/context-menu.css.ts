@@ -30,8 +30,8 @@ export function renderContextMenuStyles() {
         }
 
         .item-icon {
-            width: 35px;
-            height: 35px;
+            width: 20px;
+            height: 20px;
             background: white;
         }
 
