@@ -32,9 +32,13 @@ export function renderInventoryTile(this: InventoryTile) {
                               @input="${(e: Event) => e.target?.dispatchEvent(new Event('change'))}"
                           />
                           <drop-down
-                              .options="${MeasurementUnits.map((unit) =>
-                                  DropDownOption.create({ category: unit.measurement, value: unit, text: unit.name })
-                              )}"
+                              .options="${this.editAmount
+                                  ? MeasurementUnits.filter((x) => x.measurement == this.item.unit.measurement).map((unit) =>
+                                        DropDownOption.create({ value: unit, text: unit.name })
+                                    )
+                                  : MeasurementUnits.map((unit) =>
+                                        DropDownOption.create({ category: unit.measurement, value: unit, text: unit.name })
+                                    )}"
                               caption="${this.item.unit?.name ?? '---'}"
                               @selectionChange="${(e: CustomEvent<{ option: DropDownOption<MeasurementUnit> }>) => {
                                   this.item.unit = e.detail.option.value;

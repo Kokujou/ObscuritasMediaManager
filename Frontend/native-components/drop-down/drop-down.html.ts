@@ -4,6 +4,13 @@ import { DropDown } from './drop-down';
 import { DropDownOption } from './drop-down-option';
 
 export function renderDropDown(this: DropDown) {
+    if (this.options.length <= 1)
+        return html`<div class="dropdown">
+            <div id="caption-container">
+                ${this.caption} ${this.caption ? '' : html`<div id="empty-text-placeholder">empty</div>`}
+            </div>
+        </div>`;
+
     var maxHeight = this.maxDisplayDepth * 60;
     if (this.useSearch) maxHeight += 50;
     return html`

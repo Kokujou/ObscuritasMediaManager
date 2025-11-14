@@ -15,20 +15,12 @@ export function renderInventoryContainerStyles() {
 
             font-size: 16px;
 
-            --base: #0b0b0d; /* very dark base */
-            --mid1: #1a1a1f;
-            --mid2: #2b2b32;
-            background: linear-gradient(
-                    90deg,
-                    var(--mid1) 0%,
-                    var(--mid2) 25%,
-                    var(--base) 50%,
-                    var(--mid2) 75%,
-                    var(--mid1) 100%
-                ),
-                radial-gradient(120px 60px at 20% 20%, rgba(255, 255, 255, 0.06), transparent 30%),
-                linear-gradient(100deg, transparent 0 40%, rgba(255, 255, 255, 0.08) 41% 44%, transparent 45% 100%);
-            border: 2px solid white;
+            background: var(--metallic-black);
+            box-shadow: var(--metallic-black-shadow);
+            border: 1px solid white;
+        }
+
+        #content {
         }
 
         #content {
@@ -62,38 +54,27 @@ export function renderInventoryContainerStyles() {
         }
 
         .level {
-            width: auto;
-            position: relative;
-            flex-wrap: wrap;
-            align-items: flex-start;
-
-            min-height: 75px;
+            background: var(--metallic-silver);
             border: 4px solid #fff9;
             border-radius: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 20px;
-
-            background: var(--metallic-silver);
         }
 
-        .level::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 1;
+        .level-background {
+            position: relative;
+            width: auto;
+            min-height: 75px;
+            padding: 20px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 10px;
+
             background: #0008;
-            pointer-events: none;
             border-radius: inherit;
         }
 
         .level[dragged-over],
         [dragging] .level:hover {
             border: 4px solid blue;
-        }
-
-        .level > * {
-            z-index: 55;
         }
 
         .level-label {

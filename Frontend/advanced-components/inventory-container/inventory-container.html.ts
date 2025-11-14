@@ -29,7 +29,7 @@ export function renderInventoryContainer(this: InventoryContainer) {
 }
 
 function renderLevel(this: InventoryContainer, level: number, isSide: boolean) {
-    return html`<flex-row
+    return html`<div
         class="level"
         dropzone="move"
         ?dragged-over="${this.draggedOverLevel == level && this.draggedOverSide == isSide}"
@@ -37,56 +37,58 @@ function renderLevel(this: InventoryContainer, level: number, isSide: boolean) {
         @dragleave="${(e: Event) => this.dragOverLevel(e, undefined)}"
         @drop="${this.moveItem}"
     >
-        <label class="level-label">${level}</label>
-        ${this.items
-            .filter((x) => x.target == this.target && x.level == level && x.isSide == isSide)
-            .map(
-                (item) =>
-                    html` <inventory-tile
-                        draggable="true"
-                        .item="${item}"
-                        @dragstart="${(e: DragEvent) => this.startDraggingItem(e, item)}"
-                    ></inventory-tile>`
-            )}
-        <div class="plus-icon" @click="${() => this.addItem(level, isSide)}"></div>
+        <flex-row class="level-background">
+            <label class="level-label">${level + 1}</label>
+            ${this.items
+                .filter((x) => x.target == this.target && x.level == level && x.isSide == isSide)
+                .map(
+                    (item) =>
+                        html` <inventory-tile
+                            draggable="true"
+                            .item="${item}"
+                            @dragstart="${(e: DragEvent) => this.startDraggingItem(e, item)}"
+                        ></inventory-tile>`
+                )}
+            <div class="plus-icon" @click="${() => this.addItem(level, isSide)}"></div>
 
-        <flex-row class="drag-actions" @dragleave="${(e: Event) => e.stopPropagation()}">
-            <div
-                class="drag-action-button"
-                dropzone="move"
-                @dragover="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', true)}"
-                @dragleave="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', false)}"
-                @drop="${() => this.notifyDraggedItemDuplicated(1)}"
-            >
-                x1
-            </div>
-            <div
-                class="drag-action-button"
-                dropzone="move"
-                @dragover="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', true)}"
-                @dragleave="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', false)}"
-                @drop="${() => this.notifyDraggedItemDuplicated(2)}"
-            >
-                x2
-            </div>
-            <div
-                class="drag-action-button"
-                dropzone="move"
-                @dragover="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', true)}"
-                @dragleave="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', false)}"
-                @drop="${() => this.notifyDraggedItemDuplicated(3)}"
-            >
-                x3
-            </div>
-            <div
-                class="delete-button"
-                dropzone="move"
-                @dragover="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', true)}"
-                @dragleave="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', false)}"
-                @drop="${() => this.notifyDraggedItemDeleted()}"
-            >
-                <div class="delete-icon"></div>
-            </div>
+            <flex-row class="drag-actions" @dragleave="${(e: Event) => e.stopPropagation()}">
+                <div
+                    class="drag-action-button"
+                    dropzone="move"
+                    @dragover="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', true)}"
+                    @dragleave="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', false)}"
+                    @drop="${() => this.notifyDraggedItemDuplicated(1)}"
+                >
+                    x1
+                </div>
+                <div
+                    class="drag-action-button"
+                    dropzone="move"
+                    @dragover="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', true)}"
+                    @dragleave="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', false)}"
+                    @drop="${() => this.notifyDraggedItemDuplicated(2)}"
+                >
+                    x2
+                </div>
+                <div
+                    class="drag-action-button"
+                    dropzone="move"
+                    @dragover="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', true)}"
+                    @dragleave="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', false)}"
+                    @drop="${() => this.notifyDraggedItemDuplicated(3)}"
+                >
+                    x3
+                </div>
+                <div
+                    class="delete-button"
+                    dropzone="move"
+                    @dragover="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', true)}"
+                    @dragleave="${(e: Event) => (e.currentTarget as HTMLElement).toggleAttribute('dragged-over', false)}"
+                    @drop="${() => this.notifyDraggedItemDeleted()}"
+                >
+                    <div class="delete-icon"></div>
+                </div>
+            </flex-row>
         </flex-row>
-    </flex-row>`;
+    </div>`;
 }

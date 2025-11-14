@@ -8,6 +8,7 @@ export function renderInventoryPageStyles() {
 
         inventory-container {
             width: 80%;
+            margin-bottom: 50px;
         }
 
         .add-button {

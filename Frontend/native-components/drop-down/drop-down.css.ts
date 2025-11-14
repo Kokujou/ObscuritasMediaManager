@@ -79,6 +79,7 @@ export function renderDropDownStyles() {
             position: absolute;
             top: 100%;
             width: var(--option-width, 100%);
+
             min-width: max-content;
 
             display: flex;

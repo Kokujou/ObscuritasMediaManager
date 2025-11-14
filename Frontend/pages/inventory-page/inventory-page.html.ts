@@ -20,7 +20,6 @@ export function renderInventoryPage(this: InventoryPage) {
                     ${this.inventory
                         .filter((x) => x.target == InventoryTarget.Other)
                         .map((item) => html`<inventory-tile .item="${item}"></inventory-tile>`)}
-                    <div class="add-button">+</div>
                 </div>
             </flex-column>
         </page-layout>

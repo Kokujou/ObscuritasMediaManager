@@ -31,6 +31,7 @@ public class InventoryController(DatabaseContext dbContext) : ControllerBase
     {
         item.ItemId = Guid.NewGuid();
         item.Ingredient = null;
+        item.IngredientName = item.IngredientName.Trim();
 
         var relatedIngredient =
             await dbContext.Set<IngredientModel>().FirstOrDefaultAsync(x => x.IngredientName == item.IngredientName);
