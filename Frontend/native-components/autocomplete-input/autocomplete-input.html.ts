@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { AutocompleteInput } from './autocomplete-input';
 
 export function renderAutocompleteInput(this: AutocompleteInput) {

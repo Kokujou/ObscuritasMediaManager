@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { renderBackgroundImage } from '../../extensions/style.extensions';
 import { ContextMenu } from './context-menu';
 

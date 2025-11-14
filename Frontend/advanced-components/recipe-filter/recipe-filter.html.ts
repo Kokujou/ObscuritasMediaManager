@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { CookingTechnique } from '../../data/food/cooking-technique';
 import { Course } from '../../data/food/course';

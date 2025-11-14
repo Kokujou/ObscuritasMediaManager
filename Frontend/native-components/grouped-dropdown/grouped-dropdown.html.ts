@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { DropdownCategories, GroupedDropdown } from './grouped-dropdown';
 
 export function renderGroupedDropdown(this: GroupedDropdown) {

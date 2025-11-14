@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { ScrollSelect } from './scroll-select';
 
 export function renderScrollSelect(this: ScrollSelect) {

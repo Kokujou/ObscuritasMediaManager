@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { CustomTooltip } from './custom-tooltip';
 
 export function renderTooltip(this: CustomTooltip) {

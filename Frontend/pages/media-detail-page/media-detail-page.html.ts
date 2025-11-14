@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 
 import { Enum } from '../../extensions/enum.extensions';

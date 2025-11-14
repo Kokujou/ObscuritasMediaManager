@@ -1,4 +1,4 @@
-import { unsafeCSS } from 'lit-element';
+import { unsafeCSS } from 'lit';
 
 export function renderMaskImage(image: string) {
     return unsafeCSS(`

@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
 import { InventoryTarget } from '../../obscuritas-media-manager-backend-client';
 import { InventoryContainer } from './inventory-container';

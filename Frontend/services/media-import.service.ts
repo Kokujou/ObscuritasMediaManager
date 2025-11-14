@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { InteropQuery } from '../client-interop/interop-query';
 import { EntityStatusDialog } from '../dialogs/entity-status-dialog/entity-status-dialog';
 import { changePage } from '../extensions/url.extension';

@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { MeasurementUnits } from '../../data/measurement-units';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
 import { MeasurementUnit } from '../../obscuritas-media-manager-backend-client';

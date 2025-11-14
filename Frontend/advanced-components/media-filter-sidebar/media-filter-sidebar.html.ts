@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
 import { ContentWarning, Language, MediaCategory, TargetGroup } from '../../obscuritas-media-manager-backend-client';

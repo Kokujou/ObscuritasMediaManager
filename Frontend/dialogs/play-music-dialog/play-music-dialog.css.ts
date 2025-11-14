@@ -1,4 +1,4 @@
-import { css, unsafeCSS } from 'lit-element';
+import { css, unsafeCSS } from 'lit';
 import { PlayMusicDialog } from './play-music-dialog';
 
 export function renderPlayMusicDialogStyles() {

@@ -1,4 +1,4 @@
-import { css, unsafeCSS } from 'lit-element';
+import { css, unsafeCSS } from 'lit';
 import { renderMaskImage } from '../../extensions/style.extensions';
 import { Language } from '../../obscuritas-media-manager-backend-client';
 import { unsetIcon } from '../../resources/inline-icons/general/unset-icon.svg';

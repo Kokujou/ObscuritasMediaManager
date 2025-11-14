@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { TimeSpan } from '../../data/timespan';
 
 import { RecipeTile } from './recipe-tile';

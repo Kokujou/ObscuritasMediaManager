@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { Session } from '../../data/session';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { RecipeDetailPage } from '../recipe-detail-page/recipe-detail-page';

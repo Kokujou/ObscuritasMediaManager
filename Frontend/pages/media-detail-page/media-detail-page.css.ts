@@ -1,4 +1,4 @@
-import { css } from 'lit-element';
+import { css } from 'lit';
 import { renderMaskImage } from '../../extensions/style.extensions';
 import { trashIcon } from './images/trash-icon.svg';
 

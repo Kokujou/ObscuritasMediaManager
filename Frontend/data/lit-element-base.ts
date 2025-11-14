@@ -1,4 +1,4 @@
-import { css, LitElement } from 'lit-element';
+import { css, LitElement } from 'lit';
 import { registerContentWarnings } from '../resources/icons/content-warnings/register-content-warnings';
 import { registerTargetGroups } from '../resources/icons/target-groups/register-target-groups';
 import { registerIcons } from '../resources/inline-icons/icon-registry';

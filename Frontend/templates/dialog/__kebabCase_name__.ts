@@ -1,4 +1,4 @@
-import { LitElement } from 'lit-element';
+import { LitElement } from 'lit';
 import { render{{ pascalCase name }}Styles } from './{{ kebabCase name }}.css';
 import { render{{ pascalCase name }} } from './{{ kebabCase name }}.html';
 

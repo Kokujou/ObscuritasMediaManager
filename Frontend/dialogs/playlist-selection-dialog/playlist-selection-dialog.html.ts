@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { getPageName } from '../../extensions/url.extension';
 import { MusicPlaylistPage } from '../../pages/music-playlist-page/music-playlist-page';
 import { Icons } from '../../resources/inline-icons/icon-registry';

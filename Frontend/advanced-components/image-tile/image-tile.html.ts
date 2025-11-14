@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { ImageTile } from './image-tile';
 
 export function renderWebcomponentTemplate(this: ImageTile) {

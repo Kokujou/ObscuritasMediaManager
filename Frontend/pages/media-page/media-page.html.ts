@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { GenreModel, MediaGenreModel } from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';

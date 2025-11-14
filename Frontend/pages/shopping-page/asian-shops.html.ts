@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { IngredientModel } from '../../obscuritas-media-manager-backend-client';
 
 export function renderAsianShopLinks(ingredient: IngredientModel) {

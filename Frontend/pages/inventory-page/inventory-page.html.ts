@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { InventoryItemModel, InventoryTarget } from '../../obscuritas-media-manager-backend-client';
 import { InventoryPage } from './inventory-page';
 

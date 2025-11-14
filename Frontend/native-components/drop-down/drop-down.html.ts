@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { DropDown } from './drop-down';
 import { DropDownOption } from './drop-down-option';

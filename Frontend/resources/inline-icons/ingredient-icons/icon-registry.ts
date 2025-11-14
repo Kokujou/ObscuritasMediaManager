@@ -1,4 +1,4 @@
-import { unsafeCSS } from 'lit-element';
+import { unsafeCSS } from 'lit';
 import { renderMaskImage } from '../../../extensions/style.extensions';
 import { IngredientCategory } from '../../../obscuritas-media-manager-backend-client';
 import { miscIcon } from '../instrument-icons/misc-icon.svg';

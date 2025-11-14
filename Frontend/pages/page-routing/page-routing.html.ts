@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { PageRouting } from './page-routing';
 
 export function renderPageRouting(this: PageRouting) {

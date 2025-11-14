@@ -1,4 +1,4 @@
-import { TemplateResult } from 'lit-element';
+import { TemplateResult } from 'lit';
 import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { PageRouting } from '../../pages/page-routing/page-routing';

@@ -1,4 +1,4 @@
-import { css, unsafeCSS } from 'lit-element';
+import { css, unsafeCSS } from 'lit';
 import { renderBackgroundImage } from '../../extensions/style.extensions';
 import { Language } from '../../obscuritas-media-manager-backend-client';
 import { africaFlag } from '../../resources/inline-icons/language-icons/africa-flag.svg';

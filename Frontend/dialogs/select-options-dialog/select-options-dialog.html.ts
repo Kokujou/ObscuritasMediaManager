@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { SelectOptionsDialog } from './select-options-dialog';
 
 export function renderSelectOptionsDialog(this: SelectOptionsDialog) {

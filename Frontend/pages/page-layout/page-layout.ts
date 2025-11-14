@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { customElement } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { WarningBanner } from '../../native-components/warning-banner/warning-banner';

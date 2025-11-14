@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { PaginatedScrolling } from './paginated-scrolling';
 
 export function renderPaginatedScrolling(this: PaginatedScrolling) {

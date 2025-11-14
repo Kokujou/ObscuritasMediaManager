@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
 import { SortingProperties } from '../../data/music-sorting-properties';
 import { Session } from '../../data/session';

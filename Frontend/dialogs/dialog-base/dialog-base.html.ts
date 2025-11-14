@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { DialogBase } from './dialog-base';
 
 export function renderDialogBase(this: DialogBase) {

@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { RangeSelector } from './range-selector';
 
 export function renderRangeSelector(this: RangeSelector) {

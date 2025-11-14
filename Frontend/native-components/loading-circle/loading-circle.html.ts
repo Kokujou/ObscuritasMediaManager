@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { LoadingCircle } from './loading-circle';
 
 export function renderLoadingCircle(this: LoadingCircle) {

@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { TagLabel } from './tag-label';
 
 export function renderTagLabel(this: TagLabel) {

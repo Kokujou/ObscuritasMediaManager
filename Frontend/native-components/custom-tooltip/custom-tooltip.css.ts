@@ -1,4 +1,4 @@
-import { css } from 'lit-element';
+import { css } from 'lit';
 
 export const tooltipFadeDuration = 0.5;
 export function renderTooltipStyles() {

@@ -1,6 +1,5 @@
-import { css } from 'lit-element';
+import { css, html } from 'lit';
 import { customElement } from 'lit-element/decorators';
-import { html } from 'lit-html';
 import { LitElementBase } from '../../data/lit-element-base';
 
 @customElement('flex-column')

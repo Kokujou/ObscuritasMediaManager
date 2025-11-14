@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { renderMaskImage } from '../../extensions/style.extensions';
 import { playlistIcon } from '../../resources/inline-icons/playlist-icons/playlist-icon.svg';
 import { PlaylistTile } from './playlist-tile';

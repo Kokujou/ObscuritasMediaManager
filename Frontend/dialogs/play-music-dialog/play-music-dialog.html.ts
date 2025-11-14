@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { AudioService } from '../../services/audio-service';

@@ -1,4 +1,4 @@
-import { css } from 'lit-element';
+import { css } from 'lit';
 import { renderMaskImage } from '../../extensions/style.extensions';
 import { saveTickIcon } from '../../resources/inline-icons/general/save-tick-icon.svg';
 

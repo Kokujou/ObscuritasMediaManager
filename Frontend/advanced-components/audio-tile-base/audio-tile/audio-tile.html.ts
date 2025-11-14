@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { getMoodFontColor, MoodColors } from '../../../data/enumerations/mood';
 import { Mood } from '../../../obscuritas-media-manager-backend-client';
 import { AudioTile } from './audio-tile';

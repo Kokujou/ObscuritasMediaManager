@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { RecipeTileBase } from './recipe-tile-base';
 
 export function renderRecipeTileBase(this: RecipeTileBase) {

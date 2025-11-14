@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { AudioService } from '../../services/audio-service';
 import { CompactAudioPlayer } from './compact-audio-player';

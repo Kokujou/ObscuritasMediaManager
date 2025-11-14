@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood';
 import { Session } from '../../data/session';
 import { Enum } from '../../extensions/enum.extensions';

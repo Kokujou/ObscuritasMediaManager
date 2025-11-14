@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { PriorityList } from './priority-list';

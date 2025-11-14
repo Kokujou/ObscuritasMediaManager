@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { ColoredFoodTags } from '../../data/food/food-tags';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';

@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { customElement, state } from 'lit-element/decorators.js';
 import { LitElementBase } from '../../data/lit-element-base';
 import { LinkElement } from '../../native-components/link-element/link-element';

@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { StarRating } from '../../advanced-components/star-rating/star-rating';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';

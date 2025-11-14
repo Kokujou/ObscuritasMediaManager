@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { BorderButton } from './border-button';
 
 export function renderBorderButton(borderButton: BorderButton) {

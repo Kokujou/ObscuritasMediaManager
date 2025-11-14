@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { MediaPage } from '../media-page/media-page';
 import { MusicPage } from '../music-page/music-page';

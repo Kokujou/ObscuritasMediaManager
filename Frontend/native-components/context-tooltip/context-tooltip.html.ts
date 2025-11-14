@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { ContextTooltip } from './context-tooltip';
 
 export function renderContextTooltip(this: ContextTooltip) {

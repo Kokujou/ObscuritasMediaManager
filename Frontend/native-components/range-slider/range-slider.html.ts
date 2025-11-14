@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { RangeSlider } from './range-slider';
 
 export function renderRangeSlider(this: RangeSlider) {

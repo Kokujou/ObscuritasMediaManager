@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { MessageSnackbar } from './message-snackbar';
 
 export function renderMessageSnackbar(this: MessageSnackbar) {

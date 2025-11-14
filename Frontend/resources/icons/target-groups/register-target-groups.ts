@@ -1,4 +1,4 @@
-import { unsafeCSS } from 'lit-element';
+import { unsafeCSS } from 'lit';
 import { renderMaskImage } from '../../../extensions/style.extensions';
 import { TargetGroup } from '../../../obscuritas-media-manager-backend-client';
 import { crossIcon } from '../../inline-icons/general/cross-icon.svg';

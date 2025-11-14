@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { SideScroller } from './side-scroller';
 
 export function renderSideScroller(this: SideScroller) {

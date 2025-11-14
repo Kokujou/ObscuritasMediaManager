@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { LinkElement } from './link-element';
 
 export function renderLinkElement(this: LinkElement) {

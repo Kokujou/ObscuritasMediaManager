@@ -1,4 +1,4 @@
-import { css } from 'lit-element';
+import { css } from 'lit';
 import { renderMaskImage } from '../../extensions/style.extensions';
 import { addDishIcon } from '../../resources/inline-icons/general/add-dish-icon.svg';
 import { addRecipeIcon } from '../../resources/inline-icons/general/add-recipe-icon.svg';

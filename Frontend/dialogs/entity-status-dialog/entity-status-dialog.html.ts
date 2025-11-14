@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { ModelCreationState } from '../../obscuritas-media-manager-backend-client';
 import { EntityStatusDialog } from './entity-status-dialog';
 

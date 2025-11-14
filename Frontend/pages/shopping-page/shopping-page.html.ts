@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { Session } from '../../data/session';
 import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu';

@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { GenreModel } from '../../obscuritas-media-manager-backend-client';
 import { GenreDialog } from './genre-dialog';

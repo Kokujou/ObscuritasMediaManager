@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { ObscuritasMediaManager } from './obscuritas-media-manager';
 
 export function renderObscuritasMediaManager(this: ObscuritasMediaManager) {

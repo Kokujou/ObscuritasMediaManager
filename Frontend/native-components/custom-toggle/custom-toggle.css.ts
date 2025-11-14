@@ -1,4 +1,4 @@
-import { css, unsafeCSS } from 'lit-element';
+import { css, unsafeCSS } from 'lit';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 
 export function renderCustomToggleStyles() {

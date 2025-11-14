@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { LoginPage } from './login-page';
 
 export function renderLoginPage(this: LoginPage) {

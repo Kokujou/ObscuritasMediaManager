@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { Session } from '../../data/session';
 import { Page } from '../../data/util-types';
 import { getPageName } from '../../extensions/url.extension';

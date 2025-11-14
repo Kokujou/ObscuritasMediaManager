@@ -1,4 +1,4 @@
-import { unsafeCSS } from 'lit-element';
+import { unsafeCSS } from 'lit';
 import { ContentWarning } from '../../../obscuritas-media-manager-backend-client';
 
 /**

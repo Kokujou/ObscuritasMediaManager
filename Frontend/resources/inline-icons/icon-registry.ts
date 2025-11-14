@@ -1,4 +1,4 @@
-import { unsafeCSS } from 'lit-element';
+import { unsafeCSS } from 'lit';
 import { clipboardIcon } from '../../advanced-components/upload-area/images/clipboard-icon.svg';
 import { dropIcon } from '../../advanced-components/upload-area/images/drop-icon.svg';
 import { renderMaskImage } from '../../extensions/style.extensions';

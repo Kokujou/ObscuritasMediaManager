@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { MaintenancePage } from './maintenance-page';
 
 export function renderMaintenancePage(this: MaintenancePage) {

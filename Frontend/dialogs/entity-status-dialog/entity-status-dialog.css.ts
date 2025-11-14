@@ -1,4 +1,4 @@
-import { css, unsafeCSS } from 'lit-element';
+import { css, unsafeCSS } from 'lit';
 import { ModelCreationState } from '../../obscuritas-media-manager-backend-client';
 
 export function renderEntityStatusDialogStyles() {

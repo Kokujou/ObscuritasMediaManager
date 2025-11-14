@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { OrderedList } from './ordered-list';
 
 export function renderOrderedList(this: OrderedList) {

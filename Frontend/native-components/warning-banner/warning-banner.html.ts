@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { WarningBanner } from './warning-banner';
 
 export function renderWarningBanner(this: WarningBanner) {
