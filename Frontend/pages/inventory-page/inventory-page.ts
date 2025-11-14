@@ -44,6 +44,11 @@ export class InventoryPage extends LitElementBase {
         await this.refreshInventory();
     }
 
+    async multiplyItem(itemId: string, times: number) {
+        await InventoryService.multiplyItem(itemId, times);
+        await this.refreshInventory();
+    }
+
     async deleteItem(item: InventoryItemModel) {
         await InventoryService.deleteItem(item.itemId);
         await this.refreshInventory();

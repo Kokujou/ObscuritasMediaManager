@@ -127,10 +127,10 @@ function renderNavigationStyles() {
             position: absolute;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             top: var(--header-height);
             bottom: 0;
             width: var(--navigation-width);
+            margin-top: 100px;
         }
 
         #navigation {

@@ -13,6 +13,7 @@ public class InventoryItemModel
     public required float Quantity { get; set; }
     public MeasurementUnit Unit { get; set; } = null!;
     public int? Level { get; set; }
+    public bool IsSide { get; set; }
 
     [ForeignKey(nameof(IngredientName))] public IngredientModel? Ingredient { get; set; } = null!;
 }

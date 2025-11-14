@@ -42,7 +42,7 @@ Array.prototype.groupByKey = function <T, K extends keyof T>(this: T[], key: K):
 
 Array.prototype.groupBy = function <T, U extends string | number>(this: T[], selector: (item: T) => U): Record<U, T[]> {
     return this.reduce((rv, x) => {
-        const groupKey = selector(x);
+        const groupKey = selector(x) ?? '';
         (rv[groupKey] = rv[groupKey] || []).push(x);
         return rv;
     }, {} as Record<U, T[]>);

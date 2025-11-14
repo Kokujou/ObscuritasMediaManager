@@ -2,45 +2,35 @@ import { css } from 'lit-element';
 import { renderMaskImage } from '../../extensions/style.extensions';
 import { editIcon } from '../../pages/media-detail-page/images/edit-icon.svg';
 import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg';
+import { crossIcon } from '../../resources/inline-icons/general/cross-icon.svg';
 import { saveTickIcon } from '../../resources/inline-icons/general/save-tick-icon.svg';
 
 export function renderInventoryTileStyles() {
     return css`
         :host {
             display: flex;
+            user-select: none;
         }
 
         #inventory-tile {
             max-width: 100%;
-            padding: 20px;
+            padding: 15px;
 
             border-radius: 20px;
 
             align-items: center;
-            gap: 20px;
+            gap: 10px;
 
             color: rgba(0, 0, 0, 0.72);
             text-shadow: 1px 1px 0 #ffffff;
 
-            background: linear-gradient(
-                -72deg,
-                #dedede,
-                #ffffff 16%,
-                #dedede 21%,
-                #ffffff 24%,
-                #898989 30%,
-                #dedede 36%,
-                #ffffff 45%,
-                #ffffff 60%,
-                #dedede 72%,
-                #ffffff 80%,
-                #dedede 84%,
-                #a1a1a1
-            );
+            background: var(--metallic-silver);
+            box-shadow: var(--metallic-silver-shadow);
             border: 2px solid #cacade;
+        }
 
-            box-shadow: 4px 4px 1em rgba(122, 122, 122, 0.55), inset 2px 2px 0 rgba(255, 255, 255, 0.9),
-                inset -2px -2px 0 rgba(0, 0, 0, 0.5);
+        #inventory-tile:not([edit]) {
+            cursor: grab;
         }
 
         #drag-indicator {
@@ -50,24 +40,32 @@ export function renderInventoryTileStyles() {
 
         #item-name {
             width: 100%;
-            pointer-events: none;
+            box-sizing: border-box;
+        }
+
+        input#item-name {
+            pointer-events: all;
+        }
+
+        #amount-row {
+            flex-direction: flex-end;
         }
 
         #item-amount {
-            width: 150px;
+            width: 80px;
             margin-right: 20px;
         }
 
         input {
             background: none;
             margin: 0;
-            padding: 0;
             border: 0;
             outline: 0;
+            padding: 5px;
 
-            border-bottom: 2px solid white;
-            color: white;
+            color: inherit;
             font: inherit;
+            border-bottom: 2px solid #0003;
         }
 
         drop-down {
@@ -75,11 +73,16 @@ export function renderInventoryTileStyles() {
         }
 
         .action-icon {
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
 
             cursor: pointer;
             user-select: none;
+        }
+
+        #actions {
+            gap: 10px;
+            margin-left: 10px;
         }
 
         #accept-icon {
@@ -87,10 +90,18 @@ export function renderInventoryTileStyles() {
             ${renderMaskImage(saveTickIcon())};
         }
 
+        #cancel-icon {
+            background: red;
+            width: 18px;
+            height: 18px;
+            ${renderMaskImage(crossIcon())};
+        }
+
         #edit-icon {
             width: 20px;
             height: 20px;
 
+            cursor: pointer;
             margin-left: 10px;
             background: #333;
             ${renderMaskImage(editIcon())};

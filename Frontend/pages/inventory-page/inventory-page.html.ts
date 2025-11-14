@@ -8,27 +8,21 @@ export function renderInventoryPage(this: InventoryPage) {
     return html`
         <page-layout
             @item-added="${(e: CustomEvent<InventoryItemModel>) => this.createItem(e.detail)}"
+            @multiply-item="${(e: CustomEvent<{ itemId: string; times: number }>) =>
+                this.multiplyItem(e.detail.itemId, e.detail.times)}"
             @item-changed="${(e: CustomEvent<InventoryItemModel>) => this.updateItem(e.detail)}"
             @item-deleted="${(e: CustomEvent<InventoryItemModel>) => this.deleteItem(e.detail)}"
+            @refresh="${() => this.refreshInventory()}"
         >
-            <flex-row id="container-section">
-                <inventory-container
-                    id="freezer"
-                    target="${InventoryTarget.Freezer}"
-                    .items="${this.inventory.filter((x) => x.target == InventoryTarget.Freezer)}"
-                ></inventory-container>
-                <inventory-container
-                    id="fridge"
-                    target="${InventoryTarget.Fridge}"
-                    .items="${this.inventory.filter((x) => x.target == InventoryTarget.Fridge)}"
-                ></inventory-container>
-            </flex-row>
-            <div id="misc-section">
-                ${this.inventory
-                    .filter((x) => x.target == InventoryTarget.Other)
-                    .map((item) => html`<inventory-tile .item="${item}"></inventory-tile>`)}
-                <div class="add-button">+</div>
-            </div>
+            <flex-column id="inventory-page">
+                <inventory-container id="freezer" .items="${this.inventory}"></inventory-container>
+                <div id="misc-section">
+                    ${this.inventory
+                        .filter((x) => x.target == InventoryTarget.Other)
+                        .map((item) => html`<inventory-tile .item="${item}"></inventory-tile>`)}
+                    <div class="add-button">+</div>
+                </div>
+            </flex-column>
         </page-layout>
     `;
 }

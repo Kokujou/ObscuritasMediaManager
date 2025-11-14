@@ -533,6 +533,43 @@ export class InventoryClient {
         return Promise.resolve<void>(null as any);
     }
 
+    multiplyItem(itemId: string, times: number, signal?: AbortSignal): Promise<void> {
+        let url_ = this.baseUrl + "/Inventory/item/{itemId}/multiply/{times}";
+        if (itemId === undefined || itemId === null)
+            throw new Error("The parameter 'itemId' must be defined.");
+        url_ = url_.replace("{itemId}", encodeURIComponent("" + itemId));
+        if (times === undefined || times === null)
+            throw new Error("The parameter 'times' must be defined.");
+        url_ = url_.replace("{times}", encodeURIComponent("" + times));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processMultiplyItem(_response);
+        });
+    }
+
+    protected processMultiplyItem(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
     deleteItem(itemId: string, signal?: AbortSignal): Promise<void> {
         let url_ = this.baseUrl + "/Inventory/{itemId}";
         if (itemId === undefined || itemId === null)
@@ -3165,6 +3202,7 @@ export class InventoryItemModel implements IInventoryItemModel {
     quantity!: number;
     unit!: MeasurementUnit;
     level!: number | null;
+    isSide!: boolean;
     ingredient!: IngredientModel | null;
 
     constructor(data?: Partial<IInventoryItemModel>) {
@@ -3188,6 +3226,7 @@ export class InventoryItemModel implements IInventoryItemModel {
             this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : <any>null;
             this.unit = _data["unit"] ? MeasurementUnit.fromJS(_data["unit"], _mappings) : new MeasurementUnit();
             this.level = _data["level"] !== undefined ? _data["level"] : <any>null;
+            this.isSide = _data["isSide"] !== undefined ? _data["isSide"] : <any>null;
             this.ingredient = _data["ingredient"] ? IngredientModel.fromJS(_data["ingredient"], _mappings) : <any>null;
         }
     }
@@ -3205,6 +3244,7 @@ export class InventoryItemModel implements IInventoryItemModel {
         data["quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
         data["unit"] = this.unit ? this.unit.toJSON() : <any>null;
         data["level"] = this.level !== undefined ? this.level : <any>null;
+        data["isSide"] = this.isSide !== undefined ? this.isSide : <any>null;
         data["ingredient"] = this.ingredient ? this.ingredient.toJSON() : <any>null;
         return data;
     }
@@ -3224,6 +3264,7 @@ export interface IInventoryItemModel {
     quantity: number;
     unit: MeasurementUnit;
     level: number | null;
+    isSide: boolean;
     ingredient: IngredientModel | null;
 }
 

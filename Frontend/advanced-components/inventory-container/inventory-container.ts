@@ -10,32 +10,40 @@ export class InventoryContainer extends LitElementBase {
         return renderInventoryContainerStyles();
     }
 
-    @property() public declare target: InventoryTarget;
     @property({ type: Array }) public declare items: InventoryItemModel[];
 
     @state() protected declare draggedItem: InventoryItemModel | undefined;
     @state() protected declare draggedOverLevel: number | undefined;
+    @state() protected declare draggedOverSide: boolean;
+    @state() protected declare target: InventoryTarget;
+
+    connectedCallback(): void {
+        super.connectedCallback();
+        this.target = InventoryTarget.Freezer;
+        window.addEventListener('pointerup', this.cancelDrag.bind(this));
+        window.addEventListener('drop', this.cancelDrag.bind(this));
+    }
 
     override render() {
         return renderInventoryContainer.call(this);
     }
 
-    addItem(level: number) {
-        this.items.push(new InventoryItemModel({ level: level, target: this.target }));
+    addItem(level: number, isSide: boolean) {
+        this.items.push(new InventoryItemModel({ level: level, isSide, target: this.target }));
         this.requestFullUpdate();
     }
 
     startDraggingItem(event: DragEvent, item: InventoryItemModel) {
         this.draggedItem = item;
-        console.log(event.dataTransfer);
-        event.dataTransfer!.setData('text/plain', 'test');
+        event.dataTransfer!.setData('application/plain', 'test');
         event.dataTransfer!.setDragImage((event.currentTarget as HTMLElement).shadowRoot?.firstElementChild!, 0, 0);
     }
 
-    dragOverLevel(e: Event, level: number | undefined) {
+    dragOverLevel(e: Event, level?: number, isSide?: boolean) {
         if (!this.draggedItem) return;
         e.preventDefault();
         this.draggedOverLevel = level;
+        this.draggedOverSide = isSide ?? false;
     }
 
     moveItem() {
@@ -47,9 +55,35 @@ export class InventoryContainer extends LitElementBase {
         this.draggedItem = undefined;
         this.draggedOverLevel = undefined;
 
-        if (draggedOverLevel == draggedItem.level) return;
+        if (draggedOverLevel == draggedItem.level && this.draggedOverSide == draggedItem.isSide) return;
         draggedItem.level = draggedOverLevel;
+        draggedItem.isSide = this.draggedOverSide;
 
         this.dispatchEvent(new CustomEvent('item-changed', { detail: draggedItem, bubbles: true, composed: true }));
+    }
+
+    notifyDraggedItemDeleted() {
+        this.dispatchEvent(new CustomEvent('item-deleted', { detail: this.draggedItem, bubbles: true, composed: true }));
+    }
+
+    cancelDrag() {
+        this.draggedItem = undefined;
+        this.draggedOverLevel = undefined;
+        this.shadowRoot!.querySelector('.delete-button[dragged-over]')?.removeAttribute('dragged-over');
+    }
+
+    notifyDraggedItemDuplicated(times: number) {
+        this.dispatchEvent(
+            new CustomEvent('multiply-item', {
+                detail: { itemId: this.draggedItem?.itemId, times },
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
+    disconnectedCallback(): void {
+        super.disconnectedCallback();
+        window.removeEventListener('pointerup', this.cancelDrag);
     }
 }

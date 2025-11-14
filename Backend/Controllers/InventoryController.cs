@@ -30,6 +30,7 @@ public class InventoryController(DatabaseContext dbContext) : ControllerBase
     public async Task AddItem(InventoryItemModel item)
     {
         item.ItemId = Guid.NewGuid();
+        item.Ingredient = null;
 
         var relatedIngredient =
             await dbContext.Set<IngredientModel>().FirstOrDefaultAsync(x => x.IngredientName == item.IngredientName);
@@ -46,6 +47,32 @@ public class InventoryController(DatabaseContext dbContext) : ControllerBase
         }
 
         dbContext.Inventory.Add(item);
+        await dbContext.SaveChangesAsync();
+    }
+
+    [HttpPost("item/{itemId:guid}/multiply/{times:int}")]
+    public async Task MultiplyItemAsync(Guid itemId, int times)
+    {
+        var template = await dbContext.Inventory.FirstAsync(x => x.ItemId == itemId);
+
+        for (var i = 0; i < times; i++)
+            dbContext.Inventory.Add(new()
+            {
+                ItemId = Guid.NewGuid(),
+                IngredientName = template.IngredientName,
+                Quantity = template.Quantity,
+                Target = template.Target,
+                IsSide = template.IsSide,
+                Level = template.Level,
+                Unit = new()
+                {
+                    Name = template.Unit.Name,
+                    ShortName = template.Unit.ShortName,
+                    Measurement = template.Unit.Measurement,
+                    Multiplier = template.Unit.Multiplier
+                }
+            });
+
         await dbContext.SaveChangesAsync();
     }
 

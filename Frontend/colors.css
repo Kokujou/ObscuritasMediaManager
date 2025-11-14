@@ -5,4 +5,40 @@
     --font-color: #ddd;
 
     --label-color: #883377;
+
+    --metallic-silver: linear-gradient(
+        -72deg,
+        #dedede,
+        #ffffff 16%,
+        #dedede 21%,
+        #ffffff 24%,
+        #898989 30%,
+        #dedede 36%,
+        #ffffff 45%,
+        #ffffff 60%,
+        #dedede 72%,
+        #ffffff 80%,
+        #dedede 84%,
+        #a1a1a1
+    );
+    --metallic-silver-shadow: 2px 2px 1em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9),
+        inset -1px -1px 0 rgba(0, 0, 0, 0.5);
+
+    --metallic-black: linear-gradient(
+        -72deg,
+        #0a0a0a,
+        #1a1a1a 12%,
+        #101010 18%,
+        #2a2a2a 22%,
+        #050505 28%,
+        #1c1c1c 35%,
+        #2e2e2e 45%,
+        #202020 58%,
+        #0d0d0d 70%,
+        #262626 80%,
+        #111111 86%,
+        #1f1f1f
+    );
+    --metallic-black-shadow: 2px 2px 1em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(0, 0, 0, 0.9),
+        inset -1px -1px 0 rgba(255, 255, 255, 0.5);
 }

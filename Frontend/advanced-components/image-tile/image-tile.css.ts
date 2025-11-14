@@ -32,7 +32,7 @@ export function renderWebcomponentTemplateStyles() {
 
         #image-text {
             text-align: center;
-            font-size: 14px;
+            font-size: 20px;
             font-weight: bold;
             text-shadow: 2px 2px 2px black;
         }

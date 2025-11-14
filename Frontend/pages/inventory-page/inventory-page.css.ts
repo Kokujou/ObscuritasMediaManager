@@ -2,13 +2,12 @@ import { css } from 'lit-element';
 
 export function renderInventoryPageStyles() {
     return css`
-        #container-section {
-            justify-content: space-between;
-            align-items: flex-start;
+        #inventory-page {
+            align-items: center;
         }
 
         inventory-container {
-            width: 550px;
+            width: 80%;
         }
 
         .add-button {

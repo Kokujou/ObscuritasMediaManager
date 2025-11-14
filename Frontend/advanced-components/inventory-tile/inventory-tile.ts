@@ -1,4 +1,4 @@
-import { customElement, property } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { InventoryItemModel } from '../../obscuritas-media-manager-backend-client';
 import { renderInventoryTileStyles } from './inventory-tile.css';
@@ -12,7 +12,25 @@ export class InventoryTile extends LitElementBase {
 
     @property({ type: Object }) public declare item: InventoryItemModel;
 
+    @state() protected declare editAmount: boolean;
+
+    get createMode() {
+        return !this.item.itemId;
+    }
+
+    connectedCallback(): void {
+        super.connectedCallback();
+
+        this.addEventListener('dragstart', (e: Event) => {
+            if (!this.item.itemId || this.editAmount) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+            }
+        });
+    }
+
     override render() {
+        this.draggable = !this.createMode && !this.editAmount;
         return renderInventoryTile.call(this);
     }
 
@@ -42,10 +60,15 @@ export class InventoryTile extends LitElementBase {
     }
 
     notifyItemCreated() {
-        this.dispatchEvent(new CustomEvent('item-added', { detail: this.item, bubbles: true, composed: true }));
+        if (this.createMode)
+            this.dispatchEvent(new CustomEvent('item-added', { detail: this.item, bubbles: true, composed: true }));
+        else if (this.editAmount)
+            this.dispatchEvent(new CustomEvent('item-changed', { detail: this.item, bubbles: true, composed: true }));
+        this.editAmount = false;
     }
 
-    notifyItemDeleted() {
-        this.dispatchEvent(new CustomEvent('item-deleted', { detail: this.item, bubbles: true, composed: true }));
+    cancelEdit() {
+        this.editAmount = false;
+        this.dispatchEvent(new CustomEvent('refresh', { bubbles: true, composed: true }));
     }
 }

@@ -28,7 +28,7 @@ export function renderDropDownStyles() {
 
             color: inherit;
             border-bottom: 2px solid lightgray;
-            padding: 10px 0;
+            padding: 5px 0;
         }
 
         :host([disabled]) .dropdown {
