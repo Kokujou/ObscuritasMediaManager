@@ -10,6 +10,7 @@ export function renderInventoryTileStyles() {
         :host {
             display: flex;
             user-select: none;
+            -webkit-user-select: none;
         }
 
         #inventory-tile {

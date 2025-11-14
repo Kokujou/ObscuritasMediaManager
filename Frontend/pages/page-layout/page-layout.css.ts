@@ -36,10 +36,7 @@ export function renderWebcomponentTemplateStyles() {
             position: absolute;
         }
 
-        ${renderHeaderStyles()}
-        ${renderNavigationStyles()}
-
-#layout-content {
+        #layout-content {
             top: var(--header-height);
             left: var(--navigation-width);
             bottom: 0;
@@ -53,6 +50,9 @@ export function renderWebcomponentTemplateStyles() {
             text-decoration: none;
             color: inherit;
         }
+
+        ${renderHeaderStyles()}
+        ${renderNavigationStyles()}
     `;
 }
 
@@ -144,6 +144,7 @@ function renderNavigationStyles() {
             max-height: calc(100% - var(--header-height) - 40px);
 
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         #link-area {

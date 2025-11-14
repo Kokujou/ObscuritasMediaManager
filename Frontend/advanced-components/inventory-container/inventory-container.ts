@@ -22,6 +22,13 @@ export class InventoryContainer extends LitElementBase {
         this.target = InventoryTarget.Freezer;
         window.addEventListener('pointerup', this.cancelDrag.bind(this));
         window.addEventListener('drop', this.cancelDrag.bind(this));
+        this.addEventListener(
+            'touchmove',
+            function (e) {
+                e.stopPropagation();
+            },
+            { passive: false }
+        );
     }
 
     override render() {

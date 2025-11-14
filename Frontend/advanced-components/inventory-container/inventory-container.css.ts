@@ -51,12 +51,10 @@ export function renderInventoryContainerStyles() {
         }
 
         .levels {
-            align-items: stretch;
             gap: 20px;
         }
 
         #side-levels {
-            min-width: 200px;
         }
 
         #main-levels {
@@ -64,10 +62,10 @@ export function renderInventoryContainerStyles() {
         }
 
         .level {
+            width: auto;
             position: relative;
             flex-wrap: wrap;
             align-items: flex-start;
-            width: unset;
 
             min-height: 75px;
             border: 4px solid #fff9;
@@ -99,10 +97,11 @@ export function renderInventoryContainerStyles() {
         }
 
         .level-label {
+            position: absolute;
+            left: -20px;
+            top: -20px;
             width: 40px;
             height: 40px;
-            margin-left: -40px;
-            margin-top: -40px;
 
             display: flex;
             align-items: center;
