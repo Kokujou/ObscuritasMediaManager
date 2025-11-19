@@ -13,7 +13,7 @@ export function renderMusicPlaylistStyles() {
 
             background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
             box-shadow: 0 0 50px var(--secondary-color);
-            border-radius: 20px;
+            border-radius: 15px;
             overflow: hidden;
 
             color: var(--font-color);
@@ -142,7 +142,7 @@ export function renderMusicPlaylistStyles() {
             justify-content: center;
             background-color: var(--primary-color);
             flex: auto;
-            border-radius: 20px;
+            border-radius: 15px;
             margin: 30px;
             margin-bottom: 0;
             min-width: 0;
@@ -200,7 +200,7 @@ export function renderMusicPlaylistStyles() {
         }
 
         tag-label {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--font-color);
             --label-color: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
         }

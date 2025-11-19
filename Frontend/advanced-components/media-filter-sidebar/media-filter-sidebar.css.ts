@@ -3,7 +3,7 @@ import { css } from 'lit';
 export function renderMediaFilterSidebarStyles() {
     return css`
         :host {
-            border-radius: 50px;
+            border-radius: 20px;
 
             background: var(--accent-color-full);
             overflow-y: auto;

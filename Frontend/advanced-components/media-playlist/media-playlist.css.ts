@@ -12,7 +12,7 @@ export function renderMediaPlaylistStyles() {
             display: flex;
             flex-direction: row;
 
-            border-radius: 20px;
+            border-radius: 10px;
             box-sizing: border-box;
             border: 15px solid var(--primary-color);
 

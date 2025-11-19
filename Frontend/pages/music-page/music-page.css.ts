@@ -25,7 +25,7 @@ export function renderMusicPageStyles() {
             justify-content: center;
 
             background-color: var(--accent-color);
-            border-radius: 20px;
+            border-radius: 15px;
         }
 
         #music-filter {
@@ -54,7 +54,7 @@ export function renderMusicPageStyles() {
             flex-wrap: wrap;
             align-items: flex-start;
 
-            border-radius: 20px;
+            border-radius: 15px;
         }
 
         #search-results-container {
@@ -106,7 +106,7 @@ function renderResultOptionsBar() {
         }
 
         #result-options {
-            border-radius: 20px;
+            border-radius: 15px;
             display: flex;
             flex-direction: row;
             background-color: var(--accent-color);

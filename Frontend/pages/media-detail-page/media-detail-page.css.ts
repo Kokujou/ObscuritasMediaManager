@@ -147,7 +147,7 @@ export function renderMediaDetailPageStyles() {
             padding: 10px;
             width: 90px;
             height: 90px;
-            border-radius: 20px;
+            border-radius: 15px;
             cursor: pointer;
             opacity: 0.6;
         }
@@ -176,7 +176,7 @@ export function renderMediaDetailPageStyles() {
         #description-section {
             position: relative;
             background: var(--accent-color);
-            border-radius: 30px;
+            border-radius: 20px;
             padding: 20px 40px;
             flex: auto;
             margin-right: 20px;
@@ -449,7 +449,7 @@ export function renderMediaDetailPageStyles() {
             margin-bottom: 20px;
             padding: 10px 40px;
             align-self: center;
-            border-radius: 20px;
+            border-radius: 15px;
 
             display: flex;
             flex-direction: row;

@@ -74,7 +74,7 @@ export function renderRecipesPageStyles() {
             justify-content: center;
 
             background-color: var(--accent-color);
-            border-radius: 20px;
+            border-radius: 15px;
             overflow: hidden;
         }
 

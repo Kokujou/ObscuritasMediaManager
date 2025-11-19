@@ -150,10 +150,6 @@ export function renderDropDownStyles() {
             flex: auto;
         }
 
-        custom-toggle {
-            margin: 10px 0;
-        }
-
         .option:hover,
         .option.selected {
             cursor: pointer;

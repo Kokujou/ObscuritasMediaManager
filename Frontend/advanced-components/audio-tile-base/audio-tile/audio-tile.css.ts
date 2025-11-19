@@ -68,6 +68,8 @@ export function renderAudioTileStyles() {
             mask-size: 100% 100%;
             mask-repeat: no-repeat;
             transition: all 1s ease-out;
+
+            font-size: 12px;
         }
 
         :host(:hover) #audio-genre-section {

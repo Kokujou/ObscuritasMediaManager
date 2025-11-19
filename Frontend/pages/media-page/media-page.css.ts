@@ -76,7 +76,7 @@ export function renderMediaPageStyles() {
             align-items: center;
             justify-content: center;
             gap: 40px;
-            border-radius: 20px;
+            border-radius: 15px;
             height: 100%;
             padding: 0 30px;
         }

@@ -6,7 +6,7 @@ export function renderTooltipStyles() {
         :host {
             position: fixed;
             padding: 5px 7px;
-            border-radius: 5px;
+            border-radius: 3px;
 
             display: flex;
             z-index: 5000;

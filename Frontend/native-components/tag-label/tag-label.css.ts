@@ -12,7 +12,7 @@ export function renderTagLabelStyles() {
             padding-left: 10px;
             background: var(--label-color);
 
-            border-radius: 40px 999em 999em 40px;
+            border-radius: 20px 500em 500em 20px;
 
             display: flex;
             flex-direction: row;
@@ -36,7 +36,7 @@ export function renderTagLabelStyles() {
         #label-text {
             color: inherit;
             min-width: 30px;
-            padding: 3px;
+            padding: 2px;
             margin-right: 5px;
             font-size: inherit;
         }
@@ -60,7 +60,7 @@ export function renderTagLabelStyles() {
 
         #x-button {
             border-radius: 50%;
-            margin: 5px;
+            margin: 3px;
             margin-left: 0;
             width: 15px;
             height: 15px;
@@ -71,7 +71,7 @@ export function renderTagLabelStyles() {
             justify-content: center;
             align-items: center;
 
-            font-size: 18px;
+            font-size: 12px;
             color: lightgray;
         }
 
@@ -106,7 +106,7 @@ export function renderTagLabelStyles() {
         #autocomplete-list .autocomplete-item {
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding: 5px;
             padding-right: 30px;
             white-space: nowrap;
         }

@@ -6,7 +6,7 @@ export function renderMessageSnackbarStyles() {
             width: 300px;
             position: fixed;
             right: 50px;
-            border-radius: 10px;
+            border-radius: 5px;
             padding: 10px;
 
             display: flex;

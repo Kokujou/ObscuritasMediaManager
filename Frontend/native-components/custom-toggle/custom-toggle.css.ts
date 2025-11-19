@@ -7,7 +7,7 @@ export function renderCustomToggleStyles() {
             position: relative;
             display: block;
             background-color: var(--untoggled-color, #0007);
-            border-radius: 7px;
+            border-radius: 5px;
             --width: 40px;
             --height: 20px;
             height: var(--height);
@@ -30,7 +30,7 @@ export function renderCustomToggleStyles() {
             width: calc(var(--height) - 10px);
             height: calc(var(--height) - 10px);
             margin: 5px;
-            border-radius: 5px;
+            border-radius: 3px;
             transition: all 1s ease;
         }
 

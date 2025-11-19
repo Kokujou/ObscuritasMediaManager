@@ -11,7 +11,7 @@ export function renderRangeSliderStyles() {
             -webkit-appearance: none;
             width: 100%;
             height: 7px;
-            border-radius: 5px;
+            border-radius: 3px;
             background: var(--background-color, #28b2aaaa);
             outline: none;
         }
