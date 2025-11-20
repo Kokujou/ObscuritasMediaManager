@@ -13,7 +13,7 @@ import { PlaylistSelectionDialog } from '../../dialogs/playlist-selection-dialog
 import { changePage } from '../../extensions/url.extension';
 import { ContextMenu } from '../../native-components/context-menu/context-menu';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
-import { MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client';
+import { Mood, MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg';
 import { AudioService } from '../../services/audio-service';
 import { MusicService, PlaylistService } from '../../services/backend.services';
@@ -59,7 +59,12 @@ export class MusicPage extends LitElementBase {
 
         const sortingProperty: (keyof MusicModel)[] = [this.sortingProperty];
         if (this.sortingProperty == 'mood1') sortingProperty.push('mood2');
-        sorted = sorted.orderBy(...sortingProperty.map((property) => (x: MusicModel) => x[property]));
+        sorted = sorted.orderBy(
+            ...sortingProperty.map(
+                (property) => (x: MusicModel) =>
+                    property == 'mood1' || property == 'mood2' ? Object.values(Mood).indexOf(x[property]) : x[property]
+            )
+        );
         if (this.sortingDirection == 'ascending') return sorted;
         return sorted.reverse();
     }
