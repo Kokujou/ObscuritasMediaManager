@@ -15,8 +15,8 @@ import { RecipesPage } from '../recipes-page/recipes-page';
 import { renderImportFoodPageStyles } from './import-food-page.css';
 
 const CacheName = 'food-cache' as const;
-export const FoodCache = new CachingService<FoodModel>(await caches.open(CacheName));
-await FoodCache.initialize();
+export const FoodCache = window.caches ? new CachingService<FoodModel>(await caches.open(CacheName)) : null!;
+if (FoodCache) await FoodCache.initialize();
 
 @customElement('import-food-page')
 export class ImportFoodPage extends LitElementBase {

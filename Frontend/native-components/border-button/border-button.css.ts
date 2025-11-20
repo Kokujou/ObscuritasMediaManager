@@ -9,6 +9,9 @@ export function renderBorderButtonStyles() {
             --primary-color: darkgray;
             --border: 2px solid var(--primary-color);
             color: black;
+
+            cursor: pointer;
+            user-select: none;
         }
 
         :host([disabled]) .border {

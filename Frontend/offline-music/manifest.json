@@ -1,0 +1,18 @@
+{
+    "name": "Offline Music - ObscuritasMediaManager",
+    "short_name": "Offline Music",
+    "start_url": "https://procommutation-nyla-joyously.ngrok-free.dev/ObscuritasMediaManager/offline-music/#",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "../resources/icons/app-icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "../resources/icons/app-icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

@@ -28,7 +28,7 @@ export class Session {
 
     static initialized = false;
     static async initialize() {
-        Session.initialized = false;
+        if (Session.initialized) return;
 
         var promises = [
             MediaService.getAll()
@@ -53,4 +53,3 @@ export class Session {
         Session.initialized = true;
     }
 }
-await Session.initialize();

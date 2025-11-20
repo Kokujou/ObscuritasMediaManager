@@ -64,7 +64,6 @@ export class PageRouting extends LitElementBase {
     async firstUpdated(_changedProperties: Map<any, any>) {
         super.firstUpdated(_changedProperties);
         Session.currentPage.next(getPageName(this.currentPage));
-        document.querySelector('loading-screen')?.remove();
     }
 
     changeHash(newHash: string) {
@@ -78,7 +77,7 @@ export class PageRouting extends LitElementBase {
         if (!this.classList.replace(`current-page-${oldValue}`, `current-page-${newValue}`))
             this.classList.add(`current-page-${newValue}`);
 
-        var newPage = window.customElements.get(newValue + '-page');
+        var newPage = window.customElements.get(newValue + '-page') as Page;
         if (newPage) {
             var pageName = () => PageRouting.currentPageInstance?.tagName.replace('-PAGE', '');
             var isNewPageLoad = !PageRouting.currentPageInstance || newValue.toLowerCase() != pageName()?.toLowerCase();
@@ -88,6 +87,9 @@ export class PageRouting extends LitElementBase {
             }
 
             if (!PageRouting.currentPageInstance) return;
+
+            if (!newPage.anonymous) await Session.initialize();
+            document.querySelector('loading-screen')?.remove();
 
             this.changeHash(newValue);
             var params = queryToObject();

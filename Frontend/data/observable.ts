@@ -1,5 +1,7 @@
 export class Observable<T> {
     currentValue: T;
+    finalized: boolean;
+    resolve?: (item: T) => void;
 
     subscriptions: Subscription[] = [];
 
@@ -33,11 +35,23 @@ export class Observable<T> {
         this.next(this.currentValue);
     }
 
+    finalize() {
+        this.finalized = true;
+        if (this.resolve) this.resolve(this.currentValue);
+    }
+
     current() {
         if (this.currentValue != null && this.currentValue != undefined) return this.currentValue;
 
         const empty = {} as T;
         return empty;
+    }
+
+    toPromise() {
+        return new Promise<T>((resolve) => {
+            if (!this.finalized) this.resolve = resolve;
+            else resolve(this.currentValue);
+        });
     }
 }
 

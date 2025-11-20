@@ -86,7 +86,6 @@ public class Startup
                 await next();
             });
         app.UseRouting();
-        app.UseHttpsRedirection();
         app.UseExceptionHandler(
             a =>
                 a.Run(

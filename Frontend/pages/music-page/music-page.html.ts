@@ -13,6 +13,7 @@ import { MusicPage } from './music-page';
 
 export function renderMusicPage(this: MusicPage) {
     return html`
+        <link-element id="offline-link" href="./offline-music/#">Offline-Version</link-element>
         <page-layout>
             <div id="music-page">
                 <div id="search-panel-container">
@@ -104,7 +105,7 @@ export function renderMusicPage(this: MusicPage) {
                               ${this.paginatedPlaylists.map(
                                   (playlist) =>
                                       html`
-                                          <div class="audio-link-container">
+                                          <div class="audio-link-container" @click="${(e: Event) => e.stopPropagation()}">
                                               ${LinkElement.forPage(
                                                   MusicPlaylistPage,
                                                   { playlistId: playlist.id },
@@ -127,6 +128,7 @@ export function renderMusicPage(this: MusicPage) {
                                               class="audio-link-container"
                                               @pointerdown="${(e: PointerEvent) => this.startSelectionModeTimer(track.hash, e)}"
                                               @pointerup="${(e: PointerEvent) => this.stopSelectionModeTimer(track.hash, e)}"
+                                              @click="${(e: Event) => e.stopPropagation()}"
                                           >
                                               ${this.selectionMode
                                                   ? html`<input

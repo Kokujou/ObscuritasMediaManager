@@ -1,34 +1,11 @@
 import { css } from 'lit';
 
-export function renderMusicPageStyles() {
+export function renderOfflineMusicPageStyles() {
     return css`
-        #offline-link {
-            position: absolute;
-            left: 50px;
-            top: 50px;
-            height: 50px;
-            width: 200px;
-            border-radius: 10px;
-            z-index: 1;
-
-            background: #f0f3;
-            backdrop-filter: blur(5px);
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            font-weight: bold;
-            letter-spacing: 1px;
-            text-shadow: 0 0 5px black, 0 0 5px black;
-        }
-
         #music-page {
             position: absolute;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
+            inset: 20px;
+            max-height: 1000px;
         }
 
         #search-panel-container {
@@ -36,7 +13,7 @@ export function renderMusicPageStyles() {
             top: 0;
             right: 5px;
             width: 300px;
-            bottom: 100px;
+            max-height: calc(100% - 50px);
 
             padding: 0 10px;
 
