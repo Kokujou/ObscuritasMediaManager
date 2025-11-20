@@ -3,15 +3,15 @@
 public enum Mood
 {
     Unset,
-    Happy,
-    Aggressive,
     Sad,
-    Cool,
-    Calm,
-    Romantic,
     Dramatic,
-    Epic,
+    Monotonuous,
+    Calm,
+    Cool,
+    Romantic,
+    Happy,
     Funny,
+    Epic,
     Passionate,
-    Monotonuous
+    Aggressive
 }

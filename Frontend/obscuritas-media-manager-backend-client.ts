@@ -2938,17 +2938,17 @@ export interface IMusicModel {
 
 export enum Mood {
     Unset = "Unset",
-    Happy = "Happy",
-    Aggressive = "Aggressive",
     Sad = "Sad",
-    Cool = "Cool",
-    Calm = "Calm",
-    Romantic = "Romantic",
     Dramatic = "Dramatic",
-    Epic = "Epic",
-    Funny = "Funny",
-    Passionate = "Passionate",
     Monotonuous = "Monotonuous",
+    Calm = "Calm",
+    Cool = "Cool",
+    Romantic = "Romantic",
+    Happy = "Happy",
+    Funny = "Funny",
+    Epic = "Epic",
+    Passionate = "Passionate",
+    Aggressive = "Aggressive",
 }
 
 export enum Language {
