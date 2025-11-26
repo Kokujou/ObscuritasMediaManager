@@ -106,9 +106,9 @@ public class MusicRepository(DatabaseContext context)
         }
     }
 
-    public async Task<IEnumerable<InstrumentModel>> GetInstrumentsAsync()
+    public IQueryable<InstrumentModel> GetInstruments()
     {
-        return await context.Instruments.ToListAsync();
+        return context.Instruments;
     }
 
     public async Task AddInstrumentAsync(InstrumentModel instrument)

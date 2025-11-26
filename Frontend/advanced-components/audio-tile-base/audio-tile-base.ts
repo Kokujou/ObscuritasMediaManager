@@ -1,8 +1,8 @@
 import { customElement, property, state } from 'lit-element/decorators.js';
 import { LitElementBase } from '../../data/lit-element-base';
+import { Observable } from '../../data/observable';
 import { Session } from '../../data/session';
 import { MusicModel } from '../../obscuritas-media-manager-backend-client';
-import { AudioService } from '../../services/audio-service';
 import { renderAudioTileBaseStyles } from './audio-tile-base.css';
 import { renderAudioTileBase } from './audio-tile-base.html';
 
@@ -15,6 +15,7 @@ export class AudioTileBase extends LitElementBase {
     @property({ type: Boolean, reflect: true }) public declare disabled: boolean;
     @property({ type: Boolean, reflect: true }) public declare paused: boolean;
     @property({ type: Object }) public declare track: MusicModel;
+    @property({ type: Object }) public declare visualizationData?: Observable<Float32Array<ArrayBuffer>>;
 
     @state() protected declare hoveredRating: number;
 
@@ -25,13 +26,19 @@ export class AudioTileBase extends LitElementBase {
     constructor() {
         super();
         this.track = new MusicModel();
-        this.subscriptions.push(
-            Session.instruments.subscribe(() => this.requestFullUpdate()),
-            AudioService.visualizationData.subscribe(async () => {
-                if (this.paused || AudioService.paused) return;
-                await this.updateVisualization();
-            })
-        );
+        this.subscriptions.push(Session.instruments.subscribe(() => this.requestFullUpdate()));
+    }
+
+    connectedCallback(): void {
+        super.connectedCallback();
+
+        if (this.visualizationData)
+            this.subscriptions.push(
+                this.visualizationData.subscribe(async () => {
+                    if (this.paused) return;
+                    await this.updateVisualization();
+                })
+            );
     }
 
     override render() {
@@ -47,20 +54,21 @@ export class AudioTileBase extends LitElementBase {
         this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
         const startHeight = Math.floor(this.canvas.height / 2);
 
-        if (!AudioService.visualizationData.current()) return;
+        const currentData = this.visualizationData?.current();
+        if (!currentData) return;
 
         // Zeichnen Sie die Audiodaten
         this.canvasContext.lineWidth = 2;
         this.canvasContext.strokeStyle = 'white';
         this.canvasContext.beginPath();
 
-        const sliceWidth = Math.floor(this.canvas.width - 40.0) / AudioService.visualizationData.current().length;
+        const sliceWidth = Math.floor(this.canvas.width - 40.0) / currentData.length;
         let x = 20;
         this.canvasContext.moveTo(0, startHeight);
         this.canvasContext.lineTo(x, startHeight);
 
-        for (let i = 0; i < AudioService.visualizationData.current().length; i++) {
-            let y = startHeight + AudioService.visualizationData.current()[i] * startHeight;
+        for (let i = 0; i < currentData.length; i++) {
+            let y = startHeight + currentData[i] * startHeight;
             y = Math.floor(y);
             this.canvasContext.lineTo(x, y);
             x += sliceWidth;

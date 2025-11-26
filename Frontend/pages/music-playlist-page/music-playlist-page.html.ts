@@ -71,6 +71,7 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                     <div id="audio-tile-container">
                         <audio-tile-base
                             ?disabled="${this.updatedTrack.complete}"
+                            .visualizationData="${AudioService.visualizationData}"
                             .track="${new MusicModel(this.updatedTrack)}"
                             ?paused="${AudioService.paused || AudioService.currentTrackPath != this.updatedTrack.path}"
                             @imageClicked="${() => this.toggleCurrentTrack()}"

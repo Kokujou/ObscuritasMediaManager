@@ -2,10 +2,24 @@ import { Observable } from '../data/observable';
 
 declare global {
     interface IDBDatabase {
+        add<T>(storeName: string, item: T, key: any): Promise<void>;
         import<T>(storeName: string, data: T[], keySelector: (item: T) => any): Observable<any>;
         readStore<T>(storeName: string): Promise<T[]>;
+        clearStore<T>(storeName: string): Promise<void>;
+        countStore(storeName: string): Promise<number>;
     }
 }
+
+IDBDatabase.prototype.add = function <T>(this: IDBDatabase, storeName: string, item: T, key: any) {
+    return new Promise<void>((resolve, reject) => {
+        const transaction = this.transaction(storeName, 'readwrite');
+        transaction.objectStore(storeName).add(item, key);
+        transaction.commit();
+        transaction.oncomplete = () => resolve();
+        transaction.onabort = () => reject('the transaction was aborted');
+        transaction.onerror = () => reject(transaction.error);
+    });
+};
 
 IDBDatabase.prototype.import = function <T>(this: IDBDatabase, storeName: string, data: T[], keySelector: (item: T) => any) {
     const observable = new Observable(null);
@@ -33,6 +47,22 @@ IDBDatabase.prototype.readStore = function <T>(this: IDBDatabase, storeName: str
     return new Promise<T[]>((resolve, reject) => {
         const request = this.transaction(storeName, 'readonly').objectStore(storeName).getAll();
         request.onsuccess = () => resolve(request.result as T[]);
+        request.onerror = () => reject(request.error);
+    });
+};
+
+IDBDatabase.prototype.clearStore = function <T>(this: IDBDatabase, storeName: string) {
+    return new Promise<void>((resolve, reject) => {
+        const request = this.transaction(storeName, 'readwrite').objectStore(storeName).clear();
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+    });
+};
+
+IDBDatabase.prototype.countStore = function (this: IDBDatabase, storeName: string) {
+    return new Promise<number>((resolve, reject) => {
+        const request = this.transaction(storeName, 'readonly').objectStore(storeName).count();
+        request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
     });
 };

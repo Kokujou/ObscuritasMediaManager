@@ -1,8 +1,8 @@
 ﻿using MediaInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 using System.Diagnostics;
+using Xabe.FFmpeg;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
 
@@ -50,19 +50,20 @@ public class FileController : ControllerBase
         if (format == "MPEG-4" && info.Get(StreamKind.General, 0, "IsStreamable") != "Yes")
             highCompatibility = true;
 
-        var test = new BufferedStream(System.IO.File.Open(audioPath, FileMode.Open, FileAccess.Read, FileShare.Read));
+        var detailedInfo = FFmpeg.GetMediaInfo(audioPath).Result;
+        var audioStream = detailedInfo.AudioStreams.FirstOrDefault();
+        var isMP3 = audioStream != null && audioStream.Codec.Equals("mp3", StringComparison.OrdinalIgnoreCase);
 
-        if (!highCompatibility)
+        if (!highCompatibility || isMP3)
         {
             var stream =
                 new BufferedStream(System.IO.File.Open(audioPath, FileMode.Open, FileAccess.Read, FileShare.Read));
-            stream.DrainAsync(CancellationToken.None).Wait();
-            return File(stream, "audio/ogg", true);
+            return File(stream, "audio/mpeg", true);
         }
 
         var ffmpeg = new Process();
         var startInfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
-            $"-i \"{path.FullName}\" -c:a libmp3lame -q:a 2 -filter:a loudnorm -f mp3 pipe:1")
+            $"-i \"{path.FullName}\" -c:a libmp3lame -q:a 2 -filter:a loudnorm=I=-14:LRA=7:TP=-2 -f mp3 -b:a 256k -threads 0 pipe:1")
         {
             RedirectStandardError = true,
             RedirectStandardOutput = true,
@@ -77,7 +78,7 @@ public class FileController : ControllerBase
         ffmpeg.Start();
         ffmpeg.BeginErrorReadLine();
 
-        return File(new BufferedStream(ffmpeg.StandardOutput.BaseStream), "audio/ogg");
+        return File(ffmpeg.StandardOutput.BaseStream, "audio/mpeg");
     }
 
     [HttpPost("validate-files")]

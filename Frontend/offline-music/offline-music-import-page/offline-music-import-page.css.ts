@@ -1,4 +1,6 @@
 import { css } from 'lit';
+import { renderMaskImage } from '../../extensions/style.extensions';
+import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg';
 
 export function renderOfflineMusicImportPageStyles() {
     return css`
@@ -27,12 +29,14 @@ export function renderOfflineMusicImportPageStyles() {
             font-weight: bold;
         }
 
-        #description {
+        #description,
+        #offline-mode-text {
             max-width: 400px;
         }
 
         #import-states {
             gap: 10px;
+            width: 100%;
         }
 
         .import-status {
@@ -52,8 +56,30 @@ export function renderOfflineMusicImportPageStyles() {
             pointer-events: none;
         }
 
+        .delete-action {
+            width: 30px;
+            height: 30px;
+
+            background: white;
+
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+
+            ${renderMaskImage(trashIcon())};
+        }
+
+        #offline-mode-text {
+            color: var(--warning-color);
+        }
+
         #submit-button {
             align-self: center;
+        }
+
+        #actions {
+            gap: 20px;
+            justify-content: center;
         }
     `;
 }

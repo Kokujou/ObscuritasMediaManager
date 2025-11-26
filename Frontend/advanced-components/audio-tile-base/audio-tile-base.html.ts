@@ -1,6 +1,5 @@
 import { html } from 'lit';
 import { Icons } from '../../resources/inline-icons/icon-registry';
-import { AudioService } from '../../services/audio-service';
 import { AudioTileBase } from './audio-tile-base';
 
 export function renderAudioTileBase(this: AudioTileBase) {
@@ -16,10 +15,10 @@ export function renderAudioTileBase(this: AudioTileBase) {
             <div
                 id="audio-image"
                 icon="${this.paused ? Icons.Play : Icons.Pause}"
-                ?invisible="${!!AudioService.visualizationData.current() || AudioService.currentTrackPath != this.track.path}"
+                ?invisible="${!!this.visualizationData?.current() && !this.paused}"
                 @click="${() => this.dispatchEvent(new CustomEvent('imageClicked', { composed: true, bubbles: true }))}"
             ></div>
-            <canvas id="audio-visualization"></canvas>
+            <canvas id="audio-visualization" ?invisible="${!this.visualizationData?.current()}"></canvas>
             <div
                 id="language-icon"
                 language="${this.track.language}"

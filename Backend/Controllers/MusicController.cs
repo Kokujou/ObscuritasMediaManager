@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.Controllers.Responses;
@@ -18,10 +19,20 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class MusicController(MusicRepository repository, IOptions<JsonOptions> jsonOptions, LyricsService lyricsService)
+public class MusicController(MusicRepository repository, PlaylistRepository playlistRepository, IOptions<JsonOptions> jsonOptions, LyricsService lyricsService)
     : ControllerBase
 {
     private readonly JsonSerializerOptions _jsonOptions = jsonOptions.Value.JsonSerializerOptions;
+
+    [HttpGet("overview")]
+    public async Task<MusicOverviewResponse> GetOverviewAsync()
+    {
+        return new() {
+            Tracks = await repository.GetAll().CountAsync(),
+            Playlists = await  playlistRepository.GetAll().CountAsync(),
+            Instruments =await repository.GetInstruments().CountAsync()
+        };
+    }
 
     [HttpGet("default")]
     public MusicModel GetDefault()
@@ -98,7 +109,7 @@ public class MusicController(MusicRepository repository, IOptions<JsonOptions> j
     [HttpGet("instruments")]
     public async Task<IEnumerable<InstrumentModel>> GetInstruments()
     {
-        return await repository.GetInstrumentsAsync();
+        return await repository.GetInstruments().ToListAsync();
     }
 
     [HttpPut("instrument/{name}/type/{type}")]

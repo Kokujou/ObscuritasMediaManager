@@ -1,10 +1,8 @@
 import { html } from 'lit';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
 import { SortingProperties } from '../../data/music-sorting-properties';
-import { Session } from '../../data/session';
 import { SortingDirections } from '../../data/sorting-directions';
 import { Icons } from '../../resources/inline-icons/icon-registry';
-import { AudioService } from '../../services/audio-service';
 import { ClipboardService } from '../../services/clipboard.service';
 import { OfflineMusicPage } from './offline-music-page';
 
@@ -24,9 +22,7 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                     ) => this.updateSorting(e.detail.property, e.detail.direction)}"
                     id="music-filter"
                 ></music-filter>
-                <div id="result-count-label">
-                    ${this.filteredTracks.length} von ${Session.tracks.current().length} Musik-Tracks
-                </div>
+                <div id="result-count-label">${this.filteredTracks.length} von ${this.cachedTracks.length} Musik-Tracks</div>
             </div>
             <div id="result-options-container" @pointerdown="${(e: Event) => e.stopPropagation()}">
                 <div id="result-options">
@@ -39,6 +35,22 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                             tooltip="Ausgewählte Tracks abspielen"
                             @click="${() => this.playPlaylist(this.selectionMode ? this.selectedTracks : this.filteredTracks)}"
                         ></a>
+                    </div>
+
+                    <div class="option-section">
+                        <range-slider
+                            @valueChanged="${(e: CustomEvent<{ value: string }>) =>
+                                this.changeVolume(Number.parseInt(e.detail.value) / 100)}"
+                            step="1"
+                            min="0"
+                            max="100"
+                            .value="${`${this.audioElement.volume * 100}`}"
+                        >
+                        </range-slider>
+                    </div>
+
+                    <div class="option-section" id="playlist-section">
+                        <a id="sync" icon="${Icons.Globus}" tooltip="Synchronisieren" @click="${() => this.showImportPage()}"></a>
                     </div>
                 </div>
             </div>
@@ -84,8 +96,10 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                                         : ''}
                                     <audio-tile
                                         .track="${track}"
-                                        ?paused="${AudioService.paused || AudioService.currentTrackPath != track.path}"
-                                        @musicToggled="${() => this.playPlaylist([track])}"
+                                        .visualizationData="${this.visualizationData}"
+                                        ?paused="${this.audioElement.paused ||
+                                        this.audioElement.src != this.playedTracks[track.hash]}"
+                                        @musicToggled="${() => this.toggleTrack(track)}"
                                         @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
                                     ></audio-tile>
                                 </div>

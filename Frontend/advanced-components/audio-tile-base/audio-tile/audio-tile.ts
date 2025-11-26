@@ -1,5 +1,6 @@
 import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../../data/lit-element-base';
+import { Observable } from '../../../data/observable';
 import { ContextMenu, ContextMenuItem } from '../../../native-components/context-menu/context-menu';
 import { MusicModel } from '../../../obscuritas-media-manager-backend-client';
 import { renderAudioTileStyles } from './audio-tile.css';
@@ -13,6 +14,7 @@ export class AudioTile extends LitElementBase {
 
     @property({ type: Object }) public declare track: MusicModel;
     @property({ type: Boolean, reflect: true }) public declare paused: boolean;
+    @property({ type: Object }) public declare visualizationData?: Observable<Float32Array<ArrayBuffer>>;
 
     constructor() {
         super();

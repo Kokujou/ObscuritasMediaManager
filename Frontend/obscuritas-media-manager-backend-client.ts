@@ -1094,6 +1094,42 @@ export class MusicClient {
         this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
+    getOverview(signal?: AbortSignal): Promise<MusicOverviewResponse> {
+        let url_ = this.baseUrl + "/api/Music/overview";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processGetOverview(_response);
+        });
+    }
+
+    protected processGetOverview(response: Response): Promise<MusicOverviewResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = MusicOverviewResponse.fromJS(resultData200, _mappings);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<MusicOverviewResponse>(null as any);
+    }
+
     getDefault(signal?: AbortSignal): Promise<MusicModel> {
         let url_ = this.baseUrl + "/api/Music/default";
         url_ = url_.replace(/[?&]$/, "");
@@ -3787,6 +3823,56 @@ export class UpdateRequestOfObject implements IUpdateRequestOfObject {
 export interface IUpdateRequestOfObject {
     oldModel: any | null;
     newModel: any | null;
+}
+
+export class MusicOverviewResponse implements IMusicOverviewResponse {
+    tracks!: number;
+    playlists!: number;
+    instruments!: number;
+
+    constructor(data?: Partial<IMusicOverviewResponse>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.tracks = _data["tracks"] !== undefined ? _data["tracks"] : <any>null;
+            this.playlists = _data["playlists"] !== undefined ? _data["playlists"] : <any>null;
+            this.instruments = _data["instruments"] !== undefined ? _data["instruments"] : <any>null;
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): MusicOverviewResponse  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<MusicOverviewResponse>(data, _mappings, MusicOverviewResponse)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tracks"] = this.tracks !== undefined ? this.tracks : <any>null;
+        data["playlists"] = this.playlists !== undefined ? this.playlists : <any>null;
+        data["instruments"] = this.instruments !== undefined ? this.instruments : <any>null;
+        return data;
+    }
+
+    clone(): MusicOverviewResponse {
+        const json = this.toJSON();
+        let result = new MusicOverviewResponse();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IMusicOverviewResponse {
+    tracks: number;
+    playlists: number;
+    instruments: number;
 }
 
 export class KeyValuePairOfStringAndModelCreationState implements IKeyValuePairOfStringAndModelCreationState {
