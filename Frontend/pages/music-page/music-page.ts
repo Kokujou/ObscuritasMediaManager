@@ -1,4 +1,4 @@
-import { customElement, state } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
 import { PaginatedScrolling } from '../../advanced-components/paginated-scrolling/paginated-scrolling';
 import { LitElementBase } from '../../data/lit-element-base';
@@ -17,6 +17,7 @@ import { Mood, MusicModel, PlaylistModel } from '../../obscuritas-media-manager-
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg';
 import { AudioService } from '../../services/audio-service';
 import { MusicService, PlaylistService } from '../../services/backend.services';
+import { LocalPlaylistService } from '../../services/local-playlist.service';
 import { MaintenanceService } from '../../services/maintenance.service';
 import { MediaImportService } from '../../services/media-import.service';
 import { MusicFilterService } from '../../services/music-filter.service';
@@ -69,6 +70,8 @@ export class MusicPage extends LitElementBase {
         return sorted.reverse();
     }
 
+    @property({ type: Boolean, reflect: true }) protected declare selectionMode: boolean;
+
     @state() protected declare playlists: PlaylistModel[];
     @state() protected declare currentTrack: MusicModel;
     @state() protected declare filter: MusicFilterOptions;
@@ -77,11 +80,8 @@ export class MusicPage extends LitElementBase {
     @state() protected declare sortingDirection: keyof typeof SortingDirections;
     @state() protected declare selectionModeTimer: NodeJS.Timeout | null;
     @state() protected declare currentPage: number;
-    @state() protected declare selectionMode: boolean;
+    @state() protected declare selectionModeSetByHash: string | null;
     @state() protected declare loading: boolean;
-
-    selectionModeUnset = false;
-    selectionModeSet = false;
 
     constructor() {
         super();
@@ -121,11 +121,10 @@ export class MusicPage extends LitElementBase {
             })
         );
 
-        this.addEventListener('click', () => {
+        window.addEventListener('pointerdown', () => {
             if (!this.selectionMode || ContextMenu.instance) return;
             this.selectionMode = false;
             this.selectedHashes = [];
-            this.requestFullUpdate();
         });
     }
 
@@ -170,7 +169,7 @@ export class MusicPage extends LitElementBase {
     }
 
     async toggleMusic(track: MusicModel) {
-        if (this.selectionMode || this.selectionModeUnset) return;
+        if (this.selectionMode) return;
         await PlayMusicDialog.instance?.close();
 
         if (this.currentTrack.hash != track.hash) {
@@ -218,35 +217,34 @@ export class MusicPage extends LitElementBase {
     }
 
     startSelectionModeTimer(audioHash: string, event: PointerEvent) {
+        event.stopPropagation();
+
         if (event.button != 0) return;
-        if (this.selectionModeUnset) this.selectionModeUnset = false;
         if (this.selectionMode) return;
+        this.selectionModeSetByHash = audioHash;
         this.selectionModeTimer = setTimeout(() => {
             this.selectionModeTimer = null;
             this.selectionMode = true;
-            this.selectionModeSet = true;
-            this.selectedHashes.push(audioHash);
             this.requestFullUpdate();
-        }, 500);
+        }, 1000);
         this.requestFullUpdate();
     }
 
-    stopSelectionModeTimer(hash: string, event: PointerEvent) {
-        if (event.button != 0) return;
-        if (this.selectionMode && !this.selectionModeSet) this.toggleTrackSelection(null, hash);
-        this.selectionModeSet = false;
+    stopSelectionModeTimer() {
         if (!this.selectionModeTimer) return;
+        this.selectionModeSetByHash = null;
         clearTimeout(this.selectionModeTimer);
         this.requestFullUpdate();
     }
 
-    toggleTrackSelection(input: HTMLInputElement | null, hash: string) {
-        if ((!input || input.checked) && !this.selectedHashes.includes(hash)) this.selectedHashes.push(hash);
-        else if (!input || !input.checked) this.selectedHashes = this.selectedHashes.filter((x) => x != hash);
+    toggleTrackSelection(hash: string) {
+        if (!this.selectedHashes.includes(hash)) this.selectedHashes.push(hash);
+        else this.selectedHashes = this.selectedHashes.filter((x) => x != hash);
         if (this.selectedHashes.length == 0) {
             this.selectionMode = false;
-            this.selectionModeUnset = true;
+            this.selectedHashes = [];
         }
+
         this.requestFullUpdate();
     }
 
@@ -276,19 +274,10 @@ export class MusicPage extends LitElementBase {
     }
 
     async exportPlaylist(mode: 'local' | 'global', playlist: PlaylistModel) {
-        var m3uString = '#EXTM3U\r\n';
-        m3uString += playlist.tracks
-            .map((track) => `#EXTINF:-1, ${track.displayName.replaceAll('\n', '')}\r\n${this.getTrackPath(mode, track)}`)
-            .join('\r\n');
-
-        var blob = new Blob([m3uString], { type: 'audio/x-mpegurl' });
-        var url = URL.createObjectURL(blob);
-
-        var link = document.createElement('a');
-        link.href = url;
-        link.download = `${playlist.name}.m3u`;
-        document.body.appendChild(link);
-        link.click();
+        LocalPlaylistService.exportPlaylist(
+            playlist.name,
+            playlist.tracks.map((track) => ({ displayName: track.displayName, path: this.getTrackPath(mode, track) }))
+        );
     }
 
     async removePlaylist(playlist: PlaylistModel) {

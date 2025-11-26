@@ -12,6 +12,7 @@ export function renderBorderButtonStyles() {
 
             cursor: pointer;
             user-select: none;
+            -webkit-user-select: none;
         }
 
         :host([disabled]) .border {

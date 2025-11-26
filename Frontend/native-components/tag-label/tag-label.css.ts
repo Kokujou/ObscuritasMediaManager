@@ -5,6 +5,7 @@ export function renderTagLabelStyles() {
         :host {
             display: inline-block;
             user-select: none;
+            -webkit-user-select: none;
         }
 
         #label-container {

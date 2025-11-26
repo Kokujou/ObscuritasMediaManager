@@ -1,4 +1,4 @@
-import { customElement, state } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MusicSortingProperties, SortingProperties } from '../../data/music-sorting-properties';
@@ -8,6 +8,7 @@ import { InstrumentModel, Mood, MusicModel, PlaylistModel } from '../../obscurit
 import { IndexedDbService } from '../../services/indexed-db.service';
 import { MusicFilterService } from '../../services/music-filter.service';
 import { renderOfflineMusicPageStyles } from './offline-music-page.css';
+import { renderOfflineMusicPagePortraitStyles } from './offline-music-page.css.portrait';
 import { renderOfflineMusicPage } from './offline-music-page.html';
 
 @customElement('offline-music-page')
@@ -26,8 +27,10 @@ export class OfflineMusicPage extends LitElementBase {
     public static isPage = true as const;
 
     static override get styles() {
-        return renderOfflineMusicPageStyles();
+        return [renderOfflineMusicPageStyles(), renderOfflineMusicPagePortraitStyles()];
     }
+
+    @property({ type: Boolean, reflect: true }) protected declare selectionMode: boolean;
 
     @state() public declare dataImported: boolean;
     @state() protected declare filter: MusicFilterOptions;
@@ -35,15 +38,15 @@ export class OfflineMusicPage extends LitElementBase {
     @state() protected declare sortingDirection: keyof typeof SortingDirections;
     @state() protected declare currentPage: number;
 
-    @state() protected declare selectedHashes: string[];
+    @state() protected declare selectedTracks: MusicModel[];
     @state() protected declare selectionModeTimer: NodeJS.Timeout | null;
-    @state() protected declare selectionModeSet: boolean;
-    @state() protected declare selectionModeUnset: boolean;
-    @state() protected declare selectionMode: boolean;
+    @state() protected declare selectionModeSetByHash: string | null;
 
     @state() protected declare music: MusicModel[];
     @state() protected declare playlists: PlaylistModel[];
     @state() protected declare instruments: InstrumentModel[];
+
+    @state() protected declare sidebarFlipped: boolean;
 
     protected declare database: IDBDatabase | null;
 
@@ -93,7 +96,7 @@ export class OfflineMusicPage extends LitElementBase {
         this.sortingProperty = 'unset';
         this.sortingDirection = 'ascending';
         this.currentPage = 1;
-        this.selectedHashes = [];
+        this.selectedTracks = [];
 
         this.music = [];
         this.playlists = [];
@@ -112,6 +115,12 @@ export class OfflineMusicPage extends LitElementBase {
 
     async connectedCallback() {
         super.connectedCallback();
+
+        setTimeout(() => {
+            const video = this.shadowRoot?.querySelector('video');
+            if (video) alert(JSON.stringify(video.readyState));
+        }, 3000);
+
         this.database = await IndexedDbService.openDatabase(OfflineMusicPage.DbName, OfflineMusicPage.DbVersion);
         if (!this.database || !this.databaseConsistent) {
             document.body.appendChild(document.createElement('offline-music-import-page'));
@@ -131,11 +140,10 @@ export class OfflineMusicPage extends LitElementBase {
 
         document.body.querySelector('loading-screen')?.remove();
 
-        this.addEventListener('click', () => {
+        window.addEventListener('pointerdown', () => {
             if (!this.selectionMode || ContextMenu.instance) return;
             this.selectionMode = false;
-            this.selectedHashes = [];
-            this.requestFullUpdate();
+            this.selectedTracks = [];
         });
     }
 
@@ -149,35 +157,34 @@ export class OfflineMusicPage extends LitElementBase {
     }
 
     startSelectionModeTimer(audioHash: string, event: PointerEvent) {
+        event.stopPropagation();
+
         if (event.button != 0) return;
-        if (this.selectionModeUnset) this.selectionModeUnset = false;
         if (this.selectionMode) return;
+        this.selectionModeSetByHash = audioHash;
         this.selectionModeTimer = setTimeout(() => {
             this.selectionModeTimer = null;
             this.selectionMode = true;
-            this.selectionModeSet = true;
-            this.selectedHashes.push(audioHash);
             this.requestFullUpdate();
-        }, 500);
+        }, 1000);
         this.requestFullUpdate();
     }
 
-    stopSelectionModeTimer(hash: string, event: PointerEvent) {
-        if (event.button != 0) return;
-        if (this.selectionMode && !this.selectionModeSet) this.toggleTrackSelection(null, hash);
-        this.selectionModeSet = false;
+    stopSelectionModeTimer() {
         if (!this.selectionModeTimer) return;
+        this.selectionModeSetByHash = null;
         clearTimeout(this.selectionModeTimer);
         this.requestFullUpdate();
     }
 
-    toggleTrackSelection(input: HTMLInputElement | null, hash: string) {
-        if ((!input || input.checked) && !this.selectedHashes.includes(hash)) this.selectedHashes.push(hash);
-        else if (!input || !input.checked) this.selectedHashes = this.selectedHashes.filter((x) => x != hash);
-        if (this.selectedHashes.length == 0) {
+    toggleTrackSelection(track: MusicModel) {
+        if (!this.selectedTracks.includes(track)) this.selectedTracks.push(track);
+        else this.selectedTracks = this.selectedTracks.filter((x) => x != track);
+        if (this.selectedTracks.length == 0) {
             this.selectionMode = false;
-            this.selectionModeUnset = true;
+            this.selectedTracks = [];
         }
+
         this.requestFullUpdate();
     }
 
@@ -195,6 +202,10 @@ export class OfflineMusicPage extends LitElementBase {
             JSON.stringify({ property: this.sortingProperty, direction: this.sortingDirection })
         );
         this.requestFullUpdate();
+    }
+
+    async playPlaylist(tracks: MusicModel[]) {
+        //fuck everything and use caching service :()
     }
 
     disconnectedCallback(): void {

@@ -2,6 +2,31 @@ import { css } from 'lit';
 
 export function renderOfflineMusicPageStyles() {
     return css`
+        #online-link {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            height: 50px;
+            width: 200px;
+            border-radius: 10px;
+            z-index: 1;
+
+            background: #f0f3;
+            backdrop-filter: blur(5px);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px black, 0 0 5px black;
+
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
         #music-page {
             position: absolute;
             inset: 20px;
@@ -12,6 +37,7 @@ export function renderOfflineMusicPageStyles() {
             position: absolute;
             top: 0;
             right: 5px;
+            z-index: 2;
             width: 300px;
             max-height: calc(100% - 50px);
 
@@ -23,7 +49,12 @@ export function renderOfflineMusicPageStyles() {
             justify-content: center;
 
             background-color: var(--accent-color);
+            backdrop-filter: blur(10px);
             border-radius: 15px;
+        }
+
+        #draw-sidebar-icon {
+            display: none;
         }
 
         #music-filter {
@@ -85,6 +116,10 @@ export function renderOfflineMusicPageStyles() {
             min-height: 200px;
             --audio-tile-width: 200px;
             --audio-tile-min-height: 200px;
+        }
+
+        :host([selectionMode]) audio-tile {
+            pointer-events: none;
         }
     `;
 }

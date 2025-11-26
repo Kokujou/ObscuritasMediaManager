@@ -18,7 +18,7 @@ export class MessageSnackbar extends LitElementBase {
         var snackbar = new MessageSnackbar();
         snackbar.message = message;
         snackbar.messageType = messageType;
-        PageRouting.instance.shadowRoot!.appendChild(snackbar);
+        PageRouting.container.appendChild(snackbar);
         snackbar.requestFullUpdate();
         MessageSnackbar.recalculateHeights();
 
@@ -28,7 +28,7 @@ export class MessageSnackbar extends LitElementBase {
     }
 
     static recalculateHeights() {
-        var snackbars = PageRouting.instance.shadowRoot!.querySelectorAll('message-snackbar') as NodeListOf<MessageSnackbar>;
+        var snackbars = PageRouting.container!.querySelectorAll('message-snackbar') as NodeListOf<MessageSnackbar>;
 
         var previous: MessageSnackbar | null = null;
         for (var snackbar of snackbars) {

@@ -98,6 +98,7 @@ export function renderMusicPage(this: MusicPage) {
                     id="search-results-container"
                     scrollTopThreshold="50"
                     @scrollBottom="${() => this.loadNext()}"
+                    @dragstart="${(e: Event) => e.preventDefault()}"
                 >
                     ${this.loading
                         ? html`<partial-loading></partial-loading>`
@@ -127,16 +128,22 @@ export function renderMusicPage(this: MusicPage) {
                                           <div
                                               class="audio-link-container"
                                               @pointerdown="${(e: PointerEvent) => this.startSelectionModeTimer(track.hash, e)}"
-                                              @pointerup="${(e: PointerEvent) => this.stopSelectionModeTimer(track.hash, e)}"
-                                              @click="${(e: Event) => e.stopPropagation()}"
+                                              @pointerup="${(e: PointerEvent) => this.stopSelectionModeTimer()}"
+                                              @pointerover="${(e: PointerEvent) =>
+                                                  this.selectionModeSetByHash != track.hash
+                                                      ? this.stopSelectionModeTimer()
+                                                      : null}"
+                                              @click="${(e: Event) => {
+                                                  e.stopPropagation();
+                                                  this.toggleTrackSelection(track.hash);
+                                              }}"
                                           >
                                               ${this.selectionMode
                                                   ? html`<input
                                                         type="checkbox"
                                                         class="audio-select"
+                                                        readonly
                                                         ?checked="${this.selectedHashes.includes(track.hash)}"
-                                                        @change="${(e: Event) =>
-                                                            this.toggleTrackSelection(e.target as HTMLInputElement, track.hash)}"
                                                     />`
                                                   : ''}
                                               ${LinkElement.forPage(

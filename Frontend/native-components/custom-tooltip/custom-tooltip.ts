@@ -31,7 +31,7 @@ export class CustomTooltip extends LitElementBase {
         tooltip.anchor = anchor;
 
         CustomTooltip.currentInstance = tooltip;
-        PageRouting.instance.shadowRoot!.appendChild(CustomTooltip.currentInstance);
+        PageRouting.container.appendChild(CustomTooltip.currentInstance);
 
         if (DialogBase.instantiated > 0) tooltip.setAttribute('scope', 'dialog');
         else tooltip.setAttribute('scope', 'default');

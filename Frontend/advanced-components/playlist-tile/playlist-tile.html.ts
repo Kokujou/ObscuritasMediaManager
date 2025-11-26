@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { renderMaskImage } from '../../extensions/style.extensions';
 import { playlistIcon } from '../../resources/inline-icons/playlist-icons/playlist-icon.svg';
 import { PlaylistTile } from './playlist-tile';
@@ -40,8 +40,8 @@ export function renderPlaylistTile(this: PlaylistTile) {
                         y="50%"
                         dominant-baseline="middle"
                         text-anchor="middle"
-                        textLength="${(this.playlist.author?.length ?? 0) > 20 ? '200' : 'none'}"
-                        lengthAdjust="${(this.playlist.author?.length ?? 0) > 20 ? 'spacingAndGlyphs' : 'none'}"
+                        textLength="${(this.playlist.author?.length ?? 0) > 20 ? '200' : nothing}"
+                        lengthAdjust="${(this.playlist.author?.length ?? 0) > 20 ? 'spacingAndGlyphs' : nothing}"
                     >
                         ${this.playlist.author}
                     </text>

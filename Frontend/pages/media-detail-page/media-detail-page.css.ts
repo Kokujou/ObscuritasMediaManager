@@ -324,6 +324,7 @@ export function renderMediaDetailPageStyles() {
 
         input[disabled] {
             user-select: none;
+            -webkit-user-select: none;
             border: none;
         }
 

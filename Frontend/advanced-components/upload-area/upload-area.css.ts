@@ -77,6 +77,7 @@ export function renderUploadAreaStyles() {
             text-align: center;
             font-size: 18px;
             user-select: none;
+            -webkit-user-select: none;
         }
 
         #upload-description #icon-section {
@@ -100,6 +101,7 @@ export function renderUploadAreaStyles() {
         #image-container > * {
             transition: opacity ease 1s;
             user-select: none;
+            -webkit-user-select: none;
             caret-color: transparent;
         }
     `;

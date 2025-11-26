@@ -10,6 +10,24 @@ import { MediaService, MusicService, PlaylistService } from './backend.services'
 import { ClientInteropService } from './client-interop-service';
 
 export class MediaImportService {
+    static findCommonPrefix(paths: string[]) {
+        if (!paths || paths.length === 0) return '';
+
+        const splitPaths = paths.map((p) => p.split('\\'));
+        const prefix = [];
+
+        for (let i = 0; ; i++) {
+            const ref = splitPaths[0][i];
+            if (!ref) break;
+
+            for (const sp of splitPaths) if (sp[i] !== ref) return prefix.join('\\');
+
+            prefix.push(ref);
+        }
+
+        return prefix.join('/');
+    }
+
     static async importAudioFiles() {
         const filePaths = await ClientInteropService.executeQuery<string[]>({
             query: InteropQuery.RequestFolderContent,

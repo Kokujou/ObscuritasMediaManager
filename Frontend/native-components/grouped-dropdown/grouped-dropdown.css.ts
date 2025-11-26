@@ -16,6 +16,7 @@ export function renderGroupedDropdownStyles() {
         .dropdown {
             position: relative;
             user-select: none;
+            -webkit-user-select: none;
 
             display: flex;
             flex-direction: row;
@@ -44,6 +45,7 @@ export function renderGroupedDropdownStyles() {
         .dropdown.disabled {
             pointer-events: none;
             user-select: none;
+            -webkit-user-select: none;
 
             color: gray;
         }

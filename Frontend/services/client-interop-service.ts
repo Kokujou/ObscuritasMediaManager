@@ -71,7 +71,7 @@ export class ClientInteropService {
         this.socket = await this.#tryConnect();
         this.onConnected.next(null);
         this.failCounter.next(0);
-        while (!PageRouting.instance) await waitForSeconds(1);
+        while (!PageRouting.container) await waitForSeconds(1);
         MessageSnackbar.popup('Websocket Verbindung zum Client Interop erfolgreich', 'success');
 
         this.socket.onmessage = async (e: MessageEvent) => {

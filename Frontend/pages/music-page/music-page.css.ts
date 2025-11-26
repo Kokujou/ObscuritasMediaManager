@@ -109,6 +109,10 @@ export function renderMusicPageStyles() {
             --audio-tile-width: 200px;
             --audio-tile-min-height: 200px;
         }
+
+        :host([selectionMode]) audio-tile {
+            pointer-events: none;
+        }
     `;
 }
 

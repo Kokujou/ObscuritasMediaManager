@@ -4,6 +4,7 @@ export function renderWebcomponentTemplateStyles() {
     return css`
         :host {
             user-select: none;
+            -webkit-user-select: none;
             --header-height: 100px;
             --navigation-width: 350px;
         }
@@ -89,6 +90,7 @@ function renderHeaderStyles() {
 
             cursor: pointer;
             user-select: none;
+            -webkit-user-select: none;
             background-size: 400%;
             background-image: linear-gradient(130deg, #553355 45%, #8888aa 50%, #553355 55%);
             animation: sparkle 3s infinite;

@@ -22,7 +22,8 @@
             "**/bower_components": true,
             "**/*.code-search": true,
             "obscuritas-media-manager-backend-client.*": true,
-            "**/client-interop/**": false
+            "**/client-interop/**": false,
+            "**/dist": false
         },
         "typescript.enablePromptUseWorkspaceTsdk": true,
         "files.watcherInclude": ["**/*.ts"],

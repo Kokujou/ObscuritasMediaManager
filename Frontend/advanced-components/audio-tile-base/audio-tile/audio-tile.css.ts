@@ -6,6 +6,8 @@ export function renderAudioTileStyles() {
             display: inline-flex;
             flex-direction: column;
             position: relative;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         #tile-container {
@@ -27,6 +29,7 @@ export function renderAudioTileStyles() {
             padding: 10px;
 
             user-select: none;
+            -webkit-user-select: none;
             cursor: pointer;
             color: var(--font-color);
         }

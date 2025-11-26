@@ -18,6 +18,7 @@ export function renderMediaTileStyles() {
             justify-content: center;
 
             user-select: none;
+            -webkit-user-select: none;
         }
 
         #tile-image {

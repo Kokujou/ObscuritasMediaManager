@@ -25,6 +25,7 @@ export function renderSideScrollerStyles() {
             min-width: 30px;
 
             user-select: none;
+            -webkit-user-select: none;
             cursor: pointer;
         }
 

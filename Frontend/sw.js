@@ -1,8 +1,6 @@
 self.addEventListener('install', (event) => {
-    console.log('install2');
     event.waitUntil(
         caches.open('v1').then((cache) => {
-            console.log(cache);
             return cache.addAll([
                 'index.htm',
                 './dist/bundle.js',
@@ -21,4 +19,3 @@ self.addEventListener('fetch', (event) => {
         })
     );
 });
-console.log('install2');

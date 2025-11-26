@@ -120,6 +120,7 @@ export function renderInventoryContainerStyles() {
 
             cursor: pointer;
             user-select: none;
+            -webkit-user-select: none;
         }
 
         .plus-icon {

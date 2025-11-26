@@ -89,6 +89,7 @@ export function renderImportFoodPageStyles() {
             max-height: 100%;
             max-width: 70%;
             user-select: none;
+            -webkit-user-select: none;
 
             display: inline-block;
         }
@@ -131,6 +132,7 @@ export function renderImportFoodPageStyles() {
             font-size: 16px;
 
             user-select: none;
+            -webkit-user-select: none;
 
             min-height: 0;
             --side-scroller-gap: 30px;
@@ -184,6 +186,7 @@ export function renderImportFoodPageStyles() {
             z-index: 5;
 
             user-select: none;
+            -webkit-user-select: none;
             cursor: pointer;
         }
 
@@ -201,6 +204,7 @@ export function renderImportFoodPageStyles() {
             min-width: 30px;
 
             user-select: none;
+            -webkit-user-select: none;
             cursor: pointer;
         }
 

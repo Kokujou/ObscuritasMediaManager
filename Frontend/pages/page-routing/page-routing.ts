@@ -18,8 +18,8 @@ export class PageRouting extends LitElementBase {
     }
 
     static get container() {
-        if (!PageRouting.instance?.shadowRoot) return null;
-        return PageRouting.instance.shadowRoot!.querySelector('#current-page');
+        if (!PageRouting.instance?.shadowRoot) return document.body;
+        return PageRouting.instance.shadowRoot.querySelector('#current-page') ?? document.body;
     }
 
     get currentPage() {

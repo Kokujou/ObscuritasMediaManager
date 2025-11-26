@@ -37,6 +37,7 @@ export function renderInventoryTileStyles() {
         #drag-indicator {
             cursor: pointer;
             user-select: none;
+            -webkit-user-select: none;
         }
 
         #item-name {
@@ -79,6 +80,7 @@ export function renderInventoryTileStyles() {
 
             cursor: pointer;
             user-select: none;
+            -webkit-user-select: none;
         }
 
         #actions {

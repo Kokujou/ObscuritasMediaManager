@@ -32,7 +32,7 @@ export class ContextTooltip extends LitElementBase {
         tooltip.addEventListener('pointermove', (e: Event) => e.stopPropagation());
         event.currentTarget!.addEventListener('pointermove', (e: Event) => e.stopPropagation());
 
-        PageRouting.instance.shadowRoot!.appendChild(ContextTooltip.currentInstance);
+        PageRouting.container!.appendChild(ContextTooltip.currentInstance);
         tooltip.requestFullUpdate();
 
         return new Promise((resolve) => {

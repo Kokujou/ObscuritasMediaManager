@@ -125,6 +125,7 @@ export function renderGenreDialogStyles() {
             border-style: solid;
             cursor: pointer;
             user-select: none;
+            -webkit-user-select: none;
 
             color: white;
             text-shadow: 2px 2px 2px black;

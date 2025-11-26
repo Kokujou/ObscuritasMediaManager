@@ -64,6 +64,7 @@ export class ContextMenu extends LitElementBase {
         this.addEventListener('wheel', (e) => e.stopPropagation());
 
         window.addEventListener('click', (e: Event) => this.remove(), { signal: this.abortController.signal });
+        window.addEventListener('pointerdown', (e: Event) => this.remove(), { signal: this.abortController.signal });
         window.addEventListener('contextmenu', (e: Event) => this.remove(), { signal: this.abortController.signal });
         window.addEventListener('keydown', (e: Event) => this.remove(), { signal: this.abortController.signal });
     }

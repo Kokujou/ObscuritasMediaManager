@@ -52,6 +52,7 @@ export function renderContextTooltipStyles() {
             padding: 5px 10px;
             cursor: pointer;
             user-select: none;
+            -webkit-user-select: none;
         }
 
         .item:hover {

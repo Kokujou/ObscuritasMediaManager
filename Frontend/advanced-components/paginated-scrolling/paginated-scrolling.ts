@@ -20,6 +20,7 @@ export class PaginatedScrolling extends LitElementBase {
     }
 
     onScroll() {
+        this.dispatchEvent(new Event('scroll'));
         var scrollContainer = this.shadowRoot!.querySelector<HTMLElement>('.scroll-container')!;
         var scrollMax = scrollContainer.scrollHeight - scrollContainer.offsetHeight;
         if (scrollContainer.scrollTop >= scrollMax - this.scrollTopThreshold) this.requestAdditionalContent();

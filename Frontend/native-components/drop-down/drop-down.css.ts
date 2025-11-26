@@ -20,6 +20,7 @@ export function renderDropDownStyles() {
         .dropdown {
             position: relative;
             user-select: none;
+            -webkit-user-select: none;
 
             display: flex;
             flex-direction: row;
@@ -57,6 +58,7 @@ export function renderDropDownStyles() {
         .dropdown.disabled {
             pointer-events: none;
             user-select: none;
+            -webkit-user-select: none;
 
             color: gray;
         }

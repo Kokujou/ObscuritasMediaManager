@@ -19,7 +19,7 @@ export class WarningBanner extends LitElementBase {
         banner.inner = inner;
         banner.requestFullUpdate();
 
-        PageRouting.instance.prepend(banner);
+        PageRouting.container!.prepend(banner);
         this.instance = banner;
     }
 

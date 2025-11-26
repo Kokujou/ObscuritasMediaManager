@@ -12,6 +12,7 @@ export function renderDialogBaseStyles() {
             font-family: Arial, Helvetica, sans-serif;
             color: #ddd;
             user-select: none;
+            -webkit-user-select: none;
 
             display: flex;
             align-items: center;

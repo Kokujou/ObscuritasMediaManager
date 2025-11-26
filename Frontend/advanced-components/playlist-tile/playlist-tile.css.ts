@@ -9,6 +9,9 @@ export function renderPlaylistTileStyles() {
             flex-direction: column;
 
             text-shadow: 2px 2px 5px black;
+
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         #playlist-tile-container {
@@ -140,6 +143,7 @@ export function renderPlaylistTileStyles() {
             padding: 10px;
 
             user-select: none;
+            -webkit-user-select: none;
             cursor: pointer;
             color: var(--font-color);
         }
