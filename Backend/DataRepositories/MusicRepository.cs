@@ -19,7 +19,7 @@ public class MusicRepository(DatabaseContext context)
         await context.Music
             .IgnoreAutoIncludes()
             .Where(x => x.Hash == hash)
-            .ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
+            .ExecuteUpdateAsync(builder => builder.SetProperty(property, value));
     }
 
     public async Task UpdateAsync(string hash, JsonNode old, JsonNode updated, JsonSerializerOptions serializerOptions)

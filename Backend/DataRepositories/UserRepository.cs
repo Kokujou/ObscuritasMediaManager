@@ -42,7 +42,7 @@ public class UserRepository(DatabaseContext dbContext)
     }
 
     public async Task UpdateUserSettingsAsync(Guid userId,
-        Expression<Func<SetPropertyCalls<UserSettingsModel>, SetPropertyCalls<UserSettingsModel>>> setCalls)
+        Action<UpdateSettersBuilder<UserSettingsModel>> setCalls)
     {
         await dbContext.UserSettings.Where(x => x.Id == userId).ExecuteUpdateAsync(setCalls);
     }

@@ -72,7 +72,7 @@ public class MediaRepository(DatabaseContext context)
     public async Task UpdatePropertyAsync<T>(Guid id, Expression<Func<MediaModel, T>> property, T value)
     {
         await context.Media.IgnoreAutoIncludes().Where(x => x.Id == id)
-            .ExecuteUpdateAsync(property.ToSetPropertyCalls(value));
+            .ExecuteUpdateAsync((builder)=> builder.SetProperty(property, value));
     }
 
     public async Task<MediaModel> GetAsync(Guid guid, bool asTracking = false)
