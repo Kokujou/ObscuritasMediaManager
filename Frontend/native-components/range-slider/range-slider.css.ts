@@ -5,6 +5,7 @@ export function renderRangeSliderStyles() {
         :host {
             display: flex;
             align-items: center;
+            min-width: 100px;
         }
 
         #slider {

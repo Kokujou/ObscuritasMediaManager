@@ -1,5 +1,7 @@
 import { html } from 'lit';
+import { changePage } from '../../extensions/url.extension';
 import { OfflineMusicPage } from '../offline-music-page/offline-music-page';
+import { OfflineSession } from '../session';
 import { OfflineMusicImportPage } from './offline-music-import-page';
 
 export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
@@ -16,6 +18,7 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                 <flex-row class="import-status">
                     <label>Musik-Daten:</label>
                     <custom-toggle
+                        ?disabled="${this.loading}"
                         ?toggled="${this.musicTotal
                             ? this.musicMetadataImported! >= this.musicTotal
                             : this.musicMetadataImported > 0}"
@@ -26,19 +29,13 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                             : this.musicMetadataImported || null}
                     </div>
                     <flex-space></flex-space>
-                    <div
-                        class="delete-action"
-                        tooltip="Löschen"
-                        @click="${() => {
-                            this.database?.clearStore(OfflineMusicPage.MusicStoreName);
-                            this.loadData();
-                        }}"
-                    ></div>
+                    <div class="delete-action" tooltip="Löschen" @click="${() => this.deleteMusicMetadata()}"></div>
                 </flex-row>
 
                 <flex-row class="import-status">
                     <label>Musik:</label>
                     <custom-toggle
+                        ?disabled="${this.loading}"
                         ?toggled="${this.musicTotal ? this.musicImported! >= this.musicTotal : this.musicImported > 0}"
                     ></custom-toggle>
                     <div class="import-count-label">
@@ -51,6 +48,7 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                 <flex-row class="import-status">
                     <label>Playlists:</label>
                     <custom-toggle
+                        ?disabled="${this.loading}"
                         ?toggled="${this.playlistsTotal
                             ? this.playlistsImported! >= this.playlistsTotal
                             : this.playlistsImported > 0}"
@@ -61,18 +59,12 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                             : this.playlistsImported || null}
                     </div>
                     <flex-space></flex-space>
-                    <div
-                        class="delete-action"
-                        tooltip="Löschen"
-                        @click="${() => {
-                            this.database?.clearStore(OfflineMusicPage.PlaylistsStoreName);
-                            this.loadData();
-                        }}"
-                    ></div>
+                    <div class="delete-action" tooltip="Löschen" @click="${() => this.deletePlaylists()}"></div>
                 </flex-row>
                 <flex-row class="import-status">
                     <label>Instrumente:</label>
                     <custom-toggle
+                        ?disabled="${this.loading}"
                         ?toggled="${this.instrumentsTotal
                             ? this.instrumentsImported! >= this.instrumentsTotal
                             : this.instrumentsImported > 0}"
@@ -85,14 +77,7 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
 
                     <flex-space></flex-space>
 
-                    <div
-                        class="delete-action"
-                        tooltip="Löschen"
-                        @click="${() => {
-                            this.database?.clearStore(OfflineMusicPage.InstrumentsStoreName);
-                            this.loadData();
-                        }}"
-                    ></div>
+                    <div class="delete-action" tooltip="Löschen" @click="${() => this.deleteInstruments()}"></div>
                 </flex-row>
             </flex-column>
 
@@ -106,11 +91,11 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                 : ''}
 
             <flex-row id="actions">
-                ${this.schemaConsistent
+                ${OfflineSession.initialized
                     ? html` <border-button
                           id="submit-button"
                           text="Weiter zur Anwendung"
-                          @click="${() => location.reload()}"
+                          @click="${() => changePage(OfflineMusicPage)}"
                       ></border-button>`
                     : null}
                 ${!this.databaseConsistent && !this.offlineMode

@@ -7,6 +7,7 @@ declare global {
         readStore<T>(storeName: string): Promise<T[]>;
         clearStore<T>(storeName: string): Promise<void>;
         countStore(storeName: string): Promise<number>;
+        getStoreCursor(storeName: string): Promise<IDBCursorWithValue | null>;
     }
 }
 
@@ -62,6 +63,14 @@ IDBDatabase.prototype.clearStore = function <T>(this: IDBDatabase, storeName: st
 IDBDatabase.prototype.countStore = function (this: IDBDatabase, storeName: string) {
     return new Promise<number>((resolve, reject) => {
         const request = this.transaction(storeName, 'readonly').objectStore(storeName).count();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+};
+
+IDBDatabase.prototype.getStoreCursor = function (this: IDBDatabase, storeName: string) {
+    return new Promise<IDBCursorWithValue | null>((resolve, reject) => {
+        const request = this.transaction(storeName, 'readonly').objectStore(storeName).openCursor();
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
     });

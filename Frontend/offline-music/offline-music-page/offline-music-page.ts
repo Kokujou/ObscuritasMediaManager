@@ -2,21 +2,27 @@ import { customElement, property, state } from 'lit-element/decorators';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MusicSortingProperties, SortingProperties } from '../../data/music-sorting-properties';
-import { Observable } from '../../data/observable';
 import { SortingDirections } from '../../data/sorting-directions';
+import { newGuid } from '../../extensions/crypto.extensions';
+import { changePage } from '../../extensions/url.extension';
 import { ContextMenu } from '../../native-components/context-menu/context-menu';
 import { CustomTooltip } from '../../native-components/custom-tooltip/custom-tooltip';
-import { InstrumentModel, Mood, MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client';
-import { IndexedDbService } from '../../services/indexed-db.service';
+import { Mood, MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client';
 import { MusicFilterService } from '../../services/music-filter.service';
+import { OfflineMusicDetailsPage } from '../offline-music-details-page/offline-music-details-page';
 import { OfflineMusicImportPage } from '../offline-music-import-page/offline-music-import-page';
+import { OfflineSession } from '../session';
 import { renderOfflineMusicPageStyles } from './offline-music-page.css';
 import { renderOfflineMusicPagePortraitStyles } from './offline-music-page.css.portrait';
 import { renderOfflineMusicPage } from './offline-music-page.html';
 
+export const MusicCache = await caches.open('ObscuritasMediaManager.Music');
+
 @customElement('offline-music-page')
 export class OfflineMusicPage extends LitElementBase {
-    public static readonly CacheName = 'ObscuritasMediaManager.Music';
+    public static isPage = true as const;
+    public static pageName = 'Offline Musik' as const;
+
     public static readonly CacheKey = (hash: string) => `./track/hash/${hash}`;
 
     public static readonly DbName = 'ObscuritasMediaManager.Music';
@@ -29,8 +35,6 @@ export class OfflineMusicPage extends LitElementBase {
         OfflineMusicPage.PlaylistsStoreName,
         OfflineMusicPage.InstrumentsStoreName,
     ];
-
-    public static isPage = true as const;
 
     static override get styles() {
         return [renderOfflineMusicPageStyles(), renderOfflineMusicPagePortraitStyles()];
@@ -48,19 +52,7 @@ export class OfflineMusicPage extends LitElementBase {
     @state() protected declare selectionModeTimer: NodeJS.Timeout | null;
     @state() protected declare selectionModeSetByHash: string | null;
 
-    @state() protected declare musicMetadata: MusicModel[];
-    @state() protected declare playlists: PlaylistModel[];
-    @state() protected declare instruments: InstrumentModel[];
-    @state() protected declare trackUrls: string[];
-
     @state() protected declare sidebarFlipped: boolean;
-
-    protected declare database: IDBDatabase | null;
-    protected declare cache: Cache;
-    protected declare playedTracks: Record<string, string>;
-
-    protected declare audioElement: HTMLAudioElement;
-    protected visualizationData = new Observable<Float32Array<ArrayBuffer>>(new Float32Array());
 
     get paginatedPlaylists() {
         return this.filteredPlaylists.slice(0, 6 + 3 * this.currentPage);
@@ -73,7 +65,7 @@ export class OfflineMusicPage extends LitElementBase {
     }
 
     get filteredPlaylists() {
-        var sorted = MusicFilterService.filterPlaylists(this.playlists, this.filter);
+        var sorted = MusicFilterService.filterPlaylists(OfflineSession.playlists, this.filter);
         let sortingProperty = this.sortingProperty;
         if (sortingProperty in PlaylistModel) sorted = sorted.orderBy((x) => x[sortingProperty as keyof PlaylistModel]);
         if (this.sortingDirection == 'ascending') return sorted;
@@ -98,7 +90,9 @@ export class OfflineMusicPage extends LitElementBase {
     }
 
     get cachedTracks() {
-        return this.musicMetadata.filter((metadata) => this.trackUrls.some((url) => url.endsWith(metadata.hash)));
+        return OfflineSession.musicMetadata.filter((metadata) =>
+            OfflineSession.trackUrls.some((url) => url.endsWith(metadata.hash))
+        );
     }
 
     constructor() {
@@ -109,12 +103,6 @@ export class OfflineMusicPage extends LitElementBase {
         this.sortingDirection = 'ascending';
         this.currentPage = 1;
         this.selectedTracks = [];
-        this.trackUrls = [];
-        this.playedTracks = {};
-
-        this.musicMetadata = [];
-        this.playlists = [];
-        this.instruments = [];
 
         var localSearchString = localStorage.getItem(`offline-music.search`);
         if (localSearchString) this.filter = MusicFilterOptions.fromJSON(localSearchString);
@@ -130,36 +118,11 @@ export class OfflineMusicPage extends LitElementBase {
     async connectedCallback() {
         super.connectedCallback();
 
-        this.audioElement = document.body.querySelector('audio') ?? document.body.appendChild(document.createElement('audio'));
-        var localStorageVolume = localStorage.getItem('volume');
-        if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume) / 100);
-        this.setupAudio();
-
-        setTimeout(() => {
-            const video = this.shadowRoot?.querySelector('video');
-            if (video) alert(JSON.stringify(video.readyState));
-        }, 3000);
-
-        this.database = await IndexedDbService.openDatabase(OfflineMusicPage.DbName, OfflineMusicPage.DbVersion);
-        if (!this.database || !(await OfflineMusicImportPage.checkDataExists(this.database))) {
-            document.body.appendChild(document.createElement('offline-music-import-page'));
-            this.remove();
+        await OfflineSession.initialize();
+        if (!OfflineSession.initialized) {
+            changePage(OfflineMusicImportPage);
             return;
         }
-
-        this.cache = await caches.open(OfflineMusicPage.CacheName);
-
-        this.musicMetadata = await this.database.readStore<MusicModel>(OfflineMusicPage.MusicStoreName);
-        this.playlists = await this.database.readStore<PlaylistModel>(OfflineMusicPage.PlaylistsStoreName);
-        this.instruments = await this.database.readStore<InstrumentModel>(OfflineMusicPage.InstrumentsStoreName);
-        this.trackUrls = (await this.cache.keys()).map((x) => x.url);
-
-        if (this.musicMetadata.length <= 0 || this.instruments.length <= 0) {
-            this.showImportPage();
-            return;
-        }
-
-        document.body.querySelector('loading-screen')?.remove();
 
         this.requestFullUpdate();
         window.addEventListener('pointerdown', () => {
@@ -167,32 +130,6 @@ export class OfflineMusicPage extends LitElementBase {
             this.selectionMode = false;
             this.selectedTracks = [];
         });
-    }
-
-    async setupAudio() {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        await audioContext.audioWorklet.addModule('processor.js');
-        const track = audioContext.createMediaElementSource(this.audioElement);
-        const workletNode = new AudioWorkletNode(audioContext, 'sample-processor');
-        track.connect(workletNode).connect(audioContext.destination);
-
-        workletNode.port.onmessage = (event) => {
-            const samples = event.data as Float32Array<ArrayBuffer>;
-
-            this.visualizationData.next(samples.map((sample) => sample / this.audioElement.volume));
-        };
-
-        // Start AudioContext auf User Interaction (iOS erfordert Interaktion)
-        this.audioElement.addEventListener('play', () => {
-            if (audioContext.state === 'suspended') {
-                audioContext.resume();
-            }
-        });
-    }
-
-    showImportPage() {
-        document.body.appendChild(document.createElement('offline-music-import-page'));
-        this.remove();
     }
 
     override render() {
@@ -253,42 +190,14 @@ export class OfflineMusicPage extends LitElementBase {
     }
 
     async playPlaylist(tracks: MusicModel[]) {
-        //fuck everything and use caching service :()
+        const playlistId = newGuid();
+        OfflineSession.temporaryPlaylists[playlistId] = tracks.map((x) => x.hash);
+        changePage(OfflineMusicDetailsPage, { playlistId });
     }
 
     async toggleTrack(track: MusicModel) {
-        let source = this.playedTracks[track.hash];
-        if (!source) {
-            const response = await this.cache.match(OfflineMusicPage.CacheKey(track.hash));
-            if (!response) {
-                alert('corrupt cache!');
-                throw new Error('corrupt cache');
-            }
-
-            const blob = await response.blob();
-            source = URL.createObjectURL(blob);
-            this.playedTracks[track.hash] = source;
-        }
-
-        if (this.audioElement.src != source) {
-            this.audioElement.pause();
-            this.audioElement.src = source;
-        }
-
-        if (this.audioElement.paused) this.audioElement.play();
-        else this.audioElement.pause();
+        await OfflineSession.toggleTrack(track);
 
         this.requestFullUpdate();
-    }
-
-    changeVolume(volume: number) {
-        this.audioElement.volume = volume;
-        localStorage.setItem('volume', `${volume * 100}`);
-    }
-
-    disconnectedCallback(): void {
-        super.disconnectedCallback();
-
-        this.database?.close();
     }
 }

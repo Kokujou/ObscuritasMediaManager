@@ -2,8 +2,11 @@ import { html } from 'lit';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
 import { SortingProperties } from '../../data/music-sorting-properties';
 import { SortingDirections } from '../../data/sorting-directions';
+import { changePage } from '../../extensions/url.extension';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { ClipboardService } from '../../services/clipboard.service';
+import { OfflineMusicImportPage } from '../offline-music-import-page/offline-music-import-page';
+import { OfflineSession } from '../session';
 import { OfflineMusicPage } from './offline-music-page';
 
 export function renderOfflineMusicPage(this: OfflineMusicPage) {
@@ -40,17 +43,22 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                     <div class="option-section">
                         <range-slider
                             @valueChanged="${(e: CustomEvent<{ value: string }>) =>
-                                this.changeVolume(Number.parseInt(e.detail.value) / 100)}"
+                                OfflineSession.changeVolume(Number.parseInt(e.detail.value) / 100)}"
                             step="1"
                             min="0"
                             max="100"
-                            .value="${`${this.audioElement.volume * 100}`}"
+                            .value="${`${OfflineSession.audio.volume * 100}`}"
                         >
                         </range-slider>
                     </div>
 
                     <div class="option-section" id="playlist-section">
-                        <a id="sync" icon="${Icons.Globus}" tooltip="Synchronisieren" @click="${() => this.showImportPage()}"></a>
+                        <a
+                            id="sync"
+                            icon="${Icons.Globus}"
+                            tooltip="Synchronisieren"
+                            @click="${() => changePage(OfflineMusicImportPage)}"
+                        ></a>
                     </div>
                 </div>
             </div>
@@ -96,9 +104,8 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                                         : ''}
                                     <audio-tile
                                         .track="${track}"
-                                        .visualizationData="${this.visualizationData}"
-                                        ?paused="${this.audioElement.paused ||
-                                        this.audioElement.src != this.playedTracks[track.hash]}"
+                                        .visualizationData="${OfflineSession.visualizationData}"
+                                        ?paused="${OfflineSession.audio.paused || OfflineSession.activeTrackHash != track.hash}"
                                         @musicToggled="${() => this.toggleTrack(track)}"
                                         @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
                                     ></audio-tile>

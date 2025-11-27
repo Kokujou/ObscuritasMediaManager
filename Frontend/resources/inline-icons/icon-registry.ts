@@ -37,6 +37,7 @@ import { downloadPlaylistIcon } from './playlist-icons/download-playlist-icon.sv
 import { playPlaylistIcon } from './playlist-icons/play-playlist-icon.svg';
 import { savePlaylistIcon } from './playlist-icons/save-playlist-icon.svg';
 import { shufflePlaylistIcon } from './playlist-icons/shuffle-playlist-icon.svg';
+import { playlistIcon } from './playlist-icons/playlist-icon.svg';
 
 export const IconRegistry = {
     Cross: crossIcon(),
@@ -45,6 +46,7 @@ export const IconRegistry = {
     Import: importIcon(),
     Plus: plusIcon(),
     Popup: popupIcon(),
+    PlaylistIcon: playlistIcon(),
     AddPlaylist: addPlaylistIcon(),
     BrowsePlaylist: browsePlaylistIcon(),
     DownloadPlaylist: downloadPlaylistIcon(),

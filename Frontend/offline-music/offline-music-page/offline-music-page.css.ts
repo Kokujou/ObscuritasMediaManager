@@ -134,7 +134,6 @@ function renderResultOptionsBar() {
             height: 60px;
 
             display: flex;
-            align-items: stretch;
             justify-content: center;
         }
 
@@ -142,6 +141,8 @@ function renderResultOptionsBar() {
             border-radius: 15px;
             display: flex;
             flex-direction: row;
+            gap: 30px;
+            padding: 0 20px;
             background-color: var(--accent-color);
         }
 
@@ -150,7 +151,6 @@ function renderResultOptionsBar() {
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            margin: 0 30px;
             flex: auto;
         }
 
@@ -198,6 +198,11 @@ function renderResultOptionsBar() {
 
         #active-track-warning[invisible] {
             opacity: 0;
+        }
+
+        range-slider {
+            --background-color: #00000033;
+            --slider-color: var(--secondary-color);
         }
     `;
 }

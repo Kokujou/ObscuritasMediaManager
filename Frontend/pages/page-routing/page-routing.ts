@@ -22,8 +22,10 @@ export class PageRouting extends LitElementBase {
         return PageRouting.instance.shadowRoot.querySelector('#current-page') ?? document.body;
     }
 
+    public static DefaultPage: Page = WelcomePage;
+
     get currentPage() {
-        return (window.customElements.get(location.hash.substr(1) + '-page') as Page) ?? WelcomePage;
+        return (window.customElements.get(location.hash.substr(1) + '-page') as Page) ?? PageRouting.DefaultPage;
     }
 
     static currentPageInstance: LitElementBase | null = null;
@@ -108,7 +110,7 @@ export class PageRouting extends LitElementBase {
             return;
         }
 
-        changePage(WelcomePage);
+        changePage(PageRouting.DefaultPage);
     }
 
     loadPageFromHash(e: Event | null) {

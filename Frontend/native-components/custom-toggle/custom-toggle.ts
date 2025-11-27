@@ -19,6 +19,7 @@ export class CustomToggle extends LitElementBase {
     @property({ reflect: true }) public declare state: CheckboxState;
     @property({ type: Boolean, reflect: true }) public declare threeValues: boolean;
     @property({ type: Boolean, reflect: true }) public declare toggled: boolean;
+    @property({ type: Boolean, reflect: true }) public declare disabled: boolean;
     toggleForward = true;
 
     constructor() {

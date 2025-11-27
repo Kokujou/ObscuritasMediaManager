@@ -1,9 +1,11 @@
 import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
 import { FileClient, MusicClient, MusicModel, PlaylistClient } from '../../obscuritas-media-manager-backend-client';
 import { AuthenticatedRequestService } from '../../services/authenticated-request.service';
 import { IndexedDbService } from '../../services/indexed-db.service';
-import { OfflineMusicPage } from '../offline-music-page/offline-music-page';
+import { MusicCache, OfflineMusicPage } from '../offline-music-page/offline-music-page';
+import { OfflineSession } from '../session';
 import { renderOfflineMusicImportPageStyles } from './offline-music-import-page.css';
 import { renderOfflineMusicImportPage } from './offline-music-import-page.html';
 
@@ -11,6 +13,9 @@ const BackendUrl = '../Backend';
 
 @customElement('offline-music-import-page')
 export class OfflineMusicImportPage extends LitElementBase {
+    static isPage = true as const;
+    static pageName = 'Musik importieren';
+
     static override get styles() {
         return renderOfflineMusicImportPageStyles();
     }
@@ -21,22 +26,15 @@ export class OfflineMusicImportPage extends LitElementBase {
         if (OfflineMusicPage.StoreNames.some((storeName) => !database.objectStoreNames.contains(storeName))) return false;
 
         const musicMetadataImported = await database.countStore(OfflineMusicPage.MusicStoreName);
+        if (musicMetadataImported <= 0) return false;
         const instrumentsImported = await database.countStore(OfflineMusicPage.InstrumentsStoreName);
-        const musicImported = (await (await caches.open(OfflineMusicPage.CacheName)).keys()).length;
+        if (instrumentsImported <= 0) return false;
 
-        try {
-            if (musicMetadataImported <= 0) return false;
-            if (instrumentsImported <= 0) return false;
-            if (musicImported <= 0) return false;
+        const firstTrack = (await database.getStoreCursor(OfflineMusicPage.MusicStoreName))?.value! as MusicModel;
+        if (!(await MusicCache.match(OfflineMusicPage.CacheKey(firstTrack.hash)))) return false;
 
-            return true;
-        } catch {
-            return true;
-        }
+        return true;
     }
-
-    protected declare database?: IDBDatabase | null;
-    protected declare musicStorage: Cache;
 
     @state() protected declare musicTotal?: number;
     @state() protected declare playlistsTotal?: number;
@@ -49,6 +47,7 @@ export class OfflineMusicImportPage extends LitElementBase {
 
     @state() protected declare databaseConsistent: boolean;
     @state() protected declare importing: boolean;
+    @state() protected declare loading: boolean;
 
     protected requestService = new AuthenticatedRequestService();
     protected MusicService = new MusicClient(BackendUrl, this.requestService);
@@ -57,12 +56,6 @@ export class OfflineMusicImportPage extends LitElementBase {
 
     get offlineMode() {
         return !this.musicTotal || !this.playlistsTotal || !this.instrumentsTotal;
-    }
-
-    get schemaConsistent() {
-        return (
-            this.database && OfflineMusicPage.StoreNames.every((storeName) => this.database!.objectStoreNames.contains(storeName))
-        );
     }
 
     constructor() {
@@ -78,16 +71,16 @@ export class OfflineMusicImportPage extends LitElementBase {
     async connectedCallback() {
         super.connectedCallback();
 
-        this.database = await IndexedDbService.openDatabase(OfflineMusicPage.DbName, OfflineMusicPage.DbVersion);
-        this.musicStorage = await caches.open(OfflineMusicPage.CacheName);
-        document.body.querySelector('loading-screen')?.remove();
-
+        this.loading = true;
         await this.loadData();
+        this.loading = false;
 
         this.requestFullUpdate();
     }
 
     async loadData() {
+        await OfflineSession.initialize();
+
         try {
             const overview = await this.MusicService.getOverview();
             this.musicTotal = overview.tracks;
@@ -95,11 +88,10 @@ export class OfflineMusicImportPage extends LitElementBase {
             this.instrumentsTotal = overview.instruments;
         } catch {}
 
-        if (!this.database) return;
-        this.musicMetadataImported = await this.database.countStore(OfflineMusicPage.MusicStoreName);
-        this.playlistsImported = await this.database.countStore(OfflineMusicPage.PlaylistsStoreName);
-        this.instrumentsImported = await this.database.countStore(OfflineMusicPage.InstrumentsStoreName);
-        this.musicImported = (await this.musicStorage.keys()).length;
+        this.musicMetadataImported = OfflineSession.musicMetadata.length;
+        this.playlistsImported = OfflineSession.playlists.length;
+        this.instrumentsImported = OfflineSession.instruments.length;
+        this.musicImported = OfflineSession.trackUrls.length;
 
         this.databaseConsistent =
             this.musicMetadataImported == this.musicTotal &&
@@ -114,8 +106,10 @@ export class OfflineMusicImportPage extends LitElementBase {
         const wakeLock = await navigator.wakeLock.request('screen');
         this.importing = true;
         try {
-            await this.createSchema();
-            await this.downloadData();
+            let database = await IndexedDbService.openDatabase(OfflineMusicPage.DbName, OfflineMusicPage.DbVersion);
+            database = await this.createSchema(database);
+            await this.downloadData(database);
+            database.close();
             this.databaseConsistent = true;
         } catch (ex) {
             console.error(ex);
@@ -125,9 +119,7 @@ export class OfflineMusicImportPage extends LitElementBase {
         await wakeLock.release();
     }
 
-    async downloadData() {
-        if (!this.database) throw new Error('database does not exists.');
-
+    async downloadData(database: IDBDatabase) {
         await this.loadData();
         const promises = [];
         const subscriptions = [];
@@ -135,7 +127,7 @@ export class OfflineMusicImportPage extends LitElementBase {
         if (this.musicMetadataImported < this.musicTotal!) {
             this.musicMetadataImported = 0;
             const playlists = await this.PlaylistService.listPlaylists();
-            const playlistsObservable = this.database.import(OfflineMusicPage.PlaylistsStoreName, playlists, (x) => x.id);
+            const playlistsObservable = database.import(OfflineMusicPage.PlaylistsStoreName, playlists, (x) => x.id);
             subscriptions.push(playlistsObservable.subscribe(() => this.playlistsImported++));
             promises.push(playlistsObservable.toPromise());
         }
@@ -143,7 +135,7 @@ export class OfflineMusicImportPage extends LitElementBase {
         if (this.instrumentsImported < this.instrumentsTotal!) {
             this.instrumentsImported = 0;
             const instruments = await this.MusicService.getInstruments();
-            const instrumentsObservable = this.database.import(OfflineMusicPage.InstrumentsStoreName, instruments, (x) => x.id);
+            const instrumentsObservable = database.import(OfflineMusicPage.InstrumentsStoreName, instruments, (x) => x.id);
             subscriptions.push(instrumentsObservable.subscribe(() => this.instrumentsImported++));
             promises.push(instrumentsObservable.toPromise());
         }
@@ -153,7 +145,7 @@ export class OfflineMusicImportPage extends LitElementBase {
 
             if (this.musicMetadataImported < this.musicTotal!) {
                 this.musicMetadataImported = 0;
-                const musicObservable = this.database.import(OfflineMusicPage.MusicStoreName, music, (x) => x.hash);
+                const musicObservable = database.import(OfflineMusicPage.MusicStoreName, music, (x) => x.hash);
                 subscriptions.push(musicObservable.subscribe(() => this.musicMetadataImported++));
                 promises.push(musicObservable.toPromise());
             }
@@ -168,7 +160,7 @@ export class OfflineMusicImportPage extends LitElementBase {
     async importMusic(metadata: MusicModel[]) {
         let errors = 0;
         for (const track of metadata) {
-            if (await this.musicStorage.match(OfflineMusicPage.CacheKey(track.hash))) continue;
+            if (await MusicCache.match(OfflineMusicPage.CacheKey(track.hash))) continue;
 
             var result = await this.FileService.getAudio(track.path, true);
             if (!result) {
@@ -177,32 +169,68 @@ export class OfflineMusicImportPage extends LitElementBase {
                 continue;
             }
 
-            this.musicStorage.put(OfflineMusicPage.CacheKey(track.hash), new Response(result.data));
+            MusicCache.put(OfflineMusicPage.CacheKey(track.hash), new Response(result.data));
             this.musicImported++;
         }
 
         if (errors > 0) alert('Errors occurred while importing tracks');
     }
 
-    async createSchema() {
-        this.database = await IndexedDbService.openDatabase(OfflineMusicPage.DbName, OfflineMusicPage.DbVersion);
-
-        if (this.database && !this.schemaConsistent) {
+    async createSchema(database: IDBDatabase | null) {
+        if (database && !OfflineMusicPage.StoreNames.every((storeName) => database!.objectStoreNames.contains(storeName))) {
             console.error('database exists, but has invalid schema, recreating');
-            this.database.close();
+            database.close();
             await IndexedDbService.deleteDatabase(OfflineMusicPage.DbName);
-            this.database = null;
+            database = null;
         }
 
-        if (!this.database)
-            this.database = await IndexedDbService.createDatabase(
+        if (!database)
+            database = await IndexedDbService.createDatabase(
                 OfflineMusicPage.DbName,
                 OfflineMusicPage.DbVersion,
                 ...OfflineMusicPage.StoreNames
             );
+
+        return database;
     }
 
-    async deleteMusicCache() {}
+    async deleteMusicCache() {
+        const confirmed = await DialogBase.show('Bist du sicher?', {
+            content:
+                'Dieser Vorgang löscht eine große Menge an Daten.\r\nDies kann nicht rückgängig gemacht werden.\r\nBist du sicher?',
+            acceptActionText: 'Ja',
+            declineActionText: 'Nein',
+            noImplicitAccept: true,
+            showBorder: true,
+        });
+        if (!confirmed) return;
+    }
+
+    async deleteMusicMetadata() {
+        await this.deleteContainer(OfflineMusicPage.MusicStoreName);
+        OfflineSession.musicMetadata = [];
+        this.requestFullUpdate();
+    }
+
+    async deletePlaylists() {
+        await this.deleteContainer(OfflineMusicPage.PlaylistsStoreName);
+        OfflineSession.playlists = [];
+        OfflineSession.temporaryPlaylists = {};
+    }
+
+    async deleteInstruments() {
+        await this.deleteContainer(OfflineMusicPage.InstrumentsStoreName);
+        OfflineSession.instruments = [];
+    }
+
+    async deleteContainer(storeName: string) {
+        let database = await IndexedDbService.openDatabase(OfflineMusicPage.DbName, OfflineMusicPage.DbVersion);
+        if (!database) throw new Error('database not found');
+
+        await database.clearStore(storeName);
+
+        database.close();
+    }
 
     override render() {
         return renderOfflineMusicImportPage.call(this);

@@ -14,8 +14,12 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('fetch', (event) => {
     event.respondWith(
-        caches.match(event.request).then((resp) => {
-            resp || fetch(event.request);
+        fetch(event.request).catch(() => {
+            // Wenn fetch fehlschlägt (offline), aus Cache bedienen
+            return caches.match(event.request).then((resp) => {
+                // Optional: fallback, wenn Datei nicht im Cache ist
+                return resp || caches.match('index.htm');
+            });
         })
     );
 });

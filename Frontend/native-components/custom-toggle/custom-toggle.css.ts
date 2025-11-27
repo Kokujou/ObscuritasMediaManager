@@ -54,5 +54,9 @@ export function renderCustomToggleStyles() {
             margin-left: calc(var(--width) - var(--height) + 5px);
             rotate: 180deg;
         }
+
+        :host([disabled]) {
+            background-color: var(--disabled-color) !important;
+        }
     `;
 }
