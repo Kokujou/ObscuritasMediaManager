@@ -5,8 +5,10 @@ declare global {
         add<T>(storeName: string, item: T, key: any): Promise<void>;
         import<T>(storeName: string, data: T[], keySelector: (item: T) => any): Observable<any>;
         readStore<T>(storeName: string): Promise<T[]>;
+        getKeys(storeName: string): Promise<any[]>;
         clearStore<T>(storeName: string): Promise<void>;
         countStore(storeName: string): Promise<number>;
+        getItemByKey<T>(storeName: string, key: any): Promise<T | null>;
         getStoreCursor(storeName: string): Promise<IDBCursorWithValue | null>;
     }
 }
@@ -44,10 +46,26 @@ IDBDatabase.prototype.import = function <T>(this: IDBDatabase, storeName: string
     return observable;
 };
 
+IDBDatabase.prototype.getKeys = function (this: IDBDatabase, storeName: string) {
+    return new Promise<any[]>((resolve, reject) => {
+        const request = this.transaction(storeName, 'readonly').objectStore(storeName).getAllKeys();
+        request.onsuccess = () => resolve(request.result as any[]);
+        request.onerror = () => reject(request.error);
+    });
+};
+
 IDBDatabase.prototype.readStore = function <T>(this: IDBDatabase, storeName: string) {
     return new Promise<T[]>((resolve, reject) => {
         const request = this.transaction(storeName, 'readonly').objectStore(storeName).getAll();
         request.onsuccess = () => resolve(request.result as T[]);
+        request.onerror = () => reject(request.error);
+    });
+};
+
+IDBDatabase.prototype.getItemByKey = function <T>(this: IDBDatabase, storeName: string, key: IDBValidKey) {
+    return new Promise<T | null>((resolve, reject) => {
+        const request = this.transaction(storeName, 'readonly').objectStore(storeName).get(key);
+        request.onsuccess = () => resolve(request.result as T | null);
         request.onerror = () => reject(request.error);
     });
 };

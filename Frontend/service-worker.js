@@ -11,7 +11,6 @@ async function cacheApplication() {
     await cache.addAll([
         'index.htm',
         './dist/bundle.js',
-        './offline-music/',
         './offline-music/index.html',
         './offline-music/manifest.json',
         './native-components/loading-screen/loading-screen.js',

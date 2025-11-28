@@ -75,24 +75,24 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         return renderOfflineMusicDetailsPage.call(this);
     }
 
-    async toggleTrack() {
-        await OfflineSession.toggleTrack(this.currentTrack!);
+    async toggleTrack(event?: Event) {
+        await OfflineSession.toggleTrack(this.currentTrack!, event);
         await this.requestFullUpdate();
     }
 
-    async playNextTrack() {
+    async playNextTrack(event: Event) {
         if (this.index >= this.currentPlaylist?.length!) return;
         this.index++;
 
-        await OfflineSession.toggleTrack(this.currentTrack!, true);
+        await OfflineSession.toggleTrack(this.currentTrack!, event, true);
         await this.requestFullUpdate();
     }
 
-    async playPreviousTrack() {
+    async playPreviousTrack(event: Event) {
         if (this.index <= 0) return;
         this.index--;
 
-        await OfflineSession.toggleTrack(this.currentTrack!, true);
+        await OfflineSession.toggleTrack(this.currentTrack!, event, true);
         await this.requestFullUpdate();
     }
 }

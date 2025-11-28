@@ -1,8 +1,7 @@
-import { Observable } from '../data/observable';
+import { Observable, Subscription } from '../data/observable';
 import { Session } from '../data/session';
 import { InstrumentModel, MusicModel, PlaylistModel } from '../obscuritas-media-manager-backend-client';
 import { IndexedDbService } from '../services/indexed-db.service';
-import { MusicCache, OfflineMusicPage } from './offline-music-page/offline-music-page';
 
 export class OfflineSession {
     public static temporaryPlaylists = new Proxy({} as Record<string, string[]>, {
@@ -15,6 +14,17 @@ export class OfflineSession {
             return true;
         },
     });
+
+    public static readonly MusicStoreName = 'music';
+    public static readonly MusicMetadataStoreName = 'music-metadata';
+    public static readonly PlaylistsStoreName = 'playlists';
+    public static readonly InstrumentsStoreName = 'instruments';
+    public static readonly StoreNames = [
+        this.MusicStoreName,
+        this.MusicMetadataStoreName,
+        this.PlaylistsStoreName,
+        this.InstrumentsStoreName,
+    ];
 
     public static musicMetadata: MusicModel[] = [];
     public static playlists: PlaylistModel[] = [];
@@ -30,23 +40,33 @@ export class OfflineSession {
 
     protected static playedTracks: Record<string, string> = {};
 
+    public static readonly DbName = 'ObscuritasMediaManager.Music';
+    public static readonly DbVersion = 1;
+
+    private static pageSubscription?: Subscription;
+
     public static async initialize() {
         if (this.initialized) return;
 
-        this.audio = document.body.appendChild(document.createElement('audio'));
-        this.setupAudio();
+        if (!this.audio) {
+            this.audio = document.body.appendChild(document.createElement('audio'));
+            this.setupAudio();
+        }
 
-        Session.currentPage.subscribe((newPage) => {
-            if (newPage) this.audio.src = '';
+        this.pageSubscription ??= Session.currentPage.subscribe((newPage) => {
+            if (newPage) this.audio.removeAttribute('src');
         });
 
-        const database = await IndexedDbService.openDatabase(OfflineMusicPage.DbName, OfflineMusicPage.DbVersion);
+        const database = await this.openDatabase();
         if (!database) return;
 
-        this.musicMetadata = await database.readStore<MusicModel>(OfflineMusicPage.MusicStoreName);
-        this.playlists = await database.readStore<PlaylistModel>(OfflineMusicPage.PlaylistsStoreName);
-        this.instruments = await database.readStore<InstrumentModel>(OfflineMusicPage.InstrumentsStoreName);
-        this.trackUrls = (await MusicCache.keys()).map((x) => x.url);
+        this.musicMetadata = await database.readStore<MusicModel>(this.MusicMetadataStoreName).catch(() => []);
+        this.playlists = await database.readStore<PlaylistModel>(this.PlaylistsStoreName).catch(() => []);
+        this.instruments = await database.readStore<InstrumentModel>(this.InstrumentsStoreName).catch(() => []);
+        this.trackUrls = await database.getKeys(this.MusicStoreName);
+        database.close();
+
+        if ([this.musicMetadata, this.playlists, this.instruments, this.trackUrls].every((x) => x.length == 0)) return;
 
         document.body.querySelector('loading-screen')?.remove();
         this.initialized = true;
@@ -69,21 +89,25 @@ export class OfflineSession {
             OfflineSession.visualizationData.next(event.data.map((sample: number) => sample / this.audio.volume));
 
         this.audio.addEventListener('play', () => {
+            console.log(audioContext.state);
             if (audioContext.state === 'suspended') audioContext.resume();
         });
     }
 
-    static async toggleTrack(track: MusicModel, force = false) {
+    static async openDatabase() {
+        return await IndexedDbService.openDatabase(OfflineSession.DbName, OfflineSession.DbVersion);
+    }
+
+    static async toggleTrack(track: MusicModel, event?: Event, force = false) {
         this.activeTrackHash = track.hash;
         let source = this.playedTracks[track.hash];
         if (!source) {
-            const response = await MusicCache.match(OfflineMusicPage.CacheKey(track.hash));
-            if (!response) {
+            const database = await this.openDatabase();
+            const blob = await database!.getItemByKey<Blob>(this.MusicStoreName, track.hash);
+            if (!blob) {
                 alert('corrupt cache!');
                 throw new Error('corrupt cache');
             }
-
-            const blob = await response.blob();
             source = URL.createObjectURL(blob);
             this.playedTracks[track.hash] = source;
         }
@@ -93,8 +117,9 @@ export class OfflineSession {
             await new Promise<void>((resolve) => this.audio.addEventListener('loadedmetadata', () => resolve()));
         }
 
-        if (this.audio.paused || force) this.audio.play();
-        else this.audio.pause();
+        if (this.audio.paused || force) {
+            if (event) this.audio.play();
+        } else this.audio.pause();
     }
 
     static changeVolume(volume: number) {

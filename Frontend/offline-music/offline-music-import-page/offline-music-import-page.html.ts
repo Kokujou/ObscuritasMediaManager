@@ -95,6 +95,7 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                     ? html` <border-button
                           id="submit-button"
                           text="Weiter zur Anwendung"
+                          ?disabled="${this.loading || this.importing}"
                           @click="${() => changePage(OfflineMusicPage)}"
                       ></border-button>`
                     : null}
@@ -104,10 +105,20 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                               id="submit-button"
                               text="Importieren"
                               @click="${() => this.importData()}"
-                              ?disabled="${this.importing}"
+                              ?disabled="${this.loading || this.importing}"
                           ></border-button>
                       `
                     : null}
+                ${this.canMigrate
+                    ? html`
+                          <border-button
+                              text="Tracks migrieren"
+                              ?disabled="${this.loading || this.importing}"
+                              @click="${() => this.migrateData()}"
+                          >
+                          </border-button>
+                      `
+                    : ''}
             </flex-row>
         </flex-column>
     `;

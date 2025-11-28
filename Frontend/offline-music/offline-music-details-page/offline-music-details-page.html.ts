@@ -34,7 +34,7 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
                 disabled
                 .visualizationData="${OfflineSession.visualizationData}"
                 ?paused="${OfflineSession.audio.paused}"
-                @imageClicked="${() => this.toggleTrack()}"
+                @imageClicked="${(e: Event) => this.toggleTrack(e)}"
             >
             </audio-tile-base>
 

@@ -16,25 +16,12 @@ import { renderOfflineMusicPageStyles } from './offline-music-page.css';
 import { renderOfflineMusicPagePortraitStyles } from './offline-music-page.css.portrait';
 import { renderOfflineMusicPage } from './offline-music-page.html';
 
-export const MusicCache = await caches.open('ObscuritasMediaManager.Music');
-
 @customElement('offline-music-page')
 export class OfflineMusicPage extends LitElementBase {
     public static isPage = true as const;
     public static pageName = 'Offline Musik' as const;
 
     public static readonly CacheKey = (hash: string) => `./track/hash/${hash}`;
-
-    public static readonly DbName = 'ObscuritasMediaManager.Music';
-    public static readonly DbVersion = 1;
-    public static readonly MusicStoreName = 'music';
-    public static readonly PlaylistsStoreName = 'playlists';
-    public static readonly InstrumentsStoreName = 'instruments';
-    public static readonly StoreNames = [
-        OfflineMusicPage.MusicStoreName,
-        OfflineMusicPage.PlaylistsStoreName,
-        OfflineMusicPage.InstrumentsStoreName,
-    ];
 
     static override get styles() {
         return [renderOfflineMusicPageStyles(), renderOfflineMusicPagePortraitStyles()];
