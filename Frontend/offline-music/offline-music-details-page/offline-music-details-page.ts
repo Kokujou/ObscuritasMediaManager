@@ -1,5 +1,6 @@
 import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { changePage } from '../../extensions/url.extension';
 import { OfflineSession } from '../session';
 import { renderOfflineMusicDetailsPageStyles } from './offline-music-details-page.css';
 import { renderOfflineMusicDetailsPage } from './offline-music-details-page.html';
@@ -15,13 +16,10 @@ export class OfflineMusicDetailsPage extends LitElementBase {
     @state() public declare trackHash?: string;
     @state() public declare playlistId?: string;
     @state() public declare index: number;
+    @state() public declare randomize: boolean;
 
-    protected get currentPlaylist() {
-        return this.playlistId
-            ? OfflineSession.temporaryPlaylists[this.playlistId] ??
-                  OfflineSession.playlists.find((x) => x.id == this.playlistId)?.tracks
-            : null;
-    }
+    @state() protected declare playlistExpanded: boolean;
+    protected declare currentPlaylist: string[] | null;
 
     protected get currentTrack() {
         const trackHash = this.trackHash ?? this.currentPlaylist?.at(this.index);
@@ -33,15 +31,15 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         return OfflineSession.musicMetadata.find((x) => x.hash == trackHash);
     }
 
-    get currentTrackPosition() {
+    protected get currentTrackPosition() {
         return OfflineSession.audio.currentTime;
     }
 
-    get currentTrackDuration() {
+    protected get currentTrackDuration() {
         return OfflineSession.audio.duration;
     }
 
-    get currentTrackPositionText() {
+    protected get currentTrackPositionText() {
         var position = this.currentTrackPosition;
         var minutes = Math.floor(position / 60);
         var seconds = Math.floor(position - minutes * 60);
@@ -49,12 +47,16 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         return `${Math.floor(minutes).toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
-    get currentTrackDurationText() {
+    protected get currentTrackDurationText() {
         var duration = this.currentTrackDuration;
         var minutes = Math.floor(duration / 60);
         var seconds = Math.floor(duration - minutes * 60);
 
         return `${Math.floor(minutes).toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    protected get seedSessionKey() {
+        return `playlist.${this.playlistId}.seed`;
     }
 
     constructor() {
@@ -66,9 +68,25 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         super.connectedCallback();
         this.subscriptions.push(OfflineSession.audioProgress.subscribe(() => this.requestFullUpdate()));
 
+        this.currentPlaylist = this.playlistId
+            ? OfflineSession.temporaryPlaylists[this.playlistId] ??
+              OfflineSession.playlists.find((x) => x.id == this.playlistId)?.tracks
+            : null;
+
+        const seedString = sessionStorage.getItem(this.seedSessionKey);
+        if (this.randomize && seedString && this.currentPlaylist) {
+            const index = this.index;
+            const seed = Number.parseInt(seedString);
+            this.currentPlaylist = this.currentPlaylist.randomize(seed);
+
+            this.changeToTrackAt(index);
+        }
+
         await this.toggleTrack();
         OfflineSession.audio.pause();
         this.requestFullUpdate();
+
+        window.addEventListener('click', (e) => (this.playlistExpanded = false), { signal: this.abortController.signal });
     }
 
     override render() {
@@ -80,19 +98,37 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         await this.requestFullUpdate();
     }
 
-    async playNextTrack(event: Event) {
-        if (this.index >= this.currentPlaylist?.length!) return;
-        this.index++;
+    async changeToTrackAt(index: number, event?: Event) {
+        this.playlistExpanded = false;
+        if (!this.currentPlaylist || index < 0 || index >= this.currentPlaylist.length || this.index == index) return;
+        this.index = index;
 
         await OfflineSession.toggleTrack(this.currentTrack!, event, true);
         await this.requestFullUpdate();
+        this.refreshQuery();
     }
 
-    async playPreviousTrack(event: Event) {
-        if (this.index <= 0) return;
-        this.index--;
+    shufflePlaylist(event?: Event) {
+        if (!this.playlistId || !this.currentPlaylist) return;
 
-        await OfflineSession.toggleTrack(this.currentTrack!, event, true);
-        await this.requestFullUpdate();
+        this.randomize = true;
+
+        const seed = Math.floor(Math.random() * 10_000_000);
+        sessionStorage.setItem(this.seedSessionKey, seed.toString());
+
+        this.currentPlaylist = (
+            OfflineSession.temporaryPlaylists[this.playlistId] ??
+            OfflineSession.playlists.find((x) => x.id == this.playlistId)?.tracks
+        ).randomize(seed);
+        this.changeToTrackAt(0, event);
+        this.requestFullUpdate();
+    }
+
+    refreshQuery() {
+        changePage(
+            OfflineMusicDetailsPage,
+            { index: this.index, playlistId: this.playlistId, trackHash: this.trackHash, randomize: this.randomize },
+            false
+        );
     }
 }

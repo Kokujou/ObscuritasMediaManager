@@ -26,8 +26,8 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
             }
         </style>
 
-        <flex-column id="player">
-            <div id="back-button">←</div>
+        <flex-column id="player" @click="${(e: Event) => e.stopPropagation()}">
+            <div id="back-button" @click="${() => changePage(OfflineMusicPage)}">←</div>
 
             <audio-tile-base
                 .track="${this.currentTrack}"
@@ -48,10 +48,19 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
             <flex-row id="controls">
                 <flex-row class="control-section">
                     <div
+                        id="shuffle"
+                        class="audio-control"
+                        icon="${Icons.ShufflePlaylist}"
+                        @click="${(e: Event) => this.shufflePlaylist(e)}"
+                    ></div>
+                </flex-row>
+
+                <flex-row class="control-section">
+                    <div
                         id="last-track"
                         class="audio-control"
                         icon="${Icons.FastForward}"
-                        @click="${this.playPreviousTrack}"
+                        @click="${(e: Event) => this.changeToTrackAt(this.index - 1, e)}"
                     ></div>
                     <div
                         id="toggle-track"
@@ -59,7 +68,12 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
                         icon="${OfflineSession.audio.paused ? Icons.Play : Icons.Pause}"
                         @click="${this.toggleTrack}"
                     ></div>
-                    <div id="next-track" class="audio-control" icon="${Icons.FastForward}" @click="${this.playNextTrack}"></div>
+                    <div
+                        id="next-track"
+                        class="audio-control"
+                        icon="${Icons.FastForward}"
+                        @click="${(e: Event) => this.changeToTrackAt(this.index + 1, e)}"
+                    ></div>
                 </flex-row>
                 <flex-row class="control-section">
                     <range-slider
@@ -89,19 +103,38 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
             </flex-row>
 
             ${this.playlistId
-                ? html` <flex-row id="next-track-row">
-                      <div id="playlist-icon" class="audio-control" icon="${Icons.PlaylistIcon}"></div>
-                      ${this.nextTrack
-                          ? html`
-                                <flex-row id="next-track-text" center>
-                                    <b>Nächster Track:</b>
-                                    <div id="next-track-name-wrapper">
-                                        <div id="next-track-name">${this.nextTrack.displayName}</div>
-                                    </div>
-                                </flex-row>
-                            `
-                          : null}
-                  </flex-row>`
+                ? html`
+                      <flex-column id="playlist" ?expanded="${this.playlistExpanded}">
+                          <flex-row id="next-track-row" @click="${() => (this.playlistExpanded = !this.playlistExpanded)}">
+                              <div id="playlist-icon" class="audio-control" icon="${Icons.PlaylistIcon}"></div>
+                              <flex-row id="next-track-text" center>
+                                  <b>Nächster Track:</b>
+                                  <div id="next-track-name-wrapper">
+                                      <div id="next-track-name">${this.nextTrack?.displayName ?? '---'}</div>
+                                  </div>
+                              </flex-row>
+                          </flex-row>
+                          <flex-column id="playlist-items" expanded>
+                              ${this.currentPlaylist!.map((hash, index) => {
+                                  const track = OfflineSession.musicMetadata.find((x) => x.hash == hash);
+                                  return html`<flex-row
+                                      class="playlist-entry"
+                                      ?active="${this.currentTrack?.hash == hash}"
+                                      @click="${(e: Event) => this.changeToTrackAt(index, e)}"
+                                  >
+                                      <div class="track-icon" icon="${Icons.Note}"></div>
+                                      <flex-column class="playlist-entry-text">
+                                          <div class="playlist-entry-name">${track?.name!}</div>
+                                          <div class="playlist-entry-source">
+                                              ${track?.author?.replace('undefined', '') || ''}
+                                              ${track?.source ? `(${track.source.trim()})` : ''}
+                                          </div>
+                                      </flex-column>
+                                  </flex-row>`;
+                              })}
+                          </flex-column>
+                      </flex-column>
+                  `
                 : html`<div></div>`}
         </flex-column>
     `;

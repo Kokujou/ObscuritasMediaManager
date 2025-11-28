@@ -99,11 +99,11 @@ export class OfflineSession {
     }
 
     static async toggleTrack(track: MusicModel, event?: Event, force = false) {
-        this.activeTrackHash = track.hash;
         let source = this.playedTracks[track.hash];
         if (!source) {
             const database = await this.openDatabase();
             const blob = await database!.getItemByKey<Blob>(this.MusicStoreName, track.hash);
+            database!.close();
             if (!blob) {
                 alert('corrupt cache!');
                 throw new Error('corrupt cache');
@@ -112,14 +112,15 @@ export class OfflineSession {
             this.playedTracks[track.hash] = source;
         }
 
-        if (this.audio.src != source) {
+        if (this.activeTrackHash != track.hash) {
             this.audio.src = source;
-            await new Promise<void>((resolve) => this.audio.addEventListener('loadedmetadata', () => resolve()));
+            this.activeTrackHash = track.hash;
         }
 
         if (this.audio.paused || force) {
             if (event) this.audio.play();
         } else this.audio.pause();
+        await new Promise<void>((resolve) => this.audio.addEventListener('loadedmetadata', () => resolve()));
     }
 
     static changeVolume(volume: number) {

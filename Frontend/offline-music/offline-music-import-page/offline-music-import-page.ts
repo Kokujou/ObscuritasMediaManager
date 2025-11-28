@@ -4,7 +4,6 @@ import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
 import { FileClient, MusicClient, MusicModel, PlaylistClient } from '../../obscuritas-media-manager-backend-client';
 import { AuthenticatedRequestService } from '../../services/authenticated-request.service';
 import { IndexedDbService } from '../../services/indexed-db.service';
-import { OfflineMusicPage } from '../offline-music-page/offline-music-page';
 import { OfflineSession } from '../session';
 import { renderOfflineMusicImportPageStyles } from './offline-music-import-page.css';
 import { renderOfflineMusicImportPage } from './offline-music-import-page.html';
@@ -47,7 +46,6 @@ export class OfflineMusicImportPage extends LitElementBase {
     @state() protected declare databaseConsistent: boolean;
     @state() protected declare importing: boolean;
     @state() protected declare loading: boolean;
-    @state() protected declare canMigrate: boolean;
 
     protected requestService = new AuthenticatedRequestService();
     protected MusicService = new MusicClient(BackendUrl, this.requestService);
@@ -89,8 +87,6 @@ export class OfflineMusicImportPage extends LitElementBase {
             this.playlistsTotal = overview.playlists;
             this.instrumentsTotal = overview.instruments;
         } catch {}
-
-        this.canMigrate = await caches.has('ObscuritasMediaManager.Music');
 
         this.musicMetadataImported = OfflineSession.musicMetadata.length;
         this.playlistsImported = OfflineSession.playlists.length;
@@ -178,28 +174,6 @@ export class OfflineMusicImportPage extends LitElementBase {
         }
 
         if (errors > 0) alert('Errors occurred while importing tracks');
-    }
-
-    async migrateData() {
-        const musicCache = await caches.open('ObscuritasMediaManager.Music');
-
-        const database = await this.createSchema(await OfflineSession.openDatabase());
-
-        const metadata = await this.MusicService.getAll();
-        this.musicImported = 0;
-        for (var track of metadata) {
-            const fromCache = await musicCache.match(OfflineMusicPage.CacheKey(track.hash));
-            if (!fromCache) {
-                console.error('entry not found');
-                continue;
-            }
-
-            console.log('entry found');
-            await database.add(OfflineSession.MusicStoreName, await fromCache.blob(), track.hash);
-            this.musicImported++;
-        }
-
-        database.close();
     }
 
     async createSchema(database: IDBDatabase | null) {

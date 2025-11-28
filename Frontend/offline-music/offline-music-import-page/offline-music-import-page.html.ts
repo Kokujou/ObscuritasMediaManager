@@ -109,16 +109,6 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                           ></border-button>
                       `
                     : null}
-                ${this.canMigrate
-                    ? html`
-                          <border-button
-                              text="Tracks migrieren"
-                              ?disabled="${this.loading || this.importing}"
-                              @click="${() => this.migrateData()}"
-                          >
-                          </border-button>
-                      `
-                    : ''}
             </flex-row>
         </flex-column>
     `;

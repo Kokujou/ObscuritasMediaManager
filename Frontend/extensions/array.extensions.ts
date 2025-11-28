@@ -2,7 +2,7 @@ export {};
 
 declare global {
     interface Array<T> {
-        randomize(): T[];
+        randomize(seed?: number): T[];
         getDistance(selectedEntry: T, targetEntry: T): number;
         groupBy<T, U extends string | number>(this: T[], selector: (item: T) => U): Record<U, T[]>;
         groupByKey<K extends keyof T>(key: K): Record<string, T[]>;
@@ -22,14 +22,11 @@ declare global {
     }
 }
 
-Array.prototype.randomize = function <T>(this: T[]): T[] {
-    const array = [...this];
-    const resultList: T[] = [];
-    while (array.length > 0) {
-        const randomIndex = Math.floor(Math.random() * array.length);
-        resultList.push(array.splice(randomIndex, 1)[0]);
-    }
-    return resultList;
+Array.prototype.randomize = function <T>(this: T[], seed?: number): T[] {
+    const random = seededRandom(seed ?? 0);
+    return this.map((item) => ({ item, rnd: random.next() }))
+        .orderBy((x) => x.rnd)
+        .map((x) => x.item);
 };
 
 Array.prototype.groupByKey = function <T, K extends keyof T>(this: T[], key: K): Record<string, T[]> {
@@ -91,3 +88,15 @@ FileList.prototype.toIterator = function* () {
     for (let i = 0; i < this.length; i++) yield this[i];
     return undefined;
 };
+
+export function seededRandom(seed: number) {
+    return {
+        next: function () {
+            seed |= 0;
+            seed = (seed + 0x6d2b79f5) | 0;
+            let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+            t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        },
+    };
+}
