@@ -21,8 +21,6 @@ class SampleProcessor extends AudioWorkletProcessor {
                     this.port.postMessage(this.sampleBuffer.slice()); // Chunk senden
                 }
             }
-
-            output[0].set(samples); // Audio durchreichen
         }
 
         return true;

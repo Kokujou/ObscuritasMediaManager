@@ -19,4 +19,10 @@ public class LoginController(UserRepository userRepository) : ControllerBase
             new() { Expires = DateTimeOffset.MaxValue, Path = HttpContext.Request.PathBase });
         return token;
     }
+
+    [HttpPost("register")]
+    public async Task RegisterAsync(CredentialsRequest request)
+    {
+        await userRepository.CreateUser(request.Username, request.Password);
+    }
 }

@@ -117,6 +117,7 @@ export class OfflineMusicPage extends LitElementBase {
             this.selectionMode = false;
             this.selectedTracks = [];
         });
+        document.addEventListener('visibilitychange', () => this.requestFullUpdate());
     }
 
     override render() {
@@ -182,8 +183,8 @@ export class OfflineMusicPage extends LitElementBase {
         changePage(OfflineMusicDetailsPage, { playlistId });
     }
 
-    async toggleTrack(track: MusicModel) {
-        await OfflineSession.toggleTrack(track);
+    async toggleTrack(track: MusicModel, event: Event) {
+        await OfflineSession.toggleTrack(track, event);
 
         this.requestFullUpdate();
     }

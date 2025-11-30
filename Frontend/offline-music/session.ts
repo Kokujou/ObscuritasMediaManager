@@ -3,6 +3,9 @@ import { Session } from '../data/session';
 import { InstrumentModel, MusicModel, PlaylistModel } from '../obscuritas-media-manager-backend-client';
 import { IndexedDbService } from '../services/indexed-db.service';
 
+const SILENT_MP3 =
+    'data:audio/wav;base64,UklGRpgiAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXQiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+
 export class OfflineSession {
     public static temporaryPlaylists = new Proxy({} as Record<string, string[]>, {
         get(_, prop: string) {
@@ -32,6 +35,7 @@ export class OfflineSession {
     public static instruments: InstrumentModel[] = [];
 
     public static audio: HTMLAudioElement;
+    public static visualizationAudio: HTMLAudioElement;
     public static visualizationData = new Observable<Float32Array<ArrayBuffer>>(new Float32Array());
     public static activeTrackHash?: string;
     public static audioProgress = new Observable(null);
@@ -50,11 +54,13 @@ export class OfflineSession {
 
         if (!this.audio) {
             this.audio = document.body.appendChild(document.createElement('audio'));
+            this.visualizationAudio = document.body.appendChild(document.createElement('audio'));
+            this.audio.src = SILENT_MP3;
             this.setupAudio();
         }
 
         this.pageSubscription ??= Session.currentPage.subscribe((newPage) => {
-            if (newPage) this.audio.removeAttribute('src');
+            if (newPage) this.audio.src = SILENT_MP3;
         });
 
         const database = await this.openDatabase();
@@ -81,17 +87,32 @@ export class OfflineSession {
         // @ts-ignore
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         await audioContext.audioWorklet.addModule('processor.js');
-        const track = audioContext.createMediaElementSource(this.audio);
+        const track = audioContext.createMediaElementSource(this.visualizationAudio);
         const workletNode = new AudioWorkletNode(audioContext, 'sample-processor');
-        track.connect(workletNode).connect(audioContext.destination);
+        track.connect(workletNode);
 
         workletNode.port.onmessage = (event) =>
             OfflineSession.visualizationData.next(event.data.map((sample: number) => sample / this.audio.volume));
 
         this.audio.addEventListener('play', () => {
-            console.log(audioContext.state);
             if (audioContext.state === 'suspended') audioContext.resume();
+            this.syncVisualization();
         });
+        this.audio.addEventListener('pause', () => this.syncVisualization());
+        this.audio.addEventListener('seeked', () => this.syncVisualization());
+        this.audio.addEventListener('loadstart', () => this.syncVisualization());
+
+        navigator.mediaSession.setActionHandler('play', () => this.audio.play());
+        navigator.mediaSession.setActionHandler('pause', () => this.audio.pause());
+
+        document.addEventListener('visibilitychange', () => this.syncVisualization());
+    }
+
+    static syncVisualization() {
+        if (this.visualizationAudio.src != this.audio.src) this.visualizationAudio.src = this.audio.src;
+        if (this.audio.paused) this.visualizationAudio.pause();
+        else this.visualizationAudio.play();
+        this.visualizationAudio.currentTime = this.audio.currentTime;
     }
 
     static async openDatabase() {
@@ -100,6 +121,7 @@ export class OfflineSession {
 
     static async toggleTrack(track: MusicModel, event?: Event, force = false) {
         let source = this.playedTracks[track.hash];
+
         if (!source) {
             const database = await this.openDatabase();
             const blob = await database!.getItemByKey<Blob>(this.MusicStoreName, track.hash);
@@ -115,12 +137,22 @@ export class OfflineSession {
         if (this.activeTrackHash != track.hash) {
             this.audio.src = source;
             this.activeTrackHash = track.hash;
+            await new Promise<void>((resolve) =>
+                this.audio.addEventListener('loadedmetadata', () => {
+                    if ('mediaSession' in navigator) {
+                        navigator.mediaSession.metadata = new MediaMetadata({
+                            title: track.name,
+                            artist: track.author ?? 'Unbekannter Autor',
+                        });
+                    }
+                    resolve();
+                })
+            );
         }
 
         if (this.audio.paused || force) {
             if (event) this.audio.play();
         } else this.audio.pause();
-        await new Promise<void>((resolve) => this.audio.addEventListener('loadedmetadata', () => resolve()));
     }
 
     static changeVolume(volume: number) {

@@ -106,7 +106,7 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                                         .track="${track}"
                                         .visualizationData="${OfflineSession.visualizationData}"
                                         ?paused="${OfflineSession.audio.paused || OfflineSession.activeTrackHash != track.hash}"
-                                        @musicToggled="${() => this.toggleTrack(track)}"
+                                        @musicToggled="${(e: Event) => this.toggleTrack(track, e)}"
                                         @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
                                     ></audio-tile>
                                 </div>
