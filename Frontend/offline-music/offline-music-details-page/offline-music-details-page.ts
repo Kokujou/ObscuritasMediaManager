@@ -87,6 +87,12 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         this.requestFullUpdate();
 
         window.addEventListener('click', (e) => (this.playlistExpanded = false), { signal: this.abortController.signal });
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.setActionHandler('previoustrack', () =>
+                this.changeToTrackAt(this.index - 1, new Event('dummy'))
+            );
+            navigator.mediaSession.setActionHandler('nexttrack', () => this.changeToTrackAt(this.index + 1, new Event('dummy')));
+        }
     }
 
     override render() {

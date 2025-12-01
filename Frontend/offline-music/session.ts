@@ -59,8 +59,8 @@ export class OfflineSession {
             this.setupAudio();
         }
 
-        this.pageSubscription ??= Session.currentPage.subscribe((newPage) => {
-            if (newPage) this.audio.src = SILENT_MP3;
+        this.pageSubscription ??= Session.currentPage.subscribe((newPage, oldPage) => {
+            if (newPage && newPage != oldPage) this.audio.src = SILENT_MP3;
         });
 
         const database = await this.openDatabase();
@@ -91,8 +91,7 @@ export class OfflineSession {
         const workletNode = new AudioWorkletNode(audioContext, 'sample-processor');
         track.connect(workletNode);
 
-        workletNode.port.onmessage = (event) =>
-            OfflineSession.visualizationData.next(event.data.map((sample: number) => sample / this.audio.volume));
+        workletNode.port.onmessage = (event) => OfflineSession.visualizationData.next(event.data);
 
         this.audio.addEventListener('play', () => {
             if (audioContext.state === 'suspended') audioContext.resume();
