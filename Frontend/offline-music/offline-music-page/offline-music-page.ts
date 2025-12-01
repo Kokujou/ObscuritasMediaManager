@@ -7,7 +7,7 @@ import { newGuid } from '../../extensions/crypto.extensions';
 import { changePage } from '../../extensions/url.extension';
 import { ContextMenu } from '../../native-components/context-menu/context-menu';
 import { CustomTooltip } from '../../native-components/custom-tooltip/custom-tooltip';
-import { Mood, MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client';
+import { MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client';
 import { MusicFilterService } from '../../services/music-filter.service';
 import { OfflineMusicDetailsPage } from '../offline-music-details-page/offline-music-details-page';
 import { OfflineMusicImportPage } from '../offline-music-import-page/offline-music-import-page';
@@ -60,20 +60,7 @@ export class OfflineMusicPage extends LitElementBase {
     }
 
     get filteredTracks() {
-        var sorted = MusicFilterService.filterTracks(this.cachedTracks, this.filter);
-        if (this.sortingProperty == 'unset' && this.sortingDirection == 'ascending') return sorted;
-        if (this.sortingProperty == 'unset') return sorted.reverse();
-
-        const sortingProperty: (keyof MusicModel)[] = [this.sortingProperty];
-        if (this.sortingProperty == 'mood1') sortingProperty.push('mood2');
-        sorted = sorted.orderBy(
-            ...sortingProperty.map(
-                (property) => (x: MusicModel) =>
-                    property == 'mood1' || property == 'mood2' ? Object.values(Mood).indexOf(x[property]) : x[property]
-            )
-        );
-        if (this.sortingDirection == 'ascending') return sorted;
-        return sorted.reverse();
+        return MusicFilterService.filterTracks(this.cachedTracks, this.filter, this.sortingProperty, this.sortingDirection);
     }
 
     get cachedTracks() {

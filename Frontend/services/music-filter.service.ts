@@ -27,7 +27,12 @@ export class MusicFilterService {
         return filteredPlaylists;
     }
 
-    static filterTracks(tracks: MusicModel[], filter: MusicFilterOptions) {
+    static filterTracks(
+        tracks: MusicModel[],
+        filter: MusicFilterOptions,
+        sortingProperty: keyof MusicModel | 'unset',
+        sortingDirection: 'ascending' | 'descending'
+    ) {
         if (filter.showPlaylists == CheckboxState.Require) return [];
         var filteredTracks = [...tracks];
 
@@ -46,7 +51,23 @@ export class MusicFilterService {
             [item.mood1].concat(item.mood2 == Mood.Unset ? [] : item.mood2)
         );
 
-        return filteredTracks;
+        if (sortingProperty == 'unset' && sortingDirection == 'ascending') return filteredTracks;
+        if (sortingProperty == 'unset') return filteredTracks.reverse();
+
+        const sortingProperties: (keyof MusicModel)[] = [sortingProperty];
+        if (sortingProperty == 'mood1') sortingProperties.push('mood2');
+
+        const moodValues = Object.values(Mood);
+        filteredTracks = filteredTracks.orderBy(
+            ...sortingProperties.map(
+                (property) => (x: MusicModel) =>
+                    property == 'mood1' || property == 'mood2'
+                        ? moodValues.indexOf(x.mood1) + moodValues.indexOf(x.mood2)
+                        : x[property]
+            )
+        );
+        if (sortingDirection == 'ascending') return filteredTracks;
+        return filteredTracks.reverse();
     }
 
     static search(list: MusicModel[], search: string) {
