@@ -2,9 +2,8 @@ import { customElement, property } from 'lit-element/decorators';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { FilterEntry } from '../../data/filter-entry';
 import { LitElementBase } from '../../data/lit-element-base';
-import { MusicSortingProperties, SortingProperties } from '../../data/music-sorting-properties';
+import { MusicSortingProperties } from '../../data/music-sorting-properties';
 import { Session } from '../../data/session';
-import { SortingDirections } from '../../data/sorting-directions';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog';
 import { InstrumentType, MusicModel } from '../../obscuritas-media-manager-backend-client';
@@ -12,6 +11,7 @@ import { KeyOfType } from '../../services/object-filter.service';
 import { MusicFilterOptions } from './music-filter-options';
 import { renderMusicFilterStyles } from './music-filter.css';
 import { renderMusicFilter } from './music-filter.html';
+import { MusicSorting } from './music-sorting';
 
 @customElement('music-filter')
 export class MusicFilter extends LitElementBase {
@@ -20,14 +20,12 @@ export class MusicFilter extends LitElementBase {
     }
 
     @property({ type: Object }) public declare filter: MusicFilterOptions;
-    @property() public declare sortingProperty: SortingProperties;
-    @property() public declare sortingDirection: keyof typeof SortingDirections;
+    @property({ type: Object }) public declare sorting: MusicSorting;
 
     constructor() {
         super();
         this.filter = new MusicFilterOptions();
-        this.sortingProperty = 'unset';
-        this.sortingDirection = 'ascending';
+        this.sorting = new MusicSorting();
         if (
             !Object.keys(MusicSortingProperties).every((property) =>
                 Object.keys(new MusicModel()).concat(['unset']).includes(property)
@@ -88,18 +86,10 @@ export class MusicFilter extends LitElementBase {
 
     resetAllFilters() {
         this.filter = new MusicFilterOptions();
-        this.sortingDirection = 'ascending';
-        this.sortingProperty = 'unset';
+        this.sorting = new MusicSorting();
         this.requestFullUpdate();
         this.dispatchEvent(new CustomEvent('filterChanged', { detail: { filter: this.filter } }));
-        this.dispatchEvent(
-            new CustomEvent('sortingUpdated', {
-                detail: {
-                    property: this.sortingProperty,
-                    direction: this.sortingDirection,
-                },
-            })
-        );
+        this.dispatchEvent(new CustomEvent('sortingUpdated', { detail: this.sorting }));
     }
 
     handleDropdownChange<T extends KeyOfType<MusicFilterOptions, FilterEntry<any>>>(filter: T, selectedValues: string[]) {
@@ -144,17 +134,9 @@ export class MusicFilter extends LitElementBase {
         return !forcedInstruments.some((x) => x && x.type == type);
     }
 
-    changeSorting(property: SortingProperties | null = null, direction: keyof typeof SortingDirections | null = null) {
-        if (property) this.sortingProperty = property;
-        if (direction) this.sortingDirection = direction;
+    changeSorting(sorting: Partial<MusicSorting>) {
+        Object.assign(this.sorting, sorting);
         this.requestFullUpdate();
-        this.dispatchEvent(
-            new CustomEvent('sortingUpdated', {
-                detail: {
-                    property: this.sortingProperty,
-                    direction: this.sortingDirection,
-                },
-            })
-        );
+        this.dispatchEvent(new CustomEvent('sortingUpdated', { detail: this.sorting }));
     }
 }

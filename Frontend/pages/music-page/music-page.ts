@@ -2,14 +2,13 @@ import { customElement, property, state } from 'lit-element/decorators';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
 import { PaginatedScrolling } from '../../advanced-components/paginated-scrolling/paginated-scrolling';
 import { LitElementBase } from '../../data/lit-element-base';
-import { MusicSortingProperties, SortingProperties } from '../../data/music-sorting-properties';
 import { Session } from '../../data/session';
-import { SortingDirections } from '../../data/sorting-directions';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
 import { EditPlaylistDialog } from '../../dialogs/edit-playlist-dialog/edit-playlist-dialog';
 import { PlayMusicDialog } from '../../dialogs/play-music-dialog/play-music-dialog';
 import { PlaylistSelectionDialog } from '../../dialogs/playlist-selection-dialog/playlist-selection-dialog';
 
+import { MusicSorting } from '../../advanced-components/music-filter/music-sorting';
 import { changePage } from '../../extensions/url.extension';
 import { ContextMenu } from '../../native-components/context-menu/context-menu';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
@@ -35,41 +34,13 @@ export class MusicPage extends LitElementBase {
         return renderMusicPageStyles();
     }
 
-    get paginatedPlaylists() {
-        return this.filteredPlaylists.slice(0, 6 + 3 * this.currentPage);
-    }
-
-    get paginatedTracks() {
-        var pageSize = 6 + 3 * this.currentPage - this.filteredPlaylists.length;
-        if (pageSize < 0) pageSize = 0;
-        return this.filteredTracks.slice(0, pageSize);
-    }
-
-    get filteredPlaylists() {
-        var sorted = MusicFilterService.filterPlaylists(this.playlists, this.filter);
-        let sortingProperty = this.sortingProperty;
-        if (sortingProperty in PlaylistModel) sorted = sorted.orderBy((x) => x[sortingProperty as keyof PlaylistModel]);
-        if (this.sortingDirection == 'ascending') return sorted;
-        return sorted.reverse();
-    }
-
-    get filteredTracks() {
-        return MusicFilterService.filterTracks(
-            Session.tracks.current(),
-            this.filter,
-            this.sortingProperty,
-            this.sortingDirection
-        );
-    }
-
     @property({ type: Boolean, reflect: true }) protected declare selectionMode: boolean;
 
     @state() protected declare playlists: PlaylistModel[];
     @state() protected declare currentTrack: MusicModel;
     @state() protected declare filter: MusicFilterOptions;
+    @state() protected declare sorting: MusicSorting;
     @state() protected declare selectedHashes: string[];
-    @state() protected declare sortingProperty: SortingProperties;
-    @state() protected declare sortingDirection: keyof typeof SortingDirections;
     @state() protected declare selectionModeTimer: NodeJS.Timeout | null;
     @state() protected declare currentPage: number;
     @state() protected declare selectionModeSetByHash: string | null;
@@ -81,9 +52,8 @@ export class MusicPage extends LitElementBase {
         this.playlists = [];
         this.currentTrack = new MusicModel();
         this.filter = new MusicFilterOptions();
+        this.sorting = new MusicSorting();
         this.selectedHashes = [];
-        this.sortingProperty = 'unset';
-        this.sortingDirection = 'ascending';
         this.currentPage = 1;
 
         this.subscriptions.push(AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
@@ -135,8 +105,7 @@ export class MusicPage extends LitElementBase {
         localSearchString = localStorage.getItem(`music.sorting`);
         if (localSearchString) {
             var object = JSON.parse(localSearchString);
-            this.sortingProperty = object.property;
-            this.sortingDirection = object.direction;
+            this.sorting = object;
         }
 
         this.loading = false;
@@ -147,6 +116,24 @@ export class MusicPage extends LitElementBase {
         document.title = 'Musik';
         if (this.currentTrack?.path && !AudioService.paused) document.title += ` - ${this.currentTrack.displayName}`;
         return renderMusicPage.call(this);
+    }
+
+    getPaginatedPlaylists(playlists: PlaylistModel[]) {
+        return playlists.slice(0, 6 + 3 * this.currentPage);
+    }
+
+    getPaginatedTracks(tracks: MusicModel[], offset: number) {
+        var pageSize = 6 + 3 * this.currentPage - offset;
+        if (pageSize < 0) pageSize = 0;
+        return tracks.slice(0, pageSize);
+    }
+
+    getFilteredPlaylists() {
+        return MusicFilterService.filterPlaylists(this.playlists, this.filter, this.sorting);
+    }
+
+    getFilteredTracks() {
+        return MusicFilterService.filterTracks(Session.tracks.current(), this.filter, this.sorting);
     }
 
     loadNext() {
@@ -176,10 +163,10 @@ export class MusicPage extends LitElementBase {
         await this.requestFullUpdate();
     }
 
-    async playPlaylist() {
+    async playSelected(tracks: MusicModel[]) {
         var playlistId = '';
         if (this.selectedHashes.length > 0) playlistId = await PlaylistService.createTemporaryPlaylist(this.selectedHashes);
-        else playlistId = await PlaylistService.createTemporaryPlaylist(this.filteredTracks.map((x) => x.hash!));
+        else playlistId = await PlaylistService.createTemporaryPlaylist(tracks.map((x) => x.hash!));
         changePage(MusicPlaylistPage, { playlistId: playlistId });
     }
 
@@ -193,13 +180,9 @@ export class MusicPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    updateSorting(sortingProperty: keyof typeof MusicSortingProperties, sortingDirection: keyof typeof SortingDirections) {
-        this.sortingProperty = sortingProperty;
-        this.sortingDirection = sortingDirection;
-        localStorage.setItem(
-            `music.sorting`,
-            JSON.stringify({ property: this.sortingProperty, direction: this.sortingDirection })
-        );
+    updateSorting(sorting: MusicSorting) {
+        Object.assign(this.sorting, sorting);
+        localStorage.setItem(`music.sorting`, JSON.stringify(this.sorting));
         this.requestFullUpdate();
     }
 

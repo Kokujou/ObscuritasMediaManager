@@ -66,7 +66,7 @@ export function renderMusicFilter(this: MusicFilter) {
                         class="icon-button"
                         icon="${Icons.Revert}"
                         tooltip="Zurücksetzen"
-                        @click="${() => this.changeSorting('unset')}"
+                        @click="${() => this.changeSorting({ property: 'unset' })}"
                     ></div>
                 </div>
                 <div id="sorting-container">
@@ -75,31 +75,39 @@ export function renderMusicFilter(this: MusicFilter) {
                             DropDownOption.create({
                                 value: x[0],
                                 text: x[1],
-                                state: x[0] == this.sortingProperty ? CheckboxState.Ignore : CheckboxState.Forbid,
+                                state: x[0] == this.sorting.property ? CheckboxState.Ignore : CheckboxState.Forbid,
                             })
                         )}"
                         unsetText="Keine Sortierung"
                         maxDisplayDepth="5"
                         @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
-                            this.changeSorting(e.detail.option.value)}"
+                            this.changeSorting({ property: e.detail.option.value })}"
                     >
                     </drop-down>
                     <div
                         id="ascending-icon"
-                        ?active="${this.sortingDirection == 'ascending'}"
+                        ?active="${this.sorting.direction == 'ascending'}"
                         class="icon-button"
                         icon="${Icons.Ascending}"
                         tooltip="Aufsteigend sortieren"
-                        @click="${() => this.changeSorting(null, 'ascending')}"
+                        @click="${() => this.changeSorting({ direction: 'ascending' })}"
                     ></div>
                     <div
                         id="descending-icon"
-                        ?active="${this.sortingDirection == 'descending'}"
+                        ?active="${this.sorting.direction == 'descending'}"
                         class="icon-button"
                         icon="${Icons.Descending}"
                         tooltip="Absteigend sortieren"
-                        @click="${() => this.changeSorting(null, 'descending')}"
+                        @click="${() => this.changeSorting({ direction: 'descending' })}"
                     ></div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-label">zufällig sortierte Gruppen:</div>
+                    <custom-toggle
+                        .state="${this.sorting.randomizeGroups ? CheckboxState.Ignore : CheckboxState.Forbid}"
+                        @toggle="${(e: CustomEvent<CheckboxState>) =>
+                            this.changeSorting({ randomizeGroups: e.detail == CheckboxState.Ignore })}"
+                    ></custom-toggle>
                 </div>
             </div>
             <div id="language-filter" class="filter">

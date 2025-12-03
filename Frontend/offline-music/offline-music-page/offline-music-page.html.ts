@@ -1,7 +1,6 @@
 import { html } from 'lit';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
-import { SortingProperties } from '../../data/music-sorting-properties';
-import { SortingDirections } from '../../data/sorting-directions';
+import { MusicSorting } from '../../advanced-components/music-filter/music-sorting';
 import { changePage } from '../../extensions/url.extension';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { ClipboardService } from '../../services/clipboard.service';
@@ -10,6 +9,12 @@ import { OfflineSession } from '../session';
 import { OfflineMusicPage } from './offline-music-page';
 
 export function renderOfflineMusicPage(this: OfflineMusicPage) {
+    const cachedTracks = this.getCachedTracks();
+    const filteredPlaylists = this.getFilteredPlaylists();
+    const paginatedPlaylists = this.getPaginatedPlaylists(filteredPlaylists);
+    const filteredTracks = this.getFilteredTracks(cachedTracks);
+    const paginatedTracks = this.getPaginatedTracks(filteredTracks, filteredPlaylists.length);
+
     return html`
         <link-element id="online-link" href="../#">Online-Version</link-element>
         <div id="music-page">
@@ -17,15 +22,12 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                 <div id="draw-sidebar-icon" @click="${() => (this.sidebarFlipped = !this.sidebarFlipped)}">»</div>
                 <music-filter
                     .filter="${this.filter}"
-                    .sortingProperty="${this.sortingProperty}"
-                    .sortingDirection="${this.sortingDirection}"
+                    .sorting="${this.sorting}"
                     @filterChanged="${(e: CustomEvent<{ filter: MusicFilterOptions }>) => this.updateFilter(e.detail.filter)}"
-                    @sortingUpdated="${(
-                        e: CustomEvent<{ property: SortingProperties; direction: keyof typeof SortingDirections }>
-                    ) => this.updateSorting(e.detail.property, e.detail.direction)}"
+                    @sortingUpdated="${(e: CustomEvent<MusicSorting>) => this.updateSorting(e.detail)}"
                     id="music-filter"
                 ></music-filter>
-                <div id="result-count-label">${this.filteredTracks.length} von ${this.cachedTracks.length} Musik-Tracks</div>
+                <div id="result-count-label">${filteredTracks.length} von ${cachedTracks.length} Musik-Tracks</div>
             </div>
             <div id="result-options-container" @pointerdown="${(e: Event) => e.stopPropagation()}">
                 <div id="result-options">
@@ -36,7 +38,7 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                             id="play-playlist"
                             icon="${Icons.PlayPlaylist}"
                             tooltip="Ausgewählte Tracks abspielen"
-                            @click="${() => this.playPlaylist(this.selectionMode ? this.selectedTracks : this.filteredTracks)}"
+                            @click="${() => this.playPlaylist(this.selectionMode ? this.selectedTracks : filteredTracks)}"
                         ></a>
                     </div>
 
@@ -69,7 +71,7 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                 @scrollBottom="${() => this.loadNext()}"
             >
                 <div id="search-results">
-                    ${this.paginatedPlaylists.map(
+                    ${paginatedPlaylists.map(
                         (playlist) =>
                             html`
                                 <div class="audio-link-container" @click="${(e: Event) => e.stopPropagation()}">
@@ -80,7 +82,7 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                                 </div>
                             `
                     )}
-                    ${this.paginatedTracks.map(
+                    ${paginatedTracks.map(
                         (track) =>
                             html`
                                 <div

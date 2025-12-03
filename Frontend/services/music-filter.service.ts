@@ -1,10 +1,11 @@
 import { MusicFilterOptions } from '../advanced-components/music-filter/music-filter-options';
+import { MusicSorting } from '../advanced-components/music-filter/music-sorting';
 import { CheckboxState } from '../data/enumerations/checkbox-state';
 import { Mood, MusicModel, PlaylistModel } from '../obscuritas-media-manager-backend-client';
 import { ObjectFilterService } from './object-filter.service';
 
 export class MusicFilterService {
-    static filterPlaylists(playlists: PlaylistModel[], filter: MusicFilterOptions) {
+    static filterPlaylists(playlists: PlaylistModel[], filter: MusicFilterOptions, sorting: MusicSorting) {
         if (filter.showPlaylists == CheckboxState.Forbid || filter.showDeleted == CheckboxState.Require) return [];
 
         var filteredPlaylists = [...playlists];
@@ -24,15 +25,13 @@ export class MusicFilterService {
                 ) && requiredMoods.every((mood) => x.tracks.some((track) => track.mood1 == mood || track.mood2 == mood))
         );
 
-        return filteredPlaylists;
+        let sortingProperty = sorting.property;
+        if (sortingProperty in PlaylistModel) return filteredPlaylists.orderBy((x) => x[sortingProperty as keyof PlaylistModel]);
+        if (sorting.direction == 'ascending') return filteredPlaylists;
+        return filteredPlaylists.reverse();
     }
 
-    static filterTracks(
-        tracks: MusicModel[],
-        filter: MusicFilterOptions,
-        sortingProperty: keyof MusicModel | 'unset',
-        sortingDirection: 'ascending' | 'descending'
-    ) {
+    static filterTracks(tracks: MusicModel[], filter: MusicFilterOptions, sorting: MusicSorting) {
         if (filter.showPlaylists == CheckboxState.Require) return [];
         var filteredTracks = [...tracks];
 
@@ -51,11 +50,11 @@ export class MusicFilterService {
             [item.mood1].concat(item.mood2 == Mood.Unset ? [] : item.mood2)
         );
 
-        if (sortingProperty == 'unset' && sortingDirection == 'ascending') return filteredTracks;
-        if (sortingProperty == 'unset') return filteredTracks.reverse();
+        if (sorting.property == 'unset' && sorting.direction == 'ascending') return filteredTracks;
+        if (sorting.property == 'unset') return filteredTracks.reverse();
 
-        const sortingProperties: (keyof MusicModel)[] = [sortingProperty];
-        if (sortingProperty == 'mood1') sortingProperties.push('mood2');
+        const sortingProperties: (keyof MusicModel)[] = [sorting.property];
+        if (sorting.property == 'mood1') sortingProperties.push('mood2');
 
         const moodValues = Object.values(Mood);
         filteredTracks = filteredTracks.orderBy(
@@ -64,9 +63,10 @@ export class MusicFilterService {
                     property == 'mood1' || property == 'mood2'
                         ? moodValues.indexOf(x.mood1) + moodValues.indexOf(x.mood2)
                         : x[property]
-            )
+            ),
+            ...(sorting.randomizeGroups ? [() => Math.random()] : [])
         );
-        if (sortingDirection == 'ascending') return filteredTracks;
+        if (sorting.direction == 'ascending') return filteredTracks;
         return filteredTracks.reverse();
     }
 

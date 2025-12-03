@@ -13,6 +13,7 @@ export function renderPageRoutingStyles() {
             background-size: 100% 100%;
             background-repeat: no-repeat;
             font-family: Arial, Helvetica, sans-serif;
+            overflow-x: auto;
         }
 
         :host([dimmed]) {

@@ -1,8 +1,7 @@
 import { customElement, property, state } from 'lit-element/decorators';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
+import { MusicSorting } from '../../advanced-components/music-filter/music-sorting';
 import { LitElementBase } from '../../data/lit-element-base';
-import { MusicSortingProperties, SortingProperties } from '../../data/music-sorting-properties';
-import { SortingDirections } from '../../data/sorting-directions';
 import { newGuid } from '../../extensions/crypto.extensions';
 import { changePage } from '../../extensions/url.extension';
 import { ContextMenu } from '../../native-components/context-menu/context-menu';
@@ -31,8 +30,7 @@ export class OfflineMusicPage extends LitElementBase {
 
     @state() public declare dataImported: boolean;
     @state() protected declare filter: MusicFilterOptions;
-    @state() protected declare sortingProperty: SortingProperties;
-    @state() protected declare sortingDirection: keyof typeof SortingDirections;
+    @state() protected declare sorting: MusicSorting;
     @state() protected declare currentPage: number;
 
     @state() protected declare selectedTracks: MusicModel[];
@@ -41,40 +39,11 @@ export class OfflineMusicPage extends LitElementBase {
 
     @state() protected declare sidebarFlipped: boolean;
 
-    get paginatedPlaylists() {
-        return this.filteredPlaylists.slice(0, 6 + 3 * this.currentPage);
-    }
-
-    get paginatedTracks() {
-        var pageSize = 6 + 3 * this.currentPage - this.filteredPlaylists.length;
-        if (pageSize < 0) pageSize = 0;
-        return this.filteredTracks.slice(0, pageSize);
-    }
-
-    get filteredPlaylists() {
-        var sorted = MusicFilterService.filterPlaylists(OfflineSession.playlists, this.filter);
-        let sortingProperty = this.sortingProperty;
-        if (sortingProperty in PlaylistModel) sorted = sorted.orderBy((x) => x[sortingProperty as keyof PlaylistModel]);
-        if (this.sortingDirection == 'ascending') return sorted;
-        return sorted.reverse();
-    }
-
-    get filteredTracks() {
-        return MusicFilterService.filterTracks(this.cachedTracks, this.filter, this.sortingProperty, this.sortingDirection);
-    }
-
-    get cachedTracks() {
-        return OfflineSession.musicMetadata.filter((metadata) =>
-            OfflineSession.trackUrls.some((url) => url.endsWith(metadata.hash))
-        );
-    }
-
     constructor() {
         super();
         CustomTooltip; // for whatever reason needed
         this.filter = new MusicFilterOptions();
-        this.sortingProperty = 'unset';
-        this.sortingDirection = 'ascending';
+        this.sorting = new MusicSorting();
         this.currentPage = 1;
         this.selectedTracks = [];
 
@@ -84,8 +53,7 @@ export class OfflineMusicPage extends LitElementBase {
         localSearchString = localStorage.getItem(`offline-music.sorting`);
         if (localSearchString) {
             var object = JSON.parse(localSearchString);
-            this.sortingProperty = object.property;
-            this.sortingDirection = object.direction;
+            this.sorting = object.property;
         }
     }
 
@@ -109,6 +77,30 @@ export class OfflineMusicPage extends LitElementBase {
 
     override render() {
         return renderOfflineMusicPage.call(this);
+    }
+
+    getPaginatedPlaylists(playlists: PlaylistModel[]) {
+        return playlists.slice(0, 6 + 3 * this.currentPage);
+    }
+
+    getPaginatedTracks(tracks: MusicModel[], offset: number) {
+        var pageSize = 6 + 3 * this.currentPage - offset;
+        if (pageSize < 0) pageSize = 0;
+        return tracks.slice(0, pageSize);
+    }
+
+    getFilteredPlaylists() {
+        return MusicFilterService.filterPlaylists(OfflineSession.playlists, this.filter, this.sorting);
+    }
+
+    getFilteredTracks(tracks: MusicModel[]) {
+        return MusicFilterService.filterTracks(tracks, this.filter, this.sorting);
+    }
+
+    getCachedTracks() {
+        return OfflineSession.musicMetadata.filter((metadata) =>
+            OfflineSession.trackUrls.some((url) => url.endsWith(metadata.hash))
+        );
     }
 
     loadNext() {
@@ -154,13 +146,9 @@ export class OfflineMusicPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    updateSorting(sortingProperty: keyof typeof MusicSortingProperties, sortingDirection: keyof typeof SortingDirections) {
-        this.sortingProperty = sortingProperty;
-        this.sortingDirection = sortingDirection;
-        localStorage.setItem(
-            `music.sorting`,
-            JSON.stringify({ property: this.sortingProperty, direction: this.sortingDirection })
-        );
+    updateSorting(sorting: Partial<MusicSorting>) {
+        Object.assign(this.sorting, sorting);
+        localStorage.setItem(`music.sorting`, JSON.stringify(sorting));
         this.requestFullUpdate();
     }
 

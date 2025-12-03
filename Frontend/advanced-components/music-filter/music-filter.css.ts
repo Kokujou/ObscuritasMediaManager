@@ -24,7 +24,7 @@ export function renderMusicFilterStyles() {
             flex: auto;
             margin: 20px 0;
             padding: 0 10px;
-            gap: 20px;
+            gap: 30px;
             box-sizing: border-box;
 
             font-size: 16px;
@@ -53,7 +53,7 @@ export function renderMusicFilterStyles() {
             display: flex;
             flex-direction: row;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
         }
 
         .filter-row {

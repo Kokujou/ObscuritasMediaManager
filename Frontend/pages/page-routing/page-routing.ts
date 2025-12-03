@@ -61,6 +61,8 @@ export class PageRouting extends LitElementBase {
                 if (newValue) await this.switchPage(newValue, oldValue).then(() => this.requestFullUpdate());
             })
         );
+
+        window.addEventListener('resize', () => this.requestFullUpdate());
     }
 
     async firstUpdated(_changedProperties: Map<any, any>) {

@@ -1,8 +1,7 @@
 import { html } from 'lit';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
-import { SortingProperties } from '../../data/music-sorting-properties';
+import { MusicSorting } from '../../advanced-components/music-filter/music-sorting';
 import { Session } from '../../data/session';
-import { SortingDirections } from '../../data/sorting-directions';
 import { changePage } from '../../extensions/url.extension';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { Icons } from '../../resources/inline-icons/icon-registry';
@@ -12,6 +11,11 @@ import { MusicPlaylistPage } from '../music-playlist-page/music-playlist-page';
 import { MusicPage } from './music-page';
 
 export function renderMusicPage(this: MusicPage) {
+    const filteredPlaylists = this.getFilteredPlaylists();
+    const paginatedPlaylists = this.getPaginatedPlaylists(filteredPlaylists);
+    const filteredTracks = this.getFilteredTracks();
+    const paginatedTracks = this.getPaginatedTracks(filteredTracks, filteredPlaylists.length);
+
     return html`
         <link-element id="offline-link" href="./offline-music/#">Offline-Version</link-element>
         <page-layout>
@@ -19,16 +23,13 @@ export function renderMusicPage(this: MusicPage) {
                 <div id="search-panel-container">
                     <music-filter
                         .filter="${this.filter}"
-                        .sortingProperty="${this.sortingProperty}"
-                        .sortingDirection="${this.sortingDirection}"
+                        .sorting="${this.sorting}"
                         @filterChanged="${(e: CustomEvent<{ filter: MusicFilterOptions }>) => this.updateFilter(e.detail.filter)}"
-                        @sortingUpdated="${(
-                            e: CustomEvent<{ property: SortingProperties; direction: keyof typeof SortingDirections }>
-                        ) => this.updateSorting(e.detail.property, e.detail.direction)}"
+                        @sortingUpdated="${(e: CustomEvent<MusicSorting>) => this.updateSorting(e.detail)}"
                         id="music-filter"
                     ></music-filter>
                     <div id="result-count-label">
-                        ${this.filteredTracks.length} von ${Session.tracks.current().length} Musik-Tracks
+                        ${filteredTracks.length} von ${Session.tracks.current().length} Musik-Tracks
                     </div>
                 </div>
                 <div id="result-options-container">
@@ -72,7 +73,7 @@ export function renderMusicPage(this: MusicPage) {
                                 id="play-playlist"
                                 icon="${Icons.PlayPlaylist}"
                                 tooltip="Ausgewählte Tracks abspielen"
-                                @click="${() => this.playPlaylist()}"
+                                @click="${() => this.playSelected(filteredTracks)}"
                             ></a>
                         </div>
 
@@ -103,7 +104,7 @@ export function renderMusicPage(this: MusicPage) {
                     ${this.loading
                         ? html`<partial-loading></partial-loading>`
                         : html` <div id="search-results">
-                              ${this.paginatedPlaylists.map(
+                              ${paginatedPlaylists.map(
                                   (playlist) =>
                                       html`
                                           <div class="audio-link-container" @click="${(e: Event) => e.stopPropagation()}">
@@ -122,7 +123,7 @@ export function renderMusicPage(this: MusicPage) {
                                           </div>
                                       `
                               )}
-                              ${this.paginatedTracks.map(
+                              ${paginatedTracks.map(
                                   (track) =>
                                       html`
                                           <div
