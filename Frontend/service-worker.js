@@ -25,16 +25,18 @@ async function cacheApplication() {
 /** @param {Request} request */
 async function fetchWithFallback(request) {
     try {
+        alert('test');
         const response = await fetch(request);
         if (!response.ok) return response;
 
-        const responseClone = response.clone();
-        const cache = await caches.open('v1');
-        if (!(await cache.match(request))) return response;
+        try {
+            const responseClone = response.clone();
+            const cache = await caches.open('v1');
 
-        await cache.put(request, responseClone);
-
-        return response;
+            await cache.put(request, responseClone);
+        } finally {
+            return response;
+        }
     } catch {
         const cached = await caches.match(request);
         if (!cached) throw new Error('');

@@ -103,7 +103,8 @@ export class OfflineMusicImportPage extends LitElementBase {
     async importData() {
         if (this.offlineMode) throw new Error('Application is offline, data cannot be imported.');
 
-        const wakeLock = await navigator.wakeLock.request('screen');
+        const wakeLock = navigator.wakeLock ? await navigator.wakeLock.request('screen') : null;
+
         this.importing = true;
         try {
             let database = await OfflineSession.openDatabase();
@@ -116,7 +117,7 @@ export class OfflineMusicImportPage extends LitElementBase {
             alert('error while importing files:' + JSON.stringify(ex));
         }
         this.importing = false;
-        await wakeLock.release();
+        if (wakeLock) await wakeLock?.release();
     }
 
     async downloadData(database: IDBDatabase) {
