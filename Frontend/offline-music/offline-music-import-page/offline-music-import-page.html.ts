@@ -94,7 +94,7 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                 ${OfflineSession.initialized
                     ? html` <border-button
                           id="submit-button"
-                          text="Weiter zur Anwendung"
+                          text="Zur Anwendung"
                           ?disabled="${this.loading || this.importing}"
                           @click="${() => changePage(OfflineMusicPage)}"
                       ></border-button>`
@@ -109,6 +109,7 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                           ></border-button>
                       `
                     : null}
+                <border-button id="submit-button" text="Neu Laden" @click="${() => this.clearServiceCache()}"></border-button>
             </flex-row>
         </flex-column>
     `;

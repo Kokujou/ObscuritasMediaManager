@@ -4,13 +4,15 @@
 
 sw.addEventListener('install', (event) => event.waitUntil(cacheApplication()));
 
-sw.addEventListener('fetch', (event) => event.respondWith(fetchWithFallback(event.request)));
+sw.addEventListener('fetch', async (event) => {
+    event.respondWith(respondIfOffline(event.request));
+});
 
 async function cacheApplication() {
-    const cache = await caches.open('v1');
-    await cache.addAll([
+    const filesForCaching = [
         'index.htm',
         './dist/bundle.js',
+        './offline-music/',
         './offline-music/index.html',
         './offline-music/manifest.json',
         './native-components/loading-screen/loading-screen.js',
@@ -18,28 +20,38 @@ async function cacheApplication() {
         './native-components/loading-screen/loading-icon.css',
         './resources/inline-icons/general/loading.icon.svg.js',
         './resources/inline-icons/general/loading-icon.svg',
+        './resources/images/background.jpg',
         './offline-music/processor.js',
-    ]);
+    ];
+
+    for (var file of filesForCaching) await fetchAndCache(file, true);
+}
+
+/** @param {Request | string} request */
+async function fetchAndCache(request, force = false) {
+    try {
+        const response = await fetch(request);
+        if (!response.ok) return null;
+
+        try {
+            const cache = await caches.open('v1');
+            const responseClone = response.clone();
+            if ((await cache.match(request)) || force) await cache.put(request, responseClone);
+        } catch {}
+
+        return response;
+    } catch {
+        return null;
+    }
 }
 
 /** @param {Request} request */
-async function fetchWithFallback(request) {
-    try {
-        alert('test');
-        const response = await fetch(request);
-        if (!response.ok) return response;
+async function respondIfOffline(request) {
+    if (!(await caches.has('v1'))) await cacheApplication();
 
-        try {
-            const responseClone = response.clone();
-            const cache = await caches.open('v1');
-
-            await cache.put(request, responseClone);
-        } finally {
-            return response;
-        }
-    } catch {
-        const cached = await caches.match(request);
-        if (!cached) throw new Error('');
-        return cached;
-    }
+    const response = await fetchAndCache(request);
+    if (response) return response;
+    const cached = await caches.match(request);
+    if (!cached) return new Response();
+    return cached;
 }

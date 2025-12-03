@@ -248,6 +248,13 @@ export class OfflineMusicImportPage extends LitElementBase {
         database.close();
     }
 
+    async clearServiceCache() {
+        this.importing = true;
+        await caches.delete('v1');
+        location.assign('../');
+        this.importing = false;
+    }
+
     override render() {
         return renderOfflineMusicImportPage.call(this);
     }

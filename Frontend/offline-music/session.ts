@@ -86,7 +86,7 @@ export class OfflineSession {
 
         // @ts-ignore
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        await audioContext.audioWorklet.addModule('processor.js');
+        await audioContext.audioWorklet.addModule('./processor.js');
         const track = audioContext.createMediaElementSource(this.visualizationAudio);
         const workletNode = new AudioWorkletNode(audioContext, 'sample-processor');
         track.connect(workletNode);
