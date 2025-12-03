@@ -11,6 +11,7 @@ sw.addEventListener('fetch', async (event) => {
 async function cacheApplication() {
     const filesForCaching = [
         'index.htm',
+        'colors.css',
         './dist/bundle.js',
         './offline-music/',
         './offline-music/index.html',
@@ -52,6 +53,6 @@ async function respondIfOffline(request) {
     const response = await fetchAndCache(request);
     if (response) return response;
     const cached = await caches.match(request);
-    if (!cached) return new Response();
+    if (!cached) return (await caches.match('./offline-music/index.html')) ?? new Response();
     return cached;
 }
