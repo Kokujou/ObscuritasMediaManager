@@ -31,9 +31,11 @@ async function cacheApplication() {
 /** @param {Request | string} request */
 async function fetchAndCache(request, force = false) {
     try {
-        const response = await fetch(request);
-        if (!response.ok) return null;
+        const healthCheck = await fetch('./Backend/health');
 
+        if (!healthCheck.ok) return null;
+
+        const response = await fetch(request);
         try {
             const cache = await caches.open('v1');
             const responseClone = response.clone();
