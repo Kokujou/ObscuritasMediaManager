@@ -2,6 +2,7 @@ import { customElement, property, state } from 'lit-element/decorators';
 import { MusicFilterOptions } from '../../advanced-components/music-filter/music-filter-options';
 import { MusicSorting } from '../../advanced-components/music-filter/music-sorting';
 import { LitElementBase } from '../../data/lit-element-base';
+import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
 import { newGuid } from '../../extensions/crypto.extensions';
 import { changePage } from '../../extensions/url.extension';
 import { ContextMenu } from '../../native-components/context-menu/context-menu';
@@ -154,7 +155,31 @@ export class OfflineMusicPage extends LitElementBase {
 
     async playPlaylist(tracks: MusicModel[]) {
         const playlistId = newGuid();
-        OfflineSession.temporaryPlaylists[playlistId] = tracks.map((x) => x.hash);
+        const cachedHashes = tracks
+            .map((x) => x.hash)
+            .filter((hash) => OfflineSession.trackUrls.some((url) => url.endsWith(hash)));
+
+        if (cachedHashes.length <= 0) {
+            await DialogBase.show('Cache unvollständig', {
+                content: 'Die ausgewählten Songs sind nicht im Cache vorhanden.',
+                acceptActionText: 'Ok',
+            });
+            return;
+        }
+
+        if (
+            cachedHashes.length < tracks.length &&
+            !(await DialogBase.show('Cache unvollständig', {
+                content:
+                    'Einige Songs aus der Playlist sind noch nicht im Cache vorhanden.\r\n' +
+                    'Möchtest du ohne diese Tracks fortfahren?',
+                acceptActionText: 'Ja',
+                declineActionText: 'Nein',
+            }))
+        )
+            return;
+
+        OfflineSession.temporaryPlaylists[playlistId] = cachedHashes;
         changePage(OfflineMusicDetailsPage, { playlistId });
     }
 
