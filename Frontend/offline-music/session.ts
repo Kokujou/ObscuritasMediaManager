@@ -60,7 +60,10 @@ export class OfflineSession {
         }
 
         this.pageSubscription ??= Session.currentPage.subscribe((newPage, oldPage) => {
-            if (newPage && newPage != oldPage) this.audio.src = SILENT_MP3;
+            if (newPage && newPage != oldPage) {
+                this.activeTrackHash = undefined;
+                this.audio.src = SILENT_MP3;
+            }
         });
 
         const database = await this.openDatabase();
