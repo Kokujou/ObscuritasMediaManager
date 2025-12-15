@@ -1,10 +1,13 @@
 import { MusicFilterOptions } from '../advanced-components/music-filter/music-filter-options';
 import { MusicSorting } from '../advanced-components/music-filter/music-sorting';
 import { CheckboxState } from '../data/enumerations/checkbox-state';
+import { seededRandom } from '../extensions/array.extensions';
 import { Mood, MusicModel, PlaylistModel } from '../obscuritas-media-manager-backend-client';
 import { ObjectFilterService } from './object-filter.service';
 
 export class MusicFilterService {
+    private static randomSeed = Math.random();
+
     static filterPlaylists(playlists: PlaylistModel[], filter: MusicFilterOptions, sorting: MusicSorting) {
         if (filter.showPlaylists == CheckboxState.Forbid || filter.showDeleted == CheckboxState.Require) return [];
 
@@ -64,7 +67,7 @@ export class MusicFilterService {
                         ? moodValues.indexOf(x.mood1) + moodValues.indexOf(x.mood2)
                         : x[property]
             ),
-            ...(sorting.randomizeGroups ? [() => Math.random()] : [])
+            ...(sorting.randomizeGroups ? [() => seededRandom(this.randomSeed)] : [])
         );
         if (sorting.direction == 'ascending') return filteredTracks;
         return filteredTracks.reverse();
