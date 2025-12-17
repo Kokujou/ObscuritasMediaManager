@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { CheckboxState } from '../../data/enumerations/checkbox-state';
+import { Enum } from '../../extensions/enum.extensions';
 import { DropDown } from './drop-down';
 import { DropDownOption } from './drop-down-option';
 
@@ -87,7 +88,11 @@ function renderDropDownOption(this: DropDown, option: DropDownOption<any>) {
             @click=${() =>
                 this.changeOptionState(
                     option,
-                    option.state == CheckboxState.Ignore ? CheckboxState.Forbid : CheckboxState.Ignore
+                    this.threeValues
+                        ? Enum.nextValue(CheckboxState, option.state)
+                        : option.state == CheckboxState.Ignore
+                        ? CheckboxState.Forbid
+                        : CheckboxState.Ignore
                 )}
         >
             ${this.multiselect && this.useToggle ? renderToggle.call(this, option) : option.text}
