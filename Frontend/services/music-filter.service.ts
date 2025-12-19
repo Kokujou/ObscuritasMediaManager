@@ -71,8 +71,10 @@ export class MusicFilterService {
                 ...sortingProperties.map(
                     (property) => (x: { item: MusicModel; random: number }) =>
                         property == 'mood1' || property == 'mood2'
-                            ? moodValues.indexOf(x.item.mood1) +
-                              (x.item.mood2 == x.item.mood1 ? 0 : moodValues.indexOf(x.item.mood2))
+                            ? moodValues.indexOf(x.item.mood1) * 1.001 +
+                              (x.item.mood2 == x.item.mood1 || x.item.mood2 == Mood.Unset
+                                  ? moodValues.indexOf(x.item.mood1)
+                                  : moodValues.indexOf(x.item.mood2))
                             : x.item[property]
                 ),
                 ...(sorting.randomizeGroups ? [(x: { item: MusicModel; random: number }) => x.random] : [])
