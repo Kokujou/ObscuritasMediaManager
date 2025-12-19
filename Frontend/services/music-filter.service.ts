@@ -6,7 +6,11 @@ import { Mood, MusicModel, PlaylistModel } from '../obscuritas-media-manager-bac
 import { ObjectFilterService } from './object-filter.service';
 
 export class MusicFilterService {
-    private static randomSeed = Math.random();
+    private static randomSeed = Math.random() * 100;
+
+    static reseed() {
+        this.randomSeed = Math.random() * 100;
+    }
 
     static filterPlaylists(playlists: PlaylistModel[], filter: MusicFilterOptions, sorting: MusicSorting) {
         if (filter.showPlaylists == CheckboxState.Forbid || filter.showDeleted == CheckboxState.Require) return [];
@@ -60,15 +64,20 @@ export class MusicFilterService {
         if (sorting.property == 'mood1') sortingProperties.push('mood2');
 
         const moodValues = Object.values(Mood);
-        filteredTracks = filteredTracks.orderBy(
-            ...sortingProperties.map(
-                (property) => (x: MusicModel) =>
-                    property == 'mood1' || property == 'mood2'
-                        ? moodValues.indexOf(x.mood1) + moodValues.indexOf(x.mood2)
-                        : x[property]
-            ),
-            ...(sorting.randomizeGroups ? [() => seededRandom(this.randomSeed)] : [])
-        );
+        const random = seededRandom(this.randomSeed);
+        filteredTracks = filteredTracks
+            .map((item) => ({ item, random: random.next() }))
+            .orderBy(
+                ...sortingProperties.map(
+                    (property) => (x: { item: MusicModel; random: number }) =>
+                        property == 'mood1' || property == 'mood2'
+                            ? moodValues.indexOf(x.item.mood1) +
+                              (x.item.mood2 == x.item.mood1 ? 0 : moodValues.indexOf(x.item.mood2))
+                            : x.item[property]
+                ),
+                ...(sorting.randomizeGroups ? [(x: { item: MusicModel; random: number }) => x.random] : [])
+            )
+            .map((x) => x.item);
         if (sorting.direction == 'ascending') return filteredTracks;
         return filteredTracks.reverse();
     }

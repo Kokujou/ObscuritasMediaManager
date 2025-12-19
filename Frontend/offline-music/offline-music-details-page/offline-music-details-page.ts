@@ -92,6 +92,8 @@ export class OfflineMusicDetailsPage extends LitElementBase {
                 this.changeToTrackAt(this.index - 1, new Event('dummy'))
             );
             navigator.mediaSession.setActionHandler('nexttrack', () => this.changeToTrackAt(this.index + 1, new Event('dummy')));
+            navigator.mediaSession.setActionHandler('pause', () => this.toggleTrack(new Event('dummy')));
+            navigator.mediaSession.setActionHandler('play', () => this.toggleTrack(new Event('dummy')));
         }
 
         OfflineSession.audio.addEventListener('ended', (e: Event) => this.changeToTrackAt(this.index + 1, e));

@@ -7,6 +7,7 @@ import { Session } from '../../data/session';
 import { GenreDialogResult } from '../../dialogs/dialog-result/genre-dialog.result';
 import { GenreDialog } from '../../dialogs/genre-dialog/genre-dialog';
 import { InstrumentType, MusicModel } from '../../obscuritas-media-manager-backend-client';
+import { MusicFilterService } from '../../services/music-filter.service';
 import { KeyOfType } from '../../services/object-filter.service';
 import { MusicFilterOptions } from './music-filter-options';
 import { renderMusicFilterStyles } from './music-filter.css';
@@ -135,6 +136,7 @@ export class MusicFilter extends LitElementBase {
     }
 
     changeSorting(sorting: Partial<MusicSorting>) {
+        if (!this.sorting.randomizeGroups && sorting.randomizeGroups) MusicFilterService.reseed();
         Object.assign(this.sorting, sorting);
         this.requestFullUpdate();
         this.dispatchEvent(new CustomEvent('sortingUpdated', { detail: this.sorting }));
