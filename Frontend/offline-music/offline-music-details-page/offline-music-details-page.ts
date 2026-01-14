@@ -17,6 +17,7 @@ export class OfflineMusicDetailsPage extends LitElementBase {
     @state() public declare playlistId?: string;
     @state() public declare index: number;
     @state() public declare randomize: boolean;
+    @state() public declare caching: boolean;
 
     @state() protected declare playlistExpanded: boolean;
     protected declare currentPlaylist: string[] | null;
@@ -62,6 +63,7 @@ export class OfflineMusicDetailsPage extends LitElementBase {
     constructor() {
         super();
         this.index = 0;
+        this.caching = true;
     }
 
     async connectedCallback() {
@@ -82,7 +84,9 @@ export class OfflineMusicDetailsPage extends LitElementBase {
             this.changeToTrackAt(index);
         }
 
-        await this.toggleTrack();
+        await this.cachePlaylistTracks();
+
+        this.toggleTrack();
         OfflineSession.audio.pause();
         this.requestFullUpdate();
 
@@ -103,22 +107,44 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         return renderOfflineMusicDetailsPage.call(this);
     }
 
-    async toggleTrack(event?: Event) {
+    async cachePlaylistTracks() {
+        this.caching = true;
+        if (this.currentPlaylist || this.currentTrack?.hash) {
+            const database = await OfflineSession.openDatabase();
+            const trackCursor = database!.getStoreCursor(OfflineSession.MusicStoreName);
+            const tracks: [string, Blob][] = [];
+            trackCursor.subscribe(async (cursor) => {
+                if (!cursor) return;
+
+                const primaryKey = cursor.primaryKey as string;
+                if (!this.currentPlaylist!.includes(primaryKey) && this.currentTrack?.hash != primaryKey)
+                    return cursor.continue();
+                tracks.push([cursor.primaryKey as string, cursor.value as Blob]);
+                cursor.continue();
+            });
+
+            await trackCursor.toPromise();
+            for (var track of tracks) await OfflineSession.cacheTrack(track[0], track[1]);
+        }
+        this.caching = false;
+    }
+
+    toggleTrack(event?: Event) {
         try {
-            await OfflineSession.toggleTrack(this.currentTrack!, event);
+            OfflineSession.toggleTrackSync(this.currentTrack!, event);
         } catch {
             this.changeToTrackAt(this.index + 1, event);
         }
-        await this.requestFullUpdate();
+        this.requestFullUpdate();
     }
 
-    async changeToTrackAt(index: number, event?: Event) {
+    changeToTrackAt(index: number, event?: Event) {
         this.playlistExpanded = false;
         if (!this.currentPlaylist || index < 0 || index >= this.currentPlaylist.length || this.index == index) return;
         this.index = index;
 
-        await OfflineSession.toggleTrack(this.currentTrack!, event, true);
-        await this.requestFullUpdate();
+        OfflineSession.toggleTrackSync(this.currentTrack!, event, true);
+        this.requestFullUpdate();
         this.refreshQuery();
     }
 

@@ -26,6 +26,21 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
             }
         </style>
 
+        ${this.caching
+            ? html`
+                  <style>
+                      :host {
+                          --primary-color: gray;
+                          --secondary-color: gray;
+                          --font-color: white;
+                          --secondary-font-color: white;
+
+                          pointer-events: none;
+                      }
+                  </style>
+              `
+            : ''}
+
         <flex-column id="player" @click="${(e: Event) => e.stopPropagation()}">
             <div id="back-button" @click="${() => changePage(OfflineMusicPage)}">←</div>
 

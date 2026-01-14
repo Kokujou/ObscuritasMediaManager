@@ -121,6 +121,42 @@ export class OfflineSession {
         return await IndexedDbService.openDatabase(OfflineSession.DbName, OfflineSession.DbVersion);
     }
 
+    static async cacheTrack(trackHash: string, blob: Blob) {
+        let source = this.playedTracks[trackHash];
+        if (source) return;
+
+        if (!blob) {
+            alert('corrupt cache!');
+            throw new Error('corrupt cache');
+        }
+
+        source = URL.createObjectURL(blob);
+        this.playedTracks[trackHash] = source;
+    }
+
+    static toggleTrackSync(track: MusicModel, event?: Event, force = false) {
+        let source = this.playedTracks[track.hash];
+        if (!source) return;
+
+        if (this.activeTrackHash != track.hash) {
+            this.audio.onloadedmetadata = () => {
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: track.name,
+                        artist: track.author ?? 'Unbekannter Autor',
+                    });
+                }
+            };
+
+            this.audio.src = source;
+            this.activeTrackHash = track.hash;
+        }
+
+        if (this.audio.paused || force) {
+            if (event) this.audio.play();
+        } else this.audio.pause();
+    }
+
     static async toggleTrack(track: MusicModel, event?: Event, force = false) {
         let source = this.playedTracks[track.hash];
 

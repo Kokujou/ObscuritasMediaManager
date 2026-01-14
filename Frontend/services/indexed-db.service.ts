@@ -9,8 +9,8 @@ declare global {
         getKeys(storeName: string): Promise<any[]>;
         clearStore<T>(storeName: string): Promise<void>;
         countStore(storeName: string): Promise<number>;
-        getItemByKey<T>(storeName: string, key: any): Promise<T | null>;
-        getStoreCursor(storeName: string): Promise<IDBCursorWithValue | null>;
+        getItemByKey<T>(storeName: string, key: IDBKeyRange | IDBValidKey): Promise<T | null>;
+        getStoreCursor(storeName: string): Observable<IDBCursorWithValue | null>;
     }
 }
 
@@ -74,7 +74,7 @@ IDBDatabase.prototype.readStore = function <T>(this: IDBDatabase, storeName: str
     });
 };
 
-IDBDatabase.prototype.getItemByKey = function <T>(this: IDBDatabase, storeName: string, key: IDBValidKey) {
+IDBDatabase.prototype.getItemByKey = function <T>(this: IDBDatabase, storeName: string, key: IDBValidKey | IDBKeyRange) {
     return new Promise<T | null>((resolve, reject) => {
         const request = this.transaction(storeName, 'readonly').objectStore(storeName).get(key);
         request.onsuccess = () => resolve(request.result as T | null);
@@ -99,11 +99,15 @@ IDBDatabase.prototype.countStore = function (this: IDBDatabase, storeName: strin
 };
 
 IDBDatabase.prototype.getStoreCursor = function (this: IDBDatabase, storeName: string) {
-    return new Promise<IDBCursorWithValue | null>((resolve, reject) => {
-        const request = this.transaction(storeName, 'readonly').objectStore(storeName).openCursor();
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
+    var observable = new Observable<IDBCursorWithValue | null>(null);
+    const request = this.transaction(storeName, 'readonly').objectStore(storeName).openCursor();
+    request.onsuccess = () => {
+        if (!request.result) observable.finalize();
+        else observable.next(request.result);
+    };
+    request.onerror = () => observable.finalize();
+
+    return observable;
 };
 
 export class IndexedDbService {
