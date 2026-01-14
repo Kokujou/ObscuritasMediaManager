@@ -31,7 +31,7 @@ export class OfflineSession {
 
     public static musicMetadata: MusicModel[] = [];
     public static playlists: PlaylistModel[] = [];
-    public static trackUrls: string[] = [];
+    public static trackHashes: string[] = [];
     public static instruments: InstrumentModel[] = [];
 
     public static audio: HTMLAudioElement;
@@ -72,10 +72,10 @@ export class OfflineSession {
         this.musicMetadata = await database.readStore<MusicModel>(this.MusicMetadataStoreName).catch(() => []);
         this.playlists = await database.readStore<PlaylistModel>(this.PlaylistsStoreName).catch(() => []);
         this.instruments = await database.readStore<InstrumentModel>(this.InstrumentsStoreName).catch(() => []);
-        this.trackUrls = await database.getKeys(this.MusicStoreName);
+        this.trackHashes = await database.getKeys(this.MusicStoreName);
         database.close();
 
-        if ([this.musicMetadata, this.playlists, this.instruments, this.trackUrls].every((x) => x.length == 0)) return;
+        if ([this.musicMetadata, this.playlists, this.instruments, this.trackHashes].every((x) => x.length == 0)) return;
 
         document.body.querySelector('loading-screen')?.remove();
         this.initialized = true;
@@ -128,19 +128,27 @@ export class OfflineSession {
             const database = await this.openDatabase();
             const blob = await database!.getItemByKey<Blob>(this.MusicStoreName, track.hash);
             database!.close();
+
             if (!blob) {
                 alert('corrupt cache!');
                 throw new Error('corrupt cache');
+            }
+
+            const arrayBuffer = await blob.arrayBuffer();
+            const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+            try {
+                await audioCtx.decodeAudioData(arrayBuffer);
+                console.log('MP3 dekodierbar');
+            } catch (e) {
+                alert(JSON.stringify(e.code));
             }
             source = URL.createObjectURL(blob);
             this.playedTracks[track.hash] = source;
         }
 
         if (this.activeTrackHash != track.hash) {
-            this.audio.src = source;
-            this.activeTrackHash = track.hash;
-            await new Promise<void>((resolve) =>
-                this.audio.addEventListener('loadedmetadata', () => {
+            await new Promise<void>((resolve, reject) => {
+                this.audio.onloadedmetadata = () => {
                     if ('mediaSession' in navigator) {
                         navigator.mediaSession.metadata = new MediaMetadata({
                             title: track.name,
@@ -148,12 +156,17 @@ export class OfflineSession {
                         });
                     }
                     resolve();
-                })
-            );
+                };
+                this.audio.onerror = async () => reject(this.audio.error?.code);
+
+                this.audio.src = source;
+                this.activeTrackHash = track.hash;
+                this.audio.load();
+            });
         }
 
         if (this.audio.paused || force) {
-            if (event) this.audio.play();
+            if (event) await this.audio.play();
         } else this.audio.pause();
     }
 

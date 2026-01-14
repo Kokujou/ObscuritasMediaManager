@@ -3,6 +3,7 @@ import { Observable } from '../data/observable';
 declare global {
     interface IDBDatabase {
         add<T>(storeName: string, item: T, key: any): Promise<void>;
+        delete<T>(storeName: string, key: any): Promise<void>;
         import<T>(storeName: string, data: T[], keySelector: (item: T) => any): Observable<any>;
         readStore<T>(storeName: string): Promise<T[]>;
         getKeys(storeName: string): Promise<any[]>;
@@ -17,6 +18,17 @@ IDBDatabase.prototype.add = function <T>(this: IDBDatabase, storeName: string, i
     return new Promise<void>((resolve, reject) => {
         const transaction = this.transaction(storeName, 'readwrite');
         transaction.objectStore(storeName).add(item, key);
+        transaction.commit();
+        transaction.oncomplete = () => resolve();
+        transaction.onabort = () => reject('the transaction was aborted');
+        transaction.onerror = () => reject(transaction.error);
+    });
+};
+
+IDBDatabase.prototype.delete = function <T>(this: IDBDatabase, storeName: string, key: any) {
+    return new Promise<void>((resolve, reject) => {
+        const transaction = this.transaction(storeName, 'readwrite');
+        transaction.objectStore(storeName).delete(key);
         transaction.commit();
         transaction.oncomplete = () => resolve();
         transaction.onabort = () => reject('the transaction was aborted');

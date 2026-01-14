@@ -42,6 +42,7 @@ export class OfflineMusicImportPage extends LitElementBase {
     @state() protected declare musicImported: number;
     @state() protected declare playlistsImported: number;
     @state() protected declare instrumentsImported: number;
+    @state() protected declare validating: number;
 
     @state() protected declare databaseConsistent: boolean;
     @state() protected declare importing: boolean;
@@ -62,6 +63,7 @@ export class OfflineMusicImportPage extends LitElementBase {
         this.musicMetadataImported = 0;
         this.playlistsImported = 0;
         this.instrumentsImported = 0;
+        this.validating = 0;
 
         document.addEventListener('login', () => location.assign('../#login'));
     }
@@ -91,7 +93,7 @@ export class OfflineMusicImportPage extends LitElementBase {
         this.musicMetadataImported = OfflineSession.musicMetadata.length;
         this.playlistsImported = OfflineSession.playlists.length;
         this.instrumentsImported = OfflineSession.instruments.length;
-        this.musicImported = OfflineSession.trackUrls.length;
+        this.musicImported = OfflineSession.trackHashes.length;
 
         this.databaseConsistent =
             this.musicMetadataImported == this.musicTotal &&
@@ -217,6 +219,12 @@ export class OfflineMusicImportPage extends LitElementBase {
             showBorder: true,
         });
         if (!confirmed) return;
+
+        await this.deleteContainer(OfflineSession.MusicStoreName);
+        OfflineSession.trackHashes = [];
+        this.musicImported = 0;
+        this.databaseConsistent = false;
+        this.requestFullUpdate();
     }
 
     async deleteMusicMetadata() {
@@ -257,5 +265,52 @@ export class OfflineMusicImportPage extends LitElementBase {
 
     override render() {
         return renderOfflineMusicImportPage.call(this);
+    }
+
+    async validateMusicCache(event: Event) {
+        this.loading = true;
+
+        const failedTracks: [MusicModel, string][] = [];
+        for (let track of OfflineSession.musicMetadata) {
+            this.validating++;
+            if (!OfflineSession.trackHashes.includes(track?.hash)) {
+                failedTracks.push([track, 'not cached']);
+                continue;
+            }
+
+            try {
+                await OfflineSession.toggleTrack(track, undefined, true);
+                OfflineSession.audio.pause();
+            } catch (err) {
+                failedTracks.push([track, err]);
+            }
+        }
+
+        if (failedTracks.length >= OfflineSession.musicMetadata.length)
+            await DialogBase.show('Cache corrupt', {
+                content: 'Sämtliche Tracks sind fehlerhaft. Bitte baue den Cache neu auf.',
+            });
+        else if (failedTracks.length == 0)
+            await DialogBase.show('Alle Tracks gültig!', { content: 'Alle Tracks konnten erfolgreich validiert werden.' });
+        else {
+            const shouldDelete = await DialogBase.show('Fehler gefunden', {
+                content:
+                    'Die folgenden Tracks sind fehlerhaft: \n' +
+                    failedTracks.map((x) => x[0].displayName.replace('\n', '') + '-' + JSON.stringify(x[1])).join('\r\n'),
+                acceptActionText: 'Löschen',
+                declineActionText: 'Schließen',
+            });
+            if (shouldDelete) {
+                for (let track of failedTracks) {
+                    let database = await OfflineSession.openDatabase();
+                    database?.delete(OfflineSession.MusicStoreName, track[0].hash);
+                    OfflineSession.trackHashes = OfflineSession.trackHashes.filter((x) => x != track[0].hash);
+                    this.musicImported--;
+                    this.databaseConsistent = false;
+                    this.requestFullUpdate();
+                }
+            }
+        }
+        this.loading = false;
     }
 }

@@ -209,6 +209,11 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                                       @click="${this.changeCurrentTrackPath}"
                                   ></div>`}
                         </div>
+                        <a
+                            href="./backend/api/file/audio?audioPath=${this.updatedTrack.path}&highcompatibility=true"
+                            target="_blank"
+                            >open in new tab</a
+                        >
                     </div>
                 </div>
                 ${this.createNew

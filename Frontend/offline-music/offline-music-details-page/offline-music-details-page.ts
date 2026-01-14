@@ -104,7 +104,11 @@ export class OfflineMusicDetailsPage extends LitElementBase {
     }
 
     async toggleTrack(event?: Event) {
-        await OfflineSession.toggleTrack(this.currentTrack!, event);
+        try {
+            await OfflineSession.toggleTrack(this.currentTrack!, event);
+        } catch {
+            this.changeToTrackAt(this.index + 1, event);
+        }
         await this.requestFullUpdate();
     }
 

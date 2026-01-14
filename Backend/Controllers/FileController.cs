@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Xabe.FFmpeg;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
 
@@ -37,7 +36,7 @@ public class FileController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet("audio")]
-    public FileStreamResult GetAudio(string audioPath = "", bool highCompatibility = false)
+    public async Task<FileStreamResult> GetAudio(string audioPath = "", bool highCompatibility = false)
     {
         if (string.IsNullOrEmpty(audioPath) || !System.IO.File.Exists(audioPath))
             throw new("invalid file path");
@@ -50,11 +49,7 @@ public class FileController : ControllerBase
         if (format == "MPEG-4" && info.Get(StreamKind.General, 0, "IsStreamable") != "Yes")
             highCompatibility = true;
 
-        var detailedInfo = FFmpeg.GetMediaInfo(audioPath).Result;
-        var audioStream = detailedInfo.AudioStreams.FirstOrDefault();
-        var isMP3 = audioStream != null && audioStream.Codec.Equals("mp3", StringComparison.OrdinalIgnoreCase);
-
-        if (!highCompatibility || isMP3)
+        if (!highCompatibility)
         {
             var stream =
                 new BufferedStream(System.IO.File.Open(audioPath, FileMode.Open, FileAccess.Read, FileShare.Read));
@@ -62,8 +57,9 @@ public class FileController : ControllerBase
         }
 
         var ffmpeg = new Process();
+        var tempFile = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.mp3");
         var startInfo = new ProcessStartInfo("D:\\Programme\\ffmpeg\\bin\\ffmpeg.exe",
-            $"-i \"{path.FullName}\" -c:a libmp3lame -q:a 2 -filter:a loudnorm=I=-14:LRA=7:TP=-2 -f mp3 -b:a 256k -threads 0 pipe:1")
+            $"-i \"{path.FullName}\" -c:a libmp3lame -q:a 2 -filter:a loudnorm=I=-14:LRA=7:TP=-2 -f mp3 -b:a 256k -threads 0 -write_xing 1 {tempFile}")
         {
             RedirectStandardError = true,
             RedirectStandardOutput = true,
@@ -78,7 +74,18 @@ public class FileController : ControllerBase
         ffmpeg.Start();
         ffmpeg.BeginErrorReadLine();
 
-        return File(ffmpeg.StandardOutput.BaseStream, "audio/mpeg");
+        ffmpeg.WaitForExit();
+
+        var fileStream = new FileStream(tempFile, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true);
+
+        var ms = new MemoryStream();
+        await fileStream.CopyToAsync(ms);
+        ms.Position = 0;
+        fileStream.Close();
+
+        System.IO.File.Delete(tempFile);
+
+        return File(ms, "audio/mpeg");
     }
 
     [HttpPost("validate-files")]

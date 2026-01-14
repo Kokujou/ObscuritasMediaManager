@@ -100,7 +100,7 @@ export class OfflineMusicPage extends LitElementBase {
 
     getCachedTracks() {
         return OfflineSession.musicMetadata.filter((metadata) =>
-            OfflineSession.trackUrls.some((url) => url.endsWith(metadata.hash))
+            OfflineSession.trackHashes.some((url) => url.endsWith(metadata.hash))
         );
     }
 
@@ -157,7 +157,7 @@ export class OfflineMusicPage extends LitElementBase {
         const playlistId = newGuid();
         const cachedHashes = tracks
             .map((x) => x.hash)
-            .filter((hash) => OfflineSession.trackUrls.some((url) => url.endsWith(hash)));
+            .filter((hash) => OfflineSession.trackHashes.some((url) => url.endsWith(hash)));
 
         if (cachedHashes.length <= 0) {
             await DialogBase.show('Cache unvollständig', {

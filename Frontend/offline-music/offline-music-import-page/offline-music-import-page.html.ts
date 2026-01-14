@@ -43,6 +43,7 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                     </div>
                     <flex-space></flex-space>
                     <div class="delete-action" tooltip="Löschen" @click="${() => this.deleteMusicCache()}"></div>
+                    <div class="validate-action" tooltip="Validieren" @click="${(e: Event) => this.validateMusicCache(e)}"></div>
                 </flex-row>
 
                 <flex-row class="import-status">
@@ -89,6 +90,7 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                       </div>
                   `
                 : ''}
+            ${this.validating > 0 ? html`Validiere Eintrag ${this.validating}/${OfflineSession.musicMetadata.length}` : ''}
 
             <flex-row id="actions">
                 ${OfflineSession.initialized
@@ -109,7 +111,12 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                           ></border-button>
                       `
                     : null}
-                <border-button id="submit-button" text="Neu Laden" @click="${() => this.clearServiceCache()}"></border-button>
+                <border-button
+                    id="submit-button"
+                    text="Neu Laden"
+                    ?disabled="${this.loading || this.importing}"
+                    @click="${() => this.clearServiceCache()}"
+                ></border-button>
             </flex-row>
         </flex-column>
     `;

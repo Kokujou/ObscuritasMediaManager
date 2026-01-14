@@ -1,6 +1,7 @@
 import { css } from 'lit';
 import { renderMaskImage } from '../../extensions/style.extensions';
 import { trashIcon } from '../../pages/media-detail-page/images/trash-icon.svg';
+import { saveTickIcon } from '../../resources/inline-icons/general/save-tick-icon.svg';
 
 export function renderOfflineMusicImportPageStyles() {
     return css`
@@ -56,7 +57,8 @@ export function renderOfflineMusicImportPageStyles() {
             pointer-events: none;
         }
 
-        .delete-action {
+        .delete-action,
+        .validate-action {
             width: 30px;
             height: 30px;
 
@@ -65,8 +67,14 @@ export function renderOfflineMusicImportPageStyles() {
             cursor: pointer;
             user-select: none;
             -webkit-user-select: none;
+        }
 
+        .delete-action {
             ${renderMaskImage(trashIcon())};
+        }
+
+        .validate-action {
+            ${renderMaskImage(saveTickIcon())};
         }
 
         #offline-mode-text {

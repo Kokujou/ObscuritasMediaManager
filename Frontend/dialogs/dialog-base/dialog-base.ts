@@ -1,3 +1,4 @@
+import { TemplateResult } from 'lit';
 import { customElement, property } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
@@ -6,7 +7,7 @@ import { renderDialogBaseStyles } from './dialog-base.css';
 import { renderDialogBase } from './dialog-base.html';
 
 export class DialogProperties {
-    content: string;
+    content: string | TemplateResult;
     acceptActionText: string;
     declineActionText: string;
     width: number;
@@ -27,7 +28,7 @@ export class DialogBase extends LitElementBase {
     static show(caption: string, properties: Partial<DialogProperties>) {
         var dialog = new DialogBase();
         dialog.caption = caption;
-        dialog.acceptActionText = properties?.acceptActionText;
+        dialog.acceptActionText = properties?.acceptActionText ?? 'Ok';
         dialog.declineActionText = properties?.declineActionText;
         dialog.canAccept = true;
         dialog.properties = properties;

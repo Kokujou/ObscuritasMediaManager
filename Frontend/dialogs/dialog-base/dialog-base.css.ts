@@ -54,6 +54,8 @@ export function renderDialogBaseStyles() {
 
         #dialog-text {
             max-width: 600px;
+            max-height: 400px;
+            overflow-y: auto;
         }
 
         #dialog-title {
