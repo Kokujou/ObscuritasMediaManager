@@ -42,7 +42,7 @@ export class OfflineSession {
 
     public static initialized = false;
 
-    protected static playedTracks: Record<string, string> = {};
+    protected static playedTracks: Record<string, ArrayBuffer> = {};
 
     public static readonly DbName = 'ObscuritasMediaManager.Music';
     public static readonly DbVersion = 1;
@@ -83,6 +83,7 @@ export class OfflineSession {
 
     static async setupAudio() {
         this.audio.addEventListener('timeupdate', () => this.audioProgress.next(null));
+        this.audio.preload = 'auto';
 
         var localStorageVolume = localStorage.getItem('volume');
         if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume) / 100);
@@ -121,7 +122,7 @@ export class OfflineSession {
         return await IndexedDbService.openDatabase(OfflineSession.DbName, OfflineSession.DbVersion);
     }
 
-    static async cacheTrack(trackHash: string, blob: Blob) {
+    static async cacheTrack(trackHash: string, blob: Blob | null) {
         let source = this.playedTracks[trackHash];
         if (source) return;
 
@@ -130,13 +131,13 @@ export class OfflineSession {
             throw new Error('corrupt cache');
         }
 
-        source = URL.createObjectURL(blob);
+        source = await blob.arrayBuffer();
         this.playedTracks[trackHash] = source;
     }
 
     static toggleTrackSync(track: MusicModel, event?: Event, force = false) {
-        let source = this.playedTracks[track.hash];
-        if (!source) return;
+        let buffer = this.playedTracks[track.hash];
+        if (!buffer) return;
 
         if (this.activeTrackHash != track.hash) {
             this.audio.onloadedmetadata = () => {
@@ -147,39 +148,30 @@ export class OfflineSession {
                     });
                 }
             };
-
-            this.audio.src = source;
-            this.activeTrackHash = track.hash;
         }
 
         if (this.audio.paused || force) {
-            if (event) this.audio.play();
+            if (event) {
+                const position = this.activeTrackHash == track.hash ? this.audio.currentTime : 0;
+
+                URL.revokeObjectURL(this.audio.src);
+                this.audio.src = URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' }));
+                this.activeTrackHash = track.hash;
+                this.audio.play();
+                this.audio.currentTime = position;
+            }
         } else this.audio.pause();
     }
 
     static async toggleTrack(track: MusicModel, event?: Event, force = false) {
-        let source = this.playedTracks[track.hash];
+        let buffer = this.playedTracks[track.hash];
 
-        if (!source) {
+        if (!buffer) {
             const database = await this.openDatabase();
             const blob = await database!.getItemByKey<Blob>(this.MusicStoreName, track.hash);
             database!.close();
 
-            if (!blob) {
-                alert('corrupt cache!');
-                throw new Error('corrupt cache');
-            }
-
-            const arrayBuffer = await blob.arrayBuffer();
-            const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-            try {
-                await audioCtx.decodeAudioData(arrayBuffer);
-                console.log('MP3 dekodierbar');
-            } catch (e) {
-                alert(JSON.stringify(e.code));
-            }
-            source = URL.createObjectURL(blob);
-            this.playedTracks[track.hash] = source;
+            this.cacheTrack(track.hash, blob);
         }
 
         if (this.activeTrackHash != track.hash) {
@@ -195,9 +187,8 @@ export class OfflineSession {
                 };
                 this.audio.onerror = async () => reject(this.audio.error?.code);
 
-                this.audio.src = source;
+                this.audio.src = URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' }));
                 this.activeTrackHash = track.hash;
-                this.audio.load();
             });
         }
 
