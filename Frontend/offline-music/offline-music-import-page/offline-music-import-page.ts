@@ -34,19 +34,19 @@ export class OfflineMusicImportPage extends LitElementBase {
         return true;
     }
 
-    @state() protected declare musicTotal?: number;
-    @state() protected declare playlistsTotal?: number;
-    @state() protected declare instrumentsTotal?: number;
+    @state() declare protected musicTotal?: number;
+    @state() declare protected playlistsTotal?: number;
+    @state() declare protected instrumentsTotal?: number;
 
-    @state() protected declare musicMetadataImported: number;
-    @state() protected declare musicImported: number;
-    @state() protected declare playlistsImported: number;
-    @state() protected declare instrumentsImported: number;
-    @state() protected declare validating: number;
+    @state() declare protected musicMetadataImported: number;
+    @state() declare protected musicImported: number;
+    @state() declare protected playlistsImported: number;
+    @state() declare protected instrumentsImported: number;
+    @state() declare protected validating: number;
 
-    @state() protected declare databaseConsistent: boolean;
-    @state() protected declare importing: boolean;
-    @state() protected declare loading: boolean;
+    @state() declare protected databaseConsistent: boolean;
+    @state() declare protected importing: boolean;
+    @state() declare protected loading: boolean;
 
     protected requestService = new AuthenticatedRequestService();
     protected MusicService = new MusicClient(BackendUrl, this.requestService);
@@ -203,7 +203,7 @@ export class OfflineMusicImportPage extends LitElementBase {
             database = await IndexedDbService.createDatabase(
                 OfflineSession.DbName,
                 OfflineSession.DbVersion,
-                ...OfflineSession.StoreNames
+                ...OfflineSession.StoreNames,
             );
 
         return database;
@@ -279,7 +279,7 @@ export class OfflineMusicImportPage extends LitElementBase {
             }
 
             try {
-                await OfflineSession.toggleTrack(track, undefined, true);
+                await OfflineSession.toggleTrack(track, new Event('click'), true, false);
                 OfflineSession.audio.pause();
             } catch (err) {
                 failedTracks.push([track, err]);

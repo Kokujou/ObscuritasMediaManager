@@ -47,6 +47,7 @@ export function renderEntityStatusDialogStyles() {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            max-width: 500px;
         }
 
         #entries-loading-indication {

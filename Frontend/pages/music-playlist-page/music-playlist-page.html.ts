@@ -31,13 +31,13 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                   </style>
               `
             : this.moodToSwitch == 'mood2'
-            ? html`<style>
-                  #mood-switcher {
-                      background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
-                      border: 2px solid var(--secondary-color);
-                  }
-              </style>`
-            : ''};
+              ? html`<style>
+                    #mood-switcher {
+                        background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
+                        border: 2px solid var(--secondary-color);
+                    }
+                </style>`
+              : ''};
 
         <page-layout>
             <div id="music-player-container">
@@ -79,12 +79,12 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                             @nextParticipants="${() =>
                                 this.changeProperty(
                                     'participants',
-                                    Enum.nextValue(Participants, this.updatedTrack.participants, 'Unset')
+                                    Enum.nextValue(Participants, this.updatedTrack.participants, 'Unset'),
                                 )}"
                             @nextInstrumentation="${() =>
                                 this.changeProperty(
                                     'instrumentation',
-                                    Enum.nextValue(Instrumentation, this.updatedTrack.instrumentation, 'Unset')
+                                    Enum.nextValue(Instrumentation, this.updatedTrack.instrumentation, 'Unset'),
                                 )}"
                             @changeRating="${(e: CustomEvent) => this.changeProperty('rating', e.detail)}"
                             @changeInstruemnts="${() => this.openInstrumentsDialog()}"
@@ -126,7 +126,7 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                                       MediaDetailPage,
                                       { mediaId: this.sourceMediaId },
                                       this.updatedTrack.source!,
-                                      { target: '_blank', className: 'media-link' }
+                                      { target: '_blank', className: 'media-link' },
                                   )
                                 : renderSourceInput.call(this)}
                         </div>
@@ -137,7 +137,7 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                                         .text="${MusicGenre[genreKey]}"
                                         ?disabled="${this.updatedTrack.complete}"
                                         @removed="${() => this.removeGenreKey(genreKey)}"
-                                    ></tag-label>`
+                                    ></tag-label>`,
                             )}
                             ${this.updatedTrack.complete
                                 ? ''
@@ -209,11 +209,6 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                                       @click="${this.changeCurrentTrackPath}"
                                   ></div>`}
                         </div>
-                        <a
-                            href="./backend/api/file/audio?audioPath=${this.updatedTrack.path}&highcompatibility=true"
-                            target="_blank"
-                            >open in new tab</a
-                        >
                     </div>
                 </div>
                 ${this.createNew
@@ -222,18 +217,18 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                           <div id="edit-playlist-text">Track erstellen</div>
                       </div>`
                     : this.playlist.isTemporary
-                    ? html`
-                          <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
-                              <div id="edit-playlist-icon" icon="${Icons.Edit}"></div>
-                              <div id="edit-playlist-text">Zu Playlist befördern</div>
-                          </div>
-                      `
-                    : html`
-                          <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
-                              <div id="edit-playlist-icon" icon="${Icons.SaveTick}"></div>
-                              <div id="edit-playlist-text">Playlist bearbeiten</div>
-                          </div>
-                      `}
+                      ? html`
+                            <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
+                                <div id="edit-playlist-icon" icon="${Icons.Edit}"></div>
+                                <div id="edit-playlist-text">Zu Playlist befördern</div>
+                            </div>
+                        `
+                      : html`
+                            <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
+                                <div id="edit-playlist-icon" icon="${Icons.SaveTick}"></div>
+                                <div id="edit-playlist-text">Playlist bearbeiten</div>
+                            </div>
+                        `}
                 <div id="media-playlist-container">
                     <media-playlist
                         .items="${this.playlist.tracks.map((x) => x.displayName)}"

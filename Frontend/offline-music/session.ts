@@ -163,15 +163,16 @@ export class OfflineSession {
         } else this.audio.pause();
     }
 
-    static async toggleTrack(track: MusicModel, event?: Event, force = false) {
+    static async toggleTrack(track: MusicModel, event?: Event, force = false, cache = true) {
         let buffer = this.playedTracks[track.hash];
 
         if (!buffer) {
             const database = await this.openDatabase();
             const blob = await database!.getItemByKey<Blob>(this.MusicStoreName, track.hash);
             database!.close();
+            if (blob) buffer = await blob.arrayBuffer();
 
-            this.cacheTrack(track.hash, blob);
+            if (cache) await this.cacheTrack(track.hash, blob);
         }
 
         if (this.activeTrackHash != track.hash) {

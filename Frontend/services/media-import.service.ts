@@ -39,12 +39,12 @@ export class MediaImportService {
 
         var affectedTrackHashs: string[] = [];
         for (let path of filePaths) {
-            var name = path.split('\\').at(-1);
+            let name = path.split('\\').at(-1);
             MusicService.createMusicTrackFromPath(path).then((result) => {
                 dialog.addEntry({
                     text: result.key
                         ? LinkElement.forPage(MusicPlaylistPage, { trackHash: result.key }, name ?? path)
-                        : name ?? path,
+                        : (name ?? path),
                     status: result.value,
                 });
                 if (result.value == ModelCreationState.Success || result.value == ModelCreationState.Updated)
@@ -73,7 +73,7 @@ export class MediaImportService {
 
             for (const path of mediaPaths) {
                 var response = await MediaService.createFromMediaPath(
-                    new MediaCreationRequest({ rootPath: path, category, language })
+                    new MediaCreationRequest({ rootPath: path, category, language }),
                 );
 
                 if (!response.key) {
