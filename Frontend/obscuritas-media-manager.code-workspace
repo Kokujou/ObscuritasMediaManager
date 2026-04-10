@@ -1,8 +1,8 @@
 {
     "folders": [
         {
-            "path": "."
-        }
+            "path": ".",
+        },
     ],
     "settings": {
         "todo-tree.tree.showBadges": false,
@@ -10,12 +10,12 @@
         "blueprint.templatesPath": ["./templates"],
         "task.allowAutomaticTasks": "on",
         "files.associations": {
-            "**/templates/**": "txt"
+            "**/templates/**": "txt",
         },
         "files.exclude": {
             "**/.DS_Store": true,
             "**/node_modules/**": true,
-            "exports.js": true
+            "exports.js": true,
         },
         "search.exclude": {
             "**/node_modules": true,
@@ -23,19 +23,19 @@
             "**/*.code-search": true,
             "obscuritas-media-manager-backend-client.*": true,
             "**/client-interop/**": false,
-            "**/dist": false
+            "**/dist": false,
         },
-        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "js/ts.tsdk.promptToUseWorkspaceVersion": true,
         "files.watcherInclude": ["**/*.ts"],
         "files.watcherExclude": {
             "**/.git/objects/**": true,
             "**/.git/subtree-cache/**": true,
             "**/.hg/store/**": true,
-            "**/obscuritas-media-manager-backend-client.ts": true
+            "**/obscuritas-media-manager-backend-client.ts": true,
         },
-        "typescript.preferences.importModuleSpecifierEnding": "minimal",
-        "typescript.tsserver.experimental.enableProjectDiagnostics": false,
-        "typescript.tsdk": "node_modules\\typescript\\lib"
+        "js/ts.preferences.importModuleSpecifierEnding": "minimal",
+        "js/ts.tsserver.experimental.enableProjectDiagnostics": false,
+        "js/ts.tsdk.path": "node_modules\\typescript\\lib",
     },
     "tasks": {
         "version": "2.0.0",
@@ -52,13 +52,13 @@
                     "panel": "dedicated",
                     "clear": true,
                     "revealProblems": "never",
-                    "showReuseMessage": false
+                    "showReuseMessage": false,
                 },
                 "problemMatcher": "$ts-webpack-watch",
                 "isBackground": true,
                 "runOptions": {
-                    "runOn": "folderOpen"
-                }
+                    "runOn": "folderOpen",
+                },
             },
             {
                 "label": "Check for build errors",
@@ -72,14 +72,14 @@
                     "panel": "dedicated",
                     "clear": true,
                     "revealProblems": "never",
-                    "showReuseMessage": false
+                    "showReuseMessage": false,
                 },
                 "problemMatcher": "$tsc-watch",
                 "isBackground": true,
                 "runOptions": {
-                    "runOn": "folderOpen"
-                }
-            }
-        ]
-    }
+                    "runOn": "folderOpen",
+                },
+            },
+        ],
+    },
 }

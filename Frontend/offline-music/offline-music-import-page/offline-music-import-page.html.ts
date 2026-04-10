@@ -1,6 +1,7 @@
 import { html } from 'lit';
 import { changePage } from '../../extensions/url.extension';
 import { OfflineMusicPage } from '../offline-music-page/offline-music-page';
+import { OfflineMusicCache } from '../offline-music.cache';
 import { OfflineSession } from '../session';
 import { OfflineMusicImportPage } from './offline-music-import-page';
 
@@ -117,6 +118,28 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                     ?disabled="${this.loading || this.importing}"
                     @click="${() => this.clearServiceCache()}"
                 ></border-button>
+            </flex-row>
+            <flex-row>
+                ${this.loading
+                    ? html`test`
+                    : this.isCached
+                      ? html`<div class="info">
+                            Letztes Update:
+                            ${this.cacheDate > new Date().addDays(-1) ? 'Heute' : this.cacheDate.toLocaleDateString()}.
+                            ${this.offlineMode
+                                ? ''
+                                : html` <link-element @click="${async () => await OfflineMusicCache.cacheApplication()}"
+                                      >Jetzt updaten</link-element
+                                  >`}
+                        </div>`
+                      : html`<div class="error">
+                            Die Anwendung ist noch nicht installiert!
+                            ${this.offlineMode
+                                ? ''
+                                : html` <link-element @click="${async () => await OfflineMusicCache.cacheApplication()}"
+                                      >Jetzt installieren</link-element
+                                  >`}
+                        </div>`}
             </flex-row>
         </flex-column>
     `;

@@ -22,7 +22,9 @@ export function renderOfflineMusicImportPageStyles() {
             background: #0005;
             backdrop-filter: blur(20px);
 
-            box-shadow: 0 0 20px black, 0 0 20px black;
+            box-shadow:
+                0 0 20px black,
+                0 0 20px black;
         }
 
         #caption {
@@ -88,6 +90,20 @@ export function renderOfflineMusicImportPageStyles() {
         #actions {
             gap: 20px;
             justify-content: center;
+        }
+
+        .info *,
+        .error * {
+            display: inline-block;
+        }
+
+        .error {
+            color: var(--error-color);
+        }
+
+        link-element {
+            font-weight: bold;
+            text-decoration: underline;
         }
     `;
 }

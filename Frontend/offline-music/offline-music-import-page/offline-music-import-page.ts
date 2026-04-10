@@ -47,6 +47,8 @@ export class OfflineMusicImportPage extends LitElementBase {
     @state() declare protected databaseConsistent: boolean;
     @state() declare protected importing: boolean;
     @state() declare protected loading: boolean;
+    @state() declare protected isCached: boolean;
+    @state() declare protected cacheDate: Date;
 
     protected requestService = new AuthenticatedRequestService();
     protected MusicService = new MusicClient(BackendUrl, this.requestService);
@@ -72,6 +74,8 @@ export class OfflineMusicImportPage extends LitElementBase {
         super.connectedCallback();
 
         this.loading = true;
+        this.isCached = await caches.has('offline-music-v1');
+        this.cacheDate = new Date(Number.parseInt(localStorage.getItem('offline-music-cache-updated') ?? Date.now().toString()));
         await this.loadData();
         this.loading = false;
 
@@ -258,7 +262,7 @@ export class OfflineMusicImportPage extends LitElementBase {
 
     async clearServiceCache() {
         this.importing = true;
-        await caches.delete('v1');
+        await caches.delete('offline-music-v1');
         location.assign('/');
         this.importing = false;
     }
