@@ -2,6 +2,7 @@ import { CheckboxState } from '../../data/enumerations/checkbox-state';
 
 export class DropDownOption<T> {
     text: string;
+    searchableText?: string;
     value: T;
     category?: string;
     state: CheckboxState;
@@ -19,7 +20,7 @@ export class DropDownOption<T> {
                 value: key,
                 text: `${key ?? '---'}`,
                 state: key == defaultValue ? CheckboxState.Ignore : CheckboxState.Forbid,
-            })
+            }),
         );
     }
 

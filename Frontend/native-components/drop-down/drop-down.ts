@@ -4,6 +4,7 @@ import { LitElementBase } from '../../data/lit-element-base';
 import { DropDownOption } from './drop-down-option';
 import { renderDropDownStyles } from './drop-down.css';
 import { renderDropDown } from './drop-down.html';
+import { render } from 'lit';
 
 export const DropDownStyles = { simple: 'simple', solid: 'solid', compact: 'compact' };
 
@@ -37,25 +38,82 @@ export class DropDown extends LitElementBase {
         this._caption = value;
     }
 
-    @property() public declare unsetText: string;
-    @property() public declare searchFilter: string;
-    @property({ reflect: true }) public declare orientation: 'up' | 'down';
-    @property({ type: Number }) public declare maxDisplayDepth: number;
-    @property({ type: Number }) public declare _currentIndex: number;
-    @property({ type: Boolean, reflect: true }) public declare required: boolean;
-    @property({ type: Boolean, reflect: true }) public declare useSearch: boolean;
-    @property({ type: Boolean, reflect: true }) public declare useToggle: boolean;
-    @property({ type: Boolean, reflect: true }) public declare multiselect: boolean;
-    @property({ type: Boolean, reflect: true }) public declare threeValues: boolean;
-    @property({ type: Array }) public declare options: DropDownOption<any>[];
+    @property() declare public unsetText: string;
+    @property() declare public searchFilter: string;
+    @property({ reflect: true }) declare public orientation: 'up' | 'down';
+    @property({ type: Number }) declare public maxDisplayDepth: number;
+    @property({ type: Number }) declare public _currentIndex: number;
+    @property({ type: Boolean, reflect: true }) declare public required: boolean;
+    @property({ type: Boolean, reflect: true }) declare public useSearch: boolean;
+    @property({ type: Boolean, reflect: true }) declare public useToggle: boolean;
+    @property({ type: Boolean, reflect: true }) declare public multiselect: boolean;
+    @property({ type: Boolean, reflect: true }) declare public threeValues: boolean;
+    @property({ type: Array }) declare public options: DropDownOption<unknown>[];
 
-    @state() protected declare showDropDown: boolean;
+    @state() declare protected showDropDown: boolean;
+    @state() declare protected search: string;
+    @state() declare protected focused: DropDownOption<any> | undefined;
+
+    searchResetCallback = setTimeout(() => (this.search = ''), 1000);
+
+    attachShadow(init: ShadowRootInit): ShadowRoot {
+        return super.attachShadow({ ...init, mode: 'open', delegatesFocus: true });
+    }
 
     constructor() {
         super();
         this.unsetText = 'Unset';
         this.maxDisplayDepth = 5;
         this.options = [];
+        this.tabIndex = 0;
+
+        this.addEventListener('keydown', (e) => {
+            if (this.threeValues || this.useToggle || this.multiselect) return;
+
+            e.stopPropagation();
+            if (e.key != 'Tab') e.preventDefault();
+
+            switch (e.key) {
+                case 'Enter':
+                    if (this.showDropDown && this.focused) this.changeOptionState(this.focused, CheckboxState.Ignore);
+                    this.toggleDropdown();
+                    return;
+                case ' ':
+                    this.toggleDropdown();
+                    return;
+                case 'Escape':
+                    this.toggleDropdown(false);
+                    return;
+                case e.key.length == 1 ? e.key : null:
+                    this.search += e.key;
+                    clearTimeout(this.searchResetCallback);
+                    this.searchResetCallback = setTimeout(() => (this.search = ''), 1000);
+
+                    this.changeFocus(
+                        this.options.find(
+                            (x) =>
+                                x.searchableText?.toLocaleLowerCase().startsWith(this.search.toLocaleLowerCase()) ||
+                                x.text.toLocaleLowerCase().startsWith(this.search.toLocaleLowerCase()),
+                        ),
+                    );
+                    return;
+            }
+
+            if (e.key != 'ArrowUp' && e.key != 'ArrowDown') return;
+
+            var index = this.showDropDown
+                ? this.options.orderBy((x) => x.category).findIndex((x) => this.focused?.value == x.value)
+                : this.options.orderBy((x) => x.category).findIndex((x) => x.state != CheckboxState.Forbid);
+
+            if (e.key == 'ArrowUp') index--;
+            else if (e.key == 'ArrowDown') index++;
+
+            if (index < 0) index = this.options.length - 1;
+            if (index >= this.options.length) index = 0;
+
+            this.changeFocus(this.options[index]);
+        });
+
         this.addEventListener('click', () => {
             this.clickedOnElement = true;
         });
@@ -68,6 +126,13 @@ export class DropDown extends LitElementBase {
 
     override render() {
         return renderDropDown.call(this);
+    }
+
+    toggleDropdown(targetState?: boolean) {
+        this.showDropDown = targetState ?? !this.showDropDown;
+        this.focused = undefined;
+        if (this.useSearch) this.resetSearchFilter();
+        this.shadowRoot!.querySelector('.options')!.scrollTop = 0;
     }
 
     updateSearchFilter() {
@@ -91,5 +156,20 @@ export class DropDown extends LitElementBase {
         this.dispatchEvent(new CustomEvent('selectionChange', { detail: { option } }));
         this.dispatchEvent(new Event('change', { composed: true, bubbles: true }));
         this.requestFullUpdate();
+    }
+
+    async changeFocus(option: DropDownOption<any> | undefined) {
+        if (this.showDropDown) this.focused = option;
+        else if (option) this.changeOptionState(option, CheckboxState.Ignore);
+        else
+            this.changeOptionState(
+                this.options.find((x) => x.value == this.options.find((o) => o.state != CheckboxState.Forbid)?.value)!,
+                CheckboxState.Forbid,
+            );
+
+        await this.requestFullUpdate();
+        await this.updateComplete;
+        if (this.showDropDown)
+            this.shadowRoot!.querySelector('.option[selected]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' }) as any;
     }
 }

@@ -81,8 +81,10 @@ export function renderDropDownStyles() {
             position: absolute;
             top: 100%;
             width: var(--option-width, 100%);
-
+            box-sizing: border-box;
+            overscroll-behavior: contain;
             min-width: max-content;
+            scrollbar-gutter: stable;
 
             display: flex;
             flex-direction: column;
@@ -126,9 +128,11 @@ export function renderDropDownStyles() {
 
         .category-label {
             font-size: 16px;
+            padding: 0 10px;
             margin-top: 30px;
             margin-bottom: 5px;
             align-self: center;
+            white-space: nowrap;
         }
 
         .option {
@@ -153,7 +157,7 @@ export function renderDropDownStyles() {
         }
 
         .option:hover,
-        .option.selected {
+        .option[selected] {
             cursor: pointer;
             color: var(--dropdown-compact-hover-color, inherit);
             background: #666;

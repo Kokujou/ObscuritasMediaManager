@@ -14,17 +14,17 @@ export class GroupedDropdown extends LitElementBase {
 
     get results() {
         return Object.entries(this.options)
-            .map((x) => x[1].map((y: any) => ({ category: x[0], value: y } as GroupedDropdownResult)))
+            .map((x) => x[1].map((y: any) => ({ category: x[0], value: y }) as GroupedDropdownResult))
             .flatMap((x) => x);
     }
 
-    @property({ type: Object }) public declare options: Object;
-    @property({ type: Number }) public declare maxDisplayDepth: number;
+    @property({ type: Object }) declare public options: Object;
+    @property({ type: Number }) declare public maxDisplayDepth: number;
 
-    @state() public declare showDropDown: boolean;
-    @state() protected declare search: string;
+    @state() declare public showDropDown: boolean;
+    @state() declare protected search: string;
 
-    @state() protected declare result: GroupedDropdownResult;
+    @state() declare protected result: GroupedDropdownResult | null;
     searchResetCallback = setTimeout(() => (this.search = ''), 1000);
 
     constructor() {
@@ -49,7 +49,7 @@ export class GroupedDropdown extends LitElementBase {
             e.preventDefault();
             e.stopPropagation();
 
-            var index = this.results.findIndex((x) => x.value == this.result.value);
+            var index = this.results.findIndex((x) => x.value == this.result?.value);
 
             if (e.key == 'ArrowUp') index--;
             else if (e.key == 'ArrowDown') index++;

@@ -26,14 +26,7 @@ export function renderDropDown(this: DropDown) {
 }
 
 function showDropDown(this: DropDown) {
-    return html`<div
-        class="dropdown"
-        @click="${() => {
-            this.showDropDown = !this.showDropDown;
-            if (this.useSearch) this.resetSearchFilter();
-            this.shadowRoot!.querySelector('.options')!.scrollTop = 0;
-        }}"
-    >
+    return html`<div class="dropdown" tabindex="-1" @click="${() => this.toggleDropdown()}">
         <div id="caption-container">
             ${this.caption} ${this.caption ? '' : html`<div id="empty-text-placeholder">empty</div>`}
         </div>
@@ -68,12 +61,12 @@ function showDropDown(this: DropDown) {
                 this.options
                     .filter((x) => x.text.toLocaleLowerCase().match(this.searchFilter?.toLocaleLowerCase()))
                     .orderBy((x) => x.category)
-                    .groupBy((x) => x.category!)
+                    .groupBy((x) => x.category!),
             ).map(
                 (group) => html`
-                    ${group[0] ? html` <label class="category-label">======= ${group[0]} ======</label>` : ''}
+                    ${group[0] ? html` <label class="category-label">======= ${group[0]} =======</label>` : ''}
                     ${group[1].map((option) => renderDropDownOption.call(this, option))}
-                `
+                `,
             )}
         </div>
         <div class="dropdown-icon-container ${this.showDropDown ? 'dropped-down' : ''}">></div>
@@ -83,7 +76,7 @@ function showDropDown(this: DropDown) {
 function renderDropDownOption(this: DropDown, option: DropDownOption<any>) {
     return html`
         <div
-            ?selected="${option.state != CheckboxState.Forbid}"
+            ?selected="${option.state != CheckboxState.Forbid || this.focused?.value == option.value}"
             class="option"
             @click=${() =>
                 this.changeOptionState(
@@ -91,8 +84,8 @@ function renderDropDownOption(this: DropDown, option: DropDownOption<any>) {
                     this.threeValues
                         ? Enum.nextValue(CheckboxState, option.state)
                         : option.state == CheckboxState.Ignore
-                        ? CheckboxState.Forbid
-                        : CheckboxState.Ignore
+                          ? CheckboxState.Forbid
+                          : CheckboxState.Ignore,
                 )}
         >
             ${this.multiselect && this.useToggle ? renderToggle.call(this, option) : option.text}

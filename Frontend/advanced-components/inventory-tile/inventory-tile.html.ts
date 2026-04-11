@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { MeasurementUnits } from '../../data/measurement-units';
 import { DropDownOption } from '../../native-components/drop-down/drop-down-option';
 import { MeasurementUnit } from '../../obscuritas-media-manager-backend-client';
@@ -34,10 +35,21 @@ export function renderInventoryTile(this: InventoryTile) {
                           <drop-down
                               .options="${this.editAmount
                                   ? MeasurementUnits.filter((x) => x.measurement == this.item.unit.measurement).map((unit) =>
-                                        DropDownOption.create({ value: unit, text: unit.name })
+                                        DropDownOption.create({
+                                            value: unit,
+                                            text: unit.name,
+                                            searchableText: unit.shortName,
+                                            state: unit == this.item.unit ? CheckboxState.Ignore : CheckboxState.Forbid,
+                                        }),
                                     )
                                   : MeasurementUnits.map((unit) =>
-                                        DropDownOption.create({ category: unit.measurement, value: unit, text: unit.name })
+                                        DropDownOption.create({
+                                            category: unit.measurement,
+                                            value: unit,
+                                            text: unit.name,
+                                            searchableText: unit.shortName,
+                                            state: unit == this.item.unit ? CheckboxState.Ignore : CheckboxState.Forbid,
+                                        }),
                                     )}"
                               caption="${this.item.unit?.name ?? '---'}"
                               @selectionChange="${(e: CustomEvent<{ option: DropDownOption<MeasurementUnit> }>) => {

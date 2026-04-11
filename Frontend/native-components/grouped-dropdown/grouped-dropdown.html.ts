@@ -17,7 +17,7 @@ export function renderGroupedDropdown(this: GroupedDropdown) {
             }}"
         >
             <div id="caption-container">
-                ${this.result.value} ${this.result.value ? '' : html`<div id="empty-text-placeholder">empty</div>`}
+                ${this.result?.value} ${this.result?.value ? '' : html`<div id="empty-text-placeholder">empty</div>`}
             </div>
             <div
                 class="options"
@@ -44,7 +44,7 @@ function renderDropdownSection(this: GroupedDropdown, section: keyof DropdownCat
 function renderDropDownOption(this: GroupedDropdown, value: import('./grouped-dropdown').GroupedDropdownResult) {
     return html`
         <div
-            ?selected="${this.result.value == value.value}"
+            ?selected="${this.result?.value == value.value}"
             class="option"
             .value="${value}"
             @click=${() => this.changeResult(value)}
