@@ -112,12 +112,6 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                           ></border-button>
                       `
                     : null}
-                <border-button
-                    id="submit-button"
-                    text="Neu Laden"
-                    ?disabled="${this.loading || this.importing}"
-                    @click="${() => this.clearServiceCache()}"
-                ></border-button>
             </flex-row>
             <flex-row>
                 ${this.loading
