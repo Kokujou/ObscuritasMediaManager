@@ -105,8 +105,14 @@ export class OfflineSession {
         this.audio.addEventListener('seeked', () => this.syncVisualization());
         this.audio.addEventListener('loadstart', () => this.syncVisualization());
 
-        navigator.mediaSession.setActionHandler('play', () => this.audio.play());
-        navigator.mediaSession.setActionHandler('pause', () => this.audio.pause());
+        navigator.mediaSession.setActionHandler('play', () => {
+            this.audio.play();
+            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+            this.audio.pause();
+            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'paused';
+        });
 
         document.addEventListener('visibilitychange', () => this.syncVisualization());
     }
@@ -159,8 +165,12 @@ export class OfflineSession {
                 this.activeTrackHash = track.hash;
                 this.audio.play();
                 this.audio.currentTime = position;
+                if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
             }
-        } else this.audio.pause();
+        } else {
+            this.audio.pause();
+            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'paused';
+        }
     }
 
     static async toggleTrack(track: MusicModel, event?: Event, force = false, cache = true) {
@@ -194,8 +204,14 @@ export class OfflineSession {
         }
 
         if (this.audio.paused || force) {
-            if (event) await this.audio.play();
-        } else this.audio.pause();
+            if (event) {
+                await this.audio.play();
+                if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
+            }
+        } else {
+            this.audio.pause();
+            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'paused';
+        }
     }
 
     static changeVolume(volume: number) {
