@@ -13,14 +13,14 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         return renderOfflineMusicDetailsPageStyles();
     }
 
-    @state() public declare trackHash?: string;
-    @state() public declare playlistId?: string;
-    @state() public declare index: number;
-    @state() public declare randomize: boolean;
-    @state() public declare caching: boolean;
+    @state() declare public trackHash?: string;
+    @state() declare public playlistId?: string;
+    @state() declare public index: number;
+    @state() declare public randomize: boolean;
+    @state() declare public caching: boolean;
 
-    @state() protected declare playlistExpanded: boolean;
-    protected declare currentPlaylist: string[] | null;
+    @state() declare protected playlistExpanded: boolean;
+    declare protected currentPlaylist: string[] | null;
 
     protected get currentTrack() {
         const trackHash = this.trackHash ?? this.currentPlaylist?.at(this.index);
@@ -71,8 +71,8 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         this.subscriptions.push(OfflineSession.audioProgress.subscribe(() => this.requestFullUpdate()));
 
         this.currentPlaylist = this.playlistId
-            ? OfflineSession.temporaryPlaylists[this.playlistId] ??
-              OfflineSession.playlists.find((x) => x.id == this.playlistId)?.tracks
+            ? (OfflineSession.temporaryPlaylists[this.playlistId] ??
+              OfflineSession.playlists.find((x) => x.id == this.playlistId)?.tracks)
             : null;
 
         const seedString = sessionStorage.getItem(this.seedSessionKey);
@@ -88,12 +88,13 @@ export class OfflineMusicDetailsPage extends LitElementBase {
 
         this.toggleTrack();
         OfflineSession.audio.pause();
+        if (navigator.mediaSession) navigator.mediaSession.playbackState = 'paused';
         this.requestFullUpdate();
 
         window.addEventListener('click', (e) => (this.playlistExpanded = false), { signal: this.abortController.signal });
         if ('mediaSession' in navigator) {
             navigator.mediaSession.setActionHandler('previoustrack', () =>
-                this.changeToTrackAt(this.index - 1, new Event('dummy'))
+                this.changeToTrackAt(this.index - 1, new Event('dummy')),
             );
             navigator.mediaSession.setActionHandler('nexttrack', () => this.changeToTrackAt(this.index + 1, new Event('dummy')));
             navigator.mediaSession.setActionHandler('pause', () => this.toggleTrack(new Event('dummy')));
@@ -168,7 +169,7 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         changePage(
             OfflineMusicDetailsPage,
             { index: this.index, playlistId: this.playlistId, trackHash: this.trackHash, randomize: this.randomize },
-            false
+            false,
         );
     }
 }

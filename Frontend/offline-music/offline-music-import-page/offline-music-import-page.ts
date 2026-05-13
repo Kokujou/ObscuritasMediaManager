@@ -285,6 +285,7 @@ export class OfflineMusicImportPage extends LitElementBase {
             try {
                 await OfflineSession.toggleTrack(track, new Event('click'), true, false);
                 OfflineSession.audio.pause();
+                if (navigator.mediaSession) navigator.mediaSession.playbackState = 'paused';
             } catch (err) {
                 failedTracks.push([track, err]);
             }
