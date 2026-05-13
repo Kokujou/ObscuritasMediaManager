@@ -26,7 +26,9 @@ if ('serviceWorker' in navigator) {
             }
             catch{}
            
-            const registration = await navigator.serviceWorker.register('./service-worker.js');
+            const registration = await navigator.serviceWorker.register('./service-worker.js',{
+                    updateViaCache: 'all'
+            });
             console.log('Service Worker registriert mit Scope:', registration.scope);
         } catch (err) {
             console.log('Service Worker Registrierung fehlgeschlagen:', err);

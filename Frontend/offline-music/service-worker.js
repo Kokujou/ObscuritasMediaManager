@@ -8,8 +8,8 @@ sw.addEventListener('fetch', (event) => {
 
 /** @param {Request} request */
 async function respondWithCache(request) {
-    const cache = await caches.open('offline-music');
+    const cache = await caches.open('offline-music-v1');
     const cached = await cache.match(request);
-    if (!cached) return (await fetch(request)) ?? new Response();
+    if (!cached) return (await fetch(request).catch()) ?? new Response();
     return cached;
 }

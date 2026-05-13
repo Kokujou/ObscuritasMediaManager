@@ -72,48 +72,46 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
             >
                 <div id="search-results">
                     ${paginatedPlaylists.map(
-                        (playlist) =>
-                            html`
-                                <div class="audio-link-container" @click="${(e: Event) => e.stopPropagation()}">
-                                    <playlist-tile
-                                        .playlist="${playlist}"
-                                        @click="${() => this.playPlaylist(playlist.tracks)}"
-                                    ></playlist-tile>
-                                </div>
-                            `
+                        (playlist) => html`
+                            <div class="audio-link-container" @click="${(e: Event) => e.stopPropagation()}">
+                                <playlist-tile
+                                    .playlist="${playlist}"
+                                    @click="${() => this.playPlaylist(playlist.tracks)}"
+                                ></playlist-tile>
+                            </div>
+                        `,
                     )}
                     ${paginatedTracks.map(
-                        (track) =>
-                            html`
-                                <div
-                                    class="audio-link-container"
-                                    @pointerdown="${(e: PointerEvent) => this.startSelectionModeTimer(track.hash, e)}"
-                                    @pointerup="${(e: PointerEvent) => this.stopSelectionModeTimer()}"
-                                    @pointerover="${(e: PointerEvent) =>
-                                        this.selectionModeSetByHash != track.hash ? this.stopSelectionModeTimer() : null}"
-                                    @click="${(e: Event) => {
-                                        e.stopPropagation();
-                                        this.toggleTrackSelection(track);
-                                    }}"
-                                >
-                                    ${this.selectionMode
-                                        ? html`<input
-                                              type="checkbox"
-                                              class="audio-select"
-                                              ?checked="${this.selectedTracks.includes(track)}"
-                                              @change="${() => this.toggleTrackSelection(track)}"
-                                          />`
-                                        : ''}
-                                    <audio-tile
-                                        .track="${track}"
-                                        .visualizationData="${OfflineSession.visualizationData}"
-                                        ?paused="${OfflineSession.audio.paused || OfflineSession.activeTrackHash != track.hash}"
-                                        @musicToggled="${(e: Event) => this.toggleTrack(track, e)}"
-                                        @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
-                                        @click="${() => this.playPlaylist([track])}"
-                                    ></audio-tile>
-                                </div>
-                            `
+                        (track) => html`
+                            <div
+                                class="audio-link-container"
+                                @pointerdown="${(e: PointerEvent) => this.startSelectionModeTimer(track.hash, e)}"
+                                @pointerup="${(e: PointerEvent) => this.stopSelectionModeTimer()}"
+                                @pointerover="${(e: PointerEvent) =>
+                                    this.selectionModeSetByHash != track.hash ? this.stopSelectionModeTimer() : null}"
+                                @click="${(e: Event) => {
+                                    e.stopPropagation();
+                                    this.toggleTrackSelection(track);
+                                }}"
+                            >
+                                ${this.selectionMode
+                                    ? html`<input
+                                          type="checkbox"
+                                          class="audio-select"
+                                          ?checked="${this.selectedTracks.includes(track)}"
+                                          @change="${() => this.toggleTrackSelection(track)}"
+                                      />`
+                                    : ''}
+                                <audio-tile
+                                    .track="${track}"
+                                    .visualizationData="${OfflineSession.visualizationData}"
+                                    ?paused="${OfflineSession.audio.paused || OfflineSession.activeTrackHash != track.hash}"
+                                    @musicToggled="${(e: Event) => this.toggleTrack(track, e)}"
+                                    @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
+                                    @click="${() => this.playPlaylist([track])}"
+                                ></audio-tile>
+                            </div>
+                        `,
                     )}
                 </div>
             </paginated-scrolling>

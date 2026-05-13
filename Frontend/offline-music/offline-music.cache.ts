@@ -12,6 +12,7 @@ const FilesForCaching = [
     '../resources/inline-icons/general/loading-icon.svg',
     '../resources/images/background.jpg',
     './processor.js',
+    './service-worker.js',
 ];
 
 export class OfflineMusicCache {

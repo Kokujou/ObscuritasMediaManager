@@ -27,18 +27,18 @@ export class OfflineMusicPage extends LitElementBase {
         return [renderOfflineMusicPageStyles(), renderOfflineMusicPagePortraitStyles()];
     }
 
-    @property({ type: Boolean, reflect: true }) protected declare selectionMode: boolean;
+    @property({ type: Boolean, reflect: true }) declare protected selectionMode: boolean;
 
-    @state() public declare dataImported: boolean;
-    @state() protected declare filter: MusicFilterOptions;
-    @state() protected declare sorting: MusicSorting;
-    @state() protected declare currentPage: number;
+    @state() declare public dataImported: boolean;
+    @state() declare protected filter: MusicFilterOptions;
+    @state() declare protected sorting: MusicSorting;
+    @state() declare protected currentPage: number;
 
-    @state() protected declare selectedTracks: MusicModel[];
-    @state() protected declare selectionModeTimer: NodeJS.Timeout | null;
-    @state() protected declare selectionModeSetByHash: string | null;
+    @state() declare protected selectedTracks: MusicModel[];
+    @state() declare protected selectionModeTimer: NodeJS.Timeout | null;
+    @state() declare protected selectionModeSetByHash: string | null;
 
-    @state() protected declare sidebarFlipped: boolean;
+    @state() declare protected sidebarFlipped: boolean;
 
     constructor() {
         super();
@@ -60,7 +60,6 @@ export class OfflineMusicPage extends LitElementBase {
 
     async connectedCallback() {
         super.connectedCallback();
-
         await OfflineSession.initialize();
         if (!OfflineSession.initialized) {
             changePage(OfflineMusicImportPage);
@@ -100,7 +99,7 @@ export class OfflineMusicPage extends LitElementBase {
 
     getCachedTracks() {
         return OfflineSession.musicMetadata.filter((metadata) =>
-            OfflineSession.trackHashes.some((url) => url.endsWith(metadata.hash))
+            OfflineSession.trackHashes.some((url) => url.endsWith(metadata.hash)),
         );
     }
 
