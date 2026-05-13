@@ -111,7 +111,7 @@ export class OfflineSession {
         });
         navigator.mediaSession.setActionHandler('pause', () => {
             this.audio.pause();
-            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'paused';
+            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
         });
 
         document.addEventListener('visibilitychange', () => this.syncVisualization());
@@ -169,7 +169,7 @@ export class OfflineSession {
             }
         } else {
             this.audio.pause();
-            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'paused';
+            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
         }
     }
 
@@ -210,7 +210,7 @@ export class OfflineSession {
             }
         } else {
             this.audio.pause();
-            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'paused';
+            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
         }
     }
 

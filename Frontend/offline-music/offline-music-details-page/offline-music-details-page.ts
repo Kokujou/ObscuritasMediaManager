@@ -88,7 +88,7 @@ export class OfflineMusicDetailsPage extends LitElementBase {
 
         this.toggleTrack();
         OfflineSession.audio.pause();
-        if (navigator.mediaSession) navigator.mediaSession.playbackState = 'paused';
+        if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
         this.requestFullUpdate();
 
         window.addEventListener('click', (e) => (this.playlistExpanded = false), { signal: this.abortController.signal });
