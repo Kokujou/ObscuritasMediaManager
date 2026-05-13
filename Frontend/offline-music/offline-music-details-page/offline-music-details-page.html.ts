@@ -47,7 +47,7 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
             <audio-tile-base
                 .track="${this.currentTrack}"
                 disabled
-                .visualizationData="${OfflineSession.visualizationData}"
+                .visualizationData="${OfflineSession.audio.visualizationData}"
                 ?paused="${OfflineSession.audio.paused}"
                 @imageClicked="${(e: Event) => this.toggleTrack(e)}"
             >
@@ -93,7 +93,7 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
                 <flex-row class="control-section">
                     <range-slider
                         @valueChanged="${(e: CustomEvent<{ value: string }>) =>
-                            OfflineSession.changeVolume(Number.parseInt(e.detail.value) / 100)}"
+                            OfflineSession.audio.changeVolume(Number.parseInt(e.detail.value) / 100)}"
                         id="volume"
                         step="1"
                         min="0"

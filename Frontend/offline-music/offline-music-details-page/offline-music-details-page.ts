@@ -68,7 +68,7 @@ export class OfflineMusicDetailsPage extends LitElementBase {
 
     async connectedCallback() {
         super.connectedCallback();
-        this.subscriptions.push(OfflineSession.audioProgress.subscribe(() => this.requestFullUpdate()));
+        this.subscriptions.push(OfflineSession.audio.audioProgress.subscribe(() => this.requestFullUpdate()));
 
         this.currentPlaylist = this.playlistId
             ? (OfflineSession.temporaryPlaylists[this.playlistId] ??
@@ -101,7 +101,11 @@ export class OfflineMusicDetailsPage extends LitElementBase {
             navigator.mediaSession.setActionHandler('play', () => this.toggleTrack(new Event('dummy')));
         }
 
-        OfflineSession.audio.addEventListener('ended', (e: Event) => this.changeToTrackAt(this.index + 1, e));
+        this.subscriptions.push(
+            OfflineSession.audio.onNextTrack.subscribe(() => {
+                if (this.playlistId) this.changeToTrackAt(this.index + 1, new Event('dummy'));
+            }),
+        );
     }
 
     override render() {
@@ -132,8 +136,12 @@ export class OfflineMusicDetailsPage extends LitElementBase {
 
     toggleTrack(event?: Event) {
         try {
-            OfflineSession.toggleTrackSync(this.currentTrack!, event);
-        } catch {
+            OfflineSession.audio.toggleTrackSync(
+                OfflineSession.playedTracks[this.currentTrack!.hash]!,
+                this.currentTrack!,
+                event,
+            );
+        } catch (err) {
             this.changeToTrackAt(this.index + 1, event);
         }
         this.requestFullUpdate();
@@ -144,7 +152,12 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         if (!this.currentPlaylist || index < 0 || index >= this.currentPlaylist.length || this.index == index) return;
         this.index = index;
 
-        OfflineSession.toggleTrackSync(this.currentTrack!, event, true);
+        OfflineSession.audio.toggleTrackSync(
+            OfflineSession.playedTracks[this.currentTrack!.hash]!,
+            this.currentTrack!,
+            event,
+            true,
+        );
         this.requestFullUpdate();
         this.refreshQuery();
     }

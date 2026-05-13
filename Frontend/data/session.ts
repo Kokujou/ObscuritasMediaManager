@@ -16,7 +16,7 @@ export class Session {
     static ingredients = new Observable<IngredientModel[]>([]);
     static instruments = new Observable<InstrumentModel[]>([]);
 
-    private declare static _favoriteIngredients: string[];
+    declare private static _favoriteIngredients: string[];
     static get favoriteIngredients() {
         this._favoriteIngredients ??= JSON.parse(localStorage.getItem('favoriteIngredients') ?? '[]') as string[];
         return this._favoriteIngredients;

@@ -1,10 +1,6 @@
-import { Observable, Subscription } from '../data/observable';
-import { Session } from '../data/session';
 import { InstrumentModel, MusicModel, PlaylistModel } from '../obscuritas-media-manager-backend-client';
 import { IndexedDbService } from '../services/indexed-db.service';
-
-const SILENT_MP3 =
-    'data:audio/wav;base64,UklGRpgiAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXQiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+import { AudioService } from './audio.service';
 
 export class OfflineSession {
     public static temporaryPlaylists = new Proxy({} as Record<string, string[]>, {
@@ -34,37 +30,19 @@ export class OfflineSession {
     public static trackHashes: string[] = [];
     public static instruments: InstrumentModel[] = [];
 
-    public static audio: HTMLAudioElement;
-    public static visualizationAudio: HTMLAudioElement;
-    public static visualizationData = new Observable<Float32Array<ArrayBuffer>>(new Float32Array());
-    public static activeTrackHash?: string;
-    public static audioProgress = new Observable(null);
-
     public static initialized = false;
-
-    protected static playedTracks: Record<string, ArrayBuffer> = {};
 
     public static readonly DbName = 'ObscuritasMediaManager.Music';
     public static readonly DbVersion = 1;
 
-    private static pageSubscription?: Subscription;
+    declare public static audio: AudioService;
+
+    public static playedTracks: Record<string, ArrayBuffer> = {};
 
     public static async initialize() {
         if (this.initialized) return;
 
-        if (!this.audio) {
-            this.audio = document.body.appendChild(document.createElement('audio'));
-            this.visualizationAudio = document.body.appendChild(document.createElement('audio'));
-            this.audio.src = SILENT_MP3;
-            this.setupAudio();
-        }
-
-        this.pageSubscription ??= Session.currentPage.subscribe((newPage, oldPage) => {
-            if (newPage && newPage != oldPage) {
-                this.activeTrackHash = undefined;
-                this.audio.src = SILENT_MP3;
-            }
-        });
+        this.audio = new AudioService();
 
         const database = await this.openDatabase();
         if (!database) return;
@@ -79,49 +57,6 @@ export class OfflineSession {
 
         document.body.querySelector('loading-screen')?.remove();
         this.initialized = true;
-    }
-
-    static async setupAudio() {
-        this.audio.addEventListener('timeupdate', () => this.audioProgress.next(null));
-        this.audio.preload = 'auto';
-
-        var localStorageVolume = localStorage.getItem('volume');
-        if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume) / 100);
-
-        // @ts-ignore
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        await audioContext.audioWorklet.addModule('./processor.js');
-        const track = audioContext.createMediaElementSource(this.visualizationAudio);
-        const workletNode = new AudioWorkletNode(audioContext, 'sample-processor');
-        track.connect(workletNode);
-
-        workletNode.port.onmessage = (event) => OfflineSession.visualizationData.next(event.data);
-
-        this.audio.addEventListener('play', () => {
-            if (audioContext.state === 'suspended') audioContext.resume();
-            this.syncVisualization();
-        });
-        this.audio.addEventListener('pause', () => this.syncVisualization());
-        this.audio.addEventListener('seeked', () => this.syncVisualization());
-        this.audio.addEventListener('loadstart', () => this.syncVisualization());
-
-        navigator.mediaSession.setActionHandler('play', () => {
-            this.audio.play();
-            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
-        });
-        navigator.mediaSession.setActionHandler('pause', () => {
-            this.audio.pause();
-            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
-        });
-
-        document.addEventListener('visibilitychange', () => this.syncVisualization());
-    }
-
-    static syncVisualization() {
-        if (this.visualizationAudio.src != this.audio.src) this.visualizationAudio.src = this.audio.src;
-        if (this.audio.paused) this.visualizationAudio.pause();
-        else this.visualizationAudio.play();
-        this.visualizationAudio.currentTime = this.audio.currentTime;
     }
 
     static async openDatabase() {
@@ -141,38 +76,6 @@ export class OfflineSession {
         this.playedTracks[trackHash] = source;
     }
 
-    static toggleTrackSync(track: MusicModel, event?: Event, force = false) {
-        let buffer = this.playedTracks[track.hash];
-        if (!buffer) return;
-
-        if (this.activeTrackHash != track.hash) {
-            this.audio.onloadedmetadata = () => {
-                if ('mediaSession' in navigator) {
-                    navigator.mediaSession.metadata = new MediaMetadata({
-                        title: track.name,
-                        artist: track.author ?? 'Unbekannter Autor',
-                    });
-                }
-            };
-        }
-
-        if (this.audio.paused || force) {
-            if (event) {
-                const position = this.activeTrackHash == track.hash ? this.audio.currentTime : 0;
-
-                URL.revokeObjectURL(this.audio.src);
-                this.audio.src = URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' }));
-                this.activeTrackHash = track.hash;
-                this.audio.play();
-                this.audio.currentTime = position;
-                if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
-            }
-        } else {
-            this.audio.pause();
-            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
-        }
-    }
-
     static async toggleTrack(track: MusicModel, event?: Event, force = false, cache = true) {
         let buffer = this.playedTracks[track.hash];
 
@@ -185,37 +88,6 @@ export class OfflineSession {
             if (cache) await this.cacheTrack(track.hash, blob);
         }
 
-        if (this.activeTrackHash != track.hash) {
-            await new Promise<void>((resolve, reject) => {
-                this.audio.onloadedmetadata = () => {
-                    if ('mediaSession' in navigator) {
-                        navigator.mediaSession.metadata = new MediaMetadata({
-                            title: track.name,
-                            artist: track.author ?? 'Unbekannter Autor',
-                        });
-                    }
-                    resolve();
-                };
-                this.audio.onerror = async () => reject(this.audio.error?.code);
-
-                this.audio.src = URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' }));
-                this.activeTrackHash = track.hash;
-            });
-        }
-
-        if (this.audio.paused || force) {
-            if (event) {
-                await this.audio.play();
-                if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
-            }
-        } else {
-            this.audio.pause();
-            if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
-        }
-    }
-
-    static changeVolume(volume: number) {
-        this.audio.volume = volume;
-        localStorage.setItem('volume', `${volume * 100}`);
+        await OfflineSession.audio.toggleTrackSync(buffer!, track, event, force);
     }
 }

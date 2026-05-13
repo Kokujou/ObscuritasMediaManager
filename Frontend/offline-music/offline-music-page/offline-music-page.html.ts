@@ -45,7 +45,7 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                     <div class="option-section">
                         <range-slider
                             @valueChanged="${(e: CustomEvent<{ value: string }>) =>
-                                OfflineSession.changeVolume(Number.parseInt(e.detail.value) / 100)}"
+                                OfflineSession.audio.changeVolume(Number.parseInt(e.detail.value) / 100)}"
                             step="1"
                             min="0"
                             max="100"
@@ -104,8 +104,8 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                                     : ''}
                                 <audio-tile
                                     .track="${track}"
-                                    .visualizationData="${OfflineSession.visualizationData}"
-                                    ?paused="${OfflineSession.audio.paused || OfflineSession.activeTrackHash != track.hash}"
+                                    .visualizationData="${OfflineSession.audio.visualizationData}"
+                                    ?paused="${OfflineSession.audio.paused || OfflineSession.audio.activeTrackHash != track.hash}"
                                     @musicToggled="${(e: Event) => this.toggleTrack(track, e)}"
                                     @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
                                     @click="${() => this.playPlaylist([track])}"

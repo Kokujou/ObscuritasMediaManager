@@ -18,6 +18,7 @@ const FilesForCaching = [
 export class OfflineMusicCache {
     static async cacheApplication() {
         await caches.delete('offline-music-v1');
+        localStorage.setItem('offline-music-cache-updated', 'never');
         const responses: Map<string, Response> = new Map();
         for (var file of FilesForCaching)
             try {
@@ -26,6 +27,7 @@ export class OfflineMusicCache {
                 responses.set(file, response);
             } catch (error) {
                 alert('not all files could be retrieved. file: ' + file + '\nError: ' + (error as Error).message);
+                return;
             }
 
         await caches.delete('offline-music-v1');
