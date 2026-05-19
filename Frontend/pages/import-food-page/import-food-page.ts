@@ -81,16 +81,16 @@ export class ImportFoodPage extends LitElementBase {
         return renderImportFoodPageStyles();
     }
 
-    @property({ type: Number }) declare public index: number;
+    @property({ type: Number }) declare public index?: number;
 
     @query('image-slideshow') declare protected imageSlideshow?: ImageSlideshow;
 
     protected paginatedFiles: FoodModel[] = [];
     @state() declare protected currentDish: FoodModel;
     @state() declare protected loading: boolean;
+    @state() declare protected initialized: boolean;
 
     async connectedCallback() {
-        this.loading = true;
         await super.connectedCallback();
 
         dimLight();
@@ -102,11 +102,12 @@ export class ImportFoodPage extends LitElementBase {
 
         let itemsToGet = 10;
 
-        while (itemsToGet <= this.index) itemsToGet += 10;
+        while (itemsToGet <= this.index!) itemsToGet += 10;
         await this.loadMoreImages(itemsToGet, this.index);
     }
 
     async loadMoreImages(itemsToGet?: number, requestedIndex?: number) {
+        if (this.loading) return;
         this.loading = true;
         const currentLength = this.paginatedFiles.length;
         while (itemsToGet && requestedIndex! > currentLength + itemsToGet) itemsToGet += 10;
@@ -131,6 +132,7 @@ export class ImportFoodPage extends LitElementBase {
 
         await this.requestFullUpdate();
         this.loading = false;
+        this.initialized = true;
     }
 
     changeCurrentImage(id: string) {
@@ -185,6 +187,8 @@ export class ImportFoodPage extends LitElementBase {
         await FoodCache.deleteObject(dish);
 
         if (removedIndex < currentIndex) this.changeCurrentImage(this.currentDish.id);
+        else if (removedIndex == currentIndex && removedIndex == this.paginatedFiles.length)
+            this.changeCurrentImage(this.paginatedFiles[this.paginatedFiles.length - 1].id);
 
         await this.requestFullUpdate();
     }

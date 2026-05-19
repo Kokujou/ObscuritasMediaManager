@@ -8,7 +8,7 @@ import { FoodCache, ImportFoodPage } from './import-food-page';
 
 //Note: it is important to specify .currentIndex before events
 ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFoodPage) {
-    if (this.loading) return;
+    if (!this.initialized) return;
     return html`
         <div id="page">
             <image-slideshow
@@ -22,7 +22,7 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                     this.removeDish(this.paginatedFiles.find((x) => x.id == e.detail)!)}"
                 @scroll-to-end="${async () => await this.loadMoreImages()}"
                 .images="${this.paginatedFiles.map((file) => new SlideshowImage(file.id, file.images[0].imageData))}"
-                .currentIndex="${this.index}"
+                .currentIndex="${this.index ?? 0}"
             >
                 ${this.currentDish
                     ? html`

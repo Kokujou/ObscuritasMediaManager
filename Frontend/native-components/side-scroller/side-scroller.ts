@@ -21,9 +21,11 @@ export class SideScroller extends LitElementBase {
     }
 
     get scrollChildren() {
-        return this.shadowRoot!.querySelector('slot')!
-            .assignedElements()
-            .filter((x) => x.className != 'inner-space') as HTMLElement[];
+        return (
+            (this.shadowRoot!.querySelector('slot')
+                ?.assignedElements()
+                .filter((x) => x.className != 'inner-space') as HTMLElement[]) ?? []
+        );
     }
 
     get canScrollLeft() {
@@ -31,10 +33,10 @@ export class SideScroller extends LitElementBase {
     }
 
     get canScrollRight() {
-        return this.currentItemIndex < this.children.length - 1;
+        return this.currentItemIndex < this.scrollChildren.length - 1;
     }
 
-    @state() public declare currentItemIndex: number;
+    @state() declare public currentItemIndex: number;
 
     constructor() {
         super();
@@ -45,6 +47,7 @@ export class SideScroller extends LitElementBase {
         super.updated(_changedProperties);
         setTimeout(() => {
             this.requestFullUpdate();
+
             if (this.currentItemIndex < 0) this.currentItemIndex = Math.floor(this.scrollChildren.length / 2);
             var element = this.scrollChildren[this.currentItemIndex];
             scrollIntoParentViewX(element, this.scrollItemcontainer, this.scrollContainer);
