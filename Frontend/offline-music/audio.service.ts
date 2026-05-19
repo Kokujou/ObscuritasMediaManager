@@ -1,9 +1,7 @@
 import { Observable, Subscription } from '../data/observable';
 import { Session } from '../data/session';
 import { MusicModel } from '../obscuritas-media-manager-backend-client';
-
-const SILENT_MP3 =
-    'data:audio/wav;base64,UklGRpgiAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YXQiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+import { createDummyAudio } from './create-dummy-audio';
 
 export class AudioService {
     public audio: HTMLAudioElement;
@@ -15,9 +13,8 @@ export class AudioService {
 
     private pageSubscription?: Subscription;
 
-    private _paused = true;
     public get paused() {
-        return this._paused;
+        return this.audio.paused;
     }
 
     public get volume(): number {
@@ -28,12 +25,10 @@ export class AudioService {
     }
 
     public get currentTime() {
-        if (this._paused) return this._lastPosition;
         return this.audio.currentTime;
     }
 
     public set currentTime(value: number) {
-        this._lastPosition = value;
         this.audio.currentTime = value;
         this.visualizationAudio.currentTime = value;
     }
@@ -42,13 +37,15 @@ export class AudioService {
         return this.audio.duration;
     }
 
-    private _lastPosition = 0;
-
     constructor() {
+        const SILENT_MP3 = createDummyAudio();
         if (!this.audio) {
-            this.audio = document.body.appendChild(document.createElement('audio'));
             this.visualizationAudio = document.body.appendChild(document.createElement('audio'));
+            this.audio = document.body.appendChild(document.createElement('audio'));
+
             this.audio.src = SILENT_MP3;
+            this.visualizationAudio.src = this.audio.src;
+
             this.setupAudio();
         }
 
@@ -56,6 +53,7 @@ export class AudioService {
             if (newPage && newPage != oldPage) {
                 this.activeTrackHash = undefined;
                 this.audio.src = SILENT_MP3;
+                this.visualizationAudio.src = this.audio.src;
             }
         });
     }
@@ -64,8 +62,7 @@ export class AudioService {
         this.audio.addEventListener('timeupdate', () => this.audioProgress.next(null));
         this.audio.preload = 'auto';
 
-        var localStorageVolume = localStorage.getItem('volume');
-        if (localStorageVolume) this.changeVolume(Number.parseInt(localStorageVolume) / 100);
+        this.changeVolume(this.volume);
 
         // @ts-ignore
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -74,27 +71,35 @@ export class AudioService {
         const workletNode = new AudioWorkletNode(audioContext, 'sample-processor');
         track.connect(workletNode);
 
-        workletNode.port.onmessage = (event) => this.visualizationData.next(event.data);
+        workletNode.port.onmessage = (event) => {
+            this.visualizationData.next(event.data);
+            this.audioProgress.next(null);
+        };
 
-        this.audio.addEventListener('play', () => {
-            if (audioContext.state === 'suspended') audioContext.resume();
-            this.syncVisualization();
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState == 'visible') {
+                audioContext.resume();
+                if (this.audio.paused) this.pause();
+                else this.play();
+            } else {
+                this.visualizationAudio.pause();
+                audioContext.suspend().then(() => {
+                    if (!this.audio.paused) this.play();
+                });
+            }
         });
-        this.audio.addEventListener('pause', () => this.syncVisualization());
+
+        this.audio.addEventListener('play', () => audioContext.resume());
         this.audio.addEventListener('seeked', () => this.syncVisualization());
         this.audio.addEventListener('loadstart', () => this.syncVisualization());
 
         navigator.mediaSession.setActionHandler('play', () => this.play());
         navigator.mediaSession.setActionHandler('pause', () => this.pause());
 
-        document.addEventListener('visibilitychange', () => this.syncVisualization());
         this.audio.addEventListener('ended', () => this.onNextTrack.next());
     }
 
     syncVisualization() {
-        if (this.visualizationAudio.src != this.audio.src) this.visualizationAudio.src = this.audio.src;
-        if (this._paused && !this.visualizationAudio.paused) this.visualizationAudio.pause();
-        if (!this._paused && this.visualizationAudio.paused) this.visualizationAudio.play();
         this.visualizationAudio.currentTime = this.audio.currentTime;
     }
 
@@ -104,23 +109,24 @@ export class AudioService {
     }
 
     pause() {
-        this._paused = true;
-        this._lastPosition = this.audio.currentTime;
-        this.audio.muted = true;
-        this.audio.loop = true;
+        this.visualizationAudio.pause();
+        this.audio.pause();
         if (navigator.mediaSession) navigator.mediaSession.playbackState = 'paused';
-        this.syncVisualization();
     }
 
     play() {
-        this._paused = false;
-        this.audio.loop = false;
-        this.currentTime = this._lastPosition;
-        this.audio.volume = this.volume;
-        this.audio.muted = false;
         if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
-        this.syncVisualization();
+        if (document.visibilityState === 'visible') this.visualizationAudio.play();
         return this.audio.play();
+    }
+
+    stop() {
+        if (navigator.mediaSession) navigator.mediaSession.playbackState = 'none';
+        this.audio.pause();
+        this.audio.removeAttribute('src');
+        this.visualizationAudio.pause();
+        this.visualizationAudio.removeAttribute('src');
+        this.activeTrackHash = undefined;
     }
 
     toggleTrackSync(buffer: ArrayBuffer, track: MusicModel, event?: Event, force = false) {
@@ -147,6 +153,7 @@ export class AudioService {
         if (this.paused || force) {
             const position = this.activeTrackHash == track.hash ? this.currentTime : 0;
             const oldSrc = this.audio.src;
+            this.visualizationAudio.src = this.audio.src;
             this.audio.src = URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' }));
             URL.revokeObjectURL(oldSrc);
             this.activeTrackHash = track.hash;

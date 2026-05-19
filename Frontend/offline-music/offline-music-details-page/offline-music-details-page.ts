@@ -88,7 +88,6 @@ export class OfflineMusicDetailsPage extends LitElementBase {
 
         this.toggleTrack();
         OfflineSession.audio.pause();
-        if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
         this.requestFullUpdate();
 
         window.addEventListener('click', (e) => (this.playlistExpanded = false), { signal: this.abortController.signal });
@@ -97,8 +96,6 @@ export class OfflineMusicDetailsPage extends LitElementBase {
                 this.changeToTrackAt(this.index - 1, new Event('dummy')),
             );
             navigator.mediaSession.setActionHandler('nexttrack', () => this.changeToTrackAt(this.index + 1, new Event('dummy')));
-            navigator.mediaSession.setActionHandler('pause', () => this.toggleTrack(new Event('dummy')));
-            navigator.mediaSession.setActionHandler('play', () => this.toggleTrack(new Event('dummy')));
         }
 
         this.subscriptions.push(
@@ -184,5 +181,11 @@ export class OfflineMusicDetailsPage extends LitElementBase {
             { index: this.index, playlistId: this.playlistId, trackHash: this.trackHash, randomize: this.randomize },
             false,
         );
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+
+        OfflineSession.audio.stop();
     }
 }
