@@ -10,13 +10,17 @@ export function renderRecipesPage(this: RecipesPage) {
             <div id="page">
                 <paginated-scrolling id="recipes-content" scrollTopThreshold="20" @scrollBottom="${() => this.loadMoreItems()}">
                     <div id="items">
-                        ${LinkElement.forPage(RecipeDetailPage, {}, html`<div class="add-icon" id="add-recipe-icon"></div>`)}
+                        ${LinkElement.forPage(
+                            RecipeDetailPage,
+                            {},
+                            html`<div tooltip="Rezept hinzufügen" class="add-icon" id="add-recipe-icon"></div>`,
+                        )}
                         <link-element @click="${() => this.showFileBrowser()}">
-                            <div class="add-icon" id="add-dish-icon"></div>
+                            <div tooltip="Gericht hinzufügen" class="add-icon" id="add-dish-icon"></div>
                         </link-element>
                         ${Session.recipes
                             .current()
-                            .map((recipe) => html` <recipe-tile-base .recipe="${recipe}" compact></recipe-tile-base> `)}
+                            .map((recipe) => html` <recipe-tile-base ile-base .recipe="${recipe}" compact></recipe-tile-base> `)}
                     </div>
                 </paginated-scrolling>
             </div>

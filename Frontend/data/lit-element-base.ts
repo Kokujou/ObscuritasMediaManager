@@ -49,7 +49,7 @@ export class LitElementBase extends LitElement {
         this.attachTooltips();
     }
 
-    protected override render(): unknown | null {
+    override render(): unknown | null {
         return null;
     }
 
@@ -66,10 +66,10 @@ export class LitElementBase extends LitElement {
 
     attachTooltip(element: Element) {
         var CustomTooltip = window.customElements.get(
-            'custom-tooltip'
+            'custom-tooltip',
         ) as typeof import('../native-components/custom-tooltip/custom-tooltip').CustomTooltip;
         element.addEventListener('pointerover', (e: Event) =>
-            CustomTooltip.show(element.getAttribute('tooltip'), e, (element.getAttribute('anchor') as any) ?? 'top')
+            CustomTooltip.show(element.getAttribute('tooltip'), e, (element.getAttribute('anchor') as any) ?? 'top'),
         );
         this.elementsWithTooltips.push(element);
     }

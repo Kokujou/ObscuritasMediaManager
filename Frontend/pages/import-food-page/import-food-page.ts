@@ -1,12 +1,12 @@
-import { customElement, query, state } from 'lit-element/decorators';
+import { customElement, property, query, state } from 'lit-element/decorators';
+import { ImageSlideshow } from '../../advanced-components/image-slideshow/image-slideshow';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Observable } from '../../data/observable';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
-import { waitForAnimation, waitForSeconds } from '../../extensions/animation.extension';
+import { waitForSeconds } from '../../extensions/animation.extension';
 import { dimLight, undimLight } from '../../extensions/document.extensions';
-import { changePage, getQueryValue } from '../../extensions/url.extension';
+import { changePage } from '../../extensions/url.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
-import { SideScroller } from '../../native-components/side-scroller/side-scroller';
 import { FoodImageModel, FoodModel, FoodThumbModel } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
 import { CachingService } from '../../services/caching.service';
@@ -51,7 +51,7 @@ export class ImportFoodPage extends LitElementBase {
 
     private static async cacheFiles(
         files: IteratorObject<File, undefined> | IteratorObject<Response, undefined>,
-        signal: AbortSignal
+        signal: AbortSignal,
     ) {
         let i = 0;
 
@@ -81,25 +81,16 @@ export class ImportFoodPage extends LitElementBase {
         return renderImportFoodPageStyles();
     }
 
-    @query('side-scroller') protected declare sideScroller?: SideScroller;
-    @query('#current-image') protected declare currentImageElement?: HTMLImageElement;
+    @property({ type: Number }) declare public index: number;
+
+    @query('image-slideshow') declare protected imageSlideshow?: ImageSlideshow;
 
     protected paginatedFiles: FoodModel[] = [];
-    @state() protected declare currentDish: FoodModel;
-    @state() protected declare loading: boolean;
-
-    get currentAspectRatio() {
-        if (!this.currentImageElement) return 1;
-        return this.currentImageElement.naturalWidth / this.currentImageElement.naturalHeight;
-    }
-
-    get currentIndex() {
-        return this.sideScroller?.currentItemIndex ?? 0;
-    }
-
-    override render() {}
+    @state() declare protected currentDish: FoodModel;
+    @state() declare protected loading: boolean;
 
     async connectedCallback() {
+        this.loading = true;
         await super.connectedCallback();
 
         dimLight();
@@ -107,26 +98,18 @@ export class ImportFoodPage extends LitElementBase {
         this.focus();
         document.title = 'Gerichte importieren';
 
-        document.addEventListener('keyup', this.handleKeyUp.bind(this));
         this.subscriptions.push(ImportFoodPage.caching.subscribe(async () => this.requestFullUpdate(), true));
 
-        var fromQuery = Number.parseInt(getQueryValue('index') ?? '0');
         let itemsToGet = 10;
 
-        while (itemsToGet <= fromQuery) itemsToGet += 10;
-        await this.loadMoreImages(itemsToGet);
-        await this.requestFullUpdate();
-        await this.updated;
-        await waitForAnimation();
-
-        if (fromQuery) this.sideScroller!.setIndex(fromQuery);
+        while (itemsToGet <= this.index) itemsToGet += 10;
+        await this.loadMoreImages(itemsToGet, this.index);
     }
 
-    async loadMoreImages(itemsToGet?: number) {
-        if (this.loading) return;
+    async loadMoreImages(itemsToGet?: number, requestedIndex?: number) {
         this.loading = true;
         const currentLength = this.paginatedFiles.length;
-        while (itemsToGet && this.currentIndex > currentLength + itemsToGet) itemsToGet += 10;
+        while (itemsToGet && requestedIndex! > currentLength + itemsToGet) itemsToGet += 10;
         itemsToGet ??= Number.POSITIVE_INFINITY;
 
         while (ImportFoodPage.caching.current() && FoodCache.length < itemsToGet) await Promise.resolve();
@@ -147,17 +130,12 @@ export class ImportFoodPage extends LitElementBase {
         }
 
         await this.requestFullUpdate();
-        this.changeCurrentImage();
         this.loading = false;
     }
 
-    async changeCurrentImage() {
-        if (this.currentDish) await FoodCache.updateMetadata(this.currentDish);
-        if (this.currentIndex >= this.paginatedFiles.length - 5) await this.loadMoreImages(10);
-        this.currentDish = this.paginatedFiles[this.currentIndex];
-
-        changePage(ImportFoodPage, { index: this.currentIndex } as any, false);
-        this.requestFullUpdate();
+    changeCurrentImage(id: string) {
+        changePage(ImportFoodPage, { index: this.paginatedFiles.findIndex((x) => x.id == id) } as any, false);
+        this.currentDish = this.paginatedFiles.find((x) => x.id == id)!;
     }
 
     async reloadImage(dish: FoodModel, update = true) {
@@ -189,22 +167,6 @@ export class ImportFoodPage extends LitElementBase {
             .map((x) => Object.assign(x, { id: x.title, text: x.title }) as typeof x & AutocompleteItem);
     }
 
-    async handleKeyUp(event: KeyboardEvent) {
-        if (event.key == 'Delete') {
-            var confirmed = await DialogBase.show('Bist du sicher?', {
-                acceptActionText: 'Ja',
-                declineActionText: 'Nein',
-                content: `Das Bild wird aus dem Cache gelöscht und kann nicht wiederhergestellt werden.
-Es bleibt jedoch auf deinem Computer erhalten.
-Bit du sicher dass du es löschen möchtest?`,
-            });
-            if (!confirmed) return;
-            await this.removeDish(this.currentDish!);
-        }
-        if (event.key == 'ArrowLeft') this.sideScroller!.setIndex(this.currentIndex - 1);
-        if (event.key == 'ArrowRight') this.sideScroller!.setIndex(this.currentIndex + 1);
-    }
-
     applySearchResult(result: FoodModel) {
         if (!this.currentDish) return;
         this.currentDish.description ||= result.description;
@@ -216,20 +178,13 @@ Bit du sicher dass du es löschen möchtest?`,
     }
 
     async removeDish(dish: FoodModel) {
-        await FoodCache.deleteObject(dish);
+        const removedIndex = this.paginatedFiles.findIndex((x) => x.id == dish.id);
+        const currentIndex = this.paginatedFiles.findIndex((x) => x.id == this.currentDish?.id);
+
         this.paginatedFiles = this.paginatedFiles.filter((fromList) => fromList != dish);
+        await FoodCache.deleteObject(dish);
 
-        if (this.sideScroller!.currentItemIndex >= this.paginatedFiles.length) {
-            this.sideScroller?.setIndex(this.paginatedFiles.length - 1);
-            return;
-        }
-
-        if (dish == this.currentDish) {
-            this.changeCurrentImage();
-        } else {
-            var currentIndex = this.paginatedFiles.indexOf(this.currentDish);
-            if (this.sideScroller?.currentItemIndex != currentIndex) this.sideScroller?.setIndex(currentIndex);
-        }
+        if (removedIndex < currentIndex) this.changeCurrentImage(this.currentDish.id);
 
         await this.requestFullUpdate();
     }
@@ -272,7 +227,7 @@ Abhängig von der Größe kann der Vorgang einige Minuten dauern.`,
                 dish.images[0].imageData = base64.split(',')[1];
                 dish.images[0].mimeType = blob.type;
                 dish.thumbs[0].thumbData = (await (await ImageCompressionService.generateThumbnail(base64)).base64()).split(
-                    ','
+                    ',',
                 )[1];
                 await RecipeService.importDish(dish);
             } catch (ex) {
@@ -311,6 +266,5 @@ Wenn alles in Ordnung ist, kannst du die Seite manuell verlassen.`,
     disconnectedCallback(): void {
         super.disconnectedCallback();
         undimLight();
-        document.removeEventListener('keyup', this.handleKeyUp);
     }
 }

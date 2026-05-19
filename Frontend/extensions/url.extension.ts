@@ -16,7 +16,7 @@ export type NonMethodKeys<T> = { [K in keyof T]: T[K] extends Function ? never :
 export function changePage<T extends Page, U extends Omit<InstanceType<T>, keyof LitElementBase>>(
     target: T,
     params: Partial<Pick<U, NonMethodKeys<U>>> = {},
-    reflectInHistory = true
+    reflectInHistory = true,
 ) {
     var newUrl = new URL(location.href);
     newUrl.search = '';

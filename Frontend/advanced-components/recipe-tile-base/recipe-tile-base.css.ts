@@ -22,6 +22,10 @@ export function renderRecipeTileBaseStyles() {
             flex: auto;
         }
 
+        .recipe-image:first-of-type {
+            object-fit: contain;
+        }
+
         .recipe-image {
             position: absolute;
             top: 0;
@@ -47,7 +51,14 @@ export function renderRecipeTileBaseStyles() {
             text-align: center;
             font-size: 14px;
             font-weight: bold;
-            text-shadow: 0 0 10px purple, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 5px black;
+            text-shadow:
+                0 0 10px purple,
+                0 0 5px black,
+                0 0 5px black,
+                0 0 5px black,
+                0 0 5px black,
+                0 0 5px black,
+                0 0 5px black;
         }
     `;
 }

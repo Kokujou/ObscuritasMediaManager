@@ -59,7 +59,7 @@ export class PageRouting extends LitElementBase {
         this.subscriptions.push(
             Session.currentPage.subscribe(async (newValue, oldValue) => {
                 if (newValue) await this.switchPage(newValue, oldValue).then(() => this.requestFullUpdate());
-            })
+            }),
         );
 
         window.addEventListener('resize', () => this.requestFullUpdate());
@@ -119,6 +119,7 @@ export class PageRouting extends LitElementBase {
         e?.preventDefault();
         var nextPage = this.currentPage;
         var params = queryToObject();
+
         if (Session.currentPage.current() != getPageName(nextPage)) changePage(nextPage, params);
     }
 

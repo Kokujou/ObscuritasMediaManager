@@ -11,7 +11,7 @@ import { OfflineSession } from './session';
 export class OfflineRouting extends LitElementBase {
     static readonly DefaultPage = OfflineMusicPage;
 
-    @state() private declare currentPageInstance: LitElementBase | null;
+    @state() declare private currentPageInstance: LitElementBase | null;
 
     get currentPage() {
         return (window.customElements.get(location.hash.substr(1) + '-page') as Page) ?? OfflineRouting.DefaultPage;
@@ -37,7 +37,7 @@ export class OfflineRouting extends LitElementBase {
         this.subscriptions.push(
             Session.currentPage.subscribe(async (newValue) => {
                 if (newValue) await this.switchPage(newValue).then(() => this.requestFullUpdate());
-            })
+            }),
         );
 
         await OfflineSession.initialize();
@@ -45,7 +45,7 @@ export class OfflineRouting extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    protected override render() {
+    override render() {
         return html` ${this.currentPageInstance ?? html`<slot></slot>`} `;
     }
 

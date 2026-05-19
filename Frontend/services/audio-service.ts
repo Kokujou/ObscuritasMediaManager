@@ -130,7 +130,6 @@ export class AudioService {
 
     static async changeVolume(value: number) {
         try {
-            if (!value) console.trace();
             await ClientInteropService.sendCommand({ command: InteropCommand.ChangeTrackVolume, payload: value });
         } catch (err) {
             console.error('changing volume failed:', err);
