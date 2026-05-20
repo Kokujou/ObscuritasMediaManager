@@ -36,6 +36,7 @@ export function renderImageSlideshow(this: ImageSlideshow) {
                 ${this.images.map(
                     (image, i) =>
                         html` <div class="imported-image-container" ?current="${this.currentIndex == i}">
+                            <img class="imported-image-background" src="${image.imageData ?? ''}" />
                             <img
                                 class="imported-image"
                                 src="${image.imageData ?? ''}"

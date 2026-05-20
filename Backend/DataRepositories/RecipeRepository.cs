@@ -43,9 +43,9 @@ public class RecipeRepository(DatabaseContext databaseContext)
         await databaseContext.SaveChangesAsync();
     }
 
-    public async Task UpdateRecipeAsync(RecipeModel recipe)
+    public async Task UpdateRecipeAsync(RecipeModelBase recipeBase)
     {
-        databaseContext.Recipes.Update(recipe);
+        databaseContext.Update(recipeBase);
         foreach (var change in databaseContext.ChangeTracker.Entries<IngredientModel>())
             change.State = EntityState.Detached;
         await databaseContext.SaveChangesAsync();
@@ -173,5 +173,28 @@ public class RecipeRepository(DatabaseContext databaseContext)
         if (existing is not null) existing.Images.Add(image);
         else databaseContext.Add(dish);
         await databaseContext.SaveChangesAsync();
+    }
+
+    public async Task AddDishImagesAsync(FoodImageModel image, FoodThumbModel thumb)
+    {
+        databaseContext.Add(image);
+        databaseContext.Add(thumb);
+
+        await databaseContext.SaveChangesAsync();
+        await UpdateImageCountForAsync(image.RecipeId);
+    }
+
+    public async Task RemoveDishImagesAsync(FoodImageModel image, FoodThumbModel thumb)
+    {
+        await databaseContext.Set<FoodImageModel>().Where(x => x.ImageHash == image.ImageHash).ExecuteDeleteAsync();
+        await databaseContext.Set<FoodThumbModel>().Where(x => x.ThumbHash == thumb.ThumbHash).ExecuteDeleteAsync();
+        await UpdateImageCountForAsync(image.RecipeId);
+    }
+
+    public async Task UpdateImageCountForAsync(Guid recipeId)
+    {
+        var count = await databaseContext.Set<FoodImageModel>().CountAsync(x => x.RecipeId == recipeId);
+        await databaseContext.Recipes.Where(x => x.Id == recipeId)
+            .ExecuteUpdateAsync(query => query.SetProperty(x => x.ImageCount, count));
     }
 }

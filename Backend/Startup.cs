@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
+using NJsonSchema;
 using ObscuritasMediaManager.Backend.Authentication;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Exceptions;
@@ -34,29 +35,27 @@ public class Startup
         services.AddScoped<AnimeLoadsService>();
         services.AddHttpClient();
 
-        services.AddDbContext<DatabaseContext>(
-            x => x.UseSqlite(
-                    @"Data Source=J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\Database\database.sqlite;foreign keys=false;")
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-                .EnableSensitiveDataLogging());
+        services.AddDbContext<DatabaseContext>(x => x.UseSqlite(
+                @"Data Source=J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\Database\database.sqlite;foreign keys=false;")
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+            .EnableSensitiveDataLogging());
 
-        services.AddCors(
-            x =>
-                x.AddPolicy(
-                    "all", builder =>
-                        builder.WithOrigins(
-                                "https://localhost", "https://obscuritas.strangled.net", "https://192.168.178.30")
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()));
+        services.AddCors(x =>
+            x.AddPolicy(
+                "all", builder =>
+                    builder.WithOrigins(
+                            "https://localhost", "https://obscuritas.strangled.net", "https://192.168.178.30")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()));
 
         services.AddMvc()
-            .AddJsonOptions(
-                options =>
-                {
-                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 
-                    options.JsonSerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-                });
+                options.JsonSerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+                options.JsonSerializerOptions.AllowOutOfOrderMetadataProperties = true;
+            });
 
         FFmpeg.SetExecutablesPath("D:\\Programme\\ffmpeg\\bin");
 
@@ -64,6 +63,7 @@ public class Startup
         {
             options.SchemaSettings.AllowReferencesWithProperties = true;
             options.DocumentName = "swagger";
+            options.SchemaSettings.SchemaType = SchemaType.OpenApi3;
             options.Title = "ObscuritasMediaManager";
         });
 
@@ -78,38 +78,35 @@ public class Startup
 
     public void Configure(IApplicationBuilder app)
     {
-        app.Use(
-            async (context, next) =>
-            {
-                context.Request.EnableBuffering();
-                context.Features.Get<IHttpResponseBodyFeature>()!.DisableBuffering();
-                await next();
-            });
+        app.Use(async (context, next) =>
+        {
+            context.Request.EnableBuffering();
+            context.Features.Get<IHttpResponseBodyFeature>()!.DisableBuffering();
+            await next();
+        });
         app.UseRouting();
-        app.UseExceptionHandler(
-            a =>
-                a.Run(
-                    async context =>
-                    {
-                        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
-                        var exception = exceptionHandlerPathFeature?.Error;
-                        if (exception is null) return;
+        app.UseExceptionHandler(a =>
+            a.Run(async context =>
+            {
+                var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+                var exception = exceptionHandlerPathFeature?.Error;
+                if (exception is null) return;
 
-                        Log.Error(exception.ToString());
+                Log.Error(exception.ToString());
 
-                        context.Response.StatusCode = exception switch
+                context.Response.StatusCode = exception switch
+                {
+                    ConflictException => 409,
+                    _ => 400
+                };
+
+                await context.Response
+                    .WriteAsJsonAsync(
+                        new
                         {
-                            ConflictException => 409,
-                            _ => 400
-                        };
-
-                        await context.Response
-                            .WriteAsJsonAsync(
-                                new
-                                {
-                                    Reason = exception?.Message, InnerException = exception?.InnerException?.Message
-                                });
-                    }));
+                            Reason = exception?.Message, InnerException = exception?.InnerException?.Message
+                        });
+            }));
 
         app.UseCors("all");
         app.UseAuthentication();

@@ -2,7 +2,6 @@ import { customElement, property, query, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
-import { changePage, getQueryValue } from '../../extensions/url.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
@@ -17,10 +16,10 @@ import {
     RecipeImageCreationRequest,
     RecipeIngredientMappingModel,
     RecipeModel,
+    RecipeModelBase,
 } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
 import { ImageCompressionService } from '../../services/image-compression.service';
-import { RecipesPage } from '../recipes-page/recipes-page';
 import { renderRecipeDetailPageStyles } from './recipe-detail-page.css';
 import { renderRecipeDetailPage } from './recipe-detail-page.html';
 
@@ -50,7 +49,7 @@ export class RecipeDetailPage extends LitElementBase {
         var defaultGroupName = 'Neue Gruppe';
         var defaultIngredient = RecipeDetailPage.newIngredient;
 
-        while (this.recipe.ingredients.some((x) => x.groupName == defaultIngredient.groupName)) {
+        while (this.fullRecipe?.ingredients.some((x) => x.groupName == defaultIngredient.groupName)) {
             counter++;
             defaultIngredient.groupName = defaultGroupName + ' ' + counter;
         }
@@ -58,26 +57,34 @@ export class RecipeDetailPage extends LitElementBase {
         return defaultIngredient;
     }
 
-    @property() public declare recipeId: string | null;
+    @property() declare public recipeId: string | null;
 
-    @state() protected declare recipe: RecipeModel;
+    @state() declare protected recipe: RecipeModelBase;
 
-    @query('#page-container') protected declare pageContainer: HTMLElement;
+    @query('#page-container') declare protected pageContainer: HTMLElement;
+
+    get fullRecipe() {
+        return this.recipe instanceof RecipeModel ? this.recipe : null;
+    }
 
     constructor() {
         super();
         this.recipe = new RecipeModel({
             title: 'Rezepttitel',
+            type: 'Recipe',
             cookingTime: new TimeSpan().toString(),
             totalTime: new TimeSpan().toString(),
             cookware: [],
             preparationTime: new TimeSpan().toString(),
             difficulty: 0,
             rating: 0,
-            formattedText: 'Dein Rezept-Text',
+            recipeText: 'Dein Rezept-Text',
+            imageCount: 0,
+            images: [],
+            thumbs: [],
             ingredients: [],
         });
-        this.recipe.ingredients = [this.emptyGroup];
+        this.fullRecipe!.ingredients = [this.emptyGroup];
     }
 
     override async connectedCallback() {
@@ -85,6 +92,7 @@ export class RecipeDetailPage extends LitElementBase {
 
         if (this.recipeId) {
             this.recipe = (await RecipeService.getRecipe(this.recipeId)) as RecipeModel;
+            console.log(this.recipe);
             await this.requestFullUpdate();
         }
     }
@@ -97,34 +105,39 @@ export class RecipeDetailPage extends LitElementBase {
     }
 
     async changeProperty<T extends keyof RecipeModel>(property: T, value: RecipeModel[T]) {
-        this.recipe[property] = value;
+        if (property in this.recipe) this.recipe[property] = value;
+        else if (!this.fullRecipe) return;
+        else this.fullRecipe[property] = value;
+
         if (this.recipe.id) await RecipeService.updateRecipe(this.recipe);
         this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
         this.requestFullUpdate();
     }
 
     async addIngredient(group: string, event: Event) {
+        if (!this.fullRecipe) return;
         event.stopPropagation();
         event.preventDefault();
 
         const ingredient = RecipeDetailPage.newIngredient;
         ingredient.groupName = group;
-        ingredient.order = this.recipe.ingredients.filter((x) => x.groupName == group).length;
+        ingredient.order = this.fullRecipe.ingredients.filter((x) => x.groupName == group).length;
         ingredient.id = await RecipeService.addIngredient(this.recipe.id!, ingredient);
-        this.recipe.ingredients.push(ingredient);
+        this.fullRecipe.ingredients.push(ingredient);
         this.requestFullUpdate();
     }
 
     async addCookware() {
+        if (!this.fullRecipe) return;
         var cookware = new RecipeCookwareMappingModel({ name: '', recipeId: this.recipe.id! });
-        this.recipe.cookware = this.recipe.cookware.concat(cookware);
+        this.fullRecipe.cookware = this.fullRecipe.cookware.concat(cookware);
         cookware.id = await RecipeService.addCookware(this.recipe.id!, cookware);
         await this.requestFullUpdate();
     }
 
     renameGroup(affectedIngredients: RecipeIngredientMappingModel[], newName: string) {
         for (var ingredient of affectedIngredients) ingredient.groupName = newName;
-        this.changeProperty('ingredients', this.recipe.ingredients);
+        this.changeProperty('ingredients', this.fullRecipe!.ingredients);
 
         this.requestFullUpdate();
     }
@@ -136,21 +149,23 @@ export class RecipeDetailPage extends LitElementBase {
             new RecipeImageCreationRequest({
                 image: new FoodImageModel({ imageData, mimeType: 'image/png' }),
                 thumb: new FoodThumbModel({ thumbData }),
-            })
+            }),
         )) as RecipeModel;
 
         this.requestFullUpdate();
     }
 
     async removeIngredient(ingredient: RecipeIngredientMappingModel) {
+        if (!this.fullRecipe) return;
         await RecipeService.deleteIngredient(this.recipe.id!, ingredient.id!);
-        this.recipe.ingredients = this.recipe.ingredients.filter((x) => x.id != ingredient.id);
+        this.fullRecipe.ingredients = this.fullRecipe.ingredients.filter((x) => x.id != ingredient.id);
         await this.requestFullUpdate();
     }
 
     async removeCookware(cookware: RecipeCookwareMappingModel) {
+        if (!this.fullRecipe) return;
         await RecipeService.deleteCookware(this.recipe.id!, cookware.id!);
-        this.recipe.cookware = this.recipe.cookware.filter((x) => x.name != cookware.name);
+        this.fullRecipe.cookware = this.fullRecipe.cookware.filter((x) => x.name != cookware.name);
         await this.requestFullUpdate();
     }
 
@@ -163,7 +178,7 @@ export class RecipeDetailPage extends LitElementBase {
 
         ingredient.unit = unit;
         if (ValuelessMeasurements.includes(ingredient.unit.measurement)) ingredient.amount = 1;
-        this.changeProperty('ingredients', this.recipe.ingredients);
+        this.changeProperty('ingredients', this.fullRecipe!.ingredients);
     }
 
     changeIngredientCategory(mapping: RecipeIngredientMappingModel, category: IngredientCategory) {
@@ -174,7 +189,7 @@ export class RecipeDetailPage extends LitElementBase {
                 nation: Language.Unset,
                 category: category,
             });
-        this.changeProperty('ingredients', this.recipe.ingredients);
+        this.changeProperty('ingredients', this.fullRecipe!.ingredients);
     }
 
     async searchIngredients(search: string) {
@@ -183,14 +198,14 @@ export class RecipeDetailPage extends LitElementBase {
                 Object.assign(x, {
                     id: x.ingredientName,
                     text: x.ingredientName + ` (${x.isFluid ? 'flüssig' : 'fest'})`,
-                } as AutocompleteItem)
-            )
+                } as AutocompleteItem),
+            ),
         );
     }
 
     async searchCookware(search: string) {
         return [{ id: search, text: '+ Kochutensil hinzufügen' } as AutocompleteItem].concat(
-            (await RecipeService.searchCookware(search)).map((x) => Object.assign(x, { id: x, text: x } as AutocompleteItem))
+            (await RecipeService.searchCookware(search)).map((x) => Object.assign(x, { id: x, text: x } as AutocompleteItem)),
         );
     }
 
@@ -201,36 +216,22 @@ export class RecipeDetailPage extends LitElementBase {
             const incompatibleMeasurement = target.isFluid ? Measurement.Mass : Measurement.Volume;
             if (source.unit.measurement == incompatibleMeasurement)
                 source.unit = MeasurementUnits.find(
-                    (x) => x.measurement == (target.isFluid ? Measurement.Volume : Measurement.Mass)
+                    (x) => x.measurement == (target.isFluid ? Measurement.Volume : Measurement.Mass),
                 )!;
         }
         this.requestFullUpdate();
-        this.changeProperty('ingredients', this.recipe.ingredients);
+        this.changeProperty('ingredients', this.fullRecipe!.ingredients);
     }
 
     updateCookware(source: RecipeCookwareMappingModel, newCookware: string) {
         source.name = newCookware;
-        this.changeProperty('cookware', this.recipe.cookware);
-    }
-
-    async submit(event: SubmitEvent) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        if (!this.recipe.tags) {
-            MessageSnackbar.popup('Bitte alle notwendigen Informationen ausfüllen.', 'error');
-            return;
-        }
-
-        if (getQueryValue('recipe')) await RecipeService.updateRecipe(this.recipe);
-        else await RecipeService.createRecipe(this.recipe);
-
-        changePage(RecipesPage);
+        this.changeProperty('cookware', this.fullRecipe!.cookware);
     }
 
     async createRecipe() {
         try {
-            this.recipe.id = await RecipeService.createRecipe(this.recipe);
+            if (!this.fullRecipe) return;
+            this.recipe.id = await RecipeService.createRecipe(this.fullRecipe);
             this.recipeId = this.recipe.id;
             this.requestFullUpdate();
             MessageSnackbar.popup('Das Rezept wurde erfolgreich erstellt.', 'success');

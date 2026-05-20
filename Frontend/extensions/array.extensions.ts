@@ -30,31 +30,40 @@ Array.prototype.randomize = function <T>(this: T[], seed?: number): T[] {
 };
 
 Array.prototype.groupByKey = function <T, K extends keyof T>(this: T[], key: K): Record<string, T[]> {
-    return this.reduce((rv, x) => {
-        const groupKey = String(x[key]);
-        (rv[groupKey] = rv[groupKey] || []).push(x);
-        return rv;
-    }, {} as Record<string, T[]>);
+    return this.reduce(
+        (rv, x) => {
+            const groupKey = String(x[key]);
+            (rv[groupKey] = rv[groupKey] || []).push(x);
+            return rv;
+        },
+        {} as Record<string, T[]>,
+    );
 };
 
 Array.prototype.groupBy = function <T, U extends string | number>(this: T[], selector: (item: T) => U): Record<U, T[]> {
-    return this.reduce((rv, x) => {
-        const groupKey = selector(x) ?? '';
-        (rv[groupKey] = rv[groupKey] || []).push(x);
-        return rv;
-    }, {} as Record<U, T[]>);
+    return this.reduce(
+        (rv, x) => {
+            const groupKey = selector(x) ?? '';
+            (rv[groupKey] = rv[groupKey] || []).push(x);
+            return rv;
+        },
+        {} as Record<U, T[]>,
+    );
 };
 
 Array.prototype.groupAndSelectBy = function <T, K extends keyof T, V extends keyof T>(
     this: T[],
     groupKey: K,
-    selectKey: V
+    selectKey: V,
 ): Record<string, T[V][]> {
-    return this.reduce((rv, x) => {
-        const key = String(x[groupKey]);
-        (rv[key] = rv[key] || []).push(x[selectKey]);
-        return rv;
-    }, {} as Record<string, T[V][]>);
+    return this.reduce(
+        (rv, x) => {
+            const key = String(x[groupKey]);
+            (rv[key] = rv[key] || []).push(x[selectKey]);
+            return rv;
+        },
+        {} as Record<string, T[V][]>,
+    );
 };
 
 Array.prototype.union = function <T>(this: T[], ...others: T[][]): T[] {

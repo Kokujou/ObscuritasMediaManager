@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -10,9 +11,11 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 namespace ObscuritasMediaManager.Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20260520071538_RecipeText")]
+    partial class RecipeText
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
@@ -600,6 +603,10 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.HasBaseType("ObscuritasMediaManager.Backend.Models.RecipeModelBase");
 
                     b.Property<TimeSpan>("CookingTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FormattedText")
+                        .HasMaxLength(9999)
                         .HasColumnType("TEXT");
 
                     b.Property<TimeSpan>("PreparationTime")

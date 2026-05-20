@@ -70,14 +70,23 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     {
         request.Image.RecipeId = recipeId;
         request.Thumb.RecipeId = recipeId;
-        context.Add(request.Image);
-        context.Add(request.Thumb);
-        await context.SaveChangesAsync();
+
+        await recipeRepository.AddDishImagesAsync(request.Image, request.Thumb);
+        return await context.Set<RecipeModelBase>().SingleAsync(x => x.Id == recipeId);
+    }
+
+    [HttpDelete("recipe/{recipeId}/image")]
+    public async Task<RecipeModelBase> RemoveRecipeImage(Guid recipeId, [FromBody] RecipeImageCreationRequest request)
+    {
+        request.Image.RecipeId = recipeId;
+        request.Thumb.RecipeId = recipeId;
+
+        await recipeRepository.RemoveDishImagesAsync(request.Image, request.Thumb);
         return await context.Set<RecipeModelBase>().SingleAsync(x => x.Id == recipeId);
     }
 
     [HttpPatch]
-    public async Task UpdateRecipeAsync(RecipeModel recipe)
+    public async Task UpdateRecipeAsync(RecipeModelBase recipe)
     {
         var current = await recipeRepository.GetAsync(recipe.Id);
         if (current is null) throw new("recipe not found");

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -6,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace ObscuritasMediaManager.Backend.Models;
 
 [Table("Recipes")]
-[JsonPolymorphic(TypeDiscriminatorPropertyName = nameof(Type))]
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "type", IgnoreUnrecognizedTypeDiscriminators = true)]
 [JsonDerivedType(typeof(FoodModel), "Food")]
 [JsonDerivedType(typeof(RecipeModel), "Recipe")]
 [Index(nameof(Title), IsUnique = true)]
@@ -17,6 +18,9 @@ public class RecipeModelBase
         builder.Entity<RecipeModelBase>().HasDiscriminator<string>("Type")
             .HasValue<RecipeModel>("Recipe")
             .HasValue<FoodModel>("Food");
+
+        builder.Entity<RecipeModelBase>().Property(x => x.ImageCount)
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
 
         builder.Entity<RecipeIngredientMappingModel>().HasOne(x => x.Ingredient).WithMany()
             .OnDelete(DeleteBehavior.NoAction).HasForeignKey(x => x.IngredientName)
@@ -35,12 +39,13 @@ public class RecipeModelBase
     [IgnoreAutoInclude]
     public required List<FoodThumbModel> Thumbs { get; set; } = [];
 
-    public int ImageCount { get; private set; }
+    public int ImageCount { get; set; }
 
     public int Difficulty { get; set; }
     public int Rating { get; set; }
     public bool Deleted { get; set; }
-    [MaxLength(255)] public string? Type { get; set; }
+
+    [JsonIgnore] [MaxLength(255)] public string? Type { get; set; }
 
     [ForeignKey(nameof(FoodTagModel.RecipeId))]
     public List<FoodTagModel> Tags { get; set; } = [];

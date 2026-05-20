@@ -1,7 +1,7 @@
 import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { ContextMenu } from '../../native-components/context-menu/context-menu';
-import { RecipeModel } from '../../obscuritas-media-manager-backend-client';
+import { RecipeModel, RecipeModelBase } from '../../obscuritas-media-manager-backend-client';
 import { getRecipeTileContextMenuItems } from './recipe-context-menu-items';
 import { renderRecipeTileStyles } from './recipe-tile.css';
 import { renderRecipeTile } from './recipe-tile.html';
@@ -12,10 +12,14 @@ export class RecipeTile extends LitElementBase {
         return renderRecipeTileStyles();
     }
 
-    @property({ type: Object }) public declare recipe: RecipeModel;
-    @property({ type: Boolean }) public declare compact: boolean;
+    @property({ type: Object }) declare public recipe: RecipeModelBase;
+    @property({ type: Boolean }) declare public compact: boolean;
 
-    @state() protected declare showDeleted: boolean;
+    @state() declare protected showDeleted: boolean;
+
+    get fullRecipe() {
+        return this.recipe instanceof RecipeModel ? this.recipe : null;
+    }
 
     connectedCallback() {
         super.connectedCallback();

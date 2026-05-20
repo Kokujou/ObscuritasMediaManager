@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { Session } from '../../data/session';
+import { changePage } from '../../extensions/url.extension';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { RecipeDetailPage } from '../recipe-detail-page/recipe-detail-page';
 import { RecipesPage } from './recipes-page';
@@ -20,7 +21,15 @@ export function renderRecipesPage(this: RecipesPage) {
                         </link-element>
                         ${Session.recipes
                             .current()
-                            .map((recipe) => html` <recipe-tile-base ile-base .recipe="${recipe}" compact></recipe-tile-base> `)}
+                            .map(
+                                (recipe) => html`
+                                    <recipe-tile-base
+                                        .recipe="${recipe}"
+                                        compact
+                                        @click="${() => changePage(RecipeDetailPage, { recipeId: recipe.id })}"
+                                    ></recipe-tile-base>
+                                `,
+                            )}
                     </div>
                 </paginated-scrolling>
             </div>

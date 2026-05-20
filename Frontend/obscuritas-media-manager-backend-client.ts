@@ -111,7 +111,7 @@ export class FileClient {
         this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
-    getVideo(videoPath?: string | undefined, signal?: AbortSignal): Promise<FileResponse | null> {
+    getVideo(videoPath?: string | undefined, signal?: AbortSignal): Promise<FileResponse> {
         let url_ = this.baseUrl + "/api/File/video?";
         if (videoPath === null)
             throw new globalThis.Error("The parameter 'videoPath' cannot be null.");
@@ -132,7 +132,7 @@ export class FileClient {
         });
     }
 
-    protected processGetVideo(response: Response): Promise<FileResponse | null> {
+    protected processGetVideo(response: Response): Promise<FileResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {
@@ -151,10 +151,10 @@ export class FileClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<FileResponse | null>(null as any);
+        return Promise.resolve<FileResponse>(null as any);
     }
 
-    getAudio(audioPath?: string | undefined, highCompatibility?: boolean | undefined, signal?: AbortSignal): Promise<FileResponse | null> {
+    getAudio(audioPath?: string | undefined, highCompatibility?: boolean | undefined, signal?: AbortSignal): Promise<FileResponse> {
         let url_ = this.baseUrl + "/api/File/audio?";
         if (audioPath === null)
             throw new globalThis.Error("The parameter 'audioPath' cannot be null.");
@@ -179,7 +179,7 @@ export class FileClient {
         });
     }
 
-    protected processGetAudio(response: Response): Promise<FileResponse | null> {
+    protected processGetAudio(response: Response): Promise<FileResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {
@@ -198,7 +198,7 @@ export class FileClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<FileResponse | null>(null as any);
+        return Promise.resolve<FileResponse>(null as any);
     }
 
     validate(fileUrls: string[], signal?: AbortSignal): Promise<boolean> {
@@ -822,7 +822,7 @@ export class MediaClient {
         return Promise.resolve<MediaModel>(null as any);
     }
 
-    getImageFor(guid: string, signal?: AbortSignal): Promise<FileResponse | null> {
+    getImageFor(guid: string, signal?: AbortSignal): Promise<FileResponse> {
         let url_ = this.baseUrl + "/api/Media/{guid}/image";
         if (guid === undefined || guid === null)
             throw new globalThis.Error("The parameter 'guid' must be defined.");
@@ -842,7 +842,7 @@ export class MediaClient {
         });
     }
 
-    protected processGetImageFor(response: Response): Promise<FileResponse | null> {
+    protected processGetImageFor(response: Response): Promise<FileResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {
@@ -861,7 +861,7 @@ export class MediaClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<FileResponse | null>(null as any);
+        return Promise.resolve<FileResponse>(null as any);
     }
 
     addMediaImage(image: string, guid: string, signal?: AbortSignal): Promise<void> {
@@ -2191,7 +2191,7 @@ export class RecipeClient {
         return Promise.resolve<void>(null as any);
     }
 
-    getRecipeImage(recipeId: string, index: number, signal?: AbortSignal): Promise<FileResponse | null> {
+    getRecipeImage(recipeId: string, index: number, signal?: AbortSignal): Promise<FileResponse> {
         let url_ = this.baseUrl + "/api/Recipe/{recipeId}/images/{index}";
         if (recipeId === undefined || recipeId === null)
             throw new globalThis.Error("The parameter 'recipeId' must be defined.");
@@ -2214,7 +2214,7 @@ export class RecipeClient {
         });
     }
 
-    protected processGetRecipeImage(response: Response): Promise<FileResponse | null> {
+    protected processGetRecipeImage(response: Response): Promise<FileResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {
@@ -2233,10 +2233,10 @@ export class RecipeClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<FileResponse | null>(null as any);
+        return Promise.resolve<FileResponse>(null as any);
     }
 
-    getRecipeThumb(recipeId: string, index: number, signal?: AbortSignal): Promise<FileResponse | null> {
+    getRecipeThumb(recipeId: string, index: number, signal?: AbortSignal): Promise<FileResponse> {
         let url_ = this.baseUrl + "/api/Recipe/{recipeId}/thumb/{index}";
         if (recipeId === undefined || recipeId === null)
             throw new globalThis.Error("The parameter 'recipeId' must be defined.");
@@ -2259,7 +2259,7 @@ export class RecipeClient {
         });
     }
 
-    protected processGetRecipeThumb(response: Response): Promise<FileResponse | null> {
+    protected processGetRecipeThumb(response: Response): Promise<FileResponse> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {
@@ -2278,7 +2278,7 @@ export class RecipeClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<FileResponse | null>(null as any);
+        return Promise.resolve<FileResponse>(null as any);
     }
 
     searchDishes(search?: string | undefined, signal?: AbortSignal): Promise<RecipeModelBase[]> {
@@ -2427,6 +2427,49 @@ export class RecipeClient {
     }
 
     protected processAddRecipeImage(response: Response): Promise<RecipeModelBase> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = RecipeModelBase.fromJS(resultData200, _mappings);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<RecipeModelBase>(null as any);
+    }
+
+    removeRecipeImage(recipeId: string, request: RecipeImageCreationRequest, signal?: AbortSignal): Promise<RecipeModelBase> {
+        let url_ = this.baseUrl + "/api/Recipe/recipe/{recipeId}/image";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "DELETE",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processRemoveRecipeImage(_response);
+        });
+    }
+
+    protected processRemoveRecipeImage(response: Response): Promise<RecipeModelBase> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         let _mappings: { source: any, target: any }[] = [];
@@ -2918,12 +2961,6 @@ export class MusicModel implements IMusicModel {
             }
         }
 
-        if (!data) {
-            this.instruments = [];
-            this.instrumentTypes = [];
-            this.instrumentNames = [];
-            this.genres = [];
-        }
     }
 
     init(_data?: any, _mappings?: any) {
@@ -3330,9 +3367,6 @@ export class InventoryItemModel implements IInventoryItemModel {
             }
         }
 
-        if (!data) {
-            this.unit = new MeasurementUnit();
-        }
     }
 
     init(_data?: any, _mappings?: any) {
@@ -3341,7 +3375,7 @@ export class InventoryItemModel implements IInventoryItemModel {
             this.target = _data["target"] !== undefined ? _data["target"] : null as any;
             this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : null as any;
             this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : null as any;
-            this.unit = _data["unit"] ? MeasurementUnit.fromJS(_data["unit"], _mappings) : new MeasurementUnit();
+            this.unit = _data["unit"] ? MeasurementUnit.fromJS(_data["unit"], _mappings) : null as any;
             this.level = _data["level"] !== undefined ? _data["level"] : null as any;
             this.isSide = _data["isSide"] !== undefined ? _data["isSide"] : null as any;
             this.ingredient = _data["ingredient"] ? IngredientModel.fromJS(_data["ingredient"], _mappings) : null as any;
@@ -3604,10 +3638,6 @@ export class MediaModel implements IMediaModel {
             }
         }
 
-        if (!data) {
-            this.contentWarnings = [];
-            this.genres = [];
-        }
     }
 
     init(_data?: any, _mappings?: any) {
@@ -3861,8 +3891,8 @@ export interface IMediaCreationRequest {
 }
 
 export class UpdateRequestOfObject implements IUpdateRequestOfObject {
-    oldModel: any;
-    newModel: any;
+    oldModel: any | null;
+    newModel: any | null;
 
     constructor(data?: Partial<IUpdateRequestOfObject>) {
         if (data) {
@@ -3902,8 +3932,8 @@ export class UpdateRequestOfObject implements IUpdateRequestOfObject {
 }
 
 export interface IUpdateRequestOfObject {
-    oldModel: any;
-    newModel: any;
+    oldModel: any | null;
+    newModel: any | null;
 }
 
 export class MusicOverviewResponse implements IMusicOverviewResponse {
@@ -4069,10 +4099,6 @@ export class PlaylistModel implements IPlaylistModel {
             }
         }
 
-        if (!data) {
-            this.genres = [];
-            this.tracks = [];
-        }
     }
 
     init(_data?: any, _mappings?: any) {
@@ -4157,8 +4183,8 @@ export interface IPlaylistModel {
 }
 
 export class UpdateRequestOfPlaylistModel implements IUpdateRequestOfPlaylistModel {
-    oldModel: PlaylistModel;
-    newModel: PlaylistModel;
+    oldModel: PlaylistModel | null;
+    newModel: PlaylistModel | null;
 
     constructor(data?: Partial<IUpdateRequestOfPlaylistModel>) {
         if (data) {
@@ -4168,16 +4194,12 @@ export class UpdateRequestOfPlaylistModel implements IUpdateRequestOfPlaylistMod
             }
         }
 
-        if (!data) {
-            this.oldModel = new PlaylistModel();
-            this.newModel = new PlaylistModel();
-        }
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.oldModel = _data["oldModel"] ? PlaylistModel.fromJS(_data["oldModel"], _mappings) : new PlaylistModel();
-            this.newModel = _data["newModel"] ? PlaylistModel.fromJS(_data["newModel"], _mappings) : new PlaylistModel();
+            this.oldModel = _data["oldModel"] ? PlaylistModel.fromJS(_data["oldModel"], _mappings) : null as any;
+            this.newModel = _data["newModel"] ? PlaylistModel.fromJS(_data["newModel"], _mappings) : null as any;
         }
     }
 
@@ -4202,8 +4224,8 @@ export class UpdateRequestOfPlaylistModel implements IUpdateRequestOfPlaylistMod
 }
 
 export interface IUpdateRequestOfPlaylistModel {
-    oldModel: PlaylistModel;
-    newModel: PlaylistModel;
+    oldModel: PlaylistModel | null;
+    newModel: PlaylistModel | null;
 }
 
 export class RecipeModelBase implements IRecipeModelBase {
@@ -4231,7 +4253,6 @@ export class RecipeModelBase implements IRecipeModelBase {
         if (!data) {
             this.images = [];
             this.thumbs = [];
-            this.tags = [];
         }
         this._discriminator = "RecipeModelBase";
     }
@@ -4274,10 +4295,10 @@ export class RecipeModelBase implements IRecipeModelBase {
 
     static fromJS(data: any, _mappings?: any): RecipeModelBase  {
         data = typeof data === 'object' ? data : {};
-        if (data["type"] === "RecipeModel")
-            return createInstance<RecipeModel>(data, _mappings, RecipeModel)!;
-        if (data["type"] === "FoodModel")
+        if (data["type"] === "Food")
             return createInstance<FoodModel>(data, _mappings, FoodModel)!;
+        if (data["type"] === "Recipe")
+            return createInstance<RecipeModel>(data, _mappings, RecipeModel)!;
         return createInstance<RecipeModelBase>(data, _mappings, RecipeModelBase)!;
     }
 
@@ -4427,7 +4448,7 @@ export interface IFoodThumbModel {
 }
 
 export class FoodTagModel implements IFoodTagModel {
-    recipeId: string;
+    recipeId: string | null;
     key: string;
     value: string;
 
@@ -4471,7 +4492,7 @@ export class FoodTagModel implements IFoodTagModel {
 }
 
 export interface IFoodTagModel {
-    recipeId: string;
+    recipeId: string | null;
     key: string;
     value: string;
 }
@@ -4487,7 +4508,7 @@ export class FoodModel extends RecipeModelBase implements IFoodModel {
             }
         }
 
-        this._discriminator = "FoodModel";
+        this._discriminator = "Food";
     }
 
     init(_data?: any, _mappings?: any) {
@@ -4536,14 +4557,7 @@ export class RecipeModel extends RecipeModelBase implements IRecipeModel {
             }
         }
 
-        if (!data) {
-            this.ingredients = [];
-            this.cookware = [];
-            this.ingredientNames = [];
-            this.ingredientCategories = [];
-            this.cookwareNames = [];
-        }
-        this._discriminator = "RecipeModel";
+        this._discriminator = "Recipe";
     }
 
     init(_data?: any, _mappings?: any) {

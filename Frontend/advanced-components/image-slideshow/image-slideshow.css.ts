@@ -93,7 +93,7 @@ export function renderImageSlideshowStyles() {
             -webkit-user-select: none;
 
             min-height: 0;
-            --side-scroller-gap: 30px;
+            --side-scroller-gap: 40px;
             --side-scroller-padding-inner: 40px 0;
         }
 
@@ -109,20 +109,33 @@ export function renderImageSlideshowStyles() {
             height: 100%;
         }
 
+        .imported-image-background {
+            position: absolute;
+            left: -10%;
+            top: -10%;
+            height: 120%;
+            object-fit: contain;
+            aspect-ratio: 1;
+            border-radius: 20px;
+
+            filter: blur(5px);
+            z-index: -1;
+        }
+
         .imported-image-container[current] {
-            outline: 5px solid blue;
+            outline: 2px solid blue;
             transform: scale(1.3);
         }
 
         .imported-image {
+            padding: 5px;
             height: 100%;
+            box-sizing: border-box;
             width: auto;
             aspect-ratio: 1;
             object-fit: contain;
 
             transition: transform 0.2s linear;
-
-            background: black;
 
             cursor: pointer;
         }

@@ -41,8 +41,8 @@ export function renderRecipeDetailPageStyles() {
         #title {
             display: inline-flex;
             font-size: 18px;
-            max-width: 800px;
-            width: 800px;
+            max-width: 400px;
+            width: 400px;
             flex: unset;
             --label-height: auto;
         }
@@ -206,15 +206,17 @@ export function renderRecipeDetailPageStyles() {
             scrollbar-width: none;
         }
 
-        #recipe-text {
+        textarea {
             border: none;
             outline: none;
             min-height: 200px;
+            width: 100%;
             margin-bottom: 50px;
             border-radius: 20px;
             padding: 10px;
             border: 3px dashed;
             caret-color: white;
+            box-sizing: border-box;
 
             background: var(--accent-color-full);
             font-style: inherit;
@@ -234,7 +236,11 @@ export function renderRecipeDetailPageStyles() {
             border-radius: 10px;
             background: linear-gradient(130deg, transparent 0 20%, #fff5, transparent 40% 90%), #0009;
 
-            box-shadow: 0 0 10px white inset, 0 0 20px #440055, 0 0 20px #440055, 0 0 20px #440055;
+            box-shadow:
+                0 0 10px white inset,
+                0 0 20px #440055,
+                0 0 20px #440055,
+                0 0 20px #440055;
             text-shadow: 0 0 10px black;
 
             font-size: 18px;

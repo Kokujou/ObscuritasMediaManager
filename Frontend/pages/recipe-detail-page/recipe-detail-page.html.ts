@@ -1,8 +1,8 @@
 import { html } from 'lit';
-import { StarRating } from '../../advanced-components/star-rating/star-rating';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
-import { TimeSpan } from '../../data/timespan';
 
+import { StarRating } from '../../advanced-components/star-rating/star-rating';
+import { TimeSpan } from '../../data/timespan';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu';
 import { GroupedDropdownResult } from '../../native-components/grouped-dropdown/grouped-dropdown';
@@ -15,53 +15,7 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
     return html`
         <page-layout>
             <div id="page-container">
-                <div id="image-ingredients-container">
-                    <div id="ingredient-container">
-                        <input
-                            type="text"
-                            id="title"
-                            .value="${this.recipe.title}"
-                            onclick="javascript:this.select()"
-                            @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
-                            @change="${(e: Event) => this.changeProperty('title', (e.target as HTMLInputElement).value)}"
-                        />
-                        ${Object.entries(this.recipe.ingredients.groupByKey('groupName')).map((group) =>
-                            renderIngredientGroup.call(this, group)
-                        )}
-                        <button tabindex="0" id="add-group-link" @click="${(e: Event) => this.addIngredient('Neue Gruppe', e)}">
-                            + Gruppe hinzufügen
-                        </button>
-                        <div id="cooking-utensil-heading">Kochutensilien:</div>
-                        <div id="cookware">
-                            ${this.recipe.cookware.map(
-                                (cookware) =>
-                                    html` <div class="cookware-row">
-                                        <autocomplete-input
-                                            class="cookware-input"
-                                            .value="${{ id: cookware.name, text: cookware.name }}"
-                                            .searchItems="${this.searchCookware}"
-                                            @value-changed="${(e: CustomEvent<AutocompleteItem>) =>
-                                                this.updateCookware(cookware, e.detail.id!)}"
-                                        ></autocomplete-input>
-                                        <div
-                                            class="remove-cookware-icon"
-                                            icon="${Icons.Trash}"
-                                            @click="${() => this.removeCookware(cookware)}"
-                                        ></div>
-                                    </div>`
-                            )}
-                        </div>
-                        <button
-                            tabindex="0"
-                            id="add-cookware-link"
-                            @click="${(e: Event) => this.addCookware()}"
-                            @keyup="${(e: KeyboardEvent) => {
-                                if (e.key == 'Enter') e.target?.dispatchEvent(new Event('click'));
-                            }}"
-                        >
-                            + Kochutensil hinzufügen
-                        </button>
-                    </div>
+                <flex-row id="basic-info-section">
                     <recipe-tile
                         .recipe="${this.recipe}"
                         compact
@@ -71,46 +25,106 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                                 ? this.changeProperty('difficulty', e.detail.rating)
                                 : this.changeProperty('rating', e.detail.rating)}"
                     ></recipe-tile>
-                </div>
-
-                <div id="description-area">
-                    <div class="description-section" id="dropdown-section">
-                        <div class="description-input">
-                            <div class="input-title">Vorbereitung:</div>
-                            <duration-input
-                                id="preparation-time"
-                                .timespan="${TimeSpan.fromString(this.recipe.preparationTime)}"
-                                compact
-                                @duration-changed="${(e: CustomEvent<string>) =>
-                                    this.changeProperty('preparationTime', e.detail)}"
-                            ></duration-input>
-                        </div>
-                        <div class="description-input">
-                            <div class="input-title">Kochen:</div>
-                            <duration-input
-                                id="cooking-time"
-                                .timespan="${TimeSpan.fromString(this.recipe.cookingTime)}"
-                                compact
-                                @duration-changed="${(e: CustomEvent<string>) => this.changeProperty('cookingTime', e.detail)}"
-                            ></duration-input>
-                        </div>
+                    <div id="heading-section">
+                        <input
+                            type="text"
+                            id="title"
+                            .value="${this.recipe.title}"
+                            onclick="javascript:this.select()"
+                            @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
+                            @change="${(e: Event) => this.changeProperty('title', (e.target as HTMLInputElement).value)}"
+                        />
+                        <textarea
+                            id="description"
+                            .value="${this.recipe.description}"
+                            @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
+                            @change="${(e: Event) => this.changeProperty('description', (e.target as HTMLTextAreaElement).value)}"
+                        ></textarea>
                     </div>
-                    <textarea
-                        id="recipe-text"
-                        oninput="this.dispatchEvent(new Event('change'))"
-                        @change="${(e: Event) => this.changeProperty('formattedText', (e.target as HTMLInputElement).value)}"
-                        .value="${this.recipe.formattedText ?? ''}"
-                    >
-                    </textarea>
-                </div>
-
-                <div id="action-area">
-                    ${!this.recipe.id
-                        ? html` <div class="action-button" @click="${() => this.createRecipe()}">Erstellen</div> `
-                        : ''}
-                </div>
+                </flex-row>
             </div>
         </page-layout>
+    `;
+}
+
+function renderRecipeSection(this: RecipeDetailPage) {
+    if (!this.fullRecipe) return;
+
+    return html`
+        <div id="image-ingredients-container">
+            <div id="ingredient-container">
+                ${Object.entries(this.fullRecipe.ingredients.groupByKey('groupName')).map((group) =>
+                    renderIngredientGroup.call(this, group),
+                )}
+                <button tabindex="0" id="add-group-link" @click="${(e: Event) => this.addIngredient('Neue Gruppe', e)}">
+                    + Gruppe hinzufügen
+                </button>
+                <div id="cooking-utensil-heading">Kochutensilien:</div>
+                <div id="cookware">
+                    ${this.fullRecipe.cookware.map(
+                        (cookware) =>
+                            html` <div class="cookware-row">
+                                <autocomplete-input
+                                    class="cookware-input"
+                                    .value="${{ id: cookware.name, text: cookware.name }}"
+                                    .searchItems="${this.searchCookware}"
+                                    @value-changed="${(e: CustomEvent<AutocompleteItem>) =>
+                                        this.updateCookware(cookware, e.detail.id!)}"
+                                ></autocomplete-input>
+                                <div
+                                    class="remove-cookware-icon"
+                                    icon="${Icons.Trash}"
+                                    @click="${() => this.removeCookware(cookware)}"
+                                ></div>
+                            </div>`,
+                    )}
+                </div>
+                <button
+                    tabindex="0"
+                    id="add-cookware-link"
+                    @click="${(e: Event) => this.addCookware()}"
+                    @keyup="${(e: KeyboardEvent) => {
+                        if (e.key == 'Enter') e.target?.dispatchEvent(new Event('click'));
+                    }}"
+                >
+                    + Kochutensil hinzufügen
+                </button>
+            </div>
+        </div>
+
+        <div id="description-area">
+            <div class="description-section" id="dropdown-section">
+                <div class="description-input">
+                    <div class="input-title">Vorbereitung:</div>
+                    <duration-input
+                        id="preparation-time"
+                        .timespan="${TimeSpan.fromString(this.fullRecipe.preparationTime)}"
+                        compact
+                        @duration-changed="${(e: CustomEvent<string>) => this.changeProperty('preparationTime', e.detail)}"
+                    ></duration-input>
+                </div>
+                <div class="description-input">
+                    <div class="input-title">Kochen:</div>
+                    <duration-input
+                        id="cooking-time"
+                        .timespan="${TimeSpan.fromString(this.fullRecipe.cookingTime)}"
+                        compact
+                        @duration-changed="${(e: CustomEvent<string>) => this.changeProperty('cookingTime', e.detail)}"
+                    ></duration-input>
+                </div>
+            </div>
+            <textarea
+                id="recipe-text"
+                oninput="this.dispatchEvent(new Event('change'))"
+                @change="${(e: Event) => this.changeProperty('formattedText', (e.target as HTMLInputElement).value)}"
+                .value="${this.fullRecipe.formattedText ?? ''}"
+            >
+            </textarea>
+        </div>
+
+        <div id="action-area">
+            ${!this.recipe.id ? html` <div class="action-button" @click="${() => this.createRecipe()}">Erstellen</div> ` : ''}
+        </div>
     `;
 }
 
@@ -129,7 +143,7 @@ function renderIngredientGroup(this: RecipeDetailPage, group: [name: string, ing
                 .items="${group[1]}"
                 .itemRenderer="${(item: RecipeIngredientMappingModel) => renderIngredient.call(this, item)}"
                 @delete-item="${(e: CustomEvent<any>) => this.removeIngredient(e.detail)}"
-                @list-changed="${() => this.changeProperty('ingredients', this.recipe.ingredients)}"
+                @list-changed="${() => this.changeProperty('ingredients', this.fullRecipe!.ingredients)}"
             >
             </priority-list>
             <button tabindex="0" id="add-ingredient-link" @click="${(e: Event) => this.addIngredient(group[0], e)}">
@@ -140,7 +154,7 @@ function renderIngredientGroup(this: RecipeDetailPage, group: [name: string, ing
 }
 
 function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMappingModel) {
-    return html` <div class="ingredient" @change="${() => this.changeProperty('ingredients', this.recipe.ingredients)}">
+    return html` <div class="ingredient" @change="${() => this.changeProperty('ingredients', this.fullRecipe!.ingredients)}">
         ${!ValuelessMeasurements.includes(ingredient.unit.measurement)
             ? html` <input
                   type="text"
@@ -198,9 +212,9 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
                                     text: category,
                                     image: IngredientIcons[category],
                                     action: () => this.changeIngredientCategory(ingredient, category),
-                                } as ContextMenuItem)
+                                }) as ContextMenuItem,
                         ),
-                    e
+                    e,
                 )}"
         >
             <div class="ingredient-category-icon" icon="${Icons.Category}"></div>
