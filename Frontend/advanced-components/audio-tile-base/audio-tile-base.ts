@@ -12,12 +12,12 @@ export class AudioTileBase extends LitElementBase {
         return renderAudioTileBaseStyles();
     }
 
-    @property({ type: Boolean, reflect: true }) public declare disabled: boolean;
-    @property({ type: Boolean, reflect: true }) public declare paused: boolean;
-    @property({ type: Object }) public declare track: MusicModel;
-    @property({ type: Object }) public declare visualizationData?: Observable<Float32Array<ArrayBuffer>>;
+    @property({ type: Boolean, reflect: true }) declare public disabled: boolean;
+    @property({ type: Boolean, reflect: true }) declare public paused: boolean;
+    @property({ type: Object }) declare public track: MusicModel;
+    @property({ type: Object }) declare public visualizationData?: Observable<Float32Array<ArrayBuffer>>;
 
-    @state() protected declare hoveredRating: number;
+    @state() declare protected hoveredRating: number;
 
     protected animating = false;
     protected canvas: HTMLCanvasElement | null = null;
@@ -29,15 +29,15 @@ export class AudioTileBase extends LitElementBase {
         this.subscriptions.push(Session.instruments.subscribe(() => this.requestFullUpdate()));
     }
 
-    connectedCallback(): void {
-        super.connectedCallback();
+    updated(_changedProperties: Map<any, any>): void {
+        super.updated(_changedProperties);
 
         if (this.visualizationData)
             this.subscriptions.push(
                 this.visualizationData.subscribe(async () => {
                     if (this.paused) return;
                     await this.updateVisualization();
-                })
+                }),
             );
     }
 

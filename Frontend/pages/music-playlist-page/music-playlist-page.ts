@@ -34,7 +34,7 @@ export class MusicPlaylistPage extends LitElementBase {
 
     get autocompleteGenres() {
         return Object.values(MusicGenre).filter(
-            (genre) => !this.updatedTrack.genres?.some((x) => MusicGenre[x] == genre) && genre != MusicGenre.Unset
+            (genre) => !this.updatedTrack.genres?.some((x) => MusicGenre[x] == genre) && genre != MusicGenre.Unset,
         );
     }
 
@@ -71,12 +71,12 @@ export class MusicPlaylistPage extends LitElementBase {
         return MediaFilterService.find(Session.mediaList.current(), this.updatedTrack.source!, false)?.id;
     }
 
-    @property({ type: Number }) public declare trackIndex: number;
-    @property() public declare playlistId: string;
-    @property() public declare trackHash: string;
-    @property({ type: Boolean, reflect: true }) public declare createNew: boolean;
+    @property({ type: Number }) declare public trackIndex: number;
+    @property() declare public playlistId: string;
+    @property() declare public trackHash: string;
+    @property({ type: Boolean, reflect: true }) declare public createNew: boolean;
 
-    @state() protected declare updatedTrack: MusicModel;
+    @state() declare protected updatedTrack: MusicModel;
 
     protected playlist = new PlaylistModel({ tracks: [] });
     protected currentTrack = new MusicModel();
@@ -105,7 +105,7 @@ export class MusicPlaylistPage extends LitElementBase {
             }),
             AudioService.changed.subscribe(() => {
                 this.requestFullUpdate();
-            })
+            }),
         );
 
         window.addEventListener('hashchange', (e: Event) => {
@@ -132,7 +132,7 @@ export class MusicPlaylistPage extends LitElementBase {
             } catch {
                 MessageSnackbar.popup(
                     'Die Playlist konnte nicht gefunden werden.\n' + 'Temporäre Playlists werden regelmäßig gelöscht. ',
-                    'error'
+                    'error',
                 );
                 changePage(MusicPage);
                 return;
@@ -205,7 +205,7 @@ export class MusicPlaylistPage extends LitElementBase {
                 newModel[property] = value;
                 var updated = await MusicService.update(
                     this.updatedTrack.hash,
-                    new UpdateRequestOfObject({ oldModel, newModel })
+                    new UpdateRequestOfObject({ oldModel, newModel }),
                 );
                 this.updatedTrack = updated;
                 this.playlist.tracks[this.trackIndex] = updated;
@@ -250,7 +250,7 @@ export class MusicPlaylistPage extends LitElementBase {
             var instruments = e.detail.acceptedGenres.map((x) => x.name);
             this.changeProperty(
                 'instruments',
-                Session.instruments.current().filter((i) => instruments.includes(i.name))
+                Session.instruments.current().filter((i) => instruments.includes(i.name)),
             );
             genreDialog.remove();
         });

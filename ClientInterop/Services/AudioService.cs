@@ -100,7 +100,7 @@ public static class AudioService
         }
 
         _visualizer = new(_reader.ToSampleProvider());
-        _visualizer.Samples.Subscribe(x => VisualizationData = x.newValue ?? []);
+        _visualizer.Samples.Subscribe(x => { VisualizationData = x.newValue ?? []; });
         _visualizer.Reset();
         Player.Init(_visualizer);
         TrackPath = trackPath;

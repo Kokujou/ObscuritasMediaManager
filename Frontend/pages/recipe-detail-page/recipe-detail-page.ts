@@ -97,7 +97,6 @@ export class RecipeDetailPage extends LitElementBase {
 
         if (this.recipeId) {
             this.recipe = (await RecipeService.getRecipe(this.recipeId)) as RecipeModel;
-            console.log(this.recipe);
             await this.requestFullUpdate();
         }
     }
