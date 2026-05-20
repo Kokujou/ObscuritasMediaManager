@@ -9,6 +9,7 @@
     },
     "codeGenerators": {
         "openApiToCSharpClient": {
+            "jsonLibrary": "SystemTextJson",
             "clientBaseClass": "",
             "configurationClass": null,
             "generateClientClasses": true,

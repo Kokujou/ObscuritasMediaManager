@@ -5,8 +5,8 @@ Param(
 
     [string] $configuration = "Debug",
 
-    $sourceFramework = "net8.0",
-    $clientTargetRuntime = "Net80"
+    $sourceFramework = "net10.0",
+    $clientTargetRuntime = "Net100"
 )
 Start-Sleep -Seconds 3
 cd $PSScriptRoot
