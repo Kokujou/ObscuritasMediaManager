@@ -3,6 +3,7 @@ import { css } from 'lit';
 export function renderRecipeTileBaseStyles() {
     return css`
         :host {
+            position: relative;
             width: 250px;
             height: 300px;
             margin: 20px;

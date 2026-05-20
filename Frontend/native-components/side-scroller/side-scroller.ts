@@ -24,7 +24,7 @@ export class SideScroller extends LitElementBase {
         return (
             (this.shadowRoot!.querySelector('slot')
                 ?.assignedElements()
-                .filter((x) => x.className != 'inner-space') as HTMLElement[]) ?? []
+                .filter((x) => x.className != 'inner-space' && !x.hasAttribute('noScroll')) as HTMLElement[]) ?? []
         );
     }
 

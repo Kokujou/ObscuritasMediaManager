@@ -1,12 +1,16 @@
 import { css } from 'lit';
+import { registerIcons } from '../../resources/inline-icons/icon-registry';
 
 export function renderImageSlideshowStyles() {
     return css`
         :host {
             outline: none;
 
+            position: relative;
+
             width: 100%;
             height: 100%;
+            z-index: 1000;
             padding: 30px;
             border-radius: 20px;
             box-sizing: border-box;
@@ -164,6 +168,15 @@ export function renderImageSlideshowStyles() {
         .remove-image-icon:hover {
             background-color: red;
             transition: background-color 0.5s ease-out;
+        }
+
+        ${registerIcons()}
+
+        #add-image-button {
+            height: 100%;
+            aspect-ratio: 1;
+            background: #000a;
+            cursor: pointer;
         }
 
         .arrow-link {

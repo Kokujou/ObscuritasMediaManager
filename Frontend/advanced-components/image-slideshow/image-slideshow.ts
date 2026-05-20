@@ -14,6 +14,8 @@ export class ImageSlideshow extends LitElementBase {
     }
 
     @property({ type: Array }) declare public images: SlideshowImage[];
+    @property({ type: Number }) declare public totalCount?: number;
+    @property({ type: Boolean }) declare public allowAdd: boolean;
 
     @query('side-scroller') declare public sideScroller?: SideScroller;
     @query('#current-image') declare protected currentImageElement?: HTMLImageElement;
@@ -102,5 +104,9 @@ export class ImageSlideshow extends LitElementBase {
 
     notifyThumbError(imageId: string) {
         this.dispatchEvent(new CustomEvent('thumb-error', { detail: imageId, bubbles: true, composed: true }));
+    }
+
+    notifyAddImage() {
+        this.dispatchEvent(new CustomEvent('add-image', { bubbles: true, composed: true }));
     }
 }

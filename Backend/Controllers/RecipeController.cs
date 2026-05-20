@@ -29,7 +29,7 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
         return File(image.ImageData, image.MimeType);
     }
 
-    [HttpGet("{recipeId}/thumb/{index}")]
+    [HttpGet("{recipeId}/thumbs/{index}")]
     public async Task<IActionResult> GetRecipeThumb(Guid recipeId, int index)
     {
         var thumb = await recipeRepository.GetThumbAsync(recipeId, index);
@@ -83,6 +83,29 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
 
         await recipeRepository.RemoveDishImagesAsync(request.Image, request.Thumb);
         return await context.Set<RecipeModelBase>().SingleAsync(x => x.Id == recipeId);
+    }
+
+    [HttpPut("{recipeId}/tag")]
+    public async Task AddTagAsync(Guid recipeId, [FromBody] FoodTagModel tag)
+    {
+        tag.RecipeId = recipeId;
+        context.Set<FoodTagModel>().Add(tag);
+        await context.SaveChangesAsync();
+    }
+
+    [HttpDelete("{recipeId}/tag")]
+    public async Task RemoveTagAsync(Guid recipeId, [FromBody] FoodTagModel tag)
+    {
+        tag.RecipeId = recipeId;
+        await context.Set<FoodTagModel>().Where(x => x.RecipeId == recipeId && x.Key == tag.Key && x.Value == tag.Value)
+            .ExecuteDeleteAsync();
+    }
+
+    [HttpPost("{recipeId}/change-type")]
+    public async Task ChangeType(Guid recipeId, string type)
+    {
+        await context.Set<RecipeModelBase>().Where(x => x.Id == recipeId)
+            .ExecuteUpdateAsync(query => query.SetProperty(x => x.Type, type));
     }
 
     [HttpPatch]

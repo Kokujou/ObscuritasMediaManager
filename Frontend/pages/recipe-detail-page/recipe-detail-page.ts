@@ -1,11 +1,15 @@
 import { customElement, property, query, state } from 'lit-element/decorators';
+import { ImageSlideshow } from '../../advanced-components/image-slideshow/image-slideshow';
+import { SlideshowImage } from '../../advanced-components/image-slideshow/slideshow-image';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
+import { waitForAnimation } from '../../extensions/animation.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
     FoodImageModel,
+    FoodTagModel,
     FoodThumbModel,
     IngredientCategory,
     IngredientModel,
@@ -20,6 +24,7 @@ import {
 } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
 import { ImageCompressionService } from '../../services/image-compression.service';
+import { PageRouting } from '../page-routing/page-routing';
 import { renderRecipeDetailPageStyles } from './recipe-detail-page.css';
 import { renderRecipeDetailPage } from './recipe-detail-page.html';
 
@@ -71,7 +76,6 @@ export class RecipeDetailPage extends LitElementBase {
         super();
         this.recipe = new RecipeModel({
             title: 'Rezepttitel',
-            type: 'Recipe',
             cookingTime: new TimeSpan().toString(),
             totalTime: new TimeSpan().toString(),
             cookware: [],
@@ -83,6 +87,7 @@ export class RecipeDetailPage extends LitElementBase {
             images: [],
             thumbs: [],
             ingredients: [],
+            tags: [],
         });
         this.fullRecipe!.ingredients = [this.emptyGroup];
     }
@@ -104,14 +109,37 @@ export class RecipeDetailPage extends LitElementBase {
         return renderRecipeDetailPage.call(this);
     }
 
-    async changeProperty<T extends keyof RecipeModel>(property: T, value: RecipeModel[T]) {
-        if (property in this.recipe) this.recipe[property] = value;
-        else if (!this.fullRecipe) return;
-        else this.fullRecipe[property] = value;
+    async changeBaseProperty<T extends keyof RecipeModelBase>(property: T, value: RecipeModelBase[T]) {
+        this.recipe[property] = value;
 
         if (this.recipe.id) await RecipeService.updateRecipe(this.recipe);
         this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
         this.requestFullUpdate();
+    }
+
+    async changeProperty<T extends Exclude<keyof RecipeModel, keyof RecipeModelBase>>(property: T, value: RecipeModel[T]) {
+        if (!this.fullRecipe) return;
+
+        this.fullRecipe[property] = value;
+        await RecipeService.updateRecipe(this.fullRecipe);
+        this.recipe = (await RecipeService.getRecipe(this.fullRecipe.id!)) as RecipeModel;
+        this.requestFullUpdate();
+    }
+
+    async addTag(tag: FoodTagModel) {
+        await RecipeService.addTag(this.recipe.id!, tag);
+        this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
+    }
+
+    async removeTag(tag: FoodTagModel) {
+        await RecipeService.removeTag(this.recipe.id!, tag);
+        this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
+    }
+
+    async addRecipe() {
+        if (this.fullRecipe) return null;
+        await RecipeService.changeType(this.recipe.id!, 'Recipe');
+        this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
     }
 
     async addIngredient(group: string, event: Event) {
@@ -226,6 +254,35 @@ export class RecipeDetailPage extends LitElementBase {
     updateCookware(source: RecipeCookwareMappingModel, newCookware: string) {
         source.name = newCookware;
         this.changeProperty('cookware', this.fullRecipe!.cookware);
+    }
+
+    async showSlideshow() {
+        var slideShow = new ImageSlideshow();
+        slideShow.allowAdd = true;
+        slideShow.images = Array.createRange(0, this.recipe.imageCount - 1).map(
+            (index) =>
+                new SlideshowImage(
+                    index.toString(),
+                    `./Backend/api/recipe/${this.recipe.id}/images/${index}`,
+                    `./Backend/api/recipe/${this.recipe.id}/thumbs/${index}`,
+                ),
+        );
+        slideShow.currentIndex = 0;
+
+        slideShow.addEventListener('add-image', () => {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.onchange = async () => {};
+            fileInput.click();
+        });
+        PageRouting.instance.appendChild(slideShow);
+
+        await slideShow.requestFullUpdate();
+        await slideShow.updateComplete;
+        await waitForAnimation();
+
+        document.addEventListener('click', () => slideShow.remove(), { once: true });
     }
 
     async createRecipe() {

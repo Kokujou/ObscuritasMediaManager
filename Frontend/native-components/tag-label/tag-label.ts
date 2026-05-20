@@ -15,21 +15,34 @@ export class TagLabel extends LitElementBase {
         return null;
     }
 
-    get autocompleteItems() {
+    get filteredAutocomplete() {
         var input = this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement;
         if (!input) return [];
         var searchText = input.value;
         return this.autocomplete.filter((x) => x.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
     }
 
-    @property() public declare text: string;
-    @property({ type: Boolean, reflect: true }) public declare createNew: boolean;
-    @property({ type: Boolean, reflect: true }) public declare disabled: boolean;
-    @property({ type: Array }) public declare autocomplete: string[];
-    @property() public declare placeholder?: string;
+    get filteredGroups() {
+        var input = this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement;
+        if (!input) return [];
+        var searchText = input.value;
+        return this.groups.filter(
+            ([groups, value]) =>
+                groups.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()) ||
+                value.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()),
+        );
+    }
 
-    @state() protected declare autofillIndex: number;
-    @state() protected declare showAutocomplete: boolean;
+    @property() declare public text: string;
+    @property({ type: Boolean, reflect: true }) declare public createNew: boolean;
+    @property({ type: Boolean, reflect: true }) declare public withGroups: boolean;
+    @property({ type: Boolean, reflect: true }) declare public disabled: boolean;
+    @property({ type: Array }) declare public autocomplete: string[];
+    @property({ type: Array }) declare public groups: [string, string][];
+    @property() declare public placeholder?: string;
+
+    @state() declare protected autofillIndex: number;
+    @state() declare protected showAutocomplete: boolean;
 
     constructor() {
         super();
@@ -45,15 +58,10 @@ export class TagLabel extends LitElementBase {
         this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true }));
     }
 
-    notifyTagCreated() {
-        var tagInput = this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement;
-        this.dispatchEvent(new CustomEvent('tagCreated', { detail: { value: tagInput.value } }));
-    }
-
     handleInput(event: KeyboardEvent) {
         if (event.key == 'ArrowDown') {
             this.autofillIndex++;
-            if (this.autofillIndex >= this.autocompleteItems.length) this.autofillIndex = 0;
+            if (this.autofillIndex >= this.filteredAutocomplete.length) this.autofillIndex = 0;
             var selectedElement = this.selectedElement;
             if (!selectedElement) return;
             var selectedParent = selectedElement.parentElement!;
@@ -62,7 +70,7 @@ export class TagLabel extends LitElementBase {
                     top: selectedElement.offsetTop + selectedElement.offsetHeight - selectedParent.offsetHeight,
                 });
         } else if (event.key == 'ArrowUp') {
-            if (this.autofillIndex <= 0) this.autofillIndex = this.autocompleteItems.length;
+            if (this.autofillIndex <= 0) this.autofillIndex = this.filteredAutocomplete.length;
             this.autofillIndex--;
             var selectedElement = this.selectedElement;
             if (!selectedElement) return;
@@ -70,7 +78,7 @@ export class TagLabel extends LitElementBase {
             if (selectedElement.offsetTop <= selectedParent.scrollTop)
                 selectedParent.scrollTo({ top: selectedElement.offsetTop });
         } else if (event.key == 'Enter' || event.key == 'Tab')
-            this.setSearchText(this.autocompleteItems[this.autofillIndex > 0 ? this.autofillIndex : 0]);
+            this.notifyTagCreated(this.filteredAutocomplete[this.autofillIndex > 0 ? this.autofillIndex : 0]);
 
         this.requestFullUpdate();
         var selectedElement = this.selectedElement;
@@ -81,11 +89,10 @@ export class TagLabel extends LitElementBase {
             selectedParent.scrollTo({ top: selectedParent.scrollHeight });
     }
 
-    setSearchText(text: string) {
-        var input = this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement;
-        input.value = text;
+    notifyTagCreated(text: string, group?: string) {
+        var tagInput = this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement;
+        this.dispatchEvent(new CustomEvent('tagCreated', { detail: { value: text, group } }));
+        tagInput.value = '';
         this.requestFullUpdate();
-        this.notifyTagCreated();
-        input.value = '';
     }
 }

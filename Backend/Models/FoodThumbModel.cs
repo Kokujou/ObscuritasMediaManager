@@ -2,7 +2,6 @@
 using ObscuritasMediaManager.Backend.Extensions;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
@@ -14,7 +13,6 @@ public class FoodThumbModel
 
     public byte[]? ThumbData { get; set; }
 
-    [JsonIgnore]
     [MaxLength(32)]
     public string ThumbHash
     {

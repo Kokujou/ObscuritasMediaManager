@@ -9,6 +9,7 @@ export function renderRecipeDetailPageStyles() {
         #page-container {
             position: relative;
             width: 100%;
+            min-height: 100%;
             border-radius: 50px;
             padding: 20px;
             box-sizing: border-box;
@@ -16,6 +17,52 @@ export function renderRecipeDetailPageStyles() {
 
             display: inline-flex;
             flex-direction: column;
+        }
+
+        #heading-section {
+            gap: 20px;
+            width: 100%;
+        }
+
+        #title {
+            display: inline-flex;
+            font-size: 18px;
+            width: 100%;
+            flex: unset;
+            --label-height: auto;
+        }
+
+        #description {
+            min-height: 150px;
+        }
+
+        #food-tags {
+            column-gap: 10px;
+            row-gap: 10px;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        tag-label {
+            white-space: nowrap;
+        }
+
+        #add-recipe-button {
+            user-select: none;
+            cursor: pointer;
+
+            align-self: center;
+            border-radius: 10px;
+
+            background: darkgreen;
+            padding: 10px 40px;
+
+            box-shadow:
+                limegreen 0 0 10px inset,
+                limegreen 0 0 5px,
+                limegreen 0 0 5px,
+                limegreen 0 0 5px;
+            text-shadow: 2px 2px 2px black;
         }
 
         #image-ingredients-container {
@@ -29,22 +76,12 @@ export function renderRecipeDetailPageStyles() {
             flex-direction: column;
             gap: 20px;
 
-            min-height: 300px;
             flex: auto;
             padding: 20px;
             border-radius: 20px;
             box-sizing: padding-box;
 
             background: var(--accent-color);
-        }
-
-        #title {
-            display: inline-flex;
-            font-size: 18px;
-            max-width: 400px;
-            width: 400px;
-            flex: unset;
-            --label-height: auto;
         }
 
         #ingredients-section-title {
@@ -209,9 +246,7 @@ export function renderRecipeDetailPageStyles() {
         textarea {
             border: none;
             outline: none;
-            min-height: 200px;
             width: 100%;
-            margin-bottom: 50px;
             border-radius: 20px;
             padding: 10px;
             border: 3px dashed;
@@ -222,6 +257,11 @@ export function renderRecipeDetailPageStyles() {
             font-style: inherit;
             color: inherit;
             font-size: 18px;
+        }
+
+        #recipe-text {
+            min-height: 200px;
+            margin-bottom: 50px;
         }
 
         #action-area {

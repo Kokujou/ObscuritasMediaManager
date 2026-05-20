@@ -1,5 +1,6 @@
 import { html } from 'lit';
-import { FoodCache, ImportFoodPage } from '../../pages/import-food-page/import-food-page';
+import { ImportFoodPage } from '../../pages/import-food-page/import-food-page';
+import { Icons } from '../../resources/inline-icons/icon-registry';
 import { ImageSlideshow } from './image-slideshow';
 
 export function renderImageSlideshow(this: ImageSlideshow) {
@@ -18,6 +19,7 @@ export function renderImageSlideshow(this: ImageSlideshow) {
                         style="aspect-ratio: ${this.currentAspectRatio}; ${this.currentAspectRatio > 1
                             ? 'width: 100%;'
                             : 'height: 100%'}"
+                        @click="${(e: Event) => e.stopPropagation()}"
                         @load="${() => this.requestFullUpdate()}"
                         @error="${() => (this.currentImage?.id ? this.notifyImageError(this.currentImage.id) : null)}"
                     />
@@ -32,14 +34,18 @@ export function renderImageSlideshow(this: ImageSlideshow) {
                 </div>
             </div>
             <slot name="edit-sidebar"></slot>
-            <side-scroller @change="${async () => await this.changeCurrentImage()}">
+            <side-scroller
+                .currentItemIndex="${this.currentIndex}"
+                @change="${async () => await this.changeCurrentImage()}"
+                @click="${(e: Event) => e.stopPropagation()}"
+            >
                 ${this.images.map(
                     (image, i) =>
                         html` <div class="imported-image-container" ?current="${this.currentIndex == i}">
                             <img class="imported-image-background" src="${image.imageData ?? ''}" />
                             <img
                                 class="imported-image"
-                                src="${image.imageData ?? ''}"
+                                src="${image.thumbData ?? image.imageData ?? ''}"
                                 @click="${() => this.sideScroller!.setIndex(i)}"
                                 @error="${() => this.notifyThumbError(image.id)}"
                                 id="${image.id}"
@@ -47,8 +53,16 @@ export function renderImageSlideshow(this: ImageSlideshow) {
                             <div class="remove-image-icon" @click="${() => this.notifyImageRemoved(image.id)}">&times;</div>
                         </div>`,
                 )}
+                ${this.allowAdd
+                    ? html`<div
+                          id="add-image-button"
+                          noScroll
+                          icon="${Icons.Plus}"
+                          @click="${() => this.notifyAddImage()}"
+                      ></div> `
+                    : ''}
             </side-scroller>
-            <div id="file-count">${FoodCache.length} Bilder gefunden...</div>
+            <div id="file-count">${this.totalCount ?? this.images.length} Bilder gefunden...</div>
         </div>
     `;
 }

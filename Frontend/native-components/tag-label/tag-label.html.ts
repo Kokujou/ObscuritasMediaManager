@@ -24,18 +24,33 @@ function renderNewLabelForm(this: TagLabel) {
         />
 
         <div id="autocomplete-list" class="${this.showAutocomplete ? '' : 'hidden'}">
-            ${this.autocompleteItems.map(
-                (x, index) => html`<div
-                    class="autocomplete-item ${this.autofillIndex == index ? 'active' : ''}"
-                    @pointerover="${() => {
-                        this.autofillIndex = index;
-                        this.requestFullUpdate();
-                    }}"
-                    @pointerdown="${() => this.setSearchText(x)}"
-                >
-                    ${x}
-                </div> `
-            )}
+            ${this.withGroups
+                ? this.filteredGroups.map(
+                      (group, index) =>
+                          html`<div
+                              class="autocomplete-item ${this.autofillIndex == index ? 'active' : ''}"
+                              @pointerover="${() => {
+                                  this.autofillIndex = index;
+                                  this.requestFullUpdate();
+                              }}"
+                              @pointerdown="${() => this.notifyTagCreated(group[1], group[0])}"
+                          >
+                              ${group[0]}: ${group[1]}
+                          </div>`,
+                  )
+                : this.filteredAutocomplete.map(
+                      (x, index) =>
+                          html`<div
+                              class="autocomplete-item ${this.autofillIndex == index ? 'active' : ''}"
+                              @pointerover="${() => {
+                                  this.autofillIndex = index;
+                                  this.requestFullUpdate();
+                              }}"
+                              @pointerdown="${() => this.notifyTagCreated(x)}"
+                          >
+                              ${x}
+                          </div> `,
+                  )}
         </div>
         <div id="invisible-text">
             ${(this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement)?.value.replaceAll(' ', '\xA0')}

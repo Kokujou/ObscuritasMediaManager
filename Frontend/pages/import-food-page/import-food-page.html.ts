@@ -21,7 +21,10 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                 @image-removed="${(e: CustomEvent<string>) =>
                     this.removeDish(this.paginatedFiles.find((x) => x.id == e.detail)!)}"
                 @scroll-to-end="${async () => await this.loadMoreImages()}"
-                .images="${this.paginatedFiles.map((file) => new SlideshowImage(file.id, file.images[0].imageData))}"
+                .images="${this.paginatedFiles.map(
+                    (file) => new SlideshowImage(file.id, file.images[0].imageData, file.thumbs[0].thumbData),
+                )}"
+                .totalCount="${FoodCache.length}"
                 .currentIndex="${this.index ?? 0}"
             >
                 ${this.currentDish

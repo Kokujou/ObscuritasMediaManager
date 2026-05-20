@@ -2,7 +2,6 @@
 using ObscuritasMediaManager.Backend.Extensions;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
@@ -16,7 +15,6 @@ public class FoodImageModel
     [MaxLength(20)] public string? MimeType { get; set; }
     public byte[]? ImageData { get; set; }
 
-    [JsonIgnore]
     [MaxLength(32)]
     public string ImageHash
     {

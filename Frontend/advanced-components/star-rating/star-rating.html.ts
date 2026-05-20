@@ -23,7 +23,7 @@ export function renderStarRating(this: StarRating) {
                         @pointerout="${() => (this.hoveredRating = -1)}"
                     >
                         ${this.swords ? '⚔' : '★'}
-                    </div>`
+                    </div>`,
             )}
         </div>
     `;

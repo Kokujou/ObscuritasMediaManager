@@ -22,16 +22,10 @@ export class RecipeFilterService {
 
         ObjectFilterService.applyArrayFilter(filteredRecipes, filter.ingredients, 'ingredientNames');
         ObjectFilterService.applyMultiPropertySearch(filteredFood, filter.search ?? '', 'title', 'description');
-        ObjectFilterService.applyMultiPropertySearch(
-            filteredRecipes,
-            filter.search ?? '',
-            'title',
-            'description',
-            'formattedText'
-        );
+        ObjectFilterService.applyMultiPropertySearch(filteredRecipes, filter.search ?? '', 'title', 'description', 'recipeText');
         if (filter.maxDuration.toString() != new TimeSpan().toString())
             filteredRecipes = filteredRecipes.filter((x) =>
-                TimeSpan.fromString(x[filter.filterByTime]).smallerThan(filter.maxDuration)
+                TimeSpan.fromString(x[filter.filterByTime]).smallerThan(filter.maxDuration),
             );
 
         return filteredItems;

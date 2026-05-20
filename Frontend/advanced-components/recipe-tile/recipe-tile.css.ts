@@ -15,28 +15,6 @@ export function renderRecipeTileStyles() {
             width: var(--recipe-tile-width);
         }
 
-        #image-container {
-            position: relative;
-            width: var(--recipe-tile-width);
-            min-height: var(--recipe-tile-min-height);
-        }
-
-        #background-image {
-            position: absolute;
-            width: calc(100% - 50px);
-            height: calc(100% - 100px);
-            top: 50%;
-            left: 25px;
-            transform: translateY(-50%);
-
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 200%;
-
-            filter: blur(15px);
-            border-radius: 25%;
-        }
-
         #remove-image-button,
         #image {
             position: absolute;
@@ -74,16 +52,21 @@ export function renderRecipeTileStyles() {
             inset: 50px;
         }
 
+        #rating,
+        #difficulty {
+            --font-size: 30px;
+        }
+
         #rating {
             position: absolute;
-            bottom: 0;
+            bottom: -40px;
             left: 50%;
             transform: translateX(-50%);
         }
 
         #difficulty {
             position: absolute;
-            left: 0;
+            left: -40px;
             top: 50%;
             transform: translateY(-50%);
         }

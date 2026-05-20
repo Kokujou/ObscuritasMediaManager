@@ -2,11 +2,17 @@ import { html } from 'lit';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 
 import { StarRating } from '../../advanced-components/star-rating/star-rating';
+import { ColoredFoodTags } from '../../data/food/food-tags';
 import { TimeSpan } from '../../data/timespan';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu';
 import { GroupedDropdownResult } from '../../native-components/grouped-dropdown/grouped-dropdown';
-import { IngredientCategory, IngredientModel, RecipeIngredientMappingModel } from '../../obscuritas-media-manager-backend-client';
+import {
+    FoodTagModel,
+    IngredientCategory,
+    IngredientModel,
+    RecipeIngredientMappingModel,
+} from '../../obscuritas-media-manager-backend-client';
 import { Icons } from '../../resources/inline-icons/icon-registry';
 import { IngredientIcons } from '../../resources/inline-icons/ingredient-icons/icon-registry';
 import { RecipeDetailPage } from './recipe-detail-page';
@@ -18,30 +24,59 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                 <flex-row id="basic-info-section">
                     <recipe-tile
                         .recipe="${this.recipe}"
-                        compact
                         @imageReceived="${(e: CustomEvent<{ imageData: string }>) => this.addImage(e.detail.imageData)}"
                         @ratingChanged="${(e: CustomEvent<{ rating: number; include: boolean }>) =>
                             (e.composedPath()[0] as StarRating).swords
-                                ? this.changeProperty('difficulty', e.detail.rating)
-                                : this.changeProperty('rating', e.detail.rating)}"
+                                ? this.changeBaseProperty('difficulty', e.detail.rating)
+                                : this.changeBaseProperty('rating', e.detail.rating)}"
+                        @click="${() => this.showSlideshow()}"
                     ></recipe-tile>
-                    <div id="heading-section">
+                    <flex-column id="heading-section">
                         <input
                             type="text"
                             id="title"
                             .value="${this.recipe.title}"
-                            onclick="javascript:this.select()"
                             @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
-                            @change="${(e: Event) => this.changeProperty('title', (e.target as HTMLInputElement).value)}"
+                            @change="${(e: Event) => this.changeBaseProperty('title', (e.target as HTMLInputElement).value)}"
                         />
                         <textarea
                             id="description"
                             .value="${this.recipe.description}"
                             @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
-                            @change="${(e: Event) => this.changeProperty('description', (e.target as HTMLTextAreaElement).value)}"
+                            @change="${(e: Event) =>
+                                this.changeBaseProperty('description', (e.target as HTMLTextAreaElement).value)}"
                         ></textarea>
-                    </div>
+                        <flex-row id="food-tags">
+                            ${ColoredFoodTags.filter((tag) => this.recipe.tags.some((existing) => existing.value == tag.value))
+                                .orderBy((x) => x.key)
+                                .map(
+                                    (tag) =>
+                                        html`<tag-label
+                                            .text="${`${tag.key}: ${tag.value}`}"
+                                            style="--label-color: ${tag.color}"
+                                            @removed="${() => this.removeTag(tag)}"
+                                        ></tag-label>`,
+                                )}
+                            <tag-label
+                                createNew
+                                withGroups
+                                .groups="${ColoredFoodTags.orderBy((x) => x.key).map((x) => [x.key, x.value] as const)}"
+                                @tagCreated="${(e: CustomEvent<{ value: string; group?: string }>) =>
+                                    this.addTag(
+                                        new FoodTagModel({
+                                            recipeId: this.recipe.id,
+                                            key: e.detail.group!,
+                                            value: e.detail.value,
+                                        }),
+                                    )}"
+                            ></tag-label>
+                        </flex-row>
+                        ${!this.fullRecipe
+                            ? html` <div id="add-recipe-button" @click="${() => this.addRecipe()}">Rezept hinzufügen</div> `
+                            : ''}
+                    </flex-column>
                 </flex-row>
+                ${renderRecipeSection.call(this)}
             </div>
         </page-layout>
     `;
@@ -116,8 +151,8 @@ function renderRecipeSection(this: RecipeDetailPage) {
             <textarea
                 id="recipe-text"
                 oninput="this.dispatchEvent(new Event('change'))"
-                @change="${(e: Event) => this.changeProperty('formattedText', (e.target as HTMLInputElement).value)}"
-                .value="${this.fullRecipe.formattedText ?? ''}"
+                @change="${(e: Event) => this.changeProperty('recipeText', (e.target as HTMLInputElement).value)}"
+                .value="${this.fullRecipe.recipeText ?? ''}"
             >
             </textarea>
         </div>
