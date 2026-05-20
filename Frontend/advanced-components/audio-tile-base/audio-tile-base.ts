@@ -32,11 +32,11 @@ export class AudioTileBase extends LitElementBase {
     updated(_changedProperties: Map<any, any>): void {
         super.updated(_changedProperties);
 
-        if (this.visualizationData)
+        if (this.visualizationData && !this.subscriptions.some((x) => x.observable === this.visualizationData))
             this.subscriptions.push(
-                this.visualizationData.subscribe(async () => {
+                this.visualizationData.subscribe(() => {
                     if (this.paused) return;
-                    await this.updateVisualization();
+                    this.updateVisualization();
                 }),
             );
     }
@@ -45,7 +45,7 @@ export class AudioTileBase extends LitElementBase {
         return renderAudioTileBase.call(this);
     }
 
-    async updateVisualization() {
+    updateVisualization() {
         if (this.animating) return;
         this.animating = true;
         this.canvas ??= this.shadowRoot!.querySelector('canvas')!;

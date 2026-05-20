@@ -10,25 +10,26 @@ export class Observable<T> {
     }
 
     subscribe(observer: (newValue: T, oldValue: T) => void, fireInitial = false) {
-        let subscription = new Subscription(observer);
+        let subscription = new Subscription(this, observer);
         this.subscriptions.push(subscription);
         if (fireInitial) observer(this.current(), this.current());
         return subscription;
     }
 
-    next(value: T) {
+    async next(value: T) {
         var oldValue = this.currentValue;
         this.currentValue = value;
 
         this.subscriptions = this.subscriptions.filter((x) => !x.unsubscribed);
-        this.subscriptions.forEach(async (subscription) => {
+
+        for (var subscription of this.subscriptions) {
             try {
                 var result = subscription.observer(this.currentValue, oldValue);
                 if (result instanceof Promise) await result;
             } catch {
                 //
             }
-        });
+        }
     }
 
     refresh() {
@@ -56,9 +57,12 @@ export class Observable<T> {
 }
 
 export class Subscription {
-    public declare unsubscribed: boolean;
+    declare public unsubscribed: boolean;
 
-    constructor(public observer: (oldValue: any, newValue: any) => any) {}
+    constructor(
+        public observable: Observable<any>,
+        public observer: (oldValue: any, newValue: any) => any,
+    ) {}
 
     unsubscribe() {
         this.unsubscribed = true;

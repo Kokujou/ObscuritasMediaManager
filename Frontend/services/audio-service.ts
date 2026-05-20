@@ -32,8 +32,6 @@ export class AudioService {
                 this.paused = false;
                 this.trackPosition.next(response.trackPosition);
                 this.visualizationData.next(new Float32Array(response.visualizationData));
-
-                this.changed.next();
                 break;
             }
             case InteropEvent.TrackEnded: {
