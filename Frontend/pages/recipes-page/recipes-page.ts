@@ -27,8 +27,8 @@ export class RecipesPage extends LitElementBase {
     //     return sorted.reverse();
     // }
 
-    @state() protected declare sortingProperty: keyof typeof RecipeSortingProperties;
-    @state() protected declare sortingDirection: keyof typeof SortingDirections;
+    @state() declare protected sortingProperty: keyof typeof RecipeSortingProperties;
+    @state() declare protected sortingDirection: keyof typeof SortingDirections;
 
     constructor() {
         super();
@@ -47,7 +47,7 @@ export class RecipesPage extends LitElementBase {
         this.sortingDirection = sortingDirection;
         localStorage.setItem(
             `recipes.sorting`,
-            JSON.stringify({ property: this.sortingProperty, direction: this.sortingDirection })
+            JSON.stringify({ property: this.sortingProperty, direction: this.sortingDirection }),
         );
         this.requestFullUpdate();
     }
@@ -64,7 +64,17 @@ export class RecipesPage extends LitElementBase {
         changePage(ImportFoodPage, {});
     }
 
-    submitFileBrowser() {}
+    dataUrlToBlobUrl(base64: string) {
+        base64 = base64.replace(/\s/g, '');
+        const binary = window.atob(base64);
+        const bytes = new Uint8Array(binary.length);
 
-    loadMoreItems() {}
+        for (let i = 0; i < binary.length; i++) {
+            bytes[i] = binary.charCodeAt(i);
+        }
+
+        const blob = new Blob([bytes], { type: 'image/jpeg' });
+
+        return URL.createObjectURL(blob);
+    }
 }

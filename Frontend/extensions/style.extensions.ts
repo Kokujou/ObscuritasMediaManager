@@ -29,7 +29,7 @@ export function setFavicon(icon: string, mode: 'icon' | 'image' | 'url' = 'icon'
         case 'icon':
             return (link.href = `data:image/svg+xml;base64, ${btoa(icon)}`);
         case 'image':
-            return (link.href = `data:image/png;baes64, ${icon}`);
+            return (link.href = `data:image/png;base64, ${icon}`);
         case 'url':
             return (link.href = icon);
         default:

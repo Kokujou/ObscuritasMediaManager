@@ -18,6 +18,27 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
         return recipeRepository.GetAll();
     }
 
+    [HttpGet("broken-images")]
+    public IQueryable<FoodImageModel> GetBrokenImages()
+    {
+        foreach (var item in context.FoodImages.AsTracking())
+            context.FoodImages.Where(x => x.Id == item.Id)
+                .ExecuteUpdate(x => x.SetProperty(y => y.ImageHash, item.ImageHash));
+
+        return context.FoodImages;
+    }
+
+    [HttpGet("image/{imageHash}")]
+    public async Task<IActionResult> GetImageAsync(string imageHash)
+    {
+        var image = await context.FoodImages.FirstAsync(x => x.ImageHash.ToLower() == imageHash.ToLower());
+        if (image is { ImageData: null } or { MimeType: null }) return NoContent();
+
+        Response.Headers.CacheControl = "public, max-age=31536000, immutable";
+
+        return File(image.ImageData, image.MimeType);
+    }
+
     [HttpGet("{recipeId}/images/{index}")]
     public async Task<IActionResult> GetRecipeImage(Guid recipeId, int index)
     {
@@ -38,6 +59,20 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
         Response.Headers.CacheControl = "public, max-age=31536000, immutable";
 
         return File(thumb, "image/jpeg");
+    }
+
+    [HttpPut("/image/{imageHash}/thumb")]
+    public async Task UpsertImageThumbAsync(string imageHash, [FromBody] FoodThumbModel thumb)
+    {
+        var images = await context.FoodImages.AsTracking()
+            .Where(x => x.ImageHash.ToLower() == imageHash.ToLower()).ToListAsync();
+        foreach (var image in images)
+        {
+            if (image is null) throw new();
+            image.Thumb = thumb;
+        }
+
+        await context.SaveChangesAsync();
     }
 
     [HttpPost("search-dishes")]

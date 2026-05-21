@@ -1,28 +1,24 @@
 export class ImageCompressionService {
-    static generateThumbnail(imageData: string, maxWidth = 200, maxHeight = 200) {
-        const image = document.createElement('img');
-        return new Promise<Blob>((resolve, reject) => {
-            image.src = imageData;
-            image.onerror = (e: ErrorEvent) => reject(e);
-            image.onload = () => {
-                // Berechne Zielgröße mit Erhaltung des Seitenverhältnisses
-                let ratio = Math.min(maxWidth / image.width, maxHeight / image.height);
-                ratio = Math.min(ratio, 1); // nicht vergrößern
+    static async generateThumbnail(imageData: string, maxWidth = 200, maxHeight = 200) {
+        const blob = await fetch(imageData).then((r) => r.blob());
 
-                const canvas = document.createElement('canvas');
-                canvas.width = Math.round(image.width * ratio);
-                canvas.height = Math.round(image.height * ratio);
+        const bitmap = await createImageBitmap(blob);
 
-                const ctx = canvas.getContext('2d')!;
-                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        const ratio = Math.min(maxWidth / bitmap.width, maxHeight / bitmap.height, 1);
 
-                // Thumbnail als Blob (JPEG, Qualität 0.7)
-                canvas.toBlob(
-                    async (blob) => (blob ? resolve(blob) : reject(new Error('Canvas toBlob failed'))),
-                    'image/jpeg',
-                    0.7
-                );
-            };
+        const canvas = new OffscreenCanvas(
+            Math.max(1, Math.round(bitmap.width * ratio)),
+            Math.max(1, Math.round(bitmap.height * ratio)),
+        );
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) throw new Error('no ctx');
+
+        ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+
+        return await canvas.convertToBlob({
+            type: 'image/jpeg',
+            quality: 0.7,
         });
     }
 }
