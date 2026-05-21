@@ -31,19 +31,14 @@ public class RecipeModelBase
     [MaxLength(255)] public required string Title { get; set; }
     [MaxLength(255)] public required string Description { get; set; }
 
-    [ForeignKey(nameof(FoodImageModel.RecipeId))]
-    [IgnoreAutoInclude]
-    public required List<FoodImageModel> Images { get; set; } = [];
-
-    [ForeignKey(nameof(FoodTagModel.RecipeId))]
-    [IgnoreAutoInclude]
-    public required List<FoodThumbModel> Thumbs { get; set; } = [];
-
     public int ImageCount { get; set; }
 
     public int Difficulty { get; set; }
     public int Rating { get; set; }
     public bool Deleted { get; set; }
+
+    [MaxLength(32)] public string? FavoriteImageHash { get; set; }
+    [MaxLength(32)] public string? FavoriteThumbHash { get; set; }
 
     [JsonIgnore] [MaxLength(255)] public string? Type { get; set; }
 

@@ -53,9 +53,9 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     }
 
     [HttpPut("dish")]
-    public async Task ImportDish([FromBody] FoodModel dish)
+    public async Task ImportDish([FromBody] RecipeCreationRequest request)
     {
-        await recipeRepository.CreateOrAppendDishAsync(dish);
+        await recipeRepository.CreateOrAppendDishAsync(request.Recipe, request.Image.Image, request.Image.Thumb);
     }
 
     [HttpPost]

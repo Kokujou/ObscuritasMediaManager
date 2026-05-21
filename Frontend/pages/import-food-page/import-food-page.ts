@@ -7,7 +7,7 @@ import { waitForSeconds } from '../../extensions/animation.extension';
 import { dimLight, undimLight } from '../../extensions/document.extensions';
 import { changePage } from '../../extensions/url.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
-import { FoodImageModel, FoodModel, FoodThumbModel } from '../../obscuritas-media-manager-backend-client';
+import { FoodModel, RecipeCreationRequest } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
 import { CachingService } from '../../services/caching.service';
 import { ImageCompressionService } from '../../services/image-compression.service';
@@ -63,8 +63,6 @@ export class ImportFoodPage extends LitElementBase {
             const dish = new FoodModel({
                 id: i.toString(),
                 tags: [],
-                images: [new FoodImageModel()],
-                thumbs: [new FoodThumbModel()],
                 deleted: false,
                 difficulty: 0,
                 rating: 0,
@@ -85,8 +83,8 @@ export class ImportFoodPage extends LitElementBase {
 
     @query('image-slideshow') declare protected imageSlideshow?: ImageSlideshow;
 
-    protected paginatedFiles: FoodModel[] = [];
-    @state() declare protected currentDish: FoodModel;
+    protected paginatedFiles: RecipeCreationRequest[] = [];
+    @state() declare protected currentDish: RecipeCreationRequest;
     @state() declare protected loading: boolean;
     @state() declare protected initialized: boolean;
 
@@ -126,8 +124,9 @@ export class ImportFoodPage extends LitElementBase {
 
         for (var fromCache of (await FoodCache.getIterator()).drop(this.paginatedFiles.length).take(itemsToGet)) {
             var dish = FoodModel.fromJS(await fromCache);
-            this.paginatedFiles.push(dish);
-            await this.reloadThumb(dish, false);
+            var request = new RecipeCreationRequest({ recipe: dish });
+            this.paginatedFiles.push(request);
+            await this.reloadThumb(request, false);
         }
 
         await this.requestFullUpdate();
@@ -136,25 +135,25 @@ export class ImportFoodPage extends LitElementBase {
     }
 
     changeCurrentImage(id: string) {
-        changePage(ImportFoodPage, { index: this.paginatedFiles.findIndex((x) => x.id == id) } as any, false);
-        this.currentDish = this.paginatedFiles.find((x) => x.id == id)!;
+        changePage(ImportFoodPage, { index: this.paginatedFiles.findIndex((x) => x.recipe.id == id) } as any, false);
+        this.currentDish = this.paginatedFiles.find((x) => x.recipe.id == id)!;
     }
 
-    async reloadImage(dish: FoodModel, update = true) {
-        var response = await FoodCache.getPayload(dish);
+    async reloadImage(dish: RecipeCreationRequest, update = true) {
+        var response = await FoodCache.getPayload(dish.recipe);
         var test = await response.base64();
         if (!test.startsWith('data:image')) return;
-        dish.images[0].imageData = URL.createObjectURL(response);
-        await FoodCache.updateMetadata(dish);
+        dish.image.image.imageData = URL.createObjectURL(response);
+        await FoodCache.updateMetadata(dish.recipe);
         if (update) await this.requestFullUpdate();
     }
 
-    async reloadThumb(dish: FoodModel, update = true) {
+    async reloadThumb(dish: RecipeCreationRequest, update = true) {
         await this.reloadImage(dish, update);
-        if (!dish.images[0].imageData?.startsWith('data:image')) return;
-        var thumbData = await ImageCompressionService.generateThumbnail(dish.images[0].imageData!);
-        dish.thumbs[0].thumbData = URL.createObjectURL(thumbData);
-        await FoodCache.updateMetadata(dish);
+        if (!dish.image.image.imageData?.startsWith('data:image')) return;
+        var thumbData = await ImageCompressionService.generateThumbnail(dish.image.image.imageData!);
+        dish.image.thumb.thumbData = URL.createObjectURL(thumbData);
+        await FoodCache.updateMetadata(dish.recipe);
         if (update) await this.requestFullUpdate();
     }
 
@@ -171,24 +170,24 @@ export class ImportFoodPage extends LitElementBase {
 
     applySearchResult(result: FoodModel) {
         if (!this.currentDish) return;
-        this.currentDish.description ||= result.description;
-        this.currentDish.rating ||= result.rating;
-        this.currentDish.difficulty ||= result.difficulty;
-        if (!this.currentDish.tags.length) this.currentDish.tags = [...result.tags];
+        this.currentDish.recipe.description ||= result.description;
+        this.currentDish.recipe.rating ||= result.rating;
+        this.currentDish.recipe.difficulty ||= result.difficulty;
+        if (!this.currentDish.recipe.tags.length) this.currentDish.recipe.tags = [...result.tags];
 
         this.requestFullUpdate();
     }
 
-    async removeDish(dish: FoodModel) {
-        const removedIndex = this.paginatedFiles.findIndex((x) => x.id == dish.id);
-        const currentIndex = this.paginatedFiles.findIndex((x) => x.id == this.currentDish?.id);
+    async removeDish(dish: RecipeCreationRequest) {
+        const removedIndex = this.paginatedFiles.findIndex((x) => x.recipe.id == dish.recipe.id);
+        const currentIndex = this.paginatedFiles.findIndex((x) => x.recipe.id == this.currentDish?.recipe.id);
 
         this.paginatedFiles = this.paginatedFiles.filter((fromList) => fromList != dish);
-        await FoodCache.deleteObject(dish);
+        await FoodCache.deleteObject(dish.recipe);
 
-        if (removedIndex < currentIndex) this.changeCurrentImage(this.currentDish.id);
+        if (removedIndex < currentIndex) this.changeCurrentImage(this.currentDish.recipe.id);
         else if (removedIndex == currentIndex && removedIndex == this.paginatedFiles.length)
-            this.changeCurrentImage(this.paginatedFiles[this.paginatedFiles.length - 1].id);
+            this.changeCurrentImage(this.paginatedFiles[this.paginatedFiles.length - 1].recipe.id);
 
         await this.requestFullUpdate();
     }
@@ -223,14 +222,14 @@ Abhängig von der Größe kann der Vorgang einige Minuten dauern.`,
         var dupes = [];
         for (let dish of this.paginatedFiles) {
             try {
-                dish.id = null!;
-                dish.images[0].recipeId = null!;
-                var response = await fetch(dish.images[0].imageData!);
+                dish.recipe.id = null!;
+                dish.image.image.recipeId = null!;
+                var response = await fetch(dish.image.image.imageData!);
                 var blob = await response.blob();
                 var base64 = await blob.base64();
-                dish.images[0].imageData = base64.split(',')[1];
-                dish.images[0].mimeType = blob.type;
-                dish.thumbs[0].thumbData = (await (await ImageCompressionService.generateThumbnail(base64)).base64()).split(
+                dish.image.image.imageData = base64.split(',')[1];
+                dish.image.image.mimeType = blob.type;
+                dish.image.thumb.thumbData = (await (await ImageCompressionService.generateThumbnail(base64)).base64()).split(
                     ',',
                 )[1];
                 await RecipeService.importDish(dish);
@@ -239,7 +238,7 @@ Abhängig von der Größe kann der Vorgang einige Minuten dauern.`,
                 else {
                     await DialogBase.show('Something went wrong', {
                         declineActionText: 'Ok',
-                        content: `Ein Fehler ist beim hochladen des Gerichts ${dish.title} aufgetreten.
+                        content: `Ein Fehler ist beim hochladen des Gerichts ${dish.recipe.title} aufgetreten.
 Fehler: ${ex.reason}`,
                     });
                     return;
@@ -253,7 +252,7 @@ Fehler: ${ex.reason}`,
             ImportFoodPage.cacheAbertController = new AbortController();
 
             for (let i = 0; i < dupes.length; i++)
-                await FoodCache.cacheJson(dupes[i], await (dupes[i].images[0].imageData as any as Response).blob());
+                await FoodCache.cacheJson(dupes[i].recipe, await (dupes[i].image.image.imageData as any as Response).blob());
             await DialogBase.show('Duplikate übersprungen', {
                 declineActionText: 'Ok',
                 content: `Beim hochladen wurden ${dupes.length} Duplikate übersprungen.

@@ -4,13 +4,13 @@ import { RecipeTileBase } from './recipe-tile-base';
 export function renderRecipeTileBase(this: RecipeTileBase) {
     return html`
         <div id="recipe-images-container">
-            ${Array.createRange(0, this.recipe.imageCount - 1).map(
+            ${(this.recipe.imageCount < 3 ? [0] : Array.createRange(0, this.recipe.imageCount - 1)).map(
                 (index) => html`
                     <img
                         class="recipe-image"
                         decoding="async"
                         src="./Backend/api/recipe/${this.recipe.id}/thumbs/${index}"
-                        style=" ${this.recipe.imageCount < 3 || index == 0
+                        style=" ${index == 0
                             ? 'transform: scale(0.9); filter: drop-shadow(0 0 20px black) drop-shadow(0 0 20px black)'
                             : `transform: translate(${Math.sin(index) * 10}px, ${Math.cos(index) * 10}px) rotate(${
                                   (index % (this.recipe.imageCount / 2)) * 20 * (index % 2 != 0 ? 1 : -1)

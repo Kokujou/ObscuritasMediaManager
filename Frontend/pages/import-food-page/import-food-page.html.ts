@@ -13,16 +13,19 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
         <div id="page">
             <image-slideshow
                 @image-changing="${async (e: CustomEvent<string>) => {
-                    if (e.detail) await FoodCache.updateMetadata(this.paginatedFiles.find((x) => x.id == e.detail)!);
+                    if (e.detail)
+                        await FoodCache.updateMetadata(this.paginatedFiles.find((x) => x.recipe.id == e.detail)!.recipe);
                 }}"
                 @image-changed="${(e: CustomEvent<string>) => this.changeCurrentImage(e.detail)}"
-                @image-error="${(e: CustomEvent<string>) => this.reloadImage(this.paginatedFiles.find((x) => x.id == e.detail)!)}"
-                @thumb-error="${(e: CustomEvent<string>) => this.reloadThumb(this.paginatedFiles.find((x) => x.id == e.detail)!)}"
+                @image-error="${(e: CustomEvent<string>) =>
+                    this.reloadImage(this.paginatedFiles.find((x) => x.recipe.id == e.detail)!)}"
+                @thumb-error="${(e: CustomEvent<string>) =>
+                    this.reloadThumb(this.paginatedFiles.find((x) => x.recipe.id == e.detail)!)}"
                 @image-removed="${(e: CustomEvent<string>) =>
-                    this.removeDish(this.paginatedFiles.find((x) => x.id == e.detail)!)}"
+                    this.removeDish(this.paginatedFiles.find((x) => x.recipe.id == e.detail)!)}"
                 @scroll-to-end="${async () => await this.loadMoreImages()}"
                 .images="${this.paginatedFiles.map(
-                    (file) => new SlideshowImage(file.id, file.images[0].imageData, file.thumbs[0].thumbData),
+                    (file) => new SlideshowImage(file.recipe.id, file.image.image.imageData, file.image.thumb.thumbData),
                 )}"
                 .totalCount="${FoodCache.length}"
                 .currentIndex="${this.index ?? 0}"
@@ -32,7 +35,7 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                           <div
                               slot="edit-sidebar"
                               id="edit-image-sidebar"
-                              @change="${() => FoodCache.updateMetadata(this.currentDish)}"
+                              @change="${() => FoodCache.updateMetadata(this.currentDish.recipe)}"
                               @keyup="${(e: KeyboardEvent) => {
                                   if (e.key == 'Escape') this.focus();
                                   e.stopPropagation();
@@ -42,10 +45,10 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                                   id="food-name"
                                   allowText
                                   placeholder="Name des Gerichts..."
-                                  .value="${{ text: this.currentDish.title ?? '', id: null }}"
+                                  .value="${{ text: this.currentDish.recipe.title ?? '', id: null }}"
                                   .searchItems="${(search: string) => this.searchDishes(search)}"
                                   @value-changed="${async (e: CustomEvent<AutocompleteItem>) => {
-                                      this.currentDish.title = e.detail.text;
+                                      this.currentDish.recipe.title = e.detail.text;
                                       if (e.detail.id) this.applySearchResult(e.detail as any as FoodModel);
                                   }}"
                               ></autocomplete-input>
@@ -54,38 +57,39 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                                   id="food-description"
                                   rows="4"
                                   placeholder="Beschreibung des Gerichts..."
-                                  .value="${this.currentDish.description ?? ''}"
-                                  value="${this.currentDish.description ?? ''}"
-                                  @input="${(e: Event) => (this.currentDish.description = (e.target as HTMLInputElement).value)}"
+                                  .value="${this.currentDish.recipe.description ?? ''}"
+                                  value="${this.currentDish.recipe.description ?? ''}"
+                                  @input="${(e: Event) =>
+                                      (this.currentDish.recipe.description = (e.target as HTMLInputElement).value)}"
                               ></textarea>
                               <star-rating
                                   max="5"
-                                  .values="${Array.createRange(1, this.currentDish.rating ?? 0)}"
+                                  .values="${Array.createRange(1, this.currentDish.recipe.rating ?? 0)}"
                                   singleSelect
-                                  @ratingChanged="${(e: CustomEvent) => (this.currentDish.rating = e.detail.rating)}"
+                                  @ratingChanged="${(e: CustomEvent) => (this.currentDish.recipe.rating = e.detail.rating)}"
                               ></star-rating>
                               <star-rating
                                   swords
                                   max="5"
-                                  .values="${Array.createRange(1, this.currentDish.difficulty ?? 0)}"
+                                  .values="${Array.createRange(1, this.currentDish.recipe.difficulty ?? 0)}"
                                   singleSelect
-                                  @ratingChanged="${(e: CustomEvent) => (this.currentDish.difficulty = e.detail.rating)}"
+                                  @ratingChanged="${(e: CustomEvent) => (this.currentDish.recipe.difficulty = e.detail.rating)}"
                               ></star-rating>
                               <label>Tags:</label>
                               <drop-down
                                   .options="${ColoredFoodTags.filter(
-                                      (tag) => !this.currentDish.tags.some((existing) => tag.value == existing.value),
+                                      (tag) => !this.currentDish.recipe.tags.some((existing) => tag.value == existing.value),
                                   ).map((tag) => DropDownOption.create({ category: tag.key, text: tag.value, value: tag }))}"
                                   caption="Neuen Tag auswählen"
                                   useSearch
                                   @selectionChange="${(e: CustomEvent<{ option: DropDownOption<FoodTagModel> }>) => {
-                                      this.currentDish.tags.push(e.detail.option.value);
+                                      this.currentDish.recipe.tags.push(e.detail.option.value);
                                       this.requestFullUpdate();
                                   }}"
                               ></drop-down>
                               <div id="tags">
                                   ${ColoredFoodTags.filter((tag) =>
-                                      this.currentDish.tags.some((existing) => existing.value == tag.value),
+                                      this.currentDish.recipe.tags.some((existing) => existing.value == tag.value),
                                   )
                                       .orderBy((x) => x.key)
                                       .map(
@@ -94,7 +98,7 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                                                   .text="${`${tag.key}: ${tag.value}`}"
                                                   style="--label-color: ${tag.color}"
                                                   @removed="${() => {
-                                                      this.currentDish.tags = this.currentDish.tags.filter(
+                                                      this.currentDish.recipe.tags = this.currentDish.recipe.tags.filter(
                                                           (x) => x.value != tag.value,
                                                       );
                                                       this.requestFullUpdate();

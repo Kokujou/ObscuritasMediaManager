@@ -2367,11 +2367,11 @@ export class RecipeClient {
         return Promise.resolve<RecipeModelBase>(null as any);
     }
 
-    importDish(dish: FoodModel, signal?: AbortSignal): Promise<void> {
+    importDish(request: RecipeCreationRequest, signal?: AbortSignal): Promise<void> {
         let url_ = this.baseUrl + "/api/Recipe/dish";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(dish);
+        const content_ = JSON.stringify(request);
 
         let options_: RequestInit = {
             body: content_,
@@ -4346,12 +4346,12 @@ export class RecipeModelBase implements IRecipeModelBase {
     id: string;
     title: string;
     description: string;
-    images: FoodImageModel[];
-    thumbs: FoodThumbModel[];
     imageCount: number;
     difficulty: number;
     rating: number;
     deleted: boolean;
+    favoriteImageHash: string | null;
+    favoriteThumbHash: string | null;
     tags: FoodTagModel[];
 
     protected _discriminator: string;
@@ -4364,10 +4364,6 @@ export class RecipeModelBase implements IRecipeModelBase {
             }
         }
 
-        if (!data) {
-            this.images = [];
-            this.thumbs = [];
-        }
         this._discriminator = "RecipeModelBase";
     }
 
@@ -4376,26 +4372,12 @@ export class RecipeModelBase implements IRecipeModelBase {
             this.id = _data["id"] !== undefined ? _data["id"] : null as any;
             this.title = _data["title"] !== undefined ? _data["title"] : null as any;
             this.description = _data["description"] !== undefined ? _data["description"] : null as any;
-            if (Array.isArray(_data["images"])) {
-                this.images = [] as any;
-                for (let item of _data["images"])
-                    this.images!.push(FoodImageModel.fromJS(item, _mappings));
-            }
-            else {
-                this.images = null as any;
-            }
-            if (Array.isArray(_data["thumbs"])) {
-                this.thumbs = [] as any;
-                for (let item of _data["thumbs"])
-                    this.thumbs!.push(FoodThumbModel.fromJS(item, _mappings));
-            }
-            else {
-                this.thumbs = null as any;
-            }
             this.imageCount = _data["imageCount"] !== undefined ? _data["imageCount"] : null as any;
             this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : null as any;
             this.rating = _data["rating"] !== undefined ? _data["rating"] : null as any;
             this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : null as any;
+            this.favoriteImageHash = _data["favoriteImageHash"] !== undefined ? _data["favoriteImageHash"] : null as any;
+            this.favoriteThumbHash = _data["favoriteThumbHash"] !== undefined ? _data["favoriteThumbHash"] : null as any;
             if (Array.isArray(_data["tags"])) {
                 this.tags = [] as any;
                 for (let item of _data["tags"])
@@ -4422,20 +4404,12 @@ export class RecipeModelBase implements IRecipeModelBase {
         data["id"] = this.id !== undefined ? this.id : null as any;
         data["title"] = this.title !== undefined ? this.title : null as any;
         data["description"] = this.description !== undefined ? this.description : null as any;
-        if (Array.isArray(this.images)) {
-            data["images"] = [];
-            for (let item of this.images)
-                data["images"].push(item ? item.toJSON() : null as any);
-        }
-        if (Array.isArray(this.thumbs)) {
-            data["thumbs"] = [];
-            for (let item of this.thumbs)
-                data["thumbs"].push(item ? item.toJSON() : null as any);
-        }
         data["imageCount"] = this.imageCount !== undefined ? this.imageCount : null as any;
         data["difficulty"] = this.difficulty !== undefined ? this.difficulty : null as any;
         data["rating"] = this.rating !== undefined ? this.rating : null as any;
         data["deleted"] = this.deleted !== undefined ? this.deleted : null as any;
+        data["favoriteImageHash"] = this.favoriteImageHash !== undefined ? this.favoriteImageHash : null as any;
+        data["favoriteThumbHash"] = this.favoriteThumbHash !== undefined ? this.favoriteThumbHash : null as any;
         if (Array.isArray(this.tags)) {
             data["tags"] = [];
             for (let item of this.tags)
@@ -4456,117 +4430,13 @@ export interface IRecipeModelBase {
     id: string;
     title: string;
     description: string;
-    images: FoodImageModel[];
-    thumbs: FoodThumbModel[];
     imageCount: number;
     difficulty: number;
     rating: number;
     deleted: boolean;
+    favoriteImageHash: string | null;
+    favoriteThumbHash: string | null;
     tags: FoodTagModel[];
-}
-
-export class FoodImageModel implements IFoodImageModel {
-    recipeId: string;
-    mimeType: string | null;
-    imageData: string | null;
-    imageHash: string;
-
-    constructor(data?: Partial<IFoodImageModel>) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-
-    }
-
-    init(_data?: any, _mappings?: any) {
-        if (_data) {
-            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null as any;
-            this.mimeType = _data["mimeType"] !== undefined ? _data["mimeType"] : null as any;
-            this.imageData = _data["imageData"] !== undefined ? _data["imageData"] : null as any;
-            this.imageHash = _data["imageHash"] !== undefined ? _data["imageHash"] : null as any;
-        }
-    }
-
-    static fromJS(data: any, _mappings?: any): FoodImageModel  {
-        data = typeof data === 'object' ? data : {};
-        return createInstance<FoodImageModel>(data, _mappings, FoodImageModel)!;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null as any;
-        data["mimeType"] = this.mimeType !== undefined ? this.mimeType : null as any;
-        data["imageData"] = this.imageData !== undefined ? this.imageData : null as any;
-        data["imageHash"] = this.imageHash !== undefined ? this.imageHash : null as any;
-        return data;
-    }
-
-    clone(): FoodImageModel {
-        const json = this.toJSON();
-        let result = new FoodImageModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IFoodImageModel {
-    recipeId: string;
-    mimeType: string | null;
-    imageData: string | null;
-    imageHash: string;
-}
-
-export class FoodThumbModel implements IFoodThumbModel {
-    recipeId: string;
-    thumbData: string | null;
-    thumbHash: string;
-
-    constructor(data?: Partial<IFoodThumbModel>) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-
-    }
-
-    init(_data?: any, _mappings?: any) {
-        if (_data) {
-            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null as any;
-            this.thumbData = _data["thumbData"] !== undefined ? _data["thumbData"] : null as any;
-            this.thumbHash = _data["thumbHash"] !== undefined ? _data["thumbHash"] : null as any;
-        }
-    }
-
-    static fromJS(data: any, _mappings?: any): FoodThumbModel  {
-        data = typeof data === 'object' ? data : {};
-        return createInstance<FoodThumbModel>(data, _mappings, FoodThumbModel)!;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null as any;
-        data["thumbData"] = this.thumbData !== undefined ? this.thumbData : null as any;
-        data["thumbHash"] = this.thumbHash !== undefined ? this.thumbHash : null as any;
-        return data;
-    }
-
-    clone(): FoodThumbModel {
-        const json = this.toJSON();
-        let result = new FoodThumbModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IFoodThumbModel {
-    recipeId: string;
-    thumbData: string | null;
-    thumbHash: string;
 }
 
 export class FoodTagModel implements IFoodTagModel {
@@ -4919,6 +4789,56 @@ export interface IRecipeCookwareMappingModel {
     name: string;
 }
 
+export class RecipeCreationRequest implements IRecipeCreationRequest {
+    recipe: RecipeModelBase;
+    image: RecipeImageCreationRequest;
+
+    constructor(data?: Partial<IRecipeCreationRequest>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+        if (!data) {
+            this.recipe = new RecipeModelBase();
+            this.image = new RecipeImageCreationRequest();
+        }
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.recipe = _data["recipe"] ? RecipeModelBase.fromJS(_data["recipe"], _mappings) : new RecipeModelBase();
+            this.image = _data["image"] ? RecipeImageCreationRequest.fromJS(_data["image"], _mappings) : new RecipeImageCreationRequest();
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): RecipeCreationRequest  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<RecipeCreationRequest>(data, _mappings, RecipeCreationRequest)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["recipe"] = this.recipe ? this.recipe.toJSON() : null as any;
+        data["image"] = this.image ? this.image.toJSON() : null as any;
+        return data;
+    }
+
+    clone(): RecipeCreationRequest {
+        const json = this.toJSON();
+        let result = new RecipeCreationRequest();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRecipeCreationRequest {
+    recipe: RecipeModelBase;
+    image: RecipeImageCreationRequest;
+}
+
 export class RecipeImageCreationRequest implements IRecipeImageCreationRequest {
     image: FoodImageModel;
     thumb: FoodThumbModel;
@@ -4967,6 +4887,110 @@ export class RecipeImageCreationRequest implements IRecipeImageCreationRequest {
 export interface IRecipeImageCreationRequest {
     image: FoodImageModel;
     thumb: FoodThumbModel;
+}
+
+export class FoodImageModel implements IFoodImageModel {
+    recipeId: string;
+    mimeType: string | null;
+    imageData: string | null;
+    imageHash: string;
+
+    constructor(data?: Partial<IFoodImageModel>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null as any;
+            this.mimeType = _data["mimeType"] !== undefined ? _data["mimeType"] : null as any;
+            this.imageData = _data["imageData"] !== undefined ? _data["imageData"] : null as any;
+            this.imageHash = _data["imageHash"] !== undefined ? _data["imageHash"] : null as any;
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): FoodImageModel  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<FoodImageModel>(data, _mappings, FoodImageModel)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null as any;
+        data["mimeType"] = this.mimeType !== undefined ? this.mimeType : null as any;
+        data["imageData"] = this.imageData !== undefined ? this.imageData : null as any;
+        data["imageHash"] = this.imageHash !== undefined ? this.imageHash : null as any;
+        return data;
+    }
+
+    clone(): FoodImageModel {
+        const json = this.toJSON();
+        let result = new FoodImageModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFoodImageModel {
+    recipeId: string;
+    mimeType: string | null;
+    imageData: string | null;
+    imageHash: string;
+}
+
+export class FoodThumbModel implements IFoodThumbModel {
+    recipeId: string;
+    thumbData: string | null;
+    thumbHash: string;
+
+    constructor(data?: Partial<IFoodThumbModel>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null as any;
+            this.thumbData = _data["thumbData"] !== undefined ? _data["thumbData"] : null as any;
+            this.thumbHash = _data["thumbHash"] !== undefined ? _data["thumbHash"] : null as any;
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): FoodThumbModel  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<FoodThumbModel>(data, _mappings, FoodThumbModel)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null as any;
+        data["thumbData"] = this.thumbData !== undefined ? this.thumbData : null as any;
+        data["thumbHash"] = this.thumbHash !== undefined ? this.thumbHash : null as any;
+        return data;
+    }
+
+    clone(): FoodThumbModel {
+        const json = this.toJSON();
+        let result = new FoodThumbModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFoodThumbModel {
+    recipeId: string;
+    thumbData: string | null;
+    thumbHash: string;
 }
 
 function jsonParse(json: any, reviver?: any) {

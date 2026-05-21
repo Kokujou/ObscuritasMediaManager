@@ -84,8 +84,6 @@ export class RecipeDetailPage extends LitElementBase {
             rating: 0,
             recipeText: 'Dein Rezept-Text',
             imageCount: 0,
-            images: [],
-            thumbs: [],
             ingredients: [],
             tags: [],
         });
@@ -171,15 +169,14 @@ export class RecipeDetailPage extends LitElementBase {
 
     async addImage(imageData: string) {
         var thumbData = (await (await ImageCompressionService.generateThumbnail(imageData)).base64()).split(',')[1];
+        imageData = imageData.split(',')[1];
         this.recipe = (await RecipeService.addRecipeImage(
             this.recipe.id,
             new RecipeImageCreationRequest({
-                image: new FoodImageModel({ imageData, mimeType: 'image/png' }),
-                thumb: new FoodThumbModel({ thumbData }),
+                image: new FoodImageModel({ recipeId: this.recipe.id, imageData, mimeType: 'image/png' }),
+                thumb: new FoodThumbModel({ recipeId: this.recipe.id, thumbData }),
             }),
         )) as RecipeModel;
-
-        this.requestFullUpdate();
     }
 
     async removeIngredient(ingredient: RecipeIngredientMappingModel) {
@@ -258,6 +255,7 @@ export class RecipeDetailPage extends LitElementBase {
     async showSlideshow() {
         var slideShow = new ImageSlideshow();
         slideShow.allowAdd = true;
+
         slideShow.images = Array.createRange(0, this.recipe.imageCount - 1).map(
             (index) =>
                 new SlideshowImage(
@@ -272,7 +270,25 @@ export class RecipeDetailPage extends LitElementBase {
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
             fileInput.accept = 'image/*';
-            fileInput.onchange = async () => {};
+            fileInput.onchange = async () => {
+                if (!fileInput.files) return;
+
+                for (let file of fileInput.files) {
+                    const response = file instanceof Response ? file : new Response(file);
+                    var imageData = await response.base64();
+                    await this.addImage(imageData);
+                }
+
+                this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
+                slideShow.images = Array.createRange(0, this.recipe.imageCount - 1).map(
+                    (index) =>
+                        new SlideshowImage(
+                            index.toString(),
+                            `./Backend/api/recipe/${this.recipe.id}/images/${index}`,
+                            `./Backend/api/recipe/${this.recipe.id}/thumbs/${index}`,
+                        ),
+                );
+            };
             fileInput.click();
         });
         PageRouting.instance.appendChild(slideShow);

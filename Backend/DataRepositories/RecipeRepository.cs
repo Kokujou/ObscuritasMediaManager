@@ -13,28 +13,39 @@ public class RecipeRepository(DatabaseContext databaseContext)
 
     public IQueryable<RecipeModelBase> GetAll()
     {
-        return databaseContext.Set<RecipeModelBase>();
+        return databaseContext.Dishes;
     }
 
     public async Task<RecipeModelBase> GetAsync(Guid id)
     {
-        return await databaseContext.Set<RecipeModelBase>().SingleAsync(x => x.Id == id);
+        return await databaseContext.Dishes.SingleAsync(x => x.Id == id);
     }
 
     public async Task<FoodImageModel> GetImageAsync(Guid id, int index)
     {
-        return await databaseContext.Set<FoodImageModel>().Where(x => x.RecipeId == id).ElementAtAsync(index);
+        var favoriteHash = (await databaseContext.Dishes.Where(recipe => recipe.Id == id).SingleAsync())
+            .FavoriteImageHash;
+        return await databaseContext.FoodImages.Where(x => x.RecipeId == id)
+            .OrderBy(x => x.ImageHash == favoriteHash)
+            .ThenBy(x => x.Id)
+            .ElementAtAsync(index);
     }
 
     public async Task<byte[]?> GetThumbAsync(Guid id, int index)
     {
-        return await databaseContext.Set<FoodThumbModel>().Where(x => x.RecipeId == id).Select(x => x.ThumbData)
+        var favoriteHash = (await databaseContext.Dishes.Where(recipe => recipe.Id == id).SingleAsync())
+            .FavoriteThumbHash;
+
+        return await databaseContext.FoodThumbs.Where(x => x.RecipeId == id)
+            .OrderBy(x => x.ThumbHash == favoriteHash)
+            .ThenBy(x => x.Id)
+            .Select(x => x.ThumbData)
             .ElementAtAsync(index);
     }
 
     public async Task<bool> ExistsAsync(Guid id)
     {
-        return await databaseContext.Recipes.AnyAsync(x => x.Id == id);
+        return await databaseContext.Dishes.AnyAsync(x => x.Id == id);
     }
 
     public async Task CreateRecipeAsync(RecipeModel recipe)
@@ -161,17 +172,24 @@ public class RecipeRepository(DatabaseContext databaseContext)
         return databaseContext.Set<RecipeModelBase>().Where(x => x.Title.ToLower().Contains(search.ToLower()));
     }
 
-    public async Task CreateOrAppendDishAsync(FoodModel dish)
+    public async Task CreateOrAppendDishAsync(RecipeModelBase dish, FoodImageModel image, FoodThumbModel thumb)
     {
-        var image = dish.Images.FirstOrDefault();
         if (image is null) throw new ArgumentException("Dish image is required!", nameof(dish));
-        if (await databaseContext.Set<FoodImageModel>().AnyAsync(x => x.ImageHash == image.ImageHash))
+        if (await databaseContext.Set<FoodImageModel>()
+                .AnyAsync(x => x.RecipeId == dish.Id && x.ImageHash == image.ImageHash))
             throw new ConflictException("Dish already exists!");
 
-        var existing = await databaseContext.Set<FoodModel>().AsTracking()
-            .FirstOrDefaultAsync(x => x.Title == dish.Title);
-        if (existing is not null) existing.Images.Add(image);
-        else databaseContext.Add(dish);
+        var existing = await databaseContext.Set<FoodModel>().FirstOrDefaultAsync(x => x.Title == dish.Title);
+        if (existing is not null)
+        {
+            databaseContext.Add(image);
+            databaseContext.Add(thumb);
+        }
+        else
+        {
+            databaseContext.Add(dish);
+        }
+
         await databaseContext.SaveChangesAsync();
     }
 

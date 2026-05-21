@@ -2,14 +2,16 @@
 using ObscuritasMediaManager.Backend.Extensions;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ObscuritasMediaManager.Backend.Models;
 
 [Table("FoodImageMapping")]
 [Index(nameof(ImageHash), IsUnique = true)]
-[PrimaryKey(nameof(RecipeId), nameof(ImageHash))]
 public class FoodImageModel
 {
+    [JsonIgnore] [Key] public int Id { get; private set; }
+
     public Guid RecipeId { get; set; } = Guid.NewGuid();
 
     [MaxLength(20)] public string? MimeType { get; set; }
