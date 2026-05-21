@@ -34,17 +34,17 @@ export class MusicPage extends LitElementBase {
         return renderMusicPageStyles();
     }
 
-    @property({ type: Boolean, reflect: true }) protected declare selectionMode: boolean;
+    @property({ type: Boolean, reflect: true }) declare protected selectionMode: boolean;
 
-    @state() protected declare playlists: PlaylistModel[];
-    @state() protected declare currentTrack: MusicModel;
-    @state() protected declare filter: MusicFilterOptions;
-    @state() protected declare sorting: MusicSorting;
-    @state() protected declare selectedHashes: string[];
-    @state() protected declare selectionModeTimer: NodeJS.Timeout | null;
-    @state() protected declare currentPage: number;
-    @state() protected declare selectionModeSetByHash: string | null;
-    @state() protected declare loading: boolean;
+    @state() declare protected playlists: PlaylistModel[];
+    @state() declare protected currentTrack: MusicModel;
+    @state() declare protected filter: MusicFilterOptions;
+    @state() declare protected sorting: MusicSorting;
+    @state() declare protected selectedHashes: string[];
+    @state() declare protected selectionModeTimer: NodeJS.Timeout | null;
+    @state() declare protected currentPage: number;
+    @state() declare protected selectionModeSetByHash: string | null;
+    @state() declare protected loading: boolean;
 
     constructor() {
         super();
@@ -80,7 +80,7 @@ export class MusicPage extends LitElementBase {
                     return;
 
                 PlayMusicDialog.show(this.currentTrack, AudioService.volume, AudioService.trackPosition.current());
-            })
+            }),
         );
 
         window.addEventListener('pointerdown', () => {
@@ -251,7 +251,7 @@ export class MusicPage extends LitElementBase {
     async exportPlaylist(mode: 'local' | 'global', playlist: PlaylistModel) {
         LocalPlaylistService.exportPlaylist(
             playlist.name,
-            playlist.tracks.map((track) => ({ displayName: track.displayName, path: this.getTrackPath(mode, track) }))
+            playlist.tracks.map((track) => ({ displayName: track.displayName, path: this.getTrackPath(mode, track) })),
         );
     }
 
@@ -345,7 +345,7 @@ export class MusicPage extends LitElementBase {
     }
 
     override async disconnectedCallback() {
-        await AudioService.reset();
+        if (this.currentTrack.path) await AudioService.reset();
         await super.disconnectedCallback();
     }
 }
