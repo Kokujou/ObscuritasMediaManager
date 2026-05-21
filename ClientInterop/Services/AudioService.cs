@@ -25,6 +25,7 @@ public static class AudioService
     public static event Action<TimeSpan, float[]>? TrackPositionChanged;
     public static event Action<float>? TrackVolumeChanged;
     public static event Action<string, double>? TrackChanged;
+    public static event Action? TrackEnded;
 
     private static WaveStream? _reader;
 
@@ -105,6 +106,14 @@ public static class AudioService
         Player.Init(_visualizer);
         TrackPath = trackPath;
         TrackChanged?.Invoke(trackPath, GetCurrentTrackDuration().TotalMilliseconds);
+        Player.PlaybackStopped += (_, args) =>
+        {
+            if (GetCurrentTrackDuration() - TimeSpan.FromSeconds(5) <=
+                GetCurrentTrackPosition())
+                TrackEnded?.Invoke();
+
+            Stop();
+        };
     }
 
     public static TimeSpan GetCurrentTrackPosition()
