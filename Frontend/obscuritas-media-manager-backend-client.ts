@@ -13,20 +13,20 @@ export class CleanupClient {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : (window as any);
-        this.baseUrl = baseUrl ?? 'https://localhost/ObscuritasMediaManager/Backend';
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
     getBrokenAudioTracks(signal?: AbortSignal): Promise<MusicModel[]> {
-        let url_ = this.baseUrl + '/api/Cleanup/music';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Cleanup/music";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -36,45 +36,44 @@ export class CleanupClient {
 
     protected processGetBrokenAudioTracks(response: Response): Promise<MusicModel[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(MusicModel.fromJS(item, _mappings));
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MusicModel.fromJS(item, _mappings));
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<MusicModel[]>(null as any);
     }
 
     validateMediaRoot(rootPath: string, signal?: AbortSignal): Promise<boolean> {
-        let url_ = this.baseUrl + '/api/Cleanup/validate-media-root';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Cleanup/validate-media-root";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(rootPath);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -84,21 +83,18 @@ export class CleanupClient {
 
     protected processValidateMediaRoot(response: Response): Promise<boolean> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : (null as any);
-
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null as any;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<boolean>(null as any);
@@ -111,22 +107,24 @@ export class FileClient {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : (window as any);
-        this.baseUrl = baseUrl ?? 'https://localhost/ObscuritasMediaManager/Backend';
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
     getVideo(videoPath?: string | undefined, signal?: AbortSignal): Promise<FileResponse> {
-        let url_ = this.baseUrl + '/api/File/video?';
-        if (videoPath === null) throw new globalThis.Error("The parameter 'videoPath' cannot be null.");
-        else if (videoPath !== undefined) url_ += 'videoPath=' + encodeURIComponent('' + videoPath) + '&';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/File/video?";
+        if (videoPath === null)
+            throw new globalThis.Error("The parameter 'videoPath' cannot be null.");
+        else if (videoPath !== undefined)
+            url_ += "videoPath=" + encodeURIComponent("" + videoPath) + "&";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/octet-stream',
-            },
+                "Accept": "application/octet-stream"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -136,15 +134,10 @@ export class FileClient {
 
     protected processGetVideo(response: Response): Promise<FileResponse> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
-            let fileNameMatch = contentDisposition
-                ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition)
-                : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
             let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
             if (fileName) {
                 fileName = decodeURIComponent(fileName);
@@ -152,35 +145,33 @@ export class FileClient {
                 fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
                 fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             }
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<FileResponse>(null as any);
     }
 
-    getAudio(
-        audioPath?: string | undefined,
-        highCompatibility?: boolean | undefined,
-        signal?: AbortSignal,
-    ): Promise<FileResponse> {
-        let url_ = this.baseUrl + '/api/File/audio?';
-        if (audioPath === null) throw new globalThis.Error("The parameter 'audioPath' cannot be null.");
-        else if (audioPath !== undefined) url_ += 'audioPath=' + encodeURIComponent('' + audioPath) + '&';
-        if (highCompatibility === null) throw new globalThis.Error("The parameter 'highCompatibility' cannot be null.");
-        else if (highCompatibility !== undefined) url_ += 'highCompatibility=' + encodeURIComponent('' + highCompatibility) + '&';
-        url_ = url_.replace(/[?&]$/, '');
+    getAudio(audioPath?: string | undefined, highCompatibility?: boolean | undefined, signal?: AbortSignal): Promise<FileResponse> {
+        let url_ = this.baseUrl + "/api/File/audio?";
+        if (audioPath === null)
+            throw new globalThis.Error("The parameter 'audioPath' cannot be null.");
+        else if (audioPath !== undefined)
+            url_ += "audioPath=" + encodeURIComponent("" + audioPath) + "&";
+        if (highCompatibility === null)
+            throw new globalThis.Error("The parameter 'highCompatibility' cannot be null.");
+        else if (highCompatibility !== undefined)
+            url_ += "highCompatibility=" + encodeURIComponent("" + highCompatibility) + "&";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/octet-stream',
-            },
+                "Accept": "application/octet-stream"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -190,15 +181,10 @@ export class FileClient {
 
     protected processGetAudio(response: Response): Promise<FileResponse> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
-            let fileNameMatch = contentDisposition
-                ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition)
-                : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
             let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
             if (fileName) {
                 fileName = decodeURIComponent(fileName);
@@ -206,31 +192,29 @@ export class FileClient {
                 fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
                 fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             }
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<FileResponse>(null as any);
     }
 
     validate(fileUrls: string[], signal?: AbortSignal): Promise<boolean> {
-        let url_ = this.baseUrl + '/api/File/validate-files';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/File/validate-files";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(fileUrls);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -240,21 +224,18 @@ export class FileClient {
 
     protected processValidate(response: Response): Promise<boolean> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : (null as any);
-
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null as any;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<boolean>(null as any);
@@ -267,20 +248,20 @@ export class GenreClient {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : (window as any);
-        this.baseUrl = baseUrl ?? 'https://localhost/ObscuritasMediaManager/Backend';
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
     getAll(signal?: AbortSignal): Promise<MediaGenreModel[]> {
-        let url_ = this.baseUrl + '/api/Genre';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Genre";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -290,43 +271,45 @@ export class GenreClient {
 
     protected processGetAll(response: Response): Promise<MediaGenreModel[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(MediaGenreModel.fromJS(item, _mappings));
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MediaGenreModel.fromJS(item, _mappings));
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<MediaGenreModel[]>(null as any);
     }
 
     addGenre(section: MediaGenreCategory, name: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Genre/section/{section}/name/{name}';
-        if (section === undefined || section === null) throw new globalThis.Error("The parameter 'section' must be defined.");
-        url_ = url_.replace('{section}', encodeURIComponent('' + section));
-        if (name === undefined || name === null) throw new globalThis.Error("The parameter 'name' must be defined.");
-        url_ = url_.replace('{name}', encodeURIComponent('' + name));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Genre/section/{section}/name/{name}";
+        if (section === undefined || section === null)
+            throw new globalThis.Error("The parameter 'section' must be defined.");
+        url_ = url_.replace("{section}", encodeURIComponent("" + section));
+        if (name === undefined || name === null)
+            throw new globalThis.Error("The parameter 'name' must be defined.");
+        url_ = url_.replace("{name}", encodeURIComponent("" + name));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'PUT',
+            method: "PUT",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -336,32 +319,31 @@ export class GenreClient {
 
     protected processAddGenre(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     removeGenre(id: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Genre/{id}';
-        if (id === undefined || id === null) throw new globalThis.Error("The parameter 'id' must be defined.");
-        url_ = url_.replace('{id}', encodeURIComponent('' + id));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Genre/{id}";
+        if (id === undefined || id === null)
+            throw new globalThis.Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -371,17 +353,14 @@ export class GenreClient {
 
     protected processRemoveGenre(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
@@ -394,20 +373,20 @@ export class HealthClient {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : (window as any);
-        this.baseUrl = baseUrl ?? 'https://localhost/ObscuritasMediaManager/Backend';
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
     checkHealth(signal?: AbortSignal): Promise<boolean> {
-        let url_ = this.baseUrl + '/Health';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/Health";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -417,21 +396,18 @@ export class HealthClient {
 
     protected processCheckHealth(response: Response): Promise<boolean> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : (null as any);
-
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null as any;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<boolean>(null as any);
@@ -444,18 +420,19 @@ export class InteropProxyClient {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : (window as any);
-        this.baseUrl = baseUrl ?? 'https://localhost/ObscuritasMediaManager/Backend';
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
     connectToInterop(signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/InteropProxy';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/InteropProxy";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -465,17 +442,14 @@ export class InteropProxyClient {
 
     protected processConnectToInterop(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
@@ -488,20 +462,20 @@ export class InventoryClient {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : (window as any);
-        this.baseUrl = baseUrl ?? 'https://localhost/ObscuritasMediaManager/Backend';
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
     getInventory(signal?: AbortSignal): Promise<InventoryItemModel[]> {
-        let url_ = this.baseUrl + '/Inventory';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/Inventory";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -511,44 +485,43 @@ export class InventoryClient {
 
     protected processGetInventory(response: Response): Promise<InventoryItemModel[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(InventoryItemModel.fromJS(item, _mappings));
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(InventoryItemModel.fromJS(item, _mappings));
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<InventoryItemModel[]>(null as any);
     }
 
     updateItem(item: InventoryItemModel, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/Inventory';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/Inventory";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(item);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PATCH',
+            method: "PATCH",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -558,35 +531,32 @@ export class InventoryClient {
 
     protected processUpdateItem(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     addItem(item: InventoryItemModel, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/Inventory';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/Inventory";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(item);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -596,34 +566,34 @@ export class InventoryClient {
 
     protected processAddItem(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     multiplyItem(itemId: string, times: number, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/Inventory/item/{itemId}/multiply/{times}';
-        if (itemId === undefined || itemId === null) throw new globalThis.Error("The parameter 'itemId' must be defined.");
-        url_ = url_.replace('{itemId}', encodeURIComponent('' + itemId));
-        if (times === undefined || times === null) throw new globalThis.Error("The parameter 'times' must be defined.");
-        url_ = url_.replace('{times}', encodeURIComponent('' + times));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/Inventory/item/{itemId}/multiply/{times}";
+        if (itemId === undefined || itemId === null)
+            throw new globalThis.Error("The parameter 'itemId' must be defined.");
+        url_ = url_.replace("{itemId}", encodeURIComponent("" + itemId));
+        if (times === undefined || times === null)
+            throw new globalThis.Error("The parameter 'times' must be defined.");
+        url_ = url_.replace("{times}", encodeURIComponent("" + times));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'POST',
+            method: "POST",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -633,32 +603,31 @@ export class InventoryClient {
 
     protected processMultiplyItem(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     deleteItem(itemId: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/Inventory/{itemId}';
-        if (itemId === undefined || itemId === null) throw new globalThis.Error("The parameter 'itemId' must be defined.");
-        url_ = url_.replace('{itemId}', encodeURIComponent('' + itemId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/Inventory/{itemId}";
+        if (itemId === undefined || itemId === null)
+            throw new globalThis.Error("The parameter 'itemId' must be defined.");
+        url_ = url_.replace("{itemId}", encodeURIComponent("" + itemId));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -668,17 +637,14 @@ export class InventoryClient {
 
     protected processDeleteItem(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
@@ -691,24 +657,24 @@ export class LoginClient {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : (window as any);
-        this.baseUrl = baseUrl ?? 'https://localhost/ObscuritasMediaManager/Backend';
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
     login(request: CredentialsRequest, signal?: AbortSignal): Promise<string> {
-        let url_ = this.baseUrl + '/api/Login';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Login";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -718,39 +684,36 @@ export class LoginClient {
 
     protected processLogin(response: Response): Promise<string> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : (null as any);
-
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null as any;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<string>(null as any);
     }
 
     register(request: CredentialsRequest, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Login/register';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Login/register";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -760,17 +723,14 @@ export class LoginClient {
 
     protected processRegister(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
@@ -783,20 +743,20 @@ export class MediaClient {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : (window as any);
-        this.baseUrl = baseUrl ?? 'https://localhost/ObscuritasMediaManager/Backend';
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
     getDefault(signal?: AbortSignal): Promise<MediaModel> {
-        let url_ = this.baseUrl + '/api/Media/default';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/default";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -806,38 +766,36 @@ export class MediaClient {
 
     protected processGetDefault(response: Response): Promise<MediaModel> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = MediaModel.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = MediaModel.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<MediaModel>(null as any);
     }
 
     get(guid: string, signal?: AbortSignal): Promise<MediaModel> {
-        let url_ = this.baseUrl + '/api/Media/{guid}';
-        if (guid === undefined || guid === null) throw new globalThis.Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace('{guid}', encodeURIComponent('' + guid));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/{guid}";
+        if (guid === undefined || guid === null)
+            throw new globalThis.Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -847,38 +805,36 @@ export class MediaClient {
 
     protected processGet(response: Response): Promise<MediaModel> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = MediaModel.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = MediaModel.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<MediaModel>(null as any);
     }
 
     getImageFor(guid: string, signal?: AbortSignal): Promise<FileResponse> {
-        let url_ = this.baseUrl + '/api/Media/{guid}/image';
-        if (guid === undefined || guid === null) throw new globalThis.Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace('{guid}', encodeURIComponent('' + guid));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/{guid}/image";
+        if (guid === undefined || guid === null)
+            throw new globalThis.Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/octet-stream',
-            },
+                "Accept": "application/octet-stream"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -888,15 +844,10 @@ export class MediaClient {
 
     protected processGetImageFor(response: Response): Promise<FileResponse> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
-            let fileNameMatch = contentDisposition
-                ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition)
-                : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
             let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
             if (fileName) {
                 fileName = decodeURIComponent(fileName);
@@ -904,32 +855,31 @@ export class MediaClient {
                 fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
                 fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             }
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<FileResponse>(null as any);
     }
 
     addMediaImage(image: string, guid: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Media/{guid}/image';
-        if (guid === undefined || guid === null) throw new globalThis.Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace('{guid}', encodeURIComponent('' + guid));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/{guid}/image";
+        if (guid === undefined || guid === null)
+            throw new globalThis.Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(image);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -939,32 +889,31 @@ export class MediaClient {
 
     protected processAddMediaImage(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     deleteMediaImage(guid: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Media/{guid}/image';
-        if (guid === undefined || guid === null) throw new globalThis.Error("The parameter 'guid' must be defined.");
-        url_ = url_.replace('{guid}', encodeURIComponent('' + guid));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/{guid}/image";
+        if (guid === undefined || guid === null)
+            throw new globalThis.Error("The parameter 'guid' must be defined.");
+        url_ = url_.replace("{guid}", encodeURIComponent("" + guid));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -974,32 +923,29 @@ export class MediaClient {
 
     protected processDeleteMediaImage(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     getAll(signal?: AbortSignal): Promise<MediaModel[]> {
-        let url_ = this.baseUrl + '/api/Media';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1009,48 +955,44 @@ export class MediaClient {
 
     protected processGetAll(response: Response): Promise<MediaModel[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(MediaModel.fromJS(item, _mappings));
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MediaModel.fromJS(item, _mappings));
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<MediaModel[]>(null as any);
     }
 
-    createFromMediaPath(
-        request: MediaCreationRequest,
-        signal?: AbortSignal,
-    ): Promise<KeyValuePairOfNullableGuidAndModelCreationState> {
-        let url_ = this.baseUrl + '/api/Media';
-        url_ = url_.replace(/[?&]$/, '');
+    createFromMediaPath(request: MediaCreationRequest, signal?: AbortSignal): Promise<KeyValuePairOfNullableGuidAndModelCreationState> {
+        let url_ = this.baseUrl + "/api/Media";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1060,41 +1002,39 @@ export class MediaClient {
 
     protected processCreateFromMediaPath(response: Response): Promise<KeyValuePairOfNullableGuidAndModelCreationState> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = KeyValuePairOfNullableGuidAndModelCreationState.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = KeyValuePairOfNullableGuidAndModelCreationState.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<KeyValuePairOfNullableGuidAndModelCreationState>(null as any);
     }
 
     updateMedia(id: string, _: UpdateRequestOfObject, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Media/{id}';
-        if (id === undefined || id === null) throw new globalThis.Error("The parameter 'id' must be defined.");
-        url_ = url_.replace('{id}', encodeURIComponent('' + id));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/{id}";
+        if (id === undefined || id === null)
+            throw new globalThis.Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(_);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1104,32 +1044,31 @@ export class MediaClient {
 
     protected processUpdateMedia(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     hardDeleteMedium(mediaId: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Media/{mediaId}/hard';
-        if (mediaId === undefined || mediaId === null) throw new globalThis.Error("The parameter 'mediaId' must be defined.");
-        url_ = url_.replace('{mediaId}', encodeURIComponent('' + mediaId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/{mediaId}/hard";
+        if (mediaId === undefined || mediaId === null)
+            throw new globalThis.Error("The parameter 'mediaId' must be defined.");
+        url_ = url_.replace("{mediaId}", encodeURIComponent("" + mediaId));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1139,32 +1078,31 @@ export class MediaClient {
 
     protected processHardDeleteMedium(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     fullDeleteMedium(mediaId: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Media/{mediaId}/full';
-        if (mediaId === undefined || mediaId === null) throw new globalThis.Error("The parameter 'mediaId' must be defined.");
-        url_ = url_.replace('{mediaId}', encodeURIComponent('' + mediaId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/{mediaId}/full";
+        if (mediaId === undefined || mediaId === null)
+            throw new globalThis.Error("The parameter 'mediaId' must be defined.");
+        url_ = url_.replace("{mediaId}", encodeURIComponent("" + mediaId));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1174,34 +1112,32 @@ export class MediaClient {
 
     protected processFullDeleteMedium(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     autoFillMediaDetails(animeId: string, signal?: AbortSignal): Promise<MediaModel> {
-        let url_ = this.baseUrl + '/api/Media/auto-fill-anime-details/{animeId}';
-        if (animeId === undefined || animeId === null) throw new globalThis.Error("The parameter 'animeId' must be defined.");
-        url_ = url_.replace('{animeId}', encodeURIComponent('' + animeId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Media/auto-fill-anime-details/{animeId}";
+        if (animeId === undefined || animeId === null)
+            throw new globalThis.Error("The parameter 'animeId' must be defined.");
+        url_ = url_.replace("{animeId}", encodeURIComponent("" + animeId));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1211,21 +1147,18 @@ export class MediaClient {
 
     protected processAutoFillMediaDetails(response: Response): Promise<MediaModel> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = MediaModel.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = MediaModel.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<MediaModel>(null as any);
@@ -1238,20 +1171,20 @@ export class MusicClient {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : (window as any);
-        this.baseUrl = baseUrl ?? 'https://localhost/ObscuritasMediaManager/Backend';
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
     getOverview(signal?: AbortSignal): Promise<MusicOverviewResponse> {
-        let url_ = this.baseUrl + '/api/Music/overview';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/overview";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1261,36 +1194,33 @@ export class MusicClient {
 
     protected processGetOverview(response: Response): Promise<MusicOverviewResponse> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = MusicOverviewResponse.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = MusicOverviewResponse.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<MusicOverviewResponse>(null as any);
     }
 
     getDefault(signal?: AbortSignal): Promise<MusicModel> {
-        let url_ = this.baseUrl + '/api/Music/default';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/default";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1300,40 +1230,37 @@ export class MusicClient {
 
     protected processGetDefault(response: Response): Promise<MusicModel> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = MusicModel.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = MusicModel.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<MusicModel>(null as any);
     }
 
     createMusicTrack(track: MusicModel, signal?: AbortSignal): Promise<string> {
-        let url_ = this.baseUrl + '/api/Music/track';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/track";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(track);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1343,40 +1270,37 @@ export class MusicClient {
 
     protected processCreateMusicTrack(response: Response): Promise<string> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : (null as any);
-
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null as any;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<string>(null as any);
     }
 
     createMusicTrackFromPath(trackPath: string, signal?: AbortSignal): Promise<KeyValuePairOfStringAndModelCreationState> {
-        let url_ = this.baseUrl + '/api/Music/tracks';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/tracks";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(trackPath);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1386,34 +1310,32 @@ export class MusicClient {
 
     protected processCreateMusicTrackFromPath(response: Response): Promise<KeyValuePairOfStringAndModelCreationState> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = KeyValuePairOfStringAndModelCreationState.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = KeyValuePairOfStringAndModelCreationState.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<KeyValuePairOfStringAndModelCreationState>(null as any);
     }
 
     recalculateHashes(signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Music/recalculate-hashes';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/recalculate-hashes";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'POST',
+            method: "POST",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1423,32 +1345,29 @@ export class MusicClient {
 
     protected processRecalculateHashes(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     getAll(signal?: AbortSignal): Promise<MusicModel[]> {
-        let url_ = this.baseUrl + '/api/Music';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1458,43 +1377,43 @@ export class MusicClient {
 
     protected processGetAll(response: Response): Promise<MusicModel[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(MusicModel.fromJS(item, _mappings));
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MusicModel.fromJS(item, _mappings));
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<MusicModel[]>(null as any);
     }
 
     get(hash: string, signal?: AbortSignal): Promise<MusicModel> {
-        let url_ = this.baseUrl + '/api/Music/{hash}';
-        if (hash === undefined || hash === null) throw new globalThis.Error("The parameter 'hash' must be defined.");
-        url_ = url_.replace('{hash}', encodeURIComponent('' + hash));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/{hash}";
+        if (hash === undefined || hash === null)
+            throw new globalThis.Error("The parameter 'hash' must be defined.");
+        url_ = url_.replace("{hash}", encodeURIComponent("" + hash));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1504,42 +1423,40 @@ export class MusicClient {
 
     protected processGet(response: Response): Promise<MusicModel> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = MusicModel.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = MusicModel.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<MusicModel>(null as any);
     }
 
     update(hash: string, _: UpdateRequestOfObject, signal?: AbortSignal): Promise<MusicModel> {
-        let url_ = this.baseUrl + '/api/Music/{hash}';
-        if (hash === undefined || hash === null) throw new globalThis.Error("The parameter 'hash' must be defined.");
-        url_ = url_.replace('{hash}', encodeURIComponent('' + hash));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/{hash}";
+        if (hash === undefined || hash === null)
+            throw new globalThis.Error("The parameter 'hash' must be defined.");
+        url_ = url_.replace("{hash}", encodeURIComponent("" + hash));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(_);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1549,40 +1466,40 @@ export class MusicClient {
 
     protected processUpdate(response: Response): Promise<MusicModel> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = MusicModel.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = MusicModel.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<MusicModel>(null as any);
     }
 
     getLyrics(hash: string, offset?: number | undefined, signal?: AbortSignal): Promise<LyricsResponse> {
-        let url_ = this.baseUrl + '/api/Music/{hash}/lyrics?';
-        if (hash === undefined || hash === null) throw new globalThis.Error("The parameter 'hash' must be defined.");
-        url_ = url_.replace('{hash}', encodeURIComponent('' + hash));
-        if (offset === null) throw new globalThis.Error("The parameter 'offset' cannot be null.");
-        else if (offset !== undefined) url_ += 'offset=' + encodeURIComponent('' + offset) + '&';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/{hash}/lyrics?";
+        if (hash === undefined || hash === null)
+            throw new globalThis.Error("The parameter 'hash' must be defined.");
+        url_ = url_.replace("{hash}", encodeURIComponent("" + hash));
+        if (offset === null)
+            throw new globalThis.Error("The parameter 'offset' cannot be null.");
+        else if (offset !== undefined)
+            url_ += "offset=" + encodeURIComponent("" + offset) + "&";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1592,36 +1509,33 @@ export class MusicClient {
 
     protected processGetLyrics(response: Response): Promise<LyricsResponse> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = LyricsResponse.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = LyricsResponse.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<LyricsResponse>(null as any);
     }
 
     getInstruments(signal?: AbortSignal): Promise<InstrumentModel[]> {
-        let url_ = this.baseUrl + '/api/Music/instruments';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/instruments";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1631,43 +1545,45 @@ export class MusicClient {
 
     protected processGetInstruments(response: Response): Promise<InstrumentModel[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(InstrumentModel.fromJS(item, _mappings));
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(InstrumentModel.fromJS(item, _mappings));
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<InstrumentModel[]>(null as any);
     }
 
     addInstrument(type: InstrumentType, name: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Music/instrument/{name}/type/{type}';
-        if (type === undefined || type === null) throw new globalThis.Error("The parameter 'type' must be defined.");
-        url_ = url_.replace('{type}', encodeURIComponent('' + type));
-        if (name === undefined || name === null) throw new globalThis.Error("The parameter 'name' must be defined.");
-        url_ = url_.replace('{name}', encodeURIComponent('' + name));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/instrument/{name}/type/{type}";
+        if (type === undefined || type === null)
+            throw new globalThis.Error("The parameter 'type' must be defined.");
+        url_ = url_.replace("{type}", encodeURIComponent("" + type));
+        if (name === undefined || name === null)
+            throw new globalThis.Error("The parameter 'name' must be defined.");
+        url_ = url_.replace("{name}", encodeURIComponent("" + name));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'PUT',
+            method: "PUT",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1677,34 +1593,34 @@ export class MusicClient {
 
     protected processAddInstrument(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     removeInstrument(type: InstrumentType, name: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Music/instrument/{name}/type/{type}';
-        if (type === undefined || type === null) throw new globalThis.Error("The parameter 'type' must be defined.");
-        url_ = url_.replace('{type}', encodeURIComponent('' + type));
-        if (name === undefined || name === null) throw new globalThis.Error("The parameter 'name' must be defined.");
-        url_ = url_.replace('{name}', encodeURIComponent('' + name));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/instrument/{name}/type/{type}";
+        if (type === undefined || type === null)
+            throw new globalThis.Error("The parameter 'type' must be defined.");
+        url_ = url_.replace("{type}", encodeURIComponent("" + type));
+        if (name === undefined || name === null)
+            throw new globalThis.Error("The parameter 'name' must be defined.");
+        url_ = url_.replace("{name}", encodeURIComponent("" + name));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1714,35 +1630,32 @@ export class MusicClient {
 
     protected processRemoveInstrument(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     softDeleteTracks(trackHashes: string[], signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Music/music/soft';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/music/soft";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(trackHashes);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'DELETE',
+            method: "DELETE",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1752,35 +1665,32 @@ export class MusicClient {
 
     protected processSoftDeleteTracks(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     undeleteTracks(trackHashes: string[], signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Music/music/undelete';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/music/undelete";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(trackHashes);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1790,35 +1700,32 @@ export class MusicClient {
 
     protected processUndeleteTracks(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     hardDeleteTracks(trackHashes: string[], signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Music/music/hard';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Music/music/hard";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(trackHashes);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'DELETE',
+            method: "DELETE",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1828,17 +1735,14 @@ export class MusicClient {
 
     protected processHardDeleteTracks(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
@@ -1851,20 +1755,20 @@ export class PlaylistClient {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : (window as any);
-        this.baseUrl = baseUrl ?? 'https://localhost/ObscuritasMediaManager/Backend';
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
     getDummyPlaylist(signal?: AbortSignal): Promise<PlaylistModel> {
-        let url_ = this.baseUrl + '/api/Playlist/dummy';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Playlist/dummy";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1874,40 +1778,37 @@ export class PlaylistClient {
 
     protected processGetDummyPlaylist(response: Response): Promise<PlaylistModel> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = PlaylistModel.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = PlaylistModel.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<PlaylistModel>(null as any);
     }
 
     createTemporaryPlaylist(hashes: string[], signal?: AbortSignal): Promise<string> {
-        let url_ = this.baseUrl + '/api/Playlist/temp';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Playlist/temp";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(hashes);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1917,39 +1818,36 @@ export class PlaylistClient {
 
     protected processCreateTemporaryPlaylist(response: Response): Promise<string> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : (null as any);
-
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null as any;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<string>(null as any);
     }
 
     getPlaylist(playlistId: string, signal?: AbortSignal): Promise<PlaylistModel> {
-        let url_ = this.baseUrl + '/api/Playlist/{playlistId}';
+        let url_ = this.baseUrl + "/api/Playlist/{playlistId}";
         if (playlistId === undefined || playlistId === null)
             throw new globalThis.Error("The parameter 'playlistId' must be defined.");
-        url_ = url_.replace('{playlistId}', encodeURIComponent('' + playlistId));
-        url_ = url_.replace(/[?&]$/, '');
+        url_ = url_.replace("{playlistId}", encodeURIComponent("" + playlistId));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -1959,42 +1857,39 @@ export class PlaylistClient {
 
     protected processGetPlaylist(response: Response): Promise<PlaylistModel> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = PlaylistModel.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = PlaylistModel.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<PlaylistModel>(null as any);
     }
 
     updatePlaylistData(playlistId: string, updateRequest: UpdateRequestOfPlaylistModel, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Playlist/{playlistId}';
+        let url_ = this.baseUrl + "/api/Playlist/{playlistId}";
         if (playlistId === undefined || playlistId === null)
             throw new globalThis.Error("The parameter 'playlistId' must be defined.");
-        url_ = url_.replace('{playlistId}', encodeURIComponent('' + playlistId));
-        url_ = url_.replace(/[?&]$/, '');
+        url_ = url_.replace("{playlistId}", encodeURIComponent("" + playlistId));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(updateRequest);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2004,33 +1899,31 @@ export class PlaylistClient {
 
     protected processUpdatePlaylistData(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     deletePlaylist(playlistId: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Playlist/{playlistId}';
+        let url_ = this.baseUrl + "/api/Playlist/{playlistId}";
         if (playlistId === undefined || playlistId === null)
             throw new globalThis.Error("The parameter 'playlistId' must be defined.");
-        url_ = url_.replace('{playlistId}', encodeURIComponent('' + playlistId));
-        url_ = url_.replace(/[?&]$/, '');
+        url_ = url_.replace("{playlistId}", encodeURIComponent("" + playlistId));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2040,32 +1933,29 @@ export class PlaylistClient {
 
     protected processDeletePlaylist(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     listPlaylists(signal?: AbortSignal): Promise<PlaylistModel[]> {
-        let url_ = this.baseUrl + '/api/Playlist/list';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Playlist/list";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2075,44 +1965,43 @@ export class PlaylistClient {
 
     protected processListPlaylists(response: Response): Promise<PlaylistModel[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(PlaylistModel.fromJS(item, _mappings));
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(PlaylistModel.fromJS(item, _mappings));
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<PlaylistModel[]>(null as any);
     }
 
     createPlaylist(playlist: PlaylistModel, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Playlist/create';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Playlist/create";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(playlist);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2122,38 +2011,35 @@ export class PlaylistClient {
 
     protected processCreatePlaylist(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     addTracksToPlaylist(playlistId: string, trackHashes: string[], signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Playlist/{playlistId}/tracks';
+        let url_ = this.baseUrl + "/api/Playlist/{playlistId}/tracks";
         if (playlistId === undefined || playlistId === null)
             throw new globalThis.Error("The parameter 'playlistId' must be defined.");
-        url_ = url_.replace('{playlistId}', encodeURIComponent('' + playlistId));
-        url_ = url_.replace(/[?&]$/, '');
+        url_ = url_.replace("{playlistId}", encodeURIComponent("" + playlistId));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(trackHashes);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2163,17 +2049,14 @@ export class PlaylistClient {
 
     protected processAddTracksToPlaylist(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
@@ -2186,20 +2069,20 @@ export class RecipeClient {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
 
     constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
-        this.http = http ? http : (window as any);
-        this.baseUrl = baseUrl ?? 'https://localhost/ObscuritasMediaManager/Backend';
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "https://localhost/ObscuritasMediaManager/Backend";
     }
 
     getAllRecipes(signal?: AbortSignal): Promise<RecipeModelBase[]> {
-        let url_ = this.baseUrl + '/api/Recipe';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2209,45 +2092,44 @@ export class RecipeClient {
 
     protected processGetAllRecipes(response: Response): Promise<RecipeModelBase[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(RecipeModelBase.fromJS(item, _mappings));
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(RecipeModelBase.fromJS(item, _mappings));
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<RecipeModelBase[]>(null as any);
     }
 
     createRecipe(recipe: RecipeModel, signal?: AbortSignal): Promise<string> {
-        let url_ = this.baseUrl + '/api/Recipe';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(recipe);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2257,39 +2139,36 @@ export class RecipeClient {
 
     protected processCreateRecipe(response: Response): Promise<string> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : (null as any);
-
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null as any;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<string>(null as any);
     }
 
     updateRecipe(recipe: RecipeModelBase, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Recipe';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(recipe);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PATCH',
+            method: "PATCH",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2299,36 +2178,35 @@ export class RecipeClient {
 
     protected processUpdateRecipe(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     getRecipeImage(recipeId: string, index: number, signal?: AbortSignal): Promise<FileResponse> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/images/{index}';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        if (index === undefined || index === null) throw new globalThis.Error("The parameter 'index' must be defined.");
-        url_ = url_.replace('{index}', encodeURIComponent('' + index));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/images/{index}";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        if (index === undefined || index === null)
+            throw new globalThis.Error("The parameter 'index' must be defined.");
+        url_ = url_.replace("{index}", encodeURIComponent("" + index));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/octet-stream',
-            },
+                "Accept": "application/octet-stream"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2338,15 +2216,10 @@ export class RecipeClient {
 
     protected processGetRecipeImage(response: Response): Promise<FileResponse> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
-            let fileNameMatch = contentDisposition
-                ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition)
-                : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
             let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
             if (fileName) {
                 fileName = decodeURIComponent(fileName);
@@ -2354,31 +2227,31 @@ export class RecipeClient {
                 fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
                 fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             }
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<FileResponse>(null as any);
     }
 
     getRecipeThumb(recipeId: string, index: number, signal?: AbortSignal): Promise<FileResponse> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/thumbs/{index}';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        if (index === undefined || index === null) throw new globalThis.Error("The parameter 'index' must be defined.");
-        url_ = url_.replace('{index}', encodeURIComponent('' + index));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/thumbs/{index}";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        if (index === undefined || index === null)
+            throw new globalThis.Error("The parameter 'index' must be defined.");
+        url_ = url_.replace("{index}", encodeURIComponent("" + index));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/octet-stream',
-            },
+                "Accept": "application/octet-stream"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2388,15 +2261,10 @@ export class RecipeClient {
 
     protected processGetRecipeThumb(response: Response): Promise<FileResponse> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get('content-disposition') : undefined;
-            let fileNameMatch = contentDisposition
-                ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition)
-                : undefined;
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
             let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
             if (fileName) {
                 fileName = decodeURIComponent(fileName);
@@ -2404,29 +2272,29 @@ export class RecipeClient {
                 fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
                 fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
             }
-            return response.blob().then((blob) => {
-                return { fileName: fileName, data: blob, status: status, headers: _headers };
-            });
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<FileResponse>(null as any);
     }
 
     searchDishes(search?: string | undefined, signal?: AbortSignal): Promise<RecipeModelBase[]> {
-        let url_ = this.baseUrl + '/api/Recipe/search-dishes?';
-        if (search === null) throw new globalThis.Error("The parameter 'search' cannot be null.");
-        else if (search !== undefined) url_ += 'search=' + encodeURIComponent('' + search) + '&';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/search-dishes?";
+        if (search === null)
+            throw new globalThis.Error("The parameter 'search' cannot be null.");
+        else if (search !== undefined)
+            url_ += "search=" + encodeURIComponent("" + search) + "&";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2436,43 +2304,43 @@ export class RecipeClient {
 
     protected processSearchDishes(response: Response): Promise<RecipeModelBase[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(RecipeModelBase.fromJS(item, _mappings));
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(RecipeModelBase.fromJS(item, _mappings));
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<RecipeModelBase[]>(null as any);
     }
 
     getRecipe(id: string, signal?: AbortSignal): Promise<RecipeModelBase> {
-        let url_ = this.baseUrl + '/api/Recipe/{id}';
-        if (id === undefined || id === null) throw new globalThis.Error("The parameter 'id' must be defined.");
-        url_ = url_.replace('{id}', encodeURIComponent('' + id));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/{id}";
+        if (id === undefined || id === null)
+            throw new globalThis.Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2482,39 +2350,36 @@ export class RecipeClient {
 
     protected processGetRecipe(response: Response): Promise<RecipeModelBase> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = RecipeModelBase.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = RecipeModelBase.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<RecipeModelBase>(null as any);
     }
 
     importDish(dish: FoodModel, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Recipe/dish';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/dish";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(dish);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2524,38 +2389,36 @@ export class RecipeClient {
 
     protected processImportDish(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     addRecipeImage(recipeId: string, request: RecipeImageCreationRequest, signal?: AbortSignal): Promise<RecipeModelBase> {
-        let url_ = this.baseUrl + '/api/Recipe/recipe/{recipeId}/image';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/recipe/{recipeId}/image";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2565,42 +2428,40 @@ export class RecipeClient {
 
     protected processAddRecipeImage(response: Response): Promise<RecipeModelBase> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = RecipeModelBase.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = RecipeModelBase.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<RecipeModelBase>(null as any);
     }
 
     removeRecipeImage(recipeId: string, request: RecipeImageCreationRequest, signal?: AbortSignal): Promise<RecipeModelBase> {
-        let url_ = this.baseUrl + '/api/Recipe/recipe/{recipeId}/image';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/recipe/{recipeId}/image";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(request);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'DELETE',
+            method: "DELETE",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2610,41 +2471,39 @@ export class RecipeClient {
 
     protected processRemoveRecipeImage(response: Response): Promise<RecipeModelBase> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = RecipeModelBase.fromJS(resultData200, _mappings);
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            result200 = RecipeModelBase.fromJS(resultData200, _mappings);
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<RecipeModelBase>(null as any);
     }
 
     addTag(recipeId: string, tag: FoodTagModel, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/tag';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/tag";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(tag);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PUT',
+            method: "PUT",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2654,37 +2513,35 @@ export class RecipeClient {
 
     protected processAddTag(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     removeTag(recipeId: string, tag: FoodTagModel, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/tag';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/tag";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(tag);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'DELETE',
+            method: "DELETE",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2694,34 +2551,35 @@ export class RecipeClient {
 
     protected processRemoveTag(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     changeType(recipeId: string, type?: string | undefined, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/change-type?';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        if (type === null) throw new globalThis.Error("The parameter 'type' cannot be null.");
-        else if (type !== undefined) url_ += 'type=' + encodeURIComponent('' + type) + '&';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/change-type?";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        if (type === null)
+            throw new globalThis.Error("The parameter 'type' cannot be null.");
+        else if (type !== undefined)
+            url_ += "type=" + encodeURIComponent("" + type) + "&";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'POST',
+            method: "POST",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2731,32 +2589,29 @@ export class RecipeClient {
 
     protected processChangeType(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     getIngredients(signal?: AbortSignal): Promise<IngredientModel[]> {
-        let url_ = this.baseUrl + '/api/Recipe/ingredients';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/ingredients";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'GET',
+            method: "GET",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2766,45 +2621,47 @@ export class RecipeClient {
 
     protected processGetIngredients(response: Response): Promise<IngredientModel[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(IngredientModel.fromJS(item, _mappings));
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(IngredientModel.fromJS(item, _mappings));
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<IngredientModel[]>(null as any);
     }
 
     searchIngredients(search: string, maxItems?: number | undefined, signal?: AbortSignal): Promise<IngredientModel[]> {
-        let url_ = this.baseUrl + '/api/Recipe/ingredients/search/{search}?';
-        if (search === undefined || search === null) throw new globalThis.Error("The parameter 'search' must be defined.");
-        url_ = url_.replace('{search}', encodeURIComponent('' + search));
-        if (maxItems === null) throw new globalThis.Error("The parameter 'maxItems' cannot be null.");
-        else if (maxItems !== undefined) url_ += 'maxItems=' + encodeURIComponent('' + maxItems) + '&';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/ingredients/search/{search}?";
+        if (search === undefined || search === null)
+            throw new globalThis.Error("The parameter 'search' must be defined.");
+        url_ = url_.replace("{search}", encodeURIComponent("" + search));
+        if (maxItems === null)
+            throw new globalThis.Error("The parameter 'maxItems' cannot be null.");
+        else if (maxItems !== undefined)
+            url_ += "maxItems=" + encodeURIComponent("" + maxItems) + "&";
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                Accept: 'application/json',
-            },
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2814,47 +2671,47 @@ export class RecipeClient {
 
     protected processSearchIngredients(response: Response): Promise<IngredientModel[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
-        let _mappings: { source: any; target: any }[] = [];
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(IngredientModel.fromJS(item, _mappings));
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(IngredientModel.fromJS(item, _mappings));
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<IngredientModel[]>(null as any);
     }
 
     addIngredient(recipeId: string, ingredient: RecipeIngredientMappingModel, signal?: AbortSignal): Promise<string> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/ingredient';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/ingredient";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(ingredient);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2864,42 +2721,39 @@ export class RecipeClient {
 
     protected processAddIngredient(response: Response): Promise<string> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : (null as any);
-
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null as any;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<string>(null as any);
     }
 
     updateIngredient(ingredientName: string, ingredient: IngredientModel, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Recipe/ingredient/{ingredientName}';
+        let url_ = this.baseUrl + "/api/Recipe/ingredient/{ingredientName}";
         if (ingredientName === undefined || ingredientName === null)
             throw new globalThis.Error("The parameter 'ingredientName' must be defined.");
-        url_ = url_.replace('{ingredientName}', encodeURIComponent('' + ingredientName));
-        url_ = url_.replace(/[?&]$/, '');
+        url_ = url_.replace("{ingredientName}", encodeURIComponent("" + ingredientName));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(ingredient);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'PATCH',
+            method: "PATCH",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-            },
+                "Content-Type": "application/json",
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2909,35 +2763,34 @@ export class RecipeClient {
 
     protected processUpdateIngredient(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     deleteIngredient(recipeId: string, ingredientId: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/ingredient/{ingredientId}';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/ingredient/{ingredientId}";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
         if (ingredientId === undefined || ingredientId === null)
             throw new globalThis.Error("The parameter 'ingredientId' must be defined.");
-        url_ = url_.replace('{ingredientId}', encodeURIComponent('' + ingredientId));
-        url_ = url_.replace(/[?&]$/, '');
+        url_ = url_.replace("{ingredientId}", encodeURIComponent("" + ingredientId));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2947,38 +2800,37 @@ export class RecipeClient {
 
     protected processDeleteIngredient(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     searchCookware(search: string, maxItems?: number | undefined, signal?: AbortSignal): Promise<string[]> {
-        let url_ = this.baseUrl + '/api/Recipe/cookware/search?';
-        if (maxItems === null) throw new globalThis.Error("The parameter 'maxItems' cannot be null.");
-        else if (maxItems !== undefined) url_ += 'maxItems=' + encodeURIComponent('' + maxItems) + '&';
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/cookware/search?";
+        if (maxItems === null)
+            throw new globalThis.Error("The parameter 'maxItems' cannot be null.");
+        else if (maxItems !== undefined)
+            url_ += "maxItems=" + encodeURIComponent("" + maxItems) + "&";
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(search);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -2988,46 +2840,46 @@ export class RecipeClient {
 
     protected processSearchCookware(response: Response): Promise<string[]> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                if (Array.isArray(resultData200)) {
-                    result200 = [] as any;
-                    for (let item of resultData200) result200!.push(item);
-                } else {
-                    result200 = null as any;
-                }
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(item);
+            }
+            else {
+                result200 = null as any;
+            }
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<string[]>(null as any);
     }
 
     addCookware(recipeId: string, cookware: RecipeCookwareMappingModel, signal?: AbortSignal): Promise<string> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/cookware';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/cookware";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(cookware);
 
         let options_: RequestInit = {
             body: content_,
-            method: 'POST',
+            method: "POST",
             signal,
             headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -3037,39 +2889,38 @@ export class RecipeClient {
 
     protected processAddCookware(response: Response): Promise<string> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                let resultData200 = _responseText === '' ? null : jsonParse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : (null as any);
-
-                return result200;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null as any;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<string>(null as any);
     }
 
     deleteCookware(recipeId: string, cookwareId: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/cookware/{cookwareId}';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/cookware/{cookwareId}";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
         if (cookwareId === undefined || cookwareId === null)
             throw new globalThis.Error("The parameter 'cookwareId' must be defined.");
-        url_ = url_.replace('{cookwareId}', encodeURIComponent('' + cookwareId));
-        url_ = url_.replace(/[?&]$/, '');
+        url_ = url_.replace("{cookwareId}", encodeURIComponent("" + cookwareId));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -3079,32 +2930,31 @@ export class RecipeClient {
 
     protected processDeleteCookware(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     softDeleteRecipe(recipeId: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/soft';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/soft";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -3114,32 +2964,31 @@ export class RecipeClient {
 
     protected processSoftDeleteRecipe(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     undeleteRecipe(recipeId: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/undelete';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/undelete";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'POST',
+            method: "POST",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -3149,32 +2998,31 @@ export class RecipeClient {
 
     protected processUndeleteRecipe(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
     }
 
     hardDeleteRecipe(recipeId: string, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + '/api/Recipe/{recipeId}/hard';
-        if (recipeId === undefined || recipeId === null) throw new globalThis.Error("The parameter 'recipeId' must be defined.");
-        url_ = url_.replace('{recipeId}', encodeURIComponent('' + recipeId));
-        url_ = url_.replace(/[?&]$/, '');
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/hard";
+        if (recipeId === undefined || recipeId === null)
+            throw new globalThis.Error("The parameter 'recipeId' must be defined.");
+        url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
+        url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
-            method: 'DELETE',
+            method: "DELETE",
             signal,
-            headers: {},
+            headers: {
+            }
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
@@ -3184,17 +3032,14 @@ export class RecipeClient {
 
     protected processHardDeleteRecipe(response: Response): Promise<void> {
         const status = response.status;
-        let _headers: any = {};
-        if (response.headers && response.headers.forEach) {
-            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
-        }
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-                return;
+            return;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
-                return throwException('An unexpected server error occurred.', status, _responseText, _headers);
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
         return Promise.resolve<void>(null as any);
@@ -3225,93 +3070,107 @@ export class MusicModel implements IMusicModel {
     constructor(data?: Partial<IMusicModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.name = _data['name'] !== undefined ? _data['name'] : (null as any);
-            this.displayName = _data['displayName'] !== undefined ? _data['displayName'] : (null as any);
-            this.author = _data['author'] !== undefined ? _data['author'] : (null as any);
-            this.source = _data['source'] !== undefined ? _data['source'] : (null as any);
-            this.mood1 = _data['mood1'] !== undefined ? _data['mood1'] : (null as any);
-            this.mood2 = _data['mood2'] !== undefined ? _data['mood2'] : (null as any);
-            this.language = _data['language'] !== undefined ? _data['language'] : (null as any);
-            this.instrumentation = _data['instrumentation'] !== undefined ? _data['instrumentation'] : (null as any);
-            this.participants = _data['participants'] !== undefined ? _data['participants'] : (null as any);
-            if (Array.isArray(_data['instruments'])) {
+            this.name = _data["name"] !== undefined ? _data["name"] : null as any;
+            this.displayName = _data["displayName"] !== undefined ? _data["displayName"] : null as any;
+            this.author = _data["author"] !== undefined ? _data["author"] : null as any;
+            this.source = _data["source"] !== undefined ? _data["source"] : null as any;
+            this.mood1 = _data["mood1"] !== undefined ? _data["mood1"] : null as any;
+            this.mood2 = _data["mood2"] !== undefined ? _data["mood2"] : null as any;
+            this.language = _data["language"] !== undefined ? _data["language"] : null as any;
+            this.instrumentation = _data["instrumentation"] !== undefined ? _data["instrumentation"] : null as any;
+            this.participants = _data["participants"] !== undefined ? _data["participants"] : null as any;
+            if (Array.isArray(_data["instruments"])) {
                 this.instruments = [] as any;
-                for (let item of _data['instruments']) this.instruments!.push(InstrumentModel.fromJS(item, _mappings));
-            } else {
+                for (let item of _data["instruments"])
+                    this.instruments!.push(InstrumentModel.fromJS(item, _mappings));
+            }
+            else {
                 this.instruments = null as any;
             }
-            if (Array.isArray(_data['instrumentTypes'])) {
+            if (Array.isArray(_data["instrumentTypes"])) {
                 this.instrumentTypes = [] as any;
-                for (let item of _data['instrumentTypes']) this.instrumentTypes!.push(item);
-            } else {
+                for (let item of _data["instrumentTypes"])
+                    this.instrumentTypes!.push(item);
+            }
+            else {
                 this.instrumentTypes = null as any;
             }
-            if (Array.isArray(_data['instrumentNames'])) {
+            if (Array.isArray(_data["instrumentNames"])) {
                 this.instrumentNames = [] as any;
-                for (let item of _data['instrumentNames']) this.instrumentNames!.push(item);
-            } else {
+                for (let item of _data["instrumentNames"])
+                    this.instrumentNames!.push(item);
+            }
+            else {
                 this.instrumentNames = null as any;
             }
-            if (Array.isArray(_data['genres'])) {
+            if (Array.isArray(_data["genres"])) {
                 this.genres = [] as any;
-                for (let item of _data['genres']) this.genres!.push(item);
-            } else {
+                for (let item of _data["genres"])
+                    this.genres!.push(item);
+            }
+            else {
                 this.genres = null as any;
             }
-            this.path = _data['path'] !== undefined ? _data['path'] : (null as any);
-            this.lyrics = _data['lyrics'] !== undefined ? _data['lyrics'] : (null as any);
-            this.rating = _data['rating'] !== undefined ? _data['rating'] : (null as any);
-            this.complete = _data['complete'] !== undefined ? _data['complete'] : (null as any);
-            this.hash = _data['hash'] !== undefined ? _data['hash'] : (null as any);
-            this.deleted = _data['deleted'] !== undefined ? _data['deleted'] : (null as any);
+            this.path = _data["path"] !== undefined ? _data["path"] : null as any;
+            this.lyrics = _data["lyrics"] !== undefined ? _data["lyrics"] : null as any;
+            this.rating = _data["rating"] !== undefined ? _data["rating"] : null as any;
+            this.complete = _data["complete"] !== undefined ? _data["complete"] : null as any;
+            this.hash = _data["hash"] !== undefined ? _data["hash"] : null as any;
+            this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): MusicModel {
+    static fromJS(data: any, _mappings?: any): MusicModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<MusicModel>(data, _mappings, MusicModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['name'] = this.name !== undefined ? this.name : (null as any);
-        data['displayName'] = this.displayName !== undefined ? this.displayName : (null as any);
-        data['author'] = this.author !== undefined ? this.author : (null as any);
-        data['source'] = this.source !== undefined ? this.source : (null as any);
-        data['mood1'] = this.mood1 !== undefined ? this.mood1 : (null as any);
-        data['mood2'] = this.mood2 !== undefined ? this.mood2 : (null as any);
-        data['language'] = this.language !== undefined ? this.language : (null as any);
-        data['instrumentation'] = this.instrumentation !== undefined ? this.instrumentation : (null as any);
-        data['participants'] = this.participants !== undefined ? this.participants : (null as any);
+        data["name"] = this.name !== undefined ? this.name : null as any;
+        data["displayName"] = this.displayName !== undefined ? this.displayName : null as any;
+        data["author"] = this.author !== undefined ? this.author : null as any;
+        data["source"] = this.source !== undefined ? this.source : null as any;
+        data["mood1"] = this.mood1 !== undefined ? this.mood1 : null as any;
+        data["mood2"] = this.mood2 !== undefined ? this.mood2 : null as any;
+        data["language"] = this.language !== undefined ? this.language : null as any;
+        data["instrumentation"] = this.instrumentation !== undefined ? this.instrumentation : null as any;
+        data["participants"] = this.participants !== undefined ? this.participants : null as any;
         if (Array.isArray(this.instruments)) {
-            data['instruments'] = [];
-            for (let item of this.instruments) data['instruments'].push(item ? item.toJSON() : (null as any));
+            data["instruments"] = [];
+            for (let item of this.instruments)
+                data["instruments"].push(item ? item.toJSON() : null as any);
         }
         if (Array.isArray(this.instrumentTypes)) {
-            data['instrumentTypes'] = [];
-            for (let item of this.instrumentTypes) data['instrumentTypes'].push(item);
+            data["instrumentTypes"] = [];
+            for (let item of this.instrumentTypes)
+                data["instrumentTypes"].push(item);
         }
         if (Array.isArray(this.instrumentNames)) {
-            data['instrumentNames'] = [];
-            for (let item of this.instrumentNames) data['instrumentNames'].push(item);
+            data["instrumentNames"] = [];
+            for (let item of this.instrumentNames)
+                data["instrumentNames"].push(item);
         }
         if (Array.isArray(this.genres)) {
-            data['genres'] = [];
-            for (let item of this.genres) data['genres'].push(item);
+            data["genres"] = [];
+            for (let item of this.genres)
+                data["genres"].push(item);
         }
-        data['path'] = this.path !== undefined ? this.path : (null as any);
-        data['lyrics'] = this.lyrics !== undefined ? this.lyrics : (null as any);
-        data['rating'] = this.rating !== undefined ? this.rating : (null as any);
-        data['complete'] = this.complete !== undefined ? this.complete : (null as any);
-        data['hash'] = this.hash !== undefined ? this.hash : (null as any);
-        data['deleted'] = this.deleted !== undefined ? this.deleted : (null as any);
+        data["path"] = this.path !== undefined ? this.path : null as any;
+        data["lyrics"] = this.lyrics !== undefined ? this.lyrics : null as any;
+        data["rating"] = this.rating !== undefined ? this.rating : null as any;
+        data["complete"] = this.complete !== undefined ? this.complete : null as any;
+        data["hash"] = this.hash !== undefined ? this.hash : null as any;
+        data["deleted"] = this.deleted !== undefined ? this.deleted : null as any;
         return data;
     }
 
@@ -3346,48 +3205,48 @@ export interface IMusicModel {
 }
 
 export enum Mood {
-    Unset = 'Unset',
-    Sad = 'Sad',
-    Dramatic = 'Dramatic',
-    Monotonuous = 'Monotonuous',
-    Calm = 'Calm',
-    Cool = 'Cool',
-    Romantic = 'Romantic',
-    Happy = 'Happy',
-    Funny = 'Funny',
-    Epic = 'Epic',
-    Passionate = 'Passionate',
-    Aggressive = 'Aggressive',
+    Unset = "Unset",
+    Sad = "Sad",
+    Dramatic = "Dramatic",
+    Monotonuous = "Monotonuous",
+    Calm = "Calm",
+    Cool = "Cool",
+    Romantic = "Romantic",
+    Happy = "Happy",
+    Funny = "Funny",
+    Epic = "Epic",
+    Passionate = "Passionate",
+    Aggressive = "Aggressive",
 }
 
 export enum Language {
-    Unset = 'Unset',
-    Japanese = 'Japanese',
-    English = 'English',
-    German = 'German',
-    Spain = 'Spain',
-    Chinese = 'Chinese',
-    Italian = 'Italian',
-    Russian = 'Russian',
-    SouthAmerican = 'SouthAmerican',
-    African = 'African',
-    Korean = 'Korean',
+    Unset = "Unset",
+    Japanese = "Japanese",
+    English = "English",
+    German = "German",
+    Spain = "Spain",
+    Chinese = "Chinese",
+    Italian = "Italian",
+    Russian = "Russian",
+    SouthAmerican = "SouthAmerican",
+    African = "African",
+    Korean = "Korean",
 }
 
 export enum Instrumentation {
-    Unset = 'Unset',
-    Mono = 'Mono',
-    Groups = 'Groups',
-    Mixed = 'Mixed',
+    Unset = "Unset",
+    Mono = "Mono",
+    Groups = "Groups",
+    Mixed = "Mixed",
 }
 
 export enum Participants {
-    Unset = 'Unset',
-    Solo = 'Solo',
-    SmallGroup = 'SmallGroup',
-    LargeGroup = 'LargeGroup',
-    SmallOrchestra = 'SmallOrchestra',
-    LargeOrchestra = 'LargeOrchestra',
+    Unset = "Unset",
+    Solo = "Solo",
+    SmallGroup = "SmallGroup",
+    LargeGroup = "LargeGroup",
+    SmallOrchestra = "SmallOrchestra",
+    LargeOrchestra = "LargeOrchestra",
 }
 
 export class InstrumentModel implements IInstrumentModel {
@@ -3398,29 +3257,31 @@ export class InstrumentModel implements IInstrumentModel {
     constructor(data?: Partial<IInstrumentModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.id = _data['id'] !== undefined ? _data['id'] : (null as any);
-            this.name = _data['name'] !== undefined ? _data['name'] : (null as any);
-            this.type = _data['type'] !== undefined ? _data['type'] : (null as any);
+            this.id = _data["id"] !== undefined ? _data["id"] : null as any;
+            this.name = _data["name"] !== undefined ? _data["name"] : null as any;
+            this.type = _data["type"] !== undefined ? _data["type"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): InstrumentModel {
+    static fromJS(data: any, _mappings?: any): InstrumentModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<InstrumentModel>(data, _mappings, InstrumentModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['id'] = this.id !== undefined ? this.id : (null as any);
-        data['name'] = this.name !== undefined ? this.name : (null as any);
-        data['type'] = this.type !== undefined ? this.type : (null as any);
+        data["id"] = this.id !== undefined ? this.id : null as any;
+        data["name"] = this.name !== undefined ? this.name : null as any;
+        data["type"] = this.type !== undefined ? this.type : null as any;
         return data;
     }
 
@@ -3439,50 +3300,50 @@ export interface IInstrumentModel {
 }
 
 export enum InstrumentType {
-    Unset = 'Unset',
-    Vocal = 'Vocal',
-    WoodWind = 'WoodWind',
-    Brass = 'Brass',
-    Percussion = 'Percussion',
-    Stringed = 'Stringed',
-    Keyboard = 'Keyboard',
-    Electronic = 'Electronic',
-    HumanBody = 'HumanBody',
-    Miscellaneous = 'Miscellaneous',
+    Unset = "Unset",
+    Vocal = "Vocal",
+    WoodWind = "WoodWind",
+    Brass = "Brass",
+    Percussion = "Percussion",
+    Stringed = "Stringed",
+    Keyboard = "Keyboard",
+    Electronic = "Electronic",
+    HumanBody = "HumanBody",
+    Miscellaneous = "Miscellaneous",
 }
 
 export enum MusicGenre {
-    Unset = 'Unset',
-    Acapella = 'Acapella',
-    Avantgarde = 'Avantgarde',
-    Blues = 'Blues',
-    Classic = 'Classic',
-    Comedy = 'Comedy',
-    Country = 'Country',
-    EasyListening = 'EasyListening',
-    Electronic = 'Electronic',
-    Flamenco = 'Flamenco',
-    Folk = 'Folk',
-    HipHop = 'HipHop',
-    House = 'House',
-    Instrumental = 'Instrumental',
-    Jazz = 'Jazz',
-    Latin = 'Latin',
-    Pop = 'Pop',
-    RnB = 'RnB',
-    Soul = 'Soul',
-    Rock = 'Rock',
-    Metal = 'Metal',
-    March = 'March',
-    Moe = 'Moe',
-    Wagakki = 'Wagakki',
-    Medley = 'Medley',
-    Parody = 'Parody',
-    Ballad = 'Ballad',
-    FilmMusic = 'FilmMusic',
-    Western = 'Western',
-    Christmas = 'Christmas',
-    Enka = 'Enka',
+    Unset = "Unset",
+    Acapella = "Acapella",
+    Avantgarde = "Avantgarde",
+    Blues = "Blues",
+    Classic = "Classic",
+    Comedy = "Comedy",
+    Country = "Country",
+    EasyListening = "EasyListening",
+    Electronic = "Electronic",
+    Flamenco = "Flamenco",
+    Folk = "Folk",
+    HipHop = "HipHop",
+    House = "House",
+    Instrumental = "Instrumental",
+    Jazz = "Jazz",
+    Latin = "Latin",
+    Pop = "Pop",
+    RnB = "RnB",
+    Soul = "Soul",
+    Rock = "Rock",
+    Metal = "Metal",
+    March = "March",
+    Moe = "Moe",
+    Wagakki = "Wagakki",
+    Medley = "Medley",
+    Parody = "Parody",
+    Ballad = "Ballad",
+    FilmMusic = "FilmMusic",
+    Western = "Western",
+    Christmas = "Christmas",
+    Enka = "Enka",
 }
 
 export class GenreModel implements IGenreModel {
@@ -3493,29 +3354,31 @@ export class GenreModel implements IGenreModel {
     constructor(data?: Partial<IGenreModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.id = _data['id'] !== undefined ? _data['id'] : (null as any);
-            this.name = _data['name'] !== undefined ? _data['name'] : (null as any);
-            this.sectionName = _data['sectionName'] !== undefined ? _data['sectionName'] : (null as any);
+            this.id = _data["id"] !== undefined ? _data["id"] : null as any;
+            this.name = _data["name"] !== undefined ? _data["name"] : null as any;
+            this.sectionName = _data["sectionName"] !== undefined ? _data["sectionName"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): GenreModel {
+    static fromJS(data: any, _mappings?: any): GenreModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<GenreModel>(data, _mappings, GenreModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['id'] = this.id !== undefined ? this.id : (null as any);
-        data['name'] = this.name !== undefined ? this.name : (null as any);
-        data['sectionName'] = this.sectionName !== undefined ? this.sectionName : (null as any);
+        data["id"] = this.id !== undefined ? this.id : null as any;
+        data["name"] = this.name !== undefined ? this.name : null as any;
+        data["sectionName"] = this.sectionName !== undefined ? this.sectionName : null as any;
         return data;
     }
 
@@ -3541,28 +3404,30 @@ export class MediaGenreModel extends GenreModel implements IMediaGenreModel {
         super(data);
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         super.init(_data);
         if (_data) {
-            this.sectionName = _data['sectionName'] !== undefined ? _data['sectionName'] : (null as any);
-            this.section = _data['section'] !== undefined ? _data['section'] : (null as any);
+            this.sectionName = _data["sectionName"] !== undefined ? _data["sectionName"] : null as any;
+            this.section = _data["section"] !== undefined ? _data["section"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): MediaGenreModel {
+    static fromJS(data: any, _mappings?: any): MediaGenreModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<MediaGenreModel>(data, _mappings, MediaGenreModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['sectionName'] = this.sectionName !== undefined ? this.sectionName : (null as any);
-        data['section'] = this.section !== undefined ? this.section : (null as any);
+        data["sectionName"] = this.sectionName !== undefined ? this.sectionName : null as any;
+        data["section"] = this.section !== undefined ? this.section : null as any;
         super.toJSON(data);
         return data;
     }
@@ -3581,21 +3446,21 @@ export interface IMediaGenreModel extends IGenreModel {
 }
 
 export enum MediaGenreCategory {
-    Relationship = 'Relationship',
-    Plot = 'Plot',
-    MainGenre = 'MainGenre',
-    JobsOrHobbies = 'JobsOrHobbies',
-    Battle = 'Battle',
-    Art = 'Art',
-    Location = 'Location',
-    Personalities = 'Personalities',
-    Protagonist = 'Protagonist',
-    School = 'School',
-    Sports = 'Sports',
-    Style = 'Style',
-    Beings = 'Beings',
-    Era = 'Era',
-    Mood = 'Mood',
+    Relationship = "Relationship",
+    Plot = "Plot",
+    MainGenre = "MainGenre",
+    JobsOrHobbies = "JobsOrHobbies",
+    Battle = "Battle",
+    Art = "Art",
+    Location = "Location",
+    Personalities = "Personalities",
+    Protagonist = "Protagonist",
+    School = "School",
+    Sports = "Sports",
+    Style = "Style",
+    Beings = "Beings",
+    Era = "Era",
+    Mood = "Mood",
 }
 
 export class InventoryItemModel implements IInventoryItemModel {
@@ -3611,39 +3476,41 @@ export class InventoryItemModel implements IInventoryItemModel {
     constructor(data?: Partial<IInventoryItemModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.itemId = _data['itemId'] !== undefined ? _data['itemId'] : (null as any);
-            this.target = _data['target'] !== undefined ? _data['target'] : (null as any);
-            this.ingredientName = _data['ingredientName'] !== undefined ? _data['ingredientName'] : (null as any);
-            this.quantity = _data['quantity'] !== undefined ? _data['quantity'] : (null as any);
-            this.unit = _data['unit'] ? MeasurementUnit.fromJS(_data['unit'], _mappings) : (null as any);
-            this.level = _data['level'] !== undefined ? _data['level'] : (null as any);
-            this.isSide = _data['isSide'] !== undefined ? _data['isSide'] : (null as any);
-            this.ingredient = _data['ingredient'] ? IngredientModel.fromJS(_data['ingredient'], _mappings) : (null as any);
+            this.itemId = _data["itemId"] !== undefined ? _data["itemId"] : null as any;
+            this.target = _data["target"] !== undefined ? _data["target"] : null as any;
+            this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : null as any;
+            this.quantity = _data["quantity"] !== undefined ? _data["quantity"] : null as any;
+            this.unit = _data["unit"] ? MeasurementUnit.fromJS(_data["unit"], _mappings) : null as any;
+            this.level = _data["level"] !== undefined ? _data["level"] : null as any;
+            this.isSide = _data["isSide"] !== undefined ? _data["isSide"] : null as any;
+            this.ingredient = _data["ingredient"] ? IngredientModel.fromJS(_data["ingredient"], _mappings) : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): InventoryItemModel {
+    static fromJS(data: any, _mappings?: any): InventoryItemModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<InventoryItemModel>(data, _mappings, InventoryItemModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['itemId'] = this.itemId !== undefined ? this.itemId : (null as any);
-        data['target'] = this.target !== undefined ? this.target : (null as any);
-        data['ingredientName'] = this.ingredientName !== undefined ? this.ingredientName : (null as any);
-        data['quantity'] = this.quantity !== undefined ? this.quantity : (null as any);
-        data['unit'] = this.unit ? this.unit.toJSON() : (null as any);
-        data['level'] = this.level !== undefined ? this.level : (null as any);
-        data['isSide'] = this.isSide !== undefined ? this.isSide : (null as any);
-        data['ingredient'] = this.ingredient ? this.ingredient.toJSON() : (null as any);
+        data["itemId"] = this.itemId !== undefined ? this.itemId : null as any;
+        data["target"] = this.target !== undefined ? this.target : null as any;
+        data["ingredientName"] = this.ingredientName !== undefined ? this.ingredientName : null as any;
+        data["quantity"] = this.quantity !== undefined ? this.quantity : null as any;
+        data["unit"] = this.unit ? this.unit.toJSON() : null as any;
+        data["level"] = this.level !== undefined ? this.level : null as any;
+        data["isSide"] = this.isSide !== undefined ? this.isSide : null as any;
+        data["ingredient"] = this.ingredient ? this.ingredient.toJSON() : null as any;
         return data;
     }
 
@@ -3667,9 +3534,9 @@ export interface IInventoryItemModel {
 }
 
 export enum InventoryTarget {
-    Fridge = 'Fridge',
-    Freezer = 'Freezer',
-    Other = 'Other',
+    Fridge = "Fridge",
+    Freezer = "Freezer",
+    Other = "Other",
 }
 
 export class MeasurementUnit implements IMeasurementUnit {
@@ -3681,31 +3548,33 @@ export class MeasurementUnit implements IMeasurementUnit {
     constructor(data?: Partial<IMeasurementUnit>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.name = _data['name'] !== undefined ? _data['name'] : (null as any);
-            this.shortName = _data['shortName'] !== undefined ? _data['shortName'] : (null as any);
-            this.multiplier = _data['multiplier'] !== undefined ? _data['multiplier'] : (null as any);
-            this.measurement = _data['measurement'] !== undefined ? _data['measurement'] : (null as any);
+            this.name = _data["name"] !== undefined ? _data["name"] : null as any;
+            this.shortName = _data["shortName"] !== undefined ? _data["shortName"] : null as any;
+            this.multiplier = _data["multiplier"] !== undefined ? _data["multiplier"] : null as any;
+            this.measurement = _data["measurement"] !== undefined ? _data["measurement"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): MeasurementUnit {
+    static fromJS(data: any, _mappings?: any): MeasurementUnit  {
         data = typeof data === 'object' ? data : {};
         return createInstance<MeasurementUnit>(data, _mappings, MeasurementUnit)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['name'] = this.name !== undefined ? this.name : (null as any);
-        data['shortName'] = this.shortName !== undefined ? this.shortName : (null as any);
-        data['multiplier'] = this.multiplier !== undefined ? this.multiplier : (null as any);
-        data['measurement'] = this.measurement !== undefined ? this.measurement : (null as any);
+        data["name"] = this.name !== undefined ? this.name : null as any;
+        data["shortName"] = this.shortName !== undefined ? this.shortName : null as any;
+        data["multiplier"] = this.multiplier !== undefined ? this.multiplier : null as any;
+        data["measurement"] = this.measurement !== undefined ? this.measurement : null as any;
         return data;
     }
 
@@ -3725,12 +3594,12 @@ export interface IMeasurementUnit {
 }
 
 export enum Measurement {
-    Mass = 'Mass',
-    Volume = 'Volume',
-    Size = 'Size',
-    Pinch = 'Pinch',
-    Piece = 'Piece',
-    Unitless = 'Unitless',
+    Mass = "Mass",
+    Volume = "Volume",
+    Size = "Size",
+    Pinch = "Pinch",
+    Piece = "Piece",
+    Unitless = "Unitless",
 }
 
 export class IngredientModel implements IIngredientModel {
@@ -3743,33 +3612,35 @@ export class IngredientModel implements IIngredientModel {
     constructor(data?: Partial<IIngredientModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.ingredientName = _data['ingredientName'] !== undefined ? _data['ingredientName'] : (null as any);
-            this.lowestKnownPrice = _data['lowestKnownPrice'] !== undefined ? _data['lowestKnownPrice'] : (null as any);
-            this.nation = _data['nation'] !== undefined ? _data['nation'] : (null as any);
-            this.category = _data['category'] !== undefined ? _data['category'] : (null as any);
-            this.isFluid = _data['isFluid'] !== undefined ? _data['isFluid'] : (null as any);
+            this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : null as any;
+            this.lowestKnownPrice = _data["lowestKnownPrice"] !== undefined ? _data["lowestKnownPrice"] : null as any;
+            this.nation = _data["nation"] !== undefined ? _data["nation"] : null as any;
+            this.category = _data["category"] !== undefined ? _data["category"] : null as any;
+            this.isFluid = _data["isFluid"] !== undefined ? _data["isFluid"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): IngredientModel {
+    static fromJS(data: any, _mappings?: any): IngredientModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<IngredientModel>(data, _mappings, IngredientModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['ingredientName'] = this.ingredientName !== undefined ? this.ingredientName : (null as any);
-        data['lowestKnownPrice'] = this.lowestKnownPrice !== undefined ? this.lowestKnownPrice : (null as any);
-        data['nation'] = this.nation !== undefined ? this.nation : (null as any);
-        data['category'] = this.category !== undefined ? this.category : (null as any);
-        data['isFluid'] = this.isFluid !== undefined ? this.isFluid : (null as any);
+        data["ingredientName"] = this.ingredientName !== undefined ? this.ingredientName : null as any;
+        data["lowestKnownPrice"] = this.lowestKnownPrice !== undefined ? this.lowestKnownPrice : null as any;
+        data["nation"] = this.nation !== undefined ? this.nation : null as any;
+        data["category"] = this.category !== undefined ? this.category : null as any;
+        data["isFluid"] = this.isFluid !== undefined ? this.isFluid : null as any;
         return data;
     }
 
@@ -3790,20 +3661,20 @@ export interface IIngredientModel {
 }
 
 export enum IngredientCategory {
-    Meat = 'Meat',
-    Noodles = 'Noodles',
-    Rice = 'Rice',
-    Bread = 'Bread',
-    Fish = 'Fish',
-    Vegetables = 'Vegetables',
-    Fruits = 'Fruits',
-    Dairy = 'Dairy',
-    Eggs = 'Eggs',
-    Nuts = 'Nuts',
-    Drinks = 'Drinks',
-    Condiments = 'Condiments',
-    Oil = 'Oil',
-    Miscellaneous = 'Miscellaneous',
+    Meat = "Meat",
+    Noodles = "Noodles",
+    Rice = "Rice",
+    Bread = "Bread",
+    Fish = "Fish",
+    Vegetables = "Vegetables",
+    Fruits = "Fruits",
+    Dairy = "Dairy",
+    Eggs = "Eggs",
+    Nuts = "Nuts",
+    Drinks = "Drinks",
+    Condiments = "Condiments",
+    Oil = "Oil",
+    Miscellaneous = "Miscellaneous",
 }
 
 export class CredentialsRequest implements ICredentialsRequest {
@@ -3813,27 +3684,29 @@ export class CredentialsRequest implements ICredentialsRequest {
     constructor(data?: Partial<ICredentialsRequest>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.username = _data['username'] !== undefined ? _data['username'] : (null as any);
-            this.password = _data['password'] !== undefined ? _data['password'] : (null as any);
+            this.username = _data["username"] !== undefined ? _data["username"] : null as any;
+            this.password = _data["password"] !== undefined ? _data["password"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): CredentialsRequest {
+    static fromJS(data: any, _mappings?: any): CredentialsRequest  {
         data = typeof data === 'object' ? data : {};
         return createInstance<CredentialsRequest>(data, _mappings, CredentialsRequest)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['username'] = this.username !== undefined ? this.username : (null as any);
-        data['password'] = this.password !== undefined ? this.password : (null as any);
+        data["username"] = this.username !== undefined ? this.username : null as any;
+        data["password"] = this.password !== undefined ? this.password : null as any;
         return data;
     }
 
@@ -3874,46 +3747,52 @@ export class MediaModel implements IMediaModel {
     constructor(data?: Partial<IMediaModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            if (Array.isArray(_data['contentWarnings'])) {
+            if (Array.isArray(_data["contentWarnings"])) {
                 this.contentWarnings = [] as any;
-                for (let item of _data['contentWarnings']) this.contentWarnings!.push(item);
-            } else {
+                for (let item of _data["contentWarnings"])
+                    this.contentWarnings!.push(item);
+            }
+            else {
                 this.contentWarnings = null as any;
             }
-            this.description = _data['description'] !== undefined ? _data['description'] : (null as any);
-            if (Array.isArray(_data['genres'])) {
+            this.description = _data["description"] !== undefined ? _data["description"] : null as any;
+            if (Array.isArray(_data["genres"])) {
                 this.genres = [] as any;
-                for (let item of _data['genres']) this.genres!.push(MediaGenreModel.fromJS(item, _mappings));
-            } else {
+                for (let item of _data["genres"])
+                    this.genres!.push(MediaGenreModel.fromJS(item, _mappings));
+            }
+            else {
                 this.genres = null as any;
             }
-            this.hash = _data['hash'] !== undefined ? _data['hash'] : (null as any);
-            this.name = _data['name'] !== undefined ? _data['name'] : (null as any);
-            this.romajiName = _data['romajiName'] !== undefined ? _data['romajiName'] : (null as any);
-            this.kanjiName = _data['kanjiName'] !== undefined ? _data['kanjiName'] : (null as any);
-            this.germanName = _data['germanName'] !== undefined ? _data['germanName'] : (null as any);
-            this.englishName = _data['englishName'] !== undefined ? _data['englishName'] : (null as any);
-            this.id = _data['id'] !== undefined ? _data['id'] : (null as any);
-            this.language = _data['language'] !== undefined ? _data['language'] : (null as any);
-            this.rating = _data['rating'] !== undefined ? _data['rating'] : (null as any);
-            this.release = _data['release'] !== undefined ? _data['release'] : (null as any);
-            this.status = _data['status'] !== undefined ? _data['status'] : (null as any);
-            this.targetGroup = _data['targetGroup'] !== undefined ? _data['targetGroup'] : (null as any);
-            this.type = _data['type'] !== undefined ? _data['type'] : (null as any);
-            this.rootFolderPath = _data['rootFolderPath'] !== undefined ? _data['rootFolderPath'] : (null as any);
-            this.deleted = _data['deleted'] !== undefined ? _data['deleted'] : (null as any);
-            this.complete = _data['complete'] !== undefined ? _data['complete'] : (null as any);
+            this.hash = _data["hash"] !== undefined ? _data["hash"] : null as any;
+            this.name = _data["name"] !== undefined ? _data["name"] : null as any;
+            this.romajiName = _data["romajiName"] !== undefined ? _data["romajiName"] : null as any;
+            this.kanjiName = _data["kanjiName"] !== undefined ? _data["kanjiName"] : null as any;
+            this.germanName = _data["germanName"] !== undefined ? _data["germanName"] : null as any;
+            this.englishName = _data["englishName"] !== undefined ? _data["englishName"] : null as any;
+            this.id = _data["id"] !== undefined ? _data["id"] : null as any;
+            this.language = _data["language"] !== undefined ? _data["language"] : null as any;
+            this.rating = _data["rating"] !== undefined ? _data["rating"] : null as any;
+            this.release = _data["release"] !== undefined ? _data["release"] : null as any;
+            this.status = _data["status"] !== undefined ? _data["status"] : null as any;
+            this.targetGroup = _data["targetGroup"] !== undefined ? _data["targetGroup"] : null as any;
+            this.type = _data["type"] !== undefined ? _data["type"] : null as any;
+            this.rootFolderPath = _data["rootFolderPath"] !== undefined ? _data["rootFolderPath"] : null as any;
+            this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : null as any;
+            this.complete = _data["complete"] !== undefined ? _data["complete"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): MediaModel {
+    static fromJS(data: any, _mappings?: any): MediaModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<MediaModel>(data, _mappings, MediaModel)!;
     }
@@ -3921,30 +3800,32 @@ export class MediaModel implements IMediaModel {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         if (Array.isArray(this.contentWarnings)) {
-            data['contentWarnings'] = [];
-            for (let item of this.contentWarnings) data['contentWarnings'].push(item);
+            data["contentWarnings"] = [];
+            for (let item of this.contentWarnings)
+                data["contentWarnings"].push(item);
         }
-        data['description'] = this.description !== undefined ? this.description : (null as any);
+        data["description"] = this.description !== undefined ? this.description : null as any;
         if (Array.isArray(this.genres)) {
-            data['genres'] = [];
-            for (let item of this.genres) data['genres'].push(item ? item.toJSON() : (null as any));
+            data["genres"] = [];
+            for (let item of this.genres)
+                data["genres"].push(item ? item.toJSON() : null as any);
         }
-        data['hash'] = this.hash !== undefined ? this.hash : (null as any);
-        data['name'] = this.name !== undefined ? this.name : (null as any);
-        data['romajiName'] = this.romajiName !== undefined ? this.romajiName : (null as any);
-        data['kanjiName'] = this.kanjiName !== undefined ? this.kanjiName : (null as any);
-        data['germanName'] = this.germanName !== undefined ? this.germanName : (null as any);
-        data['englishName'] = this.englishName !== undefined ? this.englishName : (null as any);
-        data['id'] = this.id !== undefined ? this.id : (null as any);
-        data['language'] = this.language !== undefined ? this.language : (null as any);
-        data['rating'] = this.rating !== undefined ? this.rating : (null as any);
-        data['release'] = this.release !== undefined ? this.release : (null as any);
-        data['status'] = this.status !== undefined ? this.status : (null as any);
-        data['targetGroup'] = this.targetGroup !== undefined ? this.targetGroup : (null as any);
-        data['type'] = this.type !== undefined ? this.type : (null as any);
-        data['rootFolderPath'] = this.rootFolderPath !== undefined ? this.rootFolderPath : (null as any);
-        data['deleted'] = this.deleted !== undefined ? this.deleted : (null as any);
-        data['complete'] = this.complete !== undefined ? this.complete : (null as any);
+        data["hash"] = this.hash !== undefined ? this.hash : null as any;
+        data["name"] = this.name !== undefined ? this.name : null as any;
+        data["romajiName"] = this.romajiName !== undefined ? this.romajiName : null as any;
+        data["kanjiName"] = this.kanjiName !== undefined ? this.kanjiName : null as any;
+        data["germanName"] = this.germanName !== undefined ? this.germanName : null as any;
+        data["englishName"] = this.englishName !== undefined ? this.englishName : null as any;
+        data["id"] = this.id !== undefined ? this.id : null as any;
+        data["language"] = this.language !== undefined ? this.language : null as any;
+        data["rating"] = this.rating !== undefined ? this.rating : null as any;
+        data["release"] = this.release !== undefined ? this.release : null as any;
+        data["status"] = this.status !== undefined ? this.status : null as any;
+        data["targetGroup"] = this.targetGroup !== undefined ? this.targetGroup : null as any;
+        data["type"] = this.type !== undefined ? this.type : null as any;
+        data["rootFolderPath"] = this.rootFolderPath !== undefined ? this.rootFolderPath : null as any;
+        data["deleted"] = this.deleted !== undefined ? this.deleted : null as any;
+        data["complete"] = this.complete !== undefined ? this.complete : null as any;
         return data;
     }
 
@@ -3979,39 +3860,39 @@ export interface IMediaModel {
 }
 
 export enum ContentWarning {
-    Depression = 'Depression',
-    Drugs = 'Drugs',
-    Violence = 'Violence',
-    Horror = 'Horror',
-    Gore = 'Gore',
-    Vulgarity = 'Vulgarity',
-    Sexuality = 'Sexuality',
+    Depression = "Depression",
+    Drugs = "Drugs",
+    Violence = "Violence",
+    Horror = "Horror",
+    Gore = "Gore",
+    Vulgarity = "Vulgarity",
+    Sexuality = "Sexuality",
 }
 
 export enum MediaStatus {
-    Completed = 'Completed',
-    Airing = 'Airing',
-    PreAiring = 'PreAiring',
-    Aborted = 'Aborted',
-    Incomplete = 'Incomplete',
+    Completed = "Completed",
+    Airing = "Airing",
+    PreAiring = "PreAiring",
+    Aborted = "Aborted",
+    Incomplete = "Incomplete",
 }
 
 export enum TargetGroup {
-    Children = 'Children',
-    Adolescents = 'Adolescents',
-    Adults = 'Adults',
-    Families = 'Families',
-    Men = 'Men',
-    Women = 'Women',
-    None = 'None',
+    Children = "Children",
+    Adolescents = "Adolescents",
+    Adults = "Adults",
+    Families = "Families",
+    Men = "Men",
+    Women = "Women",
+    None = "None",
 }
 
 export enum MediaCategory {
-    AnimeSeries = 'AnimeSeries',
-    AnimeMovies = 'AnimeMovies',
-    RealMovies = 'RealMovies',
-    RealSeries = 'RealSeries',
-    JDrama = 'JDrama',
+    AnimeSeries = "AnimeSeries",
+    AnimeMovies = "AnimeMovies",
+    RealMovies = "RealMovies",
+    RealSeries = "RealSeries",
+    JDrama = "JDrama",
 }
 
 export class KeyValuePairOfNullableGuidAndModelCreationState implements IKeyValuePairOfNullableGuidAndModelCreationState {
@@ -4021,31 +3902,29 @@ export class KeyValuePairOfNullableGuidAndModelCreationState implements IKeyValu
     constructor(data?: Partial<IKeyValuePairOfNullableGuidAndModelCreationState>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.key = _data['key'] !== undefined ? _data['key'] : (null as any);
-            this.value = _data['value'] !== undefined ? _data['value'] : (null as any);
+            this.key = _data["key"] !== undefined ? _data["key"] : null as any;
+            this.value = _data["value"] !== undefined ? _data["value"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): KeyValuePairOfNullableGuidAndModelCreationState {
+    static fromJS(data: any, _mappings?: any): KeyValuePairOfNullableGuidAndModelCreationState  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<KeyValuePairOfNullableGuidAndModelCreationState>(
-            data,
-            _mappings,
-            KeyValuePairOfNullableGuidAndModelCreationState,
-        )!;
+        return createInstance<KeyValuePairOfNullableGuidAndModelCreationState>(data, _mappings, KeyValuePairOfNullableGuidAndModelCreationState)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['key'] = this.key !== undefined ? this.key : (null as any);
-        data['value'] = this.value !== undefined ? this.value : (null as any);
+        data["key"] = this.key !== undefined ? this.key : null as any;
+        data["value"] = this.value !== undefined ? this.value : null as any;
         return data;
     }
 
@@ -4063,12 +3942,12 @@ export interface IKeyValuePairOfNullableGuidAndModelCreationState {
 }
 
 export enum ModelCreationState {
-    Loading = 'Loading',
-    Success = 'Success',
-    Updated = 'Updated',
-    Ignored = 'Ignored',
-    Invalid = 'Invalid',
-    Error = 'Error',
+    Loading = "Loading",
+    Success = "Success",
+    Updated = "Updated",
+    Ignored = "Ignored",
+    Invalid = "Invalid",
+    Error = "Error",
 }
 
 export class MediaCreationRequest implements IMediaCreationRequest {
@@ -4080,31 +3959,33 @@ export class MediaCreationRequest implements IMediaCreationRequest {
     constructor(data?: Partial<IMediaCreationRequest>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.rootPath = _data['rootPath'] !== undefined ? _data['rootPath'] : (null as any);
-            this.category = _data['category'] !== undefined ? _data['category'] : (null as any);
-            this.language = _data['language'] !== undefined ? _data['language'] : (null as any);
-            this.entry = _data['entry'] ? MediaModel.fromJS(_data['entry'], _mappings) : (null as any);
+            this.rootPath = _data["rootPath"] !== undefined ? _data["rootPath"] : null as any;
+            this.category = _data["category"] !== undefined ? _data["category"] : null as any;
+            this.language = _data["language"] !== undefined ? _data["language"] : null as any;
+            this.entry = _data["entry"] ? MediaModel.fromJS(_data["entry"], _mappings) : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): MediaCreationRequest {
+    static fromJS(data: any, _mappings?: any): MediaCreationRequest  {
         data = typeof data === 'object' ? data : {};
         return createInstance<MediaCreationRequest>(data, _mappings, MediaCreationRequest)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['rootPath'] = this.rootPath !== undefined ? this.rootPath : (null as any);
-        data['category'] = this.category !== undefined ? this.category : (null as any);
-        data['language'] = this.language !== undefined ? this.language : (null as any);
-        data['entry'] = this.entry ? this.entry.toJSON() : (null as any);
+        data["rootPath"] = this.rootPath !== undefined ? this.rootPath : null as any;
+        data["category"] = this.category !== undefined ? this.category : null as any;
+        data["language"] = this.language !== undefined ? this.language : null as any;
+        data["entry"] = this.entry ? this.entry.toJSON() : null as any;
         return data;
     }
 
@@ -4130,27 +4011,29 @@ export class UpdateRequestOfObject implements IUpdateRequestOfObject {
     constructor(data?: Partial<IUpdateRequestOfObject>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.oldModel = _data['oldModel'] !== undefined ? _data['oldModel'] : (null as any);
-            this.newModel = _data['newModel'] !== undefined ? _data['newModel'] : (null as any);
+            this.oldModel = _data["oldModel"] !== undefined ? _data["oldModel"] : null as any;
+            this.newModel = _data["newModel"] !== undefined ? _data["newModel"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): UpdateRequestOfObject {
+    static fromJS(data: any, _mappings?: any): UpdateRequestOfObject  {
         data = typeof data === 'object' ? data : {};
         return createInstance<UpdateRequestOfObject>(data, _mappings, UpdateRequestOfObject)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['oldModel'] = this.oldModel !== undefined ? this.oldModel : (null as any);
-        data['newModel'] = this.newModel !== undefined ? this.newModel : (null as any);
+        data["oldModel"] = this.oldModel !== undefined ? this.oldModel : null as any;
+        data["newModel"] = this.newModel !== undefined ? this.newModel : null as any;
         return data;
     }
 
@@ -4175,29 +4058,31 @@ export class MusicOverviewResponse implements IMusicOverviewResponse {
     constructor(data?: Partial<IMusicOverviewResponse>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.tracks = _data['tracks'] !== undefined ? _data['tracks'] : (null as any);
-            this.playlists = _data['playlists'] !== undefined ? _data['playlists'] : (null as any);
-            this.instruments = _data['instruments'] !== undefined ? _data['instruments'] : (null as any);
+            this.tracks = _data["tracks"] !== undefined ? _data["tracks"] : null as any;
+            this.playlists = _data["playlists"] !== undefined ? _data["playlists"] : null as any;
+            this.instruments = _data["instruments"] !== undefined ? _data["instruments"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): MusicOverviewResponse {
+    static fromJS(data: any, _mappings?: any): MusicOverviewResponse  {
         data = typeof data === 'object' ? data : {};
         return createInstance<MusicOverviewResponse>(data, _mappings, MusicOverviewResponse)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['tracks'] = this.tracks !== undefined ? this.tracks : (null as any);
-        data['playlists'] = this.playlists !== undefined ? this.playlists : (null as any);
-        data['instruments'] = this.instruments !== undefined ? this.instruments : (null as any);
+        data["tracks"] = this.tracks !== undefined ? this.tracks : null as any;
+        data["playlists"] = this.playlists !== undefined ? this.playlists : null as any;
+        data["instruments"] = this.instruments !== undefined ? this.instruments : null as any;
         return data;
     }
 
@@ -4222,31 +4107,29 @@ export class KeyValuePairOfStringAndModelCreationState implements IKeyValuePairO
     constructor(data?: Partial<IKeyValuePairOfStringAndModelCreationState>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.key = _data['key'] !== undefined ? _data['key'] : (null as any);
-            this.value = _data['value'] !== undefined ? _data['value'] : (null as any);
+            this.key = _data["key"] !== undefined ? _data["key"] : null as any;
+            this.value = _data["value"] !== undefined ? _data["value"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): KeyValuePairOfStringAndModelCreationState {
+    static fromJS(data: any, _mappings?: any): KeyValuePairOfStringAndModelCreationState  {
         data = typeof data === 'object' ? data : {};
-        return createInstance<KeyValuePairOfStringAndModelCreationState>(
-            data,
-            _mappings,
-            KeyValuePairOfStringAndModelCreationState,
-        )!;
+        return createInstance<KeyValuePairOfStringAndModelCreationState>(data, _mappings, KeyValuePairOfStringAndModelCreationState)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['key'] = this.key !== undefined ? this.key : (null as any);
-        data['value'] = this.value !== undefined ? this.value : (null as any);
+        data["key"] = this.key !== undefined ? this.key : null as any;
+        data["value"] = this.value !== undefined ? this.value : null as any;
         return data;
     }
 
@@ -4270,27 +4153,29 @@ export class LyricsResponse implements ILyricsResponse {
     constructor(data?: Partial<ILyricsResponse>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.title = _data['title'] !== undefined ? _data['title'] : (null as any);
-            this.text = _data['text'] !== undefined ? _data['text'] : (null as any);
+            this.title = _data["title"] !== undefined ? _data["title"] : null as any;
+            this.text = _data["text"] !== undefined ? _data["text"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): LyricsResponse {
+    static fromJS(data: any, _mappings?: any): LyricsResponse  {
         data = typeof data === 'object' ? data : {};
         return createInstance<LyricsResponse>(data, _mappings, LyricsResponse)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['title'] = this.title !== undefined ? this.title : (null as any);
-        data['text'] = this.text !== undefined ? this.text : (null as any);
+        data["title"] = this.title !== undefined ? this.title : null as any;
+        data["text"] = this.text !== undefined ? this.text : null as any;
         return data;
     }
 
@@ -4323,60 +4208,68 @@ export class PlaylistModel implements IPlaylistModel {
     constructor(data?: Partial<IPlaylistModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.id = _data['id'] !== undefined ? _data['id'] : (null as any);
-            this.name = _data['name'] !== undefined ? _data['name'] : (null as any);
-            this.author = _data['author'] !== undefined ? _data['author'] : (null as any);
-            this.image = _data['image'] !== undefined ? _data['image'] : (null as any);
-            this.rating = _data['rating'] !== undefined ? _data['rating'] : (null as any);
-            this.language = _data['language'] !== undefined ? _data['language'] : (null as any);
-            this.nation = _data['nation'] !== undefined ? _data['nation'] : (null as any);
-            if (Array.isArray(_data['genres'])) {
+            this.id = _data["id"] !== undefined ? _data["id"] : null as any;
+            this.name = _data["name"] !== undefined ? _data["name"] : null as any;
+            this.author = _data["author"] !== undefined ? _data["author"] : null as any;
+            this.image = _data["image"] !== undefined ? _data["image"] : null as any;
+            this.rating = _data["rating"] !== undefined ? _data["rating"] : null as any;
+            this.language = _data["language"] !== undefined ? _data["language"] : null as any;
+            this.nation = _data["nation"] !== undefined ? _data["nation"] : null as any;
+            if (Array.isArray(_data["genres"])) {
                 this.genres = [] as any;
-                for (let item of _data['genres']) this.genres!.push(item);
-            } else {
+                for (let item of _data["genres"])
+                    this.genres!.push(item);
+            }
+            else {
                 this.genres = null as any;
             }
-            this.complete = _data['complete'] !== undefined ? _data['complete'] : (null as any);
-            this.isTemporary = _data['isTemporary'] !== undefined ? _data['isTemporary'] : (null as any);
-            if (Array.isArray(_data['tracks'])) {
+            this.complete = _data["complete"] !== undefined ? _data["complete"] : null as any;
+            this.isTemporary = _data["isTemporary"] !== undefined ? _data["isTemporary"] : null as any;
+            if (Array.isArray(_data["tracks"])) {
                 this.tracks = [] as any;
-                for (let item of _data['tracks']) this.tracks!.push(MusicModel.fromJS(item, _mappings));
-            } else {
+                for (let item of _data["tracks"])
+                    this.tracks!.push(MusicModel.fromJS(item, _mappings));
+            }
+            else {
                 this.tracks = null as any;
             }
         }
     }
 
-    static fromJS(data: any, _mappings?: any): PlaylistModel {
+    static fromJS(data: any, _mappings?: any): PlaylistModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<PlaylistModel>(data, _mappings, PlaylistModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['id'] = this.id !== undefined ? this.id : (null as any);
-        data['name'] = this.name !== undefined ? this.name : (null as any);
-        data['author'] = this.author !== undefined ? this.author : (null as any);
-        data['image'] = this.image !== undefined ? this.image : (null as any);
-        data['rating'] = this.rating !== undefined ? this.rating : (null as any);
-        data['language'] = this.language !== undefined ? this.language : (null as any);
-        data['nation'] = this.nation !== undefined ? this.nation : (null as any);
+        data["id"] = this.id !== undefined ? this.id : null as any;
+        data["name"] = this.name !== undefined ? this.name : null as any;
+        data["author"] = this.author !== undefined ? this.author : null as any;
+        data["image"] = this.image !== undefined ? this.image : null as any;
+        data["rating"] = this.rating !== undefined ? this.rating : null as any;
+        data["language"] = this.language !== undefined ? this.language : null as any;
+        data["nation"] = this.nation !== undefined ? this.nation : null as any;
         if (Array.isArray(this.genres)) {
-            data['genres'] = [];
-            for (let item of this.genres) data['genres'].push(item);
+            data["genres"] = [];
+            for (let item of this.genres)
+                data["genres"].push(item);
         }
-        data['complete'] = this.complete !== undefined ? this.complete : (null as any);
-        data['isTemporary'] = this.isTemporary !== undefined ? this.isTemporary : (null as any);
+        data["complete"] = this.complete !== undefined ? this.complete : null as any;
+        data["isTemporary"] = this.isTemporary !== undefined ? this.isTemporary : null as any;
         if (Array.isArray(this.tracks)) {
-            data['tracks'] = [];
-            for (let item of this.tracks) data['tracks'].push(item ? item.toJSON() : (null as any));
+            data["tracks"] = [];
+            for (let item of this.tracks)
+                data["tracks"].push(item ? item.toJSON() : null as any);
         }
         return data;
     }
@@ -4410,27 +4303,29 @@ export class UpdateRequestOfPlaylistModel implements IUpdateRequestOfPlaylistMod
     constructor(data?: Partial<IUpdateRequestOfPlaylistModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.oldModel = _data['oldModel'] ? PlaylistModel.fromJS(_data['oldModel'], _mappings) : (null as any);
-            this.newModel = _data['newModel'] ? PlaylistModel.fromJS(_data['newModel'], _mappings) : (null as any);
+            this.oldModel = _data["oldModel"] ? PlaylistModel.fromJS(_data["oldModel"], _mappings) : null as any;
+            this.newModel = _data["newModel"] ? PlaylistModel.fromJS(_data["newModel"], _mappings) : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): UpdateRequestOfPlaylistModel {
+    static fromJS(data: any, _mappings?: any): UpdateRequestOfPlaylistModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<UpdateRequestOfPlaylistModel>(data, _mappings, UpdateRequestOfPlaylistModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['oldModel'] = this.oldModel ? this.oldModel.toJSON() : (null as any);
-        data['newModel'] = this.newModel ? this.newModel.toJSON() : (null as any);
+        data["oldModel"] = this.oldModel ? this.oldModel.toJSON() : null as any;
+        data["newModel"] = this.newModel ? this.newModel.toJSON() : null as any;
         return data;
     }
 
@@ -4464,7 +4359,8 @@ export class RecipeModelBase implements IRecipeModelBase {
     constructor(data?: Partial<IRecipeModelBase>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
 
@@ -4472,67 +4368,78 @@ export class RecipeModelBase implements IRecipeModelBase {
             this.images = [];
             this.thumbs = [];
         }
-        this._discriminator = 'RecipeModelBase';
+        this._discriminator = "RecipeModelBase";
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.id = _data['id'] !== undefined ? _data['id'] : (null as any);
-            this.title = _data['title'] !== undefined ? _data['title'] : (null as any);
-            this.description = _data['description'] !== undefined ? _data['description'] : (null as any);
-            if (Array.isArray(_data['images'])) {
+            this.id = _data["id"] !== undefined ? _data["id"] : null as any;
+            this.title = _data["title"] !== undefined ? _data["title"] : null as any;
+            this.description = _data["description"] !== undefined ? _data["description"] : null as any;
+            if (Array.isArray(_data["images"])) {
                 this.images = [] as any;
-                for (let item of _data['images']) this.images!.push(FoodImageModel.fromJS(item, _mappings));
-            } else {
+                for (let item of _data["images"])
+                    this.images!.push(FoodImageModel.fromJS(item, _mappings));
+            }
+            else {
                 this.images = null as any;
             }
-            if (Array.isArray(_data['thumbs'])) {
+            if (Array.isArray(_data["thumbs"])) {
                 this.thumbs = [] as any;
-                for (let item of _data['thumbs']) this.thumbs!.push(FoodThumbModel.fromJS(item, _mappings));
-            } else {
+                for (let item of _data["thumbs"])
+                    this.thumbs!.push(FoodThumbModel.fromJS(item, _mappings));
+            }
+            else {
                 this.thumbs = null as any;
             }
-            this.imageCount = _data['imageCount'] !== undefined ? _data['imageCount'] : (null as any);
-            this.difficulty = _data['difficulty'] !== undefined ? _data['difficulty'] : (null as any);
-            this.rating = _data['rating'] !== undefined ? _data['rating'] : (null as any);
-            this.deleted = _data['deleted'] !== undefined ? _data['deleted'] : (null as any);
-            if (Array.isArray(_data['tags'])) {
+            this.imageCount = _data["imageCount"] !== undefined ? _data["imageCount"] : null as any;
+            this.difficulty = _data["difficulty"] !== undefined ? _data["difficulty"] : null as any;
+            this.rating = _data["rating"] !== undefined ? _data["rating"] : null as any;
+            this.deleted = _data["deleted"] !== undefined ? _data["deleted"] : null as any;
+            if (Array.isArray(_data["tags"])) {
                 this.tags = [] as any;
-                for (let item of _data['tags']) this.tags!.push(FoodTagModel.fromJS(item, _mappings));
-            } else {
+                for (let item of _data["tags"])
+                    this.tags!.push(FoodTagModel.fromJS(item, _mappings));
+            }
+            else {
                 this.tags = null as any;
             }
         }
     }
 
-    static fromJS(data: any, _mappings?: any): RecipeModelBase {
+    static fromJS(data: any, _mappings?: any): RecipeModelBase  {
         data = typeof data === 'object' ? data : {};
-        if (data['type'] === 'Food') return createInstance<FoodModel>(data, _mappings, FoodModel)!;
-        if (data['type'] === 'Recipe') return createInstance<RecipeModel>(data, _mappings, RecipeModel)!;
+        if (data["type"] === "Food")
+            return createInstance<FoodModel>(data, _mappings, FoodModel)!;
+        if (data["type"] === "Recipe")
+            return createInstance<RecipeModel>(data, _mappings, RecipeModel)!;
         return createInstance<RecipeModelBase>(data, _mappings, RecipeModelBase)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['type'] = this._discriminator;
-        data['id'] = this.id !== undefined ? this.id : (null as any);
-        data['title'] = this.title !== undefined ? this.title : (null as any);
-        data['description'] = this.description !== undefined ? this.description : (null as any);
+        data["type"] = this._discriminator;
+        data["id"] = this.id !== undefined ? this.id : null as any;
+        data["title"] = this.title !== undefined ? this.title : null as any;
+        data["description"] = this.description !== undefined ? this.description : null as any;
         if (Array.isArray(this.images)) {
-            data['images'] = [];
-            for (let item of this.images) data['images'].push(item ? item.toJSON() : (null as any));
+            data["images"] = [];
+            for (let item of this.images)
+                data["images"].push(item ? item.toJSON() : null as any);
         }
         if (Array.isArray(this.thumbs)) {
-            data['thumbs'] = [];
-            for (let item of this.thumbs) data['thumbs'].push(item ? item.toJSON() : (null as any));
+            data["thumbs"] = [];
+            for (let item of this.thumbs)
+                data["thumbs"].push(item ? item.toJSON() : null as any);
         }
-        data['imageCount'] = this.imageCount !== undefined ? this.imageCount : (null as any);
-        data['difficulty'] = this.difficulty !== undefined ? this.difficulty : (null as any);
-        data['rating'] = this.rating !== undefined ? this.rating : (null as any);
-        data['deleted'] = this.deleted !== undefined ? this.deleted : (null as any);
+        data["imageCount"] = this.imageCount !== undefined ? this.imageCount : null as any;
+        data["difficulty"] = this.difficulty !== undefined ? this.difficulty : null as any;
+        data["rating"] = this.rating !== undefined ? this.rating : null as any;
+        data["deleted"] = this.deleted !== undefined ? this.deleted : null as any;
         if (Array.isArray(this.tags)) {
-            data['tags'] = [];
-            for (let item of this.tags) data['tags'].push(item ? item.toJSON() : (null as any));
+            data["tags"] = [];
+            for (let item of this.tags)
+                data["tags"].push(item ? item.toJSON() : null as any);
         }
         return data;
     }
@@ -4567,31 +4474,33 @@ export class FoodImageModel implements IFoodImageModel {
     constructor(data?: Partial<IFoodImageModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.recipeId = _data['recipeId'] !== undefined ? _data['recipeId'] : (null as any);
-            this.mimeType = _data['mimeType'] !== undefined ? _data['mimeType'] : (null as any);
-            this.imageData = _data['imageData'] !== undefined ? _data['imageData'] : (null as any);
-            this.imageHash = _data['imageHash'] !== undefined ? _data['imageHash'] : (null as any);
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null as any;
+            this.mimeType = _data["mimeType"] !== undefined ? _data["mimeType"] : null as any;
+            this.imageData = _data["imageData"] !== undefined ? _data["imageData"] : null as any;
+            this.imageHash = _data["imageHash"] !== undefined ? _data["imageHash"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): FoodImageModel {
+    static fromJS(data: any, _mappings?: any): FoodImageModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<FoodImageModel>(data, _mappings, FoodImageModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['recipeId'] = this.recipeId !== undefined ? this.recipeId : (null as any);
-        data['mimeType'] = this.mimeType !== undefined ? this.mimeType : (null as any);
-        data['imageData'] = this.imageData !== undefined ? this.imageData : (null as any);
-        data['imageHash'] = this.imageHash !== undefined ? this.imageHash : (null as any);
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null as any;
+        data["mimeType"] = this.mimeType !== undefined ? this.mimeType : null as any;
+        data["imageData"] = this.imageData !== undefined ? this.imageData : null as any;
+        data["imageHash"] = this.imageHash !== undefined ? this.imageHash : null as any;
         return data;
     }
 
@@ -4618,29 +4527,31 @@ export class FoodThumbModel implements IFoodThumbModel {
     constructor(data?: Partial<IFoodThumbModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.recipeId = _data['recipeId'] !== undefined ? _data['recipeId'] : (null as any);
-            this.thumbData = _data['thumbData'] !== undefined ? _data['thumbData'] : (null as any);
-            this.thumbHash = _data['thumbHash'] !== undefined ? _data['thumbHash'] : (null as any);
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null as any;
+            this.thumbData = _data["thumbData"] !== undefined ? _data["thumbData"] : null as any;
+            this.thumbHash = _data["thumbHash"] !== undefined ? _data["thumbHash"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): FoodThumbModel {
+    static fromJS(data: any, _mappings?: any): FoodThumbModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<FoodThumbModel>(data, _mappings, FoodThumbModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['recipeId'] = this.recipeId !== undefined ? this.recipeId : (null as any);
-        data['thumbData'] = this.thumbData !== undefined ? this.thumbData : (null as any);
-        data['thumbHash'] = this.thumbHash !== undefined ? this.thumbHash : (null as any);
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null as any;
+        data["thumbData"] = this.thumbData !== undefined ? this.thumbData : null as any;
+        data["thumbHash"] = this.thumbHash !== undefined ? this.thumbHash : null as any;
         return data;
     }
 
@@ -4666,29 +4577,31 @@ export class FoodTagModel implements IFoodTagModel {
     constructor(data?: Partial<IFoodTagModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.recipeId = _data['recipeId'] !== undefined ? _data['recipeId'] : (null as any);
-            this.key = _data['key'] !== undefined ? _data['key'] : (null as any);
-            this.value = _data['value'] !== undefined ? _data['value'] : (null as any);
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null as any;
+            this.key = _data["key"] !== undefined ? _data["key"] : null as any;
+            this.value = _data["value"] !== undefined ? _data["value"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): FoodTagModel {
+    static fromJS(data: any, _mappings?: any): FoodTagModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<FoodTagModel>(data, _mappings, FoodTagModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['recipeId'] = this.recipeId !== undefined ? this.recipeId : (null as any);
-        data['key'] = this.key !== undefined ? this.key : (null as any);
-        data['value'] = this.value !== undefined ? this.value : (null as any);
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null as any;
+        data["key"] = this.key !== undefined ? this.key : null as any;
+        data["value"] = this.value !== undefined ? this.value : null as any;
         return data;
     }
 
@@ -4707,22 +4620,24 @@ export interface IFoodTagModel {
 }
 
 export class FoodModel extends RecipeModelBase implements IFoodModel {
+
     constructor(data?: Partial<IFoodModel>) {
         super(data);
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
 
-        this._discriminator = 'Food';
+        this._discriminator = "Food";
     }
 
     init(_data?: any, _mappings?: any) {
         super.init(_data);
     }
 
-    static fromJS(data: any, _mappings?: any): FoodModel {
+    static fromJS(data: any, _mappings?: any): FoodModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<FoodModel>(data, _mappings, FoodModel)!;
     }
@@ -4741,7 +4656,8 @@ export class FoodModel extends RecipeModelBase implements IFoodModel {
     }
 }
 
-export interface IFoodModel extends IRecipeModelBase {}
+export interface IFoodModel extends IRecipeModelBase {
+}
 
 export class RecipeModel extends RecipeModelBase implements IRecipeModel {
     recipeText: string;
@@ -4758,84 +4674,99 @@ export class RecipeModel extends RecipeModelBase implements IRecipeModel {
         super(data);
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
 
-        this._discriminator = 'Recipe';
+        this._discriminator = "Recipe";
     }
 
     init(_data?: any, _mappings?: any) {
         super.init(_data);
         if (_data) {
-            this.recipeText = _data['recipeText'] !== undefined ? _data['recipeText'] : (null as any);
-            this.preparationTime = _data['preparationTime'] !== undefined ? _data['preparationTime'] : (null as any);
-            this.cookingTime = _data['cookingTime'] !== undefined ? _data['cookingTime'] : (null as any);
-            this.totalTime = _data['totalTime'] !== undefined ? _data['totalTime'] : (null as any);
-            if (Array.isArray(_data['ingredients'])) {
+            this.recipeText = _data["recipeText"] !== undefined ? _data["recipeText"] : null as any;
+            this.preparationTime = _data["preparationTime"] !== undefined ? _data["preparationTime"] : null as any;
+            this.cookingTime = _data["cookingTime"] !== undefined ? _data["cookingTime"] : null as any;
+            this.totalTime = _data["totalTime"] !== undefined ? _data["totalTime"] : null as any;
+            if (Array.isArray(_data["ingredients"])) {
                 this.ingredients = [] as any;
-                for (let item of _data['ingredients'])
+                for (let item of _data["ingredients"])
                     this.ingredients!.push(RecipeIngredientMappingModel.fromJS(item, _mappings));
-            } else {
+            }
+            else {
                 this.ingredients = null as any;
             }
-            if (Array.isArray(_data['cookware'])) {
+            if (Array.isArray(_data["cookware"])) {
                 this.cookware = [] as any;
-                for (let item of _data['cookware']) this.cookware!.push(RecipeCookwareMappingModel.fromJS(item, _mappings));
-            } else {
+                for (let item of _data["cookware"])
+                    this.cookware!.push(RecipeCookwareMappingModel.fromJS(item, _mappings));
+            }
+            else {
                 this.cookware = null as any;
             }
-            if (Array.isArray(_data['ingredientNames'])) {
+            if (Array.isArray(_data["ingredientNames"])) {
                 this.ingredientNames = [] as any;
-                for (let item of _data['ingredientNames']) this.ingredientNames!.push(item);
-            } else {
+                for (let item of _data["ingredientNames"])
+                    this.ingredientNames!.push(item);
+            }
+            else {
                 this.ingredientNames = null as any;
             }
-            if (Array.isArray(_data['ingredientCategories'])) {
+            if (Array.isArray(_data["ingredientCategories"])) {
                 this.ingredientCategories = [] as any;
-                for (let item of _data['ingredientCategories']) this.ingredientCategories!.push(item);
-            } else {
+                for (let item of _data["ingredientCategories"])
+                    this.ingredientCategories!.push(item);
+            }
+            else {
                 this.ingredientCategories = null as any;
             }
-            if (Array.isArray(_data['cookwareNames'])) {
+            if (Array.isArray(_data["cookwareNames"])) {
                 this.cookwareNames = [] as any;
-                for (let item of _data['cookwareNames']) this.cookwareNames!.push(item);
-            } else {
+                for (let item of _data["cookwareNames"])
+                    this.cookwareNames!.push(item);
+            }
+            else {
                 this.cookwareNames = null as any;
             }
         }
     }
 
-    static fromJS(data: any, _mappings?: any): RecipeModel {
+    static fromJS(data: any, _mappings?: any): RecipeModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<RecipeModel>(data, _mappings, RecipeModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['recipeText'] = this.recipeText !== undefined ? this.recipeText : (null as any);
-        data['preparationTime'] = this.preparationTime !== undefined ? this.preparationTime : (null as any);
-        data['cookingTime'] = this.cookingTime !== undefined ? this.cookingTime : (null as any);
-        data['totalTime'] = this.totalTime !== undefined ? this.totalTime : (null as any);
+        data["recipeText"] = this.recipeText !== undefined ? this.recipeText : null as any;
+        data["preparationTime"] = this.preparationTime !== undefined ? this.preparationTime : null as any;
+        data["cookingTime"] = this.cookingTime !== undefined ? this.cookingTime : null as any;
+        data["totalTime"] = this.totalTime !== undefined ? this.totalTime : null as any;
         if (Array.isArray(this.ingredients)) {
-            data['ingredients'] = [];
-            for (let item of this.ingredients) data['ingredients'].push(item ? item.toJSON() : (null as any));
+            data["ingredients"] = [];
+            for (let item of this.ingredients)
+                data["ingredients"].push(item ? item.toJSON() : null as any);
         }
         if (Array.isArray(this.cookware)) {
-            data['cookware'] = [];
-            for (let item of this.cookware) data['cookware'].push(item ? item.toJSON() : (null as any));
+            data["cookware"] = [];
+            for (let item of this.cookware)
+                data["cookware"].push(item ? item.toJSON() : null as any);
         }
         if (Array.isArray(this.ingredientNames)) {
-            data['ingredientNames'] = [];
-            for (let item of this.ingredientNames) data['ingredientNames'].push(item);
+            data["ingredientNames"] = [];
+            for (let item of this.ingredientNames)
+                data["ingredientNames"].push(item);
         }
         if (Array.isArray(this.ingredientCategories)) {
-            data['ingredientCategories'] = [];
-            for (let item of this.ingredientCategories) data['ingredientCategories'].push(item);
+            data["ingredientCategories"] = [];
+            for (let item of this.ingredientCategories)
+                data["ingredientCategories"].push(item);
         }
         if (Array.isArray(this.cookwareNames)) {
-            data['cookwareNames'] = [];
-            for (let item of this.cookwareNames) data['cookwareNames'].push(item);
+            data["cookwareNames"] = [];
+            for (let item of this.cookwareNames)
+                data["cookwareNames"].push(item);
         }
         super.toJSON(data);
         return data;
@@ -4875,7 +4806,8 @@ export class RecipeIngredientMappingModel implements IRecipeIngredientMappingMod
     constructor(data?: Partial<IRecipeIngredientMappingModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
 
@@ -4886,34 +4818,34 @@ export class RecipeIngredientMappingModel implements IRecipeIngredientMappingMod
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.id = _data['id'] !== undefined ? _data['id'] : (null as any);
-            this.recipeId = _data['recipeId'] !== undefined ? _data['recipeId'] : (null as any);
-            this.ingredientName = _data['ingredientName'] !== undefined ? _data['ingredientName'] : (null as any);
-            this.description = _data['description'] !== undefined ? _data['description'] : (null as any);
-            this.groupName = _data['groupName'] !== undefined ? _data['groupName'] : (null as any);
-            this.unit = _data['unit'] ? MeasurementUnit.fromJS(_data['unit'], _mappings) : new MeasurementUnit();
-            this.amount = _data['amount'] !== undefined ? _data['amount'] : (null as any);
-            this.order = _data['order'] !== undefined ? _data['order'] : (null as any);
-            this.ingredient = _data['ingredient'] ? IngredientModel.fromJS(_data['ingredient'], _mappings) : (null as any);
+            this.id = _data["id"] !== undefined ? _data["id"] : null as any;
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null as any;
+            this.ingredientName = _data["ingredientName"] !== undefined ? _data["ingredientName"] : null as any;
+            this.description = _data["description"] !== undefined ? _data["description"] : null as any;
+            this.groupName = _data["groupName"] !== undefined ? _data["groupName"] : null as any;
+            this.unit = _data["unit"] ? MeasurementUnit.fromJS(_data["unit"], _mappings) : new MeasurementUnit();
+            this.amount = _data["amount"] !== undefined ? _data["amount"] : null as any;
+            this.order = _data["order"] !== undefined ? _data["order"] : null as any;
+            this.ingredient = _data["ingredient"] ? IngredientModel.fromJS(_data["ingredient"], _mappings) : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): RecipeIngredientMappingModel {
+    static fromJS(data: any, _mappings?: any): RecipeIngredientMappingModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<RecipeIngredientMappingModel>(data, _mappings, RecipeIngredientMappingModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['id'] = this.id !== undefined ? this.id : (null as any);
-        data['recipeId'] = this.recipeId !== undefined ? this.recipeId : (null as any);
-        data['ingredientName'] = this.ingredientName !== undefined ? this.ingredientName : (null as any);
-        data['description'] = this.description !== undefined ? this.description : (null as any);
-        data['groupName'] = this.groupName !== undefined ? this.groupName : (null as any);
-        data['unit'] = this.unit ? this.unit.toJSON() : (null as any);
-        data['amount'] = this.amount !== undefined ? this.amount : (null as any);
-        data['order'] = this.order !== undefined ? this.order : (null as any);
-        data['ingredient'] = this.ingredient ? this.ingredient.toJSON() : (null as any);
+        data["id"] = this.id !== undefined ? this.id : null as any;
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null as any;
+        data["ingredientName"] = this.ingredientName !== undefined ? this.ingredientName : null as any;
+        data["description"] = this.description !== undefined ? this.description : null as any;
+        data["groupName"] = this.groupName !== undefined ? this.groupName : null as any;
+        data["unit"] = this.unit ? this.unit.toJSON() : null as any;
+        data["amount"] = this.amount !== undefined ? this.amount : null as any;
+        data["order"] = this.order !== undefined ? this.order : null as any;
+        data["ingredient"] = this.ingredient ? this.ingredient.toJSON() : null as any;
         return data;
     }
 
@@ -4945,29 +4877,31 @@ export class RecipeCookwareMappingModel implements IRecipeCookwareMappingModel {
     constructor(data?: Partial<IRecipeCookwareMappingModel>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
+
     }
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.id = _data['id'] !== undefined ? _data['id'] : (null as any);
-            this.recipeId = _data['recipeId'] !== undefined ? _data['recipeId'] : (null as any);
-            this.name = _data['name'] !== undefined ? _data['name'] : (null as any);
+            this.id = _data["id"] !== undefined ? _data["id"] : null as any;
+            this.recipeId = _data["recipeId"] !== undefined ? _data["recipeId"] : null as any;
+            this.name = _data["name"] !== undefined ? _data["name"] : null as any;
         }
     }
 
-    static fromJS(data: any, _mappings?: any): RecipeCookwareMappingModel {
+    static fromJS(data: any, _mappings?: any): RecipeCookwareMappingModel  {
         data = typeof data === 'object' ? data : {};
         return createInstance<RecipeCookwareMappingModel>(data, _mappings, RecipeCookwareMappingModel)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['id'] = this.id !== undefined ? this.id : (null as any);
-        data['recipeId'] = this.recipeId !== undefined ? this.recipeId : (null as any);
-        data['name'] = this.name !== undefined ? this.name : (null as any);
+        data["id"] = this.id !== undefined ? this.id : null as any;
+        data["recipeId"] = this.recipeId !== undefined ? this.recipeId : null as any;
+        data["name"] = this.name !== undefined ? this.name : null as any;
         return data;
     }
 
@@ -4992,7 +4926,8 @@ export class RecipeImageCreationRequest implements IRecipeImageCreationRequest {
     constructor(data?: Partial<IRecipeImageCreationRequest>) {
         if (data) {
             for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property)) (<any>this)[property] = (<any>data)[property];
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
             }
         }
 
@@ -5004,20 +4939,20 @@ export class RecipeImageCreationRequest implements IRecipeImageCreationRequest {
 
     init(_data?: any, _mappings?: any) {
         if (_data) {
-            this.image = _data['image'] ? FoodImageModel.fromJS(_data['image'], _mappings) : new FoodImageModel();
-            this.thumb = _data['thumb'] ? FoodThumbModel.fromJS(_data['thumb'], _mappings) : new FoodThumbModel();
+            this.image = _data["image"] ? FoodImageModel.fromJS(_data["image"], _mappings) : new FoodImageModel();
+            this.thumb = _data["thumb"] ? FoodThumbModel.fromJS(_data["thumb"], _mappings) : new FoodThumbModel();
         }
     }
 
-    static fromJS(data: any, _mappings?: any): RecipeImageCreationRequest {
+    static fromJS(data: any, _mappings?: any): RecipeImageCreationRequest  {
         data = typeof data === 'object' ? data : {};
         return createInstance<RecipeImageCreationRequest>(data, _mappings, RecipeImageCreationRequest)!;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data['image'] = this.image ? this.image.toJSON() : (null as any);
-        data['thumb'] = this.thumb ? this.thumb.toJSON() : (null as any);
+        data["image"] = this.image ? this.image.toJSON() : null as any;
+        data["thumb"] = this.thumb ? this.thumb.toJSON() : null as any;
         return data;
     }
 
@@ -5040,25 +4975,29 @@ function jsonParse(json: any, reviver?: any) {
     var byid: any = {};
     var refs: any = [];
     json = (function recurse(obj: any, prop?: any, parent?: any) {
-        if (typeof obj !== 'object' || !obj) return obj;
-
-        if ('$ref' in obj) {
+        if (typeof obj !== 'object' || !obj)
+            return obj;
+        
+        if ("$ref" in obj) {
             let ref = obj.$ref;
-            if (ref in byid) return byid[ref];
+            if (ref in byid)
+                return byid[ref];
             refs.push([parent, prop, ref]);
             return undefined;
-        } else if ('$id' in obj) {
+        } else if ("$id" in obj) {
             let id = obj.$id;
             delete obj.$id;
-            if ('$values' in obj) obj = obj.$values;
+            if ("$values" in obj)
+                obj = obj.$values;
             byid[id] = obj;
         }
-
+        
         if (Array.isArray(obj)) {
             obj = obj.map((v, i) => recurse(v, i, obj));
         } else {
             for (var p in obj) {
-                if (obj.hasOwnProperty(p) && obj[p] && typeof obj[p] === 'object') obj[p] = recurse(obj[p], p, obj);
+                if (obj.hasOwnProperty(p) && obj[p] && typeof obj[p] === 'object')
+                    obj[p] = recurse(obj[p], p, obj);
             }
         }
 
@@ -5074,18 +5013,21 @@ function jsonParse(json: any, reviver?: any) {
 }
 
 function createInstance<T>(data: any, mappings: any, type: any): T | null {
-    if (!mappings) mappings = [];
-    if (!data) return null;
+  if (!mappings)
+    mappings = [];
+  if (!data)
+    return null;
 
-    const mappingIndexName = '__mappingIndex';
-    if (data[mappingIndexName]) return <T>mappings[data[mappingIndexName]].target;
+  const mappingIndexName = "__mappingIndex";
+  if (data[mappingIndexName])
+    return <T>mappings[data[mappingIndexName]].target;
 
-    data[mappingIndexName] = mappings.length;
+  data[mappingIndexName] = mappings.length;
 
-    let result: any = new type();
-    mappings.push({ source: data, target: result });
-    result.init(data, mappings);
-    return result;
+  let result: any = new type();
+  mappings.push({ source: data, target: result });
+  result.init(data, mappings);
+  return result;
 }
 
 export interface FileResponse {
@@ -5099,10 +5041,10 @@ export class SwaggerException extends Error {
     override message: string;
     status: number;
     response: string;
-    headers: { [key: string]: any };
+    headers: { [key: string]: any; };
     result: any;
 
-    constructor(message: string, status: number, response: string, headers: { [key: string]: any }, result: any) {
+    constructor(message: string, status: number, response: string, headers: { [key: string]: any; }, result: any) {
         super();
 
         this.message = message;
@@ -5119,7 +5061,9 @@ export class SwaggerException extends Error {
     }
 }
 
-function throwException(message: string, status: number, response: string, headers: { [key: string]: any }, result?: any): any {
-    if (result !== null && result !== undefined) throw result;
-    else throw new SwaggerException(message, status, response, headers, null);
+function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): any {
+    if (result !== null && result !== undefined)
+        throw result;
+    else
+        throw new SwaggerException(message, status, response, headers, null);
 }

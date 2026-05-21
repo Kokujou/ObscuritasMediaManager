@@ -86,5 +86,26 @@ public class WebSocketInteropServer() : WebSocketServer("ws://localhost:8005")
         AudioService.TrackPositionChanged +=
             (position, data) => BroadcastEvent(new TrackPositionChangedEvent(position.TotalMilliseconds, data));
         AudioService.TrackVolumeChanged += volume => BroadcastEvent(new VolumeChangedEvent(volume));
+        AudioService.Player.PlaybackStopped += (_, args) =>
+        {
+            if (AudioService.GetCurrentTrackDuration() - TimeSpan.FromSeconds(5) <=
+                AudioService.GetCurrentTrackPosition())
+                BroadcastEvent(new TrackEndedEvent());
+
+            AudioService.Stop();
+        };
+
+        _ = Task.Run(async () =>
+        {
+            while (true)
+            {
+                await Task.Delay(50);
+
+                if (AudioService.Player.PlaybackState != PlaybackState.Playing) continue;
+
+                BroadcastEvent(new TrackPositionChangedEvent(
+                    AudioService.GetCurrentTrackPosition().TotalMilliseconds, AudioService.VisualizationData));
+            }
+        });
     }
 }

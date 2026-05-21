@@ -1,6 +1,4 @@
-﻿using ObscuritasMediaManager.ClientInterop.Events;
-
-namespace ObscuritasMediaManager.ClientInterop.Commands;
+﻿namespace ObscuritasMediaManager.ClientInterop.Commands;
 
 public class PauseTrackHandler : ICommandHandler
 {
@@ -10,6 +8,5 @@ public class PauseTrackHandler : ICommandHandler
     {
         await Task.Yield();
         AudioService.Pause();
-        AudioTrackUpdatedEventHandler.StopReporting();
     }
 }

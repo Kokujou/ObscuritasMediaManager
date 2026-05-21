@@ -1,6 +1,4 @@
-﻿using ObscuritasMediaManager.ClientInterop.Events;
-
-namespace ObscuritasMediaManager.ClientInterop.Commands;
+﻿namespace ObscuritasMediaManager.ClientInterop.Commands;
 
 public class ResumeTrackHandler : ICommandHandler
 {
@@ -10,6 +8,5 @@ public class ResumeTrackHandler : ICommandHandler
     {
         await Task.Yield();
         AudioService.Play();
-        AudioTrackUpdatedEventHandler.StartReporting();
     }
 }
