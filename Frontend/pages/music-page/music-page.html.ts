@@ -89,7 +89,16 @@ export function renderMusicPage(this: MusicPage) {
                             </range-slider>
                         </div>
 
-                        <div id="active-track-warning" ?invisible="${AudioService.paused}" @click="${() => this.jumpToActive()}">
+                        <div
+                            id="active-track-warning"
+                            ?invisible="${AudioService.paused ||
+                            !filteredTracks.some((x) => x.path == AudioService.currentTrackPath)}"
+                            @click="${() =>
+                                this.jumpToIndex(
+                                    filteredPlaylists.length +
+                                        filteredTracks.findIndex((x) => x.path == AudioService.currentTrackPath),
+                                )}"
+                        >
                             Ein Track wird gerade abgespielt.&nbsp; <u> Klicken Sie hier </u> &nbsp;um zum aktiven Track zu
                             springen.
                         </div>
@@ -105,66 +114,61 @@ export function renderMusicPage(this: MusicPage) {
                         ? html`<partial-loading></partial-loading>`
                         : html` <div id="search-results">
                               ${paginatedPlaylists.map(
-                                  (playlist) =>
-                                      html`
-                                          <div class="audio-link-container" @click="${(e: Event) => e.stopPropagation()}">
-                                              ${LinkElement.forPage(
-                                                  MusicPlaylistPage,
-                                                  { playlistId: playlist.id },
-                                                  html`
-                                                      <playlist-tile
-                                                          .playlist="${playlist}"
-                                                          @local-export="${() => this.exportPlaylist('local', playlist)}"
-                                                          @global-export="${() => this.exportPlaylist('global', playlist)}"
-                                                          @remove="${() => this.removePlaylist(playlist)}"
-                                                      ></playlist-tile>
-                                                  `
-                                              )}
-                                          </div>
-                                      `
+                                  (playlist) => html`
+                                      <div class="audio-link-container" @click="${(e: Event) => e.stopPropagation()}">
+                                          ${LinkElement.forPage(
+                                              MusicPlaylistPage,
+                                              { playlistId: playlist.id },
+                                              html`
+                                                  <playlist-tile
+                                                      .playlist="${playlist}"
+                                                      @local-export="${() => this.exportPlaylist('local', playlist)}"
+                                                      @global-export="${() => this.exportPlaylist('global', playlist)}"
+                                                      @remove="${() => this.removePlaylist(playlist)}"
+                                                  ></playlist-tile>
+                                              `,
+                                          )}
+                                      </div>
+                                  `,
                               )}
                               ${paginatedTracks.map(
-                                  (track) =>
-                                      html`
-                                          <div
-                                              class="audio-link-container"
-                                              @pointerdown="${(e: PointerEvent) => this.startSelectionModeTimer(track.hash, e)}"
-                                              @pointerup="${(e: PointerEvent) => this.stopSelectionModeTimer()}"
-                                              @pointerover="${(e: PointerEvent) =>
-                                                  this.selectionModeSetByHash != track.hash
-                                                      ? this.stopSelectionModeTimer()
-                                                      : null}"
-                                              @click="${(e: Event) => {
-                                                  e.stopPropagation();
-                                                  this.toggleTrackSelection(track.hash);
-                                              }}"
-                                          >
-                                              ${this.selectionMode
-                                                  ? html`<input
-                                                        type="checkbox"
-                                                        class="audio-select"
-                                                        readonly
-                                                        ?checked="${this.selectedHashes.includes(track.hash)}"
-                                                    />`
-                                                  : ''}
-                                              ${LinkElement.forPage(
-                                                  MusicPlaylistPage,
-                                                  { trackHash: track.hash },
-                                                  html` <audio-tile
-                                                      .track="${track}"
-                                                      .visualizationData="${AudioService.visualizationData}"
-                                                      ?paused="${AudioService.paused ||
-                                                      AudioService.currentTrackPath != track.path}"
-                                                      @musicToggled="${() => this.toggleMusic(track)}"
-                                                      @soft-delete="${() => this.softDeleteTrack(track)}"
-                                                      @hard-delete="${() => this.hardDeleteTrack(track)}"
-                                                      @restore="${() => this.undeleteTrack(track)}"
-                                                      @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
-                                                  ></audio-tile>`,
-                                                  { disabled: this.selectionModeTimer == null || this.selectionMode }
-                                              )}
-                                          </div>
-                                      `
+                                  (track) => html`
+                                      <div
+                                          class="audio-link-container"
+                                          @pointerdown="${(e: PointerEvent) => this.startSelectionModeTimer(track.hash, e)}"
+                                          @pointerup="${(e: PointerEvent) => this.stopSelectionModeTimer()}"
+                                          @pointerover="${(e: PointerEvent) =>
+                                              this.selectionModeSetByHash != track.hash ? this.stopSelectionModeTimer() : null}"
+                                          @click="${(e: Event) => {
+                                              e.stopPropagation();
+                                              this.toggleTrackSelection(track.hash);
+                                          }}"
+                                      >
+                                          ${this.selectionMode
+                                              ? html`<input
+                                                    type="checkbox"
+                                                    class="audio-select"
+                                                    readonly
+                                                    ?checked="${this.selectedHashes.includes(track.hash)}"
+                                                />`
+                                              : ''}
+                                          ${LinkElement.forPage(
+                                              MusicPlaylistPage,
+                                              { trackHash: track.hash },
+                                              html` <audio-tile
+                                                  .track="${track}"
+                                                  .visualizationData="${AudioService.visualizationData}"
+                                                  .paused="${AudioService.paused || AudioService.currentTrackPath != track.path}"
+                                                  @musicToggled="${() => this.toggleMusic(track)}"
+                                                  @soft-delete="${() => this.softDeleteTrack(track)}"
+                                                  @hard-delete="${() => this.hardDeleteTrack(track)}"
+                                                  @restore="${() => this.undeleteTrack(track)}"
+                                                  @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
+                                              ></audio-tile>`,
+                                              { disabled: this.selectionModeTimer == null || this.selectionMode },
+                                          )}
+                                      </div>
+                                  `,
                               )}
                           </div>`}
                 </paginated-scrolling>

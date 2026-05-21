@@ -4,6 +4,7 @@
  */
 
 export enum InteropCommand {
+    Register = "Register",
     CopyAudioToClipboard = "CopyAudioToClipboard",
     ResumeTrack = "ResumeTrack",
     PauseTrack = "PauseTrack",

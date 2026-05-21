@@ -46,6 +46,12 @@ export class MusicPage extends LitElementBase {
     @state() declare protected selectionModeSetByHash: string | null;
     @state() declare protected loading: boolean;
 
+    get itemsToShow() {
+        var pageSize = 6 + 3 * this.currentPage;
+        if (pageSize < 0) pageSize = 0;
+        return pageSize;
+    }
+
     constructor() {
         super();
 
@@ -57,6 +63,7 @@ export class MusicPage extends LitElementBase {
         this.currentPage = 1;
 
         this.subscriptions.push(AudioService.trackPosition.subscribe(() => this.requestFullUpdate()));
+        this.subscriptions.push(AudioService.changed.subscribe(() => this.requestFullUpdate()));
     }
 
     override connectedCallback() {
@@ -119,13 +126,11 @@ export class MusicPage extends LitElementBase {
     }
 
     getPaginatedPlaylists(playlists: PlaylistModel[]) {
-        return playlists.slice(0, 6 + 3 * this.currentPage);
+        return playlists.slice(0, this.itemsToShow);
     }
 
     getPaginatedTracks(tracks: MusicModel[], offset: number) {
-        var pageSize = 6 + 3 * this.currentPage - offset;
-        if (pageSize < 0) pageSize = 0;
-        return tracks.slice(0, pageSize);
+        return tracks.slice(0, this.itemsToShow - offset);
     }
 
     getFilteredPlaylists() {
@@ -223,9 +228,14 @@ export class MusicPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    jumpToActive() {
-        var parent = this.shadowRoot!.querySelector('paginated-scrolling')! as PaginatedScrolling;
-        var child = this.shadowRoot!.querySelector('audio-tile:not([paused])')!.parentElement!;
+    async jumpToIndex(index: number) {
+        while (index + 10 > this.itemsToShow) this.loadNext();
+
+        await this.requestFullUpdate();
+        await this.updateComplete;
+
+        const parent = this.shadowRoot!.querySelector('paginated-scrolling')! as PaginatedScrolling;
+        const child = this.shadowRoot!.querySelector('audio-tile:not([paused])')!.parentElement!;
         parent.scrollToChild(child.parentElement!);
     }
 

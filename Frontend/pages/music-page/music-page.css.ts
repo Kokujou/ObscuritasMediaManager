@@ -20,7 +20,9 @@ export function renderMusicPageStyles() {
 
             font-weight: bold;
             letter-spacing: 1px;
-            text-shadow: 0 0 5px black, 0 0 5px black;
+            text-shadow:
+                0 0 5px black,
+                0 0 5px black;
         }
 
         #music-page {
@@ -171,6 +173,7 @@ function renderResultOptionsBar() {
             top: -50px;
             bottom: 100%;
             left: 50%;
+            z-index: 5;
             transform: translateX(-50%);
             padding: 0 40px;
 

@@ -9,7 +9,7 @@ export class PaginatedScrolling extends LitElementBase {
         return renderPaginatedScrollingStyles();
     }
 
-    @property({ type: Number }) public declare scrollTopThreshold: number;
+    @property({ type: Number }) declare public scrollTopThreshold: number;
 
     override render() {
         return renderPaginatedScrolling.call(this);
@@ -17,6 +17,10 @@ export class PaginatedScrolling extends LitElementBase {
 
     scrollToTop() {
         this.shadowRoot!.querySelector('.scroll-container')!.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    scrollToBottom() {
+        this.shadowRoot!.querySelector('.scroll-container')!.scrollTo({ top: 10000, behavior: 'smooth' });
     }
 
     onScroll() {
