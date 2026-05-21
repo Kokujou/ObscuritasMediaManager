@@ -75,6 +75,7 @@ export class MusicPlaylistPage extends LitElementBase {
     @property() declare public playlistId: string;
     @property() declare public trackHash: string;
     @property({ type: Boolean, reflect: true }) declare public createNew: boolean;
+    @property({ type: Boolean }) declare public randomized: boolean;
 
     @state() declare protected updatedTrack: MusicModel;
 
@@ -125,7 +126,6 @@ export class MusicPlaylistPage extends LitElementBase {
         } else if (!this.playlistId) {
             var currentTrack = await MusicService.get(this.trackHash!);
             this.playlist = new PlaylistModel({ tracks: [new MusicModel(currentTrack)], isTemporary: true, genres: [] });
-            this.trackIndex = 0;
         } else {
             try {
                 this.playlist = await PlaylistService.getPlaylist(this.playlistId);
@@ -139,7 +139,12 @@ export class MusicPlaylistPage extends LitElementBase {
             }
 
             this.playlist.tracks = this.playlist.tracks.map((x) => new MusicModel(x));
-            this.trackIndex = this.trackIndex;
+        }
+        if (this.randomized) {
+            const oldIndex = this.trackIndex;
+            this.randomized = false;
+            this.randomize();
+            if (oldIndex > 0) this.changeTrack(oldIndex);
         }
 
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
@@ -183,7 +188,7 @@ export class MusicPlaylistPage extends LitElementBase {
         this.trackIndex = index;
         this.updatedTrack = Object.assign(new MusicModel(), this.playlist.tracks[this.trackIndex]);
 
-        changePage(MusicPlaylistPage, { playlistId: this.playlist.id, trackIndex: this.trackIndex }, false);
+        this.refreshQuery();
 
         this.switchSelectedMood('mood1');
 
@@ -280,9 +285,19 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     randomize() {
+        if (this.randomized) {
+            this.randomized = false;
+            this.trackIndex = 0;
+            this.refreshQuery();
+            location.reload();
+            return;
+        }
+
+        this.randomized = true;
         this.playlist.tracks = this.playlist.tracks.randomize();
         this.changeTrack(0);
         this.requestFullUpdate();
+        this.refreshQuery();
     }
 
     async showLyrics() {
@@ -313,5 +328,14 @@ export class MusicPlaylistPage extends LitElementBase {
     override async disconnectedCallback() {
         await super.disconnectedCallback();
         await AudioService.reset();
+    }
+
+    refreshQuery() {
+        changePage(MusicPlaylistPage, {
+            playlistId: this.playlistId,
+            trackHash: this.trackHash,
+            trackIndex: this.trackIndex,
+            randomized: this.randomized,
+        });
     }
 }
