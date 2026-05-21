@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -10,9 +11,11 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 namespace ObscuritasMediaManager.Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20260521161742_AddRelationBetweenImageAndThumb")]
+    partial class AddRelationBetweenImageAndThumb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.8");
@@ -53,7 +56,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.Property<Guid>("RecipeId")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("ThumbId")
+                    b.Property<int>("ThumbId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -649,7 +652,9 @@ namespace ObscuritasMediaManager.Backend.Migrations
                 {
                     b.HasOne("ObscuritasMediaManager.Backend.Models.FoodThumbModel", "Thumb")
                         .WithMany()
-                        .HasForeignKey("ThumbId");
+                        .HasForeignKey("ThumbId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Thumb");
                 });

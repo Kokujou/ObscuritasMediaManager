@@ -107,6 +107,18 @@ export class ImageSlideshow extends LitElementBase {
     }
 
     notifyAddImage() {
-        this.dispatchEvent(new CustomEvent('add-image', { bubbles: true, composed: true }));
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.onchange = async () => {
+            if (!fileInput.files) return;
+
+            for (let file of fileInput.files) {
+                const response = file instanceof Response ? file : new Response(file);
+                var imageData = await response.base64();
+                this.dispatchEvent(new CustomEvent('add-image', { detail: imageData, bubbles: true, composed: true }));
+            }
+        };
+        fileInput.click();
     }
 }

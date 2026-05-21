@@ -25,7 +25,7 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                     this.removeDish(this.paginatedFiles.find((x) => x.recipe.id == e.detail)!)}"
                 @scroll-to-end="${async () => await this.loadMoreImages()}"
                 .images="${this.paginatedFiles.map(
-                    (file) => new SlideshowImage(file.recipe.id, file.image.image.imageData, file.image.thumb.thumbData),
+                    (file) => new SlideshowImage(file.recipe.id, file.image.imageData, file.image.thumb!.thumbData),
                 )}"
                 .totalCount="${FoodCache.length}"
                 .currentIndex="${this.index ?? 0}"

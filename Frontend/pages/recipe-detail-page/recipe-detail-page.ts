@@ -1,30 +1,22 @@
 import { customElement, property, query, state } from 'lit-element/decorators';
-import { ImageSlideshow } from '../../advanced-components/image-slideshow/image-slideshow';
-import { SlideshowImage } from '../../advanced-components/image-slideshow/slideshow-image';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
-import { waitForAnimation } from '../../extensions/animation.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
-    FoodImageModel,
     FoodTagModel,
-    FoodThumbModel,
     IngredientCategory,
     IngredientModel,
     Language,
     Measurement,
     MeasurementUnit,
     RecipeCookwareMappingModel,
-    RecipeImageCreationRequest,
     RecipeIngredientMappingModel,
     RecipeModel,
     RecipeModelBase,
 } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
-import { ImageCompressionService } from '../../services/image-compression.service';
-import { PageRouting } from '../page-routing/page-routing';
 import { renderRecipeDetailPageStyles } from './recipe-detail-page.css';
 import { renderRecipeDetailPage } from './recipe-detail-page.html';
 
@@ -167,18 +159,6 @@ export class RecipeDetailPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    async addImage(imageData: string) {
-        var thumbData = (await (await ImageCompressionService.generateThumbnail(imageData)).base64()).split(',')[1];
-        imageData = imageData.split(',')[1];
-        this.recipe = (await RecipeService.addRecipeImage(
-            this.recipe.id,
-            new RecipeImageCreationRequest({
-                image: new FoodImageModel({ recipeId: this.recipe.id, imageData, mimeType: 'image/png' }),
-                thumb: new FoodThumbModel({ recipeId: this.recipe.id, thumbData }),
-            }),
-        )) as RecipeModel;
-    }
-
     async removeIngredient(ingredient: RecipeIngredientMappingModel) {
         if (!this.fullRecipe) return;
         await RecipeService.deleteIngredient(this.recipe.id!, ingredient.id!);
@@ -250,54 +230,6 @@ export class RecipeDetailPage extends LitElementBase {
     updateCookware(source: RecipeCookwareMappingModel, newCookware: string) {
         source.name = newCookware;
         this.changeProperty('cookware', this.fullRecipe!.cookware);
-    }
-
-    async showSlideshow() {
-        var slideShow = new ImageSlideshow();
-        slideShow.allowAdd = true;
-
-        slideShow.images = Array.createRange(0, this.recipe.imageCount - 1).map(
-            (index) =>
-                new SlideshowImage(
-                    index.toString(),
-                    `./Backend/api/recipe/${this.recipe.id}/images/${index}`,
-                    `./Backend/api/recipe/${this.recipe.id}/thumbs/${index}`,
-                ),
-        );
-        slideShow.currentIndex = 0;
-
-        slideShow.addEventListener('add-image', () => {
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = 'image/*';
-            fileInput.onchange = async () => {
-                if (!fileInput.files) return;
-
-                for (let file of fileInput.files) {
-                    const response = file instanceof Response ? file : new Response(file);
-                    var imageData = await response.base64();
-                    await this.addImage(imageData);
-                }
-
-                this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
-                slideShow.images = Array.createRange(0, this.recipe.imageCount - 1).map(
-                    (index) =>
-                        new SlideshowImage(
-                            index.toString(),
-                            `./Backend/api/recipe/${this.recipe.id}/images/${index}`,
-                            `./Backend/api/recipe/${this.recipe.id}/thumbs/${index}`,
-                        ),
-                );
-            };
-            fileInput.click();
-        });
-        PageRouting.instance.appendChild(slideShow);
-
-        await slideShow.requestFullUpdate();
-        await slideShow.updateComplete;
-        await waitForAnimation();
-
-        document.addEventListener('click', () => slideShow.remove(), { once: true });
     }
 
     async createRecipe() {

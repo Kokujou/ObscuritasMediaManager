@@ -55,7 +55,7 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     [HttpPut("dish")]
     public async Task ImportDish([FromBody] RecipeCreationRequest request)
     {
-        await recipeRepository.CreateOrAppendDishAsync(request.Recipe, request.Image.Image, request.Image.Thumb);
+        await recipeRepository.CreateOrAppendDishAsync(request.Recipe, request.Image);
     }
 
     [HttpPost]
@@ -66,22 +66,18 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     }
 
     [HttpPut("recipe/{recipeId}/image")]
-    public async Task<RecipeModelBase> AddRecipeImage(Guid recipeId, [FromBody] RecipeImageCreationRequest request)
+    public async Task<RecipeModelBase> AddRecipeImage(Guid recipeId, [FromBody] FoodImageModel image)
     {
-        request.Image.RecipeId = recipeId;
-        request.Thumb.RecipeId = recipeId;
+        image.RecipeId = recipeId;
 
-        await recipeRepository.AddDishImagesAsync(request.Image, request.Thumb);
+        await recipeRepository.AddDishImagesAsync(image);
         return await context.Set<RecipeModelBase>().SingleAsync(x => x.Id == recipeId);
     }
 
-    [HttpDelete("recipe/{recipeId}/image")]
-    public async Task<RecipeModelBase> RemoveRecipeImage(Guid recipeId, [FromBody] RecipeImageCreationRequest request)
+    [HttpDelete("recipe/{recipeId}/image/at/{index}")]
+    public async Task<RecipeModelBase> RemoveRecipeImage(Guid recipeId, int index)
     {
-        request.Image.RecipeId = recipeId;
-        request.Thumb.RecipeId = recipeId;
-
-        await recipeRepository.RemoveDishImagesAsync(request.Image, request.Thumb);
+        await recipeRepository.RemoveDishImageAtAsync(recipeId, index);
         return await context.Set<RecipeModelBase>().SingleAsync(x => x.Id == recipeId);
     }
 

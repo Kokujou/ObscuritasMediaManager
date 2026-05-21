@@ -42,10 +42,10 @@ export function renderImageSlideshow(this: ImageSlideshow) {
                 ${this.images.map(
                     (image, i) =>
                         html` <div class="imported-image-container" ?current="${this.currentIndex == i}">
-                            <img class="imported-image-background" src="${image.imageData ?? ''}" />
+                            <img class="imported-image-background" src="${image.thumbData ?? ''}" />
                             <img
                                 class="imported-image"
-                                src="${image.thumbData ?? image.imageData ?? ''}"
+                                src="${image.thumbData ?? ''}"
                                 @click="${() => this.sideScroller!.setIndex(i)}"
                                 @error="${() => this.notifyThumbError(image.id)}"
                                 id="${image.id}"

@@ -34,12 +34,12 @@ public class RecipeRepository(DatabaseContext databaseContext)
     public async Task<byte[]?> GetThumbAsync(Guid id, int index)
     {
         var favoriteHash = (await databaseContext.Dishes.Where(recipe => recipe.Id == id).SingleAsync())
-            .FavoriteThumbHash;
+            .FavoriteImageHash;
 
-        return await databaseContext.FoodThumbs.Where(x => x.RecipeId == id)
-            .OrderBy(x => x.ThumbHash == favoriteHash)
+        return await databaseContext.FoodImages.Include(x => x.Thumb).Where(x => x.RecipeId == id)
+            .OrderBy(x => x.ImageHash == favoriteHash)
             .ThenBy(x => x.Id)
-            .Select(x => x.ThumbData)
+            .Select(x => x.Thumb!.ThumbData)
             .ElementAtAsync(index);
     }
 
@@ -172,41 +172,33 @@ public class RecipeRepository(DatabaseContext databaseContext)
         return databaseContext.Set<RecipeModelBase>().Where(x => x.Title.ToLower().Contains(search.ToLower()));
     }
 
-    public async Task CreateOrAppendDishAsync(RecipeModelBase dish, FoodImageModel image, FoodThumbModel thumb)
+    public async Task CreateOrAppendDishAsync(RecipeModelBase dish, FoodImageModel image)
     {
-        if (image is null) throw new ArgumentException("Dish image is required!", nameof(dish));
         if (await databaseContext.Set<FoodImageModel>()
                 .AnyAsync(x => x.RecipeId == dish.Id && x.ImageHash == image.ImageHash))
             throw new ConflictException("Dish already exists!");
+        image.RecipeId = dish.Id;
 
         var existing = await databaseContext.Set<FoodModel>().FirstOrDefaultAsync(x => x.Title == dish.Title);
-        if (existing is not null)
-        {
-            databaseContext.Add(image);
-            databaseContext.Add(thumb);
-        }
-        else
-        {
-            databaseContext.Add(dish);
-        }
+        if (existing is null) databaseContext.Add(dish);
 
+        databaseContext.Add(image);
         await databaseContext.SaveChangesAsync();
     }
 
-    public async Task AddDishImagesAsync(FoodImageModel image, FoodThumbModel thumb)
+    public async Task AddDishImagesAsync(FoodImageModel image)
     {
         databaseContext.Add(image);
-        databaseContext.Add(thumb);
 
         await databaseContext.SaveChangesAsync();
         await UpdateImageCountForAsync(image.RecipeId);
     }
 
-    public async Task RemoveDishImagesAsync(FoodImageModel image, FoodThumbModel thumb)
+    public async Task RemoveDishImageAtAsync(Guid recipeId, int index)
     {
-        await databaseContext.Set<FoodImageModel>().Where(x => x.ImageHash == image.ImageHash).ExecuteDeleteAsync();
-        await databaseContext.Set<FoodThumbModel>().Where(x => x.ThumbHash == thumb.ThumbHash).ExecuteDeleteAsync();
-        await UpdateImageCountForAsync(image.RecipeId);
+        throw new NotImplementedException();
+
+        await UpdateImageCountForAsync(recipeId);
     }
 
     public async Task UpdateImageCountForAsync(Guid recipeId)

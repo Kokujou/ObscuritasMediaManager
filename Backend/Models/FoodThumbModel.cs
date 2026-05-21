@@ -9,7 +9,6 @@ namespace ObscuritasMediaManager.Backend.Models;
 public class FoodThumbModel
 {
     [JsonIgnore] [Key] public int Id { get; private set; }
-    public Guid RecipeId { get; set; } = Guid.NewGuid();
 
     public byte[]? ThumbData { get; set; }
 

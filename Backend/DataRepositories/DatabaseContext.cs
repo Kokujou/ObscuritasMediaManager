@@ -18,7 +18,6 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
     public DbSet<RecipeModel> Recipes { get; set; }
     public DbSet<RecipeModelBase> Dishes { get; set; }
     public DbSet<FoodImageModel> FoodImages { get; set; }
-    public DbSet<FoodThumbModel> FoodThumbs { get; set; }
     public DbSet<UserSettingsModel> UserSettings { get; set; }
     public DbSet<RecipeCookwareMappingModel> Cookware { get; set; }
     public DbSet<InventoryItemModel> Inventory { get; set; }

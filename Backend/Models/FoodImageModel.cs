@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace ObscuritasMediaManager.Backend.Models;
 
 [Table("FoodImageMapping")]
-[Index(nameof(ImageHash), IsUnique = true)]
+[Index(nameof(ImageHash), nameof(RecipeId), IsUnique = true)]
 public class FoodImageModel
 {
     [JsonIgnore] [Key] public int Id { get; private set; }
@@ -16,6 +16,12 @@ public class FoodImageModel
 
     [MaxLength(20)] public string? MimeType { get; set; }
     public byte[]? ImageData { get; set; }
+
+    public int? ThumbId { get; set; }
+
+    [ForeignKey(nameof(ThumbId))]
+    [IgnoreAutoInclude]
+    public FoodThumbModel? Thumb { get; set; }
 
     [MaxLength(32)]
     public string ImageHash

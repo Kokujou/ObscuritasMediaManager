@@ -38,7 +38,6 @@ public class RecipeModelBase
     public bool Deleted { get; set; }
 
     [MaxLength(32)] public string? FavoriteImageHash { get; set; }
-    [MaxLength(32)] public string? FavoriteThumbHash { get; set; }
 
     [JsonIgnore] [MaxLength(255)] public string? Type { get; set; }
 
