@@ -84,7 +84,14 @@ export class ClientInteropService {
         this.socket.onclose = async (e: Event) => {
             this.socket = null;
             console.error('websocket conection closed, trying reconnect.');
-            this.failCounter.next(this.failCounter.current() + 1);
+            this.failCounter.next(2);
+            await this.startConnection();
+        };
+
+        this.socket.onerror = async (e: Event) => {
+            this.socket = null;
+            console.error('websocket conection closed, trying reconnect.');
+            this.failCounter.next(2);
             await this.startConnection();
         };
     }
