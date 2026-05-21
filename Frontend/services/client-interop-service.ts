@@ -1,4 +1,5 @@
 import { IInteropEvent } from '../client-interop/i-interop-event';
+import { InteropCommand } from '../client-interop/interop-command';
 import { InteropCommandRequest } from '../client-interop/interop-command-request';
 import { InteropCommandResponse } from '../client-interop/interop-command-response';
 import { InteropQueryRequest } from '../client-interop/interop-query-request';
@@ -63,16 +64,27 @@ export class ClientInteropService {
     }
 
     static async startConnection() {
+        try {
+            await InteropProxyService.connectToInterop();
+        } catch {
+            await waitForSeconds(5);
+            await this.reconnect();
+        }
+
+        this.socket = new WebSocket('ws://localhost:8005/Interop');
         setTimeout(() => {
             if (!this.socket || this.socket.readyState != WebSocket.OPEN) this.failCounter.next(2);
         }, 5000);
 
-        await InteropProxyService.connectToInterop();
-        this.socket = await this.#tryConnect();
-        this.onConnected.next(null);
-        this.failCounter.next(0);
-        while (!PageRouting.container) await waitForSeconds(1);
-        MessageSnackbar.popup('Websocket Verbindung zum Client Interop erfolgreich', 'success');
+        this.socket.onopen = async () => {
+            this.onConnected.next(null);
+            this.failCounter.next(0);
+
+            await this.sendCommand({ command: InteropCommand.Register, payload: null });
+
+            while (!PageRouting.container) await waitForSeconds(1);
+            MessageSnackbar.popup('Websocket Verbindung zum Client Interop erfolgreich', 'success');
+        };
 
         this.socket.onmessage = async (e: MessageEvent) => {
             var deserialized = JSON.parse(e.data);
@@ -82,25 +94,14 @@ export class ClientInteropService {
         };
 
         this.socket.onclose = async (e: Event) => {
-            this.socket = null;
-            console.error('websocket conection closed, trying reconnect.');
-            this.failCounter.next(2);
-            await this.startConnection();
-        };
-
-        this.socket.onerror = async (e: Event) => {
-            this.socket = null;
-            console.error('websocket conection closed, trying reconnect.');
-            this.failCounter.next(2);
-            await this.startConnection();
+            await this.reconnect();
         };
     }
 
-    static #tryConnect() {
-        return new Promise<WebSocket>((resolve, reject) => {
-            var socket = new WebSocket('ws://localhost:8005/Interop');
-            socket.onopen = () => resolve(socket);
-            socket.onclose = reject;
-        });
+    static async reconnect() {
+        this.socket = null;
+        console.error('websocket conection closed, trying reconnect.');
+        this.failCounter.next(2);
+        await this.startConnection();
     }
 }

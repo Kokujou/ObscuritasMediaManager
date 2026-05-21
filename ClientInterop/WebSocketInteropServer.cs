@@ -1,8 +1,10 @@
-﻿using ObscuritasMediaManager.ClientInterop.Commands;
+﻿using ObscuritasMediaManager.ClientInterop.Attributes;
+using ObscuritasMediaManager.ClientInterop.Commands;
 using ObscuritasMediaManager.ClientInterop.Events;
 using ObscuritasMediaManager.ClientInterop.Queries;
 using ObscuritasMediaManager.ClientInterop.Responses;
 using System.Reflection;
+using WebSocketSharp;
 
 namespace ObscuritasMediaManager.ClientInterop;
 
@@ -14,21 +16,36 @@ public class WebSocketInteropServer() : WebSocketServer("ws://localhost:8005")
 
     public static void BroadcastEvent<T>(T response) where T : IInteropEvent
     {
-        foreach (var client in Clients.Values) client.SendEvent(response);
+        var isAnonymous = typeof(T).GetCustomAttribute<AllowAnonymousAttribute>() is not null;
+        foreach (var client in Clients.Values.Where(x => !isAnonymous || x.Registered))
+            client.SendEvent(response);
     }
 
     public static void SendEventTo<T>(Guid clientId, T response) where T : IInteropEvent
     {
-        Clients.GetValueOrDefault(clientId)?.SendEvent(response);
+        var isAnonymous = typeof(T).GetCustomAttribute<AllowAnonymousAttribute>() is not null;
+        var client = Clients.GetValueOrDefault(clientId);
+
+        if (client is null || (!isAnonymous && !client.Registered)) return;
+        client.SendEvent(response);
     }
 
     public static Guid AddClient(WebSocketInteropClient client)
     {
         var id = Guid.NewGuid();
         Clients.Add(id, client);
-        SendEventTo(id, new ConnectedEvent());
+        client.OnMessageReceived += e => _ = HandleClientMessage(e, client);
 
         return id;
+    }
+
+    public static void RegisterClient(Guid clientId)
+    {
+        var client = Clients.GetValueOrDefault(clientId);
+        if (client is null) return;
+
+        client.Registered = true;
+        client.SendEvent(new ConnectedEvent());
     }
 
     public static async Task RemoveClientAsync(Guid id)
@@ -36,35 +53,56 @@ public class WebSocketInteropServer() : WebSocketServer("ws://localhost:8005")
         Clients.Remove(id);
         if (Clients.Any()) return;
 
-        await CommandHandlers[InteropCommand.StopTrack].ExecuteAsync(null);
+        await CommandHandlers[InteropCommand.StopTrack].ExecuteAsync(null, id);
     }
 
-    public static async Task HandleCommandForAsync(Guid clientId, InteropCommandRequest request)
+    public static async Task HandleCommandForAsync(WebSocketInteropClient client, InteropCommandRequest request)
     {
         var commandHandler = CommandHandlers[request.Command];
+
+        if (!client.Registered && commandHandler.GetType().GetCustomAttribute<AllowAnonymousAttribute>() is null)
+            return;
+
         try
         {
-            await commandHandler.ExecuteAsync(request.Payload);
-            Clients.GetValueOrDefault(clientId)?.RespondOnCommand(request, ResponseStatus.Success);
+            await commandHandler.ExecuteAsync(request.Payload, client.Id);
+            client.RespondOnCommand(request, ResponseStatus.Success);
         }
         catch (Exception ex)
         {
-            Clients.GetValueOrDefault(clientId)?.RespondOnCommand(request, ResponseStatus.Error, ex.ToString());
+            client.RespondOnCommand(request, ResponseStatus.Error, ex.ToString());
         }
     }
 
-    public static async Task HandleQueryForAsync(Guid clientId, InteropQueryRequest deserialized)
+    public static async Task HandleQueryForAsync(WebSocketInteropClient client, InteropQueryRequest deserialized)
     {
         var queryHandler = QueryHandlers[deserialized.Query];
+
+        if (!client.Registered && queryHandler.GetType().GetCustomAttribute<AllowAnonymousAttribute>() is null)
+            return;
+
         try
         {
             var result = await queryHandler.ExecuteAsync(deserialized.Payload);
-            Clients.GetValueOrDefault(clientId)?.RespondOnQuery(deserialized, result, ResponseStatus.Success);
+            Clients.GetValueOrDefault(client.Id)?.RespondOnQuery(deserialized, result, ResponseStatus.Success);
         }
         catch (Exception ex)
         {
-            Clients.GetValueOrDefault(clientId)?.RespondOnQuery(deserialized, null, ResponseStatus.Error, ex.Message);
+            Clients.GetValueOrDefault(client.Id)?.RespondOnQuery(deserialized, null, ResponseStatus.Error, ex.Message);
         }
+    }
+
+    private static async Task HandleClientMessage(MessageEventArgs e, WebSocketInteropClient client)
+    {
+        var json = JsonDocument.Parse(e.Data);
+
+        if (json.RootElement.EnumerateObject()
+            .Any(x => x.Name.ToLower() == nameof(InteropCommandRequest.Command).ToLower()))
+            await HandleCommandForAsync(client,
+                JsonSerializer.Deserialize<InteropCommandRequest>(e.Data, WebSocketInteropClient.DefaultJsonOptions)!);
+        else
+            await HandleQueryForAsync(client,
+                JsonSerializer.Deserialize<InteropQueryRequest>(e.Data, WebSocketInteropClient.DefaultJsonOptions)!);
     }
 
     static WebSocketInteropServer()
@@ -91,14 +129,19 @@ public class WebSocketInteropServer() : WebSocketServer("ws://localhost:8005")
         _ = Task.Run(async () =>
         {
             while (true)
-            {
-                await Task.Delay(50);
+                try
+                {
+                    await Task.Delay(50);
 
-                if (AudioService.Player.PlaybackState != PlaybackState.Playing) continue;
+                    if (AudioService.Player.PlaybackState != PlaybackState.Playing) continue;
 
-                BroadcastEvent(new TrackPositionChangedEvent(
-                    AudioService.GetCurrentTrackPosition().TotalMilliseconds, AudioService.VisualizationData));
-            }
+                    BroadcastEvent(new TrackPositionChangedEvent(
+                        AudioService.GetCurrentTrackPosition().TotalMilliseconds, AudioService.VisualizationData));
+                }
+                catch
+                {
+                    //s.t.f.u
+                }
         });
     }
 }

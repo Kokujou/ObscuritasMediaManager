@@ -5,6 +5,7 @@ namespace ObscuritasMediaManager.ClientInterop.Commands;
 [ExportTsEnum]
 public enum InteropCommand
 {
+    Register,
     CopyAudioToClipboard,
     ResumeTrack,
     PauseTrack,

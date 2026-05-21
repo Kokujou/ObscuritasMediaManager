@@ -15,6 +15,9 @@ public class WebSocketInteropClient : WebSocketBehavior
     };
 
     public Guid Id { get; set; }
+    public bool Registered { get; set; }
+
+    public event Action<MessageEventArgs> OnMessageReceived;
 
     public void SendEvent<T>(T response) where T : IInteropEvent
     {
@@ -28,18 +31,10 @@ public class WebSocketInteropClient : WebSocketBehavior
         Id = WebSocketInteropServer.AddClient(this);
     }
 
-    protected override async void OnMessage(MessageEventArgs e)
+    protected override void OnMessage(MessageEventArgs e)
     {
         base.OnMessage(e);
-        var json = JsonDocument.Parse(e.Data);
-
-        if (json.RootElement.EnumerateObject()
-            .Any(x => x.Name.ToLower() == nameof(InteropCommandRequest.Command).ToLower()))
-            await WebSocketInteropServer.HandleCommandForAsync(Id,
-                JsonSerializer.Deserialize<InteropCommandRequest>(e.Data, DefaultJsonOptions)!);
-        else
-            await WebSocketInteropServer.HandleQueryForAsync(Id,
-                JsonSerializer.Deserialize<InteropQueryRequest>(e.Data, DefaultJsonOptions)!);
+        OnMessageReceived.Invoke(e);
     }
 
     protected override async void OnClose(CloseEventArgs e)

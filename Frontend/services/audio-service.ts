@@ -29,7 +29,6 @@ export class AudioService {
         switch (x?.event) {
             case InteropEvent.TrackPositionChanged: {
                 let response = x as TrackPositionChangedEvent;
-                this.paused = false;
                 this.trackPosition.next(response.trackPosition);
                 this.visualizationData.next(new Float32Array(response.visualizationData));
                 break;

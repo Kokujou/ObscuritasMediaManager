@@ -127,7 +127,7 @@ public static class AudioService
     public static TimeSpan GetCurrentTrackDuration()
     {
         if (_reader is null)
-            return TimeSpan.MinValue;
+            return TimeSpan.Zero;
 
         return _reader.TotalTime;
     }

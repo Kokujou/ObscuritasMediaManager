@@ -49,7 +49,7 @@ public class CopyAudioToClipboardHandler : ICommandHandler
     public InteropCommand Command => InteropCommand.CopyAudioToClipboard;
 
     [STAThread]
-    public async Task ExecuteAsync(JsonElement? payload)
+    public async Task ExecuteAsync(JsonElement? payload, Guid clientId)
     {
         await Task.Yield();
         var trackPath = payload?.GetString()!;

@@ -3,5 +3,6 @@
 internal interface ICommandHandler
 {
     InteropCommand Command { get; }
-    Task ExecuteAsync(JsonElement? payload);
+
+    Task ExecuteAsync(JsonElement? payload, Guid clientId);
 }

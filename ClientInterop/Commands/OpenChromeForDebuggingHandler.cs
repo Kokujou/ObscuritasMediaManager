@@ -15,7 +15,7 @@ public class OpenChromeForDebuggingHandler : ICommandHandler
 
     public InteropCommand Command => InteropCommand.OpenChromeForDebugging;
 
-    public async Task ExecuteAsync(JsonElement? payload)
+    public async Task ExecuteAsync(JsonElement? payload, Guid clientId)
     {
         await Task.CompletedTask;
         var close = payload?.GetProperty("close").GetBoolean() == true;
