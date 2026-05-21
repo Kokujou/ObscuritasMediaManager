@@ -24,33 +24,20 @@ function renderNewLabelForm(this: TagLabel) {
         />
 
         <div id="autocomplete-list" class="${this.showAutocomplete ? '' : 'hidden'}">
-            ${this.withGroups
-                ? this.filteredGroups.map(
-                      (group, index) =>
-                          html`<div
-                              class="autocomplete-item ${this.autofillIndex == index ? 'active' : ''}"
-                              @pointerover="${() => {
-                                  this.autofillIndex = index;
-                                  this.requestFullUpdate();
-                              }}"
-                              @pointerdown="${() => this.notifyTagCreated(group[1], group[0])}"
-                          >
-                              ${group[0]}: ${group[1]}
-                          </div>`,
-                  )
-                : this.filteredAutocomplete.map(
-                      (x, index) =>
-                          html`<div
-                              class="autocomplete-item ${this.autofillIndex == index ? 'active' : ''}"
-                              @pointerover="${() => {
-                                  this.autofillIndex = index;
-                                  this.requestFullUpdate();
-                              }}"
-                              @pointerdown="${() => this.notifyTagCreated(x)}"
-                          >
-                              ${x}
-                          </div> `,
-                  )}
+            ${this.filteredAutocomplete.map(
+                (x, index) =>
+                    html`<div
+                        class="autocomplete-item ${this.autofillIndex == index ? 'active' : ''}"
+                        style="background: ${typeof x === 'string' ? 'inherit' : (x.color ?? 'inherit')}; filter: saturate(0.5)"
+                        @pointerover="${() => {
+                            this.autofillIndex = index;
+                            this.requestFullUpdate();
+                        }}"
+                        @pointerdown="${() => this.notifyTagCreated(x)}"
+                    >
+                        ${typeof x === 'string' ? x : `${x.group}: ${x.text}`}
+                    </div> `,
+            )}
         </div>
         <div id="invisible-text">
             ${(this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement)?.value.replaceAll(' ', '\xA0')}

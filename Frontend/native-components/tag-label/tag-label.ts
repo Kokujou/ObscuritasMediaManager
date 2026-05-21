@@ -1,5 +1,6 @@
 import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { TagAutocompleteItem } from './tag-autocomplete-item';
 import { renderTagLabelStyles } from './tag-label.css';
 import { renderTagLabel } from './tag-label.html';
 
@@ -19,26 +20,16 @@ export class TagLabel extends LitElementBase {
         var input = this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement;
         if (!input) return [];
         var searchText = input.value;
-        return this.autocomplete.filter((x) => x.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
-    }
-
-    get filteredGroups() {
-        var input = this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement;
-        if (!input) return [];
-        var searchText = input.value;
-        return this.groups.filter(
-            ([groups, value]) =>
-                groups.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()) ||
-                value.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()),
-        );
+        return this.autocomplete.filter((x) => {
+            const text = typeof x === 'string' ? x : x.text;
+            return text.toLocaleLowerCase().includes(searchText.toLocaleLowerCase());
+        });
     }
 
     @property() declare public text: string;
     @property({ type: Boolean, reflect: true }) declare public createNew: boolean;
-    @property({ type: Boolean, reflect: true }) declare public withGroups: boolean;
     @property({ type: Boolean, reflect: true }) declare public disabled: boolean;
-    @property({ type: Array }) declare public autocomplete: string[];
-    @property({ type: Array }) declare public groups: [string, string][];
+    @property({ type: Array }) declare public autocomplete: string[] | TagAutocompleteItem[];
     @property() declare public placeholder?: string;
 
     @state() declare protected autofillIndex: number;
@@ -89,9 +80,9 @@ export class TagLabel extends LitElementBase {
             selectedParent.scrollTo({ top: selectedParent.scrollHeight });
     }
 
-    notifyTagCreated(text: string, group?: string) {
+    notifyTagCreated(item: string | TagAutocompleteItem) {
         var tagInput = this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement;
-        this.dispatchEvent(new CustomEvent('tagCreated', { detail: { value: text, group } }));
+        this.dispatchEvent(new CustomEvent('tagCreated', { detail: { value: item } }));
         tagInput.value = '';
         this.requestFullUpdate();
     }

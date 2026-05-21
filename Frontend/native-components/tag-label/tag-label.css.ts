@@ -85,7 +85,6 @@ export function renderTagLabelStyles() {
             position: absolute;
             top: 100%;
             left: 0;
-
             background: var(--label-color);
             z-index: 1;
 

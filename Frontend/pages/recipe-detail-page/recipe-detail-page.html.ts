@@ -7,6 +7,7 @@ import { TimeSpan } from '../../data/timespan';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu';
 import { GroupedDropdownResult } from '../../native-components/grouped-dropdown/grouped-dropdown';
+import { TagAutocompleteItem } from '../../native-components/tag-label/tag-autocomplete-item';
 import {
     FoodTagModel,
     IngredientCategory,
@@ -60,13 +61,15 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                             <tag-label
                                 createNew
                                 withGroups
-                                .groups="${ColoredFoodTags.orderBy((x) => x.key).map((x) => [x.key, x.value] as const)}"
-                                @tagCreated="${(e: CustomEvent<{ value: string; group?: string }>) =>
+                                .autocomplete="${ColoredFoodTags.orderBy((x) => x.key).map(
+                                    (x) => new TagAutocompleteItem(x.value, x.key, x.color),
+                                )}"
+                                @tagCreated="${(e: CustomEvent<{ value: TagAutocompleteItem }>) =>
                                     this.addTag(
                                         new FoodTagModel({
                                             recipeId: this.recipe.id,
-                                            key: e.detail.group!,
-                                            value: e.detail.value,
+                                            key: e.detail.value.group,
+                                            value: e.detail.value.text,
                                         }),
                                     )}"
                             ></tag-label>
