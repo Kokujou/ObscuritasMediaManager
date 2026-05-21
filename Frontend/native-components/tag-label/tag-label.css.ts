@@ -42,6 +42,15 @@ export function renderTagLabelStyles() {
             font-size: inherit;
         }
 
+        #label-text span:first-of-type,
+        .autocomplete-item span:first-of-type {
+            font-size: 60%;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0px;
+            align-self: flex-end;
+        }
+
         #new-tag-input {
             border: none;
             background-color: inherit;
@@ -104,8 +113,6 @@ export function renderTagLabelStyles() {
         }
 
         #autocomplete-list .autocomplete-item {
-            display: flex;
-            align-items: center;
             padding: 5px;
             padding-right: 30px;
             white-space: nowrap;

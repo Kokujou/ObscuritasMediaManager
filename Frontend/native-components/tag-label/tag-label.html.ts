@@ -4,7 +4,12 @@ import { TagLabel } from './tag-label';
 export function renderTagLabel(this: TagLabel) {
     return html`
         <div id="label-container" @click="${(e: Event) => e.stopPropagation()}">
-            ${this.createNew ? renderNewLabelForm.call(this) : html`<div id="label-text">${this.text}</div>`}
+            ${this.createNew
+                ? renderNewLabelForm.call(this)
+                : html`<div id="label-text">
+                      ${this.group ? html`<span>${this.group}</span>` : ''}
+                      <span>${this.text}</span>
+                  </div>`}
             <div id="x-button" @click="${(e: Event) => this.notifyRemoved(e)}">&times;</div>
         </div>
     `;
@@ -35,7 +40,8 @@ function renderNewLabelForm(this: TagLabel) {
                         }}"
                         @pointerdown="${() => this.notifyTagCreated(x)}"
                     >
-                        ${typeof x === 'string' ? x : `${x.group}: ${x.text}`}
+                        ${typeof x === 'string' ? '' : html`<span>${x.group}</span>`}
+                        ${typeof x === 'string' ? x : html`<span>${x.text}</span>`}
                     </div> `,
             )}
         </div>

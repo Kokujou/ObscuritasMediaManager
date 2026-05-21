@@ -27,6 +27,7 @@ export class TagLabel extends LitElementBase {
     }
 
     @property() declare public text: string;
+    @property() declare public group?: string;
     @property({ type: Boolean, reflect: true }) declare public createNew: boolean;
     @property({ type: Boolean, reflect: true }) declare public disabled: boolean;
     @property({ type: Array }) declare public autocomplete: string[] | TagAutocompleteItem[];

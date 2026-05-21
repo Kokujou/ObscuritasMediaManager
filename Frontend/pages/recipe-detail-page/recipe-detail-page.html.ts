@@ -53,7 +53,8 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                                 .map(
                                     (tag) =>
                                         html`<tag-label
-                                            .text="${`${tag.key}: ${tag.value}`}"
+                                            .text="${tag.value}"
+                                            .group="${tag.key}"
                                             style="--label-color: ${tag.color}"
                                             @removed="${() => this.removeTag(tag)}"
                                         ></tag-label>`,
