@@ -53,7 +53,6 @@ export class PageRouting extends LitElementBase {
     override connectedCallback() {
         super.connectedCallback();
 
-        ClientInteropService.startConnection();
         document.addEventListener('login', () => changePage(LoginPage));
         document.addEventListener('maintenance', () => changePage(MaintenancePage));
         this.subscriptions.push(
@@ -67,7 +66,9 @@ export class PageRouting extends LitElementBase {
 
     async firstUpdated(_changedProperties: Map<any, any>) {
         super.firstUpdated(_changedProperties);
-        Session.currentPage.next(getPageName(this.currentPage));
+        await Session.currentPage.next(getPageName(this.currentPage));
+
+        ClientInteropService.startConnection();
     }
 
     changeHash(newHash: string) {

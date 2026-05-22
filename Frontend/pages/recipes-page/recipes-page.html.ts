@@ -19,7 +19,7 @@ export function renderRecipesPage(this: RecipesPage) {
                         <link-element @click="${() => this.showFileBrowser()}">
                             <div tooltip="Gericht hinzufügen" class="add-icon" id="add-dish-icon"></div>
                         </link-element>
-                        ${
+                        ${Session.recipes
                             .current()
                             .map(
                                 (recipe) => html`

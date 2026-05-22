@@ -64,11 +64,14 @@ export class ClientInteropService {
     }
 
     static async startConnection() {
+        const controller = new AbortController();
+        const timeout = waitForSeconds(5).then(() => controller.abort());
         try {
-            await InteropProxyService.connectToInterop();
-        } catch {
-            await waitForSeconds(5);
+            await InteropProxyService.connectToInterop(controller.signal);
+        } catch (e) {
+            await timeout;
             await this.reconnect();
+            return;
         }
 
         this.socket = new WebSocket('ws://localhost:8005/Interop');

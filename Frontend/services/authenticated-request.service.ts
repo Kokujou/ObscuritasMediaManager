@@ -7,7 +7,6 @@ export class AuthenticatedRequestService {
         var response: Response | null = null;
         try {
             requestInit.mode = 'cors';
-            requestInit.signal = null;
             response = await window.fetch(url, requestInit);
 
             if (response.status == 401) {
