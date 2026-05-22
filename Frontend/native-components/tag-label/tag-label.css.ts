@@ -42,8 +42,8 @@ export function renderTagLabelStyles() {
             font-size: inherit;
         }
 
-        #label-text span:first-of-type,
-        .autocomplete-item span:first-of-type {
+        :host([group]) #label-text span:first-of-type,
+        :host([group]) .autocomplete-item span:first-of-type {
             font-size: 60%;
             text-transform: uppercase;
             font-weight: 600;

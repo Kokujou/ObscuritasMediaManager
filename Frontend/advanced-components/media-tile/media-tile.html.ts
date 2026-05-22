@@ -59,16 +59,15 @@ function renderGenreTag(this: MediaTile, genre: MediaGenreModel | null = null) {
 function renderRating(this: MediaTile) {
     var ratingArray = [...Array(5).keys()];
     return ratingArray.map(
-        (rating) =>
-            html`
-                <div
-                    class="star ${rating < this.media.rating ? 'selected' : ''} ${rating < this.hoveredRating ? 'hovered' : ''}"
-                    @pointerover="${() => (this.hoveredRating = rating + 1)}"
-                    @pointerout="${() => (this.hoveredRating = 0)}"
-                    @click="${(e: Event) => this.notifyRatingChanged(rating + 1, e)}"
-                >
-                    ★
-                </div>
-            `
+        (rating) => html`
+            <div
+                class="star ${rating < this.media.rating ? 'selected' : ''} ${rating < this.hoveredRating ? 'hovered' : ''}"
+                @pointerover="${() => (this.hoveredRating = rating + 1)}"
+                @pointerout="${() => (this.hoveredRating = 0)}"
+                @click="${(e: Event) => this.notifyRatingChanged(rating + 1, e)}"
+            >
+                ★
+            </div>
+        `,
     );
 }
