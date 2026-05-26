@@ -5,24 +5,33 @@ import { RecipeTileBase } from './recipe-tile-base';
 export function renderRecipeTileBase(this: RecipeTileBase) {
     const recipe = this.recipe.recipe;
     const imageCount = this.recipe.imageHashes.length;
-    const half = Math.max(1, Math.floor(imageCount / 2));
+
+    const firstImageHash = recipe.favoriteImageHash ?? this.recipe.imageHashes[0];
+    const otherImageHashes = this.recipe.imageHashes.filter((x) => x != firstImageHash);
 
     return html`
         <div id="recipe-images-container">
-            ${this.recipe.imageHashes.map(
-                (hash, index) => html`
-                    <img
-                        class="recipe-image"
-                        decoding="async"
-                        src="${RecipeService.getThumbUrl(recipe.id, hash)}"
-                        style="${index === 0
-                            ? 'transform: scale(0.9); filter: drop-shadow(0 0 20px black) drop-shadow(0 0 20px black);'
-                            : `transform: translate(${Math.sin(index) * 10}px, ${Math.cos(index) * 10}px)
-                               rotate(${(index % half) * 20 * (index % 2 ? 1 : -1)}deg);
-                               z-index: -${index};`}"
-                    />
-                `,
-            )}
+            <img
+                class="recipe-image"
+                decoding="async"
+                src="${RecipeService.getThumbUrl(recipe.id, firstImageHash)}"
+                style="transform: scale(0.9); filter: drop-shadow(0 0 20px black) drop-shadow(0 0 20px black);'"
+            />
+
+            ${imageCount < 3
+                ? ''
+                : otherImageHashes.map(
+                      (hash, index) => html`
+                          <img
+                              class="recipe-image"
+                              decoding="async"
+                              src="${RecipeService.getThumbUrl(recipe.id, hash)}"
+                              style="${`transform: 
+                              rotate(${((index + 1) % (imageCount / 2)) * 20 * ((index + 1) % 2 ? 1 : -1)}deg);
+                               z-index: -${index + 1};`}"
+                          />
+                      `,
+                  )}
             <slot></slot>
         </div>
 

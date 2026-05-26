@@ -34,6 +34,7 @@ export function renderRecipeTileBaseStyles() {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transform-origin: 50% 50%;
         }
 
         .recipe-image:hover {

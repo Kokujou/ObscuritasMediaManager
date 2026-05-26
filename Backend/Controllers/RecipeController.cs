@@ -16,11 +16,7 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     [HttpGet]
     public IQueryable<RecipeResponse> GetAllRecipes()
     {
-        return recipeRepository.GetAll().Select(recipe => new RecipeResponse
-        {
-            Recipe = recipe,
-            ImageHashes = context.FoodImages.Where(x => x.RecipeId == recipe.Id).Select(img => img.ImageHash).ToList()
-        });
+        return recipeRepository.GetAll();
     }
 
     [HttpGet("broken-images")]
@@ -103,14 +99,16 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
         image.RecipeId = recipeId;
 
         await recipeRepository.AddDishImagesAsync(image);
-        return await context.FoodImages.Where(x => x.RecipeId == recipeId).Select(x => x.ImageHash).ToListAsync();
+        return await recipeRepository.GetAll().Where(x => x.Recipe.Id == recipeId).Select(x => x.ImageHashes)
+            .SingleAsync();
     }
 
     [HttpDelete("recipe/{recipeId}/images/{imageHash}")]
     public async Task<List<string>> RemoveRecipeImage(Guid recipeId, string imageHash)
     {
         await context.FoodImages.Where(x => x.RecipeId == recipeId && x.ImageHash == imageHash).ExecuteDeleteAsync();
-        return await context.FoodImages.Where(x => x.RecipeId == recipeId).Select(x => x.ImageHash).ToListAsync();
+        return await recipeRepository.GetAll().Where(x => x.Recipe.Id == recipeId).Select(x => x.ImageHashes)
+            .SingleAsync();
     }
 
     [HttpPut("{recipeId}/tag")]

@@ -12,20 +12,20 @@ public class RecipeRepository(DatabaseContext databaseContext)
     private static readonly List<Measurement> PrimaryMeasurements =
         [Measurement.Mass, Measurement.Size, Measurement.Volume];
 
-    public IQueryable<RecipeModelBase> GetAll()
+    public IQueryable<RecipeResponse> GetAll()
     {
-        return databaseContext.Dishes;
+        return databaseContext.Dishes.Select(recipe => new RecipeResponse
+        {
+            Recipe = recipe,
+            ImageHashes = databaseContext.FoodImages.Where(x => x.RecipeId == recipe.Id)
+                .Select(x => new { x.ImageHash, x.Id }).OrderBy(x => x.Id)
+                .Select(x => x.ImageHash).ToList()
+        });
     }
 
     public async Task<RecipeResponse> GetAsync(Guid id)
     {
-        return await databaseContext.Dishes.Where(x => x.Id == id)
-            .Select(recipe => new RecipeResponse
-            {
-                Recipe = recipe,
-                ImageHashes = databaseContext.FoodImages.Where(img => img.RecipeId == recipe.Id)
-                    .Select(x => x.ImageHash).ToList()
-            }).SingleAsync();
+        return await GetAll().SingleAsync(x => x.Recipe.Id == id);
     }
 
     public async Task CreateRecipeAsync(RecipeModel recipe)

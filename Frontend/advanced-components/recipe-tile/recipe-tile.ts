@@ -1,8 +1,6 @@
 import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
-import { ContextMenu } from '../../native-components/context-menu/context-menu';
 import { RecipeModel, RecipeResponse } from '../../obscuritas-media-manager-backend-client';
-import { getRecipeTileContextMenuItems } from './recipe-context-menu-items';
 import { renderRecipeTileStyles } from './recipe-tile.css';
 import { renderRecipeTile } from './recipe-tile.html';
 
@@ -23,12 +21,6 @@ export class RecipeTile extends LitElementBase {
 
     connectedCallback() {
         super.connectedCallback();
-
-        this.addEventListener('contextmenu', (e) => {
-            if (this.compact) return;
-            e.preventDefault();
-            ContextMenu.popup(getRecipeTileContextMenuItems.call(this), e);
-        });
     }
 
     override render() {
