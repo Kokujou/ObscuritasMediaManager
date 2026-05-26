@@ -2532,14 +2532,14 @@ export class RecipeClient {
         return Promise.resolve<string[]>(null as any);
     }
 
-    removeRecipeImage(recipeId: string, index: number, signal?: AbortSignal): Promise<RecipeModelBase> {
-        let url_ = this.baseUrl + "/api/Recipe/recipe/{recipeId}/image/at/{index}";
+    removeRecipeImage(recipeId: string, imageHash: string, signal?: AbortSignal): Promise<string[]> {
+        let url_ = this.baseUrl + "/api/Recipe/recipe/{recipeId}/images/{imageHash}";
         if (recipeId === undefined || recipeId === null)
             throw new globalThis.Error("The parameter 'recipeId' must be defined.");
         url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
-        if (index === undefined || index === null)
-            throw new globalThis.Error("The parameter 'index' must be defined.");
-        url_ = url_.replace("{index}", encodeURIComponent("" + index));
+        if (imageHash === undefined || imageHash === null)
+            throw new globalThis.Error("The parameter 'imageHash' must be defined.");
+        url_ = url_.replace("{imageHash}", encodeURIComponent("" + imageHash));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -2555,15 +2555,21 @@ export class RecipeClient {
         });
     }
 
-    protected processRemoveRecipeImage(response: Response): Promise<RecipeModelBase> {
+    protected processRemoveRecipeImage(response: Response): Promise<string[]> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        let _mappings: { source: any, target: any }[] = [];
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
-            result200 = RecipeModelBase.fromJS(resultData200, _mappings);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(item);
+            }
+            else {
+                result200 = null as any;
+            }
             return result200;
             });
         } else if (status !== 200 && status !== 204) {
@@ -2571,7 +2577,7 @@ export class RecipeClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<RecipeModelBase>(null as any);
+        return Promise.resolve<string[]>(null as any);
     }
 
     addTag(recipeId: string, tag: FoodTagModel, signal?: AbortSignal): Promise<void> {

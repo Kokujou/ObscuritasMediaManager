@@ -106,11 +106,11 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
         return await context.FoodImages.Where(x => x.RecipeId == recipeId).Select(x => x.ImageHash).ToListAsync();
     }
 
-    [HttpDelete("recipe/{recipeId}/image/at/{index}")]
-    public async Task<RecipeModelBase> RemoveRecipeImage(Guid recipeId, int index)
+    [HttpDelete("recipe/{recipeId}/images/{imageHash}")]
+    public async Task<List<string>> RemoveRecipeImage(Guid recipeId, string imageHash)
     {
-        await recipeRepository.RemoveDishImageAtAsync(recipeId, index);
-        return await context.Set<RecipeModelBase>().SingleAsync(x => x.Id == recipeId);
+        await context.FoodImages.Where(x => x.RecipeId == recipeId && x.ImageHash == imageHash).ExecuteDeleteAsync();
+        return await context.FoodImages.Where(x => x.RecipeId == recipeId).Select(x => x.ImageHash).ToListAsync();
     }
 
     [HttpPut("{recipeId}/tag")]

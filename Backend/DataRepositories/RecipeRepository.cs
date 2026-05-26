@@ -28,33 +28,6 @@ public class RecipeRepository(DatabaseContext databaseContext)
             }).SingleAsync();
     }
 
-    public async Task<FoodImageModel> GetImageAsync(Guid id, int index)
-    {
-        var favoriteHash = (await databaseContext.Dishes.Where(recipe => recipe.Id == id).SingleAsync())
-            .FavoriteImageHash;
-        return await databaseContext.FoodImages.Where(x => x.RecipeId == id)
-            .OrderBy(x => x.ImageHash == favoriteHash)
-            .ThenBy(x => x.Id)
-            .ElementAtAsync(index);
-    }
-
-    public async Task<byte[]?> GetThumbAsync(Guid id, int index)
-    {
-        var favoriteHash = (await databaseContext.Dishes.Where(recipe => recipe.Id == id).SingleAsync())
-            .FavoriteImageHash;
-
-        return await databaseContext.FoodImages.Include(x => x.Thumb).Where(x => x.RecipeId == id)
-            .OrderBy(x => x.ImageHash == favoriteHash)
-            .ThenBy(x => x.Id)
-            .Select(x => x.Thumb!.ThumbData)
-            .ElementAtAsync(index);
-    }
-
-    public async Task<bool> ExistsAsync(Guid id)
-    {
-        return await databaseContext.Dishes.AnyAsync(x => x.Id == id);
-    }
-
     public async Task CreateRecipeAsync(RecipeModel recipe)
     {
         await databaseContext.Recipes.AddAsync(recipe);
@@ -198,10 +171,5 @@ public class RecipeRepository(DatabaseContext databaseContext)
         databaseContext.Add(image);
 
         await databaseContext.SaveChangesAsync();
-    }
-
-    public async Task RemoveDishImageAtAsync(Guid recipeId, int index)
-    {
-        throw new NotImplementedException();
     }
 }

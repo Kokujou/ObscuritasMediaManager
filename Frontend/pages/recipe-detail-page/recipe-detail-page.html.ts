@@ -4,7 +4,6 @@ import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-
 import { StarRating } from '../../advanced-components/star-rating/star-rating';
 import { ColoredFoodTags } from '../../data/food/food-tags';
 import { TimeSpan } from '../../data/timespan';
-import { RecipeSlideshowPopup } from '../../dialogs/recipe-slideshow-popup/recipe-slideshow-popup';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { ContextMenu, ContextMenuItem } from '../../native-components/context-menu/context-menu';
 import { GroupedDropdownResult } from '../../native-components/grouped-dropdown/grouped-dropdown';
@@ -34,7 +33,7 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                             (e.composedPath()[0] as StarRating).swords
                                 ? this.changeBaseProperty('difficulty', e.detail.rating)
                                 : this.changeBaseProperty('rating', e.detail.rating)}"
-                        @click="${() => RecipeSlideshowPopup.popup(recipe.id)}"
+                        @click="${() => this.showRecipeSlideshow()}"
                     ></recipe-tile>
                     <flex-column id="heading-section">
                         <input

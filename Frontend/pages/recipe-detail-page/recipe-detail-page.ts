@@ -2,6 +2,7 @@ import { customElement, property, query, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { TimeSpan } from '../../data/timespan';
+import { RecipeSlideshowPopup } from '../../dialogs/recipe-slideshow-popup/recipe-slideshow-popup';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
@@ -243,5 +244,10 @@ export class RecipeDetailPage extends LitElementBase {
             console.error(err);
             MessageSnackbar.popup('Ein Fehler ist beim erstellen des Rezepts aufgetreten.', 'error');
         }
+    }
+
+    async showRecipeSlideshow() {
+        await RecipeSlideshowPopup.popup(this.recipe);
+        await this.requestFullUpdate();
     }
 }

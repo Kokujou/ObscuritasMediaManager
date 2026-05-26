@@ -50,6 +50,7 @@ export function renderImageSlideshow(this: ImageSlideshow) {
                                 @error="${() => this.notifyThumbError(image.id)}"
                                 id="${image.id}"
                             />
+                            <img hidden src="${image.imageData ?? ''}" />
                             <div class="remove-image-icon" @click="${() => this.notifyImageRemoved(image.id)}">&times;</div>
                         </div>`,
                 )}

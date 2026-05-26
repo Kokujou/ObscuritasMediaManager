@@ -1,4 +1,4 @@
-import { customElement, property, state } from 'lit-element/decorators';
+import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { waitForAnimation } from '../../extensions/animation.extension';
 import { FoodImageModel, FoodThumbModel, RecipeResponse } from '../../obscuritas-media-manager-backend-client';
@@ -14,22 +14,29 @@ export class RecipeSlideshowPopup extends LitElementBase {
         return renderRecipeSlideshowPopupStyles();
     }
 
-    static async popup(recipeId: string) {
-        const slideShow = new RecipeSlideshowPopup();
-        slideShow.recipeId = recipeId;
+    static popup(recipe: RecipeResponse) {
+        return new Promise<void>(async (resolve) => {
+            const slideShow = new RecipeSlideshowPopup();
+            slideShow.recipe = recipe;
 
-        PageRouting.instance.appendChild(slideShow);
+            PageRouting.instance.appendChild(slideShow);
 
-        await slideShow.requestFullUpdate();
-        await slideShow.updateComplete;
-        await waitForAnimation();
+            await slideShow.requestFullUpdate();
+            await slideShow.updateComplete;
+            await waitForAnimation();
 
-        document.addEventListener('click', () => slideShow.remove(), { once: true });
+            document.addEventListener(
+                'click',
+                () => {
+                    slideShow.remove();
+                    resolve();
+                },
+                { once: true },
+            );
+        });
     }
 
-    @property() declare public recipeId: string;
-
-    @state() declare protected recipe: RecipeResponse;
+    @state() declare public recipe: RecipeResponse;
 
     override render() {
         return renderRecipeSlideshowPopup.call(this);
@@ -37,8 +44,6 @@ export class RecipeSlideshowPopup extends LitElementBase {
 
     async connectedCallback() {
         await super.connectedCallback();
-
-        this.recipe = await RecipeService.getRecipe(this.recipeId);
     }
 
     async addImage(imageData: string) {
@@ -58,8 +63,7 @@ export class RecipeSlideshowPopup extends LitElementBase {
     }
 
     async removeImage(imageId: string) {
-        alert('not implemented');
-
+        this.recipe.imageHashes = await RecipeService.removeRecipeImage(this.recipe.recipe.id, imageId);
         await this.requestFullUpdate();
     }
 }
