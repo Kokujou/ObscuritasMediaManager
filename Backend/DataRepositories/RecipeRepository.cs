@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ObscuritasMediaManager.Backend.Controllers.Responses;
 using ObscuritasMediaManager.Backend.Data.Food;
 using ObscuritasMediaManager.Backend.Data.Music;
 using ObscuritasMediaManager.Backend.Exceptions;
@@ -16,9 +17,15 @@ public class RecipeRepository(DatabaseContext databaseContext)
         return databaseContext.Dishes;
     }
 
-    public async Task<RecipeModelBase> GetAsync(Guid id)
+    public async Task<RecipeResponse> GetAsync(Guid id)
     {
-        return await databaseContext.Dishes.SingleAsync(x => x.Id == id);
+        return await databaseContext.Dishes.Where(x => x.Id == id)
+            .Select(recipe => new RecipeResponse
+            {
+                Recipe = recipe,
+                ImageHashes = databaseContext.FoodImages.Where(img => img.RecipeId == recipe.Id)
+                    .Select(x => x.ImageHash).ToList()
+            }).SingleAsync();
     }
 
     public async Task<FoodImageModel> GetImageAsync(Guid id, int index)
@@ -191,20 +198,10 @@ public class RecipeRepository(DatabaseContext databaseContext)
         databaseContext.Add(image);
 
         await databaseContext.SaveChangesAsync();
-        await UpdateImageCountForAsync(image.RecipeId);
     }
 
     public async Task RemoveDishImageAtAsync(Guid recipeId, int index)
     {
         throw new NotImplementedException();
-
-        await UpdateImageCountForAsync(recipeId);
-    }
-
-    public async Task UpdateImageCountForAsync(Guid recipeId)
-    {
-        var count = await databaseContext.Set<FoodImageModel>().CountAsync(x => x.RecipeId == recipeId);
-        await databaseContext.Recipes.Where(x => x.Id == recipeId)
-            .ExecuteUpdateAsync(query => query.SetProperty(x => x.ImageCount, count));
     }
 }

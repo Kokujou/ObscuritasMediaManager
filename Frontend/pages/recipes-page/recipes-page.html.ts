@@ -9,7 +9,7 @@ export function renderRecipesPage(this: RecipesPage) {
     return html`
         <page-layout>
             <div id="page">
-                <paginated-scrolling id="recipes-content" scrollTopThreshold="20" @scrollBottom="${() => this.loadMoreItems()}">
+                <paginated-scrolling id="recipes-content" scrollTopThreshold="20">
                     <div id="items">
                         ${LinkElement.forPage(
                             RecipeDetailPage,
@@ -26,7 +26,7 @@ export function renderRecipesPage(this: RecipesPage) {
                                     <recipe-tile-base
                                         .recipe="${recipe}"
                                         compact
-                                        @click="${() => changePage(RecipeDetailPage, { recipeId: recipe.id })}"
+                                        @click="${() => changePage(RecipeDetailPage, { recipeId: recipe.recipe.id })}"
                                     ></recipe-tile-base>
                                 `,
                             )}

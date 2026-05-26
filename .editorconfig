@@ -2,3 +2,5 @@
 dotnet_style_namespace_match_folder = true:suggestion
 [*.cs]
 csharp_style_namespace_declarations = file_scoped:silent
+[Backend/Migrations/*.cs]
+dotnet_diagnostic.CS8981.severity = none

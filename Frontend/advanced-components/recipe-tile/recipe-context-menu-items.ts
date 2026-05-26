@@ -7,13 +7,14 @@ import { RecipeTile } from './recipe-tile';
 
 export function getRecipeTileContextMenuItems(this: RecipeTile) {
     const items: ContextMenuItem[] = [];
+    const recipe = this.recipe.recipe;
 
     const recycleRecipe: ContextMenuItem = {
         text: 'In Papierkorb verschieben',
         icon: 'Trash',
         action: async () => {
             try {
-                await RecipeService.softDeleteRecipe(this.recipe.id!);
+                await RecipeService.softDeleteRecipe(recipe.id!);
                 await MessageSnackbar.popup('Rezept erfolgreich gelöscht.', 'success');
                 Session.recipes.next(await RecipeService.getAllRecipes());
             } catch (err) {
@@ -28,7 +29,7 @@ export function getRecipeTileContextMenuItems(this: RecipeTile) {
         icon: 'Revert',
         action: async () => {
             try {
-                await RecipeService.undeleteRecipe(this.recipe.id!);
+                await RecipeService.undeleteRecipe(recipe.id!);
                 await MessageSnackbar.popup('Rezept erfolgreich wiederhergestellt.', 'success');
                 Session.recipes.next(await RecipeService.getAllRecipes());
             } catch (err) {
@@ -50,7 +51,7 @@ export function getRecipeTileContextMenuItems(this: RecipeTile) {
                     declineActionText: 'Nein',
                     noImplicitAccept: true,
                 });
-                await RecipeService.hardDeleteRecipe(this.recipe.id!);
+                await RecipeService.hardDeleteRecipe(recipe.id!);
                 await MessageSnackbar.popup('Rezept erfolgreich gelöscht.', 'success');
                 Session.recipes.next(await RecipeService.getAllRecipes());
             } catch (err) {
@@ -60,7 +61,7 @@ export function getRecipeTileContextMenuItems(this: RecipeTile) {
         },
     };
 
-    if (!this.recipe.deleted) items.push(recycleRecipe);
+    if (!recipe.deleted) items.push(recycleRecipe);
     else items.push(restoreRecipe, deleteRecipe);
 
     return items;

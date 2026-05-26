@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -19,9 +18,6 @@ public class RecipeModelBase
             .HasValue<RecipeModel>("Recipe")
             .HasValue<FoodModel>("Food");
 
-        builder.Entity<RecipeModelBase>().Property(x => x.ImageCount)
-            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-
         builder.Entity<RecipeIngredientMappingModel>().HasOne(x => x.Ingredient).WithMany()
             .OnDelete(DeleteBehavior.NoAction).HasForeignKey(x => x.IngredientName)
             .HasPrincipalKey(x => x.IngredientName).IsRequired(false);
@@ -30,8 +26,6 @@ public class RecipeModelBase
     [Key] public Guid Id { get; set; } = Guid.NewGuid();
     [MaxLength(255)] public required string Title { get; set; }
     [MaxLength(255)] public required string Description { get; set; }
-
-    public int ImageCount { get; set; }
 
     public int Difficulty { get; set; }
     public int Rating { get; set; }

@@ -1,7 +1,7 @@
 import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { waitForAnimation } from '../../extensions/animation.extension';
-import { FoodImageModel, FoodThumbModel, RecipeModelBase } from '../../obscuritas-media-manager-backend-client';
+import { FoodImageModel, FoodThumbModel, RecipeResponse } from '../../obscuritas-media-manager-backend-client';
 import { PageRouting } from '../../pages/page-routing/page-routing';
 import { RecipeService } from '../../services/backend.services';
 import { ImageCompressionService } from '../../services/image-compression.service';
@@ -29,7 +29,7 @@ export class RecipeSlideshowPopup extends LitElementBase {
 
     @property() declare public recipeId: string;
 
-    @state() declare protected recipe: RecipeModelBase;
+    @state() declare protected recipe: RecipeResponse;
 
     override render() {
         return renderRecipeSlideshowPopup.call(this);
@@ -44,17 +44,15 @@ export class RecipeSlideshowPopup extends LitElementBase {
     async addImage(imageData: string) {
         var thumbData = (await (await ImageCompressionService.generateThumbnail(imageData)).base64()).split(',')[1];
         imageData = imageData.split(',')[1];
-        this.recipe.imageCount = (
-            await RecipeService.addRecipeImage(
-                this.recipe.id,
-                new FoodImageModel({
-                    recipeId: this.recipe.id,
-                    imageData,
-                    mimeType: 'image/png',
-                    thumb: new FoodThumbModel({ thumbData }),
-                }),
-            )
-        ).imageCount;
+        this.recipe.imageHashes = await RecipeService.addRecipeImage(
+            this.recipe.recipe.id,
+            new FoodImageModel({
+                recipeId: this.recipe.recipe.id,
+                imageData,
+                mimeType: 'image/png',
+                thumb: new FoodThumbModel({ thumbData }),
+            }),
+        );
 
         await this.requestFullUpdate();
     }

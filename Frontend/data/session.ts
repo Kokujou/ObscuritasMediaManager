@@ -3,7 +3,7 @@ import {
     InstrumentModel,
     MediaModel,
     MusicModel,
-    RecipeModelBase,
+    RecipeResponse,
 } from '../obscuritas-media-manager-backend-client';
 import { MediaService, MusicService, RecipeService } from '../services/backend.services';
 import { Observable } from './observable';
@@ -12,7 +12,7 @@ export class Session {
     static currentPage = new Observable('');
     static mediaList = new Observable<MediaModel[]>([]);
     static tracks = new Observable<MusicModel[]>([]);
-    static recipes = new Observable<RecipeModelBase[]>([]);
+    static recipes = new Observable<RecipeResponse[]>([]);
     static ingredients = new Observable<IngredientModel[]>([]);
     static instruments = new Observable<InstrumentModel[]>([]);
 

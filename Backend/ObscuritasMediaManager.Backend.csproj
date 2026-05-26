@@ -26,6 +26,12 @@
 	<PropertyGroup>
 		<NoWarn>$(NoWarn);NETSDK1206</NoWarn>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Update="**\Migrations\**\*.cs">
+			<NoWarn>$(NoWarn);8981</NoWarn>
+		</Compile>
+	</ItemGroup>
 	
 	<ItemGroup>
 		<PackageReference Include="Genius.NET" Version="4.0.1" />

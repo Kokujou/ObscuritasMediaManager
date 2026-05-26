@@ -15,6 +15,7 @@ import {
     RecipeIngredientMappingModel,
     RecipeModel,
     RecipeModelBase,
+    RecipeResponse,
 } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
 import { renderRecipeDetailPageStyles } from './recipe-detail-page.css';
@@ -56,28 +57,30 @@ export class RecipeDetailPage extends LitElementBase {
 
     @property() declare public recipeId: string | null;
 
-    @state() declare protected recipe: RecipeModelBase;
+    @state() declare protected recipe: RecipeResponse;
 
     @query('#page-container') declare protected pageContainer: HTMLElement;
 
     get fullRecipe() {
-        return this.recipe instanceof RecipeModel ? this.recipe : null;
+        return this.recipe.recipe instanceof RecipeModel ? this.recipe.recipe : null;
     }
 
     constructor() {
         super();
-        this.recipe = new RecipeModel({
-            title: 'Rezepttitel',
-            cookingTime: new TimeSpan().toString(),
-            totalTime: new TimeSpan().toString(),
-            cookware: [],
-            preparationTime: new TimeSpan().toString(),
-            difficulty: 0,
-            rating: 0,
-            recipeText: 'Dein Rezept-Text',
-            imageCount: 0,
-            ingredients: [],
-            tags: [],
+        this.recipe = new RecipeResponse({
+            recipe: new RecipeModel({
+                title: 'Rezepttitel',
+                cookingTime: new TimeSpan().toString(),
+                totalTime: new TimeSpan().toString(),
+                cookware: [],
+                preparationTime: new TimeSpan().toString(),
+                difficulty: 0,
+                rating: 0,
+                recipeText: 'Dein Rezept-Text',
+                ingredients: [],
+                tags: [],
+            }),
+            imageHashes: [],
         });
         this.fullRecipe!.ingredients = [this.emptyGroup];
     }
@@ -86,23 +89,20 @@ export class RecipeDetailPage extends LitElementBase {
         super.connectedCallback();
 
         if (this.recipeId) {
-            this.recipe = (await RecipeService.getRecipe(this.recipeId)) as RecipeModel;
+            this.recipe = await RecipeService.getRecipe(this.recipeId);
             await this.requestFullUpdate();
         }
     }
 
     override render() {
-        document.title = this.recipe.id
-            ? `Rezept - ${this.recipe.title}`
-            : `Rezept erstellen ${this.recipe.title ? `- ${this.recipe.title}` : ''}`;
         return renderRecipeDetailPage.call(this);
     }
 
     async changeBaseProperty<T extends keyof RecipeModelBase>(property: T, value: RecipeModelBase[T]) {
-        this.recipe[property] = value;
+        this.recipe.recipe[property] = value;
 
-        if (this.recipe.id) await RecipeService.updateRecipe(this.recipe);
-        this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
+        if (this.recipe.recipe.id) await RecipeService.updateRecipe(this.recipe.recipe);
+        this.recipe = await RecipeService.getRecipe(this.recipe.recipe.id!);
         this.requestFullUpdate();
     }
 
@@ -111,24 +111,24 @@ export class RecipeDetailPage extends LitElementBase {
 
         this.fullRecipe[property] = value;
         await RecipeService.updateRecipe(this.fullRecipe);
-        this.recipe = (await RecipeService.getRecipe(this.fullRecipe.id!)) as RecipeModel;
+        this.recipe = await RecipeService.getRecipe(this.fullRecipe.id!);
         this.requestFullUpdate();
     }
 
     async addTag(tag: FoodTagModel) {
-        await RecipeService.addTag(this.recipe.id!, tag);
-        this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
+        await RecipeService.addTag(this.recipe.recipe.id!, tag);
+        this.recipe = await RecipeService.getRecipe(this.recipe.recipe.id!);
     }
 
     async removeTag(tag: FoodTagModel) {
-        await RecipeService.removeTag(this.recipe.id!, tag);
-        this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
+        await RecipeService.removeTag(this.recipe.recipe.id!, tag);
+        this.recipe = await RecipeService.getRecipe(this.recipe.recipe.id!);
     }
 
     async addRecipe() {
         if (this.fullRecipe) return null;
-        await RecipeService.changeType(this.recipe.id!, 'Recipe');
-        this.recipe = (await RecipeService.getRecipe(this.recipe.id!)) as RecipeModel;
+        await RecipeService.changeType(this.recipe.recipe.id!, 'Recipe');
+        this.recipe = await RecipeService.getRecipe(this.recipe.recipe.id!);
     }
 
     async addIngredient(group: string, event: Event) {
@@ -139,16 +139,16 @@ export class RecipeDetailPage extends LitElementBase {
         const ingredient = RecipeDetailPage.newIngredient;
         ingredient.groupName = group;
         ingredient.order = this.fullRecipe.ingredients.filter((x) => x.groupName == group).length;
-        ingredient.id = await RecipeService.addIngredient(this.recipe.id!, ingredient);
+        ingredient.id = await RecipeService.addIngredient(this.recipe.recipe.id!, ingredient);
         this.fullRecipe.ingredients.push(ingredient);
         this.requestFullUpdate();
     }
 
     async addCookware() {
         if (!this.fullRecipe) return;
-        var cookware = new RecipeCookwareMappingModel({ name: '', recipeId: this.recipe.id! });
+        var cookware = new RecipeCookwareMappingModel({ name: '', recipeId: this.recipe.recipe.id! });
         this.fullRecipe.cookware = this.fullRecipe.cookware.concat(cookware);
-        cookware.id = await RecipeService.addCookware(this.recipe.id!, cookware);
+        cookware.id = await RecipeService.addCookware(this.recipe.recipe.id!, cookware);
         await this.requestFullUpdate();
     }
 
@@ -161,14 +161,14 @@ export class RecipeDetailPage extends LitElementBase {
 
     async removeIngredient(ingredient: RecipeIngredientMappingModel) {
         if (!this.fullRecipe) return;
-        await RecipeService.deleteIngredient(this.recipe.id!, ingredient.id!);
+        await RecipeService.deleteIngredient(this.recipe.recipe.id!, ingredient.id!);
         this.fullRecipe.ingredients = this.fullRecipe.ingredients.filter((x) => x.id != ingredient.id);
         await this.requestFullUpdate();
     }
 
     async removeCookware(cookware: RecipeCookwareMappingModel) {
         if (!this.fullRecipe) return;
-        await RecipeService.deleteCookware(this.recipe.id!, cookware.id!);
+        await RecipeService.deleteCookware(this.recipe.recipe.id!, cookware.id!);
         this.fullRecipe.cookware = this.fullRecipe.cookware.filter((x) => x.name != cookware.name);
         await this.requestFullUpdate();
     }
@@ -235,8 +235,8 @@ export class RecipeDetailPage extends LitElementBase {
     async createRecipe() {
         try {
             if (!this.fullRecipe) return;
-            this.recipe.id = await RecipeService.createRecipe(this.fullRecipe);
-            this.recipeId = this.recipe.id;
+            this.recipe.recipe.id = await RecipeService.createRecipe(this.fullRecipe);
+            this.recipeId = this.recipe.recipe.id;
             this.requestFullUpdate();
             MessageSnackbar.popup('Das Rezept wurde erfolgreich erstellt.', 'success');
         } catch (err) {

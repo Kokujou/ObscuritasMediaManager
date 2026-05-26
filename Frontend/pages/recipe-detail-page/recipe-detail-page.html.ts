@@ -20,6 +20,10 @@ import { IngredientIcons } from '../../resources/inline-icons/ingredient-icons/i
 import { RecipeDetailPage } from './recipe-detail-page';
 
 export function renderRecipeDetailPage(this: RecipeDetailPage) {
+    const recipe = this.recipe.recipe;
+
+    document.title = recipe.id ? `Rezept - ${recipe.title}` : `Rezept erstellen ${recipe.title ? `- ${recipe.title}` : ''}`;
+
     return html`
         <page-layout>
             <div id="page-container">
@@ -30,25 +34,25 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                             (e.composedPath()[0] as StarRating).swords
                                 ? this.changeBaseProperty('difficulty', e.detail.rating)
                                 : this.changeBaseProperty('rating', e.detail.rating)}"
-                        @click="${() => RecipeSlideshowPopup.popup(this.recipe.id)}"
+                        @click="${() => RecipeSlideshowPopup.popup(recipe.id)}"
                     ></recipe-tile>
                     <flex-column id="heading-section">
                         <input
                             type="text"
                             id="title"
-                            .value="${this.recipe.title}"
+                            .value="${recipe.title}"
                             @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
                             @change="${(e: Event) => this.changeBaseProperty('title', (e.target as HTMLInputElement).value)}"
                         />
                         <textarea
                             id="description"
-                            .value="${this.recipe.description}"
+                            .value="${recipe.description}"
                             @input="${(e: KeyboardEvent) => handleLabelInput(e)}"
                             @change="${(e: Event) =>
                                 this.changeBaseProperty('description', (e.target as HTMLTextAreaElement).value)}"
                         ></textarea>
                         <flex-row id="food-tags">
-                            ${ColoredFoodTags.filter((tag) => this.recipe.tags.some((existing) => existing.value == tag.value))
+                            ${ColoredFoodTags.filter((tag) => recipe.tags.some((existing) => existing.value == tag.value))
                                 .orderBy((x) => x.key)
                                 .map(
                                     (tag) =>
@@ -68,7 +72,7 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                                 @tagCreated="${(e: CustomEvent<{ value: TagAutocompleteItem }>) =>
                                     this.addTag(
                                         new FoodTagModel({
-                                            recipeId: this.recipe.id,
+                                            recipeId: recipe.id,
                                             key: e.detail.value.group,
                                             value: e.detail.value.text,
                                         }),
@@ -162,7 +166,9 @@ function renderRecipeSection(this: RecipeDetailPage) {
         </div>
 
         <div id="action-area">
-            ${!this.recipe.id ? html` <div class="action-button" @click="${() => this.createRecipe()}">Erstellen</div> ` : ''}
+            ${!this.recipe.recipe.id
+                ? html` <div class="action-button" @click="${() => this.createRecipe()}">Erstellen</div> `
+                : ''}
         </div>
     `;
 }
