@@ -66,16 +66,16 @@ export class MediaDetailPage extends LitElementBase {
         return type == MediaCategory.AnimeMovies || type == MediaCategory.AnimeSeries || type == MediaCategory.JDrama;
     }
 
-    @state() public declare mediaId: string;
-    @state() public declare createNew: boolean;
+    @state() declare public mediaId: string;
+    @state() declare public createNew: boolean;
 
-    @state() protected declare updatedMedia: MediaModel;
-    @state() protected declare mediaIds: string[];
-    @state() protected declare hasImage: boolean;
-    @state() protected declare relatedTracks: MusicModel[];
-    @state() protected declare imageRevision: number;
-    @state() protected declare hoveredRating: number;
-    @state() protected declare selectedSeason: number;
+    @state() declare protected updatedMedia: MediaModel;
+    @state() declare protected mediaIds: string[];
+    @state() declare protected hasImage: boolean;
+    @state() declare protected relatedTracks: MusicModel[];
+    @state() declare protected imageRevision: number;
+    @state() declare protected hoveredRating: number;
+    @state() declare protected selectedSeason: number;
 
     constructor() {
         super();
@@ -90,12 +90,12 @@ export class MediaDetailPage extends LitElementBase {
         super.connectedCallback();
 
         this.subscriptions.push(
-            Session.mediaList.subscribe((newList) => {
+            Session.media.subscribe((newList) => {
                 var filter = MediaFilter.fromJSON(localStorage.getItem(`media.search`) ?? '');
                 this.mediaIds = MediaFilterService.filter([...newList], filter).map((x) => x.id);
-            })
+            }),
         );
-        Session.mediaList.refresh();
+        Session.media.refresh();
     }
 
     override render() {
@@ -138,8 +138,8 @@ export class MediaDetailPage extends LitElementBase {
 
             if (!this.createNew) {
                 await MediaService.updateMedia(this.updatedMedia.id, new UpdateRequestOfObject({ oldModel, newModel }));
-                Session.mediaList.current().find((x) => x.id == this.updatedMedia.id)![property] = value;
-                Session.mediaList.refresh();
+                Session.media.current().find((x) => x.id == this.updatedMedia.id)![property] = value;
+                Session.media.refresh();
             }
 
             this.updatedMedia[property] = value;
@@ -176,7 +176,7 @@ export class MediaDetailPage extends LitElementBase {
 
         return await this.changeProperty(
             'contentWarnings',
-            this.updatedMedia.contentWarnings.filter((x) => x != warning)
+            this.updatedMedia.contentWarnings.filter((x) => x != warning),
         );
     }
 
@@ -198,10 +198,10 @@ export class MediaDetailPage extends LitElementBase {
                     entry: this.updatedMedia,
                     language: this.updatedMedia.language,
                     rootPath: this.updatedMedia.rootFolderPath,
-                })
+                }),
             );
             if (result.value != ModelCreationState.Success) throw new Error(result.value);
-            Session.mediaList.next(await MediaService.getAll());
+            Session.media.next(await MediaService.getAll());
             await MessageSnackbar.popup('Der Eintrag wurde erfolgreich erstellt.', 'success');
             changePage(MediaDetailPage, { mediaId: result.key! });
         } catch (err) {
@@ -213,5 +213,11 @@ export class MediaDetailPage extends LitElementBase {
         if (this.updatedMedia.type == MediaCategory.AnimeSeries || this.updatedMedia.type == MediaCategory.AnimeMovies)
             window.open(`https://anilist.co/search/anime?search=${this.updatedMedia.name}`);
         else window.open(`https://www.imdb.com/find/?q=${this.updatedMedia.name}&ref_=nv_sr_sm`);
+    }
+
+    override disconnectedCallback() {
+        super.disconnectedCallback();
+
+        Session.media.next(Session.media.current().replace((x) => x.id == this.updatedMedia.id, this.updatedMedia));
     }
 }

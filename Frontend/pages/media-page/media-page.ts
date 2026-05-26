@@ -37,9 +37,9 @@ export class MediaPage extends LitElementBase {
     }
 
     get filteredMedia() {
-        if (!this.filter) return Session.mediaList.current();
+        if (!this.filter) return Session.media.current();
 
-        return MediaFilterService.filter([...Session.mediaList.current()], this.filter);
+        return MediaFilterService.filter([...Session.media.current()], this.filter);
     }
 
     get itemsPerPage() {
@@ -51,7 +51,7 @@ export class MediaPage extends LitElementBase {
     }
 
     get animeToAutoFill() {
-        return Session.mediaList
+        return Session.media
             .current()
             .filter((x) => x.type == MediaCategory.AnimeMovies || x.type == MediaCategory.AnimeSeries)
             .filter(
@@ -60,15 +60,15 @@ export class MediaPage extends LitElementBase {
                     (x.englishName?.length ?? 0) < 5 ||
                     (x.germanName?.length ?? 0) < 5 ||
                     (x.kanjiName?.length ?? 0) < 5 ||
-                    x.release <= 1900
+                    x.release <= 1900,
             );
     }
 
-    @state() protected declare genreList: string[];
-    @state() protected declare page: number;
-    @state() protected declare loading: boolean;
+    @state() declare protected genreList: string[];
+    @state() declare protected page: number;
+    @state() declare protected loading: boolean;
 
-    protected declare filter: MediaFilter;
+    declare protected filter: MediaFilter;
 
     constructor() {
         super();
@@ -88,7 +88,7 @@ export class MediaPage extends LitElementBase {
         var localSearchString = localStorage.getItem(`media.search`);
         if (localSearchString) this.filter = MediaFilter.fromJSON(localSearchString);
 
-        this.subscriptions.push(Session.mediaList.subscribe(() => this.requestFullUpdate()));
+        this.subscriptions.push(Session.media.subscribe(() => this.requestFullUpdate()));
 
         this.loading = false;
         await this.requestFullUpdate();
@@ -101,7 +101,7 @@ export class MediaPage extends LitElementBase {
     async importFolder(category: MediaCategory, language: Language) {
         try {
             await MediaImportService.importMediaCollections(category, language);
-            Session.mediaList.next(await MediaService.getAll());
+            Session.media.next(await MediaService.getAll());
         } catch (err) {
             console.error('the import of files was aborted', err);
         }
@@ -110,7 +110,7 @@ export class MediaPage extends LitElementBase {
     async cleanupMedia() {
         var success = await MaintenanceService.cleanMedia();
         if (!success) return;
-        Session.mediaList.next(await MediaService.getAll());
+        Session.media.next(await MediaService.getAll());
         await this.requestFullUpdate();
     }
 
@@ -141,7 +141,7 @@ export class MediaPage extends LitElementBase {
     async repairMedia() {
         var success = await MaintenanceService.repairMedia();
         if (!success) return;
-        Session.mediaList.next(await MediaService.getAll());
+        Session.media.next(await MediaService.getAll());
         await this.requestFullUpdate();
     }
 
@@ -193,7 +193,7 @@ export class MediaPage extends LitElementBase {
             });
             if (!confirmed) return;
             await MediaService.hardDeleteMedium(media.id);
-            Session.mediaList.next(Session.mediaList.current().filter((x) => x.id != media.id));
+            Session.media.next(Session.media.current().filter((x) => x.id != media.id));
             MessageSnackbar.popup('Der Track wurde erfolgreich aus der Datenbank gelöscht.', 'success');
         } catch (err) {
             MessageSnackbar.popup('Ein Fehler ist beim löschen des Eintrags aufgetreten: ' + err, 'error');
@@ -210,7 +210,7 @@ export class MediaPage extends LitElementBase {
             });
             if (!confirmed) return;
             await MediaService.fullDeleteMedium(media.id);
-            Session.mediaList.next(Session.mediaList.current().filter((x) => x.id != media.id));
+            Session.media.next(Session.media.current().filter((x) => x.id != media.id));
             MessageSnackbar.popup('Der Track wurde vollständig gelöscht.', 'success');
         } catch (err) {
             MessageSnackbar.popup('Ein Fehler ist beim löschen des Eintrags aufgetreten: ' + err, 'error');

@@ -257,7 +257,5 @@ export function renderSourceInput(this: MusicPlaylistPage) {
             @change="${(e: Event) => this.changeProperty('source', (e.currentTarget as HTMLInputElement).value)}"
             @click="${(e: Event) => e.preventDefault()}"
         />
-        <datalist id="media-list">
-            ${Session.mediaList.current().map((x) => html`<option value="${x.name}"></option>`)}
-        </datalist>`;
+        <datalist id="media-list">${Session.media.current().map((x) => html`<option value="${x.name}"></option>`)}</datalist>`;
 }

@@ -21,7 +21,7 @@ export class MaintenanceService {
             });
 
             var hasInvalid = false;
-            for (var medium of Session.mediaList.current()) {
+            for (var medium of Session.media.current()) {
                 if (aborted) return;
 
                 var isValid = await CleanupService.validateMediaRoot(medium.rootFolderPath);
@@ -30,7 +30,7 @@ export class MaintenanceService {
                 hasInvalid = true;
                 selectionDialog.addEntry(
                     medium.id,
-                    LinkElement.forPage(MediaDetailPage, { mediaId: medium.id }, medium.name, { target: '_blank' })
+                    LinkElement.forPage(MediaDetailPage, { mediaId: medium.id }, medium.name, { target: '_blank' }),
                 );
             }
 
@@ -91,10 +91,13 @@ export class MaintenanceService {
             }
 
             var dialog = SelectOptionsDialog.show(
-                brokenTracks.reduce((prev, curr) => {
-                    prev[curr.hash] = curr.displayName;
-                    return prev;
-                }, {} as { [key: string]: string })
+                brokenTracks.reduce(
+                    (prev, curr) => {
+                        prev[curr.hash] = curr.displayName;
+                        return prev;
+                    },
+                    {} as { [key: string]: string },
+                ),
             );
 
             dialog.addEventListener('decline', () => {

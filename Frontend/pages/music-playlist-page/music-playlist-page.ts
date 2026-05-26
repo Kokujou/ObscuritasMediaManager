@@ -68,7 +68,7 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     get sourceMediaId() {
-        return MediaFilterService.find(Session.mediaList.current(), this.updatedTrack.source!, false)?.id;
+        return MediaFilterService.find(Session.media.current(), this.updatedTrack.source!, false)?.id;
     }
 
     @property({ type: Number }) declare public trackIndex: number;
@@ -326,7 +326,10 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     override async disconnectedCallback() {
-        await super.disconnectedCallback();
+        super.disconnectedCallback();
+
+        Session.tracks.next(Session.tracks.current().replace((x) => x.hash == this.updatedTrack.hash, this.updatedTrack));
+
         await AudioService.reset();
     }
 

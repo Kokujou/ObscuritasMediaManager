@@ -11,6 +11,7 @@ declare global {
         distinct(): T[];
         distinctBy(selector: (item: T) => any): T[];
         orderBy(...selectors: ((item: T) => any)[]): T[];
+        replace<T>(this: T[], matcher: (item: T) => boolean, item: T): T[];
     }
 
     interface ArrayConstructor {
@@ -91,6 +92,14 @@ Array.prototype.orderBy = function <T>(this: T[], ...selectors: ((item: T) => an
 Array.createRange = function (from: number, to: number): number[] {
     const diff = to - from;
     return [...new Array(diff + 1).keys()].map((x) => x + from);
+};
+
+Array.prototype.replace = function <T>(this: T[], matcher: (item: T) => boolean, item: T) {
+    const currentIndex = this.findIndex(matcher);
+    if (currentIndex < 0) return this;
+    console.log('recipe with', item);
+    this.splice(currentIndex, 1, item);
+    return this;
 };
 
 FileList.prototype.toIterator = function* () {

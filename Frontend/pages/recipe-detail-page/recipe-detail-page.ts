@@ -1,6 +1,7 @@
 import { customElement, property, query, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
+import { Session } from '../../data/session';
 import { TimeSpan } from '../../data/timespan';
 import { RecipeSlideshowPopup } from '../../dialogs/recipe-slideshow-popup/recipe-slideshow-popup';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
@@ -249,5 +250,11 @@ export class RecipeDetailPage extends LitElementBase {
     async showRecipeSlideshow() {
         await RecipeSlideshowPopup.popup(this.recipe);
         await this.requestFullUpdate();
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+
+        Session.recipes.next(Session.recipes.current().replace((x) => x.recipe.id == this.recipe.recipe.id, this.recipe));
     }
 }

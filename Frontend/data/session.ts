@@ -10,7 +10,7 @@ import { Observable } from './observable';
 
 export class Session {
     static currentPage = new Observable('');
-    static mediaList = new Observable<MediaModel[]>([]);
+    static media = new Observable<MediaModel[]>([]);
     static tracks = new Observable<MusicModel[]>([]);
     static recipes = new Observable<RecipeResponse[]>([]);
     static ingredients = new Observable<IngredientModel[]>([]);
@@ -32,7 +32,7 @@ export class Session {
 
         var promises = [
             MediaService.getAll()
-                .then((list) => Session.mediaList.next(list))
+                .then((list) => Session.media.next(list))
                 .catch((err) => console.error(err)),
             MusicService.getAll()
                 .then((list) => Session.tracks.next(list))
