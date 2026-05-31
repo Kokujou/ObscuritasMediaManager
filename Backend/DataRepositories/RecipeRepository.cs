@@ -14,13 +14,13 @@ public class RecipeRepository(DatabaseContext databaseContext)
 
     public IQueryable<RecipeResponse> GetAll()
     {
-        return databaseContext.Dishes.Select(recipe => new RecipeResponse
-        {
-            Recipe = recipe,
-            ImageHashes = databaseContext.FoodImages.Where(x => x.RecipeId == recipe.Id)
-                .Select(x => new { x.ImageHash, x.Id }).OrderBy(x => x.Id)
-                .Select(x => x.ImageHash).ToList()
-        });
+        return databaseContext.Dishes
+            .GroupJoin(databaseContext.FoodImages, x => x.Id, x => x.RecipeId,
+                (recipe, images) => new RecipeResponse
+                {
+                    Recipe = recipe,
+                    ImageHashes = images.OrderBy(image => image.Id).Select(image => image.ImageHash).ToList()
+                });
     }
 
     public async Task<RecipeResponse> GetAsync(Guid id)
