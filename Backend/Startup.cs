@@ -36,7 +36,8 @@ public class Startup
         services.AddHttpClient();
 
         services.AddDbContext<DatabaseContext>(x => x.UseSqlite(
-                @"Data Source=J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\Database\database.sqlite;foreign keys=false;")
+                @"Data Source=J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\Database\database.sqlite;foreign keys=false;",
+                options => options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
             .EnableSensitiveDataLogging());
 

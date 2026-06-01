@@ -50,14 +50,15 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     [HttpGet("{recipeId}/images/{imageHash}/thumb")]
     public async Task<IActionResult> GetImageThumbAsync(Guid recipeId, string imageHash)
     {
-        var image = await context.FoodImages
-            .Where(x => x.RecipeId == recipeId && x.ImageHash.ToLower() == imageHash.ToLower())
-            .Select(x => new { thumb = x.Thumb, x.MimeType }).FirstAsync();
-        if (image is { thumb.ThumbData: null } or { MimeType: null }) return NoContent();
+        var thumbId = await context.FoodImages.Where(x => x.RecipeId == recipeId && x.ImageHash == imageHash)
+            .Select(x => x.ThumbId).SingleAsync();
+        var thumbData = await context.Set<FoodThumbModel>().Where(x => x.Id == thumbId).Select(x => x.ThumbData)
+            .SingleAsync();
+        if (thumbData is null) return NoContent();
 
         Response.Headers.CacheControl = "public, max-age=31536000, immutable";
 
-        return File(image.thumb.ThumbData, image.MimeType);
+        return File(thumbData, "image/jpeg");
     }
 
     [HttpPut("/image/{imageHash}/thumb")]

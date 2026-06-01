@@ -3,7 +3,7 @@
 namespace ObscuritasMediaManager.ClientInterop.Events;
 
 [ExportTsClass]
-public class ConnectedEvent(string _ = "") : IInteropEvent
+public class ConnectedEvent : IInteropEvent
 {
     public PlaybackState PlaybackState { get; } = AudioService.Player.PlaybackState;
     public string? TrackPath { get; } = AudioService.TrackPath;

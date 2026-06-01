@@ -12,7 +12,7 @@ export class ConnectedEvent implements IInteropEvent {
     trackPath: string;
     duration: number;
     position: number;
-    volume: number;
-    visualizationData: number[];
-    event: InteropEvent;
+    volume: number = 1.0;
+    visualizationData: number[] = [];
+    event: InteropEvent = 2;
 }

@@ -17,7 +17,7 @@ public class WebSocketInteropClient : WebSocketBehavior
     public Guid Id { get; set; }
     public bool Registered { get; set; }
 
-    public event Action<MessageEventArgs> OnMessageReceived;
+    public event Action<MessageEventArgs>? OnMessageReceived;
 
     public void SendEvent<T>(T response) where T : IInteropEvent
     {
@@ -34,7 +34,7 @@ public class WebSocketInteropClient : WebSocketBehavior
     protected override void OnMessage(MessageEventArgs e)
     {
         base.OnMessage(e);
-        OnMessageReceived.Invoke(e);
+        OnMessageReceived?.Invoke(e);
     }
 
     protected override async void OnClose(CloseEventArgs e)

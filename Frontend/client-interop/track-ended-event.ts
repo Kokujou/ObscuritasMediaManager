@@ -7,5 +7,5 @@ import { IInteropEvent } from "./i-interop-event";
 import { InteropEvent } from "./interop-event";
 
 export class TrackEndedEvent implements IInteropEvent {
-    event: InteropEvent;
+    event: InteropEvent = 1;
 }

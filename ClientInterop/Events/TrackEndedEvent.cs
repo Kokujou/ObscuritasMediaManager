@@ -3,7 +3,7 @@
 namespace ObscuritasMediaManager.ClientInterop.Events;
 
 [ExportTsClass]
-public class TrackEndedEvent(string _ = "") : IInteropEvent
+public class TrackEndedEvent : IInteropEvent
 {
     public InteropEvent Event => InteropEvent.TrackEnded;
 }
