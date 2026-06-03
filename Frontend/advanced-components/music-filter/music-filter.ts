@@ -20,8 +20,8 @@ export class MusicFilter extends LitElementBase {
         return renderMusicFilterStyles();
     }
 
-    @property({ type: Object }) public declare filter: MusicFilterOptions;
-    @property({ type: Object }) public declare sorting: MusicSorting;
+    @property({ type: Object }) declare public filter: MusicFilterOptions;
+    @property({ type: Object }) declare public sorting: MusicSorting;
 
     constructor() {
         super();
@@ -29,11 +29,11 @@ export class MusicFilter extends LitElementBase {
         this.sorting = new MusicSorting();
         if (
             !Object.keys(MusicSortingProperties).every((property) =>
-                Object.keys(new MusicModel()).concat(['unset']).includes(property)
+                Object.keys(new MusicModel()).concat(['unset']).includes(property),
             )
         ) {
             var missingProperties = Object.keys(MusicSortingProperties).filter((property) =>
-                Object.keys(new MusicModel()).concat(['unset'])
+                Object.keys(new MusicModel()).concat(['unset']),
             );
             alert("mismatch in sorting properties, the object might've changed:" + missingProperties);
             throw new Error("mismatch in sorting properties, the object might've changed" + missingProperties);
@@ -52,7 +52,7 @@ export class MusicFilter extends LitElementBase {
                         this.filter.instruments.states[instrument.name] = CheckboxState.Ignore;
                 }
                 this.requestFullUpdate();
-            })
+            }),
         );
     }
 
@@ -63,7 +63,7 @@ export class MusicFilter extends LitElementBase {
     setFilterEntryValue<T extends string | number | symbol>(
         filter: FilterEntry<T>,
         enumKey: keyof FilterEntry<T>['states'],
-        state: CheckboxState
+        state: CheckboxState,
     ) {
         filter.states[enumKey] = state;
         this.requestFullUpdate();
@@ -72,7 +72,7 @@ export class MusicFilter extends LitElementBase {
 
     setfilterEntry<T extends Exclude<keyof MusicFilterOptions, KeyOfType<MusicFilterOptions, FilterEntry<any>>>>(
         filter: T,
-        state: MusicFilterOptions[T]
+        state: MusicFilterOptions[T],
     ) {
         this.filter[filter] = state;
         this.requestFullUpdate();
@@ -98,7 +98,7 @@ export class MusicFilter extends LitElementBase {
             this.setFilterEntryValue(
                 this.filter[filter],
                 key,
-                selectedValues.includes(key) ? CheckboxState.Ignore : CheckboxState.Forbid
+                selectedValues.includes(key) ? CheckboxState.Ignore : CheckboxState.Forbid,
             );
         });
     }

@@ -52,10 +52,7 @@ export class OfflineMusicPage extends LitElementBase {
         if (localSearchString) this.filter = MusicFilterOptions.fromJSON(localSearchString);
 
         localSearchString = localStorage.getItem(`offline-music.sorting`);
-        if (localSearchString) {
-            var object = JSON.parse(localSearchString);
-            this.sorting = object.property;
-        }
+        if (localSearchString) this.sorting = JSON.parse(localSearchString);
     }
 
     async connectedCallback() {
@@ -146,9 +143,9 @@ export class OfflineMusicPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    updateSorting(sorting: Partial<MusicSorting>) {
+    updateSorting(sorting: MusicSorting) {
         Object.assign(this.sorting, sorting);
-        localStorage.setItem(`music.sorting`, JSON.stringify(sorting));
+        localStorage.setItem(`offline-music.sorting`, JSON.stringify(this.sorting));
         this.requestFullUpdate();
     }
 

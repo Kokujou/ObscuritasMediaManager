@@ -14,7 +14,7 @@ import { ContextMenu } from '../../native-components/context-menu/context-menu';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import { MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg';
-import { AudioService } from '../../services/audio-service';
+import { AudioService, AudioService } from '../../services/audio-service';
 import { MusicService, PlaylistService } from '../../services/backend.services';
 import { LocalPlaylistService } from '../../services/local-playlist.service';
 import { MaintenanceService } from '../../services/maintenance.service';
@@ -110,10 +110,7 @@ export class MusicPage extends LitElementBase {
         if (localSearchString) this.filter = MusicFilterOptions.fromJSON(localSearchString);
 
         localSearchString = localStorage.getItem(`music.sorting`);
-        if (localSearchString) {
-            var object = JSON.parse(localSearchString);
-            this.sorting = object;
-        }
+        if (localSearchString) this.sorting = JSON.parse(localSearchString);
 
         this.loading = false;
         await this.requestFullUpdate();
