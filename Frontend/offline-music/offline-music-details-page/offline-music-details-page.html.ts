@@ -135,7 +135,7 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
                                   return html`<flex-row
                                       class="playlist-entry"
                                       ?active="${this.currentTrack?.hash == hash}"
-                                      @click="${(e: Event) => this.changeToTrackAt(index, e)}"
+                                      @click="${(e: Event) => this.navigateToTrack(index, e)}"
                                   >
                                       <div class="track-icon" icon="${Icons.Note}"></div>
                                       <flex-column class="playlist-entry-text">

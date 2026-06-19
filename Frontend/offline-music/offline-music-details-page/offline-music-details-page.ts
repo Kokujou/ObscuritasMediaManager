@@ -111,34 +111,19 @@ export class OfflineMusicDetailsPage extends LitElementBase {
 
     async cachePlaylistTracks() {
         this.caching = true;
-        if (this.currentPlaylist || this.currentTrack?.hash) {
-            const database = await OfflineSession.openDatabase();
-            const trackCursor = database!.getStoreCursor(OfflineSession.MusicStoreName);
-            const tracks: [string, Blob][] = [];
-            trackCursor.subscribe(async (cursor) => {
-                if (!cursor) return;
-
-                const primaryKey = cursor.primaryKey as string;
-                if (!this.currentPlaylist!.includes(primaryKey) && this.currentTrack?.hash != primaryKey)
-                    return cursor.continue();
-                tracks.push([cursor.primaryKey as string, cursor.value as Blob]);
-                cursor.continue();
-            });
-
-            await trackCursor.toPromise();
-            for (var track of tracks) await OfflineSession.cacheTrack(track[0], track[1]);
-        }
+        const playlist = this.currentPlaylist ?? (this.currentTrack ? [this.currentTrack.hash] : []);
+        if (playlist.length) await OfflineSession.prefetchAdjacent(playlist, this.index);
         this.caching = false;
     }
 
     toggleTrack(event?: Event) {
         try {
             OfflineSession.audio.toggleTrackSync(
-                OfflineSession.playedTracks[this.currentTrack!.hash]!,
+                OfflineSession.playedTracks.get(this.currentTrack!.hash)!,
                 this.currentTrack!,
                 event,
             );
-        } catch (err) {
+        } catch {
             this.changeToTrackAt(this.index + 1, event);
         }
         this.requestFullUpdate();
@@ -148,18 +133,28 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         this.playlistExpanded = false;
         if (!this.currentPlaylist || index < 0 || index >= this.currentPlaylist.length || this.index == index) return;
         this.index = index;
-
         OfflineSession.audio.toggleTrackSync(
-            OfflineSession.playedTracks[this.currentTrack!.hash]!,
+            OfflineSession.playedTracks.get(this.currentTrack!.hash)!,
             this.currentTrack!,
             event,
             true,
         );
+        // Prefetch the new window in the background so the next MediaSession handler
+        // always finds its buffer synchronously. Fire-and-forget intentional.
+        OfflineSession.prefetchAdjacent(this.currentPlaylist, this.index);
         this.requestFullUpdate();
         this.refreshQuery();
     }
 
-    shufflePlaylist(event?: Event) {
+    async navigateToTrack(index: number, event: Event) {
+        if (!this.currentPlaylist) return;
+        this.caching = true;
+        await OfflineSession.prefetchAdjacent(this.currentPlaylist, index);
+        this.caching = false;
+        this.changeToTrackAt(index, event);
+    }
+
+    async shufflePlaylist(event?: Event) {
         if (!this.playlistId || !this.currentPlaylist) return;
 
         this.randomize = true;
@@ -171,6 +166,9 @@ export class OfflineMusicDetailsPage extends LitElementBase {
             OfflineSession.temporaryPlaylists[this.playlistId] ??
             OfflineSession.playlists.find((x) => x.id == this.playlistId)?.tracks
         ).randomize(seed);
+        this.caching = true;
+        await OfflineSession.prefetchAdjacent(this.currentPlaylist, 0);
+        this.caching = false;
         this.changeToTrackAt(0, event);
         this.requestFullUpdate();
     }

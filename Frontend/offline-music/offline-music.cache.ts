@@ -30,7 +30,6 @@ export class OfflineMusicCache {
                 return;
             }
 
-        await caches.delete('offline-music-v1');
         const cache = await caches.open('offline-music-v1');
 
         for (let response of responses) {

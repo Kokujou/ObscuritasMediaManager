@@ -22,7 +22,7 @@ export class AudioService {
         var fromStorage = localStorage.getItem('volume');
         if (fromStorage) return Number.parseInt(fromStorage) / 100;
         else this.changeVolume(1);
-        return this.volume;
+        return 1;
     }
 
     public get currentTime() {
