@@ -81,11 +81,13 @@ export class AudioService {
             if (document.visibilityState == 'visible') {
                 await audioContext.resume();
                 if (!this.audio.paused) {
+                    this.visualizationAudio.muted = false;
                     this.visualizationAudio.currentTime = this.audio.currentTime;
                     this.visualizationAudio.play().catch(() => {});
                 }
             } else {
                 this.visualizationAudio.pause();
+                this.visualizationAudio.muted = true;
                 audioContext.suspend();
             }
         });

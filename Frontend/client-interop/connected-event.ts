@@ -11,6 +11,6 @@ export class ConnectedEvent extends InteropEventBase {
     trackPath: string;
     duration: number;
     position: number;
-    volume: number;
-    visualizationData: number[];
+    volume: number = 1.0;
+    visualizationData: number[] = [];
 }
