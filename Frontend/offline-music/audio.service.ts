@@ -6,6 +6,7 @@ import { createSilentWav } from './create-dummy-audio';
 export class AudioService {
     declare public audio: HTMLAudioElement;
     declare public visualizationAudio: HTMLAudioElement;
+    declare private keepAliveAudio: HTMLAudioElement;
     public visualizationData = new Observable<Float32Array<ArrayBuffer>>(new Float32Array());
     public onNextTrack = new Observable<void>(null!);
     public audioProgress = new Observable(null);
@@ -42,9 +43,16 @@ export class AudioService {
         if (!this.audio) {
             this.visualizationAudio = document.body.appendChild(document.createElement('audio'));
             this.audio = document.body.appendChild(document.createElement('audio'));
+            this.keepAliveAudio = document.body.appendChild(document.createElement('audio'));
 
             this.audio.src = this.silentSrc;
             this.visualizationAudio.src = this.silentSrc;
+
+            // muted = true → canShowControlsManager() = false → not eligible for Now Playing.
+            // Keeps State::Playing so AVAudioSession stays active during pause on lock screen.
+            this.keepAliveAudio.src = this.silentSrc;
+            this.keepAliveAudio.muted = true;
+            this.keepAliveAudio.loop = true;
 
             this.setupAudio();
         }
@@ -120,6 +128,8 @@ export class AudioService {
     play() {
         if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
         if (document.visibilityState === 'visible') this.visualizationAudio.play().catch(() => {});
+        // Start keepAlive in this gesture context so it can run through subsequent pauses.
+        this.keepAliveAudio.play().catch(() => {});
         return this.audio.play();
     }
 
@@ -129,6 +139,7 @@ export class AudioService {
         this.audio.removeAttribute('src');
         this.visualizationAudio.pause();
         this.visualizationAudio.removeAttribute('src');
+        this.keepAliveAudio.pause();
         this.activeTrackHash = undefined;
     }
 
