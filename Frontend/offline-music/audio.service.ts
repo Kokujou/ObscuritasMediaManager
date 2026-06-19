@@ -44,7 +44,7 @@ export class AudioService {
             this.audio = document.body.appendChild(document.createElement('audio'));
 
             this.audio.src = SILENT_MP3;
-            this.visualizationAudio.src = this.audio.src;
+            this.visualizationAudio.src = SILENT_MP3;
 
             this.setupAudio();
         }
@@ -53,7 +53,7 @@ export class AudioService {
             if (newPage && newPage != oldPage) {
                 this.activeTrackHash = undefined;
                 this.audio.src = SILENT_MP3;
-                this.visualizationAudio.src = this.audio.src;
+                this.visualizationAudio.src = SILENT_MP3;
             }
         });
     }
@@ -79,13 +79,13 @@ export class AudioService {
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState == 'visible') {
                 audioContext.resume();
-                if (this.audio.paused) this.pause();
-                else this.play();
+                if (!this.audio.paused) {
+                    this.visualizationAudio.currentTime = this.audio.currentTime;
+                    this.visualizationAudio.play().catch(() => {});
+                }
             } else {
                 this.visualizationAudio.pause();
-                audioContext.suspend().then(() => {
-                    if (!this.audio.paused) this.play();
-                });
+                audioContext.suspend();
             }
         });
 
@@ -116,7 +116,7 @@ export class AudioService {
 
     play() {
         if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
-        if (document.visibilityState === 'visible') this.visualizationAudio.play();
+        if (document.visibilityState === 'visible') this.visualizationAudio.play().catch(() => {});
         return this.audio.play();
     }
 
@@ -153,8 +153,9 @@ export class AudioService {
         if (this.paused || force) {
             const position = this.activeTrackHash == track.hash ? this.currentTime : 0;
             const oldSrc = this.audio.src;
-            this.visualizationAudio.src = this.audio.src;
-            this.audio.src = URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' }));
+            const newSrc = URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' }));
+            this.audio.src = newSrc;
+            this.visualizationAudio.src = newSrc;
             URL.revokeObjectURL(oldSrc);
             this.activeTrackHash = track.hash;
 
