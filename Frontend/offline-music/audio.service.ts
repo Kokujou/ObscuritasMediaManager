@@ -130,8 +130,8 @@ export class AudioService {
         this.activeTrackHash = undefined;
     }
 
-    toggleTrackSync(buffer: ArrayBuffer, track: MusicModel, event?: Event, force = false) {
-        if (!buffer) return Promise.resolve();
+    toggleTrackSync(blob: Blob, track: MusicModel, event?: Event, force = false) {
+        if (!blob) return Promise.resolve();
 
         var result: Promise<void> | void = null!;
         if (this.activeTrackHash != track.hash) {
@@ -154,7 +154,7 @@ export class AudioService {
         if (this.paused || force) {
             const position = this.activeTrackHash == track.hash ? this.currentTime : 0;
             const oldSrc = this.audio.src;
-            const newSrc = URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' }));
+            const newSrc = URL.createObjectURL(blob);
             this.audio.src = newSrc;
             this.visualizationAudio.src = newSrc;
             // Only revoke blob URLs we created for tracks — never the silent sentinel.

@@ -37,7 +37,7 @@ export class OfflineSession {
 
     declare public static audio: AudioService;
 
-    public static playedTracks = new Map<string, ArrayBuffer>();
+    public static playedTracks = new Map<string, Blob>();
 
     public static async initialize() {
         if (this.initialized) return;
@@ -71,13 +71,14 @@ export class OfflineSession {
             throw new Error('corrupt cache');
         }
 
-        this.playedTracks.set(trackHash, await blob.arrayBuffer());
+        this.playedTracks.set(trackHash, blob);
     }
 
     // Loads the window of tracks around currentIndex into playedTracks and evicts everything
     // outside the window. Called at startup and fire-and-forget after every track change so
-    // that MediaSession next/prev handlers always find their target buffer synchronously.
-    static async prefetchAdjacent(playlist: string[], currentIndex: number, windowSize = 3) {
+    // that MediaSession next/prev handlers always find their target blob synchronously.
+    // Stores Blobs (not ArrayBuffers) so bytes stay outside the JS heap and no copy is needed.
+    static async prefetchAdjacent(playlist: string[], currentIndex: number, windowSize = 8) {
         const start = Math.max(0, currentIndex - windowSize);
         const end = Math.min(playlist.length - 1, currentIndex + windowSize);
         const window = new Set(playlist.slice(start, end + 1));
@@ -92,23 +93,22 @@ export class OfflineSession {
         if (!database) return;
         for (const hash of missing) {
             const blob = await database.getItemByKey<Blob>(this.MusicStoreName, hash);
-            if (blob) this.playedTracks.set(hash, await blob.arrayBuffer());
+            if (blob) this.playedTracks.set(hash, blob);
         }
         database.close();
     }
 
     static async toggleTrack(track: MusicModel, event?: Event, force = false, cache = true) {
-        let buffer = this.playedTracks.get(track.hash);
+        let blob = this.playedTracks.get(track.hash);
 
-        if (!buffer) {
+        if (!blob) {
             const database = await this.openDatabase();
-            const blob = await database!.getItemByKey<Blob>(this.MusicStoreName, track.hash);
+            blob = (await database!.getItemByKey<Blob>(this.MusicStoreName, track.hash)) ?? undefined;
             database!.close();
-            if (blob) buffer = await blob.arrayBuffer();
 
-            if (cache) await this.cacheTrack(track.hash, blob);
+            if (cache && blob) await this.cacheTrack(track.hash, blob);
         }
 
-        await OfflineSession.audio.toggleTrackSync(buffer!, track, event, force);
+        if (blob) await OfflineSession.audio.toggleTrackSync(blob, track, event, force);
     }
 }

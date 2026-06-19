@@ -133,14 +133,16 @@ export class OfflineMusicDetailsPage extends LitElementBase {
         this.playlistExpanded = false;
         if (!this.currentPlaylist || index < 0 || index >= this.currentPlaylist.length || this.index == index) return;
         this.index = index;
+
         OfflineSession.audio.toggleTrackSync(
             OfflineSession.playedTracks.get(this.currentTrack!.hash)!,
             this.currentTrack!,
             event,
             true,
         );
-        // Prefetch the new window in the background so the next MediaSession handler
-        // always finds its buffer synchronously. Fire-and-forget intentional.
+
+        // Slide the window to the new index. Fire-and-forget so the next
+        // MediaSession handler always finds its buffer on the fast path.
         OfflineSession.prefetchAdjacent(this.currentPlaylist, this.index);
         this.requestFullUpdate();
         this.refreshQuery();
