@@ -1,17 +1,18 @@
 import { Observable, Subscription } from '../data/observable';
 import { Session } from '../data/session';
 import { MusicModel } from '../obscuritas-media-manager-backend-client';
-import { createDummyAudio } from './create-dummy-audio';
+import { createSilentWav } from './create-dummy-audio';
 
 export class AudioService {
-    public audio: HTMLAudioElement;
-    public visualizationAudio: HTMLAudioElement;
+    declare public audio: HTMLAudioElement;
+    declare public visualizationAudio: HTMLAudioElement;
     public visualizationData = new Observable<Float32Array<ArrayBuffer>>(new Float32Array());
     public onNextTrack = new Observable<void>(null!);
     public audioProgress = new Observable(null);
     public activeTrackHash?: string;
 
     private pageSubscription?: Subscription;
+    private readonly silentSrc = createSilentWav();
 
     public get paused() {
         return this.audio.paused;
@@ -38,13 +39,12 @@ export class AudioService {
     }
 
     constructor() {
-        const SILENT_MP3 = createDummyAudio();
         if (!this.audio) {
             this.visualizationAudio = document.body.appendChild(document.createElement('audio'));
             this.audio = document.body.appendChild(document.createElement('audio'));
 
-            this.audio.src = SILENT_MP3;
-            this.visualizationAudio.src = SILENT_MP3;
+            this.audio.src = this.silentSrc;
+            this.visualizationAudio.src = this.silentSrc;
 
             this.setupAudio();
         }
@@ -52,8 +52,8 @@ export class AudioService {
         this.pageSubscription ??= Session.currentPage.subscribe((newPage, oldPage) => {
             if (newPage && newPage != oldPage) {
                 this.activeTrackHash = undefined;
-                this.audio.src = SILENT_MP3;
-                this.visualizationAudio.src = SILENT_MP3;
+                this.audio.src = this.silentSrc;
+                this.visualizationAudio.src = this.silentSrc;
             }
         });
     }
@@ -76,9 +76,10 @@ export class AudioService {
             this.audioProgress.next(null);
         };
 
-        document.addEventListener('visibilitychange', () => {
+        // visibilitychange is not a trusted user-gesture context, so awaiting here
+        document.addEventListener('visibilitychange', async () => {
             if (document.visibilityState == 'visible') {
-                audioContext.resume();
+                await audioContext.resume();
                 if (!this.audio.paused) {
                     this.visualizationAudio.currentTime = this.audio.currentTime;
                     this.visualizationAudio.play().catch(() => {});
@@ -156,7 +157,8 @@ export class AudioService {
             const newSrc = URL.createObjectURL(new Blob([buffer], { type: 'audio/mpeg' }));
             this.audio.src = newSrc;
             this.visualizationAudio.src = newSrc;
-            URL.revokeObjectURL(oldSrc);
+            // Only revoke blob URLs we created for tracks — never the silent sentinel.
+            if (oldSrc !== this.silentSrc) URL.revokeObjectURL(oldSrc);
             this.activeTrackHash = track.hash;
 
             if (event) {
