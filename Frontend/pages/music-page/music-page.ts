@@ -14,7 +14,7 @@ import { ContextMenu } from '../../native-components/context-menu/context-menu';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import { MusicModel, PlaylistModel } from '../../obscuritas-media-manager-backend-client';
 import { noteIcon } from '../../resources/inline-icons/general/note-icon.svg';
-import { AudioService, AudioService } from '../../services/audio-service';
+import { AudioService } from '../../services/audio-service';
 import { MusicService, PlaylistService } from '../../services/backend.services';
 import { LocalPlaylistService } from '../../services/local-playlist.service';
 import { MaintenanceService } from '../../services/maintenance.service';
@@ -41,7 +41,7 @@ export class MusicPage extends LitElementBase {
     @state() declare protected filter: MusicFilterOptions;
     @state() declare protected sorting: MusicSorting;
     @state() declare protected selectedHashes: string[];
-    @state() declare protected selectionModeTimer: NodeJS.Timeout | null;
+    @state() declare protected selectionModeTimer: ReturnType<typeof setTimeout> | null;
     @state() declare protected currentPage: number;
     @state() declare protected selectionModeSetByHash: string | null;
     @state() declare protected loading: boolean;

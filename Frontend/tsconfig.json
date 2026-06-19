@@ -10,11 +10,15 @@
         "pretty": true,
         "skipLibCheck": true,
         "experimentalDecorators": true,
-        "moduleResolution": "node",
+        "strict": false,
+        "moduleResolution": "bundler",
         "noImplicitAny": true,
         "strictNullChecks": true,
         "strictBindCallApply": true,
-        "plugins": [{ "name": "ts-lit-plugin" }]
+        "plugins": [{ "name": "ts-lit-plugin" }],
+        "paths": {
+            "lit-element/decorators": ["./node_modules/lit-element/decorators.d.ts"]
+        }
     },
     "include": ["**/*.ts", "**/*.json", "native-components/loading-screen/loading-screen.js"],
     "exclude": ["**/templates/**"],

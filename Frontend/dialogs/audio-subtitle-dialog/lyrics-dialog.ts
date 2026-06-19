@@ -55,7 +55,7 @@ export class LyricsDialog extends LitElementBase {
     @state() protected declare scrollingPaused: boolean;
     @state() protected declare lyricsOffset: number;
     @state() protected declare extendedScrollY: number;
-    @state() protected declare scrollInterval: NodeJS.Timeout;
+    @state() protected declare scrollInterval: ReturnType<typeof setTimeout>;
     @state() protected declare track: MusicModel;
 
     constructor() {

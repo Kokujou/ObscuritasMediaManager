@@ -35,7 +35,7 @@ export class OfflineMusicPage extends LitElementBase {
     @state() declare protected currentPage: number;
 
     @state() declare protected selectedTracks: MusicModel[];
-    @state() declare protected selectionModeTimer: NodeJS.Timeout | null;
+    @state() declare protected selectionModeTimer: ReturnType<typeof setTimeout> | null;
     @state() declare protected selectionModeSetByHash: string | null;
 
     @state() declare protected sidebarFlipped: boolean;

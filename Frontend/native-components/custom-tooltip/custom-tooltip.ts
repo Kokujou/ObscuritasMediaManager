@@ -7,7 +7,7 @@ import { renderTooltip } from './custom-tooltip.html';
 
 @customElement('custom-tooltip')
 export class CustomTooltip extends LitElementBase {
-    static timeout: NodeJS.Timeout;
+    static timeout: ReturnType<typeof setTimeout>;
     private static currentInstance: CustomTooltip | null = null;
 
     static override get styles() {
@@ -76,7 +76,7 @@ export class CustomTooltip extends LitElementBase {
 
     text: string;
     target: HTMLElement;
-    @property({ reflect: true }) public declare anchor: 'top' | 'left' | 'bottom' | 'right';
+    @property({ reflect: true }) declare public anchor: 'top' | 'left' | 'bottom' | 'right';
 
     override render() {
         return renderTooltip.call(this);
