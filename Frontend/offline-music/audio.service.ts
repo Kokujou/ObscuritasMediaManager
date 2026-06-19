@@ -6,7 +6,6 @@ import { createSilentWav } from './create-dummy-audio';
 export class AudioService {
     declare public audio: HTMLAudioElement;
     declare public visualizationAudio: HTMLAudioElement;
-    declare private keepAliveAudio: HTMLAudioElement;
     public visualizationData = new Observable<Float32Array<ArrayBuffer>>(new Float32Array());
     public onNextTrack = new Observable<void>(null!);
     public audioProgress = new Observable(null);
@@ -43,16 +42,8 @@ export class AudioService {
         if (!this.audio) {
             this.visualizationAudio = document.body.appendChild(document.createElement('audio'));
             this.audio = document.body.appendChild(document.createElement('audio'));
-            this.keepAliveAudio = document.body.appendChild(document.createElement('audio'));
-
             this.audio.src = this.silentSrc;
             this.visualizationAudio.src = this.silentSrc;
-
-            // muted = true → canShowControlsManager() = false → not eligible for Now Playing.
-            // Keeps State::Playing so AVAudioSession stays active during pause on lock screen.
-            this.keepAliveAudio.src = this.silentSrc;
-            this.keepAliveAudio.muted = true;
-            this.keepAliveAudio.loop = true;
 
             this.setupAudio();
         }
@@ -79,12 +70,20 @@ export class AudioService {
         const workletNode = new AudioWorkletNode(audioContext, 'sample-processor');
         track.connect(workletNode);
 
+        // ConstantSourceNode keeps the AudioContext's AVAudioEngine active while paused
+        // on the lock screen. HTMLMediaElement (muted) does not work — iOS excludes
+        // muted elements from AVAudioSession lifetime. AudioContext/AVAudioEngine is a
+        // separate code path and may not have the same restriction. Worth testing.
+        const sessionKeepAlive = audioContext.createConstantSource();
+        sessionKeepAlive.offset.value = 0;
+        sessionKeepAlive.connect(audioContext.destination);
+        sessionKeepAlive.start();
+
         workletNode.port.onmessage = (event) => {
             this.visualizationData.next(event.data);
             this.audioProgress.next(null);
         };
 
-        // visibilitychange is not a trusted user-gesture context, so awaiting here
         document.addEventListener('visibilitychange', async () => {
             if (document.visibilityState == 'visible') {
                 await audioContext.resume();
@@ -96,7 +95,8 @@ export class AudioService {
             } else {
                 this.visualizationAudio.pause();
                 this.visualizationAudio.muted = true;
-                audioContext.suspend();
+                // Do NOT suspend: the ConstantSourceNode must keep running to hold
+                // AVAudioSession open via AVAudioEngine during lock-screen pause.
             }
         });
 
@@ -128,8 +128,6 @@ export class AudioService {
     play() {
         if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
         if (document.visibilityState === 'visible') this.visualizationAudio.play().catch(() => {});
-        // Start keepAlive in this gesture context so it can run through subsequent pauses.
-        this.keepAliveAudio.play().catch(() => {});
         return this.audio.play();
     }
 
@@ -139,7 +137,6 @@ export class AudioService {
         this.audio.removeAttribute('src');
         this.visualizationAudio.pause();
         this.visualizationAudio.removeAttribute('src');
-        this.keepAliveAudio.pause();
         this.activeTrackHash = undefined;
     }
 
