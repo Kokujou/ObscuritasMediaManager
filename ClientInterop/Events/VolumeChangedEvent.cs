@@ -3,8 +3,7 @@
 namespace ObscuritasMediaManager.ClientInterop.Events;
 
 [ExportTsClass]
-public class VolumeChangedEvent(double volume) : IInteropEvent
+public class VolumeChangedEvent(double volume) : InteropEventBase(InteropEvent.VolumeChanged)
 {
     public double Volume => volume;
-    public InteropEvent Event => InteropEvent.VolumeChanged;
 }

@@ -1,7 +1,7 @@
-import { IInteropEvent } from '../client-interop/i-interop-event';
 import { InteropCommand } from '../client-interop/interop-command';
 import { InteropCommandRequest } from '../client-interop/interop-command-request';
 import { InteropCommandResponse } from '../client-interop/interop-command-response';
+import { InteropEventBase } from '../client-interop/interop-event-base';
 import { InteropQueryRequest } from '../client-interop/interop-query-request';
 import { InteropQueryResponse } from '../client-interop/interop-query-response';
 import { ResponseStatus } from '../client-interop/response-status';
@@ -15,7 +15,7 @@ export class ClientInteropService {
     static socket: WebSocket | null;
     static commandResponse = new Observable<InteropCommandResponse>(null!);
     static queryResponse = new Observable<InteropQueryResponse>(null!);
-    static eventResponse = new Observable<IInteropEvent>(null!);
+    static eventResponse = new Observable<InteropEventBase>(null!);
     static failCounter = new Observable(0);
     static onConnected = new Observable(null);
 
@@ -103,7 +103,7 @@ export class ClientInteropService {
 
     static async reconnect() {
         this.socket = null;
-        console.error('websocket conection closed, trying reconnect.');
+        console.error('websocket connection closed, trying reconnect.');
         this.failCounter.next(2);
         await this.startConnection();
     }

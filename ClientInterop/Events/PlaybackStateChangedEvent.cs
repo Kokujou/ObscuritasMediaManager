@@ -3,8 +3,8 @@
 namespace ObscuritasMediaManager.ClientInterop.Events;
 
 [ExportTsClass]
-public class PlaybackStateChangedEvent(PlaybackState playbackState) : IInteropEvent
+public class PlaybackStateChangedEvent(PlaybackState playbackState)
+    : InteropEventBase(InteropEvent.PlaybackStateChanged)
 {
     public PlaybackState PlaybackState => playbackState;
-    public InteropEvent Event => InteropEvent.PlaybackStateChanged;
 }

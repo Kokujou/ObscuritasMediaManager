@@ -5,6 +5,6 @@
 
 import { InteropEvent } from "./interop-event";
 
-export interface IInteropEvent {
+export class InteropEventBase {
     event: InteropEvent;
 }

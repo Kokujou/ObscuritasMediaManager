@@ -19,7 +19,7 @@ public class WebSocketInteropClient : WebSocketBehavior
 
     public event Action<MessageEventArgs>? OnMessageReceived;
 
-    public void SendEvent<T>(T response) where T : IInteropEvent
+    public void SendEvent<T>(T response) where T : InteropEventBase
     {
         var serialized = JsonSerializer.Serialize(response, DefaultJsonOptions);
         Send(serialized);

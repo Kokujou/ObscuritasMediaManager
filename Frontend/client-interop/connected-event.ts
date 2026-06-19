@@ -3,16 +3,14 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { IInteropEvent } from "./i-interop-event";
+import { InteropEventBase } from "./interop-event-base";
 import { PlaybackState } from "./playback-state";
-import { InteropEvent } from "./interop-event";
 
-export class ConnectedEvent implements IInteropEvent {
+export class ConnectedEvent extends InteropEventBase {
     playbackState: PlaybackState;
     trackPath: string;
     duration: number;
     position: number;
-    volume: number = 1.0;
-    visualizationData: number[] = [];
-    event: InteropEvent = 2;
+    volume: number;
+    visualizationData: number[];
 }

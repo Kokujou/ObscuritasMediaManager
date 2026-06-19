@@ -14,14 +14,14 @@ public class WebSocketInteropServer() : WebSocketServer("ws://localhost:8005")
     private static Dictionary<InteropCommand, ICommandHandler> CommandHandlers { get; }
     private static Dictionary<InteropQuery, IQueryHandler> QueryHandlers { get; }
 
-    public static void BroadcastEvent<T>(T response) where T : IInteropEvent
+    public static void BroadcastEvent<T>(T response) where T : InteropEventBase
     {
         var isAnonymous = typeof(T).GetCustomAttribute<AllowAnonymousAttribute>() is not null;
         foreach (var client in Clients.Values.Where(x => !isAnonymous || x.Registered))
             client.SendEvent(response);
     }
 
-    public static void SendEventTo<T>(Guid clientId, T response) where T : IInteropEvent
+    public static void SendEventTo<T>(Guid clientId, T response) where T : InteropEventBase
     {
         var isAnonymous = typeof(T).GetCustomAttribute<AllowAnonymousAttribute>() is not null;
         var client = Clients.GetValueOrDefault(clientId);

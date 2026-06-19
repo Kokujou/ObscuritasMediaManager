@@ -3,10 +3,8 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { IInteropEvent } from "./i-interop-event";
-import { InteropEvent } from "./interop-event";
+import { InteropEventBase } from "./interop-event-base";
 
-export class VolumeChangedEvent implements IInteropEvent {
+export class VolumeChangedEvent extends InteropEventBase {
     volume: number;
-    event: InteropEvent;
 }

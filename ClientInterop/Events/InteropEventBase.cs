@@ -3,6 +3,7 @@
 namespace ObscuritasMediaManager.ClientInterop.Events;
 
 [ExportTsClass]
-public class TrackEndedEvent() : InteropEventBase(InteropEvent.TrackEnded)
+public abstract class InteropEventBase(InteropEvent e)
 {
+    public InteropEvent Event { get; } = e;
 }

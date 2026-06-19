@@ -3,11 +3,9 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { IInteropEvent } from "./i-interop-event";
+import { InteropEventBase } from "./interop-event-base";
 import { PlaybackState } from "./playback-state";
-import { InteropEvent } from "./interop-event";
 
-export class PlaybackStateChangedEvent implements IInteropEvent {
+export class PlaybackStateChangedEvent extends InteropEventBase {
     playbackState: PlaybackState;
-    event: InteropEvent;
 }
