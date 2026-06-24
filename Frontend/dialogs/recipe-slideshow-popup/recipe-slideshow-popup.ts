@@ -1,5 +1,6 @@
 import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
+import { Session } from '../../data/session';
 import { waitForAnimation } from '../../extensions/animation.extension';
 import { FoodImageModel, FoodThumbModel, RecipeResponse } from '../../obscuritas-media-manager-backend-client';
 import { PageRouting } from '../../pages/page-routing/page-routing';
@@ -44,6 +45,8 @@ export class RecipeSlideshowPopup extends LitElementBase {
 
     async connectedCallback() {
         await super.connectedCallback();
+
+        Session.currentPage.subscribe(() => this.remove());
     }
 
     async addImage(imageData: string) {
