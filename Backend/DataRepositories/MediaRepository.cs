@@ -17,10 +17,9 @@ public class MediaRepository(DatabaseContext context)
         try
         {
             var existing = await context.Media
-                .FirstOrDefaultAsync(
-                    x => x.RootFolderPath == media.RootFolderPath
-                         || (x.Type == media.Type && x.Language == media.Language &&
-                             x.Name.ToLower() == media.Name.ToLower()));
+                .FirstOrDefaultAsync(x => x.RootFolderPath == media.RootFolderPath
+                                          || (x.Type == media.Type && x.Language == media.Language &&
+                                              x.Name.ToLower() == media.Name.ToLower()));
 
             if (existing is not null && existing.GetNormalizedPath() == media.GetNormalizedPath())
                 return new(existing.Id, ModelCreationState.Ignored);
@@ -72,7 +71,7 @@ public class MediaRepository(DatabaseContext context)
     public async Task UpdatePropertyAsync<T>(Guid id, Expression<Func<MediaModel, T>> property, T value)
     {
         await context.Media.IgnoreAutoIncludes().Where(x => x.Id == id)
-            .ExecuteUpdateAsync((builder)=> builder.SetProperty(property, value));
+            .ExecuteUpdateAsync(builder => builder.SetProperty(property, value));
     }
 
     public async Task<MediaModel> GetAsync(Guid guid, bool asTracking = false)
@@ -101,6 +100,13 @@ public class MediaRepository(DatabaseContext context)
     {
         return await context.Database
             .SqlQuery<string?>($"SELECT image as value FROM Media WHERE Id  = {mediaId}")
+            .SingleAsync();
+    }
+
+    public async Task<bool> MediaImageExistsAsync(Guid mediaId)
+    {
+        return await context.Database
+            .SqlQuery<bool>($"SELECT image IS NOT NULL AS value FROM Media WHERE Id = {mediaId}")
             .SingleAsync();
     }
 }

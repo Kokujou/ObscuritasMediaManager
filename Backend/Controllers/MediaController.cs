@@ -42,6 +42,12 @@ public class MediaController(
             "image/jpeg");
     }
 
+    [HttpGet("{guid:Guid}/image/exists")]
+    public async Task<bool> ImageExistsAsync(Guid guid)
+    {
+        return await mediaRepository.MediaImageExistsAsync(guid);
+    }
+
     [HttpGet]
     public IQueryable<MediaModel> GetAll()
     {

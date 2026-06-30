@@ -18,7 +18,7 @@ public class AutoFillAnimeCommandHandler : IQueryHandler
         _browser = null;
     }
 
-    private static void OnExited(object? sender, IBrowser _)
+    private static void OnExited(IBrowser _)
     {
         WebSocketInteropServer.BroadcastEvent(new ChromeClosedEvent());
     }
@@ -48,7 +48,8 @@ public class AutoFillAnimeCommandHandler : IQueryHandler
         }
         catch
         {
-            OnExited(null!, null!);
+            OnExited(null!);
+            throw;
         }
     }
 }

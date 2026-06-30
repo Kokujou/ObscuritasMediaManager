@@ -15,7 +15,7 @@ public static class AnimeLoadsService
 
         var type = !isMovie ? "anime-series" : "anime-movies";
         await page.GotoAsync(
-            $"https://www.anime-loads.org/search?sort=title&order=asc&type={type}&q=" + animeName,
+            $"https://www.anime-loads.org/search?type={type}&q=" + animeName.Replace("-", "").Replace(":", ""),
             new()
             {
                 WaitUntil = WaitUntilState.DOMContentLoaded
