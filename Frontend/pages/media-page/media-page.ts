@@ -1,6 +1,9 @@
 import { customElement, state } from 'lit-element/decorators';
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter';
-import { InteropCommand } from '../../client-interop/interop-command';
+import { AutoFillAnimeQueryRequest } from '../../client-interop/auto-fill-anime-query-request';
+import { AutoFilledAnimeResponse } from '../../client-interop/auto-filled-anime-response';
+import { InteropEvent } from '../../client-interop/interop-event';
+import { InteropQuery } from '../../client-interop/interop-query';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
@@ -57,9 +60,8 @@ export class MediaPage extends LitElementBase {
             .filter(
                 (x) =>
                     (x.description?.length ?? 0) <= 5 ||
-                    (x.englishName?.length ?? 0) < 5 ||
-                    (x.germanName?.length ?? 0) < 5 ||
-                    (x.kanjiName?.length ?? 0) < 5 ||
+                    (x.kanjiName?.length ?? 0) < 2 ||
+                    (x.romajiName?.length ?? 0) < 5 ||
                     x.release <= 1900,
             );
     }
@@ -118,24 +120,39 @@ export class MediaPage extends LitElementBase {
         var isComplete = false;
         var dialog = EntityStatusDialog.show(() => isComplete);
         var relevantAnime = this.animeToAutoFill;
+        var aborter = new AbortController();
 
-        if (relevantAnime.length > 0)
-            await ClientInteropService.sendCommand({ command: InteropCommand.OpenChromeForDebugging, payload: null });
+        var eventSubscription = ClientInteropService.eventResponse.subscribe((e) => {
+            if (e.event != InteropEvent.ChromeClosed) return;
+            aborter.abort();
+            MessageSnackbar.popup('Die Verbindung zum Chrome Browser wurde unterbrochen. Der Vorgang wird abgebrochen.', 'error');
+            eventSubscription.unsubscribe();
+        });
+
         for (var anime of relevantAnime) {
+            if (aborter.signal.aborted) break;
             try {
-                var updated = await MediaService.autoFillMediaDetails(anime.id);
+                var updated = await ClientInteropService.executeQuery<AutoFilledAnimeResponse>({
+                    query: InteropQuery.AutoFillAnime,
+                    payload: { isMovie: anime.type == MediaCategory.AnimeMovies, name: anime.name } as AutoFillAnimeQueryRequest,
+                });
+
                 dialog.addEntry({
                     status: ModelCreationState.Updated,
-                    text: LinkElement.forPage(MediaDetailPage, { mediaId: anime.id }, updated.name),
+                    text: LinkElement.forPage(MediaDetailPage, { mediaId: anime.id }, anime.name),
                 });
-            } catch {}
+            } catch {
+                dialog.addEntry({
+                    status: ModelCreationState.Error,
+                    text: LinkElement.forPage(MediaDetailPage, { mediaId: anime.id }, anime.name),
+                });
+            }
         }
-        if (relevantAnime.length > 0)
-            await ClientInteropService.sendCommand({ command: InteropCommand.OpenChromeForDebugging, payload: { close: true } });
         dialog.addEventListener('accept', () => dialog.remove());
         isComplete = true;
 
         dialog.requestFullUpdate();
+        eventSubscription.unsubscribe();
     }
 
     async repairMedia() {

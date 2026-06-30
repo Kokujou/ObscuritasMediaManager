@@ -9,5 +9,6 @@ public enum InteropQuery
     RequestFolderContent,
     RequestSubFolders,
     LoadTrack,
-    RequestFolderPath
+    RequestFolderPath,
+    AutoFillAnime
 }

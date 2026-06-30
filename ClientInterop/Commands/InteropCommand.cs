@@ -11,6 +11,5 @@ public enum InteropCommand
     PauseTrack,
     StopTrack,
     ChangeTrackPosition,
-    ChangeTrackVolume,
-    OpenChromeForDebugging
+    ChangeTrackVolume
 }

@@ -1,4 +1,4 @@
-﻿using ObscuritasMediaManager.ClientInterop.Commands;
+﻿using ObscuritasMediaManager.ClientInterop.Queries;
 using Serilog;
 using Serilog.Events;
 using System.IO;
@@ -54,7 +54,7 @@ public partial class MainWindow
 
         Closing += (_, _) =>
         {
-            OpenChromeForDebuggingHandler.TerminateProcess();
+            AutoFillAnimeCommandHandler.TerminateProcess();
             client.Send([0]);
             client.Dispose();
         };

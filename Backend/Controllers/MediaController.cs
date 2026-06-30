@@ -7,7 +7,6 @@ using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
-using ObscuritasMediaManager.Backend.Services;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using SearchOption = System.IO.SearchOption;
@@ -19,8 +18,7 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Route("api/[controller]")]
 public class MediaController(
     MediaRepository mediaRepository,
-    IOptions<JsonOptions> jsonOptions,
-    AnimeLoadsService animeLoadsService) : ControllerBase
+    IOptions<JsonOptions> jsonOptions) : ControllerBase
 {
     private JsonSerializerOptions SerializerOptions => jsonOptions.Value.JsonSerializerOptions;
 
@@ -66,6 +64,7 @@ public class MediaController(
         request.Entry.Language = request.Language;
         request.Entry.Type = request.Category;
         request.Entry.RootFolderPath = directory.FullName;
+        request.Entry.Name = directory.Name;
 
         return await mediaRepository.CreateAsync(request.Entry);
     }
@@ -110,12 +109,5 @@ public class MediaController(
         {
             Log.Error(ex, "Error when deleting media");
         }
-    }
-
-    [HttpPost("auto-fill-anime-details/{animeId}")]
-    public async Task<MediaModel> AutoFillMediaDetailsAsync(Guid animeId)
-    {
-        var anime = await mediaRepository.GetAsync(animeId, true);
-        return await animeLoadsService.AutoFillAnimeAsync(anime);
     }
 }

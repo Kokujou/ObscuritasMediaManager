@@ -10,5 +10,6 @@ public enum InteropEvent
     Connected,
     TrackChanged,
     PlaybackStateChanged,
-    VolumeChanged
+    VolumeChanged,
+    ChromeClosed
 }

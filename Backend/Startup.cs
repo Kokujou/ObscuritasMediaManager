@@ -32,7 +32,6 @@ public class Startup
         services.AddSingleton<ILyricsClient, GeniusClientExtended>();
         services.AddSingleton<LyricsService>();
         services.AddSingleton(new InteropConnectionChecker());
-        services.AddScoped<AnimeLoadsService>();
         services.AddHttpClient();
 
         services.AddDbContext<DatabaseContext>(x => x.UseSqlite(

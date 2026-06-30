@@ -9,4 +9,5 @@ export enum InteropQuery {
     RequestSubFolders = "RequestSubFolders",
     LoadTrack = "LoadTrack",
     RequestFolderPath = "RequestFolderPath",
+    AutoFillAnime = "AutoFillAnime",
 }

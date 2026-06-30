@@ -10,4 +10,5 @@ export enum InteropEvent {
     TrackChanged = "TrackChanged",
     PlaybackStateChanged = "PlaybackStateChanged",
     VolumeChanged = "VolumeChanged",
+    ChromeClosed = "ChromeClosed",
 }

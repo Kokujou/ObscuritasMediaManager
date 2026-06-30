@@ -44,7 +44,7 @@ export class ClientInteropService {
     static executeQuery<T>(query: Omit<InteropQueryRequest, 'ticks'>) {
         if (this.socket?.readyState != WebSocket.OPEN) {
             console.warn('Der Befehl kann nur mit Verbindung zum Client-Interop ausgeführt werden.');
-            return;
+            throw new Error('Interop läuft nicht!');
         }
         return new Promise<T>(async (resolve, reject) => {
             var request = {
