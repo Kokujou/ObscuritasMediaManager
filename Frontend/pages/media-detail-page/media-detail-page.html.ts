@@ -65,7 +65,7 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                                 ${Object.values(ContentWarning)
                                     .filter(
                                         (warning) =>
-                                            !this.updatedMedia.complete || this.updatedMedia?.contentWarnings?.includes(warning)
+                                            !this.updatedMedia.complete || this.updatedMedia?.contentWarnings?.includes(warning),
                                     )
                                     .map(
                                         (warning) =>
@@ -76,36 +76,29 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                                             >
                                                 <div class="content-warning-icon" content-warning="${warning}"></div>
                                                 <div class="content-warning-label">${warning}</div>
-                                            </div>`
+                                            </div>`,
                                     )}
                             </div>
                         </div>
                     </div>
                     <div id="right-panel">
-                        ${this.createNew
-                            ? ''
-                            : html` <div id="navigation">
-                                  ${this.prevMediaId
-                                      ? LinkElement.forPage(
-                                            MediaDetailPage,
-                                            { mediaId: this.prevMediaId },
-                                            html`&LeftArrow; Letzter`,
-                                            {
-                                                id: 'prev-link',
-                                            }
-                                        )
-                                      : ''}
-                                  ${this.nextMediaId
-                                      ? LinkElement.forPage(
-                                            MediaDetailPage,
-                                            { mediaId: this.nextMediaId },
-                                            html`Nächster &RightArrow;`,
-                                            {
-                                                id: 'next-link',
-                                            }
-                                        )
-                                      : ''}
-                              </div>`}
+                        <div id="navigation">
+                            ${this.prevMediaId
+                                ? LinkElement.forPage(MediaDetailPage, { mediaId: this.prevMediaId }, html`&LeftArrow; Letzter`, {
+                                      id: 'prev-link',
+                                  })
+                                : ''}
+                            ${this.nextMediaId
+                                ? LinkElement.forPage(
+                                      MediaDetailPage,
+                                      { mediaId: this.nextMediaId },
+                                      html`Nächster &RightArrow;`,
+                                      {
+                                          id: 'next-link',
+                                      },
+                                  )
+                                : ''}
+                        </div>
 
                         <div id="media-heading">
                             <div
@@ -200,7 +193,7 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                                         ?disabled="${this.updatedMedia.complete}"
                                         .options="${DropDownOption.createSimpleArray(
                                             Object.values(MediaCategory),
-                                            this.updatedMedia.type
+                                            this.updatedMedia.type,
                                         )}"
                                     ></drop-down>
                                 </div>
@@ -211,7 +204,7 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                                         ?disabled="${this.updatedMedia.complete}"
                                         .options="${DropDownOption.createSimpleArray(
                                             Object.values(Language),
-                                            this.updatedMedia.language
+                                            this.updatedMedia.language,
                                         )}"
                                         @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
                                             this.changeProperty('language', e.detail.option.value)}"
@@ -224,7 +217,7 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                                         ?disabled="${this.updatedMedia.complete}"
                                         .options="${DropDownOption.createSimpleArray(
                                             Object.values(MediaStatus),
-                                            this.updatedMedia.status
+                                            this.updatedMedia.status,
                                         )}"
                                         @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
                                             this.changeProperty('status', e.detail.option.value)}"
@@ -239,7 +232,7 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                                     @click="${() =>
                                         this.changeProperty(
                                             'targetGroup',
-                                            Enum.nextValue(TargetGroup, this.updatedMedia.targetGroup, 'None')
+                                            Enum.nextValue(TargetGroup, this.updatedMedia.targetGroup, 'None'),
                                         )}"
                                 ></div>
                                 <svg id="target-group-label" viewbox="0 0 50 20">
@@ -270,14 +263,26 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                                                       MusicPlaylistPage,
                                                       { trackHash: track.hash },
                                                       track.name,
-                                                      { className: 'track-name' }
+                                                      { className: 'track-name' },
                                                   )}
                                                   <compact-audio-player .path="${track?.path}"></compact-audio-player>
                                               </div>
-                                          `
+                                          `,
                                       )}
                                   </div>
                               `
+                            : ''}
+                        ${!this.updatedMedia.complete &&
+                        (this.updatedMedia.type == MediaCategory.AnimeMovies ||
+                            this.updatedMedia.type == MediaCategory.AnimeSeries)
+                            ? html`<div
+                                  id="autocomplete-button"
+                                  ?loading="${this.autocompleteLoading}"
+                                  @click="${() => this.autocompleteMedia()}"
+                              >
+                                  <partial-loading full-width></partial-loading>
+                                  Autovervollständigung
+                              </div>`
                             : ''}
                     </div>
                 </div>
@@ -333,10 +338,10 @@ function renderGenreSection(this: MediaDetailPage) {
                             @removed="${() =>
                                 this.changeProperty(
                                     'genres',
-                                    this.updatedMedia.genres.filter((genre) => genre != x)
+                                    this.updatedMedia.genres.filter((genre) => genre != x),
                                 )}"
                             .text="${x.name}"
-                        ></tag-label>`
+                        ></tag-label>`,
                 )}
             ${!this.updatedMedia.complete
                 ? html` <div id="add-genre-button" @click="${() => this.showGenreSelectionDialog()}">+</div> `

@@ -8,6 +8,7 @@ export function renderMessageSnackbarStyles() {
             right: 50px;
             border-radius: 5px;
             padding: 10px;
+            z-index: 5;
 
             display: flex;
             flex-direction: row;

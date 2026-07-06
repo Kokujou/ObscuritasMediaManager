@@ -1,5 +1,6 @@
 svg {
-    filter: drop-shadow(0 0 3px purple) drop-shadow(0 0 3px purple);
+    filter: drop-shadow(0 0 3px var(--loading-animation-shadow, purple))
+        drop-shadow(0 0 3px var(--loading-animation-shadow, purple));
     width: 100%;
     height: 100%;
     position: relative;
@@ -8,12 +9,12 @@ svg {
 g {
     stroke-dasharray: 21.402;
     stroke-dashoffset: 21.402;
-    stroke: black !important;
+    stroke: currentColor !important;
     stroke-width: 10;
 }
 
 path {
-    animation: dash 3s linear alternate infinite;
+    animation: dash var(--loading-animation-duration, 3s) linear alternate infinite;
 }
 
 #inner-circle {

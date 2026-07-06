@@ -499,5 +499,45 @@ export function renderMediaDetailPageStyles() {
             font-size: 14px;
             flex: auto;
         }
+
+        #autocomplete-button {
+            position: relative;
+            align-self: center;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            font-weight: bold;
+            font-size: 16px;
+            text-shadow: 0 0 10px black;
+            padding: 15px 50px;
+            background: var(--label-color);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #autocomplete-button[loading] {
+            filter: brightness(0.75);
+            pointer-events: none;
+        }
+
+        #autocomplete-button:first-letter {
+            font-size: 20px;
+        }
+
+        #autocomplete-button:not([loading]) partial-loading {
+            display: none;
+        }
+
+        #autocomplete-button partial-loading {
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            width: 35px;
+            height: 35px;
+            transform: translateY(-50%);
+            stroke-width: 25px;
+            color: black;
+            --loading-animation-duration: 1.5s;
+            --loading-animation-shadow: transparent;
+        }
     `;
 }

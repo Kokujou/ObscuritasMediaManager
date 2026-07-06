@@ -1,4 +1,4 @@
-import { customElement, state } from 'lit-element/decorators';
+import { customElement, query, state } from 'lit-element/decorators';
 import { MediaFilter } from '../../advanced-components/media-filter-sidebar/media-filter';
 import { InteropQuery } from '../../client-interop/interop-query';
 import { LitElementBase } from '../../data/lit-element-base';
@@ -18,6 +18,7 @@ import {
     MusicModel,
     UpdateRequestOfObject,
 } from '../../obscuritas-media-manager-backend-client';
+import { AnimeAutofillService } from '../../services/anime-autofill.service';
 import { MediaService } from '../../services/backend.services';
 import { ClientInteropService } from '../../services/client-interop-service';
 import { MediaFilterService } from '../../services/media-filter.service';
@@ -45,18 +46,6 @@ export class MediaDetailPage extends LitElementBase {
         return undefined;
     }
 
-    protected get nextMediaId() {
-        var currentIndex = this.mediaIds.findIndex((x) => x == this.updatedMedia.id);
-        if (currentIndex < 0) return null;
-        return this.mediaIds[currentIndex + 1];
-    }
-
-    protected get prevMediaId() {
-        var currentIndex = this.mediaIds.findIndex((x) => x == this.updatedMedia.id);
-        if (currentIndex < 0) return null;
-        return this.mediaIds[currentIndex - 1];
-    }
-
     protected get imageUrl() {
         return `./Backend/api/media/${this.updatedMedia.id}/image?rev=${this.imageRevision}`;
     }
@@ -76,6 +65,11 @@ export class MediaDetailPage extends LitElementBase {
     @state() declare protected imageRevision: number;
     @state() declare protected hoveredRating: number;
     @state() declare protected selectedSeason: number;
+    @state() declare protected nextMediaId: string | null;
+    @state() declare protected prevMediaId: string | null;
+    @state() declare protected autocompleteLoading: boolean;
+
+    @query('#dummy-image') declare protected dummyImage: HTMLImageElement;
 
     constructor() {
         super();
@@ -95,6 +89,7 @@ export class MediaDetailPage extends LitElementBase {
                 this.mediaIds = MediaFilterService.filter([...newList], filter).map((x) => x.id);
             }),
         );
+
         Session.media.refresh();
     }
 
@@ -109,16 +104,22 @@ export class MediaDetailPage extends LitElementBase {
     async updated(_changedProperties: Map<keyof MediaDetailPage, any>) {
         super.updated(_changedProperties);
         if (this.mediaId != this.updatedMedia?.id && !this.createNew) {
-            this.updatedMedia = await MediaService.get(this.mediaId);
-            this.relatedTracks = Session.tracks
-                .current()
-                .filter((x) => x.source && x.source.length > 2)
-                .filter((x) => MediaFilterService.search([this.updatedMedia], x.source!, false).length > 0);
-
-            this.requestFullUpdate();
-            document.title = this.updatedMedia.name;
-            setFavicon(this.imageUrl, 'url');
+            await this.loadMedia();
         }
+    }
+
+    async loadMedia() {
+        this.updatedMedia = await MediaService.get(this.mediaId);
+        this.relatedTracks = Session.tracks
+            .current()
+            .filter((x) => x.source && x.source.length > 2)
+            .filter((x) => MediaFilterService.search([this.updatedMedia], x.source!, false).length > 0);
+
+        this.requestFullUpdate();
+        document.title = this.updatedMedia.name;
+        setFavicon(this.imageUrl, 'url');
+        this.nextMediaId = this.getNextMediaId();
+        this.prevMediaId = this.getPrevMediaId();
     }
 
     async showGenreSelectionDialog() {
@@ -213,6 +214,35 @@ export class MediaDetailPage extends LitElementBase {
         if (this.updatedMedia.type == MediaCategory.AnimeSeries || this.updatedMedia.type == MediaCategory.AnimeMovies)
             window.open(`https://anilist.co/search/anime?search=${this.updatedMedia.name}`);
         else window.open(`https://www.imdb.com/find/?q=${this.updatedMedia.name}&ref_=nv_sr_sm`);
+    }
+
+    protected getNextMediaId() {
+        var currentIndex = this.mediaIds.findIndex((x) => x == this.updatedMedia.id);
+        if (currentIndex < 0) currentIndex = 0;
+        return this.mediaIds[currentIndex + 1];
+    }
+
+    protected getPrevMediaId() {
+        var currentIndex = this.mediaIds.findIndex((x) => x == this.updatedMedia.id);
+        if (currentIndex < 0) currentIndex = 0;
+        return this.mediaIds[currentIndex - 1];
+    }
+
+    protected async autocompleteMedia() {
+        try {
+            this.autocompleteLoading = true;
+            var updated = await AnimeAutofillService.autofillAnime(this.updatedMedia);
+            await this.loadMedia();
+            if (updated.image?.length > 5) this.imageRevision = Date.now();
+            this.autocompleteLoading = false;
+
+            MessageSnackbar.popup('Die automatische Vervollständigung wurde erfolgreich durchgeführt.', 'success');
+        } catch {
+            MessageSnackbar.popup(
+                'Die automatische Vervollständigung konnte nicht durchgeführt werden. Bitte überprüfe die Verbindung zum Client-Interop.',
+                'error',
+            );
+        }
     }
 
     override disconnectedCallback() {
