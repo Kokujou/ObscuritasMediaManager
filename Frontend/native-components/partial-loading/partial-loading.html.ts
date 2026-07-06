@@ -23,6 +23,10 @@ export function renderPartialLoading() {
             :host([hideText]) #loading-text {
                 display: none;
             }
+
+            g {
+                stroke-width: inherit;
+            }
         </style>
 
         <div id="wrapper">${unsafeHTML(loadingIcon())}</div>
