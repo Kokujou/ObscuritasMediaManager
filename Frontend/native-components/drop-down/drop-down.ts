@@ -4,7 +4,6 @@ import { LitElementBase } from '../../data/lit-element-base';
 import { DropDownOption } from './drop-down-option';
 import { renderDropDownStyles } from './drop-down.css';
 import { renderDropDown } from './drop-down.html';
-import { render } from 'lit';
 
 export const DropDownStyles = { simple: 'simple', solid: 'solid', compact: 'compact' };
 
@@ -67,7 +66,7 @@ export class DropDown extends LitElementBase {
         this.options = [];
         this.tabIndex = 0;
 
-        this.addEventListener('keydown', (e) => {
+        this.addEventListener('keyup', (e) => {
             if (this.threeValues || this.useToggle || this.multiselect) return;
 
             e.stopPropagation();

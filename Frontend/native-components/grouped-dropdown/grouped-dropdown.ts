@@ -36,7 +36,7 @@ export class GroupedDropdown extends LitElementBase {
     override connectedCallback() {
         super.connectedCallback();
 
-        this.addEventListener('keydown', (e) => {
+        this.addEventListener('keyup', (e) => {
             if (e.key.length == 1) {
                 this.search += e.key;
                 clearTimeout(this.searchResetCallback);

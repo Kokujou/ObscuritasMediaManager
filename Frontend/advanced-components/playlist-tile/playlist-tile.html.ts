@@ -29,11 +29,6 @@ export function renderPlaylistTile(this: PlaylistTile) {
                 <svg id="instrumentation-button" class="inline-icon" viewBox="0 0 80 18">
                     <text y="80%" text-anchor="start"><!---->Playlist<!----></text>
                 </svg>
-                <div
-                    id="nation-icon"
-                    nation="${this.playlist.nation}"
-                    @click="${() => this.dispatchEvent(new CustomEvent('changeLanguage'))}"
-                ></div>
                 <svg id="author-label" viewbox="0 0 200 18">
                     <text
                         x="50%"
@@ -65,7 +60,7 @@ export function renderPlaylistTile(this: PlaylistTile) {
                                 >
                                     ★
                                 </text>
-                            </svg>`
+                            </svg>`,
                     )}
                 </div>
             </div>

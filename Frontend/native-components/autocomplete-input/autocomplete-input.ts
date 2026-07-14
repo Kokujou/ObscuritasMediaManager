@@ -11,16 +11,16 @@ export class AutocompleteInput extends LitElementBase {
         return renderAutocompleteInputStyles();
     }
 
-    @property() public declare searchItems?: (text: string) => Promise<AutocompleteItem[]>;
-    @property() public declare placeholder?: string;
-    @property({ type: Object }) public declare value?: AutocompleteItem;
-    @property({ type: Boolean }) public declare allowText: boolean;
+    @property() declare public searchItems?: (text: string) => Promise<AutocompleteItem[]>;
+    @property() declare public placeholder?: string;
+    @property({ type: Object }) declare public value?: AutocompleteItem;
+    @property({ type: Boolean }) declare public allowText: boolean;
 
-    @state() protected declare showDropdown: boolean;
-    @state() protected declare searchResult: AutocompleteItem[] | undefined;
-    @state() protected declare focusedItem: AutocompleteItem | null;
+    @state() declare protected showDropdown: boolean;
+    @state() declare protected searchResult: AutocompleteItem[] | undefined;
+    @state() declare protected focusedItem: AutocompleteItem | null;
 
-    @query('#search-field') public declare searchField: HTMLInputElement;
+    @query('#search-field') declare public searchField: HTMLInputElement;
 
     connectedCallback() {
         super.connectedCallback();
@@ -44,13 +44,15 @@ export class AutocompleteInput extends LitElementBase {
         if (this.searchResult?.length) this.showDropdown = true;
     }
 
-    handleKeyDown(event: KeyboardEvent) {
+    handleKey(event: KeyboardEvent) {
         if (event.key == 'Escape' || event.key == 'Tab') {
+            event.stopPropagation();
             this.selectItem(this.value);
             return;
         }
 
         if (event.key == 'Enter' && this.showDropdown) {
+            event.stopPropagation();
             this.selectItem(this.focusedItem);
             return;
         }

@@ -1,6 +1,6 @@
-﻿using System.Collections.Concurrent;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Models;
+using System.Collections.Concurrent;
 
 namespace ObscuritasMediaManager.Backend.DataRepositories;
 
@@ -37,7 +37,7 @@ public class PlaylistRepository(DatabaseContext context)
         return playlistId;
     }
 
-    public async Task CreatePlaylistAsync(PlaylistModel playlist)
+    public async Task<Guid> CreatePlaylistAsync(PlaylistModel playlist)
     {
         await UpdateTracksAsync(playlist);
 
@@ -47,6 +47,7 @@ public class PlaylistRepository(DatabaseContext context)
         await context.SaveChangesAsync();
 
         await UpdatePlaylistTrackMappingAsync(playlist.Id, playlist.Name, cached);
+        return playlist.Id;
     }
 
     public async Task UpdateDataAsync(PlaylistModel actual, PlaylistModel old, PlaylistModel updated)
@@ -60,8 +61,6 @@ public class PlaylistRepository(DatabaseContext context)
             actual.Genres = updated.Genres;
         if (updated.Language != default && old.Language == actual.Language)
             actual.Language = updated.Language;
-        if (updated.Nation != default && old.Nation == actual.Nation)
-            actual.Nation = updated.Nation;
         if (updated.Rating != 0 && old.Rating == actual.Rating)
             actual.Rating = updated.Rating;
         if (updated.Image != default && old.Image == actual.Image)

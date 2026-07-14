@@ -38,26 +38,23 @@ public class PlaylistController(PlaylistRepository playlistRepository)
     }
 
     [HttpPost("create")]
-    public async Task CreatePlaylistAsync(PlaylistModel playlist)
+    public async Task<Guid> CreatePlaylistAsync(PlaylistModel playlist)
     {
         playlist.Id = Guid.NewGuid();
-        await playlistRepository.CreatePlaylistAsync(playlist);
+        return await playlistRepository.CreatePlaylistAsync(playlist);
     }
 
     [HttpPut("{playlistId:guid}")]
-    public async Task UpdatePlaylistDataAsync(Guid playlistId, [FromBody] UpdateRequest<PlaylistModel> updateRequest)
+    public async Task<Guid> UpdatePlaylistDataAsync(Guid playlistId,
+        [FromBody] UpdateRequest<PlaylistModel> updateRequest)
     {
         if (updateRequest.OldModel.Id != default && playlistId != updateRequest.OldModel.Id)
             throw new("Ids of objects did not match");
 
         var actual = await playlistRepository.GetPlaylistAsync(playlistId);
-        if (actual is null)
-        {
-            await playlistRepository.CreatePlaylistAsync(updateRequest.NewModel);
-            return;
-        }
-
         playlistRepository.DeleteTemporaryPlaylist(playlistId);
+        if (actual is null or { IsTemporary: true })
+            return await playlistRepository.CreatePlaylistAsync(updateRequest.NewModel);
 
         foreach (var track in updateRequest.NewModel.Tracks.Where(x => x.Hash is null))
             track.CalculateHash();
@@ -66,6 +63,7 @@ public class PlaylistController(PlaylistRepository playlistRepository)
         await playlistRepository.UpdateTracksAsync(updateRequest.NewModel);
         await playlistRepository.UpdatePlaylistTrackMappingAsync(updateRequest.NewModel.Id, updateRequest.NewModel.Name,
             updateRequest.NewModel.Tracks);
+        return actual.Id;
     }
 
     [HttpPut("{playlistId}/tracks")]

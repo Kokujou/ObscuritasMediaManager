@@ -10,28 +10,12 @@ export class DurationInput extends LitElementBase {
         return renderDurationInputStyles();
     }
 
-    @property({ type: Object }) public declare timespan: TimeSpan;
-    @property({ type: Boolean }) public declare compact: boolean;
+    @property({ type: Object }) declare public timespan: TimeSpan;
+    @property({ type: Boolean }) declare public compact: boolean;
 
     constructor() {
         super();
         this.timespan = new TimeSpan();
-    }
-
-    handleKeyDown(event: KeyboardEvent) {
-        var keyNumber = Number.parseInt(event.key);
-        var target = event.target as HTMLInputElement;
-
-        if (keyNumber >= 0) {
-            target.value = (Number.parseInt(target.value) + keyNumber).toString().padStart(2, '0');
-            return;
-        }
-
-        if (event.key.length == 1 && !keyNumber && keyNumber != 0) {
-            event.stopPropagation();
-            event.preventDefault();
-            return;
-        }
     }
 
     handleValueChange(property: keyof TimeSpan, element: HTMLInputElement, max: number) {

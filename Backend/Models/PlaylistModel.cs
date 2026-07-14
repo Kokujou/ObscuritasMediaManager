@@ -44,7 +44,6 @@ public class PlaylistModel
     [MaxLength(255)] public string? Image { get; set; }
     public byte Rating { get; set; }
     public Language Language { get; set; }
-    public Language Nation { get; set; }
     public IEnumerable<MusicGenre> Genres { get; set; } = new List<MusicGenre>();
     public bool Complete { get; set; }
     [NotMapped] public bool IsTemporary { get; set; }

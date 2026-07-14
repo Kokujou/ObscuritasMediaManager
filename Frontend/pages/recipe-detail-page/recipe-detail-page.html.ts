@@ -240,7 +240,7 @@ function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMa
         <div
             class="ingredient-category-icon-wrapper"
             tabindex="0"
-            onkeydown="javascript: if(event.key == 'Enter' || event.key == ' ') 
+            onkeyup="javascript: if(event.key == 'Enter' || event.key == ' ') 
             { 
                 event.preventDefault(); 
                 event.stopPropagation();

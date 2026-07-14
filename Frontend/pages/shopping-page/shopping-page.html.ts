@@ -32,7 +32,7 @@ export function renderShoppingPage(this: ShoppingPage) {
                                         .caption="${this.nation ?? '---'}"
                                         .options="${DropDownOption.createSimpleArray(
                                             [null, ...Object.values(Language)],
-                                            this.nation
+                                            this.nation,
                                         )}"
                                         useSearch
                                         @selectionChange="${(e: CustomEvent<{ option: DropDownOption<Language> }>) =>
@@ -141,7 +141,7 @@ function renderIngredient(this: ShoppingPage, ingredient: IngredientModel) {
                 <div
                     class="ingredient-category-icon-wrapper"
                     tabindex="0"
-                    onkeydown="javascript: if(event.key == 'Enter' || event.key == ' ') { 
+                    onkeyup="javascript: if(event.key == 'Enter' || event.key == ' ') { 
                                                 event.preventDefault(); 
                                                 event.stopPropagation();
                                                 this.dispatchEvent(new CustomEvent('click'));
@@ -156,9 +156,9 @@ function renderIngredient(this: ShoppingPage, ingredient: IngredientModel) {
                                             text: category,
                                             image: IngredientIcons[category],
                                             action: () => this.updateIngredient(ingredient, 'category', category),
-                                        } as ContextMenuItem)
+                                        }) as ContextMenuItem,
                                 ),
-                            e
+                            e,
                         )}"
                 >
                     <div class="ingredient-category-icon" icon="${Icons.Category}"></div>

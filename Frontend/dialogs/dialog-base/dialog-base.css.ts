@@ -46,13 +46,13 @@ export function renderDialogBaseStyles() {
 
         #dialog-content,
         #dialog-text {
-            white-space: pre-line;
             position: relative;
             margin: 20px;
             font-size: 16px;
         }
 
         #dialog-text {
+            white-space: pre-line;
             max-width: 600px;
             max-height: 400px;
             overflow-y: auto;

@@ -1874,7 +1874,7 @@ export class PlaylistClient {
         return Promise.resolve<PlaylistModel>(null as any);
     }
 
-    updatePlaylistData(playlistId: string, updateRequest: UpdateRequestOfPlaylistModel, signal?: AbortSignal): Promise<void> {
+    updatePlaylistData(playlistId: string, updateRequest: UpdateRequestOfPlaylistModel, signal?: AbortSignal): Promise<string> {
         let url_ = this.baseUrl + "/api/Playlist/{playlistId}";
         if (playlistId === undefined || playlistId === null)
             throw new globalThis.Error("The parameter 'playlistId' must be defined.");
@@ -1889,6 +1889,7 @@ export class PlaylistClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
+                "Accept": "application/json"
             }
         };
 
@@ -1897,19 +1898,23 @@ export class PlaylistClient {
         });
     }
 
-    protected processUpdatePlaylistData(response: Response): Promise<void> {
+    protected processUpdatePlaylistData(response: Response): Promise<string> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-            return;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null as any;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<void>(null as any);
+        return Promise.resolve<string>(null as any);
     }
 
     deletePlaylist(playlistId: string, signal?: AbortSignal): Promise<void> {
@@ -1989,7 +1994,7 @@ export class PlaylistClient {
         return Promise.resolve<PlaylistModel[]>(null as any);
     }
 
-    createPlaylist(playlist: PlaylistModel, signal?: AbortSignal): Promise<void> {
+    createPlaylist(playlist: PlaylistModel, signal?: AbortSignal): Promise<string> {
         let url_ = this.baseUrl + "/api/Playlist/create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2001,6 +2006,7 @@ export class PlaylistClient {
             signal,
             headers: {
                 "Content-Type": "application/json",
+                "Accept": "application/json"
             }
         };
 
@@ -2009,19 +2015,23 @@ export class PlaylistClient {
         });
     }
 
-    protected processCreatePlaylist(response: Response): Promise<void> {
+    protected processCreatePlaylist(response: Response): Promise<string> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
-            return;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : null as any;
+    
+            return result200;
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<void>(null as any);
+        return Promise.resolve<string>(null as any);
     }
 
     addTracksToPlaylist(playlistId: string, trackHashes: string[], signal?: AbortSignal): Promise<void> {
@@ -4291,7 +4301,6 @@ export class PlaylistModel implements IPlaylistModel {
     image: string | null;
     rating: number;
     language: Language;
-    nation: Language;
     genres: MusicGenre[];
     complete: boolean;
     isTemporary: boolean;
@@ -4315,7 +4324,6 @@ export class PlaylistModel implements IPlaylistModel {
             this.image = _data["image"] !== undefined ? _data["image"] : null as any;
             this.rating = _data["rating"] !== undefined ? _data["rating"] : null as any;
             this.language = _data["language"] !== undefined ? _data["language"] : null as any;
-            this.nation = _data["nation"] !== undefined ? _data["nation"] : null as any;
             if (Array.isArray(_data["genres"])) {
                 this.genres = [] as any;
                 for (let item of _data["genres"])
@@ -4350,7 +4358,6 @@ export class PlaylistModel implements IPlaylistModel {
         data["image"] = this.image !== undefined ? this.image : null as any;
         data["rating"] = this.rating !== undefined ? this.rating : null as any;
         data["language"] = this.language !== undefined ? this.language : null as any;
-        data["nation"] = this.nation !== undefined ? this.nation : null as any;
         if (Array.isArray(this.genres)) {
             data["genres"] = [];
             for (let item of this.genres)
@@ -4381,7 +4388,6 @@ export interface IPlaylistModel {
     image: string | null;
     rating: number;
     language: Language;
-    nation: Language;
     genres: MusicGenre[];
     complete: boolean;
     isTemporary: boolean;

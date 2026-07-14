@@ -262,7 +262,10 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     async openEditPlaylistDialog() {
-        await EditPlaylistDialog.show(this.playlist);
+        var playlistId = await EditPlaylistDialog.show(this.playlist);
+        if (!playlistId) return;
+
+        this.playlistId = playlistId;
         await this.initializeData();
     }
 

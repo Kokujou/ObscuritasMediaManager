@@ -25,37 +25,38 @@ export class EditPlaylistDialog extends LitElementBase {
     static show(playlist: PlaylistModel) {
         var dialog = new EditPlaylistDialog();
         playlist.genres ??= [];
-        dialog.oldPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist))) ?? new PlaylistModel();
-        dialog.newPlaylist = PlaylistModel.fromJS(JSON.parse(JSON.stringify(playlist))) ?? new PlaylistModel();
+        dialog.oldPlaylist = PlaylistModel.fromJS(playlist.toJSON()) ?? new PlaylistModel();
+        dialog.newPlaylist = PlaylistModel.fromJS(playlist.toJSON()) ?? new PlaylistModel();
 
         PageRouting.container!.append(dialog);
         dialog.requestFullUpdate();
 
-        return new Promise<void>((resolve) => {
+        return new Promise<string | null>((resolve) => {
             dialog.addEventListener('accept', async () => {
                 try {
+                    var playlistId: string | null = null;
                     if (dialog.newPlaylist.id)
-                        await PlaylistService.updatePlaylistData(
+                        playlistId = await PlaylistService.updatePlaylistData(
                             dialog.newPlaylist.id,
-                            new UpdateRequestOfPlaylistModel({ oldModel: dialog.oldPlaylist, newModel: dialog.newPlaylist })
+                            new UpdateRequestOfPlaylistModel({ oldModel: dialog.oldPlaylist, newModel: dialog.newPlaylist }),
                         );
-                    else await PlaylistService.createPlaylist(dialog.newPlaylist);
+                    else playlistId = await PlaylistService.createPlaylist(dialog.newPlaylist);
 
                     for (var track of dialog.newPlaylist.tracks) await dialog.updateTrackPlaylistProperties(track);
 
                     await MessageSnackbar.popup('Playlist was successfully added', 'success');
-                    resolve();
+                    resolve(playlistId);
                     dialog.remove();
                 } catch (err) {
                     console.error(err);
                     await DialogBase.show('Ein Fehler ist beim bearbeiten der Playlist aufgetreten:' + err, {
-                        declineActionText: 'Ok',
+                        acceptActionText: 'Ok',
                     });
                 }
             });
 
             dialog.addEventListener('decline', () => {
-                resolve();
+                resolve(null);
                 dialog.remove();
             });
         });
@@ -65,9 +66,9 @@ export class EditPlaylistDialog extends LitElementBase {
         return Object.values(MusicGenre).filter((genre) => !this.newPlaylist.genres.some((x) => MusicGenre[x] == genre));
     }
 
-    @property({ type: Object }) public declare oldPlaylist;
-    @property({ type: Object }) public declare newPlaylist;
-    @property({ type: Boolean, reflect: true }) public declare draggingFiles: boolean;
+    @property({ type: Object }) declare public oldPlaylist;
+    @property({ type: Object }) declare public newPlaylist;
+    @property({ type: Boolean, reflect: true }) declare public draggingFiles: boolean;
 
     constructor() {
         super();
@@ -92,7 +93,7 @@ export class EditPlaylistDialog extends LitElementBase {
     removeGenre(genre: MusicGenre) {
         this.changeProperty(
             'genres',
-            this.newPlaylist.genres.filter((x) => x != genre)
+            this.newPlaylist.genres.filter((x) => x != genre),
         );
     }
 

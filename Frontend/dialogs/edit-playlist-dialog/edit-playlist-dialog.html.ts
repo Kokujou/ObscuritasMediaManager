@@ -55,10 +55,11 @@ export function renderEditPlaylistDialog(this: EditPlaylistDialog) {
                             <div class="property-label">Genres:</div>
                             <div class="property-value">
                                 ${this.newPlaylist.genres.map(
-                                    (genre) => html`<tag-label
-                                        .text="${genre}"
-                                        @removed="${() => this.removeGenre(genre)}"
-                                    ></tag-label>`
+                                    (genre) =>
+                                        html`<tag-label
+                                            .text="${genre}"
+                                            @removed="${() => this.removeGenre(genre)}"
+                                        ></tag-label>`,
                                 )}
                                 <tag-label
                                     createNew
@@ -73,23 +74,10 @@ export function renderEditPlaylistDialog(this: EditPlaylistDialog) {
                                 <drop-down
                                     .options="${DropDownOption.createSimpleArray(
                                         Object.values(Language),
-                                        this.newPlaylist.language
+                                        this.newPlaylist.language,
                                     )}"
                                     @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
                                         this.changeProperty('language', e.detail.option.value)}"
-                                ></drop-down>
-                            </div>
-                        </div>
-                        <div id="playlist-nation" class="property">
-                            <div class="property-label">Nation:</div>
-                            <div class="property-value">
-                                <drop-down
-                                    .options="${DropDownOption.createSimpleArray(
-                                        Object.values(Language),
-                                        this.newPlaylist.nation
-                                    )}"
-                                    @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
-                                        this.changeProperty('nation', e.detail.option.value)}"
                                 ></drop-down>
                             </div>
                         </div>

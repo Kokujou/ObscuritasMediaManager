@@ -20,14 +20,14 @@ export class OrderedList extends LitElementBase {
         return children.find((x) => x.draggable);
     }
 
-    @property({ type: Array }) items: any[];
-    @property() public declare propertyName: string;
+    @property({ type: Array }) declare public items: any[];
+    @property() declare public propertyName: string;
 
-    @state() protected declare lastIndex: number;
-    @state() protected declare selectedIndices: number[];
+    @state() declare protected lastIndex: number;
+    @state() declare protected selectedIndices: number[];
 
-    @state() protected declare dragged: HTMLElement | null;
-    @state() protected declare lastHovered: HTMLElement | null;
+    @state() declare protected dragged: HTMLElement | null;
+    @state() declare protected lastHovered: HTMLElement | null;
 
     constructor() {
         super();
@@ -50,7 +50,7 @@ export class OrderedList extends LitElementBase {
             this.requestFullUpdate();
         });
 
-        this.addEventListener('keydown', async (event) => {
+        this.addEventListener('keyup', async (event) => {
             if (event.ctrlKey && event.key == 'a') {
                 this.selectedIndices = Array.from(this.getRangeBetween(0, this.items.length - 1));
                 this.requestFullUpdate();

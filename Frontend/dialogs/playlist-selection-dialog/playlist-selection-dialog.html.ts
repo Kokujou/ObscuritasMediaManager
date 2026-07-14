@@ -27,33 +27,33 @@ export function renderPlaylistSelectionDialog(this: PlaylistSelectionDialog) {
                 </thead>
                 <tbody>
                     ${this.playlists.map(
-                        (playlist) => html`<tr
-                            ?selected="${playlist?.id == this.selectedPlaylist?.id}"
-                            @click="${() => {
-                                this.selectedPlaylist = playlist;
-                                this.requestFullUpdate();
-                            }}"
-                        >
-                            <td class="name-column">${playlist.image}</td>
-                            <td>${playlist.name}</td>
-                            <td>${playlist.author}</td>
-                            <td>${playlist.language}</td>
-                            <td>${playlist.nation}</td>
-                            <td class="rating-column">
-                                <star-rating max="5" .values="${Array.from(Array(playlist.rating).keys())}"></star-rating>
-                            </td>
-                            <td>
-                                <div
-                                    class="popup-icon"
-                                    icon="${Icons.Popup}"
-                                    @click="${(e: Event) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        window.open(`./?guid=${playlist.id}#${getPageName(MusicPlaylistPage)}`, '_blank');
-                                    }}"
-                                ></div>
-                            </td>
-                        </tr>`
+                        (playlist) =>
+                            html`<tr
+                                ?selected="${playlist?.id == this.selectedPlaylist?.id}"
+                                @click="${() => {
+                                    this.selectedPlaylist = playlist;
+                                    this.requestFullUpdate();
+                                }}"
+                            >
+                                <td class="name-column">${playlist.image}</td>
+                                <td>${playlist.name}</td>
+                                <td>${playlist.author}</td>
+                                <td>${playlist.language}</td>
+                                <td class="rating-column">
+                                    <star-rating max="5" .values="${Array.from(Array(playlist.rating).keys())}"></star-rating>
+                                </td>
+                                <td>
+                                    <div
+                                        class="popup-icon"
+                                        icon="${Icons.Popup}"
+                                        @click="${(e: Event) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            window.open(`./?guid=${playlist.id}#${getPageName(MusicPlaylistPage)}`, '_blank');
+                                        }}"
+                                    ></div>
+                                </td>
+                            </tr>`,
                     )}
                 </tbody>
             </table>

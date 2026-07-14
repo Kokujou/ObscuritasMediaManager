@@ -20,7 +20,7 @@ function renderNewLabelForm(this: TagLabel) {
         <input
             id="new-tag-input"
             placeholder="${this.placeholder ?? ''}"
-            @keydown="${(e: KeyboardEvent) => this.handleInput(e)}"
+            @keyup="${(e: KeyboardEvent) => this.handleInput(e)}"
             @input="${() => this.requestFullUpdate()}"
             @focus="${() => (this.showAutocomplete = true)}"
             @focusout="${() => (this.showAutocomplete = false)}"

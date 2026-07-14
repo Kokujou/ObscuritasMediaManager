@@ -69,8 +69,10 @@ export class TagLabel extends LitElementBase {
             var selectedParent = selectedElement.parentElement!;
             if (selectedElement.offsetTop <= selectedParent.scrollTop)
                 selectedParent.scrollTo({ top: selectedElement.offsetTop });
-        } else if (event.key == 'Enter' || event.key == 'Tab')
-            this.notifyTagCreated(this.filteredAutocomplete[this.autofillIndex > 0 ? this.autofillIndex : 0]);
+        } else if (event.key == 'Enter' || event.key == 'Tab') {
+            event.stopPropagation();
+            this.notifyTagCreated();
+        }
 
         this.requestFullUpdate();
         var selectedElement = this.selectedElement;
@@ -81,7 +83,11 @@ export class TagLabel extends LitElementBase {
             selectedParent.scrollTo({ top: selectedParent.scrollHeight });
     }
 
-    notifyTagCreated(item: string | TagAutocompleteItem) {
+    notifyTagCreated(item: string | TagAutocompleteItem | null = null) {
+        item ??= this.filteredAutocomplete[this.autofillIndex > 0 ? this.autofillIndex : -1];
+        if (this.filteredAutocomplete.length == 1) item ??= this.filteredAutocomplete[0];
+
+        if (!item) return;
         var tagInput = this.shadowRoot!.querySelector('#new-tag-input') as HTMLInputElement;
         this.dispatchEvent(new CustomEvent('tagCreated', { detail: { value: item } }));
         tagInput.value = '';
