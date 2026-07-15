@@ -96,18 +96,17 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                         ${this.updatedTrack.complete
                             ? html`<div id="audio-title">${this.updatedTrack.name}</div>`
                             : html`
-                                  <div
+                                  <input
                                       type="text"
                                       id="audio-title"
-                                      contenteditable
                                       class="editable-label"
                                       tooltip="Name"
                                       ?disabled="${this.updatedTrack.complete}"
                                       oninput="this.dispatchEvent(new Event('change'))"
-                                      .textContent="${live(this.updatedTrack.name)}"
+                                      .value="${live(this.updatedTrack.name)}"
                                       @change="${(e: Event) =>
-                                          this.changeProperty('name', (e.currentTarget as HTMLInputElement).innerText)}"
-                                  ></div>
+                                          this.changeProperty('name', (e.currentTarget as HTMLInputElement).value)}"
+                                  />
                               `}
 
                         <div id="audio-subtitle">

@@ -152,7 +152,6 @@ export function renderMusicPlaylistStyles() {
 
         #audio-title {
             font-size: 18px;
-            max-width: 100%;
             margin-top: -10px;
         }
 
@@ -287,6 +286,7 @@ export function renderMusicPlaylistStyles() {
             color: inherit;
             background: none;
             text-align: center;
+            field-sizing: content;
 
             max-width: 300px;
             overflow-x: auto;
