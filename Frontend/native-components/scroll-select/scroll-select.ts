@@ -33,12 +33,13 @@ export class ScrollSelect extends LitElementBase {
         return this.currentItemIndex < this.children.length - 1;
     }
 
-    @property({ type: Array }) public declare options: string[];
-    @property() public declare value: string;
+    @property({ type: Array }) declare public options: string[];
+    @property() declare public value: string;
 
-    @state() protected declare currentItemIndex: number;
-    @state() protected declare mouseDown: boolean;
-    @state() protected declare mouseStartY: number;
+    @state() declare protected currentItemIndex: number;
+    @state() declare protected mouseDown: boolean;
+    @state() declare protected mouseStartY: number;
+    @state() declare protected wasDragging: boolean;
 
     constructor() {
         super();
@@ -94,25 +95,39 @@ export class ScrollSelect extends LitElementBase {
 
     onPointerMove(e: PointerEvent) {
         if (!this.mouseDown) return;
+
+        this.wasDragging = true;
+
         var deltaY = e.movementY;
-        this.mouseStartY += deltaY * 3;
+        this.mouseStartY += deltaY * 1.5;
         this.scrollItemsContainer.style.transform = `translateY(${this.mouseStartY}px)`;
     }
 
     onPointerUp() {
+        this.wasDragging = false;
         if (!this.mouseDown) return;
         this.mouseDown = false;
 
-        var currentScrollTop = this.mouseStartY;
         this.scrollItemsContainer.classList.toggle('user-interaction', false);
+        const matrix = new DOMMatrix(getComputedStyle(this.scrollItemsContainer).transform);
+
+        const currentTranslateY = matrix.m42;
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+
         this.scrollChildren.forEach((item, index) => {
-            var targetTop = getTargetScrollPosition(item, item.parentElement!, this.scrollContainer).top;
-            if (currentScrollTop > targetTop - item.offsetHeight / 2 && currentScrollTop < targetTop + item.offsetHeight / 2) {
-                this.currentItemIndex = index;
+            const targetTop = getTargetScrollPosition(item, item.parentElement!, this.scrollContainer).top;
+
+            const distance = Math.abs(currentTranslateY - targetTop);
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = index;
             }
         });
 
-        this.notifyValueChanged();
+        this.currentItemIndex = closestIndex;
+        this.value = this.options[this.currentItemIndex];
     }
 
     notifyValueChanged() {

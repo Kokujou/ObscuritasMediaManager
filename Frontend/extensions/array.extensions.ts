@@ -97,7 +97,6 @@ Array.createRange = function (from: number, to: number): number[] {
 Array.prototype.replace = function <T>(this: T[], matcher: (item: T) => boolean, item: T) {
     const currentIndex = this.findIndex(matcher);
     if (currentIndex < 0) return this;
-    console.log('recipe with', item);
     this.splice(currentIndex, 1, item);
     return this;
 };

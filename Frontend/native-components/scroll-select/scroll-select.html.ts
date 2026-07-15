@@ -11,10 +11,10 @@ export function renderScrollSelect(this: ScrollSelect) {
                         (x) =>
                             html`<div
                                 class="scroll-item ${this.options[this.currentItemIndex] == x ? 'active' : ''}"
-                                @click="${() => this.scrollToItem(x)}"
+                                @click="${() => (this.wasDragging ? this.scrollToItem(x) : null)}"
                             >
                                 ${x}
-                            </div>`
+                            </div>`,
                     )}
 
                     <div class="inner-space">x</div>
