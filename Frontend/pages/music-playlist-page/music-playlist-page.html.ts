@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { live } from 'lit/directives/live.js';
 import { getMoodFontColor, MoodColors } from '../../data/enumerations/mood';
 import { Session } from '../../data/session';
 import { Enum } from '../../extensions/enum.extensions';
@@ -95,17 +96,18 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                         ${this.updatedTrack.complete
                             ? html`<div id="audio-title">${this.updatedTrack.name}</div>`
                             : html`
-                                  <input
+                                  <div
                                       type="text"
                                       id="audio-title"
+                                      contenteditable
                                       class="editable-label"
                                       tooltip="Name"
                                       ?disabled="${this.updatedTrack.complete}"
-                                      .value="${this.updatedTrack.name}"
-                                      oninput="this.dispatchEvent(new Event('change'))"
+                                      onkeyup="this.dispatchEvent(new Event('change'))"
+                                      .textContent="${live(this.updatedTrack.name)}"
                                       @change="${(e: Event) =>
-                                          this.changeProperty('name', (e.currentTarget as HTMLInputElement).value)}"
-                                  />
+                                          this.changeProperty('name', (e.currentTarget as HTMLInputElement).innerText)}"
+                                  ></div>
                               `}
 
                         <div id="audio-subtitle">

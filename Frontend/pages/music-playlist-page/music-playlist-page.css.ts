@@ -154,10 +154,6 @@ export function renderMusicPlaylistStyles() {
             font-size: 18px;
             max-width: 100%;
             margin-top: -10px;
-
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         #audio-subtitle {
@@ -283,7 +279,7 @@ export function renderMusicPlaylistStyles() {
             height: 20px;
         }
 
-        input.editable-label {
+        .editable-label {
             outline: none;
             border: none;
             border-bottom: 2px solid;
@@ -291,10 +287,26 @@ export function renderMusicPlaylistStyles() {
             color: inherit;
             background: none;
             text-align: center;
+
+            max-width: 300px;
+            overflow-x: auto;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            scrollbar-width: none;
         }
 
-        input.editable-label[disabled] {
+        .editable-label::-webkit-scrollbar {
+            display: none;
+        }
+
+        .editable-label[disabled] {
             border: none;
+        }
+
+        .editable-label,
+        input[type='text'] {
+            min-width: 200px;
+            padding: 2px 10px;
         }
 
         #edit-playlist-link {
