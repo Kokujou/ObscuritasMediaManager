@@ -18,7 +18,7 @@ export class LinkElement extends LitElementBase {
         page: T,
         params: Partial<PageParams<U>> | null,
         inner: TemplateResult | string,
-        options: Partial<Record<keyof LinkElement, any>> = {}
+        options: Partial<Record<keyof LinkElement, any>> = {},
     ) {
         return html`<link-element
             id="${options.id}"
@@ -34,7 +34,7 @@ export class LinkElement extends LitElementBase {
 
     static getLinkFor<T extends Page, U extends Omit<InstanceType<T>, keyof LitElementBase> | undefined>(
         page: T | undefined,
-        params: Partial<Pick<U, import('../../extensions/url.extension').NonMethodKeys<U>>>
+        params: Partial<Pick<U, import('../../extensions/url.extension').NonMethodKeys<U>>>,
     ) {
         var link = '';
         if (params)
@@ -50,11 +50,11 @@ export class LinkElement extends LitElementBase {
         return LinkElement.getLinkFor(this.page, this.params);
     }
 
-    @property() public declare href?: string;
-    @property() public declare target?: string;
-    @property({ type: Object }) public declare page?: Page;
-    @property({ type: Object }) public declare params: any;
-    @property({ type: Boolean, reflect: true }) public declare disabled: boolean;
+    @property() declare public href?: string;
+    @property() declare public target?: string;
+    @property({ type: Object }) declare public page?: Page;
+    @property({ type: Object }) declare public params: any;
+    @property({ type: Boolean, reflect: true }) declare public disabled: boolean;
 
     override render() {
         return renderLinkElement.call(this);
@@ -69,5 +69,11 @@ export class LinkElement extends LitElementBase {
         else if (this.page) changePage(this.page, this.params);
 
         return false;
+    }
+
+    handleMiddleButton(event: MouseEvent) {
+        if (event.button != 1) return;
+        event.preventDefault();
+        window.open(this.fullLink, '_blank', 'noopener,noreferrer');
     }
 }

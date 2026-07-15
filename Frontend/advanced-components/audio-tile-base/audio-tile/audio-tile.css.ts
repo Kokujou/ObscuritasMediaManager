@@ -34,6 +34,10 @@ export function renderAudioTileStyles() {
             color: var(--font-color);
         }
 
+        :host([readOnly]) #tile-container {
+            pointer-events: none;
+        }
+
         audio-tile-base {
             min-height: var(--audio-tile-min-height);
             margin-bottom: 10px;

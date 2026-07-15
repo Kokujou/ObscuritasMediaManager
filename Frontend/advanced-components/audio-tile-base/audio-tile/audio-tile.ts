@@ -12,9 +12,10 @@ export class AudioTile extends LitElementBase {
         return renderAudioTileStyles();
     }
 
-    @property({ type: Object }) public declare track: MusicModel;
-    @property({ type: Boolean, reflect: true }) public declare paused: boolean;
-    @property({ type: Object }) public declare visualizationData?: Observable<Float32Array<ArrayBuffer>>;
+    @property({ type: Object }) declare public track: MusicModel;
+    @property({ type: Boolean, reflect: true }) declare public paused: boolean;
+    @property({ type: Boolean, reflect: true }) declare public readOnly: boolean;
+    @property({ type: Object }) declare public visualizationData?: Observable<Float32Array<ArrayBuffer>>;
 
     constructor() {
         super();

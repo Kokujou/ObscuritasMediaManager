@@ -41,6 +41,7 @@ export class MusicPage extends LitElementBase {
     @state() declare protected filter: MusicFilterOptions;
     @state() declare protected sorting: MusicSorting;
     @state() declare protected selectedHashes: string[];
+    @state() declare protected lastSelectedHash: string | null;
     @state() declare protected selectionModeTimer: ReturnType<typeof setTimeout> | null;
     @state() declare protected currentPage: number;
     @state() declare protected selectionModeSetByHash: string | null;
@@ -94,6 +95,7 @@ export class MusicPage extends LitElementBase {
             if (!this.selectionMode || ContextMenu.instance) return;
             this.selectionMode = false;
             this.selectedHashes = [];
+            this.lastSelectedHash = null;
         });
     }
 
@@ -214,12 +216,17 @@ export class MusicPage extends LitElementBase {
         this.requestFullUpdate();
     }
 
-    toggleTrackSelection(hash: string) {
-        if (!this.selectedHashes.includes(hash)) this.selectedHashes.push(hash);
-        else this.selectedHashes = this.selectedHashes.filter((x) => x != hash);
+    toggleTrackSelection(hashes: string | string[] | null) {
+        if (hashes == null) return;
+        if (Array.isArray(hashes)) return (this.selectedHashes = hashes);
+
+        this.lastSelectedHash = hashes;
+        if (!this.selectedHashes.includes(hashes)) this.selectedHashes.push(hashes);
+        else this.selectedHashes = this.selectedHashes.filter((x) => x != hashes);
         if (this.selectedHashes.length == 0) {
             this.selectionMode = false;
             this.selectedHashes = [];
+            this.lastSelectedHash = null;
         }
 
         this.requestFullUpdate();

@@ -12,6 +12,7 @@ declare global {
         distinctBy(selector: (item: T) => any): T[];
         orderBy(...selectors: ((item: T) => any)[]): T[];
         replace<T>(this: T[], matcher: (item: T) => boolean, item: T): T[];
+        takeRange<T>(this: T[], start: T, end: T): T[] | null;
     }
 
     interface ArrayConstructor {
@@ -104,6 +105,13 @@ Array.prototype.replace = function <T>(this: T[], matcher: (item: T) => boolean,
 FileList.prototype.toIterator = function* () {
     for (let i = 0; i < this.length; i++) yield this[i];
     return undefined;
+};
+
+Array.prototype.takeRange = function <T>(this: T[], start: T, end: T) {
+    var startIndex = this.indexOf(start);
+    var endIndex = this.indexOf(end);
+    if (startIndex < 0 || endIndex < 0) return null;
+    return this.slice(Math.min(startIndex, endIndex), Math.max(startIndex, endIndex) + 1);
 };
 
 export function seededRandom(seed: number) {

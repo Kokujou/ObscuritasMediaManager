@@ -139,9 +139,15 @@ export function renderMusicPage(this: MusicPage) {
                                           @pointerup="${(e: PointerEvent) => this.stopSelectionModeTimer()}"
                                           @pointerover="${(e: PointerEvent) =>
                                               this.selectionModeSetByHash != track.hash ? this.stopSelectionModeTimer() : null}"
-                                          @click="${(e: Event) => {
+                                          @click="${(e: MouseEvent) => {
                                               e.stopPropagation();
-                                              this.toggleTrackSelection(track.hash);
+                                              this.toggleTrackSelection(
+                                                  e.shiftKey && this.lastSelectedHash
+                                                      ? paginatedTracks
+                                                            .map((x) => x.hash)
+                                                            .takeRange(this.lastSelectedHash, track.hash)
+                                                      : track.hash,
+                                              );
                                           }}"
                                       >
                                           ${this.selectionMode
@@ -163,7 +169,11 @@ export function renderMusicPage(this: MusicPage) {
                                                   @soft-delete="${() => this.softDeleteTrack(track)}"
                                                   @hard-delete="${() => this.hardDeleteTrack(track)}"
                                                   @restore="${() => this.undeleteTrack(track)}"
-                                                  @clipboard="${() => ClipboardService.copyAudioToClipboard(track)}"
+                                                  @clipboard="${() => {
+                                                      if (this.selectionMode) alert('not supported');
+                                                      else ClipboardService.copyAudioToClipboard(track);
+                                                  }}"
+                                                  ?readOnly="${this.selectionMode}"
                                               ></audio-tile>`,
                                               { disabled: this.selectionModeTimer == null || this.selectionMode },
                                           )}
