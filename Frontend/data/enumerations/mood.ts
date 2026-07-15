@@ -5,7 +5,7 @@ export const MoodColors = {
     Calm: '#773311',
     Dramatic: '#333333',
     Epic: '#773399',
-    Funny: '#a0a000',
+    Funny: '#bb0',
     Happy: '#008000',
     Monotonuous: '#999999',
     Passionate: '#bb6622',

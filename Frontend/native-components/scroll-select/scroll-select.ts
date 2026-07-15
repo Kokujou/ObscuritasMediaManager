@@ -88,6 +88,7 @@ export class ScrollSelect extends LitElementBase {
 
     startDragScrolling() {
         this.mouseDown = true;
+        this.wasDragging = false;
         var element = this.scrollChildren[this.currentItemIndex];
         this.dragPosY = getTargetScrollPosition(element, element.parentElement!, this.scrollContainer).top;
         this.mouseStartY = this.dragPosY;
@@ -101,13 +102,13 @@ export class ScrollSelect extends LitElementBase {
         var deltaY = e.movementY;
         this.dragPosY += deltaY * 1.5;
 
-        if (Math.abs(this.mouseStartY - this.dragPosY) > 10) this.wasDragging = true;
+        console.log(this.mouseStartY - this.dragPosY);
+        if (Math.abs(this.mouseStartY - this.dragPosY) > 5) this.wasDragging = true;
 
         this.scrollItemsContainer.style.transform = `translateY(${this.dragPosY}px)`;
     }
 
     onPointerUp() {
-        this.wasDragging = false;
         if (!this.mouseDown) return;
         this.mouseDown = false;
 
