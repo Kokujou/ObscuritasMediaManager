@@ -38,6 +38,7 @@ export class ScrollSelect extends LitElementBase {
 
     @state() declare protected currentItemIndex: number;
     @state() declare protected mouseDown: boolean;
+    @state() declare protected dragPosY: number;
     @state() declare protected mouseStartY: number;
     @state() declare protected wasDragging: boolean;
 
@@ -88,7 +89,8 @@ export class ScrollSelect extends LitElementBase {
     startDragScrolling() {
         this.mouseDown = true;
         var element = this.scrollChildren[this.currentItemIndex];
-        this.mouseStartY = getTargetScrollPosition(element, element.parentElement!, this.scrollContainer).top;
+        this.dragPosY = getTargetScrollPosition(element, element.parentElement!, this.scrollContainer).top;
+        this.mouseStartY = this.dragPosY;
         this.scrollItemsContainer.classList.toggle('user-interaction', true);
         this.requestFullUpdate();
     }
@@ -96,11 +98,12 @@ export class ScrollSelect extends LitElementBase {
     onPointerMove(e: PointerEvent) {
         if (!this.mouseDown) return;
 
-        this.wasDragging = true;
-
         var deltaY = e.movementY;
-        this.mouseStartY += deltaY * 1.5;
-        this.scrollItemsContainer.style.transform = `translateY(${this.mouseStartY}px)`;
+        this.dragPosY += deltaY * 1.5;
+
+        if (Math.abs(this.mouseStartY - this.dragPosY) > 10) this.wasDragging = true;
+
+        this.scrollItemsContainer.style.transform = `translateY(${this.dragPosY}px)`;
     }
 
     onPointerUp() {
@@ -128,6 +131,7 @@ export class ScrollSelect extends LitElementBase {
 
         this.currentItemIndex = closestIndex;
         this.value = this.options[this.currentItemIndex];
+        this.requestFullUpdate();
     }
 
     notifyValueChanged() {

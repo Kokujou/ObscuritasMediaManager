@@ -11,7 +11,7 @@ export function renderScrollSelect(this: ScrollSelect) {
                         (x) =>
                             html`<div
                                 class="scroll-item ${this.options[this.currentItemIndex] == x ? 'active' : ''}"
-                                @click="${() => (this.wasDragging ? this.scrollToItem(x) : null)}"
+                                @click="${() => (!this.wasDragging ? this.scrollToItem(x) : null)}"
                             >
                                 ${x}
                             </div>`,
