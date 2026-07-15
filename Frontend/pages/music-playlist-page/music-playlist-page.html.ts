@@ -103,7 +103,7 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                                       class="editable-label"
                                       tooltip="Name"
                                       ?disabled="${this.updatedTrack.complete}"
-                                      onkeyup="this.dispatchEvent(new Event('change'))"
+                                      oninput="this.dispatchEvent(new Event('change'))"
                                       .textContent="${live(this.updatedTrack.name)}"
                                       @change="${(e: Event) =>
                                           this.changeProperty('name', (e.currentTarget as HTMLInputElement).innerText)}"
