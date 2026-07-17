@@ -317,10 +317,14 @@ export class MusicPlaylistPage extends LitElementBase {
     }
 
     async createTrack() {
-        var trackHash = await MusicService.createMusicTrack(this.updatedTrack);
-        changePage(MusicPlaylistPage, { trackHash });
-        this.createNew = false;
-        this.requestFullUpdate();
+        try {
+            var trackHash = await MusicService.createMusicTrack(this.updatedTrack);
+            changePage(MusicPlaylistPage, { trackHash });
+            location.reload();
+        } catch (e) {
+            console.error(e);
+            MessageSnackbar.popup('Fehler beim erstellen des Tracks: ' + e, 'error');
+        }
     }
 
     switchSelectedMood(mood: ('mood1' | 'mood2') & keyof MusicModel) {

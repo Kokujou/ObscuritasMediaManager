@@ -18,7 +18,8 @@ public class MusicModel
             Language = Language.Japanese,
             Instrumentation = Instrumentation.Mixed,
             Participants = Participants.SmallGroup,
-            Path = string.Empty
+            Path = string.Empty,
+            Hash = string.Empty
         };
     }
 
