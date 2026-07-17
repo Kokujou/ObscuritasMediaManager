@@ -2,7 +2,7 @@ import { css } from 'lit';
 
 export function renderLinkElementStyles() {
     return css`
-        a {
+        #link {
             color: inherit;
             text-decoration: inherit;
             font-weight: inherit;
