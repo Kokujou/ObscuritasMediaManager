@@ -17,6 +17,7 @@ const FilesForCaching = [
 
 export class OfflineMusicCache {
     static async cacheApplication() {
+        await this.reinstallServiceWorker();
         await caches.delete('offline-music-v1');
         localStorage.setItem('offline-music-cache-updated', 'never');
         const responses: Map<string, Response> = new Map();
@@ -39,5 +40,28 @@ export class OfflineMusicCache {
 
         localStorage.setItem('offline-music-cache-updated', Date.now().toString());
         location.reload();
+    }
+
+    static async reinstallServiceWorker() {
+        if ('serviceWorker' in navigator) {
+            try {
+                try {
+                    const worker = await fetch('./service-worker.js');
+                    if (worker.ok)
+                        for (let registration of await navigator.serviceWorker.getRegistrations())
+                            await registration.unregister();
+                    else alert('service worker corrupt');
+                } catch (ex) {
+                    alert(ex);
+                }
+
+                const registration = await navigator.serviceWorker.register('./service-worker.js', {
+                    updateViaCache: 'none',
+                });
+                console.log('Service Worker registriert mit Scope:', registration.scope);
+            } catch (err) {
+                console.log('Service Worker Registrierung fehlgeschlagen:', err);
+            }
+        }
     }
 }

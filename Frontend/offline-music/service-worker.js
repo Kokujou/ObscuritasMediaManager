@@ -9,7 +9,11 @@ sw.addEventListener('fetch', (event) => {
 /** @param {Request} request */
 async function respondWithCache(request) {
     const cache = await caches.open('offline-music-v1');
-    const cached = await cache.match(request);
-    if (!cached) return (await fetch(request).catch()) ?? new Response();
+    const url = new URL(request.url);
+
+    url.search = '';
+    url.hash = '';
+    const cached = await cache.match(url, { ignoreSearch: true });
+    if (!cached) return (await fetch(request).catch()) ?? new Response('', { status: 200 });
     return cached;
 }

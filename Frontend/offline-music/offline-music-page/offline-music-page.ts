@@ -57,6 +57,7 @@ export class OfflineMusicPage extends LitElementBase {
 
     async connectedCallback() {
         super.connectedCallback();
+
         await OfflineSession.initialize();
         if (!OfflineSession.initialized) {
             changePage(OfflineMusicImportPage);
