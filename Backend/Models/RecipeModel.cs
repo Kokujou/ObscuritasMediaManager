@@ -13,10 +13,10 @@ public class RecipeModel : RecipeModelBase
     public TimeSpan TotalTime => PreparationTime + CookingTime;
 
     [ForeignKey(nameof(RecipeIngredientMappingModel.RecipeId))]
-    public IEnumerable<RecipeIngredientMappingModel> Ingredients { get; set; } = [];
+    public List<RecipeIngredientMappingModel> Ingredients { get; set; } = [];
 
     [ForeignKey(nameof(RecipeCookwareMappingModel.RecipeId))]
-    public IEnumerable<RecipeCookwareMappingModel> Cookware { get; set; } = [];
+    public List<RecipeCookwareMappingModel> Cookware { get; set; } = [];
 
     [NotMapped] public IEnumerable<string> IngredientNames => Ingredients.Select(x => x.IngredientName);
 

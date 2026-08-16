@@ -34,6 +34,15 @@ export class RecipeSlideshowPopup extends LitElementBase {
                 },
                 { once: true },
             );
+
+            slideShow.addEventListener(
+                'close',
+                () => {
+                    slideShow.remove();
+                    resolve();
+                },
+                { once: true },
+            );
         });
     }
 
@@ -68,5 +77,7 @@ export class RecipeSlideshowPopup extends LitElementBase {
     async removeImage(imageId: string) {
         this.recipe.imageHashes = await RecipeService.removeRecipeImage(this.recipe.recipe.id, imageId);
         await this.requestFullUpdate();
+
+        if (this.recipe.imageHashes.length == 0) this.dispatchEvent(new Event('close'));
     }
 }

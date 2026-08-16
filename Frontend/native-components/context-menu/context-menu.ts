@@ -22,6 +22,7 @@ export class ContextMenu extends LitElementBase {
     static popup(items: ContextMenuItem[], pointerEvent: Event | PointerEvent | MouseEvent) {
         if (ContextMenu.instance) ContextMenu.instance.remove();
         var menu = new ContextMenu();
+        pointerEvent.preventDefault();
         pointerEvent.stopPropagation();
         menu.items = items;
 
@@ -58,7 +59,7 @@ export class ContextMenu extends LitElementBase {
                 e.preventDefault();
                 e.stopPropagation();
             },
-            { signal: this.abortController.signal, passive: false }
+            { signal: this.abortController.signal, passive: false },
         );
 
         this.addEventListener('wheel', (e) => e.stopPropagation());

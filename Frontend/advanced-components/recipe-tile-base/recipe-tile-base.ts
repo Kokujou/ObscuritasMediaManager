@@ -12,8 +12,13 @@ export class RecipeTileBase extends LitElementBase {
 
     @property({ type: Object }) declare public recipe: RecipeResponse;
     @property({ type: Boolean }) declare public compact: boolean;
+    @property({ type: Boolean }) declare public allowUpload: boolean;
 
     override render() {
         return renderRecipeTileBase.call(this);
+    }
+
+    async connectedCallback() {
+        super.connectedCallback();
     }
 }

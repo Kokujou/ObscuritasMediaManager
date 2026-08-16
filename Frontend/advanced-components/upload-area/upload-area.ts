@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { fileToDataUrl } from '../../extensions/file.extension';
 import { renderUploadAreaStyles } from './upload-area.css';
@@ -10,21 +10,33 @@ export class UploadArea extends LitElementBase {
         return renderUploadAreaStyles();
     }
 
+    @property({ type: Array }) declare public images?: string[];
+    @property({ type: Boolean, reflect: true }) declare public disabled: boolean;
+
+    @state() declare protected tempImages: string[];
+    @state() declare protected noImage: boolean;
+
+    constructor() {
+        super();
+        this.tempImages = [];
+    }
+
     override render() {
         return renderUploadArea.call(this);
     }
 
+    override updated(_changedProperties: Map<any, any>): void {
+        super.updated(_changedProperties);
+
+        if (_changedProperties.has('src')) {
+            this.noImage = false;
+            this.tempImages = [];
+        }
+    }
+
     setFocusToContainer(event: Event) {
         event.stopPropagation();
-        var el = this.shadowRoot!.querySelector('#upload-description')!;
-        var range = document.createRange();
-        var sel = window.getSelection()!;
-
-        range.setStart(el.childNodes[2], 5);
-        range.collapse(true);
-
-        sel.removeAllRanges();
-        sel.addRange(range);
+        this.shadowRoot!.querySelector<HTMLElement>('#image-container')?.focus();
     }
 
     openImageBrowser(event: Event) {
@@ -78,8 +90,14 @@ export class UploadArea extends LitElementBase {
     }
 
     notifyImageAdded(selectedImageData: string) {
+        this.tempImages = [...this.tempImages, 'data: image/png;base64,' + selectedImageData];
+        this.noImage = false;
         this.dispatchEvent(
-            new CustomEvent('imageReceived', { detail: { imageData: selectedImageData }, bubbles: true, composed: true })
+            new CustomEvent('imageReceived', { detail: { imageData: selectedImageData }, bubbles: true, composed: true }),
         );
+    }
+
+    notifyImageClicked() {
+        this.dispatchEvent(new CustomEvent('image-click', { bubbles: true, composed: true }));
     }
 }

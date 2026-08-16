@@ -4,6 +4,8 @@ import { RecipeSortingProperties } from '../../data/recipe-sorting-properties';
 import { Session } from '../../data/session';
 import { SortingDirections } from '../../data/sorting-directions';
 import { changePage } from '../../extensions/url.extension';
+import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
+import { RecipeService } from '../../services/backend.services';
 import { ImportFoodPage } from '../import-food-page/import-food-page';
 import { renderRecipesPageStyles } from './recipes-page.css';
 import { renderRecipesPage } from './recipes-page.html';
@@ -76,5 +78,23 @@ export class RecipesPage extends LitElementBase {
         const blob = new Blob([bytes], { type: 'image/jpeg' });
 
         return URL.createObjectURL(blob);
+    }
+
+    async softDeleteRecipe(recipeId: string) {
+        await RecipeService.softDeleteRecipe(recipeId);
+        MessageSnackbar.popup('Rezept wurde in den Papierkorb verschoben', 'success');
+        this.requestFullUpdate();
+    }
+
+    async undeleteRecipe(recipeId: string) {
+        await RecipeService.undeleteRecipe(recipeId);
+        MessageSnackbar.popup('Rezept wurde wiederhergestellt', 'success');
+        this.requestFullUpdate();
+    }
+
+    async hardDeleteRecipe(recipeId: string) {
+        await RecipeService.hardDeleteRecipe(recipeId);
+        MessageSnackbar.popup('Rezept wurde endgültig gelöscht', 'success');
+        this.requestFullUpdate();
     }
 }

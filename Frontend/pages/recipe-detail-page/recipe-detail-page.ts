@@ -2,12 +2,14 @@ import { customElement, property, query, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-units';
 import { Session } from '../../data/session';
-import { TimeSpan } from '../../data/timespan';
 import { RecipeSlideshowPopup } from '../../dialogs/recipe-slideshow-popup/recipe-slideshow-popup';
+import { emptyGuid } from '../../extensions/crypto.extensions';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
+    FoodImageModel,
     FoodTagModel,
+    FoodThumbModel,
     IngredientCategory,
     IngredientModel,
     Language,
@@ -20,6 +22,7 @@ import {
     RecipeResponse,
 } from '../../obscuritas-media-manager-backend-client';
 import { RecipeService } from '../../services/backend.services';
+import { ImageCompressionService } from '../../services/image-compression.service';
 import { renderRecipeDetailPageStyles } from './recipe-detail-page.css';
 import { renderRecipeDetailPage } from './recipe-detail-page.html';
 
@@ -67,36 +70,23 @@ export class RecipeDetailPage extends LitElementBase {
         return this.recipe.recipe instanceof RecipeModel ? this.recipe.recipe : null;
     }
 
-    constructor() {
-        super();
-        this.recipe = new RecipeResponse({
-            recipe: new RecipeModel({
-                title: 'Rezepttitel',
-                cookingTime: new TimeSpan().toString(),
-                totalTime: new TimeSpan().toString(),
-                cookware: [],
-                preparationTime: new TimeSpan().toString(),
-                difficulty: 0,
-                rating: 0,
-                recipeText: 'Dein Rezept-Text',
-                ingredients: [],
-                tags: [],
-            }),
-            imageHashes: [],
-        });
-        this.fullRecipe!.ingredients = [this.emptyGroup];
-    }
-
     override async connectedCallback() {
         super.connectedCallback();
 
         if (this.recipeId) {
             this.recipe = await RecipeService.getRecipe(this.recipeId);
             await this.requestFullUpdate();
+        } else {
+            this.recipe = new RecipeResponse({
+                recipe: await RecipeService.getDefault(),
+                imageHashes: [],
+            });
+            this.fullRecipe!.ingredients = [this.emptyGroup];
         }
     }
 
     override render() {
+        if (!this.recipe) return null;
         return renderRecipeDetailPage.call(this);
     }
 
@@ -234,11 +224,48 @@ export class RecipeDetailPage extends LitElementBase {
         this.changeProperty('cookware', this.fullRecipe!.cookware);
     }
 
+    async addImage(imageData: string) {
+        if (!this.recipe.recipe.id || this.recipe.recipe.id == emptyGuid) {
+            this.recipe.imageHashes.push(imageData);
+            return;
+        }
+        const thumbData = (
+            await (await ImageCompressionService.generateThumbnail('data:image/png;base64,' + imageData)).base64()
+        ).split(',')[1];
+        this.recipe.imageHashes = await RecipeService.addRecipeImage(
+            this.recipe.recipe.id,
+            new FoodImageModel({
+                recipeId: this.recipe.recipe.id!,
+                imageData: imageData,
+                mimeType: 'image/png',
+                thumb: new FoodThumbModel({ thumbData }),
+            }),
+        );
+        await this.requestFullUpdate();
+    }
+
     async createRecipe() {
         try {
             if (!this.fullRecipe) return;
+            const recipeImages = this.recipe.imageHashes;
+            this.recipe.imageHashes = [];
             this.recipe.recipe.id = await RecipeService.createRecipe(this.fullRecipe);
             this.recipeId = this.recipe.recipe.id;
+            for (var image of recipeImages) {
+                const thumbData = (
+                    await (await ImageCompressionService.generateThumbnail('data:image/png;base64,' + image)).base64()
+                ).split(',')[1];
+                await RecipeService.addRecipeImage(
+                    this.recipe.recipe.id,
+                    new FoodImageModel({
+                        recipeId: this.recipe.recipe.id,
+                        imageData: image,
+                        mimeType: 'image/png',
+                        thumb: new FoodThumbModel({ thumbData }),
+                    }),
+                );
+            }
+
             this.requestFullUpdate();
             MessageSnackbar.popup('Das Rezept wurde erfolgreich erstellt.', 'success');
         } catch (err) {

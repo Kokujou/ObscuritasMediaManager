@@ -16,7 +16,7 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     [HttpGet]
     public IQueryable<RecipeResponse> GetAllRecipes()
     {
-        return recipeRepository.GetAll();
+        return recipeRepository.GetAll().ToList().AsQueryable();
     }
 
     [HttpGet("broken-images")]
@@ -27,6 +27,12 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
                 .ExecuteUpdate(x => x.SetProperty(y => y.ImageHash, item.ImageHash));
 
         return context.FoodImages;
+    }
+
+    [HttpGet("default")]
+    public RecipeModel GetDefault()
+    {
+        return new() { Id = Guid.Empty, Title = "Rezepttitel", Description = "Rezeptbeschreibung" };
     }
 
     [HttpGet("{id}")]

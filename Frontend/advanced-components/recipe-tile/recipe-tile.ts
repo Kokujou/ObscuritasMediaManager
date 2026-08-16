@@ -12,6 +12,7 @@ export class RecipeTile extends LitElementBase {
 
     @property({ type: Object }) declare public recipe: RecipeResponse;
     @property({ type: Boolean }) declare public compact: boolean;
+    @property({ type: Boolean }) declare public allowUpload: boolean;
 
     @state() declare protected showDeleted: boolean;
 

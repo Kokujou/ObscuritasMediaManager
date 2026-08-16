@@ -1,9 +1,11 @@
 import { html } from 'lit';
 import { Session } from '../../data/session';
 import { changePage } from '../../extensions/url.extension';
+import { ContextMenu } from '../../native-components/context-menu/context-menu';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { RecipeDetailPage } from '../recipe-detail-page/recipe-detail-page';
 import { RecipesPage } from './recipes-page';
+import { getRecipesPageContextMenu } from './recipes-page.context-menu';
 
 export function renderRecipesPage(this: RecipesPage) {
     return html`
@@ -27,6 +29,8 @@ export function renderRecipesPage(this: RecipesPage) {
                                         .recipe="${recipe}"
                                         compact
                                         @click="${() => changePage(RecipeDetailPage, { recipeId: recipe.recipe.id })}"
+                                        @contextmenu="${(e: PointerEvent) =>
+                                            ContextMenu.popup(getRecipesPageContextMenu.call(this, recipe.recipe), e)}"
                                     ></recipe-tile-base>
                                 `,
                             )}
