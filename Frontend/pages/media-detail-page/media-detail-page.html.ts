@@ -17,35 +17,39 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
             @load="${() => (this.hasImage = true)}"
             @error="${() => (this.hasImage = false)}"
         />
-        ${!this.createNew
-            ? html` <div
-                  id="edit-button"
-                  onclick="this.dispatchEvent(new CustomEvent('toggle'))"
-                  @toggle="${(e: Event) => this.changeProperty('complete', !this.updatedMedia.complete)}"
-              >
-                  <custom-toggle
-                      .state="${this.updatedMedia.complete ? CheckboxState.Ignore : CheckboxState.Forbid}"
-                      id="edit-toggle"
-                  ></custom-toggle>
-                  <div id="toggle-edit-text">${this.updatedMedia.complete ? 'Vollständig' : 'Unvollständig'}</div>
-              </div>`
-            : ''}
+        ${
+            !this.createNew
+                ? html` <div
+                      id="edit-button"
+                      onclick="this.dispatchEvent(new CustomEvent('toggle'))"
+                      @toggle="${(e: Event) => this.changeProperty('complete', !this.updatedMedia.complete)}"
+                  >
+                      <custom-toggle
+                          .state="${this.updatedMedia.complete ? CheckboxState.Ignore : CheckboxState.Forbid}"
+                          id="edit-toggle"
+                      ></custom-toggle>
+                      <div id="toggle-edit-text">${this.updatedMedia.complete ? 'Vollständig' : 'Unvollständig'}</div>
+                  </div>`
+                : ''
+        }
 
         <page-layout>
             <div id="media-detail-container">
                 <div id="content-panels">
                     <div id="left-panel" ?disabled="${this.updatedMedia.complete}">
                         <div id="media-image-container">
-                            ${this.hasImage
-                                ? html`<div
-                                      id="media-image"
-                                      style="background-image: url('${this.imageUrl}')"
-                                      @click="${() => this.setMediaImage(null)}"
-                                  ></div>`
-                                : html`<upload-area
-                                      @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
-                                          this.setMediaImage(e.detail.imageData)}"
-                                  ></upload-area>`}
+                            ${
+                                this.hasImage
+                                    ? html`<div
+                                          id="media-image"
+                                          style="background-image: url('${this.imageUrl}')"
+                                          @click="${() => this.setMediaImage(null)}"
+                                      ></div>`
+                                    : html`<upload-area
+                                          @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
+                                              this.setMediaImage(e.detail.imageData)}"
+                                      ></upload-area>`
+                            }
                         </div>
 
                         <div id="media-rating" ?disabled="${this.updatedMedia.complete}">
@@ -83,21 +87,30 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                     </div>
                     <div id="right-panel">
                         <div id="navigation">
-                            ${this.prevMediaId
-                                ? LinkElement.forPage(MediaDetailPage, { mediaId: this.prevMediaId }, html`&LeftArrow; Letzter`, {
-                                      id: 'prev-link',
-                                  })
-                                : ''}
-                            ${this.nextMediaId
-                                ? LinkElement.forPage(
-                                      MediaDetailPage,
-                                      { mediaId: this.nextMediaId },
-                                      html`Nächster &RightArrow;`,
-                                      {
-                                          id: 'next-link',
-                                      },
-                                  )
-                                : ''}
+                            ${
+                                this.prevMediaId
+                                    ? LinkElement.forPage(
+                                          MediaDetailPage,
+                                          { mediaId: this.prevMediaId },
+                                          html`&LeftArrow; Letzter`,
+                                          {
+                                              id: 'prev-link',
+                                          },
+                                      )
+                                    : ''
+                            }
+                            ${
+                                this.nextMediaId
+                                    ? LinkElement.forPage(
+                                          MediaDetailPage,
+                                          { mediaId: this.nextMediaId },
+                                          html`Nächster &RightArrow;`,
+                                          {
+                                              id: 'next-link',
+                                          },
+                                      )
+                                    : ''
+                            }
                         </div>
 
                         <div id="media-heading">
@@ -123,52 +136,57 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                             target="_blank"
                             >Trailer suchen</link-element
                         >
-                        ${this.isJapanese
-                            ? html` <div class="property-entry sub-entry">
-                                      <div class="property-name">Romaji:</div>
-                                      <input
-                                          ?disabled="${this.updatedMedia.complete}"
-                                          type="text"
-                                          class="property-value"
-                                          .value="${this.updatedMedia.romajiName ?? ''}"
-                                          @change="${(e: Event) =>
-                                              this.changeProperty('romajiName', (e.currentTarget as HTMLInputElement).value)}"
-                                      />
-                                  </div>
-                                  <div class="property-entry sub-entry">
-                                      <div class="property-name">Kanji:</div>
-                                      <input
-                                          ?disabled="${this.updatedMedia.complete}"
-                                          type="text"
-                                          class="property-value"
-                                          .value="${this.updatedMedia.kanjiName ?? ''}"
-                                          @change="${(e: Event) =>
-                                              this.changeProperty('kanjiName', (e.currentTarget as HTMLInputElement).value)}"
-                                      />
-                                  </div>
-                                  <div class="property-entry sub-entry">
-                                      <div class="property-name">Deutsch:</div>
-                                      <input
-                                          ?disabled="${this.updatedMedia.complete}"
-                                          type="text"
-                                          class="property-value"
-                                          .value="${this.updatedMedia.germanName ?? ''}"
-                                          @change="${(e: Event) =>
-                                              this.changeProperty('germanName', (e.currentTarget as HTMLInputElement).value)}"
-                                      />
-                                  </div>
-                                  <div class="property-entry sub-entry">
-                                      <div class="property-name">Englisch:</div>
-                                      <input
-                                          ?disabled="${this.updatedMedia.complete}"
-                                          type="text"
-                                          class="property-value"
-                                          .value="${this.updatedMedia.englishName ?? ''}"
-                                          @change="${(e: Event) =>
-                                              this.changeProperty('englishName', (e.currentTarget as HTMLInputElement).value)}"
-                                      />
-                                  </div>`
-                            : ''}
+                        ${
+                            this.isJapanese
+                                ? html` <div class="property-entry sub-entry">
+                                          <div class="property-name">Romaji:</div>
+                                          <input
+                                              ?disabled="${this.updatedMedia.complete}"
+                                              type="text"
+                                              class="property-value"
+                                              .value="${this.updatedMedia.romajiName ?? ''}"
+                                              @change="${(e: Event) =>
+                                                  this.changeProperty('romajiName', (e.currentTarget as HTMLInputElement).value)}"
+                                          />
+                                      </div>
+                                      <div class="property-entry sub-entry">
+                                          <div class="property-name">Kanji:</div>
+                                          <input
+                                              ?disabled="${this.updatedMedia.complete}"
+                                              type="text"
+                                              class="property-value"
+                                              .value="${this.updatedMedia.kanjiName ?? ''}"
+                                              @change="${(e: Event) =>
+                                                  this.changeProperty('kanjiName', (e.currentTarget as HTMLInputElement).value)}"
+                                          />
+                                      </div>
+                                      <div class="property-entry sub-entry">
+                                          <div class="property-name">Deutsch:</div>
+                                          <input
+                                              ?disabled="${this.updatedMedia.complete}"
+                                              type="text"
+                                              class="property-value"
+                                              .value="${this.updatedMedia.germanName ?? ''}"
+                                              @change="${(e: Event) =>
+                                                  this.changeProperty('germanName', (e.currentTarget as HTMLInputElement).value)}"
+                                          />
+                                      </div>
+                                      <div class="property-entry sub-entry">
+                                          <div class="property-name">Englisch:</div>
+                                          <input
+                                              ?disabled="${this.updatedMedia.complete}"
+                                              type="text"
+                                              class="property-value"
+                                              .value="${this.updatedMedia.englishName ?? ''}"
+                                              @change="${(e: Event) =>
+                                                  this.changeProperty(
+                                                      'englishName',
+                                                      (e.currentTarget as HTMLInputElement).value,
+                                                  )}"
+                                          />
+                                      </div>`
+                                : ''
+                        }
 
                         <div class="separator"></div>
                         ${renderGenreSection.call(this)}
@@ -249,41 +267,45 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                                 </svg>
                             </div>
                         </div>
-                        ${this.relatedTracks.length > 0
-                            ? html`
-                                  <div id="related-tracks-section" class="property-group">
-                                      <div class="property-entry">
-                                          <div class="property-name" style="width: unset">Verwandte Songs:</div>
+                        ${
+                            this.relatedTracks.length > 0
+                                ? html`
+                                      <div id="related-tracks-section" class="property-group">
+                                          <div class="property-entry">
+                                              <div class="property-name" style="width: unset">Verwandte Songs:</div>
+                                          </div>
+                                          ${this.relatedTracks.map(
+                                              (track) => html`
+                                                  <div class="property-entry">
+                                                      ♫
+                                                      ${LinkElement.forPage(
+                                                          MusicPlaylistPage,
+                                                          { trackHash: track.hash },
+                                                          track.name,
+                                                          { className: 'track-name' },
+                                                      )}
+                                                      <compact-audio-player .path="${track?.path}"></compact-audio-player>
+                                                  </div>
+                                              `,
+                                          )}
                                       </div>
-                                      ${this.relatedTracks.map(
-                                          (track) => html`
-                                              <div class="property-entry">
-                                                  ♫
-                                                  ${LinkElement.forPage(
-                                                      MusicPlaylistPage,
-                                                      { trackHash: track.hash },
-                                                      track.name,
-                                                      { className: 'track-name' },
-                                                  )}
-                                                  <compact-audio-player .path="${track?.path}"></compact-audio-player>
-                                              </div>
-                                          `,
-                                      )}
-                                  </div>
-                              `
-                            : ''}
-                        ${!this.updatedMedia.complete &&
-                        (this.updatedMedia.type == MediaCategory.AnimeMovies ||
-                            this.updatedMedia.type == MediaCategory.AnimeSeries)
-                            ? html`<div
-                                  id="autocomplete-button"
-                                  ?loading="${this.autocompleteLoading}"
-                                  @click="${() => this.autocompleteMedia()}"
-                              >
-                                  <partial-loading full-width></partial-loading>
-                                  Autovervollständigung
-                              </div>`
-                            : ''}
+                                  `
+                                : ''
+                        }
+                        ${
+                            !this.updatedMedia.complete &&
+                            (this.updatedMedia.type == MediaCategory.AnimeMovies ||
+                                this.updatedMedia.type == MediaCategory.AnimeSeries)
+                                ? html`<div
+                                      id="autocomplete-button"
+                                      ?loading="${this.autocompleteLoading}"
+                                      @click="${() => this.autocompleteMedia()}"
+                                  >
+                                      <partial-loading full-width></partial-loading>
+                                      Autovervollständigung
+                                  </div>`
+                                : ''
+                        }
                     </div>
                 </div>
                 <div id="description-section" class="property-group" style="margin: 30px">
@@ -299,16 +321,18 @@ export function renderMediaDetailPage(this: MediaDetailPage) {
                         .value="${this.updatedMedia.description ?? ''}"
                     ></textarea>
                 </div>
-                ${this.createNew
-                    ? html`
-                          <div id="action-row">
-                              <div id="create-entry-link" @click="${() => this.createEntry()}">
-                                  <div id="create-entry-icon" icon="${Icons.SaveTick}"></div>
-                                  <div id="create-entry-text">Eintrag erstellen</div>
+                ${
+                    this.createNew
+                        ? html`
+                              <div id="action-row">
+                                  <div id="create-entry-link" @click="${() => this.createEntry()}">
+                                      <div id="create-entry-icon" icon="${Icons.SaveTick}"></div>
+                                      <div id="create-entry-text">Eintrag erstellen</div>
+                                  </div>
                               </div>
-                          </div>
-                      `
-                    : ''}
+                          `
+                        : ''
+                }
                 <div id="path-row">
                     <label>Basispfad: </label>
                     <input id="path" type="text" readonly value="${this.updatedMedia.rootFolderPath ?? 'Kein Pfad ausgewählt'}" />
@@ -343,9 +367,11 @@ function renderGenreSection(this: MediaDetailPage) {
                             .text="${x.name}"
                         ></tag-label>`,
                 )}
-            ${!this.updatedMedia.complete
-                ? html` <div id="add-genre-button" @click="${() => this.showGenreSelectionDialog()}">+</div> `
-                : ''}
+            ${
+                !this.updatedMedia.complete
+                    ? html` <div id="add-genre-button" @click="${() => this.showGenreSelectionDialog()}">+</div> `
+                    : ''
+            }
         </div>
     </div> `;
 }

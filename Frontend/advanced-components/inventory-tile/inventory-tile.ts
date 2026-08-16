@@ -12,11 +12,11 @@ export class InventoryTile extends LitElementBase {
         return renderInventoryTileStyles();
     }
 
-    @property({ type: Object }) public declare item: InventoryItemModel;
+    @property({ type: Object }) declare public item: InventoryItemModel;
 
-    @state() protected declare editAmount: boolean;
+    @state() declare protected editAmount: boolean;
 
-    protected declare pointerdownController: AbortController | undefined;
+    declare protected pointerdownController: AbortController | undefined;
 
     get createMode() {
         return !this.item.itemId;
@@ -39,7 +39,7 @@ export class InventoryTile extends LitElementBase {
                 if (this.pointerdownController) this.acceptChange();
                 this.pointerdownController = undefined;
             },
-            { signal: this.abortController.signal }
+            { signal: this.abortController.signal },
         );
     }
 
@@ -107,7 +107,7 @@ export class InventoryTile extends LitElementBase {
     async decrementAmount(signal: AbortSignal, iteration = 1) {
         const nearestPower10 = Math.max(Math.pow(10, Math.floor(Math.log10(this.item.quantity / 3))), 1);
         const relatedUnits = MeasurementUnits.filter((x) => x.measurement == this.item.unit.measurement).orderBy(
-            (x) => x.multiplier
+            (x) => x.multiplier,
         );
         const currentUnitIndex = relatedUnits.findIndex((x) => x.name == this.item.unit.name);
         const smallerUnit = relatedUnits[currentUnitIndex - 1];

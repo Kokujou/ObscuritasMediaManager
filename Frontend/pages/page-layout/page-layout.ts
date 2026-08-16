@@ -31,7 +31,7 @@ export class PageLayout extends LitElementBase {
                 if (x < 1) {
                     WarningBanner.remove();
                 }
-            }, true)
+            }, true),
         );
     }
 

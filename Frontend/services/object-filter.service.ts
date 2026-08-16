@@ -10,7 +10,7 @@ export class ObjectFilterService {
         list: T[],
         filter: FilterEntry<U>,
         filterProperty: keyof T,
-        idSelector = (x: T) => x as any
+        idSelector = (x: T) => x as any,
     ) {
         var allowedValues = Object.keys(filter.states).filter((value) => filter.states[value as U] == CheckboxState.Require);
         var forbiddenValues = Object.keys(filter.states).filter((value) => filter.states[value as U] == CheckboxState.Forbid);
@@ -20,7 +20,7 @@ export class ObjectFilterService {
             var itemPropertyValues = array;
             return (
                 allowedValues.every((allowedItem) =>
-                    itemPropertyValues.some((anotherItem) => idSelector(anotherItem) == allowedItem)
+                    itemPropertyValues.some((anotherItem) => idSelector(anotherItem) == allowedItem),
                 ) &&
                 itemPropertyValues.every((value) => !forbiddenValues.some((forbiddenItem) => forbiddenItem == idSelector(value)))
             );
@@ -33,7 +33,7 @@ export class ObjectFilterService {
         list: T[],
         filter: FilterEntry<U>,
         filterProperty: keyof T,
-        ignoreState = CheckboxState.Require
+        ignoreState = CheckboxState.Require,
     ) {
         let results = this.#filterForbidden([...list], filter, filterProperty);
         if (ignoreState != CheckboxState.Require) results = this.#filterNotForced([...results], filter, filterProperty);
@@ -65,7 +65,7 @@ export class ObjectFilterService {
 
     static applyMultiPropertySearch<T>(list: T[], search: string, ...properties: (keyof T)[]) {
         var results = list.filter((item) =>
-            properties.some((prop) => `${item[prop] ?? ''}`.toLowerCase().trim().includes(search.toLowerCase().trim()))
+            properties.some((prop) => `${item[prop] ?? ''}`.toLowerCase().trim().includes(search.toLowerCase().trim())),
         );
         list.length = 0;
         list.push(...results);
@@ -73,7 +73,9 @@ export class ObjectFilterService {
 
     static findByProperties<T>(list: T[], search: string, ...properties: (keyof T)[]) {
         return list.find((item) =>
-            properties.some((prop) => item[prop] && search && `${item[prop]}`.toLowerCase().trim() == search.toLowerCase().trim())
+            properties.some(
+                (prop) => item[prop] && search && `${item[prop]}`.toLowerCase().trim() == search.toLowerCase().trim(),
+            ),
         );
     }
 
@@ -88,7 +90,7 @@ export class ObjectFilterService {
     static applyMultiPropertyFilter<T, U extends string | number | symbol>(
         list: T[],
         filter: FilterEntry<U>,
-        selector: (item: T) => U[]
+        selector: (item: T) => U[],
     ) {
         var results = list.filter((item) => {
             var array = selector(item);

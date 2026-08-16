@@ -4,6 +4,7 @@ import { MeasurementUnits, ValuelessMeasurements } from '../../data/measurement-
 import { Session } from '../../data/session';
 import { RecipeSlideshowPopup } from '../../dialogs/recipe-slideshow-popup/recipe-slideshow-popup';
 import { emptyGuid } from '../../extensions/crypto.extensions';
+import { changePage } from '../../extensions/url.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
@@ -37,9 +38,9 @@ export class RecipeDetailPage extends LitElementBase {
     static get newIngredient() {
         return new RecipeIngredientMappingModel({
             amount: 0,
-            description: 'Zutat-Beschreibung',
+            description: '',
             groupName: 'Neue Gruppe',
-            ingredientName: 'Neue Zutat',
+            ingredientName: '',
             unit: new MeasurementUnit(MeasurementUnits.find((x) => x.shortName == 'g')),
             order: 0,
             ingredient: null,
@@ -177,15 +178,16 @@ export class RecipeDetailPage extends LitElementBase {
         this.changeProperty('ingredients', this.fullRecipe!.ingredients);
     }
 
-    changeIngredientCategory(mapping: RecipeIngredientMappingModel, category: IngredientCategory) {
-        if (mapping.ingredient) mapping.ingredient.category = category;
-        else
-            mapping.ingredient = new IngredientModel({
-                ingredientName: mapping.ingredientName,
-                nation: Language.Unset,
-                category: category,
-            });
-        this.changeProperty('ingredients', this.fullRecipe!.ingredients);
+    async changeIngredientCategory(mapping: RecipeIngredientMappingModel, category: IngredientCategory) {
+        mapping.ingredient ??= new IngredientModel({
+            ingredientName: mapping.ingredientName,
+            category: category,
+            nation: Language.Unset,
+        });
+
+        mapping.ingredient.category = category;
+        await RecipeService.upsertIngredient(mapping.ingredientName, mapping.ingredient);
+        this.requestFullUpdate();
     }
 
     async searchIngredients(search: string) {
@@ -265,6 +267,8 @@ export class RecipeDetailPage extends LitElementBase {
                     }),
                 );
             }
+
+            changePage(RecipeDetailPage, { recipeId: this.recipe.recipe.id });
 
             this.requestFullUpdate();
             MessageSnackbar.popup('Das Rezept wurde erfolgreich erstellt.', 'success');

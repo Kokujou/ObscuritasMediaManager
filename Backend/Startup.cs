@@ -19,7 +19,10 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers();
+        services.AddControllers(options =>
+        {
+            options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+        });
         services.AddScoped<GenreRepository>();
         services.AddScoped<MediaRepository>();
         services.AddScoped<MusicRepository>();
@@ -55,6 +58,7 @@ public class Startup
 
                 options.JsonSerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
                 options.JsonSerializerOptions.AllowOutOfOrderMetadataProperties = true;
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
             });
 
         FFmpeg.SetExecutablesPath("D:\\Programme\\ffmpeg\\bin");

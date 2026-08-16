@@ -21,7 +21,7 @@ export class MusicFilterOptions {
     instrumentTypes = new FilterEntry(Object.values(InstrumentType));
     instruments = new FilterEntry(
         Session.instruments.current().map((x) => x.name),
-        CheckboxState.Ignore
+        CheckboxState.Ignore,
     );
     moods = new FilterEntry(Object.values(Mood), CheckboxState.Ignore);
     genres = new FilterEntry(Object.values(MusicGenre), CheckboxState.Ignore);

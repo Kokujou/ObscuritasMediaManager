@@ -23,13 +23,13 @@ export class RangeSelector extends LitElementBase {
         return (right / max) * 100;
     }
 
-    @property({ type: Number }) public declare min: number;
-    @property({ type: Number }) public declare max: number;
-    @property({ type: Number }) public declare left: number;
-    @property({ type: Number }) public declare right: number;
+    @property({ type: Number }) declare public min: number;
+    @property({ type: Number }) declare public max: number;
+    @property({ type: Number }) declare public left: number;
+    @property({ type: Number }) declare public right: number;
 
-    @state() protected declare draggingLeft: boolean;
-    @state() protected declare draggingRight: boolean;
+    @state() declare protected draggingLeft: boolean;
+    @state() declare protected draggingRight: boolean;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -40,7 +40,7 @@ export class RangeSelector extends LitElementBase {
                 if (this.draggingLeft) return this.changeLeftByMouse(e);
                 if (this.draggingRight) return this.changeRightByMouse(e);
             },
-            { signal: this.abortController.signal }
+            { signal: this.abortController.signal },
         );
 
         window.addEventListener(
@@ -50,7 +50,7 @@ export class RangeSelector extends LitElementBase {
                 this.draggingRight = false;
                 this.dispatchEvent(new CustomEvent('range-changed', { detail: { left: this.left, right: this.right } }));
             },
-            { signal: this.abortController.signal }
+            { signal: this.abortController.signal },
         );
     }
 

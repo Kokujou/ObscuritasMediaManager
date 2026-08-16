@@ -28,8 +28,8 @@ export class MusicFilterService {
                 !x.tracks.some(
                     (track) =>
                         forbiddenMoods.includes(track.mood1) ||
-                        (track.mood2 != Mood.Unset && forbiddenMoods.includes(track.mood2))
-                ) && requiredMoods.every((mood) => x.tracks.some((track) => track.mood1 == mood || track.mood2 == mood))
+                        (track.mood2 != Mood.Unset && forbiddenMoods.includes(track.mood2)),
+                ) && requiredMoods.every((mood) => x.tracks.some((track) => track.mood1 == mood || track.mood2 == mood)),
         );
 
         let sortingProperty = sorting.property;
@@ -54,7 +54,7 @@ export class MusicFilterService {
         ObjectFilterService.applyValueFilter(filteredTracks, filter.showComplete, 'complete');
         ObjectFilterService.applyValueFilter(filteredTracks, filter.showDeleted, 'deleted');
         ObjectFilterService.applyMultiPropertyFilter(filteredTracks, filter.moods, (item) =>
-            [item.mood1].concat(item.mood2 == Mood.Unset ? [] : item.mood2)
+            [item.mood1].concat(item.mood2 == Mood.Unset ? [] : item.mood2),
         );
 
         if (sorting.property == 'unset' && sorting.direction == 'ascending') return filteredTracks;
@@ -75,9 +75,9 @@ export class MusicFilterService {
                               (x.item.mood2 == x.item.mood1 || x.item.mood2 == Mood.Unset
                                   ? moodValues.indexOf(x.item.mood1)
                                   : moodValues.indexOf(x.item.mood2))
-                            : x.item[property]
+                            : x.item[property],
                 ),
-                ...(sorting.randomizeGroups ? [(x: { item: MusicModel; random: number }) => x.random] : [])
+                ...(sorting.randomizeGroups ? [(x: { item: MusicModel; random: number }) => x.random] : []),
             )
             .map((x) => x.item);
         if (sorting.direction == 'ascending') return filteredTracks;

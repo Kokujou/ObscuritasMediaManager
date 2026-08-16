@@ -60,7 +60,7 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                                 value: x,
                                 text: x.translation,
                                 state: x.property == this.filter.sortingProperty ? CheckboxState.Ignore : CheckboxState.Forbid,
-                            })
+                            }),
                         )}"
                         unsetText="Keine Sortierung"
                         maxDisplayDepth="5"
@@ -128,7 +128,7 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                 </div>
                 <drop-down
                     .options="${Object.values(MediaCategory).map((x) =>
-                        DropDownOption.create({ value: x, state: this.filter.category.states[x], text: x })
+                        DropDownOption.create({ value: x, state: this.filter.category.states[x], text: x }),
                     )}"
                     useToggle
                     multiselect
@@ -155,14 +155,14 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                         .filter(
                             (x) =>
                                 this.filter.ratings.states[<keyof MediaFilter['ratings']['states']>(<unknown>x)] ==
-                                CheckboxState.Require
+                                CheckboxState.Require,
                         )
                         .map((x) => Number.parseInt(x))}"
                     @ratingChanged="${(e: CustomEvent) =>
                         this.setFilterProperty(
                             'ratings',
                             e.detail.rating,
-                            e.detail.include ? CheckboxState.Require : CheckboxState.Forbid
+                            e.detail.include ? CheckboxState.Require : CheckboxState.Forbid,
                         )}"
                 ></star-rating>
             </div>
@@ -220,7 +220,7 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                                     this.setFilterProperty('contentWarnings', warning, e.detail.value)}"
                             >
                                 <div class="icon-button" content-warning="${warning}"></div>
-                            </tri-value-checkbox>`
+                            </tri-value-checkbox>`,
                     )}
                 </side-scroller>
             </div>
@@ -236,13 +236,15 @@ export function renderMediaFilterSidebar(this: MediaFilterSidebar) {
                 </div>
                 <side-scroller>
                     ${Object.values(TargetGroup).map(
-                        (group) => html` <tri-value-checkbox
-                            allowThreeValues
-                            .value="${this.filter.targetGroups.states[group]}"
-                            @valueChanged="${(e: CustomEvent) => this.setFilterProperty('targetGroups', group, e.detail.value)}"
-                        >
-                            <div class="icon-button" target-group="${group}"></div
-                        ></tri-value-checkbox>`
+                        (group) =>
+                            html` <tri-value-checkbox
+                                allowThreeValues
+                                .value="${this.filter.targetGroups.states[group]}"
+                                @valueChanged="${(e: CustomEvent) =>
+                                    this.setFilterProperty('targetGroups', group, e.detail.value)}"
+                            >
+                                <div class="icon-button" target-group="${group}"></div
+                            ></tri-value-checkbox>`,
                     )}</side-scroller
                 >
             </div>

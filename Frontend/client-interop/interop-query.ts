@@ -4,10 +4,10 @@
  */
 
 export enum InteropQuery {
-    RequestFiles = "RequestFiles",
-    RequestFolderContent = "RequestFolderContent",
-    RequestSubFolders = "RequestSubFolders",
-    LoadTrack = "LoadTrack",
-    RequestFolderPath = "RequestFolderPath",
-    AutoFillAnime = "AutoFillAnime",
+    RequestFiles = 'RequestFiles',
+    RequestFolderContent = 'RequestFolderContent',
+    RequestSubFolders = 'RequestSubFolders',
+    LoadTrack = 'LoadTrack',
+    RequestFolderPath = 'RequestFolderPath',
+    AutoFillAnime = 'AutoFillAnime',
 }

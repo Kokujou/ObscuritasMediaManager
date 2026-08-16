@@ -4,6 +4,6 @@
  */
 
 export enum ResponseStatus {
-    Success = "Success",
-    Error = "Error",
+    Success = 'Success',
+    Error = 'Error',
 }

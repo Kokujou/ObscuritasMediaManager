@@ -9,8 +9,8 @@ export class ImageTile extends LitElementBase {
         return renderImageTileStyles();
     }
 
-    @property() public declare caption: string;
-    @property() public declare src: string;
+    @property() declare public caption: string;
+    @property() declare public src: string;
 
     override render() {
         return renderImageTile.call(this);

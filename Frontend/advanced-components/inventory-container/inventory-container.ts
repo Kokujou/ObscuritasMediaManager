@@ -10,12 +10,12 @@ export class InventoryContainer extends LitElementBase {
         return renderInventoryContainerStyles();
     }
 
-    @property({ type: Array }) public declare items: InventoryItemModel[];
+    @property({ type: Array }) declare public items: InventoryItemModel[];
 
-    @state() protected declare draggedItem: InventoryItemModel | undefined;
-    @state() protected declare draggedOverLevel: number | undefined;
-    @state() protected declare draggedOverSide: boolean;
-    @state() protected declare target: InventoryTarget;
+    @state() declare protected draggedItem: InventoryItemModel | undefined;
+    @state() declare protected draggedOverLevel: number | undefined;
+    @state() declare protected draggedOverSide: boolean;
+    @state() declare protected target: InventoryTarget;
 
     connectedCallback(): void {
         super.connectedCallback();
@@ -27,7 +27,7 @@ export class InventoryContainer extends LitElementBase {
             function (e) {
                 e.stopPropagation();
             },
-            { passive: false }
+            { passive: false },
         );
     }
 
@@ -85,7 +85,7 @@ export class InventoryContainer extends LitElementBase {
                 detail: { itemId: this.draggedItem?.itemId, times },
                 bubbles: true,
                 composed: true,
-            })
+            }),
         );
     }
 

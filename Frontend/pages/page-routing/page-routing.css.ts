@@ -17,7 +17,8 @@ export function renderPageRoutingStyles() {
         }
 
         :host([dimmed]) {
-            background: linear-gradient(var(--background-color), var(--background-color)), url('resources/images/background.jpg'),
+            background:
+                linear-gradient(var(--background-color), var(--background-color)), url('resources/images/background.jpg'),
                 linear-gradient(#0005, #0005);
         }
 

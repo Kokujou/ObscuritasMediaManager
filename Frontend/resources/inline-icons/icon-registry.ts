@@ -90,8 +90,8 @@ export function registerIcons() {
                 (selector: keyof typeof Icons) =>
                     `[icon=${selector}] {
                         ${renderMaskImage(IconRegistry[selector])}
-                    }`
+                    }`,
             )
-            .join('\n\n')
+            .join('\n\n'),
     );
 }

@@ -13,21 +13,23 @@ export function renderAutocompleteInput(this: AutocompleteInput) {
             @keyup="${(e: KeyboardEvent) => this.handleKey(e)}"
             @blur="${() => setTimeout(() => this.selectItem(this.value), 200)}"
         />
-        ${this.showDropdown
-            ? html`<div id="dropdown">
-                  ${this.searchResult?.map(
-                      (item) => html`
-                          <div
-                              class="option"
-                              ?selected="${this.value && this.value.id == item.id}"
-                              ?focused="${this.focusedItem && item.id == this.focusedItem.id}"
-                              @pointerdown="${() => this.selectItem(item)}"
-                          >
-                              ${item.text}
-                          </div>
-                      `,
-                  )}
-              </div>`
-            : ''}
+        ${
+            this.showDropdown
+                ? html`<div id="dropdown">
+                      ${this.searchResult?.map(
+                          (item) => html`
+                              <div
+                                  class="option"
+                                  ?selected="${this.value && this.value.id == item.id}"
+                                  ?focused="${this.focusedItem && item.id == this.focusedItem.id}"
+                                  @pointerdown="${() => this.selectItem(item)}"
+                              >
+                                  ${item.text}
+                              </div>
+                          `,
+                      )}
+                  </div>`
+                : ''
+        }
     `;
 }

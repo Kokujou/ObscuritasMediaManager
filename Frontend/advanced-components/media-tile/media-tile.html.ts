@@ -20,20 +20,24 @@ export function renderMediaTile(this: MediaTile) {
         <div id="tile-container">
             ${this.displayStyle == 'simple' ? '' : html`<div id="rating-container">${renderRating.call(this)}</div>`} <br />
             ${renderImageContainer.call(this)}
-            ${this.displayStyle == 'solid'
-                ? html` <div ?no-background="${!this.hasImage}" id="caption">${this.media.name}</div> `
-                : ''}
+            ${
+                this.displayStyle == 'solid'
+                    ? html` <div ?no-background="${!this.hasImage}" id="caption">${this.media.name}</div> `
+                    : ''
+            }
         </div>
-        ${this.displayStyle == 'solid'
-            ? html`
-                  <div id="genre-list" @click="${(e: Event) => e.preventDefault()}">
-                      ${this.media.genres
-                          .filter((x) => x.section == MediaGenreCategory.MainGenre)
-                          .map((genre) => renderGenreTag.call(this, genre))}
-                      <br />
-                  </div>
-              `
-            : ''}
+        ${
+            this.displayStyle == 'solid'
+                ? html`
+                      <div id="genre-list" @click="${(e: Event) => e.preventDefault()}">
+                          ${this.media.genres
+                              .filter((x) => x.section == MediaGenreCategory.MainGenre)
+                              .map((genre) => renderGenreTag.call(this, genre))}
+                          <br />
+                      </div>
+                  `
+                : ''
+        }
         <slot></slot>`;
 }
 

@@ -15,8 +15,8 @@ export class InventoryPage extends LitElementBase {
         return renderInventoryPageStyles();
     }
 
-    @state() protected declare inventory?: InventoryItemModel[];
-    @state() protected declare loading: boolean;
+    @state() declare protected inventory?: InventoryItemModel[];
+    @state() declare protected loading: boolean;
 
     override render() {
         return renderInventoryPage.call(this);

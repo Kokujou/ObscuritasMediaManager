@@ -11,7 +11,7 @@ export class MaintenancePage extends LitElementBase {
         return renderMaintenancePageStyles();
     }
 
-    @property() public declare someProperty: string;
+    @property() declare public someProperty: string;
 
     override render() {
         return renderMaintenancePage.call(this);

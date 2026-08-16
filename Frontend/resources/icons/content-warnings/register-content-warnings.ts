@@ -13,9 +13,9 @@ export function registerContentWarnings() {
                             mask: url('${getContentWarningIconPath(warning)}') 100% 100% / 100% 100%;
                             -webkit-mask: url('${getContentWarningIconPath(warning)}') 100% 100% / 100% 100%;
                         }
-                    `
+                    `,
             )
-            .join('')
+            .join(''),
     );
 }
 

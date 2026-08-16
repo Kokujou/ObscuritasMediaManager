@@ -19,7 +19,7 @@ export function renderSelectOptionsDialog(this: SelectOptionsDialog) {
                             html`<div class="option">
                                 <input id="${key}" type="${this.multiselect ? 'checkbox' : 'radio'}" .value="${key}" checked />
                                 <label for="${key}">${this.options[key]}</label>
-                            </div>`
+                            </div>`,
                     )}
                     ${!this.isComplete() ? html`<loading-circle></loading-circle>` : ''}
                 </div>

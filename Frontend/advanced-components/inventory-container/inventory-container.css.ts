@@ -140,7 +140,9 @@ export function renderInventoryContainerStyles() {
         .drag-actions {
             height: 0;
             opacity: 0;
-            transition: height 0.1s 0.1s linear, opacity 0.1s 0s linear;
+            transition:
+                height 0.1s 0.1s linear,
+                opacity 0.1s 0s linear;
 
             align-items: flex-end;
             justify-content: flex-end;
@@ -152,7 +154,9 @@ export function renderInventoryContainerStyles() {
         [dragging] .level:hover .drag-actions {
             height: 100px;
             opacity: 1;
-            transition: height 0.1s linear, opacity 0.1s 0.1s linear;
+            transition:
+                height 0.1s linear,
+                opacity 0.1s 0.1s linear;
             pointer-events: all;
         }
 
@@ -192,7 +196,9 @@ export function renderInventoryContainerStyles() {
                 #7f0d16
             );
 
-            box-shadow: 4px 4px 1em rgba(122, 0, 0, 0.55), inset 2px 2px 0 rgba(255, 0, 0, 0.9),
+            box-shadow:
+                4px 4px 1em rgba(122, 0, 0, 0.55),
+                inset 2px 2px 0 rgba(255, 0, 0, 0.9),
                 inset -2px -2px 0 rgba(0, 0, 0, 0.5);
         }
 

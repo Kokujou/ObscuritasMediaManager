@@ -4,11 +4,11 @@
  */
 
 export enum InteropEvent {
-    TrackPositionChanged = "TrackPositionChanged",
-    TrackEnded = "TrackEnded",
-    Connected = "Connected",
-    TrackChanged = "TrackChanged",
-    PlaybackStateChanged = "PlaybackStateChanged",
-    VolumeChanged = "VolumeChanged",
-    ChromeClosed = "ChromeClosed",
+    TrackPositionChanged = 'TrackPositionChanged',
+    TrackEnded = 'TrackEnded',
+    Connected = 'Connected',
+    TrackChanged = 'TrackChanged',
+    PlaybackStateChanged = 'PlaybackStateChanged',
+    VolumeChanged = 'VolumeChanged',
+    ChromeClosed = 'ChromeClosed',
 }

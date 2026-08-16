@@ -13,13 +13,13 @@ export class PriorityList extends LitElementBase {
         return this;
     }
 
-    @property({ type: Array }) public declare items: PriorityListItem[];
-    @property({ type: Object }) public declare itemRenderer: (item: any) => unknown;
+    @property({ type: Array }) declare public items: PriorityListItem[];
+    @property({ type: Object }) declare public itemRenderer: (item: any) => unknown;
 
-    @state() protected declare oldEntries: any[];
-    @state() protected declare currentlyDraggedOverItemIndex: number;
-    @state() protected declare currentlyDraggedItemIndex: number;
-    @state() protected declare draggedElement?: HTMLElement;
+    @state() declare protected oldEntries: any[];
+    @state() declare protected currentlyDraggedOverItemIndex: number;
+    @state() declare protected currentlyDraggedItemIndex: number;
+    @state() declare protected draggedElement?: HTMLElement;
 
     constructor() {
         super();

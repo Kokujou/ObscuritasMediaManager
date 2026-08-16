@@ -120,7 +120,9 @@ export function renderImportFoodPageStyles() {
             font-size: 14px;
             font-weight: bold;
             color: black;
-            text-shadow: 0 0 2px #505, 0 0 2px #505;
+            text-shadow:
+                0 0 2px #505,
+                0 0 2px #505;
         }
 
         side-scroller {

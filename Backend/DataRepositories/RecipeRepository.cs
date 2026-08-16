@@ -139,7 +139,7 @@ public class RecipeRepository(DatabaseContext databaseContext)
         return databaseContext.Set<IngredientModel>();
     }
 
-    public async Task UpdateIngredientAsync(IngredientModel ingredient)
+    public async Task UpsertIngredientAsync(IngredientModel ingredient)
     {
         if (await databaseContext.Set<IngredientModel>().AnyAsync(x => x.IngredientName == ingredient.IngredientName))
             databaseContext.Update(ingredient);

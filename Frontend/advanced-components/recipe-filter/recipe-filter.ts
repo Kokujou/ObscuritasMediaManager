@@ -16,10 +16,10 @@ export class RecipeFilter extends LitElementBase {
         return renderRecipeFilterStyles();
     }
 
-    @property() public declare sortingProperty: keyof typeof RecipeSortingProperties;
-    @property() public declare sortingDirection: keyof typeof SortingDirections;
+    @property() declare public sortingProperty: keyof typeof RecipeSortingProperties;
+    @property() declare public sortingDirection: keyof typeof SortingDirections;
 
-    public declare filter: RecipeFilterOptions;
+    declare public filter: RecipeFilterOptions;
 
     constructor() {
         super();
@@ -32,11 +32,11 @@ export class RecipeFilter extends LitElementBase {
         this.sortingDirection = 'ascending';
         if (
             !Object.keys(RecipeFilterOptions).every((property) =>
-                Object.keys(new RecipeModel()).concat(['unset']).includes(property)
+                Object.keys(new RecipeModel()).concat(['unset']).includes(property),
             )
         ) {
             var missingProperties = Object.keys(RecipeFilterOptions).filter(() =>
-                Object.keys(new RecipeModel()).concat(['unset'])
+                Object.keys(new RecipeModel()).concat(['unset']),
             );
             alert("mismatch in sorting properties, the object might've changed:" + missingProperties);
             throw new Error("mismatch in sorting properties, the object might've changed" + missingProperties);
@@ -50,7 +50,7 @@ export class RecipeFilter extends LitElementBase {
     setFilterEntryValue<T extends string | number | symbol>(
         filter: FilterEntry<T>,
         enumKey: keyof FilterEntry<T>['states'],
-        state: CheckboxState
+        state: CheckboxState,
     ) {
         filter.states[enumKey] = state;
         this.notifyFilterUpdated();
@@ -58,7 +58,7 @@ export class RecipeFilter extends LitElementBase {
 
     setfilterEntry<T extends Exclude<keyof RecipeFilterOptions, KeyOfType<RecipeFilterOptions, FilterEntry<any>>>>(
         filter: T,
-        state: RecipeFilterOptions[T]
+        state: RecipeFilterOptions[T],
     ) {
         this.filter[filter] = state;
         this.notifyFilterUpdated();
@@ -81,7 +81,7 @@ export class RecipeFilter extends LitElementBase {
                     property: this.sortingProperty,
                     direction: this.sortingDirection,
                 },
-            })
+            }),
         );
         this.requestFullUpdate();
     }
@@ -91,7 +91,7 @@ export class RecipeFilter extends LitElementBase {
             this.setFilterEntryValue(
                 this.filter[filter],
                 key,
-                selectedValues.includes(key) ? CheckboxState.Ignore : CheckboxState.Forbid
+                selectedValues.includes(key) ? CheckboxState.Ignore : CheckboxState.Forbid,
             );
         });
     }
@@ -104,7 +104,7 @@ export class RecipeFilter extends LitElementBase {
 
     changeSorting(
         property: keyof typeof RecipeSortingProperties | null = null,
-        direction: keyof typeof SortingDirections | null = null
+        direction: keyof typeof SortingDirections | null = null,
     ) {
         if (property) this.sortingProperty = property;
         if (direction) this.sortingDirection = direction;
@@ -115,7 +115,7 @@ export class RecipeFilter extends LitElementBase {
                     property: this.sortingProperty,
                     direction: this.sortingDirection,
                 },
-            })
+            }),
         );
     }
 }

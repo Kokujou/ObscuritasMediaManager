@@ -26,8 +26,8 @@
         #dedede 84%,
         #a1a1a1
     );
-    --metallic-silver-shadow: 2px 2px 1em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9),
-        inset -1px -1px 0 rgba(0, 0, 0, 0.5);
+    --metallic-silver-shadow:
+        2px 2px 1em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(255, 255, 255, 0.9), inset -1px -1px 0 rgba(0, 0, 0, 0.5);
 
     --metallic-black: linear-gradient(
         -72deg,
@@ -44,6 +44,6 @@
         #111111 86%,
         #1f1f1f
     );
-    --metallic-black-shadow: 2px 2px 1em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(0, 0, 0, 0.9),
-        inset -1px -1px 0 rgba(255, 255, 255, 0.5);
+    --metallic-black-shadow:
+        2px 2px 1em rgba(122, 122, 122, 0.55), inset 1px 1px 0 rgba(0, 0, 0, 0.9), inset -1px -1px 0 rgba(255, 255, 255, 0.5);
 }

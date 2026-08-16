@@ -54,7 +54,7 @@ export function renderRecipeFilter(this: RecipeFilter) {
                                 value: x[0],
                                 text: x[1],
                                 state: x[0] == this.sortingProperty ? CheckboxState.Ignore : CheckboxState.Forbid,
-                            })
+                            }),
                         )}"
                         unsetText="Keine Sortierung"
                         maxDisplayDepth="5"
@@ -106,7 +106,7 @@ export function renderRecipeFilter(this: RecipeFilter) {
                                 .value="${this.filter.nations.states[lang]}"
                             >
                                 <div class="inline-icon " nation="${lang}"></div>
-                            </tri-value-checkbox>`
+                            </tri-value-checkbox>`,
                     )}
                 </side-scroller>
             </div>
@@ -130,7 +130,7 @@ export function renderRecipeFilter(this: RecipeFilter) {
                     @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
                         this.setFilterEntryValue(this.filter.courses, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.entries(Course).map((x) =>
-                        DropDownOption.create({ value: x[0], state: this.filter.courses.states[x[0] as Course], text: x[1] })
+                        DropDownOption.create({ value: x[0], state: this.filter.courses.states[x[0] as Course], text: x[1] }),
                     )}"
                     multiselect
                     useToggle
@@ -163,7 +163,7 @@ export function renderRecipeFilter(this: RecipeFilter) {
                             value: x[0],
                             state: this.filter.techniques.states[x[0] as CookingTechnique],
                             text: x[1],
-                        })
+                        }),
                     )}"
                     multiselect
                     useToggle
@@ -196,7 +196,7 @@ export function renderRecipeFilter(this: RecipeFilter) {
                             value: x[0],
                             state: this.filter.ingredients.states[x[0]],
                             text: x[1],
-                        })
+                        }),
                     )}"
                     multiselect
                     useToggle
@@ -227,7 +227,7 @@ export function renderRecipeFilter(this: RecipeFilter) {
                                 state:
                                     RecipeTimes[this.filter.filterByTime] == x[1] ? CheckboxState.Ignore : CheckboxState.Forbid,
                                 text: x[1],
-                            })
+                            }),
                         )}"
                         maxDisplayDepth="5"
                     >
@@ -262,7 +262,7 @@ export function renderRecipeFilter(this: RecipeFilter) {
                         this.setFilterEntryValue(
                             this.filter.ratings,
                             e.detail.rating,
-                            e.detail.include ? CheckboxState.Ignore : CheckboxState.Forbid
+                            e.detail.include ? CheckboxState.Ignore : CheckboxState.Forbid,
                         )}"
                 ></star-rating>
             </div>

@@ -25,7 +25,7 @@ export class LanguageSwitcher extends LitElementBase {
         });
     }
 
-    @property({ reflect: true }) public declare language: Language;
+    @property({ reflect: true }) declare public language: Language;
 
     protected languageRotationOffset = 0;
     protected resolve = (lang: Language) => {};

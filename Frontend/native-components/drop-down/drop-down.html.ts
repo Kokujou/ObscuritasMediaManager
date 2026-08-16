@@ -38,25 +38,27 @@ function showDropDown(this: DropDown) {
             }}"
             @scroll="${(e: Event) => e.preventDefault()}"
         >
-            ${this.useSearch
-                ? html`
-                      <div
-                          @click="${(e: Event) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                          }}"
-                      >
-                          <input
-                              tabindex="1"
-                              type="text"
-                              placeholder="Suchtext eingeben..."
-                              id="dropdown-search"
-                              @input="${(e: Event) => (e.target as HTMLInputElement).dispatchEvent(new Event('change'))}"
-                              @change="${() => this.updateSearchFilter()}"
-                          />
-                      </div>
-                  `
-                : ''}
+            ${
+                this.useSearch
+                    ? html`
+                          <div
+                              @click="${(e: Event) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                              }}"
+                          >
+                              <input
+                                  tabindex="1"
+                                  type="text"
+                                  placeholder="Suchtext eingeben..."
+                                  id="dropdown-search"
+                                  @input="${(e: Event) => (e.target as HTMLInputElement).dispatchEvent(new Event('change'))}"
+                                  @change="${() => this.updateSearchFilter()}"
+                              />
+                          </div>
+                      `
+                    : ''
+            }
             ${Object.entries(
                 this.options
                     .filter((x) => x.text.toLocaleLowerCase().match(this.searchFilter?.toLocaleLowerCase()))

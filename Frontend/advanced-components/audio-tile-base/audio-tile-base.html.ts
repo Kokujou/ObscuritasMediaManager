@@ -47,9 +47,9 @@ export function renderAudioTileBase(this: AudioTileBase) {
                     (rating) =>
                         html` <svg
                             viewBox="0 0 15 18"
-                            class="star ${rating <= this.track.rating ? 'selected' : ''} ${rating <= this.hoveredRating
-                                ? 'hovered'
-                                : ''}"
+                            class="star ${rating <= this.track.rating ? 'selected' : ''} ${
+                                rating <= this.hoveredRating ? 'hovered' : ''
+                            }"
                         >
                             <text
                                 x="0"
@@ -58,12 +58,12 @@ export function renderAudioTileBase(this: AudioTileBase) {
                                 @pointerout="${() => (this.hoveredRating = 0)}"
                                 @click="${() =>
                                     this.dispatchEvent(
-                                        new CustomEvent('changeRating', { bubbles: true, composed: true, detail: rating })
+                                        new CustomEvent('changeRating', { bubbles: true, composed: true, detail: rating }),
                                     )}"
                             >
                                 ★
                             </text>
-                        </svg>`
+                        </svg>`,
                 )}
             </div>
 
@@ -74,7 +74,7 @@ export function renderAudioTileBase(this: AudioTileBase) {
             >
                 ${this.track.instrumentTypes?.length == 0 ? html`<a id="add-instruments-link">Add Instruments</a>` : ''}
                 ${this.track.instrumentTypes?.map(
-                    (instrument) => html` <div class="instrument-icon inline-icon" instrument-type="${instrument}"></div> `
+                    (instrument) => html` <div class="instrument-icon inline-icon" instrument-type="${instrument}"></div> `,
                 )}
             </div>
         </div>

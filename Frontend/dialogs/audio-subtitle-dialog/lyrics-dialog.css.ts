@@ -29,9 +29,16 @@ export function renderAudioSubtitleDialogStyles() {
             border-radius: 20px;
 
             --fade-padding: 80px;
-            box-shadow: 0 0 var(--fade-padding) black, 0 0 var(--fade-padding) black, 0 0 var(--fade-padding) black,
-                0 0 var(--fade-padding) black, 0 0 var(--fade-padding) black, 0 0 var(--fade-padding) black,
-                0 0 var(--fade-padding) black, 0 0 var(--fade-padding) black, 0 0 var(--fade-padding) black;
+            box-shadow:
+                0 0 var(--fade-padding) black,
+                0 0 var(--fade-padding) black,
+                0 0 var(--fade-padding) black,
+                0 0 var(--fade-padding) black,
+                0 0 var(--fade-padding) black,
+                0 0 var(--fade-padding) black,
+                0 0 var(--fade-padding) black,
+                0 0 var(--fade-padding) black,
+                0 0 var(--fade-padding) black;
         }
 
         #lyrics-content-wrapper {

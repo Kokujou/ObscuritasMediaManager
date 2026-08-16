@@ -34,9 +34,9 @@ export class ShoppingPage extends LitElementBase {
                                       lowestKnownPrice: '',
                                       category: IngredientCategory.Miscellaneous,
                                       nation: Language.Unset,
-                                  })
+                                  }),
                           )
-                    : []
+                    : [],
             ),
         ];
     }
@@ -53,16 +53,16 @@ export class ShoppingPage extends LitElementBase {
         const sorted = filtered.orderBy(
             (i) => !this.newIngredients.includes(i.ingredientName),
             (i) => !Session.favoriteIngredients.includes(i.ingredientName),
-            (i) => i.ingredientName.toLowerCase()
+            (i) => i.ingredientName.toLowerCase(),
         );
 
         return sorted;
     }
 
-    @state() protected declare searchText?: string;
-    @state() protected declare category?: IngredientCategory;
-    @state() protected declare nation?: Language;
-    @state() protected declare newIngredients: string[];
+    @state() declare protected searchText?: string;
+    @state() declare protected category?: IngredientCategory;
+    @state() declare protected nation?: Language;
+    @state() declare protected newIngredients: string[];
 
     constructor() {
         super();
@@ -78,12 +78,12 @@ export class ShoppingPage extends LitElementBase {
             ingredient[property] = value;
             if (!Session.ingredients.current().some((x) => x.ingredientName == ingredient.ingredientName))
                 Session.ingredients.current().push(ingredient);
-            await RecipeService.updateIngredient(ingredient.ingredientName, ingredient);
+            await RecipeService.upsertIngredient(ingredient.ingredientName, ingredient);
             this.requestFullUpdate();
         } catch (err) {
             MessageSnackbar.popup(
                 `Ein Fehler ist beim Update von '${property}' Zutat ${ingredient.ingredientName} aufgetreten: ${err}`,
-                'error'
+                'error',
             );
         }
     }
@@ -101,7 +101,7 @@ export class ShoppingPage extends LitElementBase {
                 isFluid: false,
             });
             this.newIngredients.push(newIngredient.ingredientName);
-            await RecipeService.updateIngredient(ingredientName, newIngredient);
+            await RecipeService.upsertIngredient(ingredientName, newIngredient);
             MessageSnackbar.popup('Zutat wurde erfolgreich erstellt.', 'success');
             Session.ingredients.next([newIngredient, ...Session.ingredients.current()]);
             await this.requestFullUpdate();

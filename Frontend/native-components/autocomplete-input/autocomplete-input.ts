@@ -79,8 +79,15 @@ export class AutocompleteInput extends LitElementBase {
     }
 
     selectItem(item: AutocompleteItem | undefined | null) {
+        if (this.searchField.value != this.value?.text && this.value?.id == item?.id && !this.allowText) {
+            this.searchField.value = this.value?.text ?? '';
+            this.showDropdown = false;
+            return;
+        }
+
         if (!item?.id && !this.allowText) return;
         if (!item?.id) item = { id: null, text: this.searchField.value };
+        if (item.text == this.value?.text) return;
         this.value = item;
 
         this.dispatchEvent(new CustomEvent('value-changed', { bubbles: true, composed: true, detail: this.value }));

@@ -46,9 +46,9 @@ export function renderPlaylistTile(this: PlaylistTile) {
                         (rating) =>
                             html` <svg
                                 viewBox="0 0 15 18"
-                                class="star ${rating <= this.playlist.rating ? 'selected' : ''} ${rating <= this.hoveredRating
-                                    ? 'hovered'
-                                    : ''}"
+                                class="star ${rating <= this.playlist.rating ? 'selected' : ''} ${
+                                    rating <= this.hoveredRating ? 'hovered' : ''
+                                }"
                             >
                                 <text
                                     x="0"

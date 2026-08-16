@@ -60,8 +60,8 @@ export class MessageSnackbar extends LitElementBase {
         }
     }
 
-    public declare message: string;
-    public declare messageType: string;
+    declare public message: string;
+    declare public messageType: string;
 
     override render() {
         this.style.backgroundColor = this.backgroundColor;
@@ -74,7 +74,7 @@ export class MessageSnackbar extends LitElementBase {
                 { opacity: 1, pointerEvents: 'none' },
                 { opacity: 0, pointerEvents: 'none' },
             ],
-            { duration: 200, fill: 'forwards' }
+            { duration: 200, fill: 'forwards' },
         );
 
         animation.onfinish = () => {

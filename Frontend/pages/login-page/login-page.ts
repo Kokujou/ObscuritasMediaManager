@@ -17,8 +17,8 @@ export class LoginPage extends LitElementBase {
         return renderLoginPageStyles();
     }
 
-    @state() protected declare username: string;
-    @state() protected declare password: string;
+    @state() declare protected username: string;
+    @state() declare protected password: string;
 
     constructor() {
         super();

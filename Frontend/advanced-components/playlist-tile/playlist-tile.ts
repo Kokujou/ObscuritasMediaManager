@@ -63,8 +63,8 @@ export class PlaylistTile extends LitElementBase {
         );
     }
 
-    @property({ type: Object }) public declare playlist: PlaylistModel;
-    @property({ type: Number }) public declare hoveredRating: number;
+    @property({ type: Object }) declare public playlist: PlaylistModel;
+    @property({ type: Number }) declare public hoveredRating: number;
 
     override connectedCallback() {
         super.connectedCallback();
@@ -91,10 +91,10 @@ export class PlaylistTile extends LitElementBase {
                             action: () => this.dispatchEvent(new CustomEvent('remove')),
                         },
                     ],
-                    e
+                    e,
                 );
             },
-            { signal: this.abortController.signal }
+            { signal: this.abortController.signal },
         );
     }
 

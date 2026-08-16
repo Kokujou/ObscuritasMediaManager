@@ -4,7 +4,7 @@ import { renderPartialLoading } from './partial-loading.html';
 
 @customElement('partial-loading')
 export class PartialLoading extends LitElementBase {
-    @property({ type: Boolean, reflect: true }) public declare hideText: boolean;
+    @property({ type: Boolean, reflect: true }) declare public hideText: boolean;
 
     override render() {
         return renderPartialLoading();

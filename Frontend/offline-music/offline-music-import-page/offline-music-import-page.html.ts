@@ -20,14 +20,16 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                     <label>Musik-Daten:</label>
                     <custom-toggle
                         ?disabled="${this.loading}"
-                        ?toggled="${this.musicTotal
-                            ? this.musicMetadataImported! >= this.musicTotal
-                            : this.musicMetadataImported > 0}"
+                        ?toggled="${
+                            this.musicTotal ? this.musicMetadataImported! >= this.musicTotal : this.musicMetadataImported > 0
+                        }"
                     ></custom-toggle>
                     <div class="import-count-label">
-                        ${this.musicTotal
-                            ? `${this.musicMetadataImported}/${this.musicTotal}`
-                            : this.musicMetadataImported || null}
+                        ${
+                            this.musicTotal
+                                ? `${this.musicMetadataImported}/${this.musicTotal}`
+                                : this.musicMetadataImported || null
+                        }
                     </div>
                     <flex-space></flex-space>
                     <div class="delete-action" tooltip="Löschen" @click="${() => this.deleteMusicMetadata()}"></div>
@@ -51,14 +53,16 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                     <label>Playlists:</label>
                     <custom-toggle
                         ?disabled="${this.loading}"
-                        ?toggled="${this.playlistsTotal
-                            ? this.playlistsImported! >= this.playlistsTotal
-                            : this.playlistsImported > 0}"
+                        ?toggled="${
+                            this.playlistsTotal ? this.playlistsImported! >= this.playlistsTotal : this.playlistsImported > 0
+                        }"
                     ></custom-toggle>
                     <div class="import-count-label">
-                        ${this.playlistsTotal
-                            ? `${this.playlistsImported}/${this.playlistsTotal}`
-                            : this.playlistsImported || null}
+                        ${
+                            this.playlistsTotal
+                                ? `${this.playlistsImported}/${this.playlistsTotal}`
+                                : this.playlistsImported || null
+                        }
                     </div>
                     <flex-space></flex-space>
                     <div class="delete-action" tooltip="Löschen" @click="${() => this.deletePlaylists()}"></div>
@@ -67,14 +71,18 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                     <label>Instrumente:</label>
                     <custom-toggle
                         ?disabled="${this.loading}"
-                        ?toggled="${this.instrumentsTotal
-                            ? this.instrumentsImported! >= this.instrumentsTotal
-                            : this.instrumentsImported > 0}"
+                        ?toggled="${
+                            this.instrumentsTotal
+                                ? this.instrumentsImported! >= this.instrumentsTotal
+                                : this.instrumentsImported > 0
+                        }"
                     ></custom-toggle>
                     <div class="import-count-label">
-                        ${this.instrumentsTotal
-                            ? `${this.instrumentsImported}/${this.instrumentsTotal}`
-                            : this.instrumentsImported || null}
+                        ${
+                            this.instrumentsTotal
+                                ? `${this.instrumentsImported}/${this.instrumentsTotal}`
+                                : this.instrumentsImported || null
+                        }
                     </div>
 
                     <flex-space></flex-space>
@@ -83,57 +91,69 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                 </flex-row>
             </flex-column>
 
-            ${this.offlineMode
-                ? html`
-                      <div id="offline-mode-text">
-                          Die Anwendung läuft im Offline-Modus. Daten können nicht importiert werden. Gelöschte Daten können nicht
-                          wiederhergestellt werden!
-                      </div>
-                  `
-                : ''}
+            ${
+                this.offlineMode
+                    ? html`
+                          <div id="offline-mode-text">
+                              Die Anwendung läuft im Offline-Modus. Daten können nicht importiert werden. Gelöschte Daten können
+                              nicht wiederhergestellt werden!
+                          </div>
+                      `
+                    : ''
+            }
             ${this.validating > 0 ? html`Validiere Eintrag ${this.validating}/${OfflineSession.musicMetadata.length}` : ''}
 
             <flex-row id="actions">
-                ${OfflineSession.initialized
-                    ? html` <border-button
-                          id="submit-button"
-                          text="Zur Anwendung"
-                          ?disabled="${this.loading || this.importing}"
-                          @click="${() => changePage(OfflineMusicPage)}"
-                      ></border-button>`
-                    : null}
-                ${!this.databaseConsistent && !this.offlineMode
-                    ? html`
-                          <border-button
+                ${
+                    OfflineSession.initialized
+                        ? html` <border-button
                               id="submit-button"
-                              text="Importieren"
-                              @click="${() => this.importData()}"
+                              text="Zur Anwendung"
                               ?disabled="${this.loading || this.importing}"
-                          ></border-button>
-                      `
-                    : null}
+                              @click="${() => changePage(OfflineMusicPage)}"
+                          ></border-button>`
+                        : null
+                }
+                ${
+                    !this.databaseConsistent && !this.offlineMode
+                        ? html`
+                              <border-button
+                                  id="submit-button"
+                                  text="Importieren"
+                                  @click="${() => this.importData()}"
+                                  ?disabled="${this.loading || this.importing}"
+                              ></border-button>
+                          `
+                        : null
+                }
             </flex-row>
             <flex-row>
-                ${this.loading
-                    ? html`test`
-                    : this.isCached
-                      ? html`<div class="info">
-                            Letztes Update:
-                            ${this.cacheDate > new Date().addDays(-1) ? 'Heute' : this.cacheDate.toLocaleDateString()}.
-                            ${this.offlineMode
-                                ? ''
-                                : html` <link-element @click="${async () => await OfflineMusicCache.cacheApplication()}"
-                                      >Jetzt updaten</link-element
-                                  >`}
-                        </div>`
-                      : html`<div class="error">
-                            Die Anwendung ist noch nicht installiert!
-                            ${this.offlineMode
-                                ? ''
-                                : html` <link-element @click="${async () => await OfflineMusicCache.cacheApplication()}"
-                                      >Jetzt installieren</link-element
-                                  >`}
-                        </div>`}
+                ${
+                    this.loading
+                        ? html`test`
+                        : this.isCached
+                          ? html`<div class="info">
+                                Letztes Update:
+                                ${this.cacheDate > new Date().addDays(-1) ? 'Heute' : this.cacheDate.toLocaleDateString()}.
+                                ${
+                                    this.offlineMode
+                                        ? ''
+                                        : html` <link-element @click="${async () => await OfflineMusicCache.cacheApplication()}"
+                                              >Jetzt updaten</link-element
+                                          >`
+                                }
+                            </div>`
+                          : html`<div class="error">
+                                Die Anwendung ist noch nicht installiert!
+                                ${
+                                    this.offlineMode
+                                        ? ''
+                                        : html` <link-element @click="${async () => await OfflineMusicCache.cacheApplication()}"
+                                              >Jetzt installieren</link-element
+                                          >`
+                                }
+                            </div>`
+                }
             </flex-row>
         </flex-column>
     `;

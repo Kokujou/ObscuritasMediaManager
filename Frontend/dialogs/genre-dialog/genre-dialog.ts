@@ -108,7 +108,7 @@ export class GenreDialog extends LitElementBase {
                     name: e.detail.name,
                     section: e.detail.section,
                     sectionName: e.detail.sectionName,
-                })
+                }),
             );
             Session.instruments.next(await MusicService.getInstruments());
             await dialog.requestFullUpdate();
@@ -138,8 +138,8 @@ export class GenreDialog extends LitElementBase {
         return getAvailableGenreSections(this.options.allowedGenres as MediaGenreModel[]);
     }
 
-    @property({ type: Object }) public declare options: GenreDialogOptions;
-    @state() protected declare searchText: string;
+    @property({ type: Object }) declare public options: GenreDialogOptions;
+    @state() declare protected searchText: string;
 
     constructor() {
         super();

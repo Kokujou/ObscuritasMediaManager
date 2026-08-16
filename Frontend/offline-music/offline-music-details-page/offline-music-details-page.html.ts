@@ -26,20 +26,22 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
             }
         </style>
 
-        ${this.caching
-            ? html`
-                  <style>
-                      :host {
-                          --primary-color: gray;
-                          --secondary-color: gray;
-                          --font-color: white;
-                          --secondary-font-color: white;
+        ${
+            this.caching
+                ? html`
+                      <style>
+                          :host {
+                              --primary-color: gray;
+                              --secondary-color: gray;
+                              --font-color: white;
+                              --secondary-font-color: white;
 
-                          pointer-events: none;
-                      }
-                  </style>
-              `
-            : ''}
+                              pointer-events: none;
+                          }
+                      </style>
+                  `
+                : ''
+        }
 
         <flex-column id="player" @click="${(e: Event) => e.stopPropagation()}">
             <div id="back-button" @click="${() => changePage(OfflineMusicPage)}">←</div>
@@ -117,40 +119,42 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
                 <div id="track-position-label">${this.currentTrackDurationText}</div>
             </flex-row>
 
-            ${this.playlistId
-                ? html`
-                      <flex-column id="playlist" ?expanded="${this.playlistExpanded}">
-                          <flex-row id="next-track-row" @click="${() => (this.playlistExpanded = !this.playlistExpanded)}">
-                              <div id="playlist-icon" class="audio-control" icon="${Icons.PlaylistIcon}"></div>
-                              <flex-row id="next-track-text" center>
-                                  <b>Nächster Track:</b>
-                                  <div id="next-track-name-wrapper">
-                                      <div id="next-track-name">${this.nextTrack?.displayName ?? '---'}</div>
-                                  </div>
+            ${
+                this.playlistId
+                    ? html`
+                          <flex-column id="playlist" ?expanded="${this.playlistExpanded}">
+                              <flex-row id="next-track-row" @click="${() => (this.playlistExpanded = !this.playlistExpanded)}">
+                                  <div id="playlist-icon" class="audio-control" icon="${Icons.PlaylistIcon}"></div>
+                                  <flex-row id="next-track-text" center>
+                                      <b>Nächster Track:</b>
+                                      <div id="next-track-name-wrapper">
+                                          <div id="next-track-name">${this.nextTrack?.displayName ?? '---'}</div>
+                                      </div>
+                                  </flex-row>
                               </flex-row>
-                          </flex-row>
-                          <flex-column id="playlist-items" expanded>
-                              ${this.currentPlaylist!.map((hash, index) => {
-                                  const track = OfflineSession.musicMetadata.find((x) => x.hash == hash);
-                                  return html`<flex-row
-                                      class="playlist-entry"
-                                      ?active="${this.currentTrack?.hash == hash}"
-                                      @click="${(e: Event) => this.navigateToTrack(index, e)}"
-                                  >
-                                      <div class="track-icon" icon="${Icons.Note}"></div>
-                                      <flex-column class="playlist-entry-text">
-                                          <div class="playlist-entry-name">${track?.name!}</div>
-                                          <div class="playlist-entry-source">
-                                              ${track?.author?.replace('undefined', '') || ''}
-                                              ${track?.source ? `(${track.source.trim()})` : ''}
-                                          </div>
-                                      </flex-column>
-                                  </flex-row>`;
-                              })}
+                              <flex-column id="playlist-items" expanded>
+                                  ${this.currentPlaylist!.map((hash, index) => {
+                                      const track = OfflineSession.musicMetadata.find((x) => x.hash == hash);
+                                      return html`<flex-row
+                                          class="playlist-entry"
+                                          ?active="${this.currentTrack?.hash == hash}"
+                                          @click="${(e: Event) => this.navigateToTrack(index, e)}"
+                                      >
+                                          <div class="track-icon" icon="${Icons.Note}"></div>
+                                          <flex-column class="playlist-entry-text">
+                                              <div class="playlist-entry-name">${track?.name!}</div>
+                                              <div class="playlist-entry-source">
+                                                  ${track?.author?.replace('undefined', '') || ''}
+                                                  ${track?.source ? `(${track.source.trim()})` : ''}
+                                              </div>
+                                          </flex-column>
+                                      </flex-row>`;
+                                  })}
+                              </flex-column>
                           </flex-column>
-                      </flex-column>
-                  `
-                : html`<div></div>`}
+                      `
+                    : html`<div></div>`
+            }
         </flex-column>
     `;
 }

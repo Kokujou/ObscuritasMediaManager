@@ -94,14 +94,16 @@ export function renderOfflineMusicPage(this: OfflineMusicPage) {
                                     this.toggleTrackSelection(track);
                                 }}"
                             >
-                                ${this.selectionMode
-                                    ? html`<input
-                                          type="checkbox"
-                                          class="audio-select"
-                                          ?checked="${this.selectedTracks.includes(track)}"
-                                          @change="${() => this.toggleTrackSelection(track)}"
-                                      />`
-                                    : ''}
+                                ${
+                                    this.selectionMode
+                                        ? html`<input
+                                              type="checkbox"
+                                              class="audio-select"
+                                              ?checked="${this.selectedTracks.includes(track)}"
+                                              @change="${() => this.toggleTrackSelection(track)}"
+                                          />`
+                                        : ''
+                                }
                                 <audio-tile
                                     .track="${track}"
                                     .visualizationData="${OfflineSession.audio.visualizationData}"

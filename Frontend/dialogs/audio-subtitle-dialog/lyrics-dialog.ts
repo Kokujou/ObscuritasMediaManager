@@ -50,13 +50,13 @@ export class LyricsDialog extends LitElementBase {
         return this.lyrics.split('\n');
     }
 
-    @state() public declare lyrics: string;
-    @state() protected declare canNext: boolean;
-    @state() protected declare scrollingPaused: boolean;
-    @state() protected declare lyricsOffset: number;
-    @state() protected declare extendedScrollY: number;
-    @state() protected declare scrollInterval: ReturnType<typeof setTimeout>;
-    @state() protected declare track: MusicModel;
+    @state() declare public lyrics: string;
+    @state() declare protected canNext: boolean;
+    @state() declare protected scrollingPaused: boolean;
+    @state() declare protected lyricsOffset: number;
+    @state() declare protected extendedScrollY: number;
+    @state() declare protected scrollInterval: ReturnType<typeof setTimeout>;
+    @state() declare protected track: MusicModel;
 
     constructor() {
         super();
@@ -69,11 +69,11 @@ export class LyricsDialog extends LitElementBase {
             (e) => {
                 if (e.key == 'Escape') this.fadeAndRemove();
             },
-            { signal: this.abortController.signal }
+            { signal: this.abortController.signal },
         );
 
         window.addEventListener('pointerup', () => {
-            clearInterval(this.scrollInterval), { signal: this.abortController.signal };
+            (clearInterval(this.scrollInterval), { signal: this.abortController.signal });
         });
 
         Session.currentPage.subscribe((x) => this.fadeAndRemove());

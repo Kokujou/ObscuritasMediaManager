@@ -19,32 +19,34 @@ export function renderMediaPageTemplate(this: MediaPage) {
                     this.requestFullUpdate();
                 }}"
             >
-                ${this.loading
-                    ? html`<partial-loading></partial-loading>`
-                    : html` <div id="result-container">
-                          ${this.paginatedMedia.map((media) =>
-                              LinkElement.forPage(
-                                  MediaDetailPage,
-                                  { mediaId: media.id },
-                                  html`
-                                      <media-tile
-                                          .media="${media}"
-                                          .autocompleteGenres="${this.genreList}"
-                                          @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
-                                              this.setMediaImage(media.id, e.detail.imageData)}"
-                                          @ratingChanged="${(e: CustomEvent<{ newRating: number }>) =>
-                                              this.changePropertyOf(media, 'rating', e.detail.newRating)}"
-                                          @genresChanged="${(e: CustomEvent<{ genres: GenreModel[] }>) =>
-                                              this.changePropertyOf(media, 'genres', e.detail.genres as MediaGenreModel[])}"
-                                          @soft-delete="${() => this.changePropertyOf(media, 'deleted', true)}"
-                                          @hard-delete="${() => this.hardDelete(media)}"
-                                          @full-delete="${() => this.fullDelete(media)}"
-                                          @undelete="${() => this.changePropertyOf(media, 'deleted', false)}"
-                                      ></media-tile>
-                                  `
-                              )
-                          )}
-                      </div>`}
+                ${
+                    this.loading
+                        ? html`<partial-loading></partial-loading>`
+                        : html` <div id="result-container">
+                              ${this.paginatedMedia.map((media) =>
+                                  LinkElement.forPage(
+                                      MediaDetailPage,
+                                      { mediaId: media.id },
+                                      html`
+                                          <media-tile
+                                              .media="${media}"
+                                              .autocompleteGenres="${this.genreList}"
+                                              @imageReceived="${(e: CustomEvent<{ imageData: string }>) =>
+                                                  this.setMediaImage(media.id, e.detail.imageData)}"
+                                              @ratingChanged="${(e: CustomEvent<{ newRating: number }>) =>
+                                                  this.changePropertyOf(media, 'rating', e.detail.newRating)}"
+                                              @genresChanged="${(e: CustomEvent<{ genres: GenreModel[] }>) =>
+                                                  this.changePropertyOf(media, 'genres', e.detail.genres as MediaGenreModel[])}"
+                                              @soft-delete="${() => this.changePropertyOf(media, 'deleted', true)}"
+                                              @hard-delete="${() => this.hardDelete(media)}"
+                                              @full-delete="${() => this.fullDelete(media)}"
+                                              @undelete="${() => this.changePropertyOf(media, 'deleted', false)}"
+                                          ></media-tile>
+                                      `,
+                                  ),
+                              )}
+                          </div>`
+                }
             </paginated-scrolling>
             <div id="footer">
                 <div id="result-options">
@@ -58,7 +60,7 @@ export function renderMediaPageTemplate(this: MediaPage) {
                                 tooltip="Eintrag hinzufügen"
                                 icon="${Icons.Plus}"
                             ></div>
-                        `
+                        `,
                     )}
                     <div
                         id="import-media-button"

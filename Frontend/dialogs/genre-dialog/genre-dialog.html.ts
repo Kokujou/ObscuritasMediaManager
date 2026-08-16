@@ -7,8 +7,8 @@ export function renderGenreDialog(this: GenreDialog) {
     const genreDict = this.options.genres.groupByKey('sectionName');
     var filteredSections = Object.keys(genreDict).filter((section) =>
         genreDict[section].some(
-            (genre) => genre.name.toLowerCase().includes(this.searchText.toLowerCase()) || genreDict[section].length == 0
-        )
+            (genre) => genre.name.toLowerCase().includes(this.searchText.toLowerCase()) || genreDict[section].length == 0,
+        ),
     );
 
     return html`
@@ -22,15 +22,17 @@ export function renderGenreDialog(this: GenreDialog) {
             @accept="${(e: Event) => this.accept(e)}"
         >
             <div id="dialog-content">
-                ${this.options.allowRemove
-                    ? html` <div id="remove-toggle">
-                          <custom-toggle
-                              @toggle="${(e: CustomEvent<CheckboxState>) =>
-                                  this.toggleAttribute('editModeEnabled', e.detail == CheckboxState.Ignore)}"
-                          ></custom-toggle>
-                          <div id="toggle-text">Löschen</div>
-                      </div>`
-                    : ''}
+                ${
+                    this.options.allowRemove
+                        ? html` <div id="remove-toggle">
+                              <custom-toggle
+                                  @toggle="${(e: CustomEvent<CheckboxState>) =>
+                                      this.toggleAttribute('editModeEnabled', e.detail == CheckboxState.Ignore)}"
+                              ></custom-toggle>
+                              <div id="toggle-text">Löschen</div>
+                          </div>`
+                        : ''
+                }
 
                 <input
                     id="search-input"

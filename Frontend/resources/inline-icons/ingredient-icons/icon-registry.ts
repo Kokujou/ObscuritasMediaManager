@@ -40,8 +40,8 @@ export function registerIngredientIcons() {
                 (selector: keyof typeof IngredientIcons) =>
                     `[ingredient=${selector}] {
                         ${renderMaskImage(IngredientIcons[selector])}
-                    }`
+                    }`,
             )
-            .join('\n\n')
+            .join('\n\n'),
     );
 }

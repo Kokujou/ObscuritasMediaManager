@@ -20,13 +20,13 @@ export class CompactAudioPlayer extends LitElementBase {
         return 0;
     }
 
-    @property() public declare path: string;
+    @property() declare public path: string;
 
     override connectedCallback() {
         super.connectedCallback();
         this.subscriptions.push(
             AudioService.changed.subscribe((x) => this.requestFullUpdate()),
-            AudioService.trackPosition.subscribe((x) => this.requestFullUpdate())
+            AudioService.trackPosition.subscribe((x) => this.requestFullUpdate()),
         );
     }
 

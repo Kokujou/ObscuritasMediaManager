@@ -15,7 +15,7 @@ export function registerTargetGroups() {
                 *[target-group="${group}"] {
                     mask: url('${getTargetGroupIconPath(group)}') 100% 100% / 100% 100%;
                 }
-            `
+            `,
             )
             .join('\n\n')}
     `);

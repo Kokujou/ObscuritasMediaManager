@@ -20,7 +20,7 @@ public class IngredientModel
         };
 
     [Key] [MaxLength(255)] public required string IngredientName { get; set; }
-    [MaxLength(255)] public required string LowestKnownPrice { get; set; }
+    [MaxLength(255)] public string LowestKnownPrice { get; set; } = string.Empty;
     public Language Nation { get; set; }
     public IngredientCategory Category { get; set; }
     public bool IsFluid { get; set; }

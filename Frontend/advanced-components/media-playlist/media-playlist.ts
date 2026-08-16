@@ -14,8 +14,8 @@ export class MediaPlaylist extends LitElementBase {
         return this.items.slice(0, this.maxPlaylistItems);
     }
 
-    @property({ type: Array }) protected declare items: string[];
-    @property({ type: Number }) protected declare index: number;
+    @property({ type: Array }) declare protected items: string[];
+    @property({ type: Number }) declare protected index: number;
 
     protected originalItems: string[] = [];
     protected maxPlaylistItems = 20;

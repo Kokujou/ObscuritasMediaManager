@@ -9,12 +9,12 @@ export class StarRating extends LitElementBase {
         return renderStarRatingStyles();
     }
 
-    @property({ type: Number }) public declare max: number;
-    @property({ type: Array }) public declare values: number[];
-    @property({ type: Boolean, reflect: true }) public declare singleSelect: boolean;
-    @property({ type: Boolean, reflect: true }) public declare vertical: boolean;
-    @property({ type: Boolean, reflect: true }) public declare swords: boolean;
-    @state() protected declare hoveredRating: number;
+    @property({ type: Number }) declare public max: number;
+    @property({ type: Array }) declare public values: number[];
+    @property({ type: Boolean, reflect: true }) declare public singleSelect: boolean;
+    @property({ type: Boolean, reflect: true }) declare public vertical: boolean;
+    @property({ type: Boolean, reflect: true }) declare public swords: boolean;
+    @state() declare protected hoveredRating: number;
 
     constructor() {
         super();

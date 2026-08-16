@@ -22,23 +22,25 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                 --secondary-font-color: ${getMoodFontColor(mood2 ?? Mood.Unset)};
             }
         </style>
-        ${this.moodToSwitch == 'mood1'
-            ? html`
-                  <style>
-                      #mood-switcher {
-                          background: linear-gradient(var(--primary-color) 0% 100%);
-                          border: 2px solid var(--primary-color);
-                      }
-                  </style>
-              `
-            : this.moodToSwitch == 'mood2'
-              ? html`<style>
-                    #mood-switcher {
-                        background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
-                        border: 2px solid var(--secondary-color);
-                    }
-                </style>`
-              : ''};
+        ${
+            this.moodToSwitch == 'mood1'
+                ? html`
+                      <style>
+                          #mood-switcher {
+                              background: linear-gradient(var(--primary-color) 0% 100%);
+                              border: 2px solid var(--primary-color);
+                          }
+                      </style>
+                  `
+                : this.moodToSwitch == 'mood2'
+                  ? html`<style>
+                        #mood-switcher {
+                            background: linear-gradient(#00000033 0% 100%), linear-gradient(var(--secondary-color) 0% 100%);
+                            border: 2px solid var(--secondary-color);
+                        }
+                    </style>`
+                  : ''
+        };
 
         <page-layout>
             <div id="music-player-container">
@@ -93,21 +95,23 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                         <div id="show-lyrics-link" @click="${() => this.showLyrics()}">Show Lyrics</div>
                     </div>
                     <div id="audio-control-container">
-                        ${this.updatedTrack.complete
-                            ? html`<div id="audio-title">${this.updatedTrack.name}</div>`
-                            : html`
-                                  <input
-                                      type="text"
-                                      id="audio-title"
-                                      class="editable-label"
-                                      tooltip="Name"
-                                      ?disabled="${this.updatedTrack.complete}"
-                                      oninput="this.dispatchEvent(new Event('change'))"
-                                      .value="${live(this.updatedTrack.name)}"
-                                      @change="${(e: Event) =>
-                                          this.changeProperty('name', (e.currentTarget as HTMLInputElement).value)}"
-                                  />
-                              `}
+                        ${
+                            this.updatedTrack.complete
+                                ? html`<div id="audio-title">${this.updatedTrack.name}</div>`
+                                : html`
+                                      <input
+                                          type="text"
+                                          id="audio-title"
+                                          class="editable-label"
+                                          tooltip="Name"
+                                          ?disabled="${this.updatedTrack.complete}"
+                                          oninput="this.dispatchEvent(new Event('change'))"
+                                          .value="${live(this.updatedTrack.name)}"
+                                          @change="${(e: Event) =>
+                                              this.changeProperty('name', (e.currentTarget as HTMLInputElement).value)}"
+                                      />
+                                  `
+                        }
 
                         <div id="audio-subtitle">
                             <input
@@ -122,14 +126,16 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                                     this.changeProperty('author', (e.currentTarget as HTMLInputElement).value)}"
                             />
                             <div id="subtitle-separator">-</div>
-                            ${this.updatedTrack?.complete && this.sourceMediaId
-                                ? LinkElement.forPage(
-                                      MediaDetailPage,
-                                      { mediaId: this.sourceMediaId },
-                                      this.updatedTrack.source!,
-                                      { target: '_blank', className: 'media-link' },
-                                  )
-                                : renderSourceInput.call(this)}
+                            ${
+                                this.updatedTrack?.complete && this.sourceMediaId
+                                    ? LinkElement.forPage(
+                                          MediaDetailPage,
+                                          { mediaId: this.sourceMediaId },
+                                          this.updatedTrack.source!,
+                                          { target: '_blank', className: 'media-link' },
+                                      )
+                                    : renderSourceInput.call(this)
+                            }
                         </div>
                         <div id="genre-section">
                             ${this.updatedTrack.genres?.map(
@@ -140,13 +146,15 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                                         @removed="${() => this.removeGenreKey(genreKey)}"
                                     ></tag-label>`,
                             )}
-                            ${this.updatedTrack.complete
-                                ? ''
-                                : html` <tag-label
-                                      createNew
-                                      .autocomplete="${this.autocompleteGenres}"
-                                      @tagCreated="${(e: CustomEvent) => this.addGenre(e.detail.value)}"
-                                  ></tag-label>`}
+                            ${
+                                this.updatedTrack.complete
+                                    ? ''
+                                    : html` <tag-label
+                                          createNew
+                                          .autocomplete="${this.autocompleteGenres}"
+                                          @tagCreated="${(e: CustomEvent) => this.addGenre(e.detail.value)}"
+                                      ></tag-label>`
+                            }
                         </div>
                         <div id="track-position-container">
                             <div id="track-position-label">${this.currentTrackPositionText}</div>
@@ -201,35 +209,39 @@ export function renderMusicPlaylistPage(this: MusicPlaylistPage) {
                         </div>
                         <div id="change-path-container">
                             <input disabled id="path-input" .value="${'file:\\\\\\' + this.updatedTrack.path}" />
-                            ${this.updatedTrack.complete
-                                ? ''
-                                : html`<div
-                                      id="change-path-button"
-                                      class="inline-icon"
-                                      icon="${Icons.Edit}"
-                                      @click="${this.changeCurrentTrackPath}"
-                                  ></div>`}
+                            ${
+                                this.updatedTrack.complete
+                                    ? ''
+                                    : html`<div
+                                          id="change-path-button"
+                                          class="inline-icon"
+                                          icon="${Icons.Edit}"
+                                          @click="${this.changeCurrentTrackPath}"
+                                      ></div>`
+                            }
                         </div>
                     </div>
                 </div>
-                ${this.createNew
-                    ? html` <div id="edit-playlist-link" @click="${() => this.createTrack()}">
-                          <div id="create-track-icon" icon="${Icons.SaveTick}"></div>
-                          <div id="edit-playlist-text">Track erstellen</div>
-                      </div>`
-                    : this.playlist.isTemporary
-                      ? html`
-                            <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
-                                <div id="edit-playlist-icon" icon="${Icons.Edit}"></div>
-                                <div id="edit-playlist-text">Zu Playlist befördern</div>
-                            </div>
-                        `
-                      : html`
-                            <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
-                                <div id="edit-playlist-icon" icon="${Icons.SaveTick}"></div>
-                                <div id="edit-playlist-text">Playlist bearbeiten</div>
-                            </div>
-                        `}
+                ${
+                    this.createNew
+                        ? html` <div id="edit-playlist-link" @click="${() => this.createTrack()}">
+                              <div id="create-track-icon" icon="${Icons.SaveTick}"></div>
+                              <div id="edit-playlist-text">Track erstellen</div>
+                          </div>`
+                        : this.playlist.isTemporary
+                          ? html`
+                                <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
+                                    <div id="edit-playlist-icon" icon="${Icons.Edit}"></div>
+                                    <div id="edit-playlist-text">Zu Playlist befördern</div>
+                                </div>
+                            `
+                          : html`
+                                <div id="edit-playlist-link" @click="${() => this.openEditPlaylistDialog()}">
+                                    <div id="edit-playlist-icon" icon="${Icons.SaveTick}"></div>
+                                    <div id="edit-playlist-text">Playlist bearbeiten</div>
+                                </div>
+                            `
+                }
                 <div id="media-playlist-container">
                     <media-playlist
                         .items="${this.playlist.tracks.map((x) => x.displayName)}"

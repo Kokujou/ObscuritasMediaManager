@@ -9,7 +9,7 @@ export class BorderButton extends LitElementBase {
         return renderBorderButtonStyles();
     }
 
-    @property() public declare text: string;
+    @property() declare public text: string;
 
     override render() {
         return renderBorderButton(this);

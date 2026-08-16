@@ -15,7 +15,7 @@ export class MediaFilterSidebar extends LitElementBase {
         return renderMediaFilterSidebarStyles();
     }
 
-    @property({ type: Object }) public declare filter: MediaFilter;
+    @property({ type: Object }) declare public filter: MediaFilter;
 
     constructor() {
         super();
@@ -34,7 +34,7 @@ export class MediaFilterSidebar extends LitElementBase {
     setFilterProperty<T extends KeyOfType<MediaFilter, FilterEntry<any>>>(
         property: T,
         key: keyof MediaFilter[T]['states'] & (string | number | symbol),
-        value: CheckboxState
+        value: CheckboxState,
     ) {
         var newFilter = this.filter[property];
         newFilter.setKey(key as never, value);
@@ -44,7 +44,7 @@ export class MediaFilterSidebar extends LitElementBase {
     setArrayFilter<U extends MediaFilter[T]['keyType'], T extends KeyOfType<MediaFilter, FilterEntry<any>>>(
         property: T,
         keys: U[] | 'all',
-        value: CheckboxState
+        value: CheckboxState,
     ) {
         var filter = this.filter[property];
         if (keys == 'all') for (let key in filter) filter.setKey(key as never, value);

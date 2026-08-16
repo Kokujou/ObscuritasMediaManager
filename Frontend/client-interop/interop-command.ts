@@ -4,11 +4,11 @@
  */
 
 export enum InteropCommand {
-    Register = "Register",
-    CopyAudioToClipboard = "CopyAudioToClipboard",
-    ResumeTrack = "ResumeTrack",
-    PauseTrack = "PauseTrack",
-    StopTrack = "StopTrack",
-    ChangeTrackPosition = "ChangeTrackPosition",
-    ChangeTrackVolume = "ChangeTrackVolume",
+    Register = 'Register',
+    CopyAudioToClipboard = 'CopyAudioToClipboard',
+    ResumeTrack = 'ResumeTrack',
+    PauseTrack = 'PauseTrack',
+    StopTrack = 'StopTrack',
+    ChangeTrackPosition = 'ChangeTrackPosition',
+    ChangeTrackVolume = 'ChangeTrackVolume',
 }

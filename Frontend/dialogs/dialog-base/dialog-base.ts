@@ -49,11 +49,11 @@ export class DialogBase extends LitElementBase {
         });
     }
 
-    @property() public declare caption: string;
-    @property() public declare acceptActionText?: string;
-    @property() public declare declineActionText?: string;
-    @property({ type: Object }) public declare properties: Partial<DialogProperties>;
-    @property({ type: Boolean, reflect: true }) public declare canAccept: boolean;
+    @property() declare public caption: string;
+    @property() declare public acceptActionText?: string;
+    @property() declare public declineActionText?: string;
+    @property({ type: Object }) declare public properties: Partial<DialogProperties>;
+    @property({ type: Boolean, reflect: true }) declare public canAccept: boolean;
 
     constructor() {
         super();
@@ -71,12 +71,12 @@ export class DialogBase extends LitElementBase {
                 if (e.key == 'Escape' && !this.properties?.noImplicitDecline) this.decline();
                 if (e.key == 'Enter' && !this.properties?.noImplicitAccept) this.accept();
             },
-            { signal: this.abortController.signal }
+            { signal: this.abortController.signal },
         );
         this.subscriptions.push(
             Session.currentPage.subscribe((oldValue, newValue) => {
                 if (oldValue != newValue) this.decline();
-            })
+            }),
         );
     }
 

@@ -20,7 +20,9 @@ export function renderOfflineMusicPageStyles() {
 
             font-weight: bold;
             letter-spacing: 1px;
-            text-shadow: 0 0 5px black, 0 0 5px black;
+            text-shadow:
+                0 0 5px black,
+                0 0 5px black;
 
             cursor: pointer;
             user-select: none;

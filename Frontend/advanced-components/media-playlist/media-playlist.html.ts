@@ -27,16 +27,15 @@ export function renderMediaPlaylist(this: MediaPlaylist) {
                 @scrollBottom="${() => this.loadMoreItems()}"
             >
                 ${this.paginatedItems.map(
-                    (x, index) =>
-                        html`
-                            <div
-                                class="playlist-entry"
-                                ?active="${this.index == index}"
-                                @dblclick="${() => this.notifyIndexChanged(index)}"
-                            >
-                                ${x}
-                            </div>
-                        `
+                    (x, index) => html`
+                        <div
+                            class="playlist-entry"
+                            ?active="${this.index == index}"
+                            @dblclick="${() => this.notifyIndexChanged(index)}"
+                        >
+                            ${x}
+                        </div>
+                    `,
                 )}
             </paginated-scrolling>
         </div>

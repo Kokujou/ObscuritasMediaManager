@@ -35,9 +35,11 @@ export function renderAudioSubtitleDialog(this: LyricsDialog) {
                     icon="${Icons.FastForward}"
                     @pointerdown="${(e: Event) => this.startScrolling('up')}"
                 ></div>
-                ${this.scrollingPaused || AudioService.paused
-                    ? html`<div class="icon" icon="${Icons.Play}" @click="${this.togglePlay}"></div>`
-                    : html` <div class="icon" icon="${Icons.Pause}" @click="${this.togglePlay}"></div>`}
+                ${
+                    this.scrollingPaused || AudioService.paused
+                        ? html`<div class="icon" icon="${Icons.Play}" @click="${this.togglePlay}"></div>`
+                        : html` <div class="icon" icon="${Icons.Pause}" @click="${this.togglePlay}"></div>`
+                }
                 <div
                     class="icon"
                     id="scroll-down-button"

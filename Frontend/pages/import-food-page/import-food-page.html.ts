@@ -30,85 +30,87 @@ ImportFoodPage.prototype.render = function renderImportFoodPage(this: ImportFood
                 .totalCount="${FoodCache.length}"
                 .currentIndex="${this.index ?? 0}"
             >
-                ${this.currentDish
-                    ? html`
-                          <div
-                              slot="edit-sidebar"
-                              id="edit-image-sidebar"
-                              @change="${() => FoodCache.updateMetadata(this.currentDish.recipe)}"
-                              @keyup="${(e: KeyboardEvent) => {
-                                  if (e.key == 'Escape') this.focus();
-                                  e.stopPropagation();
-                              }}"
-                          >
-                              <autocomplete-input
-                                  id="food-name"
-                                  allowText
-                                  placeholder="Name des Gerichts..."
-                                  .value="${{ text: this.currentDish.recipe.title ?? '', id: null }}"
-                                  .searchItems="${(search: string) => this.searchDishes(search)}"
-                                  @value-changed="${async (e: CustomEvent<AutocompleteItem>) => {
-                                      this.currentDish.recipe.title = e.detail.text;
-                                      if (e.detail.id) this.applySearchResult(e.detail as any as FoodModel);
+                ${
+                    this.currentDish
+                        ? html`
+                              <div
+                                  slot="edit-sidebar"
+                                  id="edit-image-sidebar"
+                                  @change="${() => FoodCache.updateMetadata(this.currentDish.recipe)}"
+                                  @keyup="${(e: KeyboardEvent) => {
+                                      if (e.key == 'Escape') this.focus();
+                                      e.stopPropagation();
                                   }}"
-                              ></autocomplete-input>
-                              <textarea
-                                  type="text"
-                                  id="food-description"
-                                  rows="4"
-                                  placeholder="Beschreibung des Gerichts..."
-                                  .value="${this.currentDish.recipe.description ?? ''}"
-                                  value="${this.currentDish.recipe.description ?? ''}"
-                                  @input="${(e: Event) =>
-                                      (this.currentDish.recipe.description = (e.target as HTMLInputElement).value)}"
-                              ></textarea>
-                              <star-rating
-                                  max="5"
-                                  .values="${Array.createRange(1, this.currentDish.recipe.rating ?? 0)}"
-                                  singleSelect
-                                  @ratingChanged="${(e: CustomEvent) => (this.currentDish.recipe.rating = e.detail.rating)}"
-                              ></star-rating>
-                              <star-rating
-                                  swords
-                                  max="5"
-                                  .values="${Array.createRange(1, this.currentDish.recipe.difficulty ?? 0)}"
-                                  singleSelect
-                                  @ratingChanged="${(e: CustomEvent) => (this.currentDish.recipe.difficulty = e.detail.rating)}"
-                              ></star-rating>
-                              <label>Tags:</label>
-                              <drop-down
-                                  .options="${ColoredFoodTags.filter(
-                                      (tag) => !this.currentDish.recipe.tags.some((existing) => tag.value == existing.value),
-                                  ).map((tag) => DropDownOption.create({ category: tag.key, text: tag.value, value: tag }))}"
-                                  caption="Neuen Tag auswählen"
-                                  useSearch
-                                  @selectionChange="${(e: CustomEvent<{ option: DropDownOption<FoodTagModel> }>) => {
-                                      this.currentDish.recipe.tags.push(e.detail.option.value);
-                                      this.requestFullUpdate();
-                                  }}"
-                              ></drop-down>
-                              <div id="tags">
-                                  ${ColoredFoodTags.filter((tag) =>
-                                      this.currentDish.recipe.tags.some((existing) => existing.value == tag.value),
-                                  )
-                                      .orderBy((x) => x.key)
-                                      .map(
-                                          (tag) =>
-                                              html`<tag-label
-                                                  .text="${`${tag.key}: ${tag.value}`}"
-                                                  style="--label-color: ${tag.color}"
-                                                  @removed="${() => {
-                                                      this.currentDish.recipe.tags = this.currentDish.recipe.tags.filter(
-                                                          (x) => x.value != tag.value,
-                                                      );
-                                                      this.requestFullUpdate();
-                                                  }}"
-                                              ></tag-label>`,
-                                      )}
+                              >
+                                  <autocomplete-input
+                                      id="food-name"
+                                      allowText
+                                      placeholder="Name des Gerichts..."
+                                      .value="${{ text: this.currentDish.recipe.title ?? '', id: null }}"
+                                      .searchItems="${(search: string) => this.searchDishes(search)}"
+                                      @value-changed="${async (e: CustomEvent<AutocompleteItem>) => {
+                                          this.currentDish.recipe.title = e.detail.text;
+                                          if (e.detail.id) this.applySearchResult(e.detail as any as FoodModel);
+                                      }}"
+                                  ></autocomplete-input>
+                                  <textarea
+                                      type="text"
+                                      id="food-description"
+                                      rows="4"
+                                      placeholder="Beschreibung des Gerichts..."
+                                      .value="${this.currentDish.recipe.description ?? ''}"
+                                      value="${this.currentDish.recipe.description ?? ''}"
+                                      @input="${(e: Event) =>
+                                          (this.currentDish.recipe.description = (e.target as HTMLInputElement).value)}"
+                                  ></textarea>
+                                  <star-rating
+                                      max="5"
+                                      .values="${Array.createRange(1, this.currentDish.recipe.rating ?? 0)}"
+                                      singleSelect
+                                      @ratingChanged="${(e: CustomEvent) => (this.currentDish.recipe.rating = e.detail.rating)}"
+                                  ></star-rating>
+                                  <star-rating
+                                      swords
+                                      max="5"
+                                      .values="${Array.createRange(1, this.currentDish.recipe.difficulty ?? 0)}"
+                                      singleSelect
+                                      @ratingChanged="${(e: CustomEvent) => (this.currentDish.recipe.difficulty = e.detail.rating)}"
+                                  ></star-rating>
+                                  <label>Tags:</label>
+                                  <drop-down
+                                      .options="${ColoredFoodTags.filter(
+                                          (tag) => !this.currentDish.recipe.tags.some((existing) => tag.value == existing.value),
+                                      ).map((tag) => DropDownOption.create({ category: tag.key, text: tag.value, value: tag }))}"
+                                      caption="Neuen Tag auswählen"
+                                      useSearch
+                                      @selectionChange="${(e: CustomEvent<{ option: DropDownOption<FoodTagModel> }>) => {
+                                          this.currentDish.recipe.tags.push(e.detail.option.value);
+                                          this.requestFullUpdate();
+                                      }}"
+                                  ></drop-down>
+                                  <div id="tags">
+                                      ${ColoredFoodTags.filter((tag) =>
+                                          this.currentDish.recipe.tags.some((existing) => existing.value == tag.value),
+                                      )
+                                          .orderBy((x) => x.key)
+                                          .map(
+                                              (tag) =>
+                                                  html`<tag-label
+                                                      .text="${`${tag.key}: ${tag.value}`}"
+                                                      style="--label-color: ${tag.color}"
+                                                      @removed="${() => {
+                                                          this.currentDish.recipe.tags = this.currentDish.recipe.tags.filter(
+                                                              (x) => x.value != tag.value,
+                                                          );
+                                                          this.requestFullUpdate();
+                                                      }}"
+                                                  ></tag-label>`,
+                                          )}
+                                  </div>
                               </div>
-                          </div>
-                      `
-                    : ''}
+                          `
+                        : ''
+                }
             </image-slideshow>
 
             <div id="finish-import-button" @click="${async () => await this.importFiles()}">

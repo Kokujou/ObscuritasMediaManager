@@ -4,13 +4,15 @@ import { StarRating } from './star-rating';
 
 export function renderStarRating(this: StarRating) {
     return html`
-        ${this.vertical
-            ? html`<style>
-                  #star-container {
-                      flex-direction: column !important;
-                  }
-              </style>`
-            : ''}
+        ${
+            this.vertical
+                ? html`<style>
+                      #star-container {
+                          flex-direction: column !important;
+                      }
+                  </style>`
+                : ''
+        }
         <div id="star-container">
             ${Array.createRange(0, this.max - 1).map(
                 (x) =>

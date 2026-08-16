@@ -83,8 +83,7 @@ export class OfflineSession {
         const end = Math.min(playlist.length - 1, currentIndex + windowSize);
         const window = new Set(playlist.slice(start, end + 1));
 
-        for (const hash of [...this.playedTracks.keys()])
-            if (!window.has(hash)) this.playedTracks.delete(hash);
+        for (const hash of [...this.playedTracks.keys()]) if (!window.has(hash)) this.playedTracks.delete(hash);
 
         const missing = [...window].filter((hash) => !this.playedTracks.has(hash));
         if (!missing.length) return;

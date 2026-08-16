@@ -174,10 +174,10 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     }
 
     [HttpPatch("ingredient/{ingredientName}")]
-    public async Task UpdateIngredientAsync(string ingredientName, [FromBody] IngredientModel ingredient)
+    public async Task UpsertIngredientAsync(string ingredientName, [FromBody] IngredientModel ingredient)
     {
         if (ingredientName != ingredient.IngredientName) throw new("Ingredients names do not match");
-        await recipeRepository.UpdateIngredientAsync(ingredient);
+        await recipeRepository.UpsertIngredientAsync(ingredient);
     }
 
     [HttpDelete("{recipeId}/ingredient/{ingredientId}")]

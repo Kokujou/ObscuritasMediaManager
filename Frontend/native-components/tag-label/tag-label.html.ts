@@ -4,12 +4,14 @@ import { TagLabel } from './tag-label';
 export function renderTagLabel(this: TagLabel) {
     return html`
         <div id="label-container" @click="${(e: Event) => e.stopPropagation()}">
-            ${this.createNew
-                ? renderNewLabelForm.call(this)
-                : html`<div id="label-text">
-                      ${this.group ? html`<span>${this.group}</span>` : ''}
-                      <span>${this.text}</span>
-                  </div>`}
+            ${
+                this.createNew
+                    ? renderNewLabelForm.call(this)
+                    : html`<div id="label-text">
+                          ${this.group ? html`<span>${this.group}</span>` : ''}
+                          <span>${this.text}</span>
+                      </div>`
+            }
             <div id="x-button" @click="${(e: Event) => this.notifyRemoved(e)}">&times;</div>
         </div>
     `;

@@ -76,7 +76,7 @@ export function renderMusicFilter(this: MusicFilter) {
                                 value: x[0],
                                 text: x[1],
                                 state: x[0] == this.sorting.property ? CheckboxState.Ignore : CheckboxState.Forbid,
-                            })
+                            }),
                         )}"
                         unsetText="Keine Sortierung"
                         maxDisplayDepth="5"
@@ -136,7 +136,7 @@ export function renderMusicFilter(this: MusicFilter) {
                                 .value="${this.filter.languages.states[lang]}"
                             >
                                 <div class="inline-icon " language="${lang}"></div>
-                            </tri-value-checkbox>`
+                            </tri-value-checkbox>`,
                     )}
                 </side-scroller>
             </div>
@@ -174,7 +174,7 @@ export function renderMusicFilter(this: MusicFilter) {
                                 .disabled="${!this.canFilterInstrumentType(type)}"
                             >
                                 <div class="inline-icon" instrument-type="${type}"></div>
-                            </tri-value-checkbox>`
+                            </tri-value-checkbox>`,
                     )}
                 </side-scroller>
             </div>
@@ -233,7 +233,7 @@ export function renderMusicFilter(this: MusicFilter) {
                         this.setFilterEntryValue(
                             this.filter.ratings,
                             e.detail.rating,
-                            e.detail.include ? CheckboxState.Ignore : CheckboxState.Forbid
+                            e.detail.include ? CheckboxState.Ignore : CheckboxState.Forbid,
                         )}"
                 ></star-rating>
             </div>
@@ -262,7 +262,7 @@ export function renderMusicFilter(this: MusicFilter) {
                             text: x[1],
                             color: MoodColors[x[0] as Mood],
                             state: this.filter.moods.states[x[0] as Mood],
-                        })
+                        }),
                     )}"
                     unsetText="Keine Einträge ausgewählt"
                     multiselect
@@ -292,7 +292,7 @@ export function renderMusicFilter(this: MusicFilter) {
                     @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
                         this.setFilterEntryValue(this.filter.genres, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.entries(MusicGenre).map((x) =>
-                        DropDownOption.create({ value: x[0], state: this.filter.genres.states[x[0] as MusicGenre], text: x[1] })
+                        DropDownOption.create({ value: x[0], state: this.filter.genres.states[x[0] as MusicGenre], text: x[1] }),
                     )}"
                     multiselect
                     useToggle
@@ -322,7 +322,7 @@ export function renderMusicFilter(this: MusicFilter) {
                     @selectionChange="${(e: CustomEvent<{ option: DropDownOption<any> }>) =>
                         this.setFilterEntryValue(this.filter.instrumentations, e.detail.option.value, e.detail.option.state)}"
                     .options="${Object.values(Instrumentation).map((key) =>
-                        DropDownOption.create({ value: key, text: key, state: this.filter.instrumentations.states[key] })
+                        DropDownOption.create({ value: key, text: key, state: this.filter.instrumentations.states[key] }),
                     )}"
                     useToggle
                     multiselect
@@ -356,7 +356,7 @@ export function renderMusicFilter(this: MusicFilter) {
                                 .value="${this.filter.participants.states[participants]}"
                             >
                                 <div class="inline-icon" participants="${participants}"></div>
-                            </tri-value-checkbox>`
+                            </tri-value-checkbox>`,
                     )}
                 </side-scroller>
             </div>

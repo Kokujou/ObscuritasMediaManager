@@ -15,7 +15,7 @@ export class MediaFilterService {
                 'romajiName',
                 'germanName',
                 'englishName',
-                'description'
+                'description',
             );
         ObjectFilterService.applyPropertyFilter(result, filter.ratings, 'rating');
         ObjectFilterService.applyArrayFilter(result, filter.genres, 'genres', (x) => x.id);
@@ -44,7 +44,7 @@ export class MediaFilterService {
             'romajiName',
             'germanName',
             'englishName',
-            includeDescription ? 'description' : 'name'
+            includeDescription ? 'description' : 'name',
         );
         return list;
     }
@@ -57,7 +57,7 @@ export class MediaFilterService {
             'kanjiName',
             'romajiName',
             'germanName',
-            'englishName'
+            'englishName',
         );
     }
 }

@@ -11,10 +11,10 @@ export class TriValueCheckbox extends LitElementBase {
         return renderTriValueCheckboxStyles();
     }
 
-    @property({ reflect: true }) public declare value: CheckboxState;
-    @property({ type: Boolean, reflect: true }) public declare allowThreeValues: boolean;
-    @property({ type: Boolean, reflect: true }) public declare disabled: boolean;
-    @property() public declare ignoredState: CheckboxState;
+    @property({ reflect: true }) declare public value: CheckboxState;
+    @property({ type: Boolean, reflect: true }) declare public allowThreeValues: boolean;
+    @property({ type: Boolean, reflect: true }) declare public disabled: boolean;
+    @property() declare public ignoredState: CheckboxState;
 
     constructor() {
         super();

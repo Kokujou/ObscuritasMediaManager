@@ -84,16 +84,18 @@ export function renderEditPlaylistDialog(this: EditPlaylistDialog) {
                     </div>
                 </div>
                 <div id="tracks-section" @dragover="${this.handleFilesDragOver}">
-                    ${this.draggingFiles
-                        ? html`<div
-                              id="drag-info-overlay"
-                              @dragleave="${(e: Event) => {
-                                  e.preventDefault();
-                                  this.draggingFiles = false;
-                              }}"
-                              @drop="${this.dropFiles}"
-                          ></div>`
-                        : ''}
+                    ${
+                        this.draggingFiles
+                            ? html`<div
+                                  id="drag-info-overlay"
+                                  @dragleave="${(e: Event) => {
+                                      e.preventDefault();
+                                      this.draggingFiles = false;
+                                  }}"
+                                  @drop="${this.dropFiles}"
+                              ></div>`
+                            : ''
+                    }
                     <div id="tracks-actions">
                         <div
                             id="import-icon"

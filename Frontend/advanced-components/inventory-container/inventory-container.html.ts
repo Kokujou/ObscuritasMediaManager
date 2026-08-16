@@ -17,11 +17,13 @@ export function renderInventoryContainer(this: InventoryContainer) {
                     (this.target = e.detail.option.value)}"
             ></drop-down>
             <flex-row id="container">
-                ${this.target == InventoryTarget.Other
-                    ? null
-                    : html` <flex-column id="side-levels" class="levels">
-                          ${Array.createRange(0, maxSideLevel + 1).map((level) => renderLevel.call(this, level, true))}
-                      </flex-column>`}
+                ${
+                    this.target == InventoryTarget.Other
+                        ? null
+                        : html` <flex-column id="side-levels" class="levels">
+                              ${Array.createRange(0, maxSideLevel + 1).map((level) => renderLevel.call(this, level, true))}
+                          </flex-column>`
+                }
 
                 <flex-column id="main-levels" class="levels">
                     ${Array.createRange(0, maxLevel + 1).map((level) => renderLevel.call(this, level, false))}
@@ -50,7 +52,7 @@ function renderLevel(this: InventoryContainer, level: number, isSide: boolean) {
                             draggable="true"
                             .item="${item}"
                             @dragstart="${(e: DragEvent) => this.startDraggingItem(e, item)}"
-                        ></inventory-tile>`
+                        ></inventory-tile>`,
                 )}
             <div class="plus-icon" @click="${() => this.addItem(level, isSide)}"></div>
 

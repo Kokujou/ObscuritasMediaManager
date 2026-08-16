@@ -12,13 +12,13 @@ export class MediaTile extends LitElementBase {
         return renderMediaTileStyles();
     }
 
-    @property() public declare displayStyle: string;
-    @property({ type: Object }) public declare media: MediaModel;
-    @property({ type: Array }) public declare autocompleteGenres: string[] | undefined;
+    @property() declare public displayStyle: string;
+    @property({ type: Object }) declare public media: MediaModel;
+    @property({ type: Array }) declare public autocompleteGenres: string[] | undefined;
 
-    @state() protected declare imageRevision: number;
-    @state() protected declare hoveredRating: number;
-    @state() protected declare hasImage: boolean;
+    @state() declare protected imageRevision: number;
+    @state() declare protected hoveredRating: number;
+    @state() declare protected hasImage: boolean;
 
     constructor() {
         super();

@@ -38,13 +38,13 @@ export class ObscuritasMediaManager extends LitElementBase {
             .map((resName) => ObscuritasMediaManager.imagePrefix + resName);
     }
 
-    @state() protected declare initialized: boolean;
-    @state() protected declare loadedResourceIndex: number;
+    @state() declare protected initialized: boolean;
+    @state() declare protected loadedResourceIndex: number;
 
     override render() {
         if (this.loadedResourceIndex < ObscuritasMediaManager.resourceList.length)
             return this.currentResources.map(
-                (resUrl) => html`<img invisible src="${resUrl}" @load="${() => this.loadedResourceIndex++}" />`
+                (resUrl) => html`<img invisible src="${resUrl}" @load="${() => this.loadedResourceIndex++}" />`,
             );
 
         this.initialized = true;

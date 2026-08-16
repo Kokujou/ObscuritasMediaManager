@@ -24,7 +24,7 @@ export class CachingService<T extends IdObject> {
         var current = await this.cache.match(CacheKey(object.id));
         await this.cache.put(
             CacheKey(object.id),
-            new Response(payload, { headers: Object.keysOf(object).map((key) => [key as string, JSON.stringify(object[key])]) })
+            new Response(payload, { headers: Object.keysOf(object).map((key) => [key as string, JSON.stringify(object[key])]) }),
         );
         if (!current) this.length++;
     }
@@ -35,7 +35,7 @@ export class CachingService<T extends IdObject> {
         var payload = await current.blob();
         await this.cache.put(
             CacheKey(object.id),
-            new Response(payload, { headers: Object.keysOf(object).map((key) => [key as string, JSON.stringify(object[key])]) })
+            new Response(payload, { headers: Object.keysOf(object).map((key) => [key as string, JSON.stringify(object[key])]) }),
         );
         if (!current) this.length++;
     }
@@ -68,7 +68,7 @@ export class CachingService<T extends IdObject> {
         var response = await this.cache.match(key);
         if (!response) throw new Error('key not found: ' + key.url);
         return Object.fromEntries(
-            response.headers.keys().map((key) => [key, JSON.parseOrDefault(response?.headers.get(key)!)])
+            response.headers.keys().map((key) => [key, JSON.parseOrDefault(response?.headers.get(key)!)]),
         ) as T;
     }
 }
