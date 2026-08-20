@@ -4,6 +4,7 @@ using ObscuritasMediaManager.Backend.Data;
 using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 using ObscuritasMediaManager.Backend.Services.Interfaces;
+using System.Diagnostics;
 using System.Text;
 
 namespace ObscuritasMediaManager.Backend.Services;
@@ -13,21 +14,35 @@ public sealed class UtatenClient(HttpClient http, ILogger<UtatenClient> logger) 
     public static Uri BaseAddress { get; set; } = new("https://utaten.com/");
     public const int MaxSearchHits = 50;
 
-    private static IEnumerable<Uri> BuildSearchUrls(MusicModel track)
-    {
-        var titles = track.Name.ToKanaCandidates().ToList();
+    public static string? WinningQuery;
+    public static int RequestCount;
+    public static long RequestMilliseconds;
 
-        var artists = track.Author.ToKanaCandidates()
-            .Concat(track.Author.ReverseWords().ToKanaCandidates())
+    private static IEnumerable<string> TitleCandidates(string name)
+    {
+        var hepburn = name.ToHiragana();
+        if (hepburn.Length > 0)
+            yield return hepburn;
+
+        yield return name;
+
+        var wapuro = name.ToHiragana(RomajiStyle.Wapuro);
+        if (wapuro.Length > 0 && wapuro != hepburn)
+            yield return wapuro;
+    }
+
+    private static IEnumerable<string> ArtistCandidates(MusicModel track)
+    {
+        var author = track.Author;
+        if (string.IsNullOrWhiteSpace(author) || author.ToLower() is "unset" or "undefined")
+            return [];
+
+        return new[] { author }
+            .Concat(author.ReverseWords().ToKanaCandidates().Skip(1))
+            .Concat(author.ToKanaCandidates().Skip(1))
+            .Where(x => !string.IsNullOrWhiteSpace(x))
             .Distinct()
             .ToList();
-
-        foreach (var title in titles)
-        foreach (var artist in artists)
-            yield return Build(title, artist);
-
-        foreach (var title in titles)
-            yield return Build(title, null);
     }
 
     private static Uri Build(string? title, string? artist)
@@ -106,7 +121,7 @@ public sealed class UtatenClient(HttpClient http, ILogger<UtatenClient> logger) 
             if (node.NodeType is not (HtmlNodeType.Text or HtmlNodeType.Element))
                 continue;
 
-            var raw = HtmlEntity.DeEntitize(node.InnerText) ?? string.Empty;
+            var raw = HtmlEntity.DeEntitize(node.InnerText);
             if (raw.Length == 0)
                 continue;
 
@@ -186,7 +201,7 @@ public sealed class UtatenClient(HttpClient http, ILogger<UtatenClient> logger) 
 
     private static string Text(HtmlNode? node)
     {
-        return node is null ? string.Empty : Collapse(HtmlEntity.DeEntitize(node.InnerText) ?? string.Empty);
+        return node is null ? string.Empty : Collapse(HtmlEntity.DeEntitize(node.InnerText));
     }
 
     private static string Collapse(string value)
@@ -216,14 +231,18 @@ public sealed class UtatenClient(HttpClient http, ILogger<UtatenClient> logger) 
 
     public async Task<List<LyricsSearchResponse>> SearchForAsync(MusicModel track)
     {
-        foreach (var url in BuildSearchUrls(track))
+        var artists = ArtistCandidates(track).ToList();
+        var titles = TitleCandidates(track.Name).ToList();
+
+        foreach (var (title, hits) in await ProbeTitlesAsync(titles, track))
         {
-            var hits = await SearchAsync(url, track);
             if (hits.Count == 0)
                 continue;
 
-            logger.LogInformation("UtaTen matched {Query} with {HitCount} hits", url.Query, hits.Count);
-            return hits;
+            if (hits.Count == 1 || artists.Count == 0)
+                return hits;
+
+            return await NarrowByArtistAsync(title, artists, track) ?? hits;
         }
 
         return [];
@@ -244,11 +263,38 @@ public sealed class UtatenClient(HttpClient http, ILogger<UtatenClient> logger) 
         return new(ReadTitle(document, target.Title), text);
     }
 
+    private async Task<List<(string Title, List<LyricsSearchResponse> Hits)>> ProbeTitlesAsync(
+        List<string> titles,
+        MusicModel track)
+    {
+        var first = await SearchAsync(Build(titles[0], null), track);
+        if (first.Count > 0 || titles.Count == 1)
+            return [(titles[0], first)];
+
+        var rest = titles.Skip(1).Select(x => SearchAsync(Build(x, null), track)).ToList();
+        await Task.WhenAll(rest);
+
+        return [(titles[0], first), .. titles.Skip(1).Zip(rest, (x, y) => (x, y.Result))];
+    }
+
+    private async Task<List<LyricsSearchResponse>?> NarrowByArtistAsync(
+        string title,
+        List<string> artists,
+        MusicModel track)
+    {
+        var attempts = artists.Select(x => SearchAsync(Build(title, x), track)).ToList();
+        await Task.WhenAll(attempts);
+
+        return attempts.Select(x => x.Result).FirstOrDefault(x => x.Count > 0);
+    }
+
     private async Task<List<LyricsSearchResponse>> SearchAsync(Uri url, MusicModel track)
     {
         var document = await LoadAsync(url);
+        if (document is null)
+            return [];
 
-        var table = document?.DocumentNode
+        var table = document.DocumentNode
             .SelectNodes("//table")
             ?.FirstOrDefault(n => HasClass(n, "searchResult"));
 
@@ -258,14 +304,18 @@ public sealed class UtatenClient(HttpClient http, ILogger<UtatenClient> logger) 
             return [];
         }
 
+        WinningQuery = Uri.UnescapeDataString(url.Query);
+
         var hits = new List<LyricsSearchResponse>();
 
         foreach (var row in table.SelectNodes(".//tr") ?? Enumerable.Empty<HtmlNode>())
         {
             var link = FindByClass(row, "p", "searchResult__title")?.SelectSingleNode("./a");
-            var href = link?.GetAttributeValue("href", null);
+            if (link is null)
+                continue;
 
-            if (link is null || string.IsNullOrEmpty(href))
+            var href = link.GetAttributeValue("href", string.Empty);
+            if (href.Length == 0)
                 continue;
 
             hits.Add(new() { Url = new(BaseAddress, href), Title = Text(link) });
@@ -279,7 +329,10 @@ public sealed class UtatenClient(HttpClient http, ILogger<UtatenClient> logger) 
 
     private async Task<HtmlDocument?> LoadAsync(Uri url)
     {
+        var watch = Stopwatch.StartNew();
+        Interlocked.Increment(ref RequestCount);
         using var response = await http.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+        Interlocked.Add(ref RequestMilliseconds, watch.ElapsedMilliseconds);
         if (!response.IsSuccessStatusCode)
         {
             logger.LogWarning("UtaTen request {Url} failed with {StatusCode}", url, (int)response.StatusCode);

@@ -8,6 +8,7 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 using ObscuritasMediaManager.Backend.Exceptions;
 using ObscuritasMediaManager.Backend.Services;
 using ObscuritasMediaManager.Backend.Services.Interfaces;
+using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using Xabe.FFmpeg;
@@ -33,6 +34,9 @@ public class Startup
         services.AddSingleton<LyricsService>();
         services.AddSingleton(new InteropConnectionChecker());
         services.AddHttpClient();
+        services.ConfigureHttpClientDefaults(x => x
+            .ConfigurePrimaryHttpMessageHandler(() =>
+                new HttpClientHandler { AutomaticDecompression = DecompressionMethods.All }));
 
         services.AddDbContext<DatabaseContext>(x => x.UseSqlite(
                 @"Data Source=J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\Database\database.sqlite;foreign keys=false;",

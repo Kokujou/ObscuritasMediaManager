@@ -49,7 +49,7 @@ public class MusicModel
     [NotMapped] public IEnumerable<string> InstrumentNames => Instruments.Select(x => x.Name);
     public IEnumerable<MusicGenre> Genres { get; set; } = new List<MusicGenre>();
     [MaxLength(255)] public string Path { get; set; } = null!;
-    [MaxLength(255)] public string? Lyrics { get; set; }
+    [MaxLength(9000)] public string? Lyrics { get; set; }
     public byte Rating { get; set; }
     public bool Complete { get; set; }
     [MaxLength(255)] [Key] public string Hash { get; set; } = null!;

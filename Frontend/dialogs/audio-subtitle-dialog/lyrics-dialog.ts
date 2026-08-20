@@ -1,4 +1,4 @@
-import { customElement, state } from 'lit-element/decorators';
+import { customElement, property, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { waitForSeconds } from '../../extensions/animation.extension';
@@ -50,9 +50,10 @@ export class LyricsDialog extends LitElementBase {
         return this.lyrics.split('\n');
     }
 
+    @property({ type: Boolean, reflect: true }) declare protected scrollingPaused: boolean;
+
     @state() declare public lyrics: string;
     @state() declare protected canNext: boolean;
-    @state() declare protected scrollingPaused: boolean;
     @state() declare protected lyricsOffset: number;
     @state() declare protected extendedScrollY: number;
     @state() declare protected scrollInterval: ReturnType<typeof setTimeout>;

@@ -15,7 +15,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.9");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.11");
 
             modelBuilder.Entity("MediaGenreMapping", b =>
                 {
@@ -29,7 +29,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("MediaId");
 
-                    b.ToTable("MediaGenreMapping");
+                    b.ToTable("MediaGenreMapping", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodImageModel", b =>
@@ -63,7 +63,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.HasIndex("ImageHash", "RecipeId")
                         .IsUnique();
 
-                    b.ToTable("FoodImageMapping");
+                    b.ToTable("FoodImageMapping", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodTagModel", b =>
@@ -81,7 +81,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("RecipeId", "Key", "Value");
 
-                    b.ToTable("FoodTagMapping");
+                    b.ToTable("FoodTagMapping", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodThumbModel", b =>
@@ -100,7 +100,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FoodThumbMapping");
+                    b.ToTable("FoodThumbMapping", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.GenreModel", b =>
@@ -116,7 +116,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GenreModel");
+                    b.ToTable("GenreModel", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.IngredientModel", b =>
@@ -143,7 +143,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("IngredientName");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("Ingredients", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.InstrumentModel", b =>
@@ -163,7 +163,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Instruments");
+                    b.ToTable("Instruments", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.InventoryItemModel", b =>
@@ -194,7 +194,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("IngredientName");
 
-                    b.ToTable("Inventory");
+                    b.ToTable("Inventory", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MediaGenreModel", b =>
@@ -214,7 +214,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MediaGenres");
+                    b.ToTable("MediaGenres", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MediaModel", b =>
@@ -287,7 +287,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Media");
+                    b.ToTable("Media", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MusicInstrumentMappingModel", b =>
@@ -310,7 +310,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("TrackHash");
 
-                    b.ToTable("MusicInstrumentMapping");
+                    b.ToTable("MusicInstrumentMapping", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MusicModel", b =>
@@ -379,7 +379,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Hash");
 
-                    b.ToTable("Music");
+                    b.ToTable("Music", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.PlaylistModel", b =>
@@ -417,7 +417,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Playlists");
+                    b.ToTable("Playlists", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.PlaylistTrackMappingModel", b =>
@@ -446,7 +446,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("TrackHash");
 
-                    b.ToTable("PlaylistTrackMapping");
+                    b.ToTable("PlaylistTrackMapping", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeCookwareMappingModel", b =>
@@ -467,7 +467,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Cookware");
+                    b.ToTable("Cookware", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeIngredientMappingModel", b =>
@@ -503,7 +503,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("RecipeIngredientMapping");
+                    b.ToTable("RecipeIngredientMapping", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeModelBase", b =>
@@ -545,7 +545,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
 
                     b.HasDiscriminator<string>("Type").HasValue("RecipeModelBase");
 
@@ -570,7 +570,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.UserSettingsModel", b =>
@@ -592,14 +592,14 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserSettings");
+                    b.ToTable("UserSettings", (string)null);
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodModel", b =>
                 {
                     b.HasBaseType("ObscuritasMediaManager.Backend.Models.RecipeModelBase");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
 
                     b.HasDiscriminator().HasValue("Food");
                 });
@@ -618,7 +618,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
 
                     b.HasDiscriminator().HasValue("Recipe");
                 });
@@ -687,7 +687,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                             b1.HasKey("InventoryItemModelItemId");
 
-                            b1.ToTable("Inventory");
+                            b1.ToTable("Inventory", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("InventoryItemModelItemId");
@@ -776,7 +776,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                             b1.HasKey("RecipeIngredientMappingModelId");
 
-                            b1.ToTable("RecipeIngredientMapping");
+                            b1.ToTable("RecipeIngredientMapping", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("RecipeIngredientMappingModelId");
