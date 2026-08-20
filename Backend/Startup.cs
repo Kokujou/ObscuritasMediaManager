@@ -1,4 +1,3 @@
-using Genius;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
@@ -29,10 +28,8 @@ public class Startup
         services.AddScoped<UserRepository>();
         services.AddScoped<PlaylistRepository>();
         services.AddScoped<RecipeRepository>();
-        services.AddSingleton(_ =>
-            new GeniusClient("_i5cToYg6uB_yorzbeVRYbBtqfLdhU-LtzTxaA5swKJVkDK3W_Yj33IILm1VdL1o"));
         services.AddSingleton<ILyricsClient, RizuchanClient>();
-        services.AddSingleton<ILyricsClient, GeniusClientExtended>();
+        services.AddSingleton<ILyricsClient, UtatenClient>();
         services.AddSingleton<LyricsService>();
         services.AddSingleton(new InteropConnectionChecker());
         services.AddHttpClient();
@@ -108,7 +105,7 @@ public class Startup
                     .WriteAsJsonAsync(
                         new
                         {
-                            Reason = exception?.Message, InnerException = exception?.InnerException?.Message
+                            Reason = exception.Message, InnerException = exception.InnerException?.Message
                         });
             }));
 

@@ -19,7 +19,11 @@ namespace ObscuritasMediaManager.Backend.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class MusicController(MusicRepository repository, PlaylistRepository playlistRepository, IOptions<JsonOptions> jsonOptions, LyricsService lyricsService)
+public class MusicController(
+    MusicRepository repository,
+    PlaylistRepository playlistRepository,
+    IOptions<JsonOptions> jsonOptions,
+    LyricsService lyricsService)
     : ControllerBase
 {
     private readonly JsonSerializerOptions _jsonOptions = jsonOptions.Value.JsonSerializerOptions;
@@ -27,10 +31,11 @@ public class MusicController(MusicRepository repository, PlaylistRepository play
     [HttpGet("overview")]
     public async Task<MusicOverviewResponse> GetOverviewAsync()
     {
-        return new() {
+        return new()
+        {
             Tracks = await repository.GetAll().CountAsync(),
-            Playlists = await  playlistRepository.GetAll().CountAsync(),
-            Instruments =await repository.GetInstruments().CountAsync()
+            Playlists = await playlistRepository.GetAll().CountAsync(),
+            Instruments = await repository.GetInstruments().CountAsync()
         };
     }
 

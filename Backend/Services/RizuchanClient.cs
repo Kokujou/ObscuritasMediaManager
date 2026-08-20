@@ -29,7 +29,7 @@ public class RizuchanClient(HttpClient httpClient) : ILyricsClient
         return htmlDocument.DocumentNode.SelectNodes("//*[@class='entry-title']//a")
             .Select(x => new LyricsSearchResponse
             {
-                Title = HtmlEntity.DeEntitize(x.InnerText), Url = x.GetAttributeValue("href", "")
+                Title = HtmlEntity.DeEntitize(x.InnerText), Url = new(x.GetAttributeValue("href", ""))
             })
             .ToList();
     }
