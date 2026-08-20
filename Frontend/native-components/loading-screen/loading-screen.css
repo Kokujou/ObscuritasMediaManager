@@ -7,6 +7,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    color: black;
+}
+
+:host([opaque]) #wrapper {
+    background: #2229;
 }
 
 #icon-container {

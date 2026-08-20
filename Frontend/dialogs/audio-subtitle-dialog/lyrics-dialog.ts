@@ -3,6 +3,7 @@ import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { waitForSeconds } from '../../extensions/animation.extension';
 import { MusicModel } from '../../obscuritas-media-manager-backend-client';
+import { PageRouting } from '../../pages/page-routing/page-routing';
 import { AudioService } from '../../services/audio-service';
 import { MusicService } from '../../services/backend.services';
 import { renderAudioSubtitleDialogStyles } from './lyrics-dialog.css';
@@ -17,33 +18,40 @@ export class LyricsDialog extends LitElementBase {
     static async startShowing(track: MusicModel) {
         var dialog = new LyricsDialog();
 
-        if (track.lyrics?.length && track.lyrics?.length > 0) {
-            dialog.title = track.displayName;
-            dialog.lyrics = track.lyrics;
-            dialog.lyricsOffset = -1;
-        } else {
-            var lyrics = await MusicService.getLyrics(track.hash!);
-            dialog.lyrics = lyrics.text;
-            dialog.title = lyrics.title;
-            dialog.lyricsOffset = 0;
-        }
-        dialog.track = track;
-        dialog.scrollingPaused = AudioService.paused;
-        dialog.extendedScrollY = 0;
+        var loadingScreen = document.createElement('loading-screen');
+        loadingScreen.toggleAttribute('opaque');
+        PageRouting.instance.appendChild(loadingScreen);
+        try {
+            if (track.lyrics?.length && track.lyrics?.length > 0) {
+                dialog.title = track.displayName;
+                dialog.lyrics = track.lyrics;
+                dialog.lyricsOffset = -1;
+            } else {
+                var lyrics = await MusicService.getLyrics(track.hash!);
+                dialog.lyrics = lyrics.text;
+                dialog.title = lyrics.title;
+                dialog.lyricsOffset = 0;
+            }
+            dialog.track = track;
+            dialog.scrollingPaused = AudioService.paused;
+            dialog.extendedScrollY = 0;
 
-        document.body.appendChild(dialog);
-        await dialog.requestFullUpdate();
-        var scrollContainer = dialog.shadowRoot!.querySelector<HTMLElement>('#lyrics-content-wrapper-2')!;
+            document.body.appendChild(dialog);
+            await dialog.requestFullUpdate();
+            var scrollContainer = dialog.shadowRoot!.querySelector<HTMLElement>('#lyrics-content-wrapper-2')!;
 
-        scrollContainer.style.translate = '0 0';
-        scrollContainer.style.animationDuration = (AudioService.duration ?? 30) + 'ms';
-
-        AudioService.changed.subscribe(() => {
+            scrollContainer.style.translate = '0 0';
             scrollContainer.style.animationDuration = (AudioService.duration ?? 30) + 'ms';
-            dialog.requestFullUpdate();
-        });
 
-        return dialog;
+            AudioService.changed.subscribe(() => {
+                scrollContainer.style.animationDuration = (AudioService.duration ?? 30) + 'ms';
+                dialog.requestFullUpdate();
+            });
+
+            return dialog;
+        } finally {
+            loadingScreen.remove();
+        }
     }
 
     get lyricsLines() {
