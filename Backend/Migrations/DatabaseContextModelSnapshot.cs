@@ -80,23 +80,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.ToTable("FoodTagMapping");
                 });
 
-            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.GenreModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .UseCollation("NOCASE");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GenreModel");
-                });
-
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.IngredientModel", b =>
                 {
                     b.Property<string>("IngredientName")

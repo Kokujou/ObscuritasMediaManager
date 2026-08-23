@@ -32,6 +32,7 @@ export function renderRecipesPageStyles() {
             align-items: center;
             flex-wrap: wrap;
             gap: 50px;
+            column-gap: 70px;
         }
 
         .add-icon {

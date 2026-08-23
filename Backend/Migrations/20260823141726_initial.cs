@@ -28,18 +28,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GenreModel",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false, collation: "NOCASE"),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 250, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GenreModel", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Ingredients",
                 columns: table => new
                 {
@@ -430,9 +418,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "FoodThumbMapping");
-
-            migrationBuilder.DropTable(
-                name: "GenreModel");
 
             migrationBuilder.DropTable(
                 name: "Inventory");

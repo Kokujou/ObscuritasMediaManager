@@ -11,7 +11,7 @@ using ObscuritasMediaManager.Backend.DataRepositories;
 namespace ObscuritasMediaManager.Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20260823124023_initial")]
+    [Migration("20260823141726_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -81,23 +81,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.HasKey("RecipeId", "Key", "Value");
 
                     b.ToTable("FoodTagMapping");
-                });
-
-            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.GenreModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .UseCollation("NOCASE");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GenreModel");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.IngredientModel", b =>

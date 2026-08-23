@@ -22,7 +22,7 @@ import { RecipeDetailPage } from './recipe-detail-page';
 export function renderRecipeDetailPage(this: RecipeDetailPage) {
     const recipe = this.recipe.recipe;
 
-    document.title = recipe.id ? `Rezept - ${recipe.title}` : `Rezept erstellen ${recipe.title ? `- ${recipe.title}` : ''}`;
+    document.title = recipe.id ? `${recipe.title}` : `Rezept erstellen ${recipe.title ? `- ${recipe.title}` : ''}`;
 
     return html`
         <page-layout>
@@ -81,11 +81,9 @@ export function renderRecipeDetailPage(this: RecipeDetailPage) {
                                     )}"
                             ></tag-label>
                         </flex-row>
-                        ${
-                            !this.fullRecipe
-                                ? html` <div id="add-recipe-button" @click="${() => this.addRecipe()}">Rezept hinzufügen</div> `
-                                : ''
-                        }
+                        ${!this.fullRecipe
+                            ? html` <div id="add-recipe-button" @click="${() => this.addRecipe()}">Rezept hinzufügen</div> `
+                            : ''}
                     </flex-column>
                 </flex-row>
                 ${renderRecipeSection.call(this)}
@@ -170,11 +168,9 @@ function renderRecipeSection(this: RecipeDetailPage) {
         </div>
 
         <div id="action-area">
-            ${
-                !this.recipe.recipe.id || this.recipe.recipe.id == emptyGuid
-                    ? html` <div class="action-button" @click="${() => this.createRecipe()}">Erstellen</div> `
-                    : ''
-            }
+            ${!this.recipe.recipe.id || this.recipe.recipe.id == emptyGuid
+                ? html` <div class="action-button" @click="${() => this.createRecipe()}">Erstellen</div> `
+                : ''}
         </div>
     `;
 }
@@ -206,19 +202,17 @@ function renderIngredientGroup(this: RecipeDetailPage, group: [name: string, ing
 
 function renderIngredient(this: RecipeDetailPage, ingredient: RecipeIngredientMappingModel) {
     return html` <div class="ingredient" @change="${() => this.changeProperty('ingredients', this.fullRecipe!.ingredients)}">
-        ${
-            !ValuelessMeasurements.includes(ingredient.unit.measurement)
-                ? html` <input
-                      type="text"
-                      class="ingredient-amount"
-                      supportedCharacters="[0-9.]"
-                      .value="${ingredient.amount.toString()}"
-                      onclick="javascript:this.select()"
-                      @input="${(e: KeyboardEvent) => handleLabelInput(e, /[0-9.]/g)}"
-                      @change="${(e: Event) => (ingredient.amount = Number.parseFloat((e.target as HTMLInputElement).value) ?? 0)}"
-                  />`
-                : ''
-        }
+        ${!ValuelessMeasurements.includes(ingredient.unit.measurement)
+            ? html` <input
+                  type="text"
+                  class="ingredient-amount"
+                  supportedCharacters="[0-9.]"
+                  .value="${ingredient.amount.toString()}"
+                  onclick="javascript:this.select()"
+                  @input="${(e: KeyboardEvent) => handleLabelInput(e, /[0-9.]/g)}"
+                  @change="${(e: Event) => (ingredient.amount = Number.parseFloat((e.target as HTMLInputElement).value) ?? 0)}"
+              />`
+            : ''}
 
         <grouped-dropdown
             tabindex="0"
