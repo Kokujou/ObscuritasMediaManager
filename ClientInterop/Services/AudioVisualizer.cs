@@ -43,11 +43,12 @@ public class AudioVisualizer : ISampleProvider
 
     public WaveFormat WaveFormat => source.WaveFormat;
 
-    public int Read(float[] buffer, int offset, int length)
+    public int Read(Span<float> buffer)
     {
-        var samplesRead = source.Read(buffer, offset, length);
+        var samplesRead = source.Read(buffer);
 
-        for (var n = 0; n < samplesRead; n += channels) Add(buffer[n + offset]);
+        for (var n = 0; n < samplesRead; n += channels)
+            Add(buffer[n]);
 
         return samplesRead;
     }

@@ -5,5 +5,5 @@
 
 export class FilesQueryRequest {
     multiselect: boolean;
-    nameExtensionMap: { [key: string]: string[] };
+    nameExtensionMap: { [key: string]: string[]; };
 }

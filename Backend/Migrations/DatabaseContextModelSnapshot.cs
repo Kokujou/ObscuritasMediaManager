@@ -20,16 +20,18 @@ namespace ObscuritasMediaManager.Backend.Migrations
             modelBuilder.Entity("MediaGenreMapping", b =>
                 {
                     b.Property<Guid>("GenreId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<Guid>("MediaId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.HasKey("GenreId", "MediaId");
 
                     b.HasIndex("MediaId");
 
-                    b.ToTable("MediaGenreMapping", (string)null);
+                    b.ToTable("MediaGenreMapping");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodImageModel", b =>
@@ -38,57 +40,13 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<byte[]>("ImageData")
-                        .HasColumnType("BLOB");
-
-                    b.Property<string>("ImageHash")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MimeType")
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("ThumbId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ThumbId");
-
-                    b.HasIndex("ImageHash", "RecipeId")
-                        .IsUnique();
-
-                    b.ToTable("FoodImageMapping", (string)null);
-                });
-
-            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodTagModel", b =>
-                {
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Key")
+                    b.Property<string>("ImagePath")
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Value")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("RecipeId", "Key", "Value");
-
-                    b.ToTable("FoodTagMapping", (string)null);
-                });
-
-            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodThumbModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("RecipeId")
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<byte[]>("ThumbData")
                         .HasColumnType("BLOB");
@@ -100,14 +58,34 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FoodThumbMapping", (string)null);
+                    b.ToTable("FoodThumbMapping");
+                });
+
+            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodTagModel", b =>
+                {
+                    b.Property<Guid>("RecipeId")
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
+
+                    b.Property<string>("Key")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("RecipeId", "Key", "Value");
+
+                    b.ToTable("FoodTagMapping");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.GenreModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -116,7 +94,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GenreModel", (string)null);
+                    b.ToTable("GenreModel");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.IngredientModel", b =>
@@ -143,7 +121,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("IngredientName");
 
-                    b.ToTable("Ingredients", (string)null);
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.InstrumentModel", b =>
@@ -163,14 +141,15 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Instruments", (string)null);
+                    b.ToTable("Instruments");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.InventoryItemModel", b =>
                 {
                     b.Property<Guid>("ItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("IngredientName")
                         .IsRequired()
@@ -194,14 +173,15 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("IngredientName");
 
-                    b.ToTable("Inventory", (string)null);
+                    b.ToTable("Inventory");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MediaGenreModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -214,14 +194,15 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MediaGenres", (string)null);
+                    b.ToTable("MediaGenres");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MediaModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<bool>("Complete")
                         .HasColumnType("INTEGER");
@@ -287,7 +268,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Media", (string)null);
+                    b.ToTable("Media");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MusicInstrumentMappingModel", b =>
@@ -310,7 +291,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("TrackHash");
 
-                    b.ToTable("MusicInstrumentMapping", (string)null);
+                    b.ToTable("MusicInstrumentMapping");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.MusicModel", b =>
@@ -345,7 +326,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Lyrics")
-                        .HasMaxLength(255)
+                        .HasMaxLength(9000)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Mood1")
@@ -379,14 +360,15 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Hash");
 
-                    b.ToTable("Music", (string)null);
+                    b.ToTable("Music");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.PlaylistModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Author")
                         .HasMaxLength(255)
@@ -417,13 +399,14 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Playlists", (string)null);
+                    b.ToTable("Playlists");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.PlaylistTrackMappingModel", b =>
                 {
                     b.Property<Guid>("PlaylistId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("TrackHash")
                         .HasMaxLength(255)
@@ -446,14 +429,15 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("TrackHash");
 
-                    b.ToTable("PlaylistTrackMapping", (string)null);
+                    b.ToTable("PlaylistTrackMapping");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeCookwareMappingModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -461,20 +445,22 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("RecipeId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Cookware", (string)null);
+                    b.ToTable("Cookware");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeIngredientMappingModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<float>("Amount")
                         .HasColumnType("REAL");
@@ -495,7 +481,8 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<Guid?>("RecipeId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.HasKey("Id");
 
@@ -503,14 +490,15 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("RecipeIngredientMapping", (string)null);
+                    b.ToTable("RecipeIngredientMapping");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.RecipeModelBase", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("INTEGER");
@@ -545,7 +533,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("Recipes", (string)null);
+                    b.ToTable("Recipes");
 
                     b.HasDiscriminator<string>("Type").HasValue("RecipeModelBase");
 
@@ -556,7 +544,8 @@ namespace ObscuritasMediaManager.Backend.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -570,14 +559,15 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.UserSettingsModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .UseCollation("NOCASE");
 
                     b.Property<string>("MediaFilter")
                         .HasMaxLength(9999)
@@ -592,14 +582,14 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserSettings", (string)null);
+                    b.ToTable("UserSettings");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodModel", b =>
                 {
                     b.HasBaseType("ObscuritasMediaManager.Backend.Models.RecipeModelBase");
 
-                    b.ToTable("Recipes", (string)null);
+                    b.ToTable("Recipes");
 
                     b.HasDiscriminator().HasValue("Food");
                 });
@@ -618,7 +608,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.ToTable("Recipes", (string)null);
+                    b.ToTable("Recipes");
 
                     b.HasDiscriminator().HasValue("Recipe");
                 });
@@ -636,15 +626,6 @@ namespace ObscuritasMediaManager.Backend.Migrations
                         .HasForeignKey("MediaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodImageModel", b =>
-                {
-                    b.HasOne("ObscuritasMediaManager.Backend.Models.FoodThumbModel", "Thumb")
-                        .WithMany()
-                        .HasForeignKey("ThumbId");
-
-                    b.Navigation("Thumb");
                 });
 
             modelBuilder.Entity("ObscuritasMediaManager.Backend.Models.FoodTagModel", b =>
@@ -667,7 +648,8 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.OwnsOne("ObscuritasMediaManager.Backend.Models.MeasurementUnit", "Unit", b1 =>
                         {
                             b1.Property<Guid>("InventoryItemModelItemId")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("TEXT")
+                                .UseCollation("NOCASE");
 
                             b1.Property<int>("Measurement")
                                 .HasColumnType("INTEGER");
@@ -687,7 +669,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                             b1.HasKey("InventoryItemModelItemId");
 
-                            b1.ToTable("Inventory", (string)null);
+                            b1.ToTable("Inventory");
 
                             b1.WithOwner()
                                 .HasForeignKey("InventoryItemModelItemId");
@@ -756,7 +738,8 @@ namespace ObscuritasMediaManager.Backend.Migrations
                     b.OwnsOne("ObscuritasMediaManager.Backend.Models.MeasurementUnit", "Unit", b1 =>
                         {
                             b1.Property<Guid>("RecipeIngredientMappingModelId")
-                                .HasColumnType("TEXT");
+                                .HasColumnType("TEXT")
+                                .UseCollation("NOCASE");
 
                             b1.Property<int>("Measurement")
                                 .HasColumnType("INTEGER");
@@ -776,7 +759,7 @@ namespace ObscuritasMediaManager.Backend.Migrations
 
                             b1.HasKey("RecipeIngredientMappingModelId");
 
-                            b1.ToTable("RecipeIngredientMapping", (string)null);
+                            b1.ToTable("RecipeIngredientMapping");
 
                             b1.WithOwner()
                                 .HasForeignKey("RecipeIngredientMappingModelId");

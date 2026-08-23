@@ -2201,49 +2201,6 @@ export class RecipeClient {
         return Promise.resolve<void>(null as any);
     }
 
-    getBrokenImages(signal?: AbortSignal): Promise<FoodImageModel[]> {
-        let url_ = this.baseUrl + "/api/Recipe/broken-images";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "GET",
-            signal,
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processGetBrokenImages(_response);
-        });
-    }
-
-    protected processGetBrokenImages(response: Response): Promise<FoodImageModel[]> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        let _mappings: { source: any, target: any }[] = [];
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : jsonParse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(FoodImageModel.fromJS(item, _mappings));
-            }
-            else {
-                result200 = null as any;
-            }
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<FoodImageModel[]>(null as any);
-    }
-
     getDefault(signal?: AbortSignal): Promise<RecipeModel> {
         let url_ = this.baseUrl + "/api/Recipe/default";
         url_ = url_.replace(/[?&]$/, "");
@@ -2319,14 +2276,14 @@ export class RecipeClient {
         return Promise.resolve<RecipeResponse>(null as any);
     }
 
-    getImage(recipeId: string, imageHash: string, signal?: AbortSignal): Promise<FileResponse> {
-        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/images/{imageHash}";
+    getImage(recipeId: string, thumbHash: string, signal?: AbortSignal): Promise<FileResponse> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/images/{thumbHash}";
         if (recipeId === undefined || recipeId === null)
             throw new globalThis.Error("The parameter 'recipeId' must be defined.");
         url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
-        if (imageHash === undefined || imageHash === null)
-            throw new globalThis.Error("The parameter 'imageHash' must be defined.");
-        url_ = url_.replace("{imageHash}", encodeURIComponent("" + imageHash));
+        if (thumbHash === undefined || thumbHash === null)
+            throw new globalThis.Error("The parameter 'thumbHash' must be defined.");
+        url_ = url_.replace("{thumbHash}", encodeURIComponent("" + thumbHash));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -2364,14 +2321,14 @@ export class RecipeClient {
         return Promise.resolve<FileResponse>(null as any);
     }
 
-    getImageThumb(recipeId: string, imageHash: string, signal?: AbortSignal): Promise<FileResponse> {
-        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/images/{imageHash}/thumb";
+    getImageThumb(recipeId: string, thumbHash: string, signal?: AbortSignal): Promise<FileResponse> {
+        let url_ = this.baseUrl + "/api/Recipe/{recipeId}/images/{thumbHash}/thumb";
         if (recipeId === undefined || recipeId === null)
             throw new globalThis.Error("The parameter 'recipeId' must be defined.");
         url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
-        if (imageHash === undefined || imageHash === null)
-            throw new globalThis.Error("The parameter 'imageHash' must be defined.");
-        url_ = url_.replace("{imageHash}", encodeURIComponent("" + imageHash));
+        if (thumbHash === undefined || thumbHash === null)
+            throw new globalThis.Error("The parameter 'thumbHash' must be defined.");
+        url_ = url_.replace("{thumbHash}", encodeURIComponent("" + thumbHash));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -2407,44 +2364,6 @@ export class RecipeClient {
             });
         }
         return Promise.resolve<FileResponse>(null as any);
-    }
-
-    upsertImageThumb(imageHash: string, thumb: FoodThumbModel, signal?: AbortSignal): Promise<void> {
-        let url_ = this.baseUrl + "/image/{imageHash}/thumb";
-        if (imageHash === undefined || imageHash === null)
-            throw new globalThis.Error("The parameter 'imageHash' must be defined.");
-        url_ = url_.replace("{imageHash}", encodeURIComponent("" + imageHash));
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(thumb);
-
-        let options_: RequestInit = {
-            body: content_,
-            method: "PUT",
-            signal,
-            headers: {
-                "Content-Type": "application/json",
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processUpsertImageThumb(_response);
-        });
-    }
-
-    protected processUpsertImageThumb(response: Response): Promise<void> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            return;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<void>(null as any);
     }
 
     searchDishes(search?: string | undefined, signal?: AbortSignal): Promise<RecipeModelBase[]> {
@@ -2529,14 +2448,14 @@ export class RecipeClient {
         return Promise.resolve<void>(null as any);
     }
 
-    addRecipeImage(recipeId: string, image: FoodImageModel, signal?: AbortSignal): Promise<string[]> {
+    addRecipeImage(recipeId: string, request: FoodImageCreationRequest, signal?: AbortSignal): Promise<string[]> {
         let url_ = this.baseUrl + "/api/Recipe/recipe/{recipeId}/image";
         if (recipeId === undefined || recipeId === null)
             throw new globalThis.Error("The parameter 'recipeId' must be defined.");
         url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(image);
+        const content_ = JSON.stringify(request);
 
         let options_: RequestInit = {
             body: content_,
@@ -2578,14 +2497,14 @@ export class RecipeClient {
         return Promise.resolve<string[]>(null as any);
     }
 
-    removeRecipeImage(recipeId: string, imageHash: string, signal?: AbortSignal): Promise<string[]> {
-        let url_ = this.baseUrl + "/api/Recipe/recipe/{recipeId}/images/{imageHash}";
+    removeRecipeImage(recipeId: string, thumbHash: string, signal?: AbortSignal): Promise<string[]> {
+        let url_ = this.baseUrl + "/api/Recipe/recipe/{recipeId}/images/{thumbHash}";
         if (recipeId === undefined || recipeId === null)
             throw new globalThis.Error("The parameter 'recipeId' must be defined.");
         url_ = url_.replace("{recipeId}", encodeURIComponent("" + recipeId));
-        if (imageHash === undefined || imageHash === null)
-            throw new globalThis.Error("The parameter 'imageHash' must be defined.");
-        url_ = url_.replace("{imageHash}", encodeURIComponent("" + imageHash));
+        if (thumbHash === undefined || thumbHash === null)
+            throw new globalThis.Error("The parameter 'thumbHash' must be defined.");
+        url_ = url_.replace("{thumbHash}", encodeURIComponent("" + thumbHash));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -4931,114 +4850,6 @@ export interface IRecipeCookwareMappingModel {
     name: string;
 }
 
-export class FoodImageModel implements IFoodImageModel {
-    recipeId: string;
-    mimeType: string | undefined;
-    imageData: string | undefined;
-    thumbId: number | undefined;
-    thumb: FoodThumbModel | undefined;
-    imageHash: string;
-
-    constructor(data?: Partial<IFoodImageModel>) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-
-    }
-
-    init(_data?: any, _mappings?: any) {
-        if (_data) {
-            this.recipeId = _data["recipeId"];
-            this.mimeType = _data["mimeType"];
-            this.imageData = _data["imageData"];
-            this.thumbId = _data["thumbId"];
-            this.thumb = _data["thumb"] ? FoodThumbModel.fromJS(_data["thumb"], _mappings) : undefined as any;
-            this.imageHash = _data["imageHash"];
-        }
-    }
-
-    static fromJS(data: any, _mappings?: any): FoodImageModel  {
-        data = typeof data === 'object' ? data : {};
-        return createInstance<FoodImageModel>(data, _mappings, FoodImageModel)!;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["recipeId"] = this.recipeId;
-        data["mimeType"] = this.mimeType;
-        data["imageData"] = this.imageData;
-        data["thumbId"] = this.thumbId;
-        data["thumb"] = this.thumb ? this.thumb.toJSON() : undefined as any;
-        data["imageHash"] = this.imageHash;
-        return data;
-    }
-
-    clone(): FoodImageModel {
-        const json = this.toJSON();
-        let result = new FoodImageModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IFoodImageModel {
-    recipeId: string;
-    mimeType: string | undefined;
-    imageData: string | undefined;
-    thumbId: number | undefined;
-    thumb: FoodThumbModel | undefined;
-    imageHash: string;
-}
-
-export class FoodThumbModel implements IFoodThumbModel {
-    thumbData: string | undefined;
-    thumbHash: string;
-
-    constructor(data?: Partial<IFoodThumbModel>) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-
-    }
-
-    init(_data?: any, _mappings?: any) {
-        if (_data) {
-            this.thumbData = _data["thumbData"];
-            this.thumbHash = _data["thumbHash"];
-        }
-    }
-
-    static fromJS(data: any, _mappings?: any): FoodThumbModel  {
-        data = typeof data === 'object' ? data : {};
-        return createInstance<FoodThumbModel>(data, _mappings, FoodThumbModel)!;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["thumbData"] = this.thumbData;
-        data["thumbHash"] = this.thumbHash;
-        return data;
-    }
-
-    clone(): FoodThumbModel {
-        const json = this.toJSON();
-        let result = new FoodThumbModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IFoodThumbModel {
-    thumbData: string | undefined;
-    thumbHash: string;
-}
-
 export class RecipeCreationRequest implements IRecipeCreationRequest {
     recipe: RecipeModelBase;
     image: FoodImageModel;
@@ -5087,6 +4898,106 @@ export class RecipeCreationRequest implements IRecipeCreationRequest {
 export interface IRecipeCreationRequest {
     recipe: RecipeModelBase;
     image: FoodImageModel;
+}
+
+export class FoodImageModel implements IFoodImageModel {
+    recipeId: string;
+    imagePath: string | undefined;
+    thumbData: string | undefined;
+    thumbHash: string;
+
+    constructor(data?: Partial<IFoodImageModel>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.recipeId = _data["recipeId"];
+            this.imagePath = _data["imagePath"];
+            this.thumbData = _data["thumbData"];
+            this.thumbHash = _data["thumbHash"];
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): FoodImageModel  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<FoodImageModel>(data, _mappings, FoodImageModel)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["recipeId"] = this.recipeId;
+        data["imagePath"] = this.imagePath;
+        data["thumbData"] = this.thumbData;
+        data["thumbHash"] = this.thumbHash;
+        return data;
+    }
+
+    clone(): FoodImageModel {
+        const json = this.toJSON();
+        let result = new FoodImageModel();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFoodImageModel {
+    recipeId: string;
+    imagePath: string | undefined;
+    thumbData: string | undefined;
+    thumbHash: string;
+}
+
+export class FoodImageCreationRequest implements IFoodImageCreationRequest {
+    imageData: string;
+    thumbData: string;
+
+    constructor(data?: Partial<IFoodImageCreationRequest>) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property) && this.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+
+    }
+
+    init(_data?: any, _mappings?: any) {
+        if (_data) {
+            this.imageData = _data["imageData"];
+            this.thumbData = _data["thumbData"];
+        }
+    }
+
+    static fromJS(data: any, _mappings?: any): FoodImageCreationRequest  {
+        data = typeof data === 'object' ? data : {};
+        return createInstance<FoodImageCreationRequest>(data, _mappings, FoodImageCreationRequest)!;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["imageData"] = this.imageData;
+        data["thumbData"] = this.thumbData;
+        return data;
+    }
+
+    clone(): FoodImageCreationRequest {
+        const json = this.toJSON();
+        let result = new FoodImageCreationRequest();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IFoodImageCreationRequest {
+    imageData: string;
+    thumbData: string;
 }
 
 function jsonParse(json: any, reviver?: any) {

@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { InteropEvent } from './interop-event';
+import { InteropEvent } from "./interop-event";
 
 export class InteropEventBase {
     event: InteropEvent;

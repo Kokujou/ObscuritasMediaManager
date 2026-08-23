@@ -8,9 +8,8 @@ import { changePage } from '../../extensions/url.extension';
 import { AutocompleteItem } from '../../native-components/autocomplete-input/autocomplete-input';
 import { MessageSnackbar } from '../../native-components/message-snackbar/message-snackbar';
 import {
-    FoodImageModel,
+    FoodImageCreationRequest,
     FoodTagModel,
-    FoodThumbModel,
     IngredientCategory,
     IngredientModel,
     Language,
@@ -235,11 +234,9 @@ export class RecipeDetailPage extends LitElementBase {
         ).split(',')[1];
         this.recipe.imageHashes = await RecipeService.addRecipeImage(
             this.recipe.recipe.id,
-            new FoodImageModel({
-                recipeId: this.recipe.recipe.id!,
-                imageData: imageData,
-                mimeType: 'image/png',
-                thumb: new FoodThumbModel({ thumbData }),
+            new FoodImageCreationRequest({
+                imageData,
+                thumbData,
             }),
         );
         await this.requestFullUpdate();
@@ -252,17 +249,15 @@ export class RecipeDetailPage extends LitElementBase {
             this.recipe.imageHashes = [];
             this.recipe.recipe.id = await RecipeService.createRecipe(this.fullRecipe);
             this.recipeId = this.recipe.recipe.id;
-            for (var image of recipeImages) {
+            for (var imageData of recipeImages) {
                 const thumbData = (
-                    await (await ImageCompressionService.generateThumbnail('data:image/png;base64,' + image)).base64()
+                    await (await ImageCompressionService.generateThumbnail('data:image/png;base64,' + imageData)).base64()
                 ).split(',')[1];
                 await RecipeService.addRecipeImage(
                     this.recipe.recipe.id,
-                    new FoodImageModel({
-                        recipeId: this.recipe.recipe.id,
-                        imageData: image,
-                        mimeType: 'image/png',
-                        thumb: new FoodThumbModel({ thumbData }),
+                    new FoodImageCreationRequest({
+                        imageData,
+                        thumbData,
                     }),
                 );
             }

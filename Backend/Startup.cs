@@ -39,7 +39,7 @@ public class Startup
                 new HttpClientHandler { AutomaticDecompression = DecompressionMethods.All }));
 
         services.AddDbContext<DatabaseContext>(x => x.UseSqlite(
-                @"Data Source=J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\Database\database.sqlite;foreign keys=false;",
+                @$"Data Source={DatabaseContext.DbBaseUrl}\database.sqlite;foreign keys=false;",
                 options => options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
             .EnableSensitiveDataLogging());
@@ -122,4 +122,22 @@ public class Startup
         app.UseOpenApi();
         app.UseSwaggerUi(options => { options.WithCredentials = true; });
     }
+
+    //public async Task ImageToFiles(IServiceProvider provider)
+    //{
+    //    await using var scope = provider.CreateAsyncScope();
+    //    var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    //    var images = await dbContext.FoodImages.Where(x => x.ThumbId != null).ToListAsync();
+    //    Directory.CreateDirectory($@"{DbBaseUrl}\Images");
+
+    //    foreach (var image in images)
+    //    {
+    //        var path = $@"{DbBaseUrl}\Images\{image.ImageHash}.png";
+    //        await File.WriteAllBytesAsync(path, image.ImageData!);
+    //        await dbContext.Set<FoodThumbModel>()
+    //            .Where(x => x.Id == image.ThumbId)
+    //            .ExecuteUpdateAsync(o =>
+    //                o.SetProperty(x => x.RecipeId, image.RecipeId).SetProperty(x => x.ImagePath, path));
+    //    }
+    //}
 }

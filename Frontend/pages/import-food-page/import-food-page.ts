@@ -143,16 +143,16 @@ export class ImportFoodPage extends LitElementBase {
         var response = await FoodCache.getPayload(dish.recipe);
         var test = await response.base64();
         if (!test.startsWith('data:image')) return;
-        dish.image.imageData = URL.createObjectURL(response);
+        dish.image.imagePath = URL.createObjectURL(response);
         await FoodCache.updateMetadata(dish.recipe);
         if (update) await this.requestFullUpdate();
     }
 
     async reloadThumb(dish: RecipeCreationRequest, update = true) {
         await this.reloadImage(dish, update);
-        if (!dish.image.imageData?.startsWith('data:image')) return;
-        var thumbData = await ImageCompressionService.generateThumbnail(dish.image.imageData!);
-        dish.image.thumb!.thumbData = URL.createObjectURL(thumbData);
+        if (!dish.image.imagePath?.startsWith('data:image')) return;
+        var thumbData = await ImageCompressionService.generateThumbnail(dish.image.imagePath!);
+        dish.image.thumbData = URL.createObjectURL(thumbData);
         await FoodCache.updateMetadata(dish.recipe);
         if (update) await this.requestFullUpdate();
     }
@@ -224,14 +224,11 @@ Abhängig von der Größe kann der Vorgang einige Minuten dauern.`,
             try {
                 dish.recipe.id = null!;
                 dish.image.recipeId = null!;
-                var response = await fetch(dish.image.imageData!);
+                var response = await fetch(dish.image.imagePath!);
                 var blob = await response.blob();
                 var base64 = await blob.base64();
-                dish.image.imageData = base64.split(',')[1];
-                dish.image.mimeType = blob.type;
-                dish.image.thumb!.thumbData = (await (await ImageCompressionService.generateThumbnail(base64)).base64()).split(
-                    ',',
-                )[1];
+                dish.image.imagePath = base64.split(',')[1];
+                dish.image.thumbData = (await (await ImageCompressionService.generateThumbnail(base64)).base64()).split(',')[1];
                 await RecipeService.importDish(dish);
             } catch (ex) {
                 if (ex.httpStatus == 409) dupes.push(dish);
@@ -252,7 +249,7 @@ Fehler: ${ex.reason}`,
             ImportFoodPage.cacheAbertController = new AbortController();
 
             for (let i = 0; i < dupes.length; i++)
-                await FoodCache.cacheJson(dupes[i].recipe, await (dupes[i].image.imageData as any as Response).blob());
+                await FoodCache.cacheJson(dupes[i].recipe, await (dupes[i].image.imagePath as any as Response).blob());
             await DialogBase.show('Duplikate übersprungen', {
                 declineActionText: 'Ok',
                 content: `Beim hochladen wurden ${dupes.length} Duplikate übersprungen.

@@ -8,6 +8,9 @@ namespace ObscuritasMediaManager.Backend.DataRepositories;
 
 public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbContext(options)
 {
+    public const string DbBaseUrl = @"J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\Database";
+    public const string ImagesBaseUrl = @"J:\Dokumente\Web-Projekte\ObscuritasMediaManager\Backend\Database\Images";
+
     public DbSet<MediaGenreModel> MediaGenres { get; set; }
     public DbSet<MediaModel> Media { get; set; }
     public DbSet<MusicModel> Music { get; set; }
@@ -40,8 +43,6 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
 
         MusicModel.Configure(modelBuilder);
 
-        modelBuilder.Entity<GenreModel>();
-
         modelBuilder.Entity<InstrumentModel>();
 
         modelBuilder.Entity<UserSettingsModel>();
@@ -60,5 +61,12 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
                          .Where(n => n.PropertyInfo!.GetCustomAttribute<IgnoreAutoIncludeAttribute>() is null))
                 navigation.SetIsEagerLoaded(true);
         }
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        base.ConfigureConventions(configurationBuilder);
+
+        configurationBuilder.Properties<Guid>().UseCollation("NOCASE");
     }
 }

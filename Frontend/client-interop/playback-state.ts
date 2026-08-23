@@ -4,7 +4,7 @@
  */
 
 export enum PlaybackState {
-    Stopped = 'Stopped',
-    Playing = 'Playing',
-    Paused = 'Paused',
+    Stopped = "Stopped",
+    Playing = "Playing",
+    Paused = "Paused",
 }

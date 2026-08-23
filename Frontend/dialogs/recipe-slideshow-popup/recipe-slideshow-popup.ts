@@ -2,7 +2,7 @@ import { customElement, state } from 'lit-element/decorators';
 import { LitElementBase } from '../../data/lit-element-base';
 import { Session } from '../../data/session';
 import { waitForAnimation } from '../../extensions/animation.extension';
-import { FoodImageModel, FoodThumbModel, RecipeResponse } from '../../obscuritas-media-manager-backend-client';
+import { FoodImageCreationRequest, RecipeResponse } from '../../obscuritas-media-manager-backend-client';
 import { PageRouting } from '../../pages/page-routing/page-routing';
 import { RecipeService } from '../../services/backend.services';
 import { ImageCompressionService } from '../../services/image-compression.service';
@@ -63,12 +63,7 @@ export class RecipeSlideshowPopup extends LitElementBase {
         imageData = imageData.split(',')[1];
         this.recipe.imageHashes = await RecipeService.addRecipeImage(
             this.recipe.recipe.id,
-            new FoodImageModel({
-                recipeId: this.recipe.recipe.id,
-                imageData,
-                mimeType: 'image/png',
-                thumb: new FoodThumbModel({ thumbData }),
-            }),
+            new FoodImageCreationRequest({ thumbData, imageData }),
         );
 
         await this.requestFullUpdate();

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ObscuritasMediaManager.Backend.Controllers.Requests;
 using ObscuritasMediaManager.Backend.Controllers.Responses;
 using ObscuritasMediaManager.Backend.DataRepositories;
+using ObscuritasMediaManager.Backend.Extensions;
 using ObscuritasMediaManager.Backend.Models;
 
 namespace ObscuritasMediaManager.Backend.Controllers;
@@ -19,16 +20,6 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
         return recipeRepository.GetAll().ToList().AsQueryable();
     }
 
-    [HttpGet("broken-images")]
-    public IQueryable<FoodImageModel> GetBrokenImages()
-    {
-        foreach (var item in context.FoodImages.AsTracking())
-            context.FoodImages.Where(x => x.Id == item.Id)
-                .ExecuteUpdate(x => x.SetProperty(y => y.ImageHash, item.ImageHash));
-
-        return context.FoodImages;
-    }
-
     [HttpGet("default")]
     public RecipeModel GetDefault()
     {
@@ -41,44 +32,28 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
         return await recipeRepository.GetAsync(id);
     }
 
-    [HttpGet("{recipeId}/images/{imageHash}")]
-    public async Task<IActionResult> GetImageAsync(Guid recipeId, string imageHash)
+    [HttpGet("{recipeId}/images/{thumbHash}")]
+    public async Task<IActionResult> GetImageAsync(Guid recipeId, string thumbHash)
     {
         var image = await context.FoodImages.FirstAsync(x =>
-            x.RecipeId == recipeId && x.ImageHash.ToLower() == imageHash.ToLower());
-        if (image is { ImageData: null } or { MimeType: null }) return NoContent();
+            x.RecipeId == recipeId && x.ThumbHash.ToLower() == thumbHash.ToLower());
+        if (image.ImagePath is null) return NoContent();
 
         Response.Headers.CacheControl = "public, max-age=31536000, immutable";
 
-        return File(image.ImageData, image.MimeType);
+        return File(new FileStream(image.ImagePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), "image/png");
     }
 
-    [HttpGet("{recipeId}/images/{imageHash}/thumb")]
-    public async Task<IActionResult> GetImageThumbAsync(Guid recipeId, string imageHash)
+    [HttpGet("{recipeId}/images/{thumbHash}/thumb")]
+    public async Task<IActionResult> GetImageThumbAsync(Guid recipeId, string thumbHash)
     {
-        var thumbId = await context.FoodImages.Where(x => x.RecipeId == recipeId && x.ImageHash == imageHash)
-            .Select(x => x.ThumbId).SingleAsync();
-        var thumbData = await context.Set<FoodThumbModel>().Where(x => x.Id == thumbId).Select(x => x.ThumbData)
-            .SingleAsync();
-        if (thumbData is null) return NoContent();
+        var thumb = await context.FoodImages.FirstAsync(x =>
+            x.RecipeId == recipeId && x.ThumbHash.ToLower() == thumbHash.ToLower());
+        if (thumb.ThumbData is null) return NoContent();
 
         Response.Headers.CacheControl = "public, max-age=31536000, immutable";
 
-        return File(thumbData, "image/jpeg");
-    }
-
-    [HttpPut("/image/{imageHash}/thumb")]
-    public async Task UpsertImageThumbAsync(string imageHash, [FromBody] FoodThumbModel thumb)
-    {
-        var images = await context.FoodImages.AsTracking()
-            .Where(x => x.ImageHash.ToLower() == imageHash.ToLower()).ToListAsync();
-        foreach (var image in images)
-        {
-            if (image is null) throw new();
-            image.Thumb = thumb;
-        }
-
-        await context.SaveChangesAsync();
+        return File(thumb.ThumbData, "image/png");
     }
 
     [HttpPost("search-dishes")]
@@ -101,19 +76,26 @@ public class RecipeController(RecipeRepository recipeRepository, DatabaseContext
     }
 
     [HttpPut("recipe/{recipeId}/image")]
-    public async Task<List<string>> AddRecipeImage(Guid recipeId, [FromBody] FoodImageModel image)
+    public async Task<List<string>> AddRecipeImage(Guid recipeId, [FromBody] FoodImageCreationRequest request)
     {
-        image.RecipeId = recipeId;
+        var path = $@"{DatabaseContext.ImagesBaseUrl}\{request.ImageData.GetHash()}.png";
+        await System.IO.File.WriteAllBytesAsync(path, request.ImageData);
 
-        await recipeRepository.AddDishImagesAsync(image);
+        await recipeRepository.AddDishImagesAsync(new()
+        {
+            ImagePath = path,
+            RecipeId = recipeId,
+            ThumbHash = request.ThumbData.GetHash(),
+            ThumbData = request.ThumbData
+        });
         return await recipeRepository.GetAll().Where(x => x.Recipe.Id == recipeId).Select(x => x.ImageHashes)
             .SingleAsync();
     }
 
-    [HttpDelete("recipe/{recipeId}/images/{imageHash}")]
-    public async Task<List<string>> RemoveRecipeImage(Guid recipeId, string imageHash)
+    [HttpDelete("recipe/{recipeId}/images/{thumbHash}")]
+    public async Task<List<string>> RemoveRecipeImage(Guid recipeId, string thumbHash)
     {
-        await context.FoodImages.Where(x => x.RecipeId == recipeId && x.ImageHash == imageHash).ExecuteDeleteAsync();
+        await context.FoodImages.Where(x => x.RecipeId == recipeId && x.ThumbHash == thumbHash).ExecuteDeleteAsync();
         return await recipeRepository.GetAll().Where(x => x.Recipe.Id == recipeId).Select(x => x.ImageHashes)
             .SingleAsync();
     }

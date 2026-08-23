@@ -3,7 +3,7 @@
  * Any changes made to this file can be lost when this file is regenerated.
  */
 
-import { InteropEventBase } from './interop-event-base';
+import { InteropEventBase } from "./interop-event-base";
 
 export class TrackChangedEvent extends InteropEventBase {
     trackPath: string;
