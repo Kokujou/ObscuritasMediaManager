@@ -1,6 +1,5 @@
 import { html } from 'lit';
 import { Session } from '../../data/session';
-import { changePage } from '../../extensions/url.extension';
 import { ContextMenu } from '../../native-components/context-menu/context-menu';
 import { LinkElement } from '../../native-components/link-element/link-element';
 import { RecipeDetailPage } from '../recipe-detail-page/recipe-detail-page';
@@ -23,16 +22,19 @@ export function renderRecipesPage(this: RecipesPage) {
                         </link-element>
                         ${Session.recipes
                             .current()
-                            .map(
-                                (recipe) => html`
-                                    <recipe-tile-base
-                                        .recipe="${recipe}"
-                                        compact
-                                        @click="${() => changePage(RecipeDetailPage, { recipeId: recipe.recipe.id })}"
-                                        @contextmenu="${(e: PointerEvent) =>
-                                            ContextMenu.popup(getRecipesPageContextMenu.call(this, recipe.recipe), e)}"
-                                    ></recipe-tile-base>
-                                `,
+                            .map((recipe) =>
+                                LinkElement.forPage(
+                                    RecipeDetailPage,
+                                    { recipeId: recipe.recipe.id },
+                                    html`
+                                        <recipe-tile-base
+                                            .recipe="${recipe}"
+                                            compact
+                                            @contextmenu="${(e: PointerEvent) =>
+                                                ContextMenu.popup(getRecipesPageContextMenu.call(this, recipe.recipe), e)}"
+                                        ></recipe-tile-base>
+                                    `,
+                                ),
                             )}
                     </div>
                 </paginated-scrolling>

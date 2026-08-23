@@ -43,7 +43,6 @@ export class RecipeDetailPage extends LitElementBase {
             ingredientName: '',
             unit: new MeasurementUnit(MeasurementUnits.find((x) => x.shortName == 'g')),
             order: 0,
-            ingredient: null,
         });
     }
 
@@ -67,7 +66,7 @@ export class RecipeDetailPage extends LitElementBase {
 
     @query('#page-container') declare protected pageContainer: HTMLElement;
 
-    get fullRecipe() {
+    protected get fullRecipe() {
         return this.recipe.recipe instanceof RecipeModel ? this.recipe.recipe : null;
     }
 
