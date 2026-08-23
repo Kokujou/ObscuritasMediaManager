@@ -16,6 +16,10 @@ export function renderRecipeTileBaseStyles() {
             cursor: pointer;
         }
 
+        :host([compact]) {
+            margin: 0;
+        }
+
         #recipe-images-container {
             position: relative;
             display: flex;

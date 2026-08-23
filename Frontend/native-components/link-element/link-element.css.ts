@@ -14,6 +14,7 @@ export function renderLinkElementStyles() {
             justify-content: inherit;
             min-width: 100%;
             min-height: inherit;
+            z-index: 5;
         }
     `;
 }

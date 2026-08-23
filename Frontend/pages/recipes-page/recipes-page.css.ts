@@ -38,7 +38,7 @@ export function renderRecipesPageStyles() {
             width: 100px;
             height: 100px;
             box-sizing: border-box;
-            margin: 20px;
+            margin: 75px;
 
             background: gray;
             cursor: pointer;

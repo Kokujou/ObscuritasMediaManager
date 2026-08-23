@@ -56,24 +56,29 @@ export class LinkElement extends LitElementBase {
     @property({ type: Object }) declare public params: any;
     @property({ type: Boolean, reflect: true }) declare public disabled: boolean;
 
+    connectedCallback(): void {
+        super.connectedCallback();
+
+        this.addEventListener('click', this.handleClick);
+        this.addEventListener('pointerdown', (e) => e.preventDefault());
+        this.addEventListener('auxclick', (e) =>
+            e.button == 1 ? window.open(this.fullLink, '_blank', 'noopener,noreferrer') : null,
+        );
+    }
+
     override render() {
         return renderLinkElement.call(this);
     }
 
     handleClick(event: MouseEvent) {
         if (this.target == '_blank') return;
-        if (event.button == 0) event.preventDefault();
         if (this.disabled) return;
+        if (event.button != 0) return;
+        event.preventDefault();
 
         if (this.href) location.assign(this.fullLink);
         else if (this.page) changePage(this.page, this.params);
 
         return false;
-    }
-
-    handleMiddleButton(event: MouseEvent) {
-        if (event.button != 1) return;
-        event.preventDefault();
-        window.open(this.fullLink, '_blank', 'noopener,noreferrer');
     }
 }

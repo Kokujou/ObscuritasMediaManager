@@ -9,6 +9,10 @@ export function renderUploadAreaStyles() {
             display: flex;
         }
 
+        :host([disabled]) {
+            pointer-events: none;
+        }
+
         #image-container {
             position: relative;
             flex: auto;

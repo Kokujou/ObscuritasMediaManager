@@ -47,11 +47,6 @@ export function renderRecipeTileStyles() {
             opacity: 0.8;
         }
 
-        upload-area {
-            position: absolute;
-            inset: 50px;
-        }
-
         #rating,
         #difficulty {
             --font-size: 30px;
