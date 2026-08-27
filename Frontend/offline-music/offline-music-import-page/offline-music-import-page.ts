@@ -4,11 +4,19 @@ import { DialogBase } from '../../dialogs/dialog-base/dialog-base';
 import { FileClient, MusicClient, MusicModel, PlaylistClient } from '../../obscuritas-media-manager-backend-client';
 import { AuthenticatedRequestService } from '../../services/authenticated-request.service';
 import { IndexedDbService } from '../../services/indexed-db.service';
+import { OfflineMusicCache } from '../offline-music.cache';
+import { SessionRecorder } from '../session-recorder';
 import { OfflineSession } from '../session';
 import { renderOfflineMusicImportPageStyles } from './offline-music-import-page.css';
 import { renderOfflineMusicImportPage } from './offline-music-import-page.html';
 
 const BackendUrl = '../Backend';
+const ImportedMarkerKey = 'offline-music.imported-at';
+/**
+ * Bump by hand when shipping. dist/bundle.js is gitignored, so a commit alone changes nothing
+ * about what is served - this is the only way to tell from the device which build is live.
+ */
+const BuildMarker = '2026-08-27 keepalive+recorder';
 
 @customElement('offline-music-import-page')
 export class OfflineMusicImportPage extends LitElementBase {
@@ -17,21 +25,6 @@ export class OfflineMusicImportPage extends LitElementBase {
 
     static override get styles() {
         return renderOfflineMusicImportPageStyles();
-    }
-
-    static async checkDataExists(database: IDBDatabase | null) {
-        if (!database) return false;
-
-        if (OfflineSession.StoreNames.some((storeName) => !database.objectStoreNames.contains(storeName))) return false;
-
-        const musicMetadataImported = await database.countStore(OfflineSession.MusicMetadataStoreName);
-        if (musicMetadataImported <= 0) return false;
-        const instrumentsImported = await database.countStore(OfflineSession.InstrumentsStoreName);
-        if (instrumentsImported <= 0) return false;
-        const musicImported = await database.countStore(OfflineSession.MusicStoreName);
-        if (musicImported <= 0) return false;
-
-        return true;
     }
 
     @state() declare protected musicTotal?: number;
@@ -48,7 +41,8 @@ export class OfflineMusicImportPage extends LitElementBase {
     @state() declare protected importing: boolean;
     @state() declare protected loading: boolean;
     @state() declare protected isCached: boolean;
-    @state() declare protected cacheDate: Date;
+    @state() declare protected cacheDate: Date | null;
+    @state() declare protected diagnosticsExpanded: boolean;
 
     protected requestService = new AuthenticatedRequestService();
     protected MusicService = new MusicClient(BackendUrl, this.requestService);
@@ -57,6 +51,16 @@ export class OfflineMusicImportPage extends LitElementBase {
 
     get offlineMode() {
         return !this.musicTotal || !this.playlistsTotal || !this.instrumentsTotal;
+    }
+
+    /**
+     * An import that once succeeded but has no data left. On iOS the service worker and Cache
+     * Storage are shared with the Safari tab while IndexedDB is not, and ITP evicts script-writable
+     * storage on its own - both leave the shell loading with an empty library, which is otherwise
+     * indistinguishable from never having imported at all.
+     */
+    get archiveLost() {
+        return !!localStorage.getItem(ImportedMarkerKey) && this.musicImported == 0 && this.musicMetadataImported == 0;
     }
 
     constructor() {
@@ -75,7 +79,7 @@ export class OfflineMusicImportPage extends LitElementBase {
 
         this.loading = true;
         this.isCached = await caches.has('offline-music-v1');
-        this.cacheDate = new Date(Number.parseInt(localStorage.getItem('offline-music-cache-updated') ?? Date.now().toString()));
+        this.cacheDate = OfflineMusicCache.lastUpdated;
         await this.loadData();
         this.loading = false;
 
@@ -99,31 +103,52 @@ export class OfflineMusicImportPage extends LitElementBase {
         this.instrumentsImported = OfflineSession.instruments.length;
         this.musicImported = OfflineSession.trackHashes.length;
 
+        // >=, not ==: an offline archive may hold tracks the backend no longer offers, and that
+        // is not an inconsistency to be repaired by re-importing.
         this.databaseConsistent =
-            this.musicMetadataImported == this.musicTotal &&
-            this.musicImported == this.musicTotal &&
-            this.playlistsImported == this.playlistsTotal &&
-            this.instrumentsImported == this.instrumentsTotal;
+            this.musicMetadataImported >= (this.musicTotal ?? 0) &&
+            this.musicImported >= (this.musicTotal ?? 0) &&
+            this.playlistsImported >= (this.playlistsTotal ?? 0) &&
+            this.instrumentsImported >= (this.instrumentsTotal ?? 0);
     }
 
     async importData() {
         if (this.offlineMode) throw new Error('Application is offline, data cannot be imported.');
 
-        const wakeLock = navigator.wakeLock ? await navigator.wakeLock.request('screen') : null;
-
         this.importing = true;
+        this.requestFullUpdate();
+
+        // Screen Wake Lock is unsupported on iOS and can be refused everywhere else. It used to
+        // sit above the try, so a refusal aborted the whole import without any feedback.
+        let wakeLock: WakeLockSentinel | null = null;
+        try {
+            wakeLock = navigator.wakeLock ? await navigator.wakeLock.request('screen') : null;
+        } catch (ex) {
+            console.warn('screen wake lock unavailable, the import continues', ex);
+        }
+
         try {
             let database = await OfflineSession.openDatabase();
             database = await this.createSchema(database);
-            await this.downloadData(database);
-            database.close();
-            this.databaseConsistent = true;
+            try {
+                await this.downloadData(database);
+            } finally {
+                database.close();
+            }
+            // the stores changed under us, and initialize() is memoised - re-read before counting
+            await OfflineSession.reload();
+            await this.loadData();
+            if (this.musicImported > 0) localStorage.setItem(ImportedMarkerKey, Date.now().toString());
         } catch (ex) {
             console.error(ex);
-            alert('error while importing files:' + JSON.stringify(ex));
+            alert('error while importing files: ' + ((ex as Error)?.message ?? JSON.stringify(ex)));
+        } finally {
+            this.importing = false;
+            try {
+                await wakeLock?.release();
+            } catch {}
+            this.requestFullUpdate();
         }
-        this.importing = false;
-        if (wakeLock) await wakeLock?.release();
     }
 
     async downloadData(database: IDBDatabase) {
@@ -134,83 +159,109 @@ export class OfflineMusicImportPage extends LitElementBase {
         if (this.playlistsImported < this.playlistsTotal!) {
             this.playlistsImported = 0;
             const playlists = await this.PlaylistService.listPlaylists();
-            const playlistsObservable = database.import(OfflineSession.PlaylistsStoreName, playlists, (x) => x.id);
-            subscriptions.push(playlistsObservable.subscribe(() => this.playlistsImported++));
-            promises.push(playlistsObservable.toPromise());
+            const playlistsImport = database.import(OfflineSession.PlaylistsStoreName, playlists, (x) => x.id);
+            subscriptions.push(playlistsImport.progress.subscribe(() => this.playlistsImported++));
+            promises.push(playlistsImport.completed);
         }
 
         if (this.instrumentsImported < this.instrumentsTotal!) {
             this.instrumentsImported = 0;
             const instruments = await this.MusicService.getInstruments();
-            const instrumentsObservable = database.import(OfflineSession.InstrumentsStoreName, instruments, (x) => x.id);
-            subscriptions.push(instrumentsObservable.subscribe(() => this.instrumentsImported++));
-            promises.push(instrumentsObservable.toPromise());
+            const instrumentsImport = database.import(OfflineSession.InstrumentsStoreName, instruments, (x) => x.id);
+            subscriptions.push(instrumentsImport.progress.subscribe(() => this.instrumentsImported++));
+            promises.push(instrumentsImport.completed);
         }
 
         if (this.musicMetadataImported < this.musicTotal! || this.musicImported < this.musicTotal!) {
             const music = await this.MusicService.getAll();
+            if (!(await this.confirmBackendIdentity(music))) throw new Error('import cancelled: unknown library');
 
             if (this.musicMetadataImported < this.musicTotal!) {
                 this.musicMetadataImported = 0;
-                const musicObservable = database.import(OfflineSession.MusicMetadataStoreName, music, (x) => x.hash);
-                subscriptions.push(musicObservable.subscribe(() => this.musicMetadataImported++));
-                promises.push(musicObservable.toPromise());
+                const metadataImport = database.import(OfflineSession.MusicMetadataStoreName, music, (x) => x.hash);
+                subscriptions.push(metadataImport.progress.subscribe(() => this.musicMetadataImported++));
+                promises.push(metadataImport.completed);
             }
 
             if (this.musicImported < this.musicTotal!) promises.push(this.importMusic(music, database));
         }
 
-        await Promise.all(promises);
-        subscriptions.forEach((x) => x.unsubscribe());
+        try {
+            await Promise.all(promises);
+        } finally {
+            subscriptions.forEach((x) => x.unsubscribe());
+        }
+    }
+
+    /**
+     * The backend is addressed relatively, so a different device answering on the same address in
+     * a different network looks identical from here. Compare the offered library against the local
+     * archive: no overlap at all means this is somebody else's library, not an update of ours.
+     */
+    private async confirmBackendIdentity(offered: MusicModel[]) {
+        const local = new Set(OfflineSession.trackHashes);
+        if (local.size == 0 || offered.length == 0) return true;
+
+        const overlap = offered.filter((track) => local.has(track.hash)).length;
+        if (overlap > 0) return true;
+
+        return await DialogBase.show('Unbekannte Bibliothek', {
+            content:
+                `Der erreichbare Server bietet ${offered.length} Tracks an, von denen keiner ` +
+                `zu den ${local.size} lokal gespeicherten passt.\r\n` +
+                'Das ist wahrscheinlich ein anderes Gerät und nicht dein Server.\r\n' +
+                'Trotzdem importieren? Vorhandene Dateien bleiben erhalten.',
+            acceptActionText: 'Importieren',
+            declineActionText: 'Abbrechen',
+            noImplicitAccept: true,
+            showBorder: true,
+        });
     }
 
     async importMusic(metadata: MusicModel[], database: IDBDatabase) {
-        let errors = 0;
+        const failed: string[] = [];
         for (const track of metadata) {
             if (await database.getItemByKey(OfflineSession.MusicStoreName, track.hash)) continue;
 
-            var result = await this.FileService.getAudio(track.path, true);
-            if (!result) {
-                console.error('track could not be imported: ' + track.name);
-                errors++;
-                continue;
+            // One unreachable or unstorable track must not abandon the rest of the library.
+            try {
+                const result = await this.FileService.getAudio(track.path, true);
+                if (!result?.data) throw new Error('empty response');
+
+                await database.add(OfflineSession.MusicStoreName, result.data, track.hash);
+                this.musicImported++;
+            } catch (error) {
+                console.error('track could not be imported: ' + (track.displayName ?? track.name), error);
+                failed.push(track.displayName ?? track.name);
             }
 
-            database.add(OfflineSession.MusicStoreName, result.data, track.hash);
-            this.musicImported++;
+            this.requestFullUpdate();
         }
 
-        if (errors > 0) alert('Errors occurred while importing tracks');
+        if (failed.length)
+            alert(
+                failed.length + ' of ' + metadata.length + ' tracks could not be imported: ' + failed.slice(0, 20).join(', '),
+            );
     }
 
+    /**
+     * Brings the schema up to date without ever dropping the database. A missing object store is
+     * added through a version bump, which leaves every existing store - and the imported audio in
+     * particular - untouched. The previous implementation deleted the whole database instead.
+     */
     async createSchema(database: IDBDatabase | null) {
-        if (database && !OfflineSession.StoreNames.every((storeName) => database!.objectStoreNames.contains(storeName))) {
-            console.error('database exists, but has invalid schema, recreating');
-            database.close();
+        const missing = database
+            ? OfflineSession.StoreNames.filter((storeName) => !database.objectStoreNames.contains(storeName))
+            : OfflineSession.StoreNames;
+        database?.close();
 
-            const confirmed = await DialogBase.show('Datenbank inkonsistent', {
-                content:
-                    'Die Datenbank hat das falsche Schema und muss neu erstellt werden.\r\n' +
-                    'Dadurch werden sämtliche Daten gelöscht und müssen neu importiert werden.\r\n' +
-                    'Fortfahren?',
-                acceptActionText: 'Ja',
-                declineActionText: 'Nein',
-                noImplicitAccept: true,
-            });
-            if (!confirmed) throw new Error('Database inconsistent');
+        if (database && missing.length) console.warn('adding missing object stores: ' + missing.join(', '));
 
-            await IndexedDbService.deleteDatabase(OfflineSession.DbName);
-            database = null;
-        }
-
-        if (!database)
-            database = await IndexedDbService.createDatabase(
-                OfflineSession.DbName,
-                OfflineSession.DbVersion,
-                ...OfflineSession.StoreNames,
-            );
-
-        return database;
+        return await IndexedDbService.createDatabase(
+            OfflineSession.DbName,
+            OfflineSession.DbVersion,
+            ...OfflineSession.StoreNames,
+        );
     }
 
     async deleteMusicCache() {
@@ -232,6 +283,14 @@ export class OfflineMusicImportPage extends LitElementBase {
     }
 
     async deleteMusicMetadata() {
+        if (
+            !(await this.confirmDeletion(
+                'Metadaten löschen?',
+                'Ohne Metadaten sind die gespeicherten Audiodateien nicht mehr auffindbar und müssen neu importiert werden.',
+            ))
+        )
+            return;
+
         await this.deleteContainer(OfflineSession.MusicMetadataStoreName);
         OfflineSession.musicMetadata = [];
         this.requestFullUpdate();
@@ -239,32 +298,94 @@ export class OfflineMusicImportPage extends LitElementBase {
     }
 
     async deletePlaylists() {
+        if (!(await this.confirmDeletion('Playlists löschen?', 'Die gespeicherten Playlists werden entfernt.'))) return;
+
         await this.deleteContainer(OfflineSession.PlaylistsStoreName);
         OfflineSession.playlists = [];
-        OfflineSession.temporaryPlaylists = {};
+        OfflineSession.clearTemporaryPlaylists();
         this.playlistsImported = 0;
     }
 
     async deleteInstruments() {
+        if (!(await this.confirmDeletion('Instrumente löschen?', 'Die gespeicherten Instrumente werden entfernt.'))) return;
+
         await this.deleteContainer(OfflineSession.InstrumentsStoreName);
         OfflineSession.instruments = [];
         this.instrumentsImported = 0;
+    }
+
+    private confirmDeletion(title: string, content: string) {
+        return DialogBase.show(title, {
+            content: content + '\r\nFortfahren?',
+            acceptActionText: 'Löschen',
+            declineActionText: 'Abbrechen',
+            noImplicitAccept: true,
+            showBorder: true,
+        });
+    }
+
+    get buildMarker() {
+        return BuildMarker;
+    }
+
+    get recorderEnabled() {
+        return SessionRecorder.enabled;
+    }
+
+    get keepSessionAlive() {
+        return OfflineSession.audio?.keepSessionAlive ?? false;
+    }
+
+    get sessionLog() {
+        return SessionRecorder.read();
+    }
+
+    get sessionLogGaps() {
+        return SessionRecorder.gaps.length;
+    }
+
+    setRecorderEnabled(enabled: boolean) {
+        SessionRecorder.enabled = enabled;
+        this.requestFullUpdate();
+    }
+
+    setKeepSessionAlive(enabled: boolean) {
+        if (OfflineSession.audio) OfflineSession.audio.keepSessionAlive = enabled;
+        this.requestFullUpdate();
+    }
+
+    clearSessionLog() {
+        SessionRecorder.clear();
+        this.requestFullUpdate();
+    }
+
+    async copySessionLog() {
+        try {
+            await navigator.clipboard.writeText(SessionRecorder.asText());
+        } catch {
+            alert('Die Zwischenablage ist nicht verfügbar. Das Log lässt sich unten markieren.');
+        }
     }
 
     async deleteContainer(storeName: string) {
         let database = await OfflineSession.openDatabase();
         if (!database) throw new Error('database not found');
 
-        await database.clearStore(storeName);
+        try {
+            await database.clearStore(storeName);
+        } finally {
+            database.close();
+        }
 
-        database.close();
+        await OfflineSession.reload();
+        await this.loadData();
+        this.requestFullUpdate();
     }
 
     async clearServiceCache() {
         this.importing = true;
-        await caches.delete('offline-music-v1');
-        location.assign('/');
-        this.importing = false;
+        await OfflineMusicCache.deleteCache();
+        location.reload();
     }
 
     override render() {
@@ -283,11 +404,11 @@ export class OfflineMusicImportPage extends LitElementBase {
             }
 
             try {
-                await OfflineSession.toggleTrack(track, new Event('click'), true, false);
-                OfflineSession.audio.pause();
+                await OfflineSession.playTrack(track, false, false);
             } catch (err) {
-                failedTracks.push([track, err]);
+                failedTracks.push([track, (err as Error)?.message ?? String(err)]);
             }
+            this.requestFullUpdate();
         }
 
         if (failedTracks.length >= OfflineSession.musicMetadata.length)
@@ -315,6 +436,7 @@ export class OfflineMusicImportPage extends LitElementBase {
                 }
             }
         }
+        this.validating = 0;
         this.loading = false;
     }
 }

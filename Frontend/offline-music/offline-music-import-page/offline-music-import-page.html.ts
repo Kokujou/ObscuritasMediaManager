@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { CheckboxState } from '../../data/enumerations/checkbox-state';
 import { changePage } from '../../extensions/url.extension';
 import { OfflineMusicPage } from '../offline-music-page/offline-music-page';
 import { OfflineMusicCache } from '../offline-music.cache';
@@ -14,6 +15,16 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                 Um diese Website offline verwenden zu können, müssen vorher Daten von der Online-Version in den Browser-Cache
                 importiert werden.
             </div>
+
+            ${
+                this.archiveLost
+                    ? html`<div class="error">
+                          Die Offline-Bibliothek war importiert, ist jetzt aber leer. iOS teilt Cache Storage mit dem
+                          Safari-Tab, IndexedDB dagegen nicht, und löscht Speicher ungenutzter Seiten von sich aus. Die
+                          Audiodateien müssen neu importiert werden.
+                      </div>`
+                    : null
+            }
 
             <flex-column id="import-states">
                 <flex-row class="import-status">
@@ -127,14 +138,68 @@ export function renderOfflineMusicImportPage(this: OfflineMusicImportPage) {
                         : null
                 }
             </flex-row>
+            <flex-column id="diagnostics">
+                <div class="info" id="build-marker">Build: ${this.buildMarker}</div>
+                <flex-row class="import-status">
+                    <label>Pause hält Session:</label>
+                    <custom-toggle
+                        .state="${this.keepSessionAlive ? CheckboxState.Ignore : CheckboxState.Forbid}"
+                        @toggle="${(e: CustomEvent<CheckboxState>) =>
+                            this.setKeepSessionAlive(e.detail == CheckboxState.Ignore)}"
+                    ></custom-toggle>
+                    <flex-space></flex-space>
+                    <label>Aufzeichnung:</label>
+                    <custom-toggle
+                        .state="${this.recorderEnabled ? CheckboxState.Ignore : CheckboxState.Forbid}"
+                        @toggle="${(e: CustomEvent<CheckboxState>) =>
+                            this.setRecorderEnabled(e.detail == CheckboxState.Ignore)}"
+                    ></custom-toggle>
+                </flex-row>
+
+                ${
+                    this.recorderEnabled
+                        ? html`
+                              <flex-row class="import-status">
+                                  <div class="${this.sessionLogGaps ? 'error' : 'info'}">
+                                      ${
+                                          this.sessionLogGaps
+                                              ? `${this.sessionLogGaps} Lücke(n) im Herzschlag — der Prozess wurde suspendiert.`
+                                              : 'Keine Lücke aufgezeichnet.'
+                                      }
+                                  </div>
+                                  <flex-space></flex-space>
+                                  <link-element @click="${() => (this.diagnosticsExpanded = !this.diagnosticsExpanded)}"
+                                      >${this.diagnosticsExpanded ? 'Log verbergen' : 'Log anzeigen'}</link-element
+                                  >
+                                  <link-element @click="${() => this.copySessionLog()}">Kopieren</link-element>
+                                  <link-element @click="${() => this.clearSessionLog()}">Leeren</link-element>
+                              </flex-row>
+                          `
+                        : null
+                }
+                ${
+                    this.recorderEnabled && this.diagnosticsExpanded
+                        ? html`<pre id="session-log">
+${this.sessionLog
+                                  .map((entry) => new Date(entry.t).toLocaleTimeString() + '  ' + entry.text)
+                                  .join('\n')}</pre
+                          >`
+                        : null
+                }
+            </flex-column>
+
             <flex-row>
                 ${
                     this.loading
-                        ? html`test`
+                        ? html`<div class="info">Prüfe Installation…</div>`
                         : this.isCached
                           ? html`<div class="info">
                                 Letztes Update:
-                                ${this.cacheDate > new Date().addDays(-1) ? 'Heute' : this.cacheDate.toLocaleDateString()}.
+                                ${!this.cacheDate
+                                    ? 'unbekannt'
+                                    : this.cacheDate > new Date().addDays(-1)
+                                      ? 'Heute'
+                                      : this.cacheDate.toLocaleDateString()}.
                                 ${
                                     this.offlineMode
                                         ? ''

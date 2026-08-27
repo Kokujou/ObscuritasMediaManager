@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>iOS Audio Probe</title>
+<style>
+    :root { color-scheme: dark; --bg:#0f1216; --fg:#e7eaee; --mut:#8a95a1; --acc:#4fb6c9; --warn:#dda24a; --bad:#e8776a; --ok:#6cc38c; --line:#262d36; }
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1rem 1rem 4rem; background:var(--bg); color:var(--fg);
+           font:14px/1.5 -apple-system, system-ui, sans-serif; }
+    h1 { font-size:1.1rem; margin:0 0 .25rem; }
+    p.sub { margin:0 0 1rem; color:var(--mut); font-size:.82rem; }
+    fieldset { border:1px solid var(--line); border-radius:6px; margin:0 0 .9rem; padding:.7rem .8rem .9rem; }
+    legend { color:var(--acc); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; padding:0 .35rem; }
+    button { font:600 15px/1 inherit; color:var(--fg); background:#1b2027; border:1px solid var(--line);
+             border-radius:6px; padding:.7rem .9rem; margin:.15rem .3rem .15rem 0; min-width:5.5rem; }
+    button:active { background:#242b34; }
+    button.acc { border-color:var(--acc); color:var(--acc); }
+    button.on { background:#173038; border-color:var(--acc); color:var(--acc); }
+    #state { display:grid; grid-template-columns:auto 1fr; gap:.15rem .7rem; font:12px/1.45 ui-monospace, monospace; }
+    #state dt { color:var(--mut); }
+    #state dd { margin:0; font-variant-numeric:tabular-nums; }
+    #verdict { font:600 13px/1.45 inherit; padding:.6rem .7rem; border-radius:5px; border:1px solid var(--line);
+               background:#161b21; margin:0 0 .9rem; }
+    #verdict.gap { border-color:var(--bad); color:var(--bad); }
+    #verdict.clean { border-color:var(--ok); color:var(--ok); }
+    #log { font:11px/1.4 ui-monospace, monospace; white-space:pre; overflow-x:auto;
+           max-height:22rem; overflow-y:auto; background:#0b0e12; border:1px solid var(--line);
+           border-radius:5px; padding:.6rem; margin:0; }
+    .gapline { color:var(--bad); font-weight:700; }
+    .evt { color:var(--warn); }
+    .hint { color:var(--mut); font-size:.78rem; margin:.5rem 0 0; }
+</style>
+</head>
+<body>
+
+<h1>iOS Audio Probe</h1>
+<p class="sub">Misst, was beim Pausieren im Hintergrund passiert. Der Herzschlag tickt jede Sekunde — eine
+Lücke in den Ticks beweist, dass der Prozess suspendiert wurde, und zeigt, wie lange.</p>
+
+<div id="verdict">Noch keine Messung. Ablauf: Play → Pause → Bildschirm sperren → 60 s warten →
+entsperren → hier lesen.</div>
+
+<fieldset>
+    <legend>Steuerung</legend>
+    <button id="play" class="acc">Play</button>
+    <button id="pause">Pause</button>
+    <button id="keep">Keepalive: aus</button>
+    <br>
+    <button id="copy">Log kopieren</button>
+    <button id="clear">Log leeren</button>
+    <p class="hint">Keepalive an = „Pause" tauscht die Quelle auf 15 Minuten Stille statt zu pausieren.
+    <code>volume 1</code>, nicht gemutet — die einzige Konfiguration, die WebKits
+    <code>computeCanProduceAudio()</code> als „spielt Audio" zählt.</p>
+</fieldset>
+
+<fieldset>
+    <legend>Zustand</legend>
+    <dl id="state"></dl>
+</fieldset>
+
+<fieldset>
+    <legend>Log</legend>
+    <pre id="log"></pre>
+</fieldset>
+
+<script>
+(() => {
+    'use strict';
+
+    const LOG_KEY = 'ios-audio-probe.log';
+    const KEEP_KEY = 'ios-audio-probe.keepalive';
+    const MAX_ENTRIES = 900;
+
+    // ---------- ring buffer that survives a reload, a discard, and a crash ----------
+
+    let log = [];
+    try { log = JSON.parse(localStorage.getItem(LOG_KEY) || '[]'); } catch { log = []; }
+
+    let flushTimer = 0;
+    const persist = () => {
+        clearTimeout(flushTimer);
+        flushTimer = setTimeout(() => {
+            try { localStorage.setItem(LOG_KEY, JSON.stringify(log.slice(-MAX_ENTRIES))); } catch {}
+        }, 250);
+    };
+
+    const add = (kind, text) => {
+        log.push({ t: Date.now(), kind, text });
+        if (log.length > MAX_ENTRIES) log = log.slice(-MAX_ENTRIES);
+        persist();
+        render();
+    };
+
+    // ---------- generated audio: no files, no server, no cert ----------
+
+    const wav = (seconds, freq) => {
+        const rate = 8000, n = Math.round(rate * seconds), bytes = n * 2;
+        const buf = new ArrayBuffer(44 + bytes), v = new DataView(buf);
+        const txt = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+        txt(0, 'RIFF'); v.setUint32(4, 36 + bytes, true); txt(8, 'WAVE'); txt(12, 'fmt ');
+        v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+        v.setUint32(24, rate, true); v.setUint32(28, rate * 2, true);
+        v.setUint16(32, 2, true); v.setUint16(34, 16, true);
+        txt(36, 'data'); v.setUint32(40, bytes, true);
+        // silence needs no writing: the ArrayBuffer is already zeroed
+        if (freq)
+            for (let i = 0; i < n; i++)
+                v.setInt16(44 + i * 2, Math.round(Math.sin(2 * Math.PI * freq * i / rate) * 9000), true);
+        return URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
+    };
+
+    const trackSrc = wav(600, 220);   // 10 min hörbarer Ton
+    const silentSrc = wav(900, 0);     // 15 min Stille, NICHT loopend: currentTime ist die Messuhr
+
+    // ---------- the player under test ----------
+
+    const audio = document.body.appendChild(document.createElement('audio'));
+    audio.src = trackSrc;
+    audio.preload = 'auto';
+
+    let holding = false, heldPosition = 0, heldDuration = NaN;
+    let holdStartedAt = 0;
+    const keepAlive = () => localStorage.getItem(KEEP_KEY) === 'true';
+    const logicallyPaused = () => holding || audio.paused;
+
+    // WebKit maps this straight onto AVAudioSessionCategoryPlayback via categoryOverride,
+    // which MediaSessionManagerCocoa honours before any playing/paused check.
+    const declareSession = () => {
+        if (!navigator.audioSession) return 'absent';
+        try { navigator.audioSession.type = 'playback'; return navigator.audioSession.type; }
+        catch (e) { return 'error: ' + e.name; }
+    };
+    const sessionType = declareSession();
+
+    const enterHold = () => {
+        heldPosition = audio.currentTime;
+        heldDuration = audio.duration;
+        holding = true;
+        audio.loop = false;
+        audio.src = silentSrc;
+        holdStartedAt = Date.now();
+        add('act', 'HOLD an — Quelle auf Stille, Position gemerkt @' + heldPosition.toFixed(2));
+        audio.play().catch((e) => {
+            add('act', 'HOLD fehlgeschlagen (' + e.name + '), fällt auf echtes Pause zurück');
+            holding = false; audio.loop = false; audio.src = trackSrc; audio.pause();
+        });
+    };
+
+    const leaveHold = (resume) => {
+        if (!holding) return;
+        const pos = heldPosition;
+        holding = false;
+        audio.loop = false;
+        audio.src = trackSrc;
+        audio.addEventListener('loadedmetadata', () => { if (pos > 0) audio.currentTime = pos; }, { once: true });
+        add('act', 'HOLD aus — zurück auf Track @' + pos.toFixed(2) + (resume ? ', spielt weiter' : ', pausiert'));
+        if (resume) audio.play().catch((e) => add('act', 'Resume fehlgeschlagen: ' + e.name));
+        else audio.pause();
+    };
+
+    const doPlay = () => {
+        if (holding) { leaveHold(true); }
+        else audio.play().catch((e) => add('act', 'play() abgelehnt: ' + e.name));
+        if (navigator.mediaSession) navigator.mediaSession.playbackState = 'playing';
+        setMeta();
+    };
+
+    const doPause = () => {
+        if (keepAlive() && !audio.paused && !holding) enterHold();
+        else audio.pause();
+        if (navigator.mediaSession) navigator.mediaSession.playbackState = 'paused';
+    };
+
+    // While holding, iOS sees a playing element and sends `pause` where the user means play.
+    // Never trust the command name over our own state.
+    const toggle = (from) => {
+        add('act', 'Remote-Kommando "' + from + '" — logisch ' + (logicallyPaused() ? 'pausiert → play' : 'spielt → pause'));
+        if (logicallyPaused()) doPlay(); else doPause();
+    };
+
+    const setMeta = () => {
+        if (!('mediaSession' in navigator) || !window.MediaMetadata) return;
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: 'iOS Audio Probe', artist: 'Sinuston 220 Hz', album: 'Diagnose',
+        });
+    };
+
+    if ('mediaSession' in navigator) {
+        try {
+            navigator.mediaSession.setActionHandler('play', () => toggle('play'));
+            navigator.mediaSession.setActionHandler('pause', () => toggle('pause'));
+            setMeta();
+        } catch (e) { add('act', 'setActionHandler: ' + e.name); }
+    }
+
+    // ---------- instrumentation ----------
+
+    const MEDIA_EVENTS = ['loadstart','loadedmetadata','loadeddata','canplay','canplaythrough','play',
+        'playing','pause','waiting','stalled','suspend','emptied','error','ended','ratechange','volumechange'];
+
+    for (const type of MEDIA_EVENTS)
+        audio.addEventListener(type, () => add('evt', type + '  ' + snapshot()));
+
+    const snapshot = () =>
+        'rs=' + audio.readyState + ' ns=' + audio.networkState +
+        ' err=' + (audio.error ? audio.error.code : '-') +
+        ' paused=' + (audio.paused ? 1 : 0) + ' loop=' + (audio.loop ? 1 : 0) +
+        ' vol=' + audio.volume + ' muted=' + (audio.muted ? 1 : 0) +
+        ' t=' + audio.currentTime.toFixed(2) + ' hold=' + (holding ? 1 : 0);
+
+    for (const type of ['visibilitychange'])
+        document.addEventListener(type, () => add('evt', type + ' → ' + document.visibilityState + '  ' + snapshot()));
+    for (const type of ['pageshow','pagehide','freeze','resume','focus','blur'])
+        window.addEventListener(type, () => add('evt', type + '  ' + snapshot()));
+
+    // The heartbeat is the actual measurement: a gap proves the process stopped running.
+    let lastTick = Date.now();
+    setInterval(() => {
+        const now = Date.now();
+        const drift = now - lastTick;
+        lastTick = now;
+        if (drift > 2500) add('gap', 'LÜCKE ' + (drift / 1000).toFixed(1) + ' s — kein JS gelaufen  ' + snapshot());
+        else render();
+    }, 1000);
+
+    // ---------- UI ----------
+
+    const $ = (id) => document.getElementById(id);
+    const pad2 = (n) => String(n).padStart(2, '0');
+    const clock = (t) => { const d = new Date(t); return pad2(d.getHours()) + ':' + pad2(d.getMinutes()) + ':' + pad2(d.getSeconds()); };
+
+    const renderState = () => {
+        const ctx = window.AudioContext || window.webkitAudioContext;
+        const rows = [
+            ['Engine', /CriOS/.test(navigator.userAgent) ? 'Chrome (WKWebView)'
+                     : /EdgiOS/.test(navigator.userAgent) ? 'Edge (WKWebView)'
+                     : /FxiOS/.test(navigator.userAgent) ? 'Firefox (WKWebView)' : 'Safari / WebKit'],
+            ['standalone', (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) ? 'ja' : 'nein'],
+            ['audioSession.type', sessionType],
+            ['mediaSession', 'mediaSession' in navigator ? 'ja' : 'nein'],
+            ['setPositionState', navigator.mediaSession && navigator.mediaSession.setPositionState ? 'ja' : 'nein'],
+            ['AudioContext', ctx ? 'ja' : 'nein'],
+            ['logisch', logicallyPaused() ? 'pausiert' : 'spielt'],
+            ['Hold-Uhr', holding ? audio.currentTime.toFixed(1) + ' s von ' + ((Date.now() - holdStartedAt) / 1000).toFixed(1) + ' s Wandzeit' : '—'],
+            ['Element', snapshot()],
+        ];
+        $('state').innerHTML = rows.map(([k, v]) => '<dt>' + k + '</dt><dd>' + v + '</dd>').join('');
+    };
+
+    const renderLog = () => {
+        const out = [];
+        for (let i = 0; i < log.length; i++) {
+            const e = log[i];
+            const prev = log[i - 1];
+            const d = prev ? ((e.t - prev.t) / 1000).toFixed(1).padStart(6) : '     0';
+            const line = clock(e.t) + ' +' + d + 's  ' + e.text;
+            out.push(e.kind === 'gap' ? '<span class="gapline">' + line + '</span>'
+                   : e.kind === 'evt' ? '<span class="evt">' + line + '</span>' : line);
+        }
+        const el = $('log');
+        const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 30;
+        el.innerHTML = out.join('\n');
+        if (atBottom) el.scrollTop = el.scrollHeight;
+    };
+
+    const renderVerdict = () => {
+        const gaps = log.filter((e) => e.kind === 'gap');
+        const v = $('verdict');
+        if (!gaps.length) {
+            v.className = log.length > 20 ? 'clean' : '';
+            v.textContent = log.length > 20
+                ? 'Keine Lücke im Herzschlag — der Prozess lief durch. Wenn Play trotzdem nichts tat, ist es NICHT die Suspendierung.'
+                : 'Noch keine Messung. Ablauf: Play → Pause → Bildschirm sperren → 60 s warten → entsperren → hier lesen.';
+            return;
+        }
+        const worst = gaps.reduce((a, e) => (parseFloat(e.text.match(/LÜCKE ([\d.]+)/)[1]) > a.s
+            ? { s: parseFloat(e.text.match(/LÜCKE ([\d.]+)/)[1]), e } : a), { s: 0, e: gaps[0] });
+        const posOnGap = parseFloat((worst.e.text.match(/ t=([\d.]+)/) || [0, '0'])[1]);
+        v.className = 'gap';
+
+        // If the filler advanced by roughly the length of the gap, the media engine kept running
+        // and only the JS timers were throttled - the process assertion held.
+        const survived = posOnGap >= worst.s * 0.7;
+        v.textContent = gaps.length + ' Lücke(n), längste ' + worst.s.toFixed(1) + ' s. '
+            + (survived
+                ? 'Wiedergabeposition war dabei bei ' + posOnGap.toFixed(1) + ' s — Audio lief also durch, nur JS '
+                  + 'war gedrosselt. Die Assertion HAT gehalten.'
+                : 'Wiedergabeposition nur bei ' + posOnGap.toFixed(1) + ' s — Audio lief NICHT durch. Echte '
+                  + 'Suspendierung.');
+    };
+
+    let rafPending = false;
+    const render = () => {
+        if (rafPending) return;
+        rafPending = true;
+        requestAnimationFrame(() => { rafPending = false; renderState(); renderLog(); renderVerdict(); });
+    };
+
+    const syncKeepButton = () => {
+        const b = $('keep');
+        b.textContent = 'Keepalive: ' + (keepAlive() ? 'AN' : 'aus');
+        b.className = keepAlive() ? 'on' : '';
+    };
+
+    $('play').onclick = () => { add('act', 'Play gedrückt'); doPlay(); };
+    $('pause').onclick = () => { add('act', 'Pause gedrückt'); doPause(); };
+    $('keep').onclick = () => {
+        const next = !keepAlive();
+        localStorage.setItem(KEEP_KEY, String(next));
+        if (!next && holding) leaveHold(false);
+        add('act', 'Keepalive → ' + (next ? 'AN' : 'aus'));
+        syncKeepButton();
+    };
+    $('clear').onclick = () => { log = []; persist(); add('act', 'Log geleert'); };
+    $('copy').onclick = async () => {
+        const text = log.map((e) => new Date(e.t).toISOString() + '  ' + e.text).join('\n');
+        try { await navigator.clipboard.writeText(text); add('act', 'Log in die Zwischenablage kopiert'); }
+        catch { add('act', 'Zwischenablage verweigert — Log per Hand markieren'); }
+    };
+
+    syncKeepButton();
+    add('act', 'Probe gestartet — ' + navigator.userAgent);
+    render();
+})();
+</script>
+</body>
+</html>

@@ -21,8 +21,6 @@ export class OfflineMusicPage extends LitElementBase {
     public static isPage = true as const;
     public static pageName = 'Offline Musik' as const;
 
-    public static readonly CacheKey = (hash: string) => `./track/hash/${hash}`;
-
     static override get styles() {
         return [renderOfflineMusicPageStyles(), renderOfflineMusicPagePortraitStyles()];
     }
@@ -65,12 +63,19 @@ export class OfflineMusicPage extends LitElementBase {
         }
 
         this.requestFullUpdate();
-        window.addEventListener('pointerdown', () => {
-            if (!this.selectionMode || ContextMenu.instance) return;
-            this.selectionMode = false;
-            this.selectedTracks = [];
+        // both were added without a signal, so every page instance left one behind on document
+        window.addEventListener(
+            'pointerdown',
+            () => {
+                if (!this.selectionMode || ContextMenu.instance) return;
+                this.selectionMode = false;
+                this.selectedTracks = [];
+            },
+            { signal: this.abortController.signal },
+        );
+        document.addEventListener('visibilitychange', () => this.requestFullUpdate(), {
+            signal: this.abortController.signal,
         });
-        document.addEventListener('visibilitychange', () => this.requestFullUpdate());
     }
 
     override render() {
@@ -96,9 +101,8 @@ export class OfflineMusicPage extends LitElementBase {
     }
 
     getCachedTracks() {
-        return OfflineSession.musicMetadata.filter((metadata) =>
-            OfflineSession.trackHashes.some((url) => url.endsWith(metadata.hash)),
-        );
+        const cached = new Set(OfflineSession.trackHashes);
+        return OfflineSession.musicMetadata.filter((metadata) => cached.has(metadata.hash));
     }
 
     loadNext() {
@@ -124,6 +128,7 @@ export class OfflineMusicPage extends LitElementBase {
         if (!this.selectionModeTimer) return;
         this.selectionModeSetByHash = null;
         clearTimeout(this.selectionModeTimer);
+        this.selectionModeTimer = null;
         this.requestFullUpdate();
     }
 
@@ -152,9 +157,8 @@ export class OfflineMusicPage extends LitElementBase {
 
     async playPlaylist(tracks: MusicModel[]) {
         const playlistId = newGuid();
-        const cachedHashes = tracks
-            .map((x) => x.hash)
-            .filter((hash) => OfflineSession.trackHashes.some((url) => url.endsWith(hash)));
+        const cached = new Set(OfflineSession.trackHashes);
+        const cachedHashes = tracks.map((x) => x.hash).filter((hash) => cached.has(hash));
 
         if (cachedHashes.length <= 0) {
             await DialogBase.show('Cache unvollständig', {
@@ -180,8 +184,16 @@ export class OfflineMusicPage extends LitElementBase {
         changePage(OfflineMusicDetailsPage, { playlistId });
     }
 
-    async toggleTrack(track: MusicModel, event: Event) {
-        await OfflineSession.toggleTrack(track, event);
+    async toggleTrack(track: MusicModel) {
+        try {
+            await OfflineSession.playTrack(track);
+        } catch (error) {
+            console.error(error);
+            await DialogBase.show('Track nicht abspielbar', {
+                content: 'Dieser Track ist nicht im Offline-Cache oder beschädigt.',
+                acceptActionText: 'Ok',
+            });
+        }
 
         this.requestFullUpdate();
     }

@@ -22,12 +22,15 @@ export class Observable<T> {
 
         this.subscriptions = this.subscriptions.filter((x) => !x.unsubscribed);
 
-        for (var subscription of this.subscriptions) {
+        // iterate a copy: an observer may unsubscribe itself while it runs
+        for (var subscription of [...this.subscriptions]) {
             try {
                 var result = subscription.observer(this.currentValue, oldValue);
                 if (result instanceof Promise) await result;
-            } catch {
-                //
+            } catch (error) {
+                // never rethrow - one broken observer must not stop the others - but a swallowed
+                // render error used to be completely invisible
+                console.error('observer failed', error);
             }
         }
     }
@@ -66,5 +69,8 @@ export class Subscription {
 
     unsubscribe() {
         this.unsubscribed = true;
+        // drop the reference immediately instead of waiting for the next next()
+        const index = this.observable.subscriptions.indexOf(this);
+        if (index >= 0) this.observable.subscriptions.splice(index, 1);
     }
 }

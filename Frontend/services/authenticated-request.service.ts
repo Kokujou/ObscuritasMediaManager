@@ -15,7 +15,7 @@ export class AuthenticatedRequestService {
                 document.dispatchEvent(new CustomEvent('maintenance'));
             }
 
-            if (response.status > 400) throw { httpStatus: response.status };
+            if (response.status >= 400) throw { httpStatus: response.status };
 
             return response;
         } catch (err) {

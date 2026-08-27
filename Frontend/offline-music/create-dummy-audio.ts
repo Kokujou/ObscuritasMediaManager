@@ -1,9 +1,9 @@
-// Returns a blob URL for a short silent PCM WAV (0.5s, 8kHz, mono, 16-bit).
+// Returns a blob URL for a silent PCM WAV (8kHz, mono, 16-bit).
 // WAV/PCM is the one format guaranteed to be natively decoded on all iOS versions
-// without a codec step. Kept short to minimize memory; 8kHz is the lowest rate iOS accepts.
-export function createSilentWav(): string {
+// without a codec step. 8kHz is the lowest rate iOS accepts.
+export function createSilentWav(seconds = 0.5): string {
     const sampleRate = 8000;
-    const numSamples = sampleRate / 2; // 0.5 seconds
+    const numSamples = Math.max(1, Math.round(sampleRate * seconds));
     const dataBytes = numSamples * 2; // 16-bit = 2 bytes per sample
 
     const buffer = new ArrayBuffer(44 + dataBytes);

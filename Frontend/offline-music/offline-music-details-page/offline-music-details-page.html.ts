@@ -8,12 +8,8 @@ import { OfflineSession } from '../session';
 import { OfflineMusicDetailsPage } from './offline-music-details-page';
 
 export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
-    if (!OfflineSession.initialized) return;
-
-    if (!this.currentTrack) {
-        changePage(OfflineMusicPage);
-        return;
-    }
+    // Navigating away belongs in connectedCallback, not in a render pass.
+    if (!OfflineSession.initialized || !this.currentTrack) return;
 
     var mood2 = this.currentTrack.mood2 == Mood.Unset ? this.currentTrack.mood1 : this.currentTrack.mood2;
     return html`
@@ -50,8 +46,8 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
                 .track="${this.currentTrack}"
                 disabled
                 .visualizationData="${OfflineSession.audio.visualizationData}"
-                ?paused="${OfflineSession.audio.paused}"
-                @imageClicked="${(e: Event) => this.toggleTrack(e)}"
+                ?paused="${!OfflineSession.audio.playing}"
+                @imageClicked="${() => void this.toggleTrack()}"
             >
             </audio-tile-base>
 
@@ -68,7 +64,7 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
                         id="shuffle"
                         class="audio-control"
                         icon="${Icons.ShufflePlaylist}"
-                        @click="${(e: Event) => this.shufflePlaylist(e)}"
+                        @click="${() => void this.shufflePlaylist()}"
                     ></div>
                 </flex-row>
 
@@ -77,19 +73,19 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
                         id="last-track"
                         class="audio-control"
                         icon="${Icons.FastForward}"
-                        @click="${(e: Event) => this.changeToTrackAt(this.index - 1, e)}"
+                        @click="${() => void this.changeToTrackAt(this.index - 1)}"
                     ></div>
                     <div
                         id="toggle-track"
                         class="audio-control"
-                        icon="${OfflineSession.audio.paused ? Icons.Play : Icons.Pause}"
-                        @click="${this.toggleTrack}"
+                        icon="${OfflineSession.audio.playing ? Icons.Pause : Icons.Play}"
+                        @click="${() => void this.toggleTrack()}"
                     ></div>
                     <div
                         id="next-track"
                         class="audio-control"
                         icon="${Icons.FastForward}"
-                        @click="${(e: Event) => this.changeToTrackAt(this.index + 1, e)}"
+                        @click="${() => void this.changeToTrackAt(this.index + 1)}"
                     ></div>
                 </flex-row>
                 <flex-row class="control-section">
@@ -138,7 +134,7 @@ export function renderOfflineMusicDetailsPage(this: OfflineMusicDetailsPage) {
                                       return html`<flex-row
                                           class="playlist-entry"
                                           ?active="${this.currentTrack?.hash == hash}"
-                                          @click="${(e: Event) => this.navigateToTrack(index, e)}"
+                                          @click="${() => void this.navigateToTrack(index)}"
                                       >
                                           <div class="track-icon" icon="${Icons.Note}"></div>
                                           <flex-column class="playlist-entry-text">

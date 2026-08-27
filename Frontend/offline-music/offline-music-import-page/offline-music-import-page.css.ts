@@ -5,6 +5,41 @@ import { saveTickIcon } from '../../resources/inline-icons/general/save-tick-ico
 
 export function renderOfflineMusicImportPageStyles() {
     return css`
+        #diagnostics {
+            gap: 6px;
+            width: 100%;
+            padding-top: 8px;
+            border-top: 1px solid #ffffff22;
+        }
+
+        /* the four status toggles above are display-only, hence pointer-events: none on
+           custom-toggle - the diagnostic ones are actual switches and need it back */
+        #diagnostics custom-toggle {
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        #build-marker {
+            font-size: 10px;
+            opacity: 0.6;
+        }
+
+        #session-log {
+            width: 100%;
+            max-height: 40vh;
+            overflow: auto;
+            margin: 0;
+            padding: 8px;
+            background: #0006;
+            border-radius: 4px;
+            font-family: ui-monospace, monospace;
+            font-size: 10px;
+            line-height: 1.4;
+            white-space: pre;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
         :host {
             height: 100%;
 

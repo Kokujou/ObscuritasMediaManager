@@ -21,7 +21,8 @@ export function changePage<T extends Page, U extends Omit<InstanceType<T>, keyof
     var newUrl = new URL(location.href);
     newUrl.search = '';
     newUrl.hash = '';
-    var paramEntries = Object.entries(params ?? {}).filter((x) => x[1]);
+    // only drop absent values - filtering everything falsy silently swallowed index=0
+    var paramEntries = Object.entries(params ?? {}).filter((x) => x[1] !== undefined && x[1] !== null && x[1] !== '');
     if (paramEntries.length > 0) newUrl.search = '?' + paramEntries.map((x) => `${x[0]}=${x[1]}`).join('&');
     newUrl.hash = '#' + getPageName(target);
     if (reflectInHistory) history.pushState(null, '', newUrl);
